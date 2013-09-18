@@ -6,11 +6,10 @@
 
 <h:head></h:head> 
 <body> 
-	<p>  Hello word! Giulio puzza.</p>
+	<p>  Benvenuto in Jama</p>
 	<h:form>
-		Inserire il titolo della convenzione
-		<h:inputText value="#{convenzioneJsfBean.title}" />
-		<h:commandButton value="Inserisci" action="#{convenzioneJsfBean.create()}" />
+		Premendo il pulsante verra avviato il lavoro specificato in TestBean.doJob()
+		<h:commandButton value="doJob" action="#{testBean.doJob()}" />
 	</h:form>
 </body> 
 </html>
