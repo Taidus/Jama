@@ -18,6 +18,8 @@ public class Agreement {
 	private String title;
 	private String protocolNumber;
 	
+	private AgreementType type;
+	
 	private ChiefScientist chief;
 	private String conctatPerson;
 	private Company company;
