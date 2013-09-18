@@ -1,4 +1,4 @@
-package businessModel;
+package businessLayer;
 
 public class ChiefScientist {
 
