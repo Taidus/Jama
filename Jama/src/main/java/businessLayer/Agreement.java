@@ -24,7 +24,7 @@ public class Agreement {
 	private UAR uar;
 	
 	private int CIA_projectNumber;
-	private ConctractSpilittingTable splittingTable;
+	private ConctractShareTable shareTable;
 	
 	private float wholeAmount;
 	private float IVA_amount;
