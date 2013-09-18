@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,12 +22,19 @@ public class Agreement {
 	
 	private AgreementType type;
 	
+	@ManyToOne
 	private ChiefScientist chief;
 	private String conctatPerson;
+	
+	@ManyToOne
 	private Company company;
+	
+	@ManyToOne
 	private UAR uar;
 	
 	private int CIA_projectNumber;
+	
+	@OneToOne
 	private ConctractShareTable shareTable;
 	
 	private float wholeAmount;
