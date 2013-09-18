@@ -35,7 +35,7 @@ public class Agreement {
 	private int CIA_projectNumber;
 	
 	@OneToOne
-	private ConctractShareTable shareTable;
+	private AgreementShareTable shareTable;
 	
 	private float wholeAmount;
 	private float IVA_amount;
@@ -120,11 +120,11 @@ public class Agreement {
 		CIA_projectNumber = cIA_projectNumber;
 	}
 
-	public ConctractShareTable getShareTable() {
+	public AgreementShareTable getShareTable() {
 		return shareTable;
 	}
 
-	public void setShareTable(ConctractShareTable shareTable) {
+	public void setShareTable(AgreementShareTable shareTable) {
 		this.shareTable = shareTable;
 	}
 
