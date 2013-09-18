@@ -1,0 +1,13 @@
+
+
+@Entity
+Convenzione: Agreement
+Tabella di Ripartizione: Share Table
+Ditta: Company
+UAR: UAR
+Rata: Installment
+Responsabile Scientifico: Chief Scientist
+Allegati: Attachment 
+
+
+
