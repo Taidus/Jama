@@ -1,4 +1,4 @@
-package serviceLayer;
+package daoLayer;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import businessLayer.Company;
 
 @Stateless
-public class CompanyServiceBean {
+public class CompanyDaoBean {
 	@PersistenceContext(unitName="primary")
 	private EntityManager em;
 
-	public CompanyServiceBean() {
+	public CompanyDaoBean() {
 	}
 	
 	public Company createCompany(String name) {

@@ -4,23 +4,23 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import serviceLayer.AgreementServiceBean;
-import serviceLayer.ChiefScientistServiceBean;
-import serviceLayer.UARServiceBean;
+import daoLayer.AgreementDaoBean;
+import daoLayer.ChiefScientistDaoBean;
+import daoLayer.DepartmentDaoBean;
 import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
-import businessLayer.UAR;
+import businessLayer.Department;
 
 @Named
 @RequestScoped
 public class TestBean{
 	
 	@EJB
-	private ChiefScientistServiceBean chiefSB;
+	private ChiefScientistDaoBean chiefSB;
 	@EJB
-	private UARServiceBean UARSB;
+	private DepartmentDaoBean UARSB;
 	@EJB
-	private AgreementServiceBean agrSB;
+	private AgreementDaoBean agrSB;
 	
 
 	public TestBean() {
@@ -29,7 +29,7 @@ public class TestBean{
 	public void doJob(){
 		
 		
-		UAR disit = UARSB.createUAR("45/cvb55", "disit");
+		Department disit = UARSB.createDepartment("45/cvb55", "disit");
 		ChiefScientist chief = chiefSB.createChiefScientist("paolo", "nesimerda");
 		String title = "convenzione schifosa per eclap";
 		Agreement agr = agrSB.createAgreement(title, disit, chief);

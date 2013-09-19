@@ -1,4 +1,4 @@
-package serviceLayer;
+package daoLayer;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -7,12 +7,12 @@ import javax.persistence.PersistenceContext;
 import businessLayer.ChiefScientist;
 
 @Stateless
-public class ChiefScientistServiceBean {
+public class ChiefScientistDaoBean {
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 
-	public ChiefScientistServiceBean() {
+	public ChiefScientistDaoBean() {
 	}
 
 	public ChiefScientist createChiefScientist(String name, String surname) {

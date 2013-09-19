@@ -30,7 +30,7 @@ public class Agreement {
 	private Company company;
 	
 	@ManyToOne
-	private UAR uar;
+	private Department department;
 	
 	private int CIA_projectNumber;
 	
@@ -104,12 +104,12 @@ public class Agreement {
 		this.company = company;
 	}
 
-	public UAR getUar() {
-		return uar;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setUar(UAR uar) {
-		this.uar = uar;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	public int getCIA_projectNumber() {

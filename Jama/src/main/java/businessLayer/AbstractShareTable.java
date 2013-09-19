@@ -1,12 +1,12 @@
 package businessLayer;
 
+import java.util.Map;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
 @MappedSuperclass
 public abstract class AbstractShareTable {
@@ -20,9 +20,9 @@ public abstract class AbstractShareTable {
 	private float Structures;
 	private float personnel;
 	
+	
 	@ElementCollection
 	private Map<ChiefScientist,Float> sharePerPersonnel;
-	
 	private float GoodsAndServices;
 	private float businessTrip;
 	private float consumerMaterials;
@@ -56,12 +56,14 @@ public abstract class AbstractShareTable {
 	public void setPersonnel(float personnel) {
 		this.personnel = personnel;
 	}
+	
 	public Map<ChiefScientist, Float> getSharePerPersonnel() {
 		return sharePerPersonnel;
 	}
 	public void setSharePerPersonnel(Map<ChiefScientist, Float> sharePerPersonnel) {
 		this.sharePerPersonnel = sharePerPersonnel;
 	}
+	
 	public float getGoodsAndServices() {
 		return GoodsAndServices;
 	}
