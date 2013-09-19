@@ -88,6 +88,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+            	<groupId>org.richfaces</groupId>
+            	<artifactId>richfaces-bom</artifactId>
+            	<version>4.3.3.Final</version>
+            	<type>pom</type>
+            	<scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -199,6 +206,15 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>  
+	        <groupId>org.richfaces.ui</groupId>  
+	        <artifactId>richfaces-components-ui</artifactId>  
+	    </dependency>  
+	    
+	    <dependency>  
+	        <groupId>org.richfaces.core</groupId>  
+	        <artifactId>richfaces-core-impl</artifactId>  
+    	</dependency> 
     </dependencies>
 
     <build>
