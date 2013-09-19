@@ -32,7 +32,7 @@ public class TestBean{
 		Department disit = UARSB.createDepartment("45/cvb55", "disit");
 		ChiefScientist chief = chiefSB.createChiefScientist("paolo", "nesimerda");
 		String title = "convenzione schifosa per eclap";
-		Agreement agr = agrSB.createAgreement(title, disit, chief);
+//		Agreement agr = agrSB.createAgreement(title, disit, chief);
 		
 	}
 	

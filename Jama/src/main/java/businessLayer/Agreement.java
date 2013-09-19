@@ -24,8 +24,8 @@ public class Agreement {
 	
 	@ManyToOne
 	private ChiefScientist chief;
-	private String conctatPerson;
-	
+	private String contactPerson;
+
 	@ManyToOne
 	private Company company;
 	
@@ -71,6 +71,14 @@ public class Agreement {
 	public void setProtocolNumber(String protocolNumber) {
 		this.protocolNumber = protocolNumber;
 	}
+	
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
 
 	public AgreementType getType() {
 		return type;
@@ -88,13 +96,6 @@ public class Agreement {
 		this.chief = chief;
 	}
 
-	public String getConctatPerson() {
-		return conctatPerson;
-	}
-
-	public void setConctatPerson(String conctatPerson) {
-		this.conctatPerson = conctatPerson;
-	}
 
 	public Company getCompany() {
 		return company;

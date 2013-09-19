@@ -6,8 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import businessLayer.Agreement;
-import businessLayer.ChiefScientist;
-import businessLayer.Department;
 
 
 
@@ -16,19 +14,10 @@ public class AgreementDaoBean {
 	@PersistenceContext(unitName="primary")
 	private EntityManager em;
 	
-	public AgreementDaoBean() {
-	}
-	
-	
-	//pochi campi per prova
-	public Agreement createAgreement(String title,Department department,ChiefScientist chief){
+	public AgreementDaoBean() {}
 		
-		Agreement agr = new Agreement();
-		agr.setTitle(title);
-		agr.setDepartment(department);
-		agr.setChief(chief);
-		em.persist(agr);
-		return agr;
+	public void create(Agreement agreement){
+		em.persist(agreement);
 	}
 	
 	public void deleteAgreement(int id){
