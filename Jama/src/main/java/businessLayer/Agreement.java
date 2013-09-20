@@ -14,43 +14,44 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Agreement {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String title;
 	private String protocolNumber;
-	
+
 	private AgreementType type;
-	
+
 	@ManyToOne
 	private ChiefScientist chief;
 	private String contactPerson;
 
 	@ManyToOne
 	private Company company;
-	
+
 	@ManyToOne
 	private Department department;
-	
+
 	private int CIA_projectNumber;
-	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	private int inventoryNumber;
+
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private AgreementShareTable shareTable;
-	
+
 	private float wholeAmount;
 	private float IVA_amount;
 	private float wholeTaxableAmount;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Calendar approvalDate;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Calendar beginDate;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Calendar deadlineDate;
-	
+
 	private String note;
 
 	public int getId() {
@@ -72,7 +73,7 @@ public class Agreement {
 	public void setProtocolNumber(String protocolNumber) {
 		this.protocolNumber = protocolNumber;
 	}
-	
+
 	public String getContactPerson() {
 		return contactPerson;
 	}
@@ -96,7 +97,6 @@ public class Agreement {
 	public void setChief(ChiefScientist chief) {
 		this.chief = chief;
 	}
-
 
 	public Company getCompany() {
 		return company;
@@ -122,12 +122,27 @@ public class Agreement {
 		CIA_projectNumber = cIA_projectNumber;
 	}
 
+	public int getInventoryNumber() {
+		return inventoryNumber;
+	}
+
+	public void setInventoryNumber(int inventoryNumber) {
+		this.inventoryNumber = inventoryNumber;
+	}
+
 	public AgreementShareTable getShareTable() {
 		return shareTable;
 	}
 
 	public void setShareTable(AgreementShareTable shareTable) {
-		this.shareTable = shareTable;
+
+		// TODO modificare secondo quanto fatto in validate()
+		try {
+			shareTable.validate();
+			this.shareTable = shareTable;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public float getWholeAmount() {
@@ -185,9 +200,5 @@ public class Agreement {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	
-	
-	
-	
+
 }

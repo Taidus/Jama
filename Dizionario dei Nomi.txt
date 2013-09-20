@@ -1,13 +1,22 @@
 
 
-@Entity
+@Entities
+
 Convenzione: Agreement
-Tabella di Ripartizione: Share Table
+Tabella di Ripartizione: ShareTable
 Ditta: Company
-UAR: UAR
+UAR: Department
 Rata: Installment
-Responsabile Scientifico: Chief Scientist
+Responsabile Scientifico: ChiefScientist
 Allegati: Attachment 
+
+
+@Fields
+
+Reversale : voucher
+Sospeso : pending
+Fattura : invoice
+Repertorio: inventoryNumber
 
 
 
