@@ -3,17 +3,17 @@
     xmlns:rich="http://richfaces.org/rich">
  
     <div style="position: relative; height: 140px">
-        <h:panelGrid columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
-            <h:outputText value="Notes:" />
-            <h:inputTextarea cols="20" rows="4" id="notes" value="#{agreementWizardPCB.agreement.note}" label="Notes" required="false" />
-            <rich:message for="notes" />
-        </h:panelGrid>
+    	
+    	<h1>There's nothing here! AHAHAHAHAHAH </h1>    
+        
         <div class="navPanel" style="width: 100%;">
+        
             <a4j:commandButton value="&lt;&lt;Previous" style="float:left">
                 <rich:toggleControl targetItem="@prev" event="click" />
                 <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
                 
             </a4j:commandButton>
+            
             <h:commandButton value="Save" style="float:right" action="#{agreementWizardPCB.save()}">
             </h:commandButton>
         </div>
