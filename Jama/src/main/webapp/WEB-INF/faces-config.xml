@@ -28,10 +28,16 @@
         for creating @Named managed beans. -->
         
     <application>
+    
     	<resource-bundle>
     		<base-name>messages</base-name>
     		<var>msgs</var>
     	</resource-bundle>
+    	
+    	<locale-config>
+    		<default-locale>it</default-locale>
+    	</locale-config>
+    	
     </application>
 
 </faces-config>

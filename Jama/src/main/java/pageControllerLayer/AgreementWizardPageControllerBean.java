@@ -17,7 +17,7 @@ import daoLayer.AgreementDaoBean;
 
 @Named("agreementWizardPCB")
 @ConversationScoped
-public class agreementWizardPageControllerBean implements Serializable {
+public class AgreementWizardPageControllerBean implements Serializable {
 	
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class agreementWizardPageControllerBean implements Serializable {
 	private Agreement agreement;
 	private AgreementShareTable agreementShareTable;
 
-	public agreementWizardPageControllerBean() {
+	public AgreementWizardPageControllerBean() {
 		this.agreement = new Agreement();
 		this.agreementShareTable = new AgreementShareTable();
 	}

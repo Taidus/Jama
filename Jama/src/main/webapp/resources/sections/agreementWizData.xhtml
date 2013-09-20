@@ -60,6 +60,7 @@
             <h:outputText value="#{msgs.newAgrIva}:" />
             <h:inputText id="iva" value="#{agreementWizardPCB.agreement.IVA_amount}" label="#{msgs.newAgrIva}" required="true">
             	<f:convertNumber/>
+            	<f:ajax render="amount" />
             </h:inputText>
             <rich:message for="iva" />
             

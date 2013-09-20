@@ -148,8 +148,8 @@ public class Agreement {
 		return wholeAmount;
 	}
 
-	public void setWholeAmount(float wholeAmount) {
-		this.wholeAmount = wholeAmount;
+	private void setWholeAmount() {
+		this.wholeAmount = this.wholeTaxableAmount*(100 + this.IVA_amount)/100;
 	}
 
 	public float getIVA_amount() {
@@ -158,6 +158,7 @@ public class Agreement {
 
 	public void setIVA_amount(float iVA_amount) {
 		IVA_amount = iVA_amount;
+		setWholeAmount();
 	}
 
 	public float getWholeTaxableAmount() {
@@ -166,6 +167,7 @@ public class Agreement {
 
 	public void setWholeTaxableAmount(float wholeTaxableAmount) {
 		this.wholeTaxableAmount = wholeTaxableAmount;
+		setWholeAmount();
 	}
 
 	public Calendar getApprovalDate() {
