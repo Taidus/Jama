@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+ 
+    <div style="position: relative;">
+    
+	    <h:outputStylesheet>
+	        .col1 { vertical-align:top; }
+	        .col2 { vertical-align:top; width:450px; }
+	        .wizard { width:400px; }
+	        .wform td { vertical-align:top; }
+	        .wfcol1 { text-align: right; white-space:nowrap;}
+	        .wfcol2 { }
+	        .wfcol3 { }
+	        .s1row td { height:30px; }
+	        .rich-message { color:red; }
+	 
+	        .navPanel {
+	        position:absolute;
+	        bottom:0;
+	        height:23px;
+	        margin:0;
+	        padding:2px;
+	        }
+	 
+	    </h:outputStylesheet>
+    
+        <h:panelGrid rowClasses="s1row" columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
+            
+            <h:outputText value="#{msgs.newAgrTitle}:" />
+            <h:inputText id="title" value="#{agreementWizardPCB.agreement.title}" label="#{msgs.newAgrTitle}" required="true" />
+            <rich:message for="title" />
+            
+            <h:outputText value="#{msgs.newAgrProtocolNumber}:" />
+            <h:inputText id="protocolNumber" value="#{agreementWizardPCB.agreement.protocolNumber}" label="#{msgs.newAgrProtocolNumber}" required="true" />
+            <rich:message for="protocolNumber" />
+            
+            <h:outputText value="#{msgs.newAgrType}:" />
+            <h:inputText id="type" value="#{agreementWizardPCB.agreement.type}" label="#{msgs.newAgrType}" required="true" />
+            <rich:message for="type" />
+            
+            <h:outputText value="#{msgs.newAgrChief}:" />
+            <h:selectOneMenu id="chief" value="#{agreementWizardPCB.agreement.chief}" label="#{msgs.newAgrChief}" required="true">
+            	<f:selectItem itemValue="Vic" itemLabel="Vicario"/>
+            	<f:selectItem itemValue="Beppe" itemLabel="Modica"/>
+            </h:selectOneMenu> 
+            <rich:message for="chief" />
+ 
+            <h:outputText value="#{msgs.newAgrContact}:" />
+            <h:inputText id="contact" value="#{agreementWizardPCB.agreement.contactPerson}" label="#{msgs.newAgrContact}" required="true" />
+            <rich:message for="contact" />
+            
+            <h:outputText value="#{msgs.newAgrCompany}:" />
+            <h:selectOneMenu id="company" value="#{agreementWizardPCB.agreement.company}" label="#{msgs.newAgrCompany}" required="true">
+            	<f:selectItem itemValue="Apple" itemLabel="Apple"/>
+            	<f:selectItem itemValue="MS" itemLabel="Microsoft"/>
+			</h:selectOneMenu> 
+            <rich:message for="company" />
+            
+            <h:outputText value="#{msgs.newAgrDepartment}:" />
+            <h:inputText id="department" value="#{agreementWizardPCB.agreement.department}" label="#{msgs.newAgrDepartment}" required="true" />
+            <rich:message for="department" />
+            
+            <h:outputText value="#{msgs.newAgrProjectNumber}:" />
+            <h:inputText id="projectNumber" value="#{agreementWizardPCB.agreement.CIA_projectNumber}" label="#{msgs.newAgrProjectNumber}" required="true" />
+            <rich:message for="projectNumber" />
+            
+            <h:outputText value="#{msgs.newAgrTaxableAmount}:" />
+            <h:inputText id="taxableAmount" value="#{agreementWizardPCB.agreement.wholeTaxableAmount}" label="#{msgs.newAgrTaxableAmount}" required="true" />
+            <rich:message for="taxableAmount" />
+            
+            <h:outputText value="#{msgs.newAgrIva}:" />
+            <h:inputText id="iva" value="#{agreementWizardPCB.agreement.IVA_amount}" label="#{msgs.newAgrIva}" required="true" />
+            <rich:message for="iva" />
+            
+            <h:outputText value="#{msgs.newAgrWholeAmount}:" />
+            <h:inputText id="amount" value="#{agreementWizardPCB.agreement.wholeAmount}" label="#{msgs.newAgrWholeAmount}" required="true" />
+            <rich:message for="amount" />
+            
+            <h:outputText value="#{msgs.newAgrApproval}:" />
+            <rich:calendar id="approvalDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
+            <rich:message for="approvalDate" />
+            
+            <h:outputText value="#{msgs.newAgrBegin}:" />
+            <rich:calendar id="beginDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
+            <rich:message for="beginDate" />
+            
+            <h:outputText value="#{msgs.newAgrEnd}:" />
+            <rich:calendar id="deadlineDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
+            <rich:message for="deadlineDate" />
+            
+            <h:outputText value="#{msgs.newAgrNote}:" />
+            <h:inputTextarea id="notes" cols="20" rows="4"  value="#{agreementWizardPCB.agreement.note}" label="#{msgs.newAgrNote}" required="false" />
+            <rich:message for="notes" />
+            
+        </h:panelGrid>
+        
+        
+        <div class="navPanel" style="width: 100%;">
+        
+            <a4j:commandButton style="float:right" value="Next &gt;&gt;">
+                <rich:toggleControl targetItem="@next" event="click" />
+                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
+            </a4j:commandButton>
+            
+            <h:commandButton action="cancel" value="Annulla" immediate="true"/>
+            
+        </div>
+        
+        
+    </div>
+</ui:composition>
