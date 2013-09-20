@@ -11,6 +11,8 @@
         <div class="navPanel" style="width: 100%;">
             <a4j:commandButton value="&lt;&lt;Previous" style="float:left">
                 <rich:toggleControl targetItem="@prev" event="click" />
+                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
+                
             </a4j:commandButton>
             <h:commandButton value="Save" style="float:right" action="#{agreementWizardPCB.save()}">
             </h:commandButton>

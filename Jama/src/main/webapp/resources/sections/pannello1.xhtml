@@ -15,6 +15,7 @@
         <div class="navPanel" style="width: 100%;">
             <a4j:commandButton style="float:right" value="Next &gt;&gt;">
                 <rich:toggleControl targetItem="@next" event="click" />
+                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
             </a4j:commandButton>
         </div>
     </div>

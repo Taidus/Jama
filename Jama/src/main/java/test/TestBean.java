@@ -7,9 +7,6 @@ import javax.inject.Named;
 import daoLayer.AgreementDaoBean;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.DepartmentDaoBean;
-import businessLayer.Agreement;
-import businessLayer.ChiefScientist;
-import businessLayer.Department;
 
 @Named
 @RequestScoped
@@ -29,9 +26,9 @@ public class TestBean{
 	public void doJob(){
 		
 		
-		Department disit = UARSB.createDepartment("45/cvb55", "disit");
-		ChiefScientist chief = chiefSB.createChiefScientist("paolo", "nesimerda");
-		String title = "convenzione schifosa per eclap";
+//		Department disit = UARSB.createDepartment("45/cvb55", "disit");
+//		ChiefScientist chief = chiefSB.createChiefScientist("paolo", "nesimerda");
+//		String title = "convenzione schifosa per eclap";
 //		Agreement agr = agrSB.createAgreement(title, disit, chief);
 		
 	}

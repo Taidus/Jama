@@ -20,7 +20,7 @@ public class AgreementDaoBean {
 		em.persist(agreement);
 	}
 	
-	public void deleteAgreement(int id){
+	public void delete(int id){
 		
 		Agreement agr = em.find(Agreement.class,id);
 		if(agr!=null){

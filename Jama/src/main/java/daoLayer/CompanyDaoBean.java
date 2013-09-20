@@ -8,28 +8,25 @@ import businessLayer.Company;
 
 @Stateless
 public class CompanyDaoBean {
-	@PersistenceContext(unitName="primary")
+	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 
 	public CompanyDaoBean() {
 	}
-	
-	public Company createCompany(String name) {
 
-		Company c = new Company();
-		c.setName(name);
+	public Company create(Company c) {
+
 		em.persist(c);
 		return c;
 	}
-	
-	public void removeCompany(int id){
-		
-		Company c = em.find(Company.class,id);
-		em.remove(c);
-		
+
+	public void remove(int id) {
+
+		Company c = em.find(Company.class, id);
+		if (c != null) {
+			em.remove(c);
+		}
+
 	};
-		
-		
-	
 
 }

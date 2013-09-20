@@ -15,14 +15,21 @@ public class ChiefScientistDaoBean {
 	public ChiefScientistDaoBean() {
 	}
 
-	public ChiefScientist createChiefScientist(String name, String surname) {
+	public ChiefScientist createChiefScientist(ChiefScientist chief) {
 
-		ChiefScientist chief = new ChiefScientist();
-		chief.setName(name);
-		chief.setSurname(surname);
 		em.persist(chief);
 		return chief;
 
+	}
+	
+	public void delete(int id){
+		
+		ChiefScientist chief = em.find(ChiefScientist.class,id);
+		if(chief!=null){
+			
+			em.remove(chief);
+		}
+		
 	}
 
 }
