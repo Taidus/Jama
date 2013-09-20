@@ -6,11 +6,13 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
+import businessLayer.AgreementType;
 import daoLayer.AgreementDaoBean;
 
 @Named("agreementWizardPCB")
@@ -45,7 +47,7 @@ public class agreementWizardPageControllerBean implements Serializable {
 	
 	public AgreementShareTable getAgreementShareTable() {
 		return agreementShareTable;
-	}	
+	}
 		
 	public Conversation getConversation() {
 		return conversation;
