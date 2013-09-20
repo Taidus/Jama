@@ -31,7 +31,7 @@ public class Installment implements Serializable {
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private InvoiceShareTable shareTable;
 
 	public Calendar getDate() {

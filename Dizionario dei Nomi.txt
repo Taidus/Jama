@@ -17,6 +17,7 @@ Reversale : voucher
 Sospeso : pending
 Fattura : invoice
 Repertorio: inventoryNumber
+Imponibile: taxable
 
 
 
