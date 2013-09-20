@@ -2,6 +2,7 @@ package businessLayer;
 
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class Agreement {
 	
 	private int CIA_projectNumber;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.PERSIST)
 	private AgreementShareTable shareTable;
 	
 	private float wholeAmount;

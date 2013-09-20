@@ -15,40 +15,44 @@ public abstract class AbstractShareTable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	private float AtheneumCapitalBalance;
-	private float AtheneumCommonBalance;
-	private float Structures;
+	private float atheneumCapitalBalance;
+	private float atheneumCommonBalance;
+	private float structures;
 	private float personnel;
 	
 	
 	@ElementCollection
 	private Map<ChiefScientist,Float> sharePerPersonnel;
-	private float GoodsAndServices;
+	private float goodsAndServices;
 	private float businessTrip;
 	private float consumerMaterials;
-	private float InventoryMaterials;
+	private float inventoryMaterials;
 	private float rentals;
-	private float personnelOnConctract;
+	private float personnelOnContract;
 	private float otherCost;
 	
 	
+	//da vedere il sistema per il passaggio del messaggio di errore
+	public abstract boolean validate();
+	
+	
 	public float getAtheneumCapitalBalance() {
-		return AtheneumCapitalBalance;
+		return atheneumCapitalBalance;
 	}
 	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
-		AtheneumCapitalBalance = atheneumCapitalBalance;
+		this.atheneumCapitalBalance = atheneumCapitalBalance;
 	}
 	public float getAtheneumCommonBalance() {
-		return AtheneumCommonBalance;
+		return atheneumCommonBalance;
 	}
 	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
-		AtheneumCommonBalance = atheneumCommonBalance;
+		this.atheneumCommonBalance = atheneumCommonBalance;
 	}
 	public float getStructures() {
-		return Structures;
+		return structures;
 	}
 	public void setStructures(float structures) {
-		Structures = structures;
+		this.structures = structures;
 	}
 	public float getPersonnel() {
 		return personnel;
@@ -56,19 +60,17 @@ public abstract class AbstractShareTable {
 	public void setPersonnel(float personnel) {
 		this.personnel = personnel;
 	}
-	
 	public Map<ChiefScientist, Float> getSharePerPersonnel() {
 		return sharePerPersonnel;
 	}
 	public void setSharePerPersonnel(Map<ChiefScientist, Float> sharePerPersonnel) {
 		this.sharePerPersonnel = sharePerPersonnel;
 	}
-	
 	public float getGoodsAndServices() {
-		return GoodsAndServices;
+		return goodsAndServices;
 	}
 	public void setGoodsAndServices(float goodsAndServices) {
-		GoodsAndServices = goodsAndServices;
+		this.goodsAndServices = goodsAndServices;
 	}
 	public float getBusinessTrip() {
 		return businessTrip;
@@ -83,10 +85,10 @@ public abstract class AbstractShareTable {
 		this.consumerMaterials = consumerMaterials;
 	}
 	public float getInventoryMaterials() {
-		return InventoryMaterials;
+		return inventoryMaterials;
 	}
 	public void setInventoryMaterials(float inventoryMaterials) {
-		InventoryMaterials = inventoryMaterials;
+		this.inventoryMaterials = inventoryMaterials;
 	}
 	public float getRentals() {
 		return rentals;
@@ -94,11 +96,11 @@ public abstract class AbstractShareTable {
 	public void setRentals(float rentals) {
 		this.rentals = rentals;
 	}
-	public float getPersonnelOnConctract() {
-		return personnelOnConctract;
+	public float getPersonnelOnContract() {
+		return personnelOnContract;
 	}
-	public void setPersonnelOnConctract(float personnelOnConctract) {
-		this.personnelOnConctract = personnelOnConctract;
+	public void setPersonnelOnContract(float personnelOnContract) {
+		this.personnelOnContract = personnelOnContract;
 	}
 	public float getOtherCost() {
 		return otherCost;
@@ -109,6 +111,8 @@ public abstract class AbstractShareTable {
 	public int getId() {
 		return id;
 	}
+	
+	
 	
 	
 	
