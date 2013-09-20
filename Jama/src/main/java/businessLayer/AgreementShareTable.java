@@ -7,9 +7,7 @@ public class AgreementShareTable extends AbstractShareTable {
 
 	@Override
 	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+		return (areMainValuesConsistent() && arePersonnelSharesConsistent() && areGoodsSharesConsistent());
 	}
-	
 
 }

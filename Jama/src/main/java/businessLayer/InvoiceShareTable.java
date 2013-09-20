@@ -35,8 +35,7 @@ public class InvoiceShareTable extends AbstractShareTable implements
 
 	@Override
 	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+		return (areMainValuesConsistent() && arePersonnelSharesConsistent() && areGoodsSharesConsistent());
 	}
 
 }
