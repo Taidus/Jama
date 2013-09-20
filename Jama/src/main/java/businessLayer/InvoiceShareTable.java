@@ -5,6 +5,7 @@ import businessLayer.AbstractShareTable;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.resource.spi.IllegalStateException;
 
 /**
  * Entity implementation class for Entity: InvoiceShareTable
@@ -18,7 +19,7 @@ public class InvoiceShareTable extends AbstractShareTable implements
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@OneToOne(mappedBy="shareTable")
+	@OneToOne(mappedBy = "shareTable")
 	private Installment installment;
 
 	public InvoiceShareTable() {
@@ -34,8 +35,19 @@ public class InvoiceShareTable extends AbstractShareTable implements
 	}
 
 	@Override
-	public boolean validate() {
-		return (areMainValuesConsistent() && arePersonnelSharesConsistent() && areGoodsSharesConsistent());
+	public boolean validate() throws IllegalStateException {
+		if (!areGoodsSharesConsistent()) {
+			throw new IllegalStateException(
+					"Le quote dei Beni e Servizi non sono corrette");
+		}
+		if (!arePersonnelSharesConsistent()) {
+			throw new IllegalStateException(
+					"Le quote del Personale non sono corrette");
+		}
+		if (areMainValuesConsistent()) {
+			throw new IllegalStateException("Le quote non sono corrette");
+		}
+		return true;
 	}
 
 }

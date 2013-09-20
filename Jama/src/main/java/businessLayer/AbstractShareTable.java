@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.resource.spi.IllegalStateException;
 
 @MappedSuperclass
 public abstract class AbstractShareTable {
@@ -25,7 +26,8 @@ public abstract class AbstractShareTable {
 	@ElementCollection
 	private Map<ChiefScientist, Float> sharePerPersonnel;
 
-	// XXX: un refactor per accorpare tutta sta roba rende migliore la
+	// XXX: un refactor per accorpare tutta sta roba in un qualche tipo di
+	// collezione rende migliore la
 	// validazione (attualmente c'è un'istruzione mostro pazzesca)
 	private float goodsAndServices;
 	private float businessTrip;
@@ -36,7 +38,7 @@ public abstract class AbstractShareTable {
 	private float otherCost;
 
 	// da vedere il sistema per il passaggio del messaggio di errore
-	public abstract boolean validate();
+	public abstract boolean validate() throws IllegalStateException;
 
 	public float getAtheneumCapitalBalance() {
 		return atheneumCapitalBalance;
@@ -163,9 +165,9 @@ public abstract class AbstractShareTable {
 		adjustMainValues(total);
 		return true;
 	}
-	
+
 	protected void adjustMainValues(Float total) {
 		goodsAndServices += Float.valueOf(100) - total;
 	}
-	
+
 }
