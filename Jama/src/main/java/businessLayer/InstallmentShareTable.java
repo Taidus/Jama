@@ -2,26 +2,18 @@ package businessLayer;
 
 import businessLayer.AbstractShareTable;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 import javax.resource.spi.IllegalStateException;
 
-/**
- * Entity implementation class for Entity: InvoiceShareTable
- * 
- */
 @Entity
-public class InstallmentShareTable extends AbstractShareTable implements
-		Serializable {
+public class InstallmentShareTable extends AbstractShareTable{
 
-	private static final long serialVersionUID = 1L;
 	
 	@OneToOne(mappedBy = "shareTable")
 	private Installment installment;
 
 	public InstallmentShareTable() {
-		super();
+		initFields();
 	}
 
 	public Installment getInstallment() {

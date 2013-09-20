@@ -6,6 +6,10 @@ import javax.resource.spi.IllegalStateException;
 @Entity
 public class AgreementShareTable extends AbstractShareTable {
 
+	public AgreementShareTable() {
+		initFields();
+	}
+
 	@Override
 	public boolean validate() throws IllegalStateException {
 		if (!areGoodsSharesConsistent()) {

@@ -53,6 +53,12 @@ public class Agreement {
 	private Calendar deadlineDate;
 
 	private String note;
+	
+	
+
+	public Agreement() {
+		shareTable = new AgreementShareTable();
+	}
 
 	public int getId() {
 		return id;
@@ -135,14 +141,7 @@ public class Agreement {
 	}
 
 	public void setShareTable(AgreementShareTable shareTable) {
-
-		// TODO modificare secondo quanto fatto in validate()
-		try {
-			shareTable.validate();
-			this.shareTable = shareTable;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.shareTable = shareTable;
 	}
 
 	public float getWholeAmount() {

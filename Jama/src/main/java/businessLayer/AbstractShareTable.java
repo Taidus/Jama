@@ -1,5 +1,6 @@
 package businessLayer;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,6 +40,11 @@ public abstract class AbstractShareTable {
 
 	// da vedere il sistema per il passaggio del messaggio di errore
 	public abstract boolean validate() throws IllegalStateException;
+	public void initFields(){
+		
+		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
+		
+	}
 
 	public float getAtheneumCapitalBalance() {
 		return atheneumCapitalBalance;
