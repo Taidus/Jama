@@ -31,8 +31,10 @@ public class Installment implements Serializable {
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
+	
 	@OneToOne(cascade = CascadeType.PERSIST)
-	private InvoiceShareTable shareTable;
+	@JoinColumn(name="pippo")
+	private InstallmentShareTable shareTable;
 
 	public Calendar getDate() {
 		return date;
@@ -122,11 +124,11 @@ public class Installment implements Serializable {
 		this.note = note;
 	}
 
-	public InvoiceShareTable getShareTable() {
+	public InstallmentShareTable getShareTable() {
 		return shareTable;
 	}
 
-	public void setShareTable(InvoiceShareTable shareTable) {
+	public void setShareTable(InstallmentShareTable shareTable) {
 		this.shareTable = shareTable;
 	}
 

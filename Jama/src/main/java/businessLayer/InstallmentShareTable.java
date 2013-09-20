@@ -12,17 +12,15 @@ import javax.resource.spi.IllegalStateException;
  * 
  */
 @Entity
-public class InvoiceShareTable extends AbstractShareTable implements
+public class InstallmentShareTable extends AbstractShareTable implements
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	
 	@OneToOne(mappedBy = "shareTable")
 	private Installment installment;
 
-	public InvoiceShareTable() {
+	public InstallmentShareTable() {
 		super();
 	}
 
