@@ -65,6 +65,10 @@
             <h:inputText id="projectNumber" value="#{agreementWizardPCB.agreement.CIA_projectNumber}" label="#{msgs.newAgrProjectNumber}" required="true" />
             <rich:message for="projectNumber" />
             
+            <h:outputText value="#{msgs.newAgrInventory}:" />
+            <h:inputText id="inventoryNumber" value="#{agreementWizardPCB.agreement.inventoryNumber}" label="#{msgs.newAgrInventory}" required="true" />
+            <rich:message for="inventoryNumber" />
+            
             <h:outputText value="#{msgs.newAgrTaxableAmount}:" />
             <h:inputText id="taxableAmount" value="#{agreementWizardPCB.agreement.wholeTaxableAmount}" label="#{msgs.newAgrTaxableAmount}" required="true" />
             <rich:message for="taxableAmount" />
@@ -98,12 +102,13 @@
         
         <div class="navPanel" style="width: 100%;">
         
+        	<h:commandButton action="cancel" value="Annulla" immediate="true"/>
+        	
             <a4j:commandButton style="float:right" value="Next &gt;&gt;">
                 <rich:toggleControl targetItem="@next" event="click" />
                 <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
             </a4j:commandButton>
             
-            <h:commandButton action="cancel" value="Annulla" immediate="true"/>
             
         </div>
         

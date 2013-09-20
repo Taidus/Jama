@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import businessLayer.Agreement;
+import businessLayer.AgreementShareTable;
 import daoLayer.AgreementDaoBean;
 
 @Named("agreementWizardPCB")
@@ -24,10 +25,13 @@ public class agreementWizardPageControllerBean implements Serializable {
 	
 	@EJB private AgreementDaoBean agreementDao;
 	@Inject private Conversation conversation;
+	
 	private Agreement agreement;
+	private AgreementShareTable agreementShareTable;
 
 	public agreementWizardPageControllerBean() {
 		this.agreement = new Agreement();
+		this.agreementShareTable = new AgreementShareTable();
 	}
 	
 	@PostConstruct
@@ -39,6 +43,9 @@ public class agreementWizardPageControllerBean implements Serializable {
 		return agreement;
 	}
 	
+	public AgreementShareTable getAgreementShareTable() {
+		return agreementShareTable;
+	}	
 		
 	public Conversation getConversation() {
 		return conversation;
