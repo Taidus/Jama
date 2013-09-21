@@ -47,16 +47,27 @@
 	        <h:outputText value="#{msgs.newInstInvoiceDate}:" />
             <rich:calendar id="invoiceDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
             <rich:message for="invoiceDate" />
-	        
-	        
-            
-            //2 radio
             
             
-            
-            
-            
-            
+            <h:outputText value="#{msgs.newInstPaidInvoice}" />
+            <h:selectOneRadio id="paidInvoice"
+                      value="#{installmentWizardPCB.installment.paidInvoice}">
+        	<f:selectItem id="paidInvoiceYes" itemLabel="#{msgs.yes}" itemValue="1" />
+        	<f:selectItem id="paidInvoiceNo" itemLabel="#{msgs.no}" itemValue="2" />
+    		</h:selectOneRadio>
+    		<br/>
+    		
+    		<h:outputText value="#{msgs.newInstReportRequired}" />
+            <h:selectOneRadio id="reportRequired"
+                      value="#{installmentWizardPCB.installment.reportRequired}">
+        	<f:selectItem id="reportRequiredYes" itemLabel="#{msgs.yes}" itemValue="1" />
+        	<f:selectItem id="reportRequiredNo" itemLabel="#{msgs.no}" itemValue="2" />
+    		</h:selectOneRadio>
+    		<br/>
+    		
+    		<h:outputText value="#{msgs.newInstNote}:" />
+            <h:inputTextarea id="notes" cols="20" rows="4"  value="#{installmentWizardPCB.installment.note}" label="#{msgs.newInstNote}" required="false" />
+            <rich:message for="notes" />          
             
         </h:panelGrid>
         
@@ -67,7 +78,7 @@
         	
             <a4j:commandButton style="float:right" value="Next &gt;&gt;">
                 <rich:toggleControl targetItem="@next" event="click" />
-                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
+                <input type="hidden" name="cid" value='#{installmentWizardPCB.conversation.id}' />
             </a4j:commandButton>
             
             

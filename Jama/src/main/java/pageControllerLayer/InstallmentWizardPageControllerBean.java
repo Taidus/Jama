@@ -2,6 +2,7 @@ package pageControllerLayer;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -26,7 +27,11 @@ public class InstallmentWizardPageControllerBean implements Serializable {
 
 	public InstallmentWizardPageControllerBean() {
 		installment = new Installment();
-		conversation.begin();
+	}
+	
+	@PostConstruct
+	public void init(){
+		conversation.begin();		
 	}
 
 	public Conversation getConversation() {
