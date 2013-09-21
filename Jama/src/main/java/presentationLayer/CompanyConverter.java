@@ -7,21 +7,20 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
-import daoLayer.ChiefScientistDaoBean;
+import daoLayer.CompanyDaoBean;
 
 @Named
 @RequestScoped
-public class ChiefConverter implements Converter {
+public class CompanyConverter implements Converter {
 	
-	@EJB private ChiefScientistDaoBean chiefDaoBean;
-	
-	public ChiefConverter() {}
+	@EJB private CompanyDaoBean companyDao;
+
+	public CompanyConverter() {}
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
-		int id = Integer.parseInt(value);
-		return chiefDaoBean.getById(id);
+		return companyDao.getById(Integer.parseInt(value));
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import businessLayer.ChiefScientist;
 import businessLayer.Company;
 
 @Named("agreementWizPB")
-@SessionScoped
+@SessionScoped //FIXME
 public class AgreementWizardPresentationBean implements Serializable{
 	/**
 	 */

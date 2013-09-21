@@ -29,8 +29,13 @@
             <h:outputText value="#{msgs.newAgrChief}:" />
             <h:selectOneMenu id="chief" value="#{agreementWizardPCB.agreement.chief}" label="#{msgs.newAgrChief}" required="true">
             	<f:selectItems value="#{agreementWizPB.chiefItems}" />
+            	<f:converter binding="#{chiefConverter}" />
             </h:selectOneMenu> 
             <rich:message for="chief" />
+            
+            <h:commandButton value="#{msgs.add}">
+			        <rich:componentControl target="chiefPopup" operation="show" />
+			</h:commandButton>
  
             <h:outputText value="#{msgs.newAgrContact}:" />
             <h:inputText id="contact" value="#{agreementWizardPCB.agreement.contactPerson}" label="#{msgs.newAgrContact}" required="true" />
@@ -100,6 +105,20 @@
             
             
         </div>
+        
+		<rich:popupPanel id="chiefPopup" modal="false" moveable="true" resizeable="true">
+			<f:facet name="header">
+	            <h:outputText value="#{msgs.newAgrAddChiefPopupTitle}" />
+	        </f:facet>
+	        
+	        <f:facet name="controls">
+	            <h:outputLink value="#" onclick="#{rich:component('chiefPopup')}.hide(); return false;">
+	                X
+	            </h:outputLink>
+	        </f:facet>
+	        
+	        <p>Al momento non è possibile aggiungere nuovi responsabili!</p> 
+		</rich:popupPanel>
         
         
     </div>
