@@ -1,7 +1,11 @@
 package daoLayer;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 
 import businessLayer.Company;
@@ -33,6 +37,12 @@ public class CompanyDaoBean {
 
 		return em.find(Company.class, id);
 
+	}
+	
+	public List<Company> getAll(){
+		
+		return em.createNamedQuery("Company.findAll",Company.class).getResultList();
+		
 	}
 
 }

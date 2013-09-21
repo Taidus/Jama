@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+.col1 { vertical-align:top; }
+	        .wizard { }
+	        .wform td { vertical-align:top; }
+	        .wfcol1 { text-align: right; white-space:nowrap;}
+	        .wfcol2 { }
+	        .wfcol3 { }
+	        .s1row td { height:30px; }
+	        .rich-message { color:red; }
+	 
+	        .navPanel {
+	        position:absolute;
+	        bottom:0;
+	        height:23px;
+	        margin:0;
+	        padding:2px;
+	        }

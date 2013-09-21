@@ -1,5 +1,7 @@
 package daoLayer;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,9 +33,17 @@ public class DepartmentDaoBean {
 
 	}
 	
+	
 	public Department getById(int id){
 		
 		return em.find(Department.class,id);
+	}
+	
+	
+	public List<Department> getAll(){
+		
+		return em.createNamedQuery("Department.findAll",Department.class).getResultList();
+		
 	}
 
 }

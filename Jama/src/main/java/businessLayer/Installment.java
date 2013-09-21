@@ -21,6 +21,7 @@ public class Installment implements Serializable {
 	private Calendar date;
 	private float amount;
 	private float iva;
+	private int voucherNumber;
 	@Temporal(TemporalType.DATE)
 	private Calendar voucherDate;
 	private int ivaVoucherNumber;
@@ -31,9 +32,9 @@ public class Installment implements Serializable {
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
-	
+
 	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="pippo")
+	@JoinColumn(name = "pippo")
 	private InstallmentShareTable shareTable;
 
 	public Calendar getDate() {
@@ -58,6 +59,14 @@ public class Installment implements Serializable {
 
 	public void setIva(float iva) {
 		this.iva = iva;
+	}
+
+	public int getVoucherNumber() {
+		return voucherNumber;
+	}
+
+	public void setVoucherNumber(int voucherNumber) {
+		this.voucherNumber = voucherNumber;
 	}
 
 	public Calendar getVoucherDate() {

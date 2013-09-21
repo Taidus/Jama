@@ -4,8 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+@NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c")
+})
 public class ChiefScientist {
 	
 	@Id
@@ -33,7 +38,8 @@ public class ChiefScientist {
 
 	@Override
 	public String toString() {
-		return name + " " + surname;
+		return "ChiefScientist [id=" + id + ", name=" + name + ", surname="
+				+ surname + "]";
 	}
 
 	@Override

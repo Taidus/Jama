@@ -4,8 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+@NamedQuery(name="Department.findAll",query="SELECT d FROM Department d")
+})
 public class Department {
 
 	@Id
@@ -29,6 +34,12 @@ public class Department {
 	}
 	public int getId() {
 		return id;
+	}
+	
+	@Override
+	public String toString() {
+		return "Department [id=" + id + ", code=" + code + ", name=" + name
+				+ "]";
 	}
 	
 	

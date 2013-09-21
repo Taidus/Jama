@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+ 
+    <div style="position: relative;">
+    
+        <h:panelGrid rowClasses="s1row" columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
+        
+        	<h:outputText value="#{msgs.newInstDate}:" />
+            <rich:calendar id="date" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
+            <rich:message for="date" />
+            
+            <h:outputText value="#{msgs.newInstAmount}:" />
+	        <h:inputText id="amount" value="#{installmentWizardPCB.installment.amount}" 
+	        	label="#{msgs.newInstAmount}" required="true" />
+	        <rich:message for="amount" />
+	        
+	        <h:outputText value="#{msgs.newInstIva}:" />
+            <h:inputText id="iva" value="#{installmentWizardPCB.installment.iva}" label="#{msgs.newInstIva}" required="true">
+            </h:inputText>
+            <rich:message for="iva" />
+            
+            <h:outputText value="#{msgs.newInstVoucherNumber}:" />
+	        <h:inputText id="voucherNumber" value="#{installmentWizardPCB.installment.voucherNumber}" 
+	        	label="#{msgs.newInstVoucherNumber}" required="true" />
+	        <rich:message for="voucherNumber" />
+	        
+	        <h:outputText value="#{msgs.newInstVoucherDate}:" />
+            <rich:calendar id="voucherDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
+            <rich:message for="voucherDate" />
+            
+            <h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
+	        <h:inputText id="ivaVoucherNumber" value="#{installmentWizardPCB.installment.ivaVoucherNumber}" 
+	        	label="#{msgs.newInstVoucherNumber}" required="true" />
+	        <rich:message for="ivaVoucherNumber" />
+	        
+	        <h:outputText value="#{msgs.newInstPendingNumber}:" />
+	        <h:inputText id="pendingNumber" value="#{installmentWizardPCB.installment.pendingNumber}" 
+	        	label="#{msgs.newInstPendingNumber}" required="true" />
+	        <rich:message for="pendingNumber" />
+	        
+	        <h:outputText value="#{msgs.newInstInvoiceNumber}:" />
+	        <h:inputText id="invoiceNumber" value="#{installmentWizardPCB.installment.invoiceNumber}" 
+	        	label="#{msgs.newInstInvoiceNumber}" required="true" />
+	        <rich:message for="invoiceNumber" />
+	        
+	        <h:outputText value="#{msgs.newInstInvoiceDate}:" />
+            <rich:calendar id="invoiceDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
+            <rich:message for="invoiceDate" />
+	        
+	        
+            
+            //2 radio
+            
+            
+            
+            
+            
+            
+            
+        </h:panelGrid>
+        
+        
+        <div class="navPanel" style="width: 100%;">
+        
+        	<h:commandButton action="cancel" value="Annulla" immediate="true"/>
+        	
+            <a4j:commandButton style="float:right" value="Next &gt;&gt;">
+                <rich:toggleControl targetItem="@next" event="click" />
+                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
+            </a4j:commandButton>
+            
+            
+        </div>
+        
+        
+    </div>
+</ui:composition>

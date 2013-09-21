@@ -10,17 +10,19 @@ import javax.inject.Named;
 
 import daoLayer.InstallmentDaoBean;
 import businessLayer.Installment;
+import businessLayer.InstallmentShareTable;
 
 @Named("installmentWizardPCB")
 @ConversationScoped
-public class InstallmentWizardPageControllerBean implements Serializable{
+public class InstallmentWizardPageControllerBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Inject	
+	@Inject
 	private Conversation conversation;
 	@EJB
 	private InstallmentDaoBean installmentDao;
 	private Installment installment;
+	private InstallmentShareTable installmentShareTable;
 
 	public InstallmentWizardPageControllerBean() {
 		installment = new Installment();
@@ -34,15 +36,20 @@ public class InstallmentWizardPageControllerBean implements Serializable{
 	public Installment getInstallment() {
 		return installment;
 	}
-	
-	public void save(){
+
+	public InstallmentShareTable getInstallmentShareTable() {
+		return installmentShareTable;
+	}
+
+	public void setInstallmentShareTable(
+			InstallmentShareTable installmentShareTable) {
+		this.installmentShareTable = installmentShareTable;
+	}
+
+	public void save() {
 		installmentDao.create(installment);
 		conversation.end();
-		
+
 	}
-	
-	
-	
-	
 
 }
