@@ -53,8 +53,11 @@ public class InstallmentWizardPageControllerBean implements Serializable {
 
 	public void save() {
 		installmentDao.create(installment);
+		close();
+	}
+	
+	public void close(){
 		conversation.end();
-
 	}
 
 }

@@ -13,6 +13,8 @@ import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
 import daoLayer.AgreementDaoBean;
 
+
+
 @Named("agreementWizardPCB")
 @ConversationScoped
 public class AgreementWizardPageControllerBean implements Serializable {
@@ -53,6 +55,10 @@ public class AgreementWizardPageControllerBean implements Serializable {
 
 	public void save(){
 		agreementDao.create(agreement);
+		close();
+	}
+	
+	public void close(){
 		conversation.end();
 	}
 	

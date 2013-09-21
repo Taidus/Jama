@@ -18,6 +18,7 @@ public class ChiefConverter implements Converter {
 	public ChiefConverter() {}
 
 	@Override
+	
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
 		int id = Integer.parseInt(value);

@@ -117,7 +117,24 @@
 	            </h:outputLink>
 	        </f:facet>
 	        
-	        <p>Al momento non è possibile aggiungere nuovi responsabili!</p> 
+	        <h:panelGrid columns="3" columnClasses="addChiefCol1,addChiefCol2,addChiefCol3">
+	        	<h:outputText value="#{msgs.name}:" />
+	            <h:inputText id="chiefName" value="#{chiefPopupPCB.chief.name}" label="#{msgs.name}" required="true" />
+	            <rich:message for="chiefName" />
+	            
+	            <h:outputText value="#{msgs.surname}:" />
+	            <h:inputText id="chiefSurname" value="#{chiefPopupPCB.chief.surname}" label="#{msgs.surname}" required="true" />
+	            <rich:message for="chiefSurname" />
+	        </h:panelGrid>
+	        
+	        <div class="navPanel" style="width: 100%;">
+        
+	        	<h:commandButton onclick="#{rich:component('chiefPopup')}.hide(); return false" value="Annulla" immediate="true"/>
+	        	<a4j:commandButton onclick="#{chiefPopupPCB.save()}; #{rich:component('chiefPopup')}.hide(); return false"
+	        		value="#{msgs.save}" style="float: right">
+	        	</a4j:commandButton>
+            
+        	</div>
 		</rich:popupPanel>
         
         
