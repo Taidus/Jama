@@ -31,4 +31,10 @@ public class InstallmentDaoBean {
 	public InstallmentDaoBean() {
 	}
 
+	public Installment getById(int id) {
+
+		return em.find(Installment.class, id);
+
+	}
+
 }

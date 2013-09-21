@@ -30,5 +30,10 @@ public class DepartmentDaoBean {
 		}
 
 	}
+	
+	public Department getById(int id){
+		
+		return em.find(Department.class,id);
+	}
 
 }

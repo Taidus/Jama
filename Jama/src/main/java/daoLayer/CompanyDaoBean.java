@@ -27,6 +27,12 @@ public class CompanyDaoBean {
 			em.remove(c);
 		}
 
-	};
+	}
+
+	public Company getById(int id) {
+
+		return em.find(Company.class, id);
+
+	}
 
 }

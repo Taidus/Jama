@@ -21,15 +21,21 @@ public class ChiefScientistDaoBean {
 		return chief;
 
 	}
-	
-	public void delete(int id){
-		
-		ChiefScientist chief = em.find(ChiefScientist.class,id);
-		if(chief!=null){
-			
+
+	public void delete(int id) {
+
+		ChiefScientist chief = em.find(ChiefScientist.class, id);
+		if (chief != null) {
+
 			em.remove(chief);
 		}
-		
+
+	}
+
+	public ChiefScientist getById(int id) {
+
+		return em.find(ChiefScientist.class, id);
+
 	}
 
 }
