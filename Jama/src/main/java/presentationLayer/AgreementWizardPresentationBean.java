@@ -19,7 +19,11 @@ public class AgreementWizardPresentationBean implements Serializable{
 	
 	public SelectItem[] getAgreementTypeItems(){
 		AgreementType[] types = AgreementType.values();
-		return arrayToSelectItems(types);
+		SelectItem[] result = new SelectItem[types.length];
+		for(int i=0; i< types.length; i++){
+			result[i] = new SelectItem(types[i], types[i].toString());
+		}
+		return result;
 	}
 	
 	public SelectItem[] getChiefItems(){
@@ -32,7 +36,11 @@ public class AgreementWizardPresentationBean implements Serializable{
 		chiefs[1].setName("Enrico");
 		chiefs[1].setSurname("Vicario");
 		
-		return arrayToSelectItems(chiefs);
+		SelectItem[] result = new SelectItem[chiefs.length];
+		for(int i=0; i< chiefs.length; i++){
+			result[i] = new SelectItem(chiefs[i].getId(), chiefs[i].toString());
+		}
+		return result;
 	}
 	
 	public SelectItem[] getCompanyItems(){
@@ -43,13 +51,9 @@ public class AgreementWizardPresentationBean implements Serializable{
 		companies[1] = new Company();
 		companies[1].setName("Microsoft");
 		
-		return arrayToSelectItems(companies);
-	}
-	
-	private <T> SelectItem[] arrayToSelectItems(T[] array){
-		SelectItem[] result = new SelectItem[array.length];
-		for(int i=0; i< array.length; i++){
-			result[i] = new SelectItem(array[i], array[i].toString());
+		SelectItem[] result = new SelectItem[companies.length];
+		for(int i=0; i< companies.length; i++){
+			result[i] = new SelectItem(companies[i].getId(), companies[i].toString());
 		}
 		return result;
 	}
