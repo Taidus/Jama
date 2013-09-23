@@ -34,7 +34,7 @@ public class InstallmentShareTable extends AbstractShareTable{
 			throw new IllegalStateException(
 					"Le quote del Personale non sono corrette");
 		}
-		if (areMainValuesConsistent()) {
+		if (!areMainValuesConsistent()) {
 			throw new IllegalStateException("Le quote non sono corrette");
 		}
 		return true;
