@@ -1,142 +1,116 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j"
-    xmlns:rich="http://richfaces.org/rich">
- 
-    <div style="position: relative;">
-    
-        <h:panelGrid rowClasses="s1row" columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
-            
-            <h:outputText value="#{msgs.newAgrTitle}:" />
-            <h:inputTextarea id="title" cols="20" rows="4"   value="#{agreementWizardPCB.agreement.title}" label="#{msgs.newAgrTitle}" required="true" />
-            <rich:message for="title" />
-            
-            <h:outputText value="#{msgs.newAgrProtocolNumber}:" />
-            <h:inputText id="protocolNumber" value="#{agreementWizardPCB.agreement.protocolNumber}" label="#{msgs.newAgrProtocolNumber}" required="true" >
-            	<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6" integerOnly="true"/>
-            </h:inputText>
-            <rich:message for="protocolNumber" />
-            
-            <h:outputText value="#{msgs.newAgrDepartment}:" />
-            <h:outputText value="#{agreementWizardPCB.agreement.department}" />
-            <br/>
-            
-            <h:outputText value="#{msgs.newAgrType}:" />
-            <h:selectOneMenu id="type" value="#{agreementWizardPCB.agreement.type}" label="#{msgs.newAgrType}" required="true">
-            	<f:selectItems value="#{agreementWizPB.agreementTypeItems}" />
-            </h:selectOneMenu> 
-            <rich:message for="type" />
-            
-            <h:outputText value="#{msgs.newAgrChief}:" />
-            <h:selectOneMenu id="chief" value="#{agreementWizardPCB.agreement.chief}" label="#{msgs.newAgrChief}" required="true">
-            	<f:selectItems value="#{agreementWizPB.chiefItems}" />
-            	<f:converter binding="#{chiefConverter}" />
-            </h:selectOneMenu> 
-            <rich:message for="chief" />
-            
-            <h:commandButton value="#{msgs.add}">
-			        <rich:componentControl target="chiefPopup" operation="show" />
-			</h:commandButton>
- 
-            <h:outputText value="#{msgs.newAgrContact}:" />
-            <h:inputText id="contact" value="#{agreementWizardPCB.agreement.contactPerson}" label="#{msgs.newAgrContact}" required="true" />
-            <rich:message for="contact" />
-            
-            <h:outputText value="#{msgs.newAgrCompany}:" />
-            <h:selectOneMenu id="company" value="#{agreementWizardPCB.agreement.company}" label="#{msgs.newAgrCompany}" required="true">
-            	<f:selectItems value="#{agreementWizPB.companyItems}" />
-			</h:selectOneMenu> 
-            <rich:message for="company" />
-            
-            <h:outputText value="#{msgs.newAgrProjectNumber}:" />
-            <h:inputText id="projectNumber" value="#{agreementWizardPCB.agreement.CIA_projectNumber}" label="#{msgs.newAgrProjectNumber}" required="true" />
-            <rich:message for="projectNumber" />
-            
-            <h:outputText value="#{msgs.newAgrInventory}:" />
-            <h:inputText id="inventoryNumber" value="#{agreementWizardPCB.agreement.inventoryNumber}" label="#{msgs.newAgrInventory}" required="true" />
-            <rich:message for="inventoryNumber" />
-            
-            <h:outputText value="#{msgs.newAgrTaxableAmount}:" />
-            <h:inputText id="taxableAmount" value="#{agreementWizardPCB.agreement.wholeTaxableAmount}" label="#{msgs.newAgrTaxableAmount}" required="true">
-            	<f:convertNumber/>
-            	<f:ajax render="amount" />
-            </h:inputText>
-            <rich:message for="taxableAmount" />
-            
-            <h:outputText value="#{msgs.newAgrIva}:" />
-            <h:inputText id="iva" value="#{agreementWizardPCB.agreement.IVA_amount}" label="#{msgs.newAgrIva}" required="true">
-            	<f:convertNumber/>
-            	<f:ajax render="amount" />
-            </h:inputText>
-            <rich:message for="iva" />
-            
-            <h:outputText value="#{msgs.newAgrWholeAmount}:" />
-            <h:inputText id="amount" value="#{agreementWizardPCB.agreement.wholeAmount}" readonly="true" >
-            	<f:convertNumber type="currency"/>
-            </h:inputText>
-            <br/>
-            
-            <h:outputText value="#{msgs.newAgrApproval}:" />
-            <rich:calendar id="approvalDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
-            <rich:message for="approvalDate" />
-            
-            <h:outputText value="#{msgs.newAgrBegin}:" />
-            <rich:calendar id="beginDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
-            <rich:message for="beginDate" />
-            
-            <h:outputText value="#{msgs.newAgrEnd}:" />
-            <rich:calendar id="deadlineDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
-            <rich:message for="deadlineDate" />
-            
-            <h:outputText value="#{msgs.newAgrNote}:" />
-            <h:inputTextarea id="notes" cols="20" rows="4"  value="#{agreementWizardPCB.agreement.note}" label="#{msgs.newAgrNote}" required="false" />
-            <rich:message for="notes" />
-            
-        </h:panelGrid>
-        
-        
-        <div class="navPanel" style="width: 100%;">
-        
-        	<h:commandButton action="cancel" value="Annulla" immediate="true"/>
-        	
-            <a4j:commandButton style="float:right" value="Next &gt;&gt;">
-                <rich:toggleControl targetItem="@next" event="click" />
-                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
-            </a4j:commandButton>
-            
-            
-        </div>
-        
-		<rich:popupPanel id="chiefPopup" modal="false" moveable="true" resizeable="true">
-			<f:facet name="header">
-	            <h:outputText value="#{msgs.newAgrAddChiefPopupTitle}" />
-	        </f:facet>
-	        
-	        <f:facet name="controls">
-	            <h:outputLink value="#" onclick="#{rich:component('chiefPopup')}.hide(); return false;">
-	                X
-	            </h:outputLink>
-	        </f:facet>
-	        
-	        <h:panelGrid columns="3" columnClasses="addChiefCol1,addChiefCol2,addChiefCol3">
-	        	<h:outputText value="#{msgs.name}:" />
-	            <h:inputText id="chiefName" value="#{chiefPopupPCB.chief.name}" label="#{msgs.name}" required="true" />
-	            <rich:message for="chiefName" />
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+	<p:tab id="tabDati" title="Dati">
+	
+		<p:panel header="Tabella dei dati generali">
+		      
+		    <h:panelGrid columns="3" columnClasses="label, value, errorMessage" styleClass="grid">
+		    
+				<h:outputText value="#{msgs.newAgrTitle}:" />
+	            <h:inputTextarea id="title" cols="20" rows="4"   value="#{agreementWizardPCB.agreement.title}" label="#{msgs.newAgrTitle}" required="true" />
+	            <h:message for="title" />
 	            
-	            <h:outputText value="#{msgs.surname}:" />
-	            <h:inputText id="chiefSurname" value="#{chiefPopupPCB.chief.surname}" label="#{msgs.surname}" required="true" />
-	            <rich:message for="chiefSurname" />
-	        </h:panelGrid>
-	        
-	        <div class="navPanel" style="width: 100%;">
-        
-	        	<h:commandButton onclick="#{rich:component('chiefPopup')}.hide(); return false" value="Annulla" immediate="true"/>
-	        	<a4j:commandButton onclick="#{chiefPopupPCB.save()}; #{rich:component('chiefPopup')}.hide(); return false"
-	        		value="#{msgs.save}" style="float: right">
-	        	</a4j:commandButton>
-            
-        	</div>
-		</rich:popupPanel>
-        
-        
-    </div>
+	            <h:outputText value="#{msgs.newAgrProtocolNumber}:" />
+	            <h:inputText id="protocolNumber" value="#{agreementWizardPCB.agreement.protocolNumber}" label="#{msgs.newAgrProtocolNumber}" required="true" >
+	            	<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6" integerOnly="true"/>
+	            </h:inputText>
+	            <h:message class="errorMessage" for="protocolNumber" />
+	            
+	            <h:outputText value="#{msgs.newAgrDepartment}:" />
+	            <h:outputText value="#{agreementWizardPCB.agreement.department}" />
+	            <br/>
+	            
+	            <h:outputText value="#{msgs.newAgrType}:" />
+	            <h:selectOneMenu id="type" value="#{agreementWizardPCB.agreement.type}" label="#{msgs.newAgrType}" required="true">
+	            	<f:selectItems value="#{agreementWizPB.agreementTypeItems}" />
+	            </h:selectOneMenu>
+	            <h:message class="errorMessage" for="type" />
+	            
+	            <ui:remove>
+	            
+	            <h:outputText value="#{msgs.newAgrChief}:" />
+	            <h:selectOneMenu id="chief" value="#{agreementWizardPCB.agreement.chief}" label="#{msgs.newAgrChief}" required="true">
+	            	<f:selectItems value="#{agreementWizPB.chiefItems}" />
+	            	<f:converter binding="#{chiefConverter}" />
+	            </h:selectOneMenu> 
+	            <h:message class="errorMessage" for="chief" />
+	            
+	            <h:commandButton value="#{msgs.add}">
+				        
+				</h:commandButton>
+	 
+	            <h:outputText value="#{msgs.newAgrContact}:" />
+	            <h:inputText id="contact" value="#{agreementWizardPCB.agreement.contactPerson}" label="#{msgs.newAgrContact}" required="true" />
+	            <h:message class="errorMessage" for="contact" />
+	            
+	            <h:outputText value="#{msgs.newAgrCompany}:" />
+	            <h:selectOneMenu id="company" value="#{agreementWizardPCB.agreement.company}" label="#{msgs.newAgrCompany}" required="true">
+	            	<f:selectItems value="#{agreementWizPB.companyItems}" />
+				</h:selectOneMenu> 
+	            <h:message class="errorMessage" for="company" />
+	            
+	            </ui:remove>
+	            
+	            <h:outputText value="#{msgs.newAgrProjectNumber}:" />
+	            <h:inputText id="projectNumber" value="#{agreementWizardPCB.agreement.CIA_projectNumber}" label="#{msgs.newAgrProjectNumber}" required="true" />
+	            <h:message class="errorMessage" for="projectNumber" />
+	            
+	            <h:outputText value="#{msgs.newAgrInventory}:" />
+	            <h:inputText id="inventoryNumber" value="#{agreementWizardPCB.agreement.inventoryNumber}" label="#{msgs.newAgrInventory}" required="true" />
+	            <h:message class="errorMessage" for="inventoryNumber" />
+	            
+	            <h:outputText value="#{msgs.newAgrTaxableAmount}:" />
+	            <h:inputText id="taxableAmount" value="#{agreementWizardPCB.agreement.wholeTaxableAmount}" label="#{msgs.newAgrTaxableAmount}" required="true">
+	            	<f:convertNumber/>
+	            	<f:ajax render="amount" />
+	            </h:inputText>
+	            <h:message class="errorMessage" for="taxableAmount" />
+	            
+	            <h:outputText value="#{msgs.newAgrIva}:" />
+	            <h:inputText id="iva" value="#{agreementWizardPCB.agreement.IVA_amount}" label="#{msgs.newAgrIva}" required="true">
+	            	<f:convertNumber/>
+	            	<f:ajax render="amount" />
+	            </h:inputText>
+	            <h:message class="errorMessage" for="iva" />
+	            
+	            <h:outputText value="#{msgs.newAgrWholeAmount}:" />
+	            <h:inputText id="amount" value="#{agreementWizardPCB.agreement.wholeAmount}" readonly="true" >
+	            	<f:convertNumber type="currency"/>
+	            </h:inputText>
+	            <br/>
+	            
+	            <h:outputText value="#{msgs.newAgrApproval}:" />
+	            <p:calendar id="approvalDate" pattern="dd/MM/yyyy" showButtonPanel="true" showOtherMonths="true" required="true">
+	            	<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+	            </p:calendar>
+	            <h:message class="errorMessage" for="approvalDate" />
+	            
+	            <h:outputText value="#{msgs.newAgrBegin}:" />
+	            <p:calendar id="beginDate" pattern="dd/MM/yyyy" required="true">
+	            	<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+	            </p:calendar>
+	            <h:message class="errorMessage" for="beginDate" />
+	            
+	            <h:outputText value="#{msgs.newAgrEnd}:" />
+	            <p:calendar id="deadlineDate" pattern="dd/MM/yyyy" required="true">
+	            	<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+	            </p:calendar>
+	            <h:message class="errorMessage" for="deadlineDate" />
+	            
+	            <h:outputText value="#{msgs.newAgrNote}:" />
+	            <h:inputTextarea id="notes" cols="20" rows="4"  value="#{agreementWizardPCB.agreement.note}" label="#{msgs.newAgrNote}" required="false" />
+	            <h:message class="errorMessage" for="notes" />
+		  
+		    </h:panelGrid>
+		    
+		</p:panel>
+          
+  	</p:tab> 
+	
 </ui:composition>
+
+	

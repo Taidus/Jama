@@ -24,6 +24,9 @@ public class AgreementWizardPresentationBean implements Serializable{
 	@EJB private ChiefScientistDaoBean chiefDaoBean;
 	@EJB private CompanyDaoBean companyDaoBean;
 	
+	private String[] wizardPageNames = {"NewFile1", "NewFile2"};
+	private int currentPageIndex;
+	
 	public SelectItem[] getAgreementTypeItems(){
 		AgreementType[] types = AgreementType.values();
 		SelectItem[] result = new SelectItem[types.length];
@@ -34,14 +37,6 @@ public class AgreementWizardPresentationBean implements Serializable{
 	}
 	
 	public SelectItem[] getChiefItems(){
-		//FIXME initialize properly
-//		ChiefScientist[] chiefs = new ChiefScientist[2];
-//		chiefs[0] = new ChiefScientist();
-//		chiefs[0].setName("Beppe");
-//		chiefs[0].setSurname("Modica");
-//		chiefs[1] = new ChiefScientist();
-//		chiefs[1].setName("Enrico");
-//		chiefs[1].setSurname("Vicario");
 		
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		
@@ -53,12 +48,6 @@ public class AgreementWizardPresentationBean implements Serializable{
 	}
 	
 	public SelectItem[] getCompanyItems(){
-		//FIXME initialize properly
-//		Company[] companies = new Company[2];
-//		companies[0] = new Company();
-//		companies[0].setName("Apple");
-//		companies[1] = new Company();
-//		companies[1].setName("Microsoft");
 		
 		List<Company> companies = companyDaoBean.getAll();
 		
@@ -69,6 +58,28 @@ public class AgreementWizardPresentationBean implements Serializable{
 		return result;
 	}
 	
-	public AgreementWizardPresentationBean() {}
+	public AgreementWizardPresentationBean() {
+		this.currentPageIndex = 0;
+	}
+	
+	public String next(){
+		if(currentPageIndex +1 < wizardPageNames.length){
+			currentPageIndex++;
+			return wizardPageNames[currentPageIndex];
+		}
+		else{
+			return null;
+		}
+	}
+	
+	public String previous(){
+		if(currentPageIndex > 0){
+			currentPageIndex--;
+			return wizardPageNames[currentPageIndex];
+		}
+		else{
+			return null;
+		}
+	}
 
 }

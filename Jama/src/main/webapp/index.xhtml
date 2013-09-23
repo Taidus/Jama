@@ -1,18 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
 
 <h:head></h:head> 
 <h:body>
-    <rich:panel>
-        <f:facet name="header">
-        Write your own custom rich components with built-in AJAX support
-        </f:facet>
+	
+        <ui:remove><ui:include src="/NewFile1.xhtml" /></ui:remove>
+        
         <ui:include src="/resources/sections/agreementWiz.xhtml" />
-	</rich:panel>
 </h:body> 
 </html>

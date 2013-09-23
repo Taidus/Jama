@@ -1,77 +1,70 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j"
-    xmlns:rich="http://richfaces.org/rich">
- 
-    <div style="position: relative">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
     
-    	<h:panelGrid rowClasses="s1row" columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
-    	
-	    	<h:outputText value="#{msgs.newAgrCapitalBalance}:" />
-	        <h:inputText id="atheneumCapitalBalance" value="#{agreementWizardPCB.agreementShareTable.atheneumCapitalBalance}" 
-	        	label="#{msgs.newAgrCapitalBalance}" required="true" />
-	        %
-	        <rich:message for="atheneumCapitalBalance" />
-	        
-	        <h:outputText value="#{msgs.newAgrCommonBalance}:" />
-	        <h:inputText id="atheneumCommonBalance" value="#{agreementWizardPCB.agreementShareTable.atheneumCommonBalance}" 
-	        	label="#{msgs.newAgrCommonBalance}" required="true" />
-	        <rich:message for="atheneumCommonBalance" />
-	        
-	        <h:outputText value="#{msgs.newAgrPersonnel}:" />
-	        <h:inputText id="personnel" value="#{agreementWizardPCB.agreementShareTable.personnel}" label="#{msgs.newAgrPersonnel}" required="true" />
-	        <rich:message for="personnel" />
-	        
-	        <h:outputText value="#{msgs.newAgrStructures}:" />
-	        <h:inputText id="structures" value="#{agreementWizardPCB.agreementShareTable.structures}" label="#{msgs.newAgrStructures}" required="true" />
-	        <rich:message for="structures" />
-	        
-	        <h:outputText value="#{msgs.newAgrGoods}:" />
-	        <h:inputText id="goodsAndServices" value="#{agreementWizardPCB.agreementShareTable.goodsAndServices}" label="#{msgs.newAgrGoods}" required="true" />
-	        <rich:message for="goodsAndServices" />
-	        
-	        <h:outputText value="#{msgs.newAgrTrip}:" />
-	        <h:inputText id="businessTrip" value="#{agreementWizardPCB.agreementShareTable.businessTrip}" label="#{msgs.newAgrTrip}" required="true" />
-	        <rich:message for="businessTrip" />
-	        
-	        <h:outputText value="#{msgs.newAgrConsMaterials}:" />
-	        <h:inputText id="consumerMaterials" value="#{agreementWizardPCB.agreementShareTable.consumerMaterials}" 
-	        	label="#{msgs.newAgrConsMaterials}" required="true" />
-	        <rich:message for="consumerMaterials" />
-	        
-	        <h:outputText value="#{msgs.newAgrInvMaterials}:" />
-	        <h:inputText id="inventoryMaterials" value="#{agreementWizardPCB.agreementShareTable.inventoryMaterials}" 
-	        	label="#{msgs.newAgrInvMaterials}" required="true" />
-	        <rich:message for="inventoryMaterials" />
-	        
-	        <h:outputText value="#{msgs.newAgrRentals}:" />
-	        <h:inputText id="rentals" value="#{agreementWizardPCB.agreementShareTable.rentals}" label="#{msgs.newAgrRentals}" required="true" />
-	        <rich:message for="rentals" />
-	        
-	        <h:outputText value="#{msgs.newAgrContrPersonnel}:" />
-	        <h:inputText id="personnelOnContract" value="#{agreementWizardPCB.agreementShareTable.personnelOnContract}" 
-	        	label="#{msgs.newAgrContrPersonnel}" required="true" />
-	        <rich:message for="personnelOnContract" />
-	        
-	        <h:outputText value="#{msgs.newAgrOtherCosts}:" />
-	        <h:inputText id="otherCost" value="#{agreementWizardPCB.agreementShareTable.otherCost}" label="#{msgs.newAgrOtherCosts}" required="true" />
-	        <rich:message for="otherCost" />
-        
-        </h:panelGrid>
-        
-        <div class="navPanel" style="width: 100%;">
-        	
-        	<h:commandButton action="cancel" value="Annulla" immediate="true"/>
-        
-            <a4j:commandButton value="&lt;&lt;Previous" style="float:left">
-                <rich:toggleControl targetItem="@prev" event="click" />
-                <input type="hidden" name="cid" value='#{agreementWizardPCB.conversation.id}' />
-                
-            </a4j:commandButton>
-            
-            <h:commandButton value="Save" style="float:right" action="#{agreementWizardPCB.save()}">
-            </h:commandButton>
-        </div>
- 
- 
-    </div>
+    <p:tab id="tabRip" title="Passo 2">
+    	<p:panel header="Tabella di ripartizione"> 
+    		
+    		<h:panelGrid columns="3" columnClasses="label, value, errorMessage" styleClass="grid">
+    			
+
+				<h:outputText value="#{msgs.newAgrCapitalBalance}:" />
+		        <h:inputText id="atheneumCapitalBalance" value="#{agreementWizardPCB.agreementShareTable.atheneumCapitalBalance}" 
+		        	label="#{msgs.newAgrCapitalBalance}" required="true" />
+		        <h:message for="atheneumCapitalBalance" />
+		        
+		        <h:outputText value="#{msgs.newAgrCommonBalance}:" />
+		        <h:inputText id="atheneumCommonBalance" value="#{agreementWizardPCB.agreementShareTable.atheneumCommonBalance}" 
+		        	label="#{msgs.newAgrCommonBalance}" required="true" />
+		        <h:message for="atheneumCommonBalance" />
+		        
+		        <h:outputText value="#{msgs.newAgrPersonnel}:" />
+		        <h:inputText id="personnel" value="#{agreementWizardPCB.agreementShareTable.personnel}" label="#{msgs.newAgrPersonnel}" required="true" />
+		        <h:message for="personnel" />
+		        
+		        <h:outputText value="#{msgs.newAgrStructures}:" />
+		        <h:inputText id="structures" value="#{agreementWizardPCB.agreementShareTable.structures}" label="#{msgs.newAgrStructures}" required="true" />
+		        <h:message for="structures" />
+		        
+		        <h:outputText value="#{msgs.newAgrGoods}:" />
+		        <h:inputText id="goodsAndServices" value="#{agreementWizardPCB.agreementShareTable.goodsAndServices}" label="#{msgs.newAgrGoods}" required="true" />
+		        <h:message for="goodsAndServices" />
+		        
+		        <h:outputText value="#{msgs.newAgrTrip}:" />
+		        <h:inputText id="businessTrip" value="#{agreementWizardPCB.agreementShareTable.businessTrip}" label="#{msgs.newAgrTrip}" required="true" />
+		        <h:message for="businessTrip" />
+		        
+		        <h:outputText value="#{msgs.newAgrConsMaterials}:" />
+		        <h:inputText id="consumerMaterials" value="#{agreementWizardPCB.agreementShareTable.consumerMaterials}" 
+		        	label="#{msgs.newAgrConsMaterials}" required="true" />
+		        <h:message for="consumerMaterials" />
+		        
+		        <h:outputText value="#{msgs.newAgrInvMaterials}:" />
+		        <h:inputText id="inventoryMaterials" value="#{agreementWizardPCB.agreementShareTable.inventoryMaterials}" 
+		        	label="#{msgs.newAgrInvMaterials}" required="true" />
+		        <h:message for="inventoryMaterials" />
+		        
+		        <h:outputText value="#{msgs.newAgrRentals}:" />
+		        <h:inputText id="rentals" value="#{agreementWizardPCB.agreementShareTable.rentals}" label="#{msgs.newAgrRentals}" required="true" />
+		        <h:message for="rentals" />
+		        
+		        <h:outputText value="#{msgs.newAgrContrPersonnel}:" />
+		        <h:inputText id="personnelOnContract" value="#{agreementWizardPCB.agreementShareTable.personnelOnContract}" 
+		        	label="#{msgs.newAgrContrPersonnel}" required="true" />
+		        <h:message for="personnelOnContract" />
+		        
+		        <h:outputText value="#{msgs.newAgrOtherCosts}:" />
+		        <h:inputText id="otherCost" value="#{agreementWizardPCB.agreementShareTable.otherCost}" label="#{msgs.newAgrOtherCosts}" required="true" />
+		        <h:message for="otherCost" />
+	      	
+	      	</h:panelGrid>
+	      	
+	      	<p:commandButton value="#{msgs.save}" action="#{agreementWizardPCB.save()}" />
+	           
+		</p:panel>
+	       
+	</p:tab>
+
 </ui:composition>
