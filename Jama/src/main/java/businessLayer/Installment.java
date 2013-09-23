@@ -1,8 +1,7 @@
 package businessLayer;
 
 import java.io.Serializable;
-import java.util.Calendar;
-
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -18,17 +17,17 @@ public class Installment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Temporal(TemporalType.DATE)
-	private Calendar date;
+	private Date date;
 	private float amount;
 	private float iva;
 	private int voucherNumber;
 	@Temporal(TemporalType.DATE)
-	private Calendar voucherDate;
+	private Date voucherDate;
 	private int ivaVoucherNumber;
 	private int pendingNumber;
 	private int invoiceNumber;
 	@Temporal(TemporalType.DATE)
-	private Calendar invoiceDate;
+	private Date invoiceDate;
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
@@ -37,11 +36,11 @@ public class Installment implements Serializable {
 	@JoinColumn(name = "pippo")
 	private InstallmentShareTable shareTable;
 
-	public Calendar getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(Calendar date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -69,11 +68,11 @@ public class Installment implements Serializable {
 		this.voucherNumber = voucherNumber;
 	}
 
-	public Calendar getVoucherDate() {
+	public Date getVoucherDate() {
 		return voucherDate;
 	}
 
-	public void setVoucherDate(Calendar voucherDate) {
+	public void setVoucherDate(Date voucherDate) {
 		this.voucherDate = voucherDate;
 	}
 
@@ -101,11 +100,11 @@ public class Installment implements Serializable {
 		this.invoiceNumber = invoiceNumber;
 	}
 
-	public Calendar getInvoiceDate() {
+	public Date getInvoiceDate() {
 		return invoiceDate;
 	}
 
-	public void setInvoiceDate(Calendar invoiceDate) {
+	public void setInvoiceDate(Date invoiceDate) {
 		this.invoiceDate = invoiceDate;
 	}
 

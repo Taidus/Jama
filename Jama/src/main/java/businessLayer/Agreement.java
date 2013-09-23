@@ -1,7 +1,6 @@
 package businessLayer;
 
-import java.util.Calendar;
-
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,13 +43,13 @@ public class Agreement {
 	private float wholeTaxableAmount;
 
 	@Temporal(TemporalType.DATE)
-	private Calendar approvalDate;
+	private Date approvalDate;
 
 	@Temporal(TemporalType.DATE)
-	private Calendar beginDate;
+	private Date beginDate;
 
 	@Temporal(TemporalType.DATE)
-	private Calendar deadlineDate;
+	private Date deadlineDate;
 
 	private String note;
 	
@@ -170,27 +169,27 @@ public class Agreement {
 		setWholeAmount();
 	}
 
-	public Calendar getApprovalDate() {
+	public Date getApprovalDate() {
 		return approvalDate;
 	}
 
-	public void setApprovalDate(Calendar approvalDate) {
+	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
 	}
 
-	public Calendar getBeginDate() {
+	public Date getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(Calendar beginDate) {
+	public void setBeginDate(Date beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public Calendar getDeadlineDate() {
+	public Date getDeadlineDate() {
 		return deadlineDate;
 	}
 
-	public void setDeadlineDate(Calendar deadlineDate) {
+	public void setDeadlineDate(Date deadlineDate) {
 		this.deadlineDate = deadlineDate;
 	}
 
