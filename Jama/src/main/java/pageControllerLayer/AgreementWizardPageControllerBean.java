@@ -34,6 +34,7 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	public AgreementWizardPageControllerBean() {
 		this.agreement = new Agreement();
 		this.agreementShareTable = new AgreementShareTable();
+		this.agreement.setShareTable(agreementShareTable);
 	}
 	
 	@PostConstruct
