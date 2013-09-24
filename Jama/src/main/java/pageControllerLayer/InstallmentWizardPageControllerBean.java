@@ -20,6 +20,7 @@ public class InstallmentWizardPageControllerBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private Conversation conversation;
+	@Inject private ShareTablePageControllerBean shareTablePCB;
 	@EJB
 	private InstallmentDaoBean installmentDao;
 	private Installment installment;
@@ -27,11 +28,15 @@ public class InstallmentWizardPageControllerBean implements Serializable {
 
 	public InstallmentWizardPageControllerBean() {
 		installment = new Installment();
+		installmentShareTable = new InstallmentShareTable();
+		installment.setShareTable(installmentShareTable);
 	}
 	
 	@PostConstruct
 	public void init(){
-		conversation.begin();		
+		conversation.begin();
+		shareTablePCB.setShareTable(installmentShareTable);
+
 	}
 
 	public Conversation getConversation() {

@@ -1,33 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-	<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-	    xmlns:rich="http://richfaces.org/rich">
-	    <br />
-	    <h:outputStylesheet library="css" name="installmentWiz.css"/>
-	    
-	    <br />
-	    
-	    <h:panelGrid width="100%" columns="2" columnClasses="col1">
-	        <rich:panel styleClass="wizard">
-	            <f:facet name="header">
-	                <h:outputText value="#{msgs.newInst}" />
-	            </f:facet>
-	            <h:form>
-	                <rich:togglePanel switchType="ajax">
-	                
-	                    <rich:togglePanelItem>
-	                        <ui:include src="/resources/sections/installmentWizData.xhtml" />
-	                    </rich:togglePanelItem>
-	                    
-	                    <rich:togglePanelItem>
-	                        <ui:include src="/resources/sections/wizShareTable.xhtml" />
-	                    </rich:togglePanelItem>
-	               
-	                </rich:togglePanel>
-	            </h:form>
-	        </rich:panel>
-	    </h:panelGrid>
-	    
-	    <br />
-	</ui:composition>
+<h:head>
+	<h:outputStylesheet name="installmentWiz.css" library="css" />
+</h:head>
+<h:body>
+
+
+	<h:panelGrid width="100%" columns="2" columnClasses="col1">
+		<h:form>
+
+			<p:growl id="growl" sticky="true" showDetail="true" />
+			<input type="hidden" name="cid"
+				value='#{installmentWizardPCB.conversation.id}' />
+
+			<p:wizard>
+
+				<ui:include src="/resources/sections/installmentWizData.xhtml" />
+
+				<ui:include src="/resources/sections/wizShareTable.xhtml" />
+				
+				<ui:include src="/resources/sections/installmentLastStep.xhtml" />
+				
+				
+
+			</p:wizard>
+
+			<h:button value="#{msgs.cancel}" outcome="/cancel"
+				immediate="true" ajax="false" />
+
+		</h:form>
+	</h:panelGrid>
+
+	<br />
+</h:body>
+</html>
+
+
+

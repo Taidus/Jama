@@ -27,6 +27,7 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	
 	@EJB private AgreementDaoBean agreementDao;
 	@Inject private Conversation conversation;
+	@Inject private ShareTablePageControllerBean shareTablePCB;
 	
 	private Agreement agreement;
 	private AgreementShareTable agreementShareTable;
@@ -39,7 +40,8 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	
 	@PostConstruct
 	public void init(){
-		conversation.begin();		
+		conversation.begin();
+		shareTablePCB.setShareTable(agreementShareTable);
 	}
 	
 	public Agreement getAgreement() {

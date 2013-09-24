@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+	<p:tab id="tabEnd" title="Passo 3">
+		<p:panel header="Empty">
+
+			<h:panelGrid columns="3" columnClasses="label, value, errorMessage"
+				styleClass="grid">
+
+
+				<h:outputText value="#{msgs.newAgrCapitalBalance}:" />
+				<br />
+				<br />
+
+			</h:panelGrid>
+			
+			<p:commandButton value="#{msgs.save}" action="#{installmentWizardPCB.save()}" ajax="false"/>
+			
+
+
+		</p:panel>
+
+	</p:tab>
+
+</ui:composition>
+
+
+

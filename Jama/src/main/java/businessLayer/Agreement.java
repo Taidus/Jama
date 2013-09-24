@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,6 +45,7 @@ public class Agreement {
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 	
+	@OneToMany(mappedBy="agreement")
 	private List<Installment> installments;
 
 	public List<Installment> getInstallments() {

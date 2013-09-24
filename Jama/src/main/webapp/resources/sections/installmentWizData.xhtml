@@ -1,89 +1,107 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j"
-    xmlns:rich="http://richfaces.org/rich">
- 
-    <div style="position: relative;">
-    
-        <h:panelGrid rowClasses="s1row" columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
-        
-        	<h:outputText value="#{msgs.newInstDate}:" />
-            <rich:calendar id="date" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
-            <rich:message for="date" />
-            
-            <h:outputText value="#{msgs.newInstAmount}:" />
-	        <h:inputText id="amount" value="#{installmentWizardPCB.installment.amount}" 
-	        	label="#{msgs.newInstAmount}" required="true" />
-	        <rich:message for="amount" />
-	        
-	        <h:outputText value="#{msgs.newInstIva}:" />
-            <h:inputText id="iva" value="#{installmentWizardPCB.installment.iva}" label="#{msgs.newInstIva}" required="true">
-            </h:inputText>
-            <rich:message for="iva" />
-            
-            <h:outputText value="#{msgs.newInstVoucherNumber}:" />
-	        <h:inputText id="voucherNumber" value="#{installmentWizardPCB.installment.voucherNumber}" 
-	        	label="#{msgs.newInstVoucherNumber}" required="true" />
-	        <rich:message for="voucherNumber" />
-	        
-	        <h:outputText value="#{msgs.newInstVoucherDate}:" />
-            <rich:calendar id="voucherDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
-            <rich:message for="voucherDate" />
-            
-            <h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
-	        <h:inputText id="ivaVoucherNumber" value="#{installmentWizardPCB.installment.ivaVoucherNumber}" 
-	        	label="#{msgs.newInstVoucherNumber}" required="true" />
-	        <rich:message for="ivaVoucherNumber" />
-	        
-	        <h:outputText value="#{msgs.newInstPendingNumber}:" />
-	        <h:inputText id="pendingNumber" value="#{installmentWizardPCB.installment.pendingNumber}" 
-	        	label="#{msgs.newInstPendingNumber}" required="true" />
-	        <rich:message for="pendingNumber" />
-	        
-	        <h:outputText value="#{msgs.newInstInvoiceNumber}:" />
-	        <h:inputText id="invoiceNumber" value="#{installmentWizardPCB.installment.invoiceNumber}" 
-	        	label="#{msgs.newInstInvoiceNumber}" required="true" />
-	        <rich:message for="invoiceNumber" />
-	        
-	        <h:outputText value="#{msgs.newInstInvoiceDate}:" />
-            <rich:calendar id="invoiceDate" datePattern="dd/MM/yyyy" popup="true" required="true"></rich:calendar>
-            <rich:message for="invoiceDate" />
-            
-            
-            <h:outputText value="#{msgs.newInstPaidInvoice}" />
-            <h:selectOneRadio id="paidInvoice"
-                      value="#{installmentWizardPCB.installment.paidInvoice}">
-        	<f:selectItem id="paidInvoiceYes" itemLabel="#{msgs.yes}" itemValue="1" />
-        	<f:selectItem id="paidInvoiceNo" itemLabel="#{msgs.no}" itemValue="2" />
-    		</h:selectOneRadio>
-    		<br/>
-    		
-    		<h:outputText value="#{msgs.newInstReportRequired}" />
-            <h:selectOneRadio id="reportRequired"
-                      value="#{installmentWizardPCB.installment.reportRequired}">
-        	<f:selectItem id="reportRequiredYes" itemLabel="#{msgs.yes}" itemValue="1" />
-        	<f:selectItem id="reportRequiredNo" itemLabel="#{msgs.no}" itemValue="2" />
-    		</h:selectOneRadio>
-    		<br/>
-    		
-    		<h:outputText value="#{msgs.newInstNote}:" />
-            <h:inputTextarea id="notes" cols="20" rows="4"  value="#{installmentWizardPCB.installment.note}" label="#{msgs.newInstNote}" required="false" />
-            <rich:message for="notes" />          
-            
-        </h:panelGrid>
-        
-        
-        <div class="navPanel" style="width: 100%;">
-        
-        	<h:commandButton action="cancel" value="Annulla" immediate="true"/>
-        	
-            <a4j:commandButton style="float:right" value="Next &gt;&gt;">
-                <rich:toggleControl targetItem="@next" event="click" />
-                <input type="hidden" name="cid" value='#{installmentWizardPCB.conversation.id}' />
-            </a4j:commandButton>
-            
-            
-        </div>
-        
-        
-    </div>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:tab id="tabDati" title="Dati">
+
+		<p:panel header="Tabella dei dati generali">
+
+			<h:panelGrid columns="3" columnClasses="label, value, errorMessage"
+				styleClass="grid">
+
+
+				<h:outputText value="#{msgs.newInstDate}:" />
+				<p:calendar id="date" datePattern="dd/MM/yyyy" required="true"
+					value="#{installmentWizardPCB.installment.date}">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</p:calendar>
+				<h:message for="date" />
+
+				<h:outputText value="#{msgs.newInstAmount}:" />
+				<h:inputText id="amount"
+					value="#{installmentWizardPCB.installment.amount}"
+					label="#{msgs.newInstAmount}" required="true">
+				</h:inputText>
+				<h:message for="amount" />
+
+				<h:outputText value="#{msgs.newInstIva}:" />
+				<h:inputText id="iva"
+					value="#{installmentWizardPCB.installment.iva}"
+					label="#{msgs.newInstIva}" required="true">
+				</h:inputText>
+				<h:message for="iva" />
+
+				<h:outputText value="#{msgs.newInstVoucherNumber}:" />
+				<h:inputText id="voucherNumber"
+					value="#{installmentWizardPCB.installment.voucherNumber}"
+					label="#{msgs.newInstVoucherNumber}" required="true" />
+				<h:message for="voucherNumber" />
+
+				<h:outputText value="#{msgs.newInstVoucherDate}:" />
+				<p:calendar id="voucherDate" datePattern="dd/MM/yyyy"
+					required="true"
+					value="#{installmentWizardPCB.installment.voucherDate}">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</p:calendar>
+				<h:message for="voucherDate" />
+
+				<h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
+				<h:inputText id="ivaVoucherNumber"
+					value="#{installmentWizardPCB.installment.ivaVoucherNumber}"
+					label="#{msgs.newInstVoucherNumber}" required="true" />
+				<h:message for="ivaVoucherNumber" />
+
+				<h:outputText value="#{msgs.newInstPendingNumber}:" />
+				<h:inputText id="pendingNumber"
+					value="#{installmentWizardPCB.installment.pendingNumber}"
+					label="#{msgs.newInstPendingNumber}" required="true" />
+				<h:message for="pendingNumber" />
+
+				<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
+				<h:inputText id="invoiceNumber"
+					value="#{installmentWizardPCB.installment.invoiceNumber}"
+					label="#{msgs.newInstInvoiceNumber}" required="true" />
+				<h:message for="invoiceNumber" />
+
+				<h:outputText value="#{msgs.newInstInvoiceDate}:" />
+				<p:calendar id="invoiceDate" datePattern="dd/MM/yyyy"
+					required="true"
+					value="#{installmentWizardPCB.installment.invoiceDate}">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</p:calendar>
+				<h:message for="invoiceDate" />
+
+
+				<h:outputText value="#{msgs.newInstPaidInvoice}" />
+				<h:selectOneRadio id="paidInvoice"
+					value="#{installmentWizardPCB.installment.paidInvoice}">
+					<f:selectItem id="paidInvoiceYes" itemLabel="#{msgs.yes}"
+						itemValue="1" />
+					<f:selectItem id="paidInvoiceNo" itemLabel="#{msgs.no}"
+						itemValue="2" />
+				</h:selectOneRadio>
+				<br />
+
+				<h:outputText value="#{msgs.newInstReportRequired}" />
+				<h:selectBooleanCheckbox
+					value="#{installmentWizardPCB.installment.reportRequired}"
+					id="reportRequired" />
+
+				<br />
+
+				<h:outputText value="#{msgs.newInstNote}:" />
+				<h:inputTextarea id="notes" cols="20" rows="4"
+					value="#{installmentWizardPCB.installment.note}"
+					label="#{msgs.newInstNote}" required="false" />
+				<h:message for="notes" />
+
+
+			</h:panelGrid>
+
+		</p:panel>
+
+	</p:tab>
+
 </ui:composition>

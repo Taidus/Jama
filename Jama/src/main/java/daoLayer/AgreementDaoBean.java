@@ -1,10 +1,13 @@
 package daoLayer;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import businessLayer.Agreement;
+import businessLayer.Department;
 
 @Stateless
 public class AgreementDaoBean {
@@ -32,6 +35,12 @@ public class AgreementDaoBean {
 
 		return em.find(Agreement.class, id);
 
+	}
+	
+	public List<Agreement> getAll(){
+		
+		return em.createNamedQuery("Agreement.findAll",Agreement.class).getResultList();
+		
 	}
 
 }

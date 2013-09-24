@@ -32,10 +32,11 @@ public class Installment implements Serializable {
 	private boolean reportRequired;
 	private String note;
 	
+	@ManyToOne
 	private Agreement agreement;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "pippo")
+	@JoinColumn
 	private InstallmentShareTable shareTable;
 
 	public Installment() {
