@@ -1,6 +1,8 @@
 package businessLayer;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +43,16 @@ public class Agreement {
 	private float wholeAmount;
 	private float IVA_amount;
 	private float wholeTaxableAmount;
+	
+	private List<Installment> installments;
+
+	public List<Installment> getInstallments() {
+		return installments;
+	}
+
+	public void setInstallments(List<Installment> installments) {
+		this.installments = installments;
+	}
 
 	@Temporal(TemporalType.DATE)
 	private Date approvalDate;

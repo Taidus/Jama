@@ -1,7 +1,9 @@
 package businessLayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -146,6 +148,22 @@ public abstract class AbstractShareTable {
 	public int getId() {
 		return id;
 	}
+	
+	
+	
+	//XXX: se per caso aggiungo un attributo alla classe e mi dimentico di metterlo qua, esplode la validazione
+	
+	//XXX: non sono sicuro che List sia giusto, forse un array è più adatto (visto come la uso di solito)
+	public List<Float> getMainValues() {
+		ArrayList<Float> mainValues = new ArrayList<Float>();
+		mainValues.add(atheneumCapitalBalance);
+		mainValues.add(atheneumCommonBalance);
+		mainValues.add(structures);
+		mainValues.add(personnel);
+		mainValues.add(goodsAndServices);
+		
+		return mainValues;
+	}
 
 	protected boolean arePersonnelSharesConsistent() {
 		Float total = Float.valueOf(0);
@@ -175,5 +193,6 @@ public abstract class AbstractShareTable {
 	protected void adjustMainValues(Float total) {
 		goodsAndServices += Float.valueOf(100) - total;
 	}
-
+	
+	
 }

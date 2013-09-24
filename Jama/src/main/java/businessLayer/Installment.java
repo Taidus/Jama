@@ -31,11 +31,16 @@ public class Installment implements Serializable {
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
+	
+	private Agreement agreement;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pippo")
 	private InstallmentShareTable shareTable;
 
+	public Installment() {
+	}
+	
 	public Date getDate() {
 		return date;
 	}
@@ -148,7 +153,16 @@ public class Installment implements Serializable {
 		return id;
 	}
 
-	public Installment() {
+	public Agreement getAgreement() {
+		return agreement;
+	}
+
+	public void setAgreement(Agreement agreement) {
+		this.agreement = agreement;
+	}
+	
+	public float getWholeAmount() {
+		return amount + amount*iva/100;
 	}
 
 }
