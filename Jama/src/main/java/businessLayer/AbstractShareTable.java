@@ -19,24 +19,24 @@ public abstract class AbstractShareTable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	private float atheneumCapitalBalance;
-	private float atheneumCommonBalance;
-	private float structures;
-	private float personnel;
+	protected float atheneumCapitalBalance;
+	protected float atheneumCommonBalance;
+	protected float structures;
+	protected float personnel;
 
 	@ElementCollection
-	private Map<ChiefScientist, Float> sharePerPersonnel;
+	protected Map<ChiefScientist, Float> sharePerPersonnel;
 
 	// XXX: un refactor per accorpare tutta sta roba in un qualche tipo di
 	// collezione rende migliore la
 	// validazione (attualmente c'è un'istruzione mostro pazzesca)
-	private float goodsAndServices;
-	private float businessTrip;
-	private float consumerMaterials;
-	private float inventoryMaterials;
-	private float rentals;
-	private float personnelOnContract;
-	private float otherCost;
+	protected float goodsAndServices;
+	protected float businessTrip;
+	protected float consumerMaterials;
+	protected float inventoryMaterials;
+	protected float rentals;
+	protected float personnelOnContract;
+	protected float otherCost;
 
 	// da vedere il sistema per il passaggio del messaggio di errore
 	public abstract boolean validate() throws IllegalStateException;
