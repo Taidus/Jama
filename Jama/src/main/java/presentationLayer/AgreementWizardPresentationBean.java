@@ -24,9 +24,6 @@ public class AgreementWizardPresentationBean implements Serializable{
 	@EJB private ChiefScientistDaoBean chiefDaoBean;
 	@EJB private CompanyDaoBean companyDaoBean;
 	
-	private String[] wizardPageNames = {"NewFile1", "NewFile2"};
-	private int currentPageIndex;
-	
 	public SelectItem[] getAgreementTypeItems(){
 		AgreementType[] types = AgreementType.values();
 		SelectItem[] result = new SelectItem[types.length];
@@ -37,7 +34,6 @@ public class AgreementWizardPresentationBean implements Serializable{
 	}
 	
 	public SelectItem[] getChiefItems(){
-		
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		
 		SelectItem[] result = new SelectItem[chiefs.size()];
@@ -58,28 +54,6 @@ public class AgreementWizardPresentationBean implements Serializable{
 		return result;
 	}
 	
-	public AgreementWizardPresentationBean() {
-		this.currentPageIndex = 0;
-	}
-	
-	public String next(){
-		if(currentPageIndex +1 < wizardPageNames.length){
-			currentPageIndex++;
-			return wizardPageNames[currentPageIndex];
-		}
-		else{
-			return null;
-		}
-	}
-	
-	public String previous(){
-		if(currentPageIndex > 0){
-			currentPageIndex--;
-			return wizardPageNames[currentPageIndex];
-		}
-		else{
-			return null;
-		}
-	}
+	public AgreementWizardPresentationBean() {}
 
 }

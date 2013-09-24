@@ -7,20 +7,24 @@ import javax.inject.Named;
 import businessLayer.ChiefScientist;
 import daoLayer.ChiefScientistDaoBean;
 
-@Named("chiefPopupPCB")
+@Named("chiefDialogPCB")
 @RequestScoped
-public class ChiefPopupPageControllerBean{
+public class ChiefDialogPageControllerBean{
 	
 	@EJB private ChiefScientistDaoBean chiefDao;
 	
 	private ChiefScientist chief;
 
-	public ChiefPopupPageControllerBean() {
+	public ChiefDialogPageControllerBean() {
 		this.chief = new ChiefScientist();
 	}
 	
 	public ChiefScientist getChief() {
 		return chief;
+	}
+	
+	public void clear(){
+		this.chief = new ChiefScientist();
 	}
 
 	public void save(){

@@ -30,19 +30,19 @@
 	            </h:selectOneMenu>
 	            <h:message class="errorMessage" for="type" />
 	            
-	            <ui:remove>
-	            
 	            <h:outputText value="#{msgs.newAgrChief}:" />
-	            <h:selectOneMenu id="chief" value="#{agreementWizardPCB.agreement.chief}" label="#{msgs.newAgrChief}" required="true">
+	            <p:selectOneMenu id="chiefMenu" value="#{agreementWizardPCB.agreement.chief}" label="#{msgs.newAgrChief}" required="true">
 	            	<f:selectItems value="#{agreementWizPB.chiefItems}" />
 	            	<f:converter binding="#{chiefConverter}" />
-	            </h:selectOneMenu> 
-	            <h:message class="errorMessage" for="chief" />
+	            </p:selectOneMenu> 
+	            <h:message class="errorMessage" for="chiefMenu" />
 	            
-	            <h:commandButton value="#{msgs.add}">
-				        
-				</h:commandButton>
-	 
+	            <p:commandButton value="#{msgs.add}" process="@this" actionListener="#{chiefDialogPCB.clear()}" 
+						oncomplete="w_chiefDialog.show()" update=":#{p:component('chiefPanel')}" >
+					<p:resetInput target=":#{p:component('chiefPanel')}" />
+				</p:commandButton>  
+				
+				 <ui:remove>
 	            <h:outputText value="#{msgs.newAgrContact}:" />
 	            <h:inputText id="contact" value="#{agreementWizardPCB.agreement.contactPerson}" label="#{msgs.newAgrContact}" required="true" />
 	            <h:message class="errorMessage" for="contact" />
@@ -84,32 +84,32 @@
 	            <br/>
 	            
 	            <h:outputText value="#{msgs.newAgrApproval}:" />
-	            <p:calendar id="approvalDate" pattern="dd/MM/yyyy" showButtonPanel="true" showOtherMonths="true" required="true">
+	            <p:calendar id="approvalDate" pattern="dd/MM/yyyy" showOtherMonths="true" required="true" >
 	            	<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 	            </p:calendar>
 	            <h:message class="errorMessage" for="approvalDate" />
 	            
 	            <h:outputText value="#{msgs.newAgrBegin}:" />
-	            <p:calendar id="beginDate" pattern="dd/MM/yyyy" required="true">
+	            <p:calendar id="beginDate" pattern="dd/MM/yyyy" showOtherMonths="true" required="true">
 	            	<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
 	            </p:calendar>
 	            <h:message class="errorMessage" for="beginDate" />
 	            
 	            <h:outputText value="#{msgs.newAgrEnd}:" />
-	            <p:calendar id="deadlineDate" pattern="dd/MM/yyyy" required="true">
+	            <p:calendar id="deadlineDate" pattern="dd/MM/yyyy" showOtherMonths="true" required="true">
 	            	<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 	            </p:calendar>
 	            <h:message class="errorMessage" for="deadlineDate" />
 	            
-	            <h:outputText value="#{msgs.newAgrNote}:" />
-	            <h:inputTextarea id="notes" cols="20" rows="4"  value="#{agreementWizardPCB.agreement.note}" label="#{msgs.newAgrNote}" required="false" />
-	            <h:message class="errorMessage" for="notes" />
+	            
 		  
 		    </h:panelGrid>
 		    
 		</p:panel>
           
   	</p:tab> 
+  	
+  	
 	
 </ui:composition>
 
