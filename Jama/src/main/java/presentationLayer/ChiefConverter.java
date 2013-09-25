@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
+import businessLayer.ChiefScientist;
 import daoLayer.ChiefScientistDaoBean;
 
 @Named
@@ -17,8 +18,7 @@ public class ChiefConverter implements Converter {
 	
 	public ChiefConverter() {}
 
-	@Override
-	
+	@Override	
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
 		int id = Integer.parseInt(value);
@@ -28,7 +28,7 @@ public class ChiefConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
-		return value.toString();
+		return String.valueOf(((ChiefScientist) value).getId());
 	}
 
 }

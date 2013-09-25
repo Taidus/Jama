@@ -38,6 +38,7 @@
 				</h:selectOneMenu>
 				<h:message class="errorMessage" for="type" />
 
+				<ui:debug rendered="true"/>
 				<h:outputText value="#{msgs.newAgrChief}:" />
 				<p:selectOneMenu id="chiefMenu"
 					value="#{agreementWizardPCB.agreement.chief}"
@@ -108,6 +109,8 @@
 				</h:inputText>
 				<br />
 
+				<ui:remove>
+				
 				<h:outputText value="#{msgs.newAgrApproval}:" />
 				<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
 					showOtherMonths="true" required="true"
@@ -132,7 +135,8 @@
 				</p:calendar>
 				<h:message class="errorMessage" for="deadlineDate" />
 
-
+				</ui:remove>
+				
 
 			</h:panelGrid>
 

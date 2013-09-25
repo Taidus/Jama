@@ -40,7 +40,7 @@ public class AgreementWizardPresentationBean implements Serializable{
 		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
 			current = chiefs.get(i);
-			result[i] = new SelectItem(current.getId(), current.getName() + " " + current.getSurname());
+			result[i] = new SelectItem(current, current.getName() + " " + current.getSurname());
 		}
 		return result;
 	}
@@ -53,7 +53,7 @@ public class AgreementWizardPresentationBean implements Serializable{
 		Company current = null;
 		for(int i=0; i< companies.size(); i++){
 			current = companies.get(i);
-			result[i] = new SelectItem(current.getId(), current.getName());
+			result[i] = new SelectItem(current, current.getName());
 		}
 		return result;
 	}
