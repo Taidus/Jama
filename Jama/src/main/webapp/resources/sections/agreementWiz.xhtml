@@ -5,7 +5,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head>
+<h:head>
+	<h:outputStylesheet name="agreementWiz.css" library="css" />
+</h:head>
 <h:body>
 
 	<h:panelGrid width="100%" columns="2" columnClasses="col1">
@@ -36,7 +38,6 @@
 
 	<br />
 
-
 	<p:dialog id="chiefDialog" header="#{msgs.newChiefTitle}"
 		widgetVar="w_chiefDialog" modal="true">
 		<h:form>
@@ -65,6 +66,33 @@
 				actionListener="#{chiefDialogPCB.save()}"
 				update=":#{p:component('chiefMenu')}"
 				oncomplete="if (!args.validationFailed) w_chiefDialog.hide()" />
+
+		</h:form>
+
+	</p:dialog>
+	
+	<p:dialog id="companyDialog" header="#{msgs.newCompanyTitle}"
+		widgetVar="w_companyDialog" modal="true">
+		<h:form>
+
+			<h:panelGrid id="companyPanel" columns="3"
+				columnClasses="label, value, errorMessage" styleClass="grid">
+
+				<h:outputText value="#{msgs.name}:" />
+				<h:inputText id="companyName" value="#{companyDialogPCB.company.name}"
+					label="#{msgs.name}" required="true" />
+				<h:message for="companyName" />
+
+				<br />
+
+			</h:panelGrid>
+
+			<p:commandButton type="button" onclick="w_companyDialog.hide();"
+				value="#{msgs.cancel}" />
+			<p:commandButton value="#{msgs.save}"
+				actionListener="#{companyDialogPCB.save()}"
+				update=":#{p:component('companyMenu')}"
+				oncomplete="if (!args.validationFailed) w_companyDialog.hide()" />
 
 		</h:form>
 

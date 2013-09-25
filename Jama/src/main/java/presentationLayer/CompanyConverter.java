@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
+import businessLayer.Company;
 import daoLayer.CompanyDaoBean;
 
 @Named
@@ -26,7 +27,7 @@ public class CompanyConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
-		return value.toString();
+		return String.valueOf(((Company) value).getId());
 	}
 
 }

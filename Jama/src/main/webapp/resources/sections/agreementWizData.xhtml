@@ -8,137 +8,315 @@
 
 		<p:panel header="Tabella dei dati generali">
 
-			<h:panelGrid columns="3" columnClasses="label, value, errorMessage"
-				styleClass="grid">
+			<p:panelGrid id="agrDataPanelGrid">
 
-				<h:outputText value="#{msgs.newAgrTitle}:" />
-				<h:inputTextarea id="title" cols="20" rows="4"
-					value="#{agreementWizardPCB.agreement.title}"
-					label="#{msgs.newAgrTitle}" required="true" />
-				<h:message for="title" />
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.newAgrTitle}:" />
+					</p:column>
 
-				<h:outputText value="#{msgs.newAgrProtocolNumber}:" />
-				<h:inputText id="protocolNumber"
-					value="#{agreementWizardPCB.agreement.protocolNumber}"
-					label="#{msgs.newAgrProtocolNumber}" required="true">
-					<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
-						integerOnly="true" />
-				</h:inputText>
-				<h:message class="errorMessage" for="protocolNumber" />
+					<p:column>
+						<h:inputTextarea id="title" cols="20" rows="4"
+							value="#{agreementWizardPCB.agreement.title}"
+							label="#{msgs.newAgrTitle}" required="true" />
+					</p:column>
 
-				<h:outputText value="#{msgs.newAgrDepartment}:" />
-				<h:outputText value="#{agreementWizardPCB.agreement.department}" />
-				<br />
+					<p:column colspan="2">
+						<h:message for="title" />
+					</p:column>
+				</p:row>
 
-				<h:outputText value="#{msgs.newAgrType}:" />
-				<h:selectOneMenu id="type"
-					value="#{agreementWizardPCB.agreement.type}"
-					label="#{msgs.newAgrType}" required="true">
-					<f:selectItems value="#{agreementWizPB.agreementTypeItems}" />
-				</h:selectOneMenu>
-				<h:message class="errorMessage" for="type" />
 
-				<ui:debug rendered="true"/>
-				<h:outputText value="#{msgs.newAgrChief}:" />
-				<p:selectOneMenu id="chiefMenu"
-					value="#{agreementWizardPCB.agreement.chief}"
-					label="#{msgs.newAgrChief}" required="true">
-					<f:selectItems value="#{agreementWizPB.chiefItems}" />
-					<f:converter binding="#{chiefConverter}" />
-				</p:selectOneMenu>
-				<h:message class="errorMessage" for="chiefMenu" />
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.newAgrProtocolNumber}:" />
+					</p:column>
 
-				<p:commandButton value="#{msgs.add}" process="@this"
-					actionListener="#{chiefDialogPCB.clear()}"
-					oncomplete="w_chiefDialog.show()"
-					update=":#{p:component('chiefPanel')}">
-					<p:resetInput target=":#{p:component('chiefPanel')}" />
-				</p:commandButton>
+					<p:column>
+						<h:inputText id="protocolNumber"
+							value="#{agreementWizardPCB.agreement.protocolNumber}"
+							label="#{msgs.newAgrProtocolNumber}" required="true">
+							<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
+								integerOnly="true" />
+						</h:inputText>
+					</p:column>
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="protocolNumber" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrDepartment}:" />
+					</p:column>
+
+					<p:column colspan="3">
+						<h:outputText value="#{agreementWizardPCB.agreement.department}" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrType}:" />
+					</p:column>
+
+					<p:column>
+						<h:selectOneMenu id="type"
+							value="#{agreementWizardPCB.agreement.type}"
+							label="#{msgs.newAgrType}" required="true">
+							<f:selectItems value="#{agreementWizPB.agreementTypeItems}" />
+						</h:selectOneMenu>
+					</p:column>
+
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="type" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrChief}:" />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="chiefMenu"
+							value="#{agreementWizardPCB.agreement.chief}"
+							label="#{msgs.newAgrChief}" required="true">
+							<f:selectItems value="#{agreementWizPB.chiefItems}" />
+							<f:converter binding="#{chiefConverter}" />
+						</p:selectOneMenu>
+					</p:column>
+
+					<p:column>
+						<p:commandButton value="#{msgs.add}" process="@this"
+							actionListener="#{chiefDialogPCB.clear()}"
+							oncomplete="w_chiefDialog.show()"
+							update=":#{p:component('chiefPanel')}">
+							<p:resetInput target=":#{p:component('chiefPanel')}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column>
+						<h:message class="errorMessage" for="chiefMenu" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrContact}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="contact"
+							value="#{agreementWizardPCB.agreement.contactPerson}"
+							label="#{msgs.newAgrContact}" required="true" />
+					</p:column>
+
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="contact" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrCompany}:" />
+					</p:column>
+
+					<p:column>
+						<h:selectOneMenu id="companyMenu"
+							value="#{agreementWizardPCB.agreement.company}"
+							label="#{msgs.newAgrCompany}" required="true">
+							<f:selectItems value="#{agreementWizPB.companyItems}" />
+							<f:converter binding="#{companyConverter}" />
+						</h:selectOneMenu>
+					</p:column>
+
+					<p:column>
+						<p:commandButton value="#{msgs.add}" process="@this"
+							actionListener="#{companyDialogPCB.clear()}"
+							oncomplete="w_companyDialog.show()"
+							update=":#{p:component('companyPanel')}">
+							<p:resetInput target=":#{p:component('companyPanel')}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column>
+						<h:message class="errorMessage" for="companyMenu" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrProjectNumber}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="projectNumber"
+							value="#{agreementWizardPCB.agreement.CIA_projectNumber}"
+							label="#{msgs.newAgrProjectNumber}" required="true" />
+					</p:column>
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="projectNumber" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrInventory}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="inventoryNumber"
+							value="#{agreementWizardPCB.agreement.inventoryNumber}"
+							label="#{msgs.newAgrInventory}" required="true" />
+					</p:column>
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="inventoryNumber" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrTaxableAmount}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="taxableAmount"
+							value="#{agreementWizardPCB.agreement.wholeTaxableAmount}"
+							label="#{msgs.newAgrTaxableAmount}" required="true">
+							<f:convertNumber />
+							<f:ajax render="amount" />
+						</h:inputText>
+					</p:column>
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="taxableAmount" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrIva}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="iva"
+							value="#{agreementWizardPCB.agreement.IVA_amount}"
+							label="#{msgs.newAgrIva}" required="true">
+							<f:convertNumber />
+							<f:ajax render="amount" />
+						</h:inputText>
+					</p:column>
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="iva" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.newAgrWholeAmount}:" />
+					</p:column>
+
+					<p:column colspan="3">
+						<h:inputText id="amount"
+							value="#{agreementWizardPCB.agreement.wholeAmount}"
+							readonly="true">
+							<f:convertNumber type="currency" />
+						</h:inputText>
+					</p:column>
+				</p:row>
 
 				<ui:remove>
-					<h:outputText value="#{msgs.newAgrContact}:" />
-					<h:inputText id="contact"
-						value="#{agreementWizardPCB.agreement.contactPerson}"
-						label="#{msgs.newAgrContact}" required="true" />
-					<h:message class="errorMessage" for="contact" />
 
-					<h:outputText value="#{msgs.newAgrCompany}:" />
-					<h:selectOneMenu id="company"
-						value="#{agreementWizardPCB.agreement.company}"
-						label="#{msgs.newAgrCompany}" required="true">
-						<f:selectItems value="#{agreementWizPB.companyItems}" />
-					</h:selectOneMenu>
-					<h:message class="errorMessage" for="company" />
+					<p:row>
+
+						<p:column>
+							<h:outputText value="#{msgs.newAgrApproval}:" />
+						</p:column>
+
+						<p:column>
+							<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
+								showOtherMonths="true" required="true"
+								value="#{agreementWizardPCB.agreement.approvalDate}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</p:calendar>
+						</p:column>
+
+						<p:column colspan="2">
+							<h:message class="errorMessage" for="approvalDate" />
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+
+						<p:column>
+							<h:outputText value="#{msgs.newAgrBegin}:" />
+						</p:column>
+
+						<p:column>
+							<p:calendar id="beginDate" pattern="dd/MM/yyyy"
+								showOtherMonths="true" required="true"
+								value="#{agreementWizardPCB.agreement.beginDate}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</p:calendar>
+						</p:column>
+
+						<p:column colspan="2">
+							<h:message class="errorMessage" for="beginDate" />
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+
+						<p:column>
+							<h:outputText value="#{msgs.newAgrEnd}:" />
+						</p:column>
+
+						<p:column>
+							<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
+								showOtherMonths="true" required="true"
+								value="#{agreementWizardPCB.agreement.deadlineDate}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</p:calendar>
+						</p:column>
+
+						<p:column colspan="2">
+							<h:message class="errorMessage" for="deadlineDate" />
+						</p:column>
+					</p:row>
 
 				</ui:remove>
 
-				<h:outputText value="#{msgs.newAgrProjectNumber}:" />
-				<h:inputText id="projectNumber"
-					value="#{agreementWizardPCB.agreement.CIA_projectNumber}"
-					label="#{msgs.newAgrProjectNumber}" required="true" />
-				<h:message class="errorMessage" for="projectNumber" />
 
-				<h:outputText value="#{msgs.newAgrInventory}:" />
-				<h:inputText id="inventoryNumber"
-					value="#{agreementWizardPCB.agreement.inventoryNumber}"
-					label="#{msgs.newAgrInventory}" required="true" />
-				<h:message class="errorMessage" for="inventoryNumber" />
-
-				<h:outputText value="#{msgs.newAgrTaxableAmount}:" />
-				<h:inputText id="taxableAmount"
-					value="#{agreementWizardPCB.agreement.wholeTaxableAmount}"
-					label="#{msgs.newAgrTaxableAmount}" required="true">
-					<f:convertNumber />
-					<f:ajax render="amount" />
-				</h:inputText>
-				<h:message class="errorMessage" for="taxableAmount" />
-
-				<h:outputText value="#{msgs.newAgrIva}:" />
-				<h:inputText id="iva"
-					value="#{agreementWizardPCB.agreement.IVA_amount}"
-					label="#{msgs.newAgrIva}" required="true">
-					<f:convertNumber />
-					<f:ajax render="amount" />
-				</h:inputText>
-				<h:message class="errorMessage" for="iva" />
-
-				<h:outputText value="#{msgs.newAgrWholeAmount}:" />
-				<h:inputText id="amount"
-					value="#{agreementWizardPCB.agreement.wholeAmount}" readonly="true">
-					<f:convertNumber type="currency" />
-				</h:inputText>
-				<br />
-
-				<ui:remove>
-				
-				<h:outputText value="#{msgs.newAgrApproval}:" />
-				<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
-					showOtherMonths="true" required="true"
-					value="#{agreementWizardPCB.agreement.approvalDate}">
-					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-				</p:calendar>
-				<h:message class="errorMessage" for="approvalDate" />
-
-				<h:outputText value="#{msgs.newAgrBegin}:" />
-				<p:calendar id="beginDate" pattern="dd/MM/yyyy"
-					showOtherMonths="true" required="true"
-					value="#{agreementWizardPCB.agreement.beginDate}">
-					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-				</p:calendar>
-				<h:message class="errorMessage" for="beginDate" />
-
-				<h:outputText value="#{msgs.newAgrEnd}:" />
-				<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
-					showOtherMonths="true" required="true"
-					value="#{agreementWizardPCB.agreement.deadlineDate}">
-					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-				</p:calendar>
-				<h:message class="errorMessage" for="deadlineDate" />
-
-				</ui:remove>
-				
-
-			</h:panelGrid>
+			</p:panelGrid>
 
 		</p:panel>
 
