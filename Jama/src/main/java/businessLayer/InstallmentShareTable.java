@@ -40,7 +40,7 @@ public class InstallmentShareTable extends AbstractShareTable {
 	}
 
 	@Override
-	public boolean validate() throws IllegalStateException {
+	public boolean isValid() throws IllegalStateException {
 		if (!areGoodsSharesConsistent()) {
 			throw new IllegalStateException(
 					"Le quote dei Beni e Servizi non sono corrette");
@@ -56,7 +56,7 @@ public class InstallmentShareTable extends AbstractShareTable {
 	}
 
 	// XXX: sto nome fa schifo
-	public boolean validateWithOtherInstallments() throws IllegalStateException {
+	public boolean isValidWithOtherInstallments() throws IllegalStateException {
 		// FIXME: per ora assumo che prima della validazione la seguente rata
 		// non sia ancora aggiunta alla convenzione
 		// (che mi sembra la cosa più logica e corretta)
@@ -90,7 +90,6 @@ public class InstallmentShareTable extends AbstractShareTable {
 		}
 
 		for (int index = 0; index < usedPercentages.size(); index++) {
-			// XXX: oddio santo sono un Barilla
 			if(usedPercentages.get(index).compareTo(installment.getAgreement().getShareTable().getMainValues().get(index)) == 1) {
 				throw new IllegalStateException("Le quote non sono corrette");
 			}

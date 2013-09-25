@@ -11,7 +11,7 @@ public class AgreementShareTable extends AbstractShareTable {
 	}
 
 	@Override
-	public boolean validate() throws IllegalStateException {
+	public boolean isValid() throws IllegalStateException {
 		if (!areGoodsSharesConsistent()) {
 			throw new IllegalStateException(
 					"Le quote dei Beni e Servizi non sono corrette");

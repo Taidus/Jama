@@ -41,7 +41,7 @@ public abstract class AbstractShareTable {
 	protected float otherCost;
 
 	// da vedere il sistema per il passaggio del messaggio di errore
-	public abstract boolean validate() throws IllegalStateException;
+	public abstract boolean isValid() throws IllegalStateException;
 	public void initFields(){
 		
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
