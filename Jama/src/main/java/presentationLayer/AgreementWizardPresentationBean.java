@@ -37,8 +37,10 @@ public class AgreementWizardPresentationBean implements Serializable{
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		
 		SelectItem[] result = new SelectItem[chiefs.size()];
+		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
-			result[i] = new SelectItem(chiefs.get(i).getId(), chiefs.get(i).toString());
+			current = chiefs.get(i);
+			result[i] = new SelectItem(current.getId(), current.getName() + " " + current.getSurname());
 		}
 		return result;
 	}
@@ -48,8 +50,10 @@ public class AgreementWizardPresentationBean implements Serializable{
 		List<Company> companies = companyDaoBean.getAll();
 		
 		SelectItem[] result = new SelectItem[companies.size()];
+		Company current = null;
 		for(int i=0; i< companies.size(); i++){
-			result[i] = new SelectItem(companies.get(i).getId(), companies.get(i).toString());
+			current = companies.get(i);
+			result[i] = new SelectItem(current.getId(), current.getName());
 		}
 		return result;
 	}
