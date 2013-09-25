@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -46,6 +47,7 @@ public class Agreement {
 	private float wholeTaxableAmount;
 	
 	@OneToMany(mappedBy="agreement")
+	@OrderColumn
 	private List<Installment> installments;
 
 	public List<Installment> getInstallments() {
