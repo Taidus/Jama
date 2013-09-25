@@ -40,7 +40,7 @@ public class InstallmentShareTable extends AbstractShareTable {
 	}
 
 	@Override
-	public boolean isValid() throws IllegalStateException {
+	public void isValid() throws IllegalStateException {
 		if (!areGoodsSharesConsistent()) {
 			throw new IllegalStateException(
 					"Le quote dei Beni e Servizi non sono corrette");
@@ -52,7 +52,6 @@ public class InstallmentShareTable extends AbstractShareTable {
 		if (!areMainValuesConsistent()) {
 			throw new IllegalStateException("Le quote non sono corrette");
 		}
-		return true;
 	}
 
 	// XXX: sto nome fa schifo

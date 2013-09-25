@@ -76,6 +76,9 @@
 					value="#{shareTablePCB.shareTable.otherCost}"
 					label="#{msgs.newAgrOtherCosts}" required="true" />
 				<h:message for="otherCost" />
+				
+				<h:inputHidden value="needed" id="percentsCheck" validator="#{shareTablePCB.validate}" />
+				<h:message styleClass="errorMessage" for="percentsCheck"/>
 
 			</h:panelGrid>
 
