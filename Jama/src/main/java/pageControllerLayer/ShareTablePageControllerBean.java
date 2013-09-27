@@ -9,6 +9,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import javax.resource.spi.IllegalStateException;
 
+import util.MathUtil;
 import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
@@ -99,10 +100,7 @@ public class ShareTablePageControllerBean implements Serializable {
 			sum += f;
 		}
 		sum = (sum * goodsAndServices / 100);
-		if (Float.compare(sum, goodsAndServices) != 0) {
-			return false;
-		}
-		return true;
+		return MathUtil.doubleEquals(sum, goodsAndServices);
 	}
 
 	private boolean areMainValuesConsistentOrAdjustable(float[] mainValues) {
@@ -110,10 +108,7 @@ public class ShareTablePageControllerBean implements Serializable {
 		for (float f : mainValues) {
 			sum += f;
 		}
-		if (Float.compare(sum, 100) > 0) {
-			return false;
-		}
-		return true;
+		return sum <= 100F;
 	}
 
 	private float adjustMainValues(float[] mainValues, float goodsAndServices) {
