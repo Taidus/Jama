@@ -77,9 +77,8 @@ public class AgreementManagerPageControllerBean implements Serializable{
 	public String save(){
 		
 		agreementDao.create(currentAgreement);
-
 		close();
-		return "/resources/sections/home.xhtml";
+		return "/home.xhtml";
 	}
 	
 	public void close(){
