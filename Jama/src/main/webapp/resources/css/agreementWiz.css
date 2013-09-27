@@ -3,3 +3,7 @@
 #agreementWiz tr, #agreementWiz td{
 	border: none;
 }
+
+.errorMessage{
+       color: #FF0000;
+}
