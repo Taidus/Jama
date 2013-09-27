@@ -85,36 +85,44 @@ public class ShareTablePageControllerBean implements Serializable {
 					"Le quote del personale sono corrette"));
 		}
 
-		adjustMainValues(mainValues, goodsAndServices);
+		goodsAndServices = adjustMainValues(mainValues, goodsAndServices);
+		
+		UIInput goodsAndServicesField = (UIInput) component
+				.findComponent("goodsAndServices");
+		goodsAndServicesField.setValue(goodsAndServices);
+		
 	}
 
 	private boolean areGoodsAndServicesSharesConsistent(
 			float[] goodsAndServicesValues, float goodsAndServices) {
-		Float sum = Float.valueOf(0);
+		float sum = 0;
 		for (float f : goodsAndServicesValues) {
 			sum += f;
 		}
-		sum = Float.valueOf(sum * goodsAndServices / 100);
-		return sum.equals(Float.valueOf(goodsAndServices));
-	}
-
-	private boolean areMainValuesConsistentOrAdjustable(float[] mainValues) {
-		Float sum = Float.valueOf(0);
-		for (float f : mainValues) {
-			sum += f;
-		}
-		if (sum.compareTo(Float.valueOf(100)) == 1) {
+		sum = (sum * goodsAndServices / 100);
+		if (Float.compare(sum, goodsAndServices) != 0) {
 			return false;
 		}
 		return true;
 	}
 
-	private void adjustMainValues(float[] mainValues, float goodsAndServices) {
-		Float sum = Float.valueOf(0);
+	private boolean areMainValuesConsistentOrAdjustable(float[] mainValues) {
+		float sum = 0;
 		for (float f : mainValues) {
 			sum += f;
 		}
-		goodsAndServices += (Float.valueOf(100) - sum);
+		if (Float.compare(sum, 100) > 0) {
+			return false;
+		}
+		return true;
+	}
+
+	private float adjustMainValues(float[] mainValues, float goodsAndServices) {
+		float sum = 0;
+		for (float f : mainValues) {
+			sum += f;
+		}
+		return (100 - sum + goodsAndServices);
 	}
 
 	// TODO
