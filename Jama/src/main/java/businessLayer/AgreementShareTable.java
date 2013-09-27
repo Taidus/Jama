@@ -1,7 +1,9 @@
 package businessLayer;
 
+import javax.faces.validator.ValidatorException;
 import javax.persistence.Entity;
-import javax.resource.spi.IllegalStateException;
+
+import util.Messages;
 
 @Entity
 public class AgreementShareTable extends AbstractShareTable {
@@ -11,17 +13,20 @@ public class AgreementShareTable extends AbstractShareTable {
 	}
 
 	@Override
-	public void isValid() throws IllegalStateException {
-		if (!areGoodsSharesConsistent()) {
-			throw new IllegalStateException(
-					"Le quote dei Beni e Servizi non sono corrette");
+	public void validate(float[] mainValues, float[] goodsAndShareValues,
+			float[] personnelValues, float goodsAndServices, float personnel) {
+		if (!areMainValuesConsistent(mainValues)) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableValues"));
 		}
-		if (!arePersonnelSharesConsistent()) {
-			throw new IllegalStateException(
-					"Le quote del Personale non sono corrette");
+		if (!areGoodsAndServicesValuesConsistent(goodsAndShareValues,
+				goodsAndServices)) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableGoods"));
 		}
-		if (!areMainValuesConsistent()) {
-			throw new IllegalStateException("Le quote non sono corrette");
+		if (!arePersonnelValuesConsistent(personnelValues, personnel)) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTablePersonnel"));
 		}
 	}
 
