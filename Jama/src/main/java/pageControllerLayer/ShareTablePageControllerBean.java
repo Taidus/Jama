@@ -69,59 +69,9 @@ public class ShareTablePageControllerBean implements Serializable {
 				structures, personnel, goodsAndServices };
 		float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
 				inventoryMaterials, rentals, personnelOnContract, otherCost };
-		float[] personnelShares = {};
+		float[] personnelValues = {};
 
-		if (!areMainValuesConsistentOrAdjustable(mainValues)) {
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableValues"));
-		}
-
-		if (!areGoodsAndServicesSharesConsistent(goodsAndServicesValues,
-				goodsAndServices)) {
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableGoods"));
-		}
-
-		if (!arePersonnelSharesConsistent(personnelShares, personnel)) {
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
-		}
-		//FIXME probabilmente si possono usare i messaggi di errore parametrizzati
-
-		goodsAndServices = adjustMainValues(mainValues, goodsAndServices);
-		
-		UIInput goodsAndServicesField = (UIInput) component
-				.findComponent("goodsAndServices");
-		goodsAndServicesField.setValue(goodsAndServices);
-		
-	}
-
-	private boolean areGoodsAndServicesSharesConsistent(
-			float[] goodsAndServicesValues, float goodsAndServices) {
-		float sum = 0;
-		for (float f : goodsAndServicesValues) {
-			sum += f;
-		}
-		sum = (sum * goodsAndServices / 100);
-		return MathUtil.doubleEquals(sum, goodsAndServices);
-	}
-
-	private boolean areMainValuesConsistentOrAdjustable(float[] mainValues) {
-		float sum = 0;
-		for (float f : mainValues) {
-			sum += f;
-		}
-		return sum <= 100F;
-	}
-
-	private float adjustMainValues(float[] mainValues, float goodsAndServices) {
-		float sum = 0;
-		for (float f : mainValues) {
-			sum += f;
-		}
-		return (100 - sum + goodsAndServices);
-	}
-
-	// TODO
-	private boolean arePersonnelSharesConsistent(float[] personnelShares,
-			float personnel) {
-		return true;
+		shareTable.validate(mainValues, goodsAndServicesValues,
+				personnelValues, goodsAndServices, personnel);
 	}
 }

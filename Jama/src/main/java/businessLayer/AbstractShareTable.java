@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.resource.spi.IllegalStateException;
 
+import util.MathUtil;
+
 @MappedSuperclass
 public abstract class AbstractShareTable {
 
@@ -41,11 +43,14 @@ public abstract class AbstractShareTable {
 	protected float otherCost;
 
 	// da vedere il sistema per il passaggio del messaggio di errore
-	public abstract void isValid() throws IllegalStateException;
-	public void initFields(){
-		
+	public abstract void validate(float[] mainValues,
+			float[] goodsAndServicesValues, float[] personnelValues,
+			float goodsAndServices, float personnel);
+
+	public void initFields() {
+
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
-		
+
 	}
 
 	public float getAtheneumCapitalBalance() {
@@ -148,51 +153,43 @@ public abstract class AbstractShareTable {
 	public int getId() {
 		return id;
 	}
-	
-	
-	
-	//XXX: se per caso aggiungo un attributo alla classe e mi dimentico di metterlo qua, esplode la validazione
-	
-	//XXX: non sono sicuro che List sia giusto, forse un array è più adatto (visto come la uso di solito)
-	public List<Float> getMainValues() {
-		ArrayList<Float> mainValues = new ArrayList<Float>();
-		mainValues.add(atheneumCapitalBalance);
-		mainValues.add(atheneumCommonBalance);
-		mainValues.add(structures);
-		mainValues.add(personnel);
-		mainValues.add(goodsAndServices);
-		
-		return mainValues;
-	}
 
-	protected boolean arePersonnelSharesConsistent() {
-		Float total = Float.valueOf(0);
-		for (Iterator<Entry<ChiefScientist, Float>> it = sharePerPersonnel
-				.entrySet().iterator(); it.hasNext();) {
-			total += it.next().getValue();
+	// XXX: se per caso aggiungo un attributo alla classe e mi dimentico di
+	// metterlo qua, esplode la validazione
+
+	// XXX: non sono sicuro che List sia giusto, forse un array è più adatto
+	// (visto come la uso di solito)
+
+	protected boolean arePersonnelValuesConsistent(float[] personnelValues,
+			float personnel) {
+		float sum = 0;
+		for (float f : personnelValues) {
+			sum += f;
 		}
-		return total.equals(Float.valueOf(100));
+		sum = sum * personnel / 100;
+		return MathUtil.doubleEquals(personnel, sum);
 	}
 
-	protected boolean areGoodsSharesConsistent() {
-		return Float.valueOf(100).equals(
-				businessTrip + consumerMaterials + inventoryMaterials + rentals
-						+ personnelOnContract + otherCost);
-	}
-
-	protected boolean areMainValuesConsistent() {
-		Float total = atheneumCapitalBalance + atheneumCommonBalance
-				+ structures + personnel + goodsAndServices;
-		if (total.compareTo(Float.valueOf(100)) > 0) {
-			return false;
+	protected boolean areGoodsAndServicesValuesConsistent(
+			float[] goodsAndServicesValues, float goodsAndServices) {
+		float sum = 0;
+		for (float f : goodsAndServicesValues) {
+			sum += f;
 		}
-		adjustMainValues(total);
-		return true;
+		sum = sum * goodsAndServices / 100;
+		return MathUtil.doubleEquals(goodsAndServices, sum);
+	}
+
+	protected boolean areMainValuesConsistent(float[] mainValues) {
+		float sum = 0;
+		for (float f : mainValues) {
+			sum += f;
+		}
+		return (!(sum < 100));
 	}
 
 	protected void adjustMainValues(Float total) {
 		goodsAndServices += Float.valueOf(100) - total;
 	}
-	
-	
+
 }
