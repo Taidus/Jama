@@ -14,6 +14,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Agreement {
@@ -21,20 +26,18 @@ public class Agreement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String title;
-	private String protocolNumber;
+	
+	@NotNull @Size(max=1000) private String title;
+	private String protocolNumber; //FIXME ma serve?
 
-	private AgreementType type;
+	@NotNull private AgreementType type;
 
-	@ManyToOne
-	private ChiefScientist chief;
-	private String contactPerson;
+	@ManyToOne @NotNull private ChiefScientist chief;
+	@NotNull private String contactPerson; //FIXME String o oggetto?
 
-	@ManyToOne
-	private Company company;
+	@ManyToOne @NotNull	private Company company;
 
-	@ManyToOne
-	private Department department;
+	@ManyToOne @NotNull	private Department department;
 
 	private int CIA_projectNumber;
 	private int inventoryNumber;
@@ -50,27 +53,14 @@ public class Agreement {
 	@OrderColumn
 	private List<Installment> installments;
 
-	public List<Installment> getInstallments() {
-		return installments;
-	}
+	@Temporal(TemporalType.DATE) @NotNull private Date approvalDate;
 
-	public void setInstallments(List<Installment> installments) {
-		this.installments = installments;
-	}
+	@Temporal(TemporalType.DATE) @NotNull private Date beginDate;
 
-	@Temporal(TemporalType.DATE)
-	private Date approvalDate;
-
-	@Temporal(TemporalType.DATE)
-	private Date beginDate;
-
-	@Temporal(TemporalType.DATE)
-	private Date deadlineDate;
+	@Temporal(TemporalType.DATE) @NotNull private Date deadlineDate;
 
 	private String note;
 	
-	
-
 	public Agreement() {
 		shareTable = new AgreementShareTable();
 	}
@@ -191,6 +181,14 @@ public class Agreement {
 
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
+	}
+	
+	public List<Installment> getInstallments() {
+		return installments;
+	}
+
+	public void setInstallments(List<Installment> installments) {
+		this.installments = installments;
 	}
 
 	public Date getBeginDate() {

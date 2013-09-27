@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
@@ -16,8 +18,9 @@ public class ChiefScientist {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	private String name;
-	private String surname;
+	
+	@NotNull @Size(min=1, max=100) private String name;
+	@NotNull @Size(min=1, max=100) private String surname;
 	
 	public String getName() {
 		return name;

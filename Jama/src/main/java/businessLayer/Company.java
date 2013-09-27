@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c") })
@@ -14,7 +16,8 @@ public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String name;
+	
+	@NotNull @Size(min=1, max=1000) private String name;
 
 	public String getName() {
 		return name;

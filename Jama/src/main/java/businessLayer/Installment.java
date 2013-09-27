@@ -2,7 +2,10 @@ package businessLayer;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * Entity implementation class for Entity: Installment
@@ -16,27 +19,33 @@ public class Installment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Temporal(TemporalType.DATE)
-	private Date date;
+	
+	@Temporal(TemporalType.DATE) @NotNull private Date date;
+	
 	private float amount;
 	private float iva;
-	private int voucherNumber;
-	@Temporal(TemporalType.DATE)
-	private Date voucherDate;
-	private int ivaVoucherNumber;
-	private int pendingNumber;
-	private int invoiceNumber;
-	@Temporal(TemporalType.DATE)
-	private Date invoiceDate;
+	
+	@Min(0) private int voucherNumber;
+	
+	@Temporal(TemporalType.DATE) private Date voucherDate;
+	
+	@Min(0) private int ivaVoucherNumber;
+	@Min(0) private int pendingNumber;
+	@Min(0) private int invoiceNumber;
+	
+	@Temporal(TemporalType.DATE) private Date invoiceDate;
+	
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
 	
 	@ManyToOne
+	@NotNull
 	private Agreement agreement;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn
+	@NotNull
 	private InstallmentShareTable shareTable;
 
 	public Installment() {

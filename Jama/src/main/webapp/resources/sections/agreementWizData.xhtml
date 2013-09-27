@@ -206,12 +206,13 @@
 							value="#{agreementWizardPCB.agreement.wholeTaxableAmount}"
 							label="#{msgs.newAgrTaxableAmount}" required="true">
 							<f:convertNumber />
-							<f:ajax render="amount" />
+							<f:validateDoubleRange minimum="0.0" />
+							<f:ajax render="amount taxAmountError" />
 						</h:inputText>
 					</p:column>
 
 					<p:column colspan="2">
-						<h:message class="errorMessage" for="taxableAmount" />
+						<h:message id="taxAmountError" class="errorMessage" for="taxableAmount" />
 					</p:column>
 				</p:row>
 
@@ -227,12 +228,13 @@
 							value="#{agreementWizardPCB.agreement.IVA_amount}"
 							label="#{msgs.newAgrIva}" required="true">
 							<f:convertNumber />
-							<f:ajax render="amount" />
+							<f:validateDoubleRange minimum="0.0" maximum="100.0" />
+							<f:ajax render="amount ivaError" />
 						</h:inputText>
 					</p:column>
 
-					<p:column colspan="2">
-						<h:message class="errorMessage" for="iva" />
+ 					<p:column colspan="2">
+						<h:message id="ivaError" class="errorMessage" for="iva" />
 					</p:column>
 				</p:row>
 
@@ -248,6 +250,7 @@
 							value="#{agreementWizardPCB.agreement.wholeAmount}"
 							readonly="true">
 							<f:convertNumber type="currency" />
+							<f:validateDoubleRange minimum="0.0" />
 						</h:inputText>
 					</p:column>
 				</p:row>
