@@ -1,5 +1,6 @@
 package businessLayer;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +22,15 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Agreement {
+public class Agreement implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+		
+	//TODO rimmettere i not null
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -37,7 +45,7 @@ public class Agreement {
 
 	@ManyToOne @NotNull	private Company company;
 
-	@ManyToOne @NotNull	private Department department;
+	@ManyToOne 	private Department department;
 
 	private int CIA_projectNumber;
 	private int inventoryNumber;
@@ -49,15 +57,15 @@ public class Agreement {
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 	
-	@OneToMany(mappedBy="agreement")
+	@OneToMany(mappedBy="agreement",cascade = CascadeType.PERSIST)
 	@OrderColumn
 	private List<Installment> installments;
 
-	@Temporal(TemporalType.DATE) @NotNull private Date approvalDate;
+	@Temporal(TemporalType.DATE)  private Date approvalDate;
 
-	@Temporal(TemporalType.DATE) @NotNull private Date beginDate;
+	@Temporal(TemporalType.DATE)  private Date beginDate;
 
-	@Temporal(TemporalType.DATE) @NotNull private Date deadlineDate;
+	@Temporal(TemporalType.DATE)  private Date deadlineDate;
 
 	private String note;
 	

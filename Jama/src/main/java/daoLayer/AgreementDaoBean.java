@@ -2,16 +2,17 @@ package daoLayer;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import businessLayer.Agreement;
-import businessLayer.Department;
 
-@Stateless
+@Stateful
 public class AgreementDaoBean {
-	@PersistenceContext(unitName = "primary")
+	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	public AgreementDaoBean() {
@@ -40,6 +41,11 @@ public class AgreementDaoBean {
 	public List<Agreement> getAll(){
 		
 		return em.createNamedQuery("Agreement.findAll",Agreement.class).getResultList();
+		
+	}
+	
+	@Remove
+	public void close(){
 		
 	}
 

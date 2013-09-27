@@ -10,11 +10,12 @@
 	<h:outputStylesheet name="home.css" library="css" />
 </h:head>
 <h:body>
+	<h:form>
 	<h:outputText value="Cosa vuoi fare oggi?" styleClass="text" />
-	<h:button value="Crea Convenzione"
-		outcome="/resources/sections/agreementWiz.xhtml" styleClass="buttons" />
+	<h:commandButton value="Crea Convenzione" action="#{agreementManagerPCB.createAgreement}" styleClass="buttons" />
 	<h:button value="Aggiungi Rata"
 		outcome="/resources/sections/installmentWiz" styleClass="buttons" />
+	</h:form>
 </h:body>
 
 

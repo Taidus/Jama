@@ -1,12 +1,19 @@
 package businessLayer;
 
+import java.io.Serializable;
+
 import javax.faces.validator.ValidatorException;
 import javax.persistence.Entity;
 
 import util.Messages;
 
 @Entity
-public class AgreementShareTable extends AbstractShareTable {
+public class AgreementShareTable extends AbstractShareTable implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public AgreementShareTable() {
 		initFields();

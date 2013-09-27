@@ -1,22 +1,16 @@
 package pageControllerLayer;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.resource.spi.IllegalStateException;
 
-import util.MathUtil;
-import util.Messages;
+import annotations.Current;
 import businessLayer.AbstractShareTable;
-import businessLayer.ChiefScientist;
-
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 @Named("shareTablePCB")
 @ConversationScoped
@@ -26,7 +20,7 @@ public class ShareTablePageControllerBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private AbstractShareTable shareTable;
+	@Inject @Current private AbstractShareTable shareTable;
 
 	public ShareTablePageControllerBean() {
 	}
@@ -35,9 +29,6 @@ public class ShareTablePageControllerBean implements Serializable {
 		return shareTable;
 	}
 
-	public void setShareTable(AbstractShareTable shareTable) {
-		this.shareTable = shareTable;
-	}
 
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
