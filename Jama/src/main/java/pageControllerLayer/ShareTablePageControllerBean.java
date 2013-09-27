@@ -74,12 +74,13 @@ public class ShareTablePageControllerBean implements Serializable {
 					"Le quote non sono corrette"));
 		}
 
-		if (!areGoodsAndServicesSharesConsistent(goodsAndServicesValues)) {
+		if (!areGoodsAndServicesSharesConsistent(goodsAndServicesValues,
+				goodsAndServices)) {
 			throw new ValidatorException(new FacesMessage(
 					"Le quote dei Beni e Servizi non sono corrette"));
 		}
 
-		if (!arePersonnelSharesConsistent(personnelShares)) {
+		if (!arePersonnelSharesConsistent(personnelShares, personnel)) {
 			throw new ValidatorException(new FacesMessage(
 					"Le quote del personale sono corrette"));
 		}
@@ -88,12 +89,13 @@ public class ShareTablePageControllerBean implements Serializable {
 	}
 
 	private boolean areGoodsAndServicesSharesConsistent(
-			float[] goodsAndServicesValues) {
+			float[] goodsAndServicesValues, float goodsAndServices) {
 		Float sum = Float.valueOf(0);
 		for (float f : goodsAndServicesValues) {
 			sum += f;
 		}
-		return sum.equals(Float.valueOf(100));
+		sum = Float.valueOf(sum * goodsAndServices / 100);
+		return sum.equals(Float.valueOf(goodsAndServices));
 	}
 
 	private boolean areMainValuesConsistentOrAdjustable(float[] mainValues) {
@@ -116,7 +118,8 @@ public class ShareTablePageControllerBean implements Serializable {
 	}
 
 	// TODO
-	private boolean arePersonnelSharesConsistent(float[] personnelShares) {
+	private boolean arePersonnelSharesConsistent(float[] personnelShares,
+			float personnel) {
 		return true;
 	}
 }
