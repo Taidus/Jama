@@ -1,0 +1,65 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1596" measuredH="744" mockupW="1328" mockupH="707">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="268" y="37" w="1328" h="707" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Elenco%20delle%20Convenzioni</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="301" y="241" w="1263" h="419" measuredW="278" measuredH="111" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>2</selectedIndex>
+        <text>Responsabile%2C%20Ditt%E0%2C%20Data%0AVicario%2C%20Enel%2C%2012/09/2013%0AShoen%2C%20Poste%2C%2011/06/2013%0AArgenti%2C%20Nuova%20Pignone%2C%2009/08/2011%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::FieldSet" x="301" y="95" w="1263" h="131" measuredW="200" measuredH="170" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Filters</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::RadioButtonGroup" x="323" y="126" w="146" h="48" measuredW="63" measuredH="39" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28o%29%20aperte%0A%28%20%29%20chiuse</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::ComboBox" x="444" y="148" w="-1" h="-1" measuredW="93" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>ComboBox</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::ComboBox" x="572" y="148" w="-1" h="-1" measuredW="93" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>ComboBox</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="572" y="116" w="-1" h="-1" measuredW="79" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Responsabile</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="701" y="116" w="-1" h="-1" measuredW="29" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Ditta</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="444" y="116" w="40" h="-1" measuredW="30" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Anno</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::ComboBox" x="701" y="148" w="-1" h="-1" measuredW="93" measuredH="24" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>ComboBox</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::LinkBar" x="901" y="675" w="-1" h="-1" measuredW="97" measuredH="19" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Previous%2CNext</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Menu" x="819" y="328" w="187" h="-1" measuredW="150" measuredH="52" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Aggiunti%20una%20Rata%20%0AModifica%20la%20Convenzione</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

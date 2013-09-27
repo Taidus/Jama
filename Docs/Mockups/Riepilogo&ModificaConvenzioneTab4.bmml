@@ -1,0 +1,39 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1678" measuredH="699" mockupW="1414" mockupH="670">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::FieldSet" x="286" y="91" w="1371" h="297" measuredW="200" measuredH="170" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Riepilogo</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="304" y="129" w="1221" h="92" measuredW="225" measuredH="81" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Anno%2CNote%2C%20Fatturato%2CResiduo%0A2004%2C4000%u20AC%2C5000%u20AC%2C1000%u20AC%0A2005%2C3000%u20AC%2C3000%u20AC%2C0%u20AC</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::DataGrid" x="310" y="242" w="421" h="111" measuredW="273" measuredH="111" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Totale%20imponibile%20Convenzione%2C114.000%u20AC%0ATotale%20fatturato%2C91.200%u20AC%0ATotale%20Residuo%20in%20scadenza%2C0%u20AC%0ATotale%20Residuo%20non%20in%20scadenza%3A%2C%2022.800%u20AC</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::TabBar" x="264" y="29" w="1414" h="670" measuredW="454" measuredH="100" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>3</selectedIndex>
+        <text>Campi%20Obbligatori%2C%20Tabella%20di%20Ripartizione%2C%20Rate%2C%20Riepilogo%2CAllegati</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::PointyButton" x="1001" y="638" w="163" h="-1" measuredW="127" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>center</direction>
+        <icon>SaveIcon%7Csmall</icon>
+        <text>Salva%20ed%20Esci</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::PointyButton" x="822" y="638" w="157" h="-1" measuredW="89" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>center</direction>
+        <icon>ForbiddenIcon%7Csmall</icon>
+        <text>Annulla</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,48 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1582" measuredH="746" mockupW="1383" mockupH="707">
+  <controls>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::TabBar" x="199" y="39" w="1383" h="707" measuredW="234" measuredH="100" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <color>16777215</color>
+        <selectedIndex>2</selectedIndex>
+        <tabVPosition>top</tabVPosition>
+        <text>Passo%201%2C%20Passo%202%2C%20Passo%203</text>
+        <verticalScrollbar>false</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::PointyButton" x="811" y="704" w="115" h="-1" measuredW="65" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <state>up</state>
+        <text>Indietro</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::PointyButton" x="941" y="704" w="118" h="-1" measuredW="71" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>SaveIcon%7Csmall</icon>
+        <text>Fine</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Label" x="329" y="212" w="-1" h="-1" measuredW="928" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>L%27operazione%20di%20creazione%20della%20nuova%20convenzione%20%E8%20quasi%20terminata%2C%20%E8%20possibile%20aggiungere%20degli%20allegati%20o%20altrimenti%20proseguire%20per%20completare%20l%27operazione.</text>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Button" x="329" y="283" w="170" h="34" measuredW="149" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Csmall</icon>
+        <text>Aggiungi%20%20allegati</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::List" x="334" y="376" w="122" h="158" measuredW="100" measuredH="126" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Documento1.pdf%0ATabella.xsl</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="334" y="332" w="-1" h="-1" measuredW="115" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Documenti%20allegati%20%3A</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
