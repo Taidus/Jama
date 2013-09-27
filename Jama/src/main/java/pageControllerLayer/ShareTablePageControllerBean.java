@@ -9,6 +9,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import javax.resource.spi.IllegalStateException;
 
+import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
@@ -70,20 +71,18 @@ public class ShareTablePageControllerBean implements Serializable {
 		float[] personnelShares = {};
 
 		if (!areMainValuesConsistentOrAdjustable(mainValues)) {
-			throw new ValidatorException(new FacesMessage(
-					"Le quote non sono corrette"));
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableValues"));
 		}
 
 		if (!areGoodsAndServicesSharesConsistent(goodsAndServicesValues,
 				goodsAndServices)) {
-			throw new ValidatorException(new FacesMessage(
-					"Le quote dei Beni e Servizi non sono corrette"));
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableGoods"));
 		}
 
 		if (!arePersonnelSharesConsistent(personnelShares, personnel)) {
-			throw new ValidatorException(new FacesMessage(
-					"Le quote del personale sono corrette"));
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 		}
+		//FIXME probabilmente si possono usare i messaggi di errore parametrizzati
 
 		adjustMainValues(mainValues, goodsAndServices);
 	}
