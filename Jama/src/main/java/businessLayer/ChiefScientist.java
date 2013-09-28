@@ -29,6 +29,7 @@ public class ChiefScientist {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getSurname() {
 		return surname;
 	}
@@ -37,6 +38,10 @@ public class ChiefScientist {
 	}
 	public int getId() {
 		return id;
+	}
+	
+	public String getCompleteName(){
+		return this.name + " " + this.surname;
 	}
 
 	@Override

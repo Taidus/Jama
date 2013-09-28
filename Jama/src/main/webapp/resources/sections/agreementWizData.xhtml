@@ -213,7 +213,8 @@
 					</p:column>
 
 					<p:column colspan="2">
-						<h:message id="taxAmountError" class="errorMessage" for="taxableAmount" />
+						<h:message id="taxAmountError" class="errorMessage"
+							for="taxableAmount" />
 					</p:column>
 				</p:row>
 
@@ -234,7 +235,7 @@
 						</h:inputText>
 					</p:column>
 
- 					<p:column colspan="2">
+					<p:column colspan="2">
 						<h:message id="ivaError" class="errorMessage" for="iva" />
 					</p:column>
 				</p:row>
@@ -256,68 +257,69 @@
 					</p:column>
 				</p:row>
 
-				<ui:remove>
 
-					<p:row>
+				<p:row>
 
-						<p:column>
-							<h:outputText value="#{msgs.approvalDate}:" />
-						</p:column>
+					<p:column>
+						<h:outputText value="#{msgs.approvalDate}:" />
+					</p:column>
 
-						<p:column>
-							<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
-								showOtherMonths="true" required="true"
-								value="#{agreementWizardPCB.agreement.approvalDate}">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							</p:calendar>
-						</p:column>
+					<p:column>
+						<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
+							readonlyInput="true" showOn="both"
+							showOtherMonths="true" required="true"
+							value="#{agreementWizardPCB.agreement.approvalDate}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</p:calendar>
+					</p:column>
 
-						<p:column colspan="2">
-							<h:message class="errorMessage" for="approvalDate" />
-						</p:column>
-					</p:row>
-
-
-					<p:row>
-
-						<p:column>
-							<h:outputText value="#{msgs.beginDate}:" />
-						</p:column>
-
-						<p:column>
-							<p:calendar id="beginDate" pattern="dd/MM/yyyy"
-								showOtherMonths="true" required="true"
-								value="#{agreementWizardPCB.agreement.beginDate}">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							</p:calendar>
-						</p:column>
-
-						<p:column colspan="2">
-							<h:message class="errorMessage" for="beginDate" />
-						</p:column>
-					</p:row>
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="approvalDate" />
+					</p:column>
+				</p:row>
 
 
-					<p:row>
+				<p:row>
 
-						<p:column>
-							<h:outputText value="#{msgs.deadlineDate}:" />
-						</p:column>
+					<p:column>
+						<h:outputText value="#{msgs.beginDate}:" />
+					</p:column>
 
-						<p:column>
-							<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
-								showOtherMonths="true" required="true"
-								value="#{agreementWizardPCB.agreement.deadlineDate}">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-							</p:calendar>
-						</p:column>
+					<p:column>
+						<p:calendar id="beginDate" pattern="dd/MM/yyyy"
+							readonlyInput="true" showOn="both"
+							showOtherMonths="true" required="true"
+							value="#{agreementWizardPCB.agreement.beginDate}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</p:calendar>
+					</p:column>
 
-						<p:column colspan="2">
-							<h:message class="errorMessage" for="deadlineDate" />
-						</p:column>
-					</p:row>
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="beginDate" />
+					</p:column>
+				</p:row>
 
-				</ui:remove>
+
+				<p:row>
+
+					<p:column>
+						<h:outputText value="#{msgs.deadlineDate}:" />
+					</p:column>
+
+					<p:column>
+						<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
+							readonlyInput="true" showOn="both"
+							showOtherMonths="true" required="true"
+							value="#{agreementWizardPCB.agreement.deadlineDate}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</p:calendar>
+					</p:column>
+
+					<p:column colspan="2">
+						<h:message class="errorMessage" for="deadlineDate" />
+					</p:column>
+				</p:row>
+
 
 
 			</p:panelGrid>

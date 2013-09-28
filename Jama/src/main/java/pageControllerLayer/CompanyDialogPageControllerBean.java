@@ -11,7 +11,7 @@ import daoLayer.CompanyDaoBean;
 @Named("companyDialogPCB")
 @RequestScoped
 public class CompanyDialogPageControllerBean{
-	//FIXME in realtà bisogna aggiustare l'interfaccia, creando un template per i dialoghi
+	//FIXME (in realtà non bisogna aggiustare questa classe ma l'interfaccia, creando un template per i dialoghi)
 	@EJB private CompanyDaoBean companyDao;
 	
 	private Company company;
