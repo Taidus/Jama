@@ -1,14 +1,8 @@
 package businessLayer;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import businessLayer.AbstractShareTable;
-
 import javax.faces.validator.ValidatorException;
 import javax.persistence.*;
-
 import util.Messages;
 
 @Entity

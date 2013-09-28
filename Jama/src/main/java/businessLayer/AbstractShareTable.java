@@ -2,7 +2,6 @@ package businessLayer;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,9 +25,6 @@ public abstract class AbstractShareTable {
 	@ElementCollection
 	protected Map<ChiefScientist, Float> sharePerPersonnel;
 
-	// XXX: un refactor per accorpare tutta sta roba in un qualche tipo di
-	// collezione rende migliore la
-	// validazione (attualmente c'è un'istruzione mostro pazzesca)
 	protected float goodsAndServices;
 	protected float businessTrip;
 	protected float consumerMaterials;
@@ -37,7 +33,6 @@ public abstract class AbstractShareTable {
 	protected float personnelOnContract;
 	protected float otherCost;
 
-	// da vedere il sistema per il passaggio del messaggio di errore
 	public abstract void validate(float[] mainValues,
 			float[] goodsAndServicesValues, float[] personnelValues,
 			float goodsAndServices, float personnel);
@@ -149,19 +144,13 @@ public abstract class AbstractShareTable {
 		return id;
 	}
 
-	// XXX: se per caso aggiungo un attributo alla classe e mi dimentico di
-	// metterlo qua, esplode la validazione
-
-	// XXX: non sono sicuro che List sia giusto, forse un array è più adatto
-	// (visto come la uso di solito)
-
 	protected boolean arePersonnelValuesConsistent(float[] personnelValues,
 			float personnel) {
 		float sum = 0;
 		for (float f : personnelValues) {
 			sum += f;
 		}
-		sum = sum * personnel / 100;
+		sum *= personnel / 100;
 		return MathUtil.doubleEquals(personnel, sum);
 	}
 
@@ -171,7 +160,7 @@ public abstract class AbstractShareTable {
 		for (float f : goodsAndServicesValues) {
 			sum += f;
 		}
-		sum = sum * goodsAndServices / 100;
+		sum *= goodsAndServices / 100;
 		return MathUtil.doubleEquals(goodsAndServices, sum);
 	}
 
