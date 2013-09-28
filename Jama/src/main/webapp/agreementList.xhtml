@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<h:body> 
+
+	<h:form>  
+	  
+	    <p:dataTable id="agreementTable" var="agr" value="#{agreementListPB.allAgreements}" widgetVar="w_agrTable"   
+	            emptyMessage="#{msgs.noAgrFound}" filteredValue="#{agreementListPB.filteredValues}">  
+	  
+	  		<f:facet name="header">  
+	            <p:outputPanel>  
+	                <h:outputText value="#{msgs.search}:" />  
+	                <p:inputText id="globalFilter" onkeyup="w_agrTable.filter()" style="width:150px" />  
+	            </p:outputPanel>  
+	        </f:facet>  
+		  		
+	        <p:column id="chiefColumn" filterBy="#{agr.chief}"   
+	                headerText="#{msgs.chief}"  
+	                filterMatchMode="contains">  
+	            <h:outputText value="#{agr.chief}" />  
+	        </p:column>  
+	        
+	        <p:column id="companyColumn" filterBy="#{agr.company}"   
+	                headerText="#{msgs.company}"  
+	                filterMatchMode="contains">  
+	            <h:outputText value="#{agr.company}" />  
+	        </p:column> 
+	        
+	        <p:column id="dateColumn" filterBy="#{agr.approvalDate}"   
+	                filterMatchMode="contains"> 
+	                <f:facet name="header">
+	                	#{msgs.approvalDate}  
+					    <div style="display: block;  width: 90%; margin: auto;">
+					          <p:calendar id="firstDate" styleClass="calendarFilter" value="#{agreementListPB.filterMinDate}">
+					                  <p:ajax event="dateSelect" listener="#{agreementListPB.filterByDate()}" update="agreementTable" />
+					          </p:calendar>
+					           -
+					          <p:calendar id="lastDate" styleClass="calendarFilter" value="#{agreementListPB.filterMaxDate}">
+					                  <p:ajax event="dateSelect" listener="#{agreementListPB.filterByDate()}" update="agreementTable" />
+					          </p:calendar>
+					    </div>
+					</f:facet>
+	            <h:outputText value="#{agr.chief}" />  
+	        </p:column> 
+	         
+	    </p:dataTable>  
+	      
+	</h:form>  
+
+</h:body> 
+</html>
