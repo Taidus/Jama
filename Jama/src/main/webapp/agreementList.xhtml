@@ -13,7 +13,7 @@
 				value='#{agreementListPB.conversation.id}' />
 
 		<p:dataTable id="agreementTable" var="agr"
-			value="#{agreementListPB.allAgreements}" widgetVar="w_agrTable"
+			value="#{agreementListPB.agreements}" widgetVar="w_agrTable"
 			emptyMessage="#{msgs.noAgrFound}"
 			filteredValue="#{agreementListPB.filteredValues}">
 
@@ -26,7 +26,8 @@
 			</f:facet>
 
 			<p:column id="chiefColumn" filterBy="#{agr.chief.completeName}"
-				headerText="#{msgs.chief}" filterMatchMode="contains">
+				headerText="#{msgs.chief}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterChiefItems}">
 				<h:outputText value="#{agr.chief.completeName}" />
 			</p:column>
 
@@ -61,9 +62,11 @@
 			</p:column>
 
 		</p:dataTable>
+		
+		<h:commandButton action="#{agreementListPB.backToHome()}" value="Home" immediate="true"/> 
 
 	</h:form>
 	
-	<h:commandButton action="#{agreementListPB.backToHome()}" value="Home" immediate="true"/> 
+	
 </h:body>
 </html>

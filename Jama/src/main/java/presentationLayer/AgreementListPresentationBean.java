@@ -13,31 +13,35 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import businessLayer.Agreement;
+import businessLayer.ChiefScientist;
 import daoLayer.AgreementDaoBean;
+import daoLayer.ChiefScientistDaoBean;
 
 @Named("agreementListPB")
 @ConversationScoped
 public class AgreementListPresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EJB
-	private AgreementDaoBean agreementDao;
+	@EJB private AgreementDaoBean agreementDao;
+	@EJB private ChiefScientistDaoBean chiefDao;
 	
 	@Inject private Conversation conversation;
-
-	private List<Agreement> filteredValues;
+	
 	private List<Agreement> agreements;
+
+	private Agreement selectedValue;
+	private List<Agreement> filteredValues;
 	private Date filterMinDate;
 	private Date filterMaxDate;
 
-	public AgreementListPresentationBean() {
-		System.out.println("Costruito");
-	}
+	public AgreementListPresentationBean() {}
 	
 	@PostConstruct
 	public void init() {
 		this.agreements = agreementDao.getAll();
+		
 		this.filteredValues = agreements;
+		
 		conversation.begin();
 	}
 	
@@ -45,8 +49,16 @@ public class AgreementListPresentationBean implements Serializable {
 		return conversation;
 	}
 
-	public List<Agreement> getAllAgreements() {
+	public List<Agreement> getAgreements() {
 		return agreements;
+	}
+
+	public Agreement getSelectedValue() {
+		return selectedValue;
+	}
+
+	public void setSelectedValue(Agreement selectedValue) {
+		this.selectedValue = selectedValue;
 	}
 
 	public List<Agreement> getFilteredValues() {
@@ -100,7 +112,6 @@ public class AgreementListPresentationBean implements Serializable {
 	
 	private void close(){
 		conversation.end();
-		System.out.println("Conversazione chiusa");
 	}
 	
 	public String backToHome(){
