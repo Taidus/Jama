@@ -41,7 +41,7 @@ public class ChiefScientist {
 	}
 	
 	public String getCompleteName(){
-		return this.name + " " + this.surname;
+		return this.surname + " " + this.name;
 	}
 
 	@Override
