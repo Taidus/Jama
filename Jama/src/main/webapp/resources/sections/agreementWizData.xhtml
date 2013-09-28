@@ -70,7 +70,7 @@
 						<h:selectOneMenu id="type"
 							value="#{agreementWizardPCB.agreement.type}"
 							label="#{msgs.agrType}" required="true">
-							<f:selectItems value="#{agreementWizPB.agreementTypeItems}" />
+							<f:selectItems value="#{utilPB.agreementTypeItems}" />
 						</h:selectOneMenu>
 					</p:column>
 
@@ -91,7 +91,7 @@
 						<p:selectOneMenu id="chiefMenu"
 							value="#{agreementWizardPCB.agreement.chief}"
 							label="#{msgs.chief}" required="true">
-							<f:selectItems value="#{agreementWizPB.chiefItems}" />
+							<f:selectItems value="#{utilPB.chiefItems}" />
 							<f:converter binding="#{chiefConverter}" />
 						</p:selectOneMenu>
 					</p:column>
@@ -140,7 +140,7 @@
 						<h:selectOneMenu id="companyMenu"
 							value="#{agreementWizardPCB.agreement.company}"
 							label="#{msgs.company}" required="true">
-							<f:selectItems value="#{agreementWizPB.companyItems}" />
+							<f:selectItems value="#{utilPB.companyItems}" />
 							<f:converter binding="#{companyConverter}" />
 						</h:selectOneMenu>
 					</p:column>

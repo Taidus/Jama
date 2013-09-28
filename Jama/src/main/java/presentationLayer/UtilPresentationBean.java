@@ -14,9 +14,9 @@ import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 
-@Named("agreementWizPB")
+@Named("utilPB")
 @SessionScoped //FIXME
-public class AgreementWizardPresentationBean implements Serializable{
+public class UtilPresentationBean implements Serializable{
 	/**
 	 */
 	private static final long serialVersionUID = 1L;
@@ -58,6 +58,6 @@ public class AgreementWizardPresentationBean implements Serializable{
 		return result;
 	}
 	
-	public AgreementWizardPresentationBean() {}
+	public UtilPresentationBean() {}
 
 }
