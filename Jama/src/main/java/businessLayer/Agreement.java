@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
@@ -22,6 +24,9 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 @Entity
+@NamedQueries({
+@NamedQuery(name="Agreement.findAll",query="SELECT a FROM Agreement a")
+})
 public class Agreement implements Serializable {
 
 	/**

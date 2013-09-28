@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -13,18 +14,25 @@ import daoLayer.AgreementDaoBean;
 
 @Named("agreementListPB")
 @RequestScoped
-public class AgreementListPresentationBean {
+public class AgreementListPresentationBean  {
 	
+
 	@EJB private AgreementDaoBean agreementDao;
 	
 	private List<Agreement> filteredValues;
 	private List<Agreement> agreements;
 	private Date filterMinDate;
 	private Date filterMaxDate;
+	
+	@PostConstruct
+	public void init(){
+		this.agreements = agreementDao.getAll();
+		this.filteredValues = agreements;	}
+	
+
 
 	public AgreementListPresentationBean() {
-		this.agreements = agreementDao.getAll();
-		this.filteredValues = agreements;
+		
 	}
 	
 	public List<Agreement> getAllAgreements(){
