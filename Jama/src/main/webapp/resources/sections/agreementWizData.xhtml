@@ -90,7 +90,8 @@
 					<p:column>
 						<p:selectOneMenu id="chiefMenu"
 							value="#{agreementWizardPCB.agreement.chief}"
-							label="#{msgs.chief}" required="true">
+							label="#{msgs.chief}" required="true"
+							filter="true" filterMatchMode="contains">
 							<f:selectItems value="#{utilPB.chiefItems}" />
 							<f:converter binding="#{chiefConverter}" />
 						</p:selectOneMenu>

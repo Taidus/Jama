@@ -2,14 +2,19 @@ package pageControllerLayer;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import annotations.Current;
+import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import daoLayer.ChiefScientistDaoBean;
 
 @Named("chiefDialogPCB")
 @RequestScoped
 public class ChiefDialogPageControllerBean{
+	
+	@Inject @Current private Agreement agreement;
 	
 	@EJB private ChiefScientistDaoBean chiefDao;
 	
@@ -29,6 +34,7 @@ public class ChiefDialogPageControllerBean{
 
 	public void save(){
 		chiefDao.createChiefScientist(chief);
+		agreement.setChief(chief);
 	}
 	
 
