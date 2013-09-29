@@ -74,6 +74,24 @@ public class Agreement implements Serializable {
 	public Agreement() {
 		shareTable = new AgreementShareTable();
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber="
+				+ protocolNumber + ", type=" + type + ", chief=" + chief
+				+ ", contactPerson=" + contactPerson + ", company=" + company
+				+ ", department=" + department + ", CIA_projectNumber="
+				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber
+				+ ", shareTable=" + shareTable + ", wholeAmount=" + wholeAmount
+				+ ", IVA_amount=" + IVA_amount + ", wholeTaxableAmount="
+				+ wholeTaxableAmount + ", installments=" + installments
+				+ ", approvalDate=" + approvalDate + ", beginDate=" + beginDate
+				+ ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
+	}
+
+
 
 	public int getId() {
 		return id;

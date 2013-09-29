@@ -97,6 +97,33 @@
 		</h:form>
 
 	</p:dialog>
+	
+		<p:dialog id="personnelShareDialog" header="#{msgs.newCompanyTitle}"
+		widgetVar="w_personnelShare" modal="true">
+		<h:form>
+
+			<h:panelGrid id="personnelSharePanel" columns="3"
+				columnClasses="label, value, errorMessage" styleClass="grid">
+
+				<h:outputText value="#{msgs.name}:" />
+				<h:inputText id="companyName" value="#{companyDialogPCB.company.name}"
+					label="#{msgs.name}" required="true" />
+				<h:message for="companyName" />
+
+				<br />
+
+			</h:panelGrid>
+
+			<p:commandButton type="button" onclick="w_companyDialog.hide();"
+				value="#{msgs.cancel}" />
+			<p:commandButton value="#{msgs.save}"
+				actionListener="#{companyDialogPCB.save()}"
+				update=":#{p:component('companyMenu')}"
+				oncomplete="if (!args.validationFailed) w_companyDialog.hide()" />
+
+		</h:form>
+
+	</p:dialog>
 
 
 </h:body>

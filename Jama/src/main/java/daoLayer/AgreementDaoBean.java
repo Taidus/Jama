@@ -7,6 +7,7 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.TypedQuery;
 
 import businessLayer.Agreement;
 
@@ -42,6 +43,10 @@ public class AgreementDaoBean {
 		
 		return em.createNamedQuery("Agreement.findAll",Agreement.class).getResultList();
 		
+	}
+	
+	public TypedQuery<Agreement> getFindAllQuery(){
+		return em.createNamedQuery("Agreement.findAll",Agreement.class);
 	}
 	
 	@Remove

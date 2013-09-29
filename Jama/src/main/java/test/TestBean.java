@@ -1,23 +1,35 @@
 package test;
 
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 import businessLayer.Department;
 import daoLayer.AgreementDaoBean;
+import daoLayer.AgreementSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
 import daoLayer.DepartmentDaoBean;
+import daoLayer.ResultPagerBean;
 
 @Named
-@RequestScoped
-public class TestBean {
+@SessionScoped
+public class TestBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@EJB
 	private ChiefScientistDaoBean chiefSB;
 	@EJB
@@ -26,7 +38,8 @@ public class TestBean {
 	private AgreementDaoBean agrSB;
 	@EJB
 	private CompanyDaoBean compDB;
-
+	@EJB
+	private AgreementSearchService searchService;
 	public TestBean() {
 	}
 
@@ -71,34 +84,54 @@ public class TestBean {
 		System.out.println(result);
 
 	}
-	
-	
-	private void testChiefScientistGetAll(){
-		
-		
+
+	private void testChiefScientistGetAll() {
+
 		ChiefScientist c = new ChiefScientist();
 		c.setName("Enrico");
 		c.setSurname("Vicario");
-		
+
 		ChiefScientist c1 = new ChiefScientist();
 		c1.setName("Beppe");
 		c1.setSurname("Modica");
-		
+
 		chiefSB.createChiefScientist(c);
 		chiefSB.createChiefScientist(c1);
 
-		
 		List<ChiefScientist> result = chiefSB.getAll();
 		System.out.println(result);
-		
-		
-		
+
 	}
 
-	public void doJob() {
+	@PostConstruct
+	public void init() {
 		
-		testChiefScientistGetAll();
+		int chiefId = 11;
+		int companyId = 12;
+		Date lower = new Date(Calendar.getInstance().getTimeInMillis());
+		Calendar c = new GregorianCalendar();
+		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+		c.add(Calendar. DAY_OF_MONTH,1);
+		Date upper = new Date(c.getTimeInMillis());
+		searchService.setPageSize(1);
+		
+		searchService.init(lower, upper, chiefId, null);
+	}
 
+	public void doJob1() {
+
+		System.out.println(searchService.getCurrentResults());
+
+	}
+
+	public void doJob2() {
+
+		searchService.next();
+	}
+
+	public void doJob3() {
+
+		searchService.previous();
 	}
 
 }
