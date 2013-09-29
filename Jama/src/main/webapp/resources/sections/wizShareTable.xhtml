@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:debug />
 
 	<p:tab id="tabRip" title="Passo 2">
@@ -78,14 +78,43 @@
 					value="#{shareTablePCB.shareTable.otherCost}"
 					label="#{msgs.shareTableOtherCosts}" required="true" />
 				<h:message for="otherCost" />
-				
-				<h:inputHidden value="needed" id="percentsCheck" validator="#{shareTablePCB.validate}" />
-				<h:message styleClass="errorMessage" for="percentsCheck"/>
+
+				<h:inputHidden value="needed" id="percentsCheck"
+					validator="#{shareTablePCB.validate}" />
+				<h:message styleClass="errorMessage" for="percentsCheck" />
 
 			</h:panelGrid>
-
-
 		</p:panel>
+
+		<p:dataTable id="personnelShares" value="#{shareTablePCB.shares}"
+			var="share">
+
+			<f:facet name="header">
+				#{msgs.shareTablePersonnel}
+			</f:facet>
+
+			<p:column>
+				<f:facet name="header">
+					#{msgs.chief}
+				</f:facet>
+				
+				#{share.chiefScientist}
+				
+				<f:facet name="footer">
+					<p:commandButton value="#{msgs.add}"
+						action="#{shareTablePCB.addRow()}" update="personnelShares"
+						immediate="true" />
+				</f:facet>
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					#{msgs.share}
+				</f:facet>
+				
+				#{share.share}
+			</p:column>
+		</p:dataTable>
 
 	</p:tab>
 

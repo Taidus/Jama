@@ -1,7 +1,10 @@
 package pageControllerLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -11,16 +14,35 @@ import javax.inject.Named;
 
 import annotations.Current;
 import businessLayer.AbstractShareTable;
+import businessLayer.ChiefScientist;
 
 @Named("shareTablePCB")
 @ConversationScoped
 public class ShareTablePageControllerBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	@Inject @Current private AbstractShareTable shareTable;
+	@Inject
+	@Current
+	private AbstractShareTable shareTable;
+	private List<PersonnelShare> shares;
+	private PersonnelShare selectedShare;
+	
+	public PersonnelShare getSelectedShare() {
+		return selectedShare;
+	}
+
+	public void setSelectedShare(PersonnelShare selectedShare) {
+		this.selectedShare = selectedShare;
+	}
+
+	@PostConstruct
+	public void init() {
+		shares = new ArrayList<PersonnelShare>();
+	}
+	
+	public List<PersonnelShare> getShares() {
+		return shares;
+	}
 
 	public ShareTablePageControllerBean() {
 	}
@@ -28,7 +50,6 @@ public class ShareTablePageControllerBean implements Serializable {
 	public AbstractShareTable getShareTable() {
 		return shareTable;
 	}
-
 
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
@@ -64,5 +85,33 @@ public class ShareTablePageControllerBean implements Serializable {
 
 		shareTable.validate(mainValues, goodsAndServicesValues,
 				personnelValues, goodsAndServices, personnel);
+	}
+
+	public static class PersonnelShare {
+		private ChiefScientist chiefScientist;
+		private float share;
+
+		public ChiefScientist getChiefScientist() {
+			return chiefScientist;
+		}
+
+		public void setChiefScientist(ChiefScientist chiefScientist) {
+			this.chiefScientist = chiefScientist;
+		}
+
+		public float getShare() {
+			return share;
+		}
+
+		public void setShare(float share) {
+			this.share = share;
+		}
+	}
+	
+	public void addRow() {
+		PersonnelShare p = new PersonnelShare();
+		p.setChiefScientist(new ChiefScientist());
+		p.setShare(0);
+		shares.add(p);
 	}
 }
