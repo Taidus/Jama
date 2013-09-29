@@ -66,10 +66,25 @@ public class UtilPresentationBean implements Serializable{
 		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
 			current = chiefs.get(i);
-			result[i+1] = new SelectItem(current.getCompleteName(), current.getCompleteName());
+			result[i+1] = new SelectItem(current, current.getCompleteName());
 		}
 		return result;
 	}
+	
+	public SelectItem[] getFilterCompanyItems(){
+		
+		List<Company> companies = companyDaoBean.getAll();
+		
+		SelectItem[] result = new SelectItem[companies.size()+1];
+		result[0] = new SelectItem("", "Select");
+		Company current = null;
+		for(int i=0; i< companies.size(); i++){
+			current = companies.get(i);
+			result[i+1] = new SelectItem(current, current.getName());
+		}
+		return result;
+	}
+	
 	
 	public UtilPresentationBean() {}
 

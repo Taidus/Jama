@@ -12,11 +12,14 @@
 		<input type="hidden" name="cid"
 				value='#{agreementListPB.conversation.id}' />
 
-		<p:dataTable id="agreementTable" var="agr"
-			value="#{agreementListPB.agreements}" widgetVar="w_agrTable"
-			emptyMessage="#{msgs.noAgrFound}"
-			filteredValue="#{agreementListPB.filteredValues}">
+		<p:dataTable var="agr" widgetVar="w_agrTable" value="#{agreementListPB.lazyModel}" emptyMessage="#{msgs.noAgrFound}"
+			paginator="true"
+			rows="10"
+			paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			rowsPerPageTemplate="5,10,15" 
+			selection="#{agreementListPB.selectedValue}" id="agreementTable" lazy="true">
 
+			<ui:remove>
 			<f:facet name="header">
 				<p:outputPanel>
 					<h:outputText value="#{msgs.search}:" />
@@ -24,38 +27,37 @@
 						style="width:150px" />
 				</p:outputPanel>
 			</f:facet>
+			</ui:remove>
 
-			<p:column id="chiefColumn" filterBy="#{agr.chief.completeName}"
+			<p:column id="chiefColumn" filterBy="#{agr.chief}"
 				headerText="#{msgs.chief}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterChiefItems}">
 				<h:outputText value="#{agr.chief.completeName}" />
 			</p:column>
 
-			<p:column id="companyColumn" filterBy="#{agr.company.name}"
-				headerText="#{msgs.company}" filterMatchMode="contains">
+			<p:column id="companyColumn" filterBy="#{agr.company}"
+				headerText="#{msgs.company}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterCompanyItems}">
 				<h:outputText value="#{agr.company.name}" />
 			</p:column>
 
 			<p:column id="dateColumn">
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
+					<h:form>
 					    <div style="display: block; width: 90%; margin: auto;">
 						<p:calendar id="firstDate" styleClass="calendarFilter"
-							value="#{agreementListPB.filterMinDate}" pattern="dd/MM/yyyy"
+							value="#{agreementListPB.lazyModel.filterMinDate}" pattern="dd/MM/yyyy"
 							readonlyInput="true" showOn="both" showOtherMonths="true">
-							<p:ajax event="dateSelect"
-								listener="#{agreementListPB.filterByDate()}"
-								update="agreementTable" />
 						</p:calendar>
 						-
 						<p:calendar id="lastDate" styleClass="calendarFilter"
-							value="#{agreementListPB.filterMaxDate}" pattern="dd/MM/yyyy"
+							value="#{agreementListPB.lazyModel.filterMaxDate}" pattern="dd/MM/yyyy"
 							readonlyInput="true" showOn="both" showOtherMonths="true">
-							<p:ajax event="dateSelect"
-								listener="#{agreementListPB.filterByDate()}"
-								update="agreementTable" />
 						</p:calendar>
 					</div>
+						<p:commandButton value="#{msgs.filter}" onclick="w_agrTable.filter()" />
+					</h:form>
 				</f:facet>
 				
 				<h:outputText value="#{agr.approvalDate}" />
