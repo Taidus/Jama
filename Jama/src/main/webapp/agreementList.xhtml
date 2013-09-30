@@ -13,10 +13,8 @@
 				value='#{agreementListPB.conversation.id}' />
 
 		<p:dataTable var="agr" widgetVar="w_agrTable" value="#{agreementListPB.lazyModel}" emptyMessage="#{msgs.noAgrFound}"
-			paginator="true"
-			rows="10"
-			paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-			rowsPerPageTemplate="5,10,15" 
+			paginator="true" rows="10" rowsPerPageTemplate="5,10,15" 
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
 			selection="#{agreementListPB.selectedValue}" id="agreementTable" lazy="true">
 
 			<ui:remove>
@@ -29,13 +27,13 @@
 			</f:facet>
 			</ui:remove>
 
-			<p:column id="chiefColumn" filterBy="#{agr.chief}"
+			<p:column id="chiefColumn" filterBy="#{agr.chief.id}"
 				headerText="#{msgs.chief}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterChiefItems}">
 				<h:outputText value="#{agr.chief.completeName}" />
 			</p:column>
 
-			<p:column id="companyColumn" filterBy="#{agr.company}"
+			<p:column id="companyColumn" filterBy="#{agr.company.id}"
 				headerText="#{msgs.company}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterCompanyItems}">
 				<h:outputText value="#{agr.company.name}" />

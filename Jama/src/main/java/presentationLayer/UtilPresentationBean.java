@@ -66,7 +66,7 @@ public class UtilPresentationBean implements Serializable{
 		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
 			current = chiefs.get(i);
-			result[i+1] = new SelectItem(current, current.getCompleteName());
+			result[i+1] = new SelectItem(current.getId(), current.getCompleteName());
 		}
 		return result;
 	}
@@ -80,7 +80,7 @@ public class UtilPresentationBean implements Serializable{
 		Company current = null;
 		for(int i=0; i< companies.size(); i++){
 			current = companies.get(i);
-			result[i+1] = new SelectItem(current, current.getName());
+			result[i+1] = new SelectItem(current.getId(), current.getName());
 		}
 		return result;
 	}
