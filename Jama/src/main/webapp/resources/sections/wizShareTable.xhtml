@@ -87,7 +87,9 @@
 		</p:panel>
 
 		<p:dataTable id="personnelShares" value="#{shareTablePCB.shares}"
-			var="share">
+			var="share" selectionMode="single"
+			selection="#{shareTablePCB.selectedShare}"
+			rowKey="#{share}">
 
 			<f:facet name="header">
 				#{msgs.shareTablePersonnel}
@@ -101,14 +103,19 @@
 				<p:selectOneMenu id="chiefMenu" value="#{share.chiefScientist}"
 					label="#{msgs.chief}" required="true" filter="true"
 					filterMatchMode="contains">
+					<f:selectItem itemLabel="Selezionare" itemValue="#{null}"
+						noSelectionOption="true" />
 					<f:selectItems value="#{utilPB.chiefItems}" />
-					<f:converter binding="#{chiefConverter}" />
+					<f:converter binding="#{chiefConverterPersonnelShare}" />
 					<p:ajax process="@this" />
 				</p:selectOneMenu>
 
 				<f:facet name="footer">
 					<p:commandButton value="#{msgs.add}"
 						action="#{shareTablePCB.addRow()}" update="personnelShares"
+						immediate="true" />
+					<p:commandButton value="#{msgs.remove}"
+						action="#{shareTablePCB.removeRow()}" update="personnelShares"
 						immediate="true" />
 				</f:facet>
 			</p:column>

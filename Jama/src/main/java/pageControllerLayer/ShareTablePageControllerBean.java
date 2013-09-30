@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
@@ -12,8 +11,6 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import daoLayer.ChiefScientistDaoBean;
 import annotations.Current;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
@@ -40,6 +37,7 @@ public class ShareTablePageControllerBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		shares = new ArrayList<PersonnelShare>();
+		shares.add(new PersonnelShare());
 	}
 
 	public List<PersonnelShare> getShares() {
@@ -56,8 +54,6 @@ public class ShareTablePageControllerBean implements Serializable {
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
 
-		debug();
-		
 		float atheneumCapitalBalance = (Float) ((UIInput) component
 				.findComponent("atheneumCapitalBalance")).getValue();
 		float atheneumCommonBalance = (Float) ((UIInput) component
@@ -96,6 +92,11 @@ public class ShareTablePageControllerBean implements Serializable {
 		private ChiefScientist chiefScientist;
 		private float share;
 
+		public PersonnelShare() {
+			chiefScientist = new ChiefScientist();
+			share = 0;
+		}
+
 		public ChiefScientist getChiefScientist() {
 			return chiefScientist;
 		}
@@ -115,18 +116,14 @@ public class ShareTablePageControllerBean implements Serializable {
 
 	public void addRow() {
 		PersonnelShare p = new PersonnelShare();
-		// XXX
 		p.setChiefScientist(new ChiefScientist());
 		p.setShare(0);
 		shares.add(p);
 	}
 
-	public void debug() {
-		System.out.println("[");
-		for (Iterator<PersonnelShare> it = shares.iterator(); it.hasNext();) {
-			PersonnelShare p = it.next();
-			System.out.println(p.getChiefScientist().getCompleteName() + ": " + p.getShare());
-		}
-		System.out.println("]");
+	public void removeRow() {
+		System.out.println(selectedShare);
+		shares.remove(selectedShare);
+		System.out.println(shares);
 	}
 }
