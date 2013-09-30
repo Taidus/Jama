@@ -2,6 +2,7 @@ package pageControllerLayer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -26,7 +27,7 @@ public class ShareTablePageControllerBean implements Serializable {
 	private AbstractShareTable shareTable;
 	private List<PersonnelShare> shares;
 	private PersonnelShare selectedShare;
-	
+
 	public PersonnelShare getSelectedShare() {
 		return selectedShare;
 	}
@@ -39,7 +40,7 @@ public class ShareTablePageControllerBean implements Serializable {
 	public void init() {
 		shares = new ArrayList<PersonnelShare>();
 	}
-	
+
 	public List<PersonnelShare> getShares() {
 		return shares;
 	}
@@ -107,11 +108,21 @@ public class ShareTablePageControllerBean implements Serializable {
 			this.share = share;
 		}
 	}
-	
+
 	public void addRow() {
 		PersonnelShare p = new PersonnelShare();
 		p.setChiefScientist(new ChiefScientist());
 		p.setShare(0);
 		shares.add(p);
+	}
+
+	public void debug() {
+		System.out.println("[");
+		for (Iterator<PersonnelShare> it = shares.iterator(); it.hasNext();) {
+			PersonnelShare p = it.next();
+			System.out.println(p.getChiefScientist().getCompleteName() + ": "
+					+ p.getShare());
+		}
+		System.out.println("]");
 	}
 }

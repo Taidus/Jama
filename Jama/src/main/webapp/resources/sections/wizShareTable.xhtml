@@ -97,9 +97,14 @@
 				<f:facet name="header">
 					#{msgs.chief}
 				</f:facet>
-				
-				#{share.chiefScientist}
-				
+
+				<p:selectOneMenu id="chiefMenu" value="#{share.chiefScientist}"
+					label="#{msgs.chief}" required="true" filter="true"
+					filterMatchMode="contains">
+					<f:selectItems value="#{utilPB.chiefItems}" />
+					<f:converter binding="#{chiefConverter}" />
+				</p:selectOneMenu>
+
 				<f:facet name="footer">
 					<p:commandButton value="#{msgs.add}"
 						action="#{shareTablePCB.addRow()}" update="personnelShares"
@@ -111,10 +116,14 @@
 				<f:facet name="header">
 					#{msgs.share}
 				</f:facet>
-				
-				#{share.share}
+
+				<h:inputText id="share" value="#{share.share}" label="#{msgs.share}"
+					required="true" />
 			</p:column>
 		</p:dataTable>
+
+		<p:commandButton value="debug" action="#{shareTablePCB.debug}"
+			immediate="true" />
 
 	</p:tab>
 
