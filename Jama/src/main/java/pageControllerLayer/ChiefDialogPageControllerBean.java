@@ -14,7 +14,7 @@ import daoLayer.ChiefScientistDaoBean;
 @RequestScoped
 public class ChiefDialogPageControllerBean{
 	
-	@Inject @Current private Agreement agreement;
+	//@Inject @Current private Agreement agreement;
 	
 	@EJB private ChiefScientistDaoBean chiefDao;
 	
@@ -34,7 +34,7 @@ public class ChiefDialogPageControllerBean{
 
 	public void save(){
 		chiefDao.createChiefScientist(chief);
-		agreement.setChief(chief);
+		//agreement.setChief(chief);
 	}
 	
 

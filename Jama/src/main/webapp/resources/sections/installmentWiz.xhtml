@@ -3,7 +3,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+>
 
 <h:head>
 	<h:outputStylesheet name="installmentWiz.css" library="css" />
@@ -22,16 +24,19 @@
 
 				<ui:include src="/resources/sections/installmentWizData.xhtml" />
 
-				<ui:include src="/resources/sections/wizShareTable.xhtml" />
-				
+				<p:tab id="tabRip" title="Passo 2">
+					<sections:wizShareTable
+						shareTableController="#{agreementWizardPCB.shareTableController}" />
+				</p:tab>
+
 				<ui:include src="/resources/sections/installmentLastStep.xhtml" />
-				
-				
+
+
 
 			</p:wizard>
 
-			<h:button value="#{msgs.cancel}" outcome="/cancel"
-				immediate="true" ajax="false" />
+			<h:button value="#{msgs.cancel}" outcome="/cancel" immediate="true"
+				ajax="false" />
 
 		</h:form>
 	</h:panelGrid>

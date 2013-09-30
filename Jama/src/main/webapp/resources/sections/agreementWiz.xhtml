@@ -3,7 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 <h:head>
 	<h:outputStylesheet name="agreementWiz.css" library="css" />
@@ -21,10 +22,12 @@
 
 				<ui:include src="/resources/sections/agreementWizData.xhtml" />
 
-				<ui:include src="/resources/sections/wizShareTable.xhtml" />
-				
+				<p:tab id="tabRip" title="Passo 2">
+					<sections:wizShareTable shareTableController ="#{agreementWizardPCB.shareTableController}" />
+				</p:tab>
+
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
-				
+
 
 			</p:wizard>
 
@@ -70,7 +73,7 @@
 		</h:form>
 
 	</p:dialog>
-	
+
 	<p:dialog id="companyDialog" header="#{msgs.newCompanyTitle}"
 		widgetVar="w_companyDialog" modal="true">
 		<h:form>
@@ -79,8 +82,9 @@
 				columnClasses="label, value, errorMessage" styleClass="grid">
 
 				<h:outputText value="#{msgs.name}:" />
-				<h:inputText id="companyName" value="#{companyDialogPCB.company.name}"
-					label="#{msgs.name}" required="true" />
+				<h:inputText id="companyName"
+					value="#{companyDialogPCB.company.name}" label="#{msgs.name}"
+					required="true" />
 				<h:message for="companyName" />
 
 				<br />
@@ -97,8 +101,8 @@
 		</h:form>
 
 	</p:dialog>
-	
-		<p:dialog id="personnelShareDialog" header="#{msgs.newCompanyTitle}"
+
+	<p:dialog id="personnelShareDialog" header="#{msgs.newCompanyTitle}"
 		widgetVar="w_personnelShare" modal="true">
 		<h:form>
 
@@ -106,8 +110,9 @@
 				columnClasses="label, value, errorMessage" styleClass="grid">
 
 				<h:outputText value="#{msgs.name}:" />
-				<h:inputText id="companyName" value="#{companyDialogPCB.company.name}"
-					label="#{msgs.name}" required="true" />
+				<h:inputText id="companyName"
+					value="#{companyDialogPCB.company.name}" label="#{msgs.name}"
+					required="true" />
 				<h:message for="companyName" />
 
 				<br />

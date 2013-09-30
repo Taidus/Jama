@@ -1,30 +1,28 @@
 package pageControllerLayer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
-import annotations.Current;
+
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
-@Named("shareTablePCB")
-@ConversationScoped
-public class ShareTablePageControllerBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@Inject
-	@Current
+public class ShareTableController  {
+
+
 	private AbstractShareTable shareTable;
 	private List<PersonnelShare> shares;
 	private PersonnelShare selectedShare;
+	
+	public ShareTableController(AbstractShareTable shareTable) {
+		shares = new ArrayList<PersonnelShare>();
+		shares.add(new PersonnelShare());
+		this.shareTable = shareTable;
+	}
 
 	public PersonnelShare getSelectedShare() {
 		return selectedShare;
@@ -34,18 +32,10 @@ public class ShareTablePageControllerBean implements Serializable {
 		this.selectedShare = selectedShare;
 	}
 
-	@PostConstruct
-	public void init() {
-		shares = new ArrayList<PersonnelShare>();
-		shares.add(new PersonnelShare());
-	}
-
 	public List<PersonnelShare> getShares() {
 		return shares;
 	}
 
-	public ShareTablePageControllerBean() {
-	}
 
 	public AbstractShareTable getShareTable() {
 		return shareTable;
