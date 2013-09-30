@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import daoLayer.ChiefScientistDaoBean;
 import annotations.Current;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
@@ -54,6 +55,9 @@ public class ShareTablePageControllerBean implements Serializable {
 
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
+
+		debug();
+		
 		float atheneumCapitalBalance = (Float) ((UIInput) component
 				.findComponent("atheneumCapitalBalance")).getValue();
 		float atheneumCommonBalance = (Float) ((UIInput) component
@@ -111,6 +115,7 @@ public class ShareTablePageControllerBean implements Serializable {
 
 	public void addRow() {
 		PersonnelShare p = new PersonnelShare();
+		// XXX
 		p.setChiefScientist(new ChiefScientist());
 		p.setShare(0);
 		shares.add(p);
@@ -120,8 +125,7 @@ public class ShareTablePageControllerBean implements Serializable {
 		System.out.println("[");
 		for (Iterator<PersonnelShare> it = shares.iterator(); it.hasNext();) {
 			PersonnelShare p = it.next();
-			System.out.println(p.getChiefScientist().getCompleteName() + ": "
-					+ p.getShare());
+			System.out.println(p.getChiefScientist().getCompleteName() + ": " + p.getShare());
 		}
 		System.out.println("]");
 	}

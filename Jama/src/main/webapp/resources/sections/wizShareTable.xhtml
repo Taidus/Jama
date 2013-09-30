@@ -103,6 +103,7 @@
 					filterMatchMode="contains">
 					<f:selectItems value="#{utilPB.chiefItems}" />
 					<f:converter binding="#{chiefConverter}" />
+					<p:ajax process="@this" />
 				</p:selectOneMenu>
 
 				<f:facet name="footer">
@@ -118,12 +119,11 @@
 				</f:facet>
 
 				<h:inputText id="share" value="#{share.share}" label="#{msgs.share}"
-					required="true" />
+					required="true">
+					<p:ajax process="@this" />
+				</h:inputText>
 			</p:column>
 		</p:dataTable>
-
-		<p:commandButton value="debug" action="#{shareTablePCB.debug}"
-			immediate="true" />
 
 	</p:tab>
 
