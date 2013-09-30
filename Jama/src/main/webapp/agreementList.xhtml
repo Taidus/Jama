@@ -11,11 +11,17 @@
 	<h:form>
 		<input type="hidden" name="cid"
 				value='#{agreementListPB.conversation.id}' />
+				
+		<p:contextMenu for="agreementTable">  
+	        <p:menuitem value="#{msgs.view}" outcome="done" icon="ui-icon-search" />  
+	        <p:menuitem value="#{msgs.edit}" outcome="cancel" icon="ui-icon-edit"/>  
+	    </p:contextMenu> 
 
-		<p:dataTable var="agr" widgetVar="w_agrTable" value="#{agreementListPB.lazyModel}" emptyMessage="#{msgs.noAgrFound}"
+		<p:dataTable id="agreementTable" var="agr" widgetVar="w_agrTable" lazy="true" 
+			value="#{agreementListPB.lazyModel}" emptyMessage="#{msgs.noAgrFound}"
 			paginator="true" rows="10" rowsPerPageTemplate="5,10,15" 
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
-			selection="#{agreementListPB.selectedValue}" id="agreementTable" lazy="true">
+			selection="#{agreementListPB.selectedValue}" selectionMode="single" rowKey="#{agr.id}">
 
 			<ui:remove>
 			<f:facet name="header">
@@ -42,19 +48,20 @@
 			<p:column id="dateColumn">
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
-					<h:form>
+					<h:form id="calendarFilters">
 					    <div style="display: block; width: 90%; margin: auto;">
-						<p:calendar id="firstDate" styleClass="calendarFilter"
-							value="#{agreementListPB.lazyModel.filterMinDate}" pattern="dd/MM/yyyy"
-							readonlyInput="true" showOn="both" showOtherMonths="true">
-						</p:calendar>
-						-
-						<p:calendar id="lastDate" styleClass="calendarFilter"
-							value="#{agreementListPB.lazyModel.filterMaxDate}" pattern="dd/MM/yyyy"
-							readonlyInput="true" showOn="both" showOtherMonths="true">
-						</p:calendar>
-					</div>
+							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate"
+								value="#{agreementListPB.lazyModel.filterMinDate}" pattern="dd/MM/yyyy"
+								readonlyInput="true" showOn="both" showOtherMonths="true">
+							</p:calendar>
+							-
+							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate"
+								value="#{agreementListPB.lazyModel.filterMaxDate}" pattern="dd/MM/yyyy"
+								readonlyInput="true" showOn="both" showOtherMonths="true">
+							</p:calendar>
+						</div>
 						<p:commandButton value="#{msgs.filter}" onclick="w_agrTable.filter()" />
+						<p:commandButton value="#{msgs.reset}" onclick="w_firstDate.setDate(null); w_lastDate.setDate(null);" />
 					</h:form>
 				</f:facet>
 				

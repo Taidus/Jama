@@ -1,6 +1,5 @@
 package presentationLayer;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -16,8 +15,6 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import businessLayer.Agreement;
-import businessLayer.ChiefScientist;
-import daoLayer.AgreementDaoBean;
 import daoLayer.AgreementSearchService;
 
 @Named
@@ -26,16 +23,13 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private AgreementDaoBean agreementDao;
-	@EJB
 	private AgreementSearchService agreementSearch;
 
-	private List<Agreement> fetchedAgreements;
+	private List<Agreement> displayedAgreements;
 
 	private Date filterMinDate;
 	private Date filterMaxDate;
 	private Integer currentChiefId, currentCompanyId;
-	
 	private boolean filterChanged;
 
 	public LazyAgreementDataModel() {
@@ -45,26 +39,33 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	@PostConstruct
-	public void init() {
-		this.fetchedAgreements = agreementDao.getAll();
-		System.out.println("Size: " + fetchedAgreements.size());
-		for (Agreement agr : fetchedAgreements) {
-			System.out.println("Agr #" + agr.getId() + ": " + agr.getChief() + "; " + agr.getCompany());
-		}
-		Field[] f = Agreement.class.getFields();
-		for (int i = 0; i < f.length; i++) {
-			System.out.println(f[i]);
-		}
-	}
+	public void init() {}
 
 	@Override
 	public Agreement getRowData(String rowKey) {
-		return null;
+		int key = Integer.parseInt(rowKey);
+		
+		Agreement current = null;
+		boolean found = false;
+		Iterator<Agreement> it = displayedAgreements.iterator();
+		
+		while(false == found && it.hasNext()){
+			current = it.next();
+			if(current.getId() == key){
+				found = true;
+			}
+		}
+		
+		if(false == found){
+			throw new IllegalStateException("Cannot retrieve agreement from a displayed row");
+		}
+		
+		return current;
 	}
 
 	@Override
 	public Object getRowKey(Agreement agr) {
-		return null;
+		return agr.getId();
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 			System.out.println("[" + key + ", " + value + "]");
 		}
 
-		List<Agreement> data = new ArrayList<>();
+		displayedAgreements = new ArrayList<>();
 //		data = fetchedAgreements;
 
 		// filter
@@ -137,7 +138,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		agreementSearch.setPageSize(pageSize);
 		agreementSearch.setCurrentPage(first/pageSize);
 
-		data = agreementSearch.getCurrentResults();
+		displayedAgreements = agreementSearch.getCurrentResults();
 
 		// sort
 		if (sortField != null) {
@@ -145,15 +146,15 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		}
 
 		// rowCount
-		int dataSize = data.size();
+		int dataSize = displayedAgreements.size();
 		int rowCount = dataSize;
 		
 		// paginate
 		if (dataSize > pageSize) {
 			if (first + pageSize <= dataSize) {
-				data = data.subList(first, first + pageSize);
+				displayedAgreements = displayedAgreements.subList(first, first + pageSize);
 			} else {
-				data = data.subList(first, first + (dataSize % pageSize));
+				displayedAgreements = displayedAgreements.subList(first, first + (dataSize % pageSize));
 			}
 
 			// try {
@@ -168,7 +169,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		
 		filterChanged = false;
 		this.setRowCount(rowCount);
-		return data;
+		return displayedAgreements;
 	}
 
 	public Date getFilterMinDate() {

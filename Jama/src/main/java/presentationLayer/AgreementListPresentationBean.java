@@ -9,8 +9,6 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.model.LazyDataModel;
-
 import businessLayer.Agreement;
 import daoLayer.ChiefScientistDaoBean;
 
