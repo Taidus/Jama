@@ -110,7 +110,8 @@
 				</f:facet>
 
 			<p:selectOneMenu id="chiefMenu" value="#{share.chiefScientist}"
-				label="#{msgs.chief}" filter="true" filterMatchMode="contains">
+				label="#{msgs.chief}" filter="true"
+				filterMatchMode="contains">
 				<f:selectItem itemLabel="Selezionare" itemValue="#{null}" />
 				<f:selectItems value="#{utilPB.chiefItems}" />
 				<f:converter binding="#{chiefConverterPersonnelShare}" />
@@ -120,10 +121,12 @@
 			<f:facet name="footer">
 				<p:commandButton value="#{msgs.add}"
 					action="#{cc.attrs.shareTableController.addRow()}"
-					update="personnelShares" process="personnelShares, @this" />
+					update="personnelShares"
+					process="personnelShares, @this" />
 				<p:commandButton value="#{msgs.remove}"
 					action="#{cc.attrs.shareTableController.removeRow()}"
-					update="personnelShares" process="personnelShares, @this" />
+					update="personnelShares"
+					process="personnelShares, @this" />
 			</f:facet>
 		</p:column>
 

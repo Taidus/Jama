@@ -1,7 +1,10 @@
 package pageControllerLayer;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -70,22 +73,45 @@ public class ShareTableController {
 		float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
 				inventoryMaterials, rentals, personnelOnContract, otherCost };
 		float[] personnelValues = createPersonnelValues(shares);
-		
+
+		debug();
+
 		shareTable.validate(mainValues, goodsAndServicesValues,
 				personnelValues, goodsAndServices, personnel);
+		
+		fillAgreementShares();
 	}
 
 	private float[] createPersonnelValues(List<PersonnelShare> shares) {
 		float[] f = new float[shares.size()];
 		int i = 0;
 		for (PersonnelShare p : shares) {
-			if(p.getChiefScientist() != null) {
+			if (p.getChiefScientist() != null) {
 				f[i] = p.getShare();
-				System.out.println(f[i]);
 				i++;
 			}
 		}
 		return f;
+	}
+	
+	private void fillAgreementShares() {
+		Map<ChiefScientist, Float> m = new HashMap<>();
+		for(PersonnelShare p : shares) {
+			if(p.getChiefScientist() != null) {
+				m.put(p.getChiefScientist(), p.getShare());
+			}
+		}
+		shareTable.setSharePerPersonnel(m);
+	}
+	
+	private void debug() {
+		System.out.println("Quote attuali: ");
+		for (PersonnelShare p : shares) {
+			if (p.getChiefScientist() != null) {
+				System.out.println(p.getChiefScientist().getCompleteName()
+						+ ": " + p.getShare());
+			}
+		}
 	}
 
 	public static class PersonnelShare {

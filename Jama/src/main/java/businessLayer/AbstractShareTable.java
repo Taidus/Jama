@@ -172,8 +172,8 @@ public abstract class AbstractShareTable {
 		return (!(sum < 100));
 	}
 
-	protected void adjustMainValues(Float total) {
-		goodsAndServices += Float.valueOf(100) - total;
+	protected void adjustMainValues(float total) {
+		goodsAndServices += 100 - total;
 	}
 
 }
