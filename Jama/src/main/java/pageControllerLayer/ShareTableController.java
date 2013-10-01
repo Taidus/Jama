@@ -1,6 +1,7 @@
 package pageControllerLayer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UIComponent;
@@ -10,14 +11,12 @@ import javax.faces.context.FacesContext;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
-
-public class ShareTableController  {
-
+public class ShareTableController {
 
 	private AbstractShareTable shareTable;
 	private List<PersonnelShare> shares;
 	private PersonnelShare selectedShare;
-	
+
 	public ShareTableController(AbstractShareTable shareTable) {
 		shares = new ArrayList<PersonnelShare>();
 		shares.add(new PersonnelShare());
@@ -35,7 +34,6 @@ public class ShareTableController  {
 	public List<PersonnelShare> getShares() {
 		return shares;
 	}
-
 
 	public AbstractShareTable getShareTable() {
 		return shareTable;
@@ -105,10 +103,7 @@ public class ShareTableController  {
 	}
 
 	public void addRow() {
-		PersonnelShare p = new PersonnelShare();
-		p.setChiefScientist(new ChiefScientist());
-		p.setShare(0);
-		shares.add(p);
+		shares.add(new PersonnelShare());
 	}
 
 	public void removeRow() {
@@ -116,4 +111,5 @@ public class ShareTableController  {
 		shares.remove(selectedShare);
 		System.out.println(shares);
 	}
+
 }
