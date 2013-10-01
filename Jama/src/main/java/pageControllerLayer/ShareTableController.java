@@ -2,9 +2,11 @@ package pageControllerLayer;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
@@ -67,10 +69,23 @@ public class ShareTableController {
 				structures, personnel, goodsAndServices };
 		float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
 				inventoryMaterials, rentals, personnelOnContract, otherCost };
-		float[] personnelValues = {};
-
+		float[] personnelValues = createPersonnelValues(shares);
+		
 		shareTable.validate(mainValues, goodsAndServicesValues,
 				personnelValues, goodsAndServices, personnel);
+	}
+
+	private float[] createPersonnelValues(List<PersonnelShare> shares) {
+		float[] f = new float[shares.size()];
+		int i = 0;
+		for (PersonnelShare p : shares) {
+			if(p.getChiefScientist() != null) {
+				f[i] = p.getShare();
+				System.out.println(f[i]);
+				i++;
+			}
+		}
+		return f;
 	}
 
 	public static class PersonnelShare {
@@ -78,7 +93,7 @@ public class ShareTableController {
 		private float share;
 
 		public PersonnelShare() {
-			chiefScientist = new ChiefScientist();
+			chiefScientist = null;
 			share = 0;
 		}
 
