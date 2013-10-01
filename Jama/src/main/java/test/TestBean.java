@@ -5,13 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-
-import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 import businessLayer.Department;
@@ -20,7 +17,6 @@ import daoLayer.AgreementSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
 import daoLayer.DepartmentDaoBean;
-import daoLayer.ResultPagerBean;
 
 @Named
 @SessionScoped

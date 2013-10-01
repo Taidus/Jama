@@ -1,13 +1,10 @@
 package pageControllerLayer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
@@ -107,9 +104,7 @@ public class ShareTableController {
 	}
 
 	public void removeRow() {
-		System.out.println(selectedShare);
 		shares.remove(selectedShare);
-		System.out.println(shares);
 	}
 
 }
