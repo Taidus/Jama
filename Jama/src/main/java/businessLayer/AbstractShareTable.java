@@ -37,7 +37,7 @@ public abstract class AbstractShareTable {
 			float[] goodsAndServicesValues, float[] personnelValues,
 			float goodsAndServices, float personnel);
 
-	public void initFields() {
+	public final void initFields() {
 
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
 
