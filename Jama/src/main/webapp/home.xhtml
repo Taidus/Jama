@@ -12,7 +12,7 @@
 <h:body>
 	<h:form>
 	<h:outputText value="Cosa vuoi fare oggi?" styleClass="text" />
-	<h:commandButton value="Crea Convenzione" action="#{agreementWizardPCB.editAgreement()}" styleClass="buttons" />
+	<h:commandButton value="Crea Convenzione" action="#{agreementManager.createAgreement()}" styleClass="buttons" />
 	<h:button value="Aggiungi Rata"
 		outcome="/resources/sections/installmentWiz" styleClass="buttons" />
 	<h:button value="Lista convenzioni"	outcome="agreementList" styleClass="buttons" />

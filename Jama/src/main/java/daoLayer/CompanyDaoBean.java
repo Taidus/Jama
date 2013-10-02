@@ -2,13 +2,17 @@ package daoLayer;
 
 import java.util.List;
 
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ConversationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import businessLayer.Company;
 
-@Stateless
+@Stateful
+@ConversationScoped
+
 public class CompanyDaoBean {
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;

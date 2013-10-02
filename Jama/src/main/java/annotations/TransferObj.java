@@ -15,6 +15,6 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({TYPE, METHOD, FIELD, PARAMETER})
-public @interface Current {
+public @interface TransferObj {
 
 }

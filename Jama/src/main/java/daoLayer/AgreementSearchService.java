@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.ConversationScoped;
 import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -15,6 +16,8 @@ import javax.persistence.criteria.Root;
 import businessLayer.Agreement;
 
 @Stateful
+@ConversationScoped
+
 public class AgreementSearchService extends ResultPagerBean<Agreement> {
 
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,

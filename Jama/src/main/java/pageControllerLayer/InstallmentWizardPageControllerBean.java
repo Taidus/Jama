@@ -8,11 +8,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
-import businessLayer.Agreement;
+import businessLayer.Installment;
 
-@Named("agreementWizardPCB")
+@Named("installmentWizardPCB")
 @ConversationScoped
-public class AgreementWizardPageControllerBean implements Serializable {
+public class InstallmentWizardPageControllerBean implements Serializable {
 
 	/**
 	 * 
@@ -20,24 +20,24 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	@TransferObj
-	private Agreement agreement;
+	private Installment installment;
 	private ShareTableController shareTableController;
 
-	public AgreementWizardPageControllerBean() {
+	public InstallmentWizardPageControllerBean() {
 	}
 
 	@PostConstruct
 	private void init() {
 		shareTableController = new ShareTableController(
-				agreement.getShareTable());
+				installment.getShareTable());
 	}
 
-	public Agreement getAgreement() {
-		return agreement;
+	public Installment getInstallment() {
+		return installment;
 	}
 
-	public void setAgreement(Agreement agreement) {
-		this.agreement = agreement;
+	public void setInstallment(Installment installment) {
+		this.installment = installment;
 	}
 
 	public ShareTableController getShareTableController() {

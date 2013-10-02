@@ -2,6 +2,7 @@ package businessLayer;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -75,7 +76,52 @@ public class Agreement implements Serializable {
 		shareTable = new AgreementShareTable();
 	}
 	
+	public void cloneFields(Agreement copy){
+		
+		this.title = copy.getTitle();
+		this.protocolNumber = copy.getProtocolNumber();
+		this.type = copy.getType();
+		this.chief = copy.getChief();
+		this.contactPerson = copy.getContactPerson();
+		this.company = copy.getCompany();
+		this.department = copy.getDepartment();
+		this.CIA_projectNumber = copy.getCIA_projectNumber();
+		this.inventoryNumber = copy.getInventoryNumber();
+		this.shareTable = copy.getShareTable();
+		this.wholeAmount = copy.getWholeAmount();
+		this.IVA_amount = copy.getIVA_amount();
+		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
+		this.installments = copy.getInstallments();
+		this.approvalDate = copy.getApprovalDate();
+		this.beginDate = copy.getBeginDate();
+		this.deadlineDate = copy.getDeadlineDate();
+		this.note = copy.getNote();
+		
+		
+		
+	}
 	
+	public Installment getInstallmentById(int id){
+		
+		boolean found = false;
+		Installment result = null;
+		Iterator<Installment> i = installments.iterator();
+		while(found==false && i.hasNext()){
+			Installment current = i.next();
+			
+			if(current.getId() == id){
+				result=current;
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+
 
 	@Override
 	public String toString() {
