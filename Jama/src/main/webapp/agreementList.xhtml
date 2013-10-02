@@ -26,14 +26,11 @@
 		<input type="hidden" name="cid"
 			value='#{agreementListPB.conversation.id}' />
 
-		<ui:remove>
-			<p:contextMenu for="agreementTable">
-				<p:menuitem value="#{msgs.view}" outcome="done"
-					icon="ui-icon-search" />
-				<p:menuitem value="#{msgs.edit}" outcome="cancel"
-					icon="ui-icon-wrench" />
-			</p:contextMenu>
-		</ui:remove>
+		<p:contextMenu for="agreementTable">
+			<p:menuitem value="#{msgs.view}" outcome="done" icon="ui-icon-search" />
+			<p:menuitem value="#{msgs.edit}" outcome="cancel"
+				icon="ui-icon-wrench" />
+		</p:contextMenu>
 
 		<p:dataTable id="agreementTable" var="agr" widgetVar="w_agrTable"
 			lazy="true" value="#{agreementListPB.lazyModel}"
