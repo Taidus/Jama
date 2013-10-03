@@ -198,13 +198,15 @@
 						<h:inputText id="inventoryNumber"
 							value="#{agreementWizardPCB.agreement.inventoryNumber}"
 							label="#{msgs.agrInventory}" required="true">
-							<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
+							<f:ajax event="blur" execute="@this"
+								render="inventoryNumberError" />
 
 						</h:inputText>
 					</p:column>
 
 					<p:column colspan="2">
-						<h:message class="errorMessage" id="inventoryNumberError" for="inventoryNumber" />
+						<h:message class="errorMessage" id="inventoryNumberError"
+							for="inventoryNumber" />
 					</p:column>
 				</p:row>
 
@@ -261,12 +263,11 @@
 					</p:column>
 
 					<p:column colspan="3">
-						<h:inputText id="amount"
+						<h:outputText id="amount"
 							value="#{agreementWizardPCB.agreement.wholeAmount}"
 							readonly="true">
-							<f:convertNumber type="currency" />
-							<f:validateDoubleRange minimum="0.0" />
-						</h:inputText>
+							<f:convertNumber type="currency" currencySymbol="€" />
+						</h:outputText>
 					</p:column>
 				</p:row>
 

@@ -18,12 +18,13 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:wizard>
+			<p:wizard >
 
 				<ui:include src="/resources/sections/agreementWizData.xhtml" />
 
-				<p:tab id="tabRip" title="Passo 2">
-					<sections:wizShareTable shareTableController ="#{agreementWizardPCB.shareTableController}" />
+				<p:tab  id="tabRip" title="Passo 2">
+					<sections:wizShareTable shareTableController ="#{agreementWizardPCB.shareTableController}"
+					percentBean="#{agreementWizardPCB}"/>
 				</p:tab>
 
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />

@@ -7,7 +7,7 @@
 
 <composite:interface>
 	<composite:attribute name="shareTableController"></composite:attribute>
-	<composite:attribute name="wholeAmount"></composite:attribute>
+	<composite:attribute name="percentBean"></composite:attribute>
 
 
 
@@ -19,7 +19,7 @@
 
 	<p:panel header="Tabella di ripartizione">
 
-		<h:panelGrid columns="3" columnClasses="label, value, errorMessage"
+		<h:panelGrid columns="4" columnClasses="label, value, percents, errorMessage"
 			styleClass="grid">
 
 
@@ -28,9 +28,16 @@
 				value="#{cc.attrs.shareTableController.shareTable.atheneumCapitalBalance}"
 				label="#{msgs.shareTableCapitalBalance}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="atheneumCapitalBalanceError" />
+					render="atheneumCapitalBalanceError  percentAtheneumCapitalBalance" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
 
 			</h:inputText>
+			<h:outputText id="percentAtheneumCapitalBalance"
+				value="#{cc.attrs.percentBean.percentAtheneumCapitalBalance}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
 			<h:message id="atheneumCapitalBalanceError"
 				for="atheneumCapitalBalance" />
 
@@ -39,90 +46,151 @@
 				value="#{cc.attrs.shareTableController.shareTable.atheneumCommonBalance}"
 				label="#{msgs.shareTableCommonBalance}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="atheneumCommonBalanceError" />
+					render="atheneumCommonBalanceError percentAtheneumCommonBalance" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
 			</h:inputText>
-			<h:message for="atheneumCommonBalance" id="atheneumCommonBalanceError" />
+			<h:outputText id="percentAtheneumCommonBalance"
+				value="#{cc.attrs.percentBean.percentAtheneumCommonBalance}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+			<h:message for="atheneumCommonBalance"
+				id="atheneumCommonBalanceError" />
 
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
 			<h:inputText id="personnel"
 				value="#{cc.attrs.shareTableController.shareTable.personnel}"
-				label="#{msgs.shareTablePersonnel}" required="true" >
-					<f:ajax event="blur" execute="@this"
-					render="personnelError" />
-				</h:inputText>
-			<h:message for="personnel" id="personnelError"/>
+				label="#{msgs.shareTablePersonnel}" required="true">
+				<f:ajax event="blur" execute="@this"
+					render="personnelError percentPersonnel" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentPersonnel"
+				value="#{cc.attrs.percentBean.percentPersonnel}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+			<h:message for="personnel" id="personnelError" />
 
 			<h:outputText value="#{msgs.shareTableStructures}:" />
 			<h:inputText id="structures"
 				value="#{cc.attrs.shareTableController.shareTable.structures}"
-				label="#{msgs.shareTableStructures}" required="true" >
-					<f:ajax event="blur" execute="@this"
-					render="structuresError" />
-				</h:inputText>
-			<h:message for="structures" id="structuresError"/>
+				label="#{msgs.shareTableStructures}" required="true">
+				<f:ajax event="blur" execute="@this"
+					render="structuresError percentStructures" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentStructures"
+				value="#{cc.attrs.percentBean.percentStructures}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+			<h:message for="structures" id="structuresError" />
 
 			<h:outputText value="#{msgs.shareTableGoods}:" />
 			<h:inputText id="goodsAndServices"
 				value="#{cc.attrs.shareTableController.shareTable.goodsAndServices}"
-				label="#{msgs.shareTableGoods}" required="true" >
+				label="#{msgs.shareTableGoods}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="goodsAndServicesError" />
-				</h:inputText>
+					render="goodsAndServicesError percentGoodsAndServices" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentGoodsAndServices"
+				value="#{cc.attrs.percentBean.percentGoodsAndServices}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
 			<h:message for="goodsAndServices" id="goodsAndServicesError" />
 
 			<h:outputText value="#{msgs.shareTableTrip}:" />
 			<h:inputText id="businessTrip"
 				value="#{cc.attrs.shareTableController.shareTable.businessTrip}"
-				label="#{msgs.shareTableTrip}" required="true" >
-					<f:ajax event="blur" execute="@this"
-					render="businessTripError" />
-				</h:inputText>
-			<h:message for="businessTrip" id="businessTripError"/>
+				label="#{msgs.shareTableTrip}" required="true">
+				<f:ajax event="blur" execute="@this"
+					render="businessTripError percentBusinessTrip" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentBusinessTrip"
+				value="#{cc.attrs.percentBean.percentBusinessTrip}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+			<h:message for="businessTrip" id="businessTripError" />
 
 			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
 			<h:inputText id="consumerMaterials"
 				value="#{cc.attrs.shareTableController.shareTable.consumerMaterials}"
-				label="#{msgs.shareTableConsMaterials}" required="true" >
+				label="#{msgs.shareTableConsMaterials}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="consumerMaterialsError" />
-				</h:inputText>
+					render="consumerMaterialsError percentConsumerMaterials" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentConsumerMaterials"
+				value="#{cc.attrs.percentBean.percentConsumerMaterials}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
 			<h:message for="consumerMaterials" id="consumerMaterialsError" />
 
 			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
 			<h:inputText id="inventoryMaterials"
 				value="#{cc.attrs.shareTableController.shareTable.inventoryMaterials}"
-				label="#{msgs.shareTableInvMaterials}" required="true" >
+				label="#{msgs.shareTableInvMaterials}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="inventoryMaterialsError" />
-				</h:inputText>
-			<h:message for="inventoryMaterials" id="inventoryMaterialsError"/>
+					render="inventoryMaterialsError percentInventoryMaterials" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentInventoryMaterials"
+				value="#{cc.attrs.percentBean.percentInventoryMaterials}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+			<h:message for="inventoryMaterials" id="inventoryMaterialsError" />
 
 			<h:outputText value="#{msgs.shareTableRentals}:" />
 			<h:inputText id="rentals"
 				value="#{cc.attrs.shareTableController.shareTable.rentals}"
-				label="#{msgs.shareTableRentals}" required="true" >
+				label="#{msgs.shareTableRentals}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="rentalsError" />
-				</h:inputText>
+					render="rentalsError percentRentals" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentRentals"
+				value="#{cc.attrs.percentBean.percentRentals}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
 			<h:message for="rentals" id="rentalsError" />
 
 			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
 			<h:inputText id="personnelOnContract"
 				value="#{cc.attrs.shareTableController.shareTable.personnelOnContract}"
-				label="#{msgs.shareTableContrPersonnel}" required="true" >
+				label="#{msgs.shareTableContrPersonnel}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="personnelOnContractError" />
-				</h:inputText>
+					render="personnelOnContractError percentPersonnelOnContract" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentPersonnelOnContract"
+				value="#{cc.attrs.percentBean.percentPersonnelOnContract}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
 			<h:message for="personnelOnContract" id="personnelOnContractError" />
 
 			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
 			<h:inputText id="otherCost"
 				value="#{cc.attrs.shareTableController.shareTable.otherCost}"
-				label="#{msgs.shareTableOtherCosts}" required="true" >
+				label="#{msgs.shareTableOtherCosts}" required="true">
 				<f:ajax event="blur" execute="@this"
-					render="otherCostError" />
-				</h:inputText>
-			<h:message for="otherCost" id="otherCostError"/>
+					render="otherCostError percentOtherCost" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
+			</h:inputText>
+			<h:outputText id="percentOtherCost"
+				value="#{cc.attrs.percentBean.percentOtherCost}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+			<h:message for="otherCost" id="otherCostError" />
 
 			<h:inputHidden value="needed" id="percentsCheck"
 				validator="#{cc.attrs.shareTableController.validate}" />
@@ -171,9 +239,13 @@
 
 			<h:inputText id="share" value="#{share.share}" label="#{msgs.share}"
 				required="true">
-				<p:ajax process="@this" />
+				<f:ajax event="blur" execute="@this" render="shareError" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+
 			</h:inputText>
+			<h:message styleClass="errorMessage" for="share" id="shareError" />
 		</p:column>
+
 	</p:dataTable>
 
 </composite:implementation>

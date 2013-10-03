@@ -25,7 +25,8 @@
 
 				<p:tab id="tabRip" title="Passo 2">
 					<sections:wizShareTable
-						shareTableController="#{installmentWizardPCB.shareTableController}" />
+						shareTableController="#{installmentWizardPCB.shareTableController}"
+						wholeAmount="#{installmentWizardPCB.installment.wholeAmount}" />
 				</p:tab>
 
 				<ui:include src="/resources/sections/installmentLastStep.xhtml" />
