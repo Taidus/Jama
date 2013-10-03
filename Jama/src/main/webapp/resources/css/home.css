@@ -12,4 +12,22 @@
 	
 	font-size:30px;
 }
-	
+
+#agreementTable .agr-list-button{
+	height: 20px;
+	width: 30px;
+	display: none;
+	float: right;
+}
+
+#agreementTable .button-right-column{
+	border-left: none;
+}
+
+#agreementTable .button-left-column{
+	border-right: none;
+}
+
+#agreementTable .button-column{
+	width: 80px;
+}
