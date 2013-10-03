@@ -2,13 +2,16 @@ package pageControllerLayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
+import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
@@ -75,10 +78,27 @@ public class ShareTableController {
 
 		debug();
 
+		sharesDoubleEntryCheck();
+
 		shareTable.validate(mainValues, goodsAndServicesValues,
 				personnelValues, goodsAndServices, personnel);
-		
+
 		fillAgreementShares();
+	}
+
+	private void sharesDoubleEntryCheck() {
+		PersonnelShare[] sharesArray = new PersonnelShare[shares.size()];
+		sharesArray = shares.toArray(sharesArray);
+		for (int firstIndex = 0; firstIndex < sharesArray.length; firstIndex++) {
+			for (int secondIndex = firstIndex + 1; secondIndex < sharesArray.length; secondIndex++) {
+				ChiefScientist firstChief = sharesArray[firstIndex].getChiefScientist();
+				ChiefScientist secondChief = sharesArray[secondIndex].getChiefScientist();
+				if (firstChief.equals(secondChief)) {
+					throw new ValidatorException(
+							Messages.getErrorMessage("err_doubleChiefInShares"));
+				}
+			}
+		}
 	}
 
 	private float[] createPersonnelValues(List<PersonnelShare> shares) {
@@ -92,17 +112,17 @@ public class ShareTableController {
 		}
 		return f;
 	}
-	
+
 	private void fillAgreementShares() {
 		Map<ChiefScientist, Float> m = new HashMap<>();
-		for(PersonnelShare p : shares) {
-			if(p.getChiefScientist() != null) {
+		for (PersonnelShare p : shares) {
+			if (p.getChiefScientist() != null) {
 				m.put(p.getChiefScientist(), p.getShare());
 			}
 		}
 		shareTable.setSharePerPersonnel(m);
 	}
-	
+
 	private void debug() {
 		System.out.println("Quote attuali: ");
 		for (PersonnelShare p : shares) {
@@ -137,6 +157,7 @@ public class ShareTableController {
 		public void setShare(float share) {
 			this.share = share;
 		}
+		
 	}
 
 	public void addRow() {
