@@ -49,10 +49,10 @@ public class AgreementListPresentationBean implements Serializable {
 		this.selectedValue = selectedValue;
 	}
 	
-	public void editAgreement(){
+	public String editAgreement(){
 		System.out.println(selectedValue.getId() + ": " + selectedValue.getChief() + ", " + selectedValue.getCompany());
 		agrManager.setSelectedAgreementId(selectedValue.getId());
-		agrManager.editAgreement();
+		return agrManager.editAgreement();
 	}
 	
 	private void close(){
