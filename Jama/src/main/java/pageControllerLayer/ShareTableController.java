@@ -1,11 +1,12 @@
 package pageControllerLayer;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -23,9 +24,9 @@ public class ShareTableController {
 	private PersonnelShare selectedShare;
 
 	public ShareTableController(AbstractShareTable shareTable) {
-		shares = new ArrayList<PersonnelShare>();
-		shares.add(new PersonnelShare());
 		this.shareTable = shareTable;
+		shares = new ArrayList<PersonnelShare>();
+		initShares(shareTable.getSharePerPersonnel());
 	}
 
 	public PersonnelShare getSelectedShare() {
@@ -87,13 +88,26 @@ public class ShareTableController {
 		fillAgreementShares();
 	}
 
+	private void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
+		Set<Entry<ChiefScientist,Float>> s = sharePerPersonnel.entrySet();
+		for(Iterator<Entry<ChiefScientist,Float>> it = s.iterator(); it.hasNext(); ) {
+			Entry<ChiefScientist,Float> e = it.next();
+			shares.add(new PersonnelShare(e.getKey(), e.getValue()));
+		}
+		if(shares.isEmpty()) {
+			shares.add(new PersonnelShare());
+		}
+	}
+
 	private void sharesDoubleEntryCheck() {
 		PersonnelShare[] sharesArray = new PersonnelShare[shares.size()];
 		sharesArray = shares.toArray(sharesArray);
 		for (int firstIndex = 0; firstIndex < sharesArray.length; firstIndex++) {
 			for (int secondIndex = firstIndex + 1; secondIndex < sharesArray.length; secondIndex++) {
-				ChiefScientist firstChief = sharesArray[firstIndex].getChiefScientist();
-				ChiefScientist secondChief = sharesArray[secondIndex].getChiefScientist();
+				ChiefScientist firstChief = sharesArray[firstIndex]
+						.getChiefScientist();
+				ChiefScientist secondChief = sharesArray[secondIndex]
+						.getChiefScientist();
 				if (firstChief.equals(secondChief)) {
 					throw new ValidatorException(
 							Messages.getErrorMessage("err_doubleChiefInShares"));
@@ -138,6 +152,11 @@ public class ShareTableController {
 		private ChiefScientist chiefScientist;
 		private float share;
 
+		public PersonnelShare(ChiefScientist chiefScientist, float share) {
+			this.chiefScientist = chiefScientist;
+			this.share = share;
+		}
+		
 		public PersonnelShare() {
 			chiefScientist = null;
 			share = 0;
@@ -158,7 +177,7 @@ public class ShareTableController {
 		public void setShare(float share) {
 			this.share = share;
 		}
-		
+
 	}
 
 	public void addRow() {
