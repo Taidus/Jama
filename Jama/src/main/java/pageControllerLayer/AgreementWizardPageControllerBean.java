@@ -1,21 +1,19 @@
 package pageControllerLayer;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import annotations.TransferObj;
 import businessLayer.Agreement;
-import businessLayer.ChiefScientist;
 
 @Named("agreementWizardPCB")
 @ConversationScoped
 public class AgreementWizardPageControllerBean implements Serializable {
-
+	//TODO: modificare il getpercentuale per i sottocampi
+	
 	/**
 	 * 
 	 */
@@ -82,31 +80,31 @@ public class AgreementWizardPageControllerBean implements Serializable {
 
 	
 	public float getPercentBusinessTrip() {
-		return agreement.getShareTable().getBusinessTrip()*agreement.getWholeAmount()/100;
+		return agreement.getShareTable().getBusinessTrip()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
 	}
 
 	
 
 	public float getPercentConsumerMaterials() {
-		return agreement.getShareTable().getConsumerMaterials()*agreement.getWholeAmount()/100;
+		return agreement.getShareTable().getConsumerMaterials()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
 	}
 
 	
 
 	public float getPercentInventoryMaterials() {
-		return agreement.getShareTable().getInventoryMaterials()*agreement.getWholeAmount()/100;
+		return agreement.getShareTable().getInventoryMaterials()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
 	}
 
 
 
 	public float getPercentRentals() {
-		return agreement.getShareTable().getRentals()*agreement.getWholeAmount()/100;
+		return agreement.getShareTable().getRentals()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
 	}
 
 	
 
 	public float getPercentPersonnelOnContract() {
-		return agreement.getShareTable().getPersonnelOnContract()*agreement.getWholeAmount()/100;
+		return agreement.getShareTable().getPersonnelOnContract()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
 	}
 
 	

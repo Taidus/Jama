@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-
 import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
@@ -48,34 +45,47 @@ public class ShareTableController {
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
 
-		float atheneumCapitalBalance = (Float) ((UIInput) component
-				.findComponent("atheneumCapitalBalance")).getValue();
-		float atheneumCommonBalance = (Float) ((UIInput) component
-				.findComponent("atheneumCommonBalance")).getValue();
-		float structures = (Float) ((UIInput) component
-				.findComponent("structures")).getValue();
-		float personnel = (Float) ((UIInput) component
-				.findComponent("personnel")).getValue();
+		// float atheneumCapitalBalance = (Float) ((UIInput) component
+		// .findComponent("atheneumCapitalBalance")).getValue();
+		// float atheneumCommonBalance = (Float) ((UIInput) component
+		// .findComponent("atheneumCommonBalance")).getValue();
+		// float structures = (Float) ((UIInput) component
+		// .findComponent("structures")).getValue();
+		// float personnel = (Float) ((UIInput) component
+		// .findComponent("personnel")).getValue();
+		//
+		// float goodsAndServices = (Float) ((UIInput) component
+		// .findComponent("goodsAndServices")).getValue();
+		// float businessTrip = (Float) ((UIInput) component
+		// .findComponent("businessTrip")).getValue();
+		// float consumerMaterials = (Float) ((UIInput) component
+		// .findComponent("consumerMaterials")).getValue();
+		// float inventoryMaterials = (Float) ((UIInput) component
+		// .findComponent("inventoryMaterials")).getValue();
+		// float rentals = (Float) ((UIInput)
+		// component.findComponent("rentals"))
+		// .getValue();
+		// float personnelOnContract = (Float) ((UIInput) component
+		// .findComponent("personnelOnContract")).getValue();
+		// float otherCost = (Float) ((UIInput) component
+		// .findComponent("otherCost")).getValue();
+		//
+		// float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance,
+		// structures, personnel, goodsAndServices };
+		// float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
+		// inventoryMaterials, rentals, personnelOnContract, otherCost };
+		// float[] personnelValues = createPersonnelValues(shares);
 
-		float goodsAndServices = (Float) ((UIInput) component
-				.findComponent("goodsAndServices")).getValue();
-		float businessTrip = (Float) ((UIInput) component
-				.findComponent("businessTrip")).getValue();
-		float consumerMaterials = (Float) ((UIInput) component
-				.findComponent("consumerMaterials")).getValue();
-		float inventoryMaterials = (Float) ((UIInput) component
-				.findComponent("inventoryMaterials")).getValue();
-		float rentals = (Float) ((UIInput) component.findComponent("rentals"))
-				.getValue();
-		float personnelOnContract = (Float) ((UIInput) component
-				.findComponent("personnelOnContract")).getValue();
-		float otherCost = (Float) ((UIInput) component
-				.findComponent("otherCost")).getValue();
+		float[] mainValues = { shareTable.getAtheneumCapitalBalance(),
+				shareTable.getAtheneumCommonBalance(),
+				shareTable.getStructures(), shareTable.getPersonnel(),
+				shareTable.getGoodsAndServices() };
 
-		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance,
-				structures, personnel, goodsAndServices };
-		float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
-				inventoryMaterials, rentals, personnelOnContract, otherCost };
+		float[] goodsAndServicesValues = { shareTable.getBusinessTrip(),
+				shareTable.getConsumerMaterials(),
+				shareTable.getInventoryMaterials(), shareTable.getRentals(),
+				shareTable.getPersonnelOnContract(), shareTable.getOtherCost() };
+		
 		float[] personnelValues = createPersonnelValues(shares);
 
 		debug();
@@ -83,18 +93,19 @@ public class ShareTableController {
 		sharesDoubleEntryCheck();
 
 		shareTable.validate(mainValues, goodsAndServicesValues,
-				personnelValues, goodsAndServices, personnel);
+				personnelValues, shareTable.getGoodsAndServices(), shareTable.getPersonnel());
 
-		fillAgreementShares();
+		fillAgreementPersonnelShares();
 	}
 
 	private void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
-		Set<Entry<ChiefScientist,Float>> s = sharePerPersonnel.entrySet();
-		for(Iterator<Entry<ChiefScientist,Float>> it = s.iterator(); it.hasNext(); ) {
-			Entry<ChiefScientist,Float> e = it.next();
+		Set<Entry<ChiefScientist, Float>> s = sharePerPersonnel.entrySet();
+		for (Iterator<Entry<ChiefScientist, Float>> it = s.iterator(); it
+				.hasNext();) {
+			Entry<ChiefScientist, Float> e = it.next();
 			shares.add(new PersonnelShare(e.getKey(), e.getValue()));
 		}
-		if(shares.isEmpty()) {
+		if (shares.isEmpty()) {
 			shares.add(new PersonnelShare());
 		}
 	}
@@ -128,7 +139,7 @@ public class ShareTableController {
 		return f;
 	}
 
-	private void fillAgreementShares() {
+	private void fillAgreementPersonnelShares() {
 		Map<ChiefScientist, Float> m = new HashMap<>();
 		for (PersonnelShare p : shares) {
 			if (p.getChiefScientist() != null) {
@@ -156,7 +167,7 @@ public class ShareTableController {
 			this.chiefScientist = chiefScientist;
 			this.share = share;
 		}
-		
+
 		public PersonnelShare() {
 			chiefScientist = null;
 			share = 0;
