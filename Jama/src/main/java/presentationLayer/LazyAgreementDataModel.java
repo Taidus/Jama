@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
-import javax.inject.Named;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -17,7 +16,6 @@ import org.primefaces.model.SortOrder;
 import businessLayer.Agreement;
 import daoLayer.AgreementSearchService;
 
-@Named
 @Dependent
 public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	private static final long serialVersionUID = 1L;
@@ -30,36 +28,39 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	private Date filterMinDate;
 	private Date filterMaxDate;
 	private Integer currentChiefId, currentCompanyId;
-	private boolean filterChanged;
+	private boolean inputChanged;
+	private SortOrder sortOrder;
 
 	public LazyAgreementDataModel() {
-		this.filterChanged = true;
+		this.inputChanged = true;
 		this.currentChiefId = null;
 		this.currentCompanyId = null;
+		this.sortOrder = SortOrder.DESCENDING;
 	}
 
 	@PostConstruct
-	public void init() {}
+	public void init() {
+	}
 
 	@Override
 	public Agreement getRowData(String rowKey) {
 		int key = Integer.parseInt(rowKey);
-		
+
 		Agreement current = null;
 		boolean found = false;
 		Iterator<Agreement> it = displayedAgreements.iterator();
-		
-		while(false == found && it.hasNext()){
+
+		while (false == found && it.hasNext()) {
 			current = it.next();
-			if(current.getId() == key){
+			if (current.getId() == key) {
 				found = true;
 			}
 		}
-		
-		if(false == found){
+
+		if (false == found) {
 			throw new IllegalStateException("Cannot retrieve agreement from a displayed row");
 		}
-		
+
 		return current;
 	}
 
@@ -70,7 +71,6 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	@Override
 	public List<Agreement> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-		// TODO plug Hibernate in
 		System.out.println("-----------------");
 		System.out.println("First: " + first + "; page size: " + pageSize);
 		System.out.println("Min: " + filterMinDate + "; max: " + filterMaxDate);
@@ -82,7 +82,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		}
 
 		displayedAgreements = new ArrayList<>();
-		
+
 		Integer newChiefId = null;
 		Integer newCompanyId = null;
 		if (filters != null) {
@@ -97,14 +97,16 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		}
 		updateChiefId(newChiefId);
 		updateCompanyId(newCompanyId);
+		setSortOrder(sortOrder);
 		System.out.println("Chief ID: " + currentChiefId + "; company ID: " + currentCompanyId);
-		System.out.println("Filter changed: " + filterChanged);		
-		
-		if(filterChanged){
+		System.out.println("Order: " + sortOrder);
+		System.out.println("Filter changed: " + inputChanged);
+
+		if (inputChanged) {
 			agreementSearch.init(filterMinDate, filterMaxDate, currentChiefId, currentCompanyId, sortOrder);
 		}
 		agreementSearch.setPageSize(pageSize);
-		agreementSearch.setCurrentPage(first/pageSize);
+		agreementSearch.setCurrentPage(first / pageSize);
 
 		displayedAgreements = agreementSearch.getCurrentResults();
 
@@ -117,7 +119,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		// rowCount
 		int dataSize = displayedAgreements.size();
 		int rowCount = dataSize;
-		
+
 		// paginate
 		if (dataSize > pageSize) {
 			if (first + pageSize <= dataSize) {
@@ -131,14 +133,25 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 			// } catch (IndexOutOfBoundsException e) {
 			// return data.subList(first, first + (dataSize % pageSize));
 			// }
-		}
-		else if(dataSize == pageSize){
+		} else if (dataSize == pageSize) {
 			rowCount++;
 		}
-		
-		filterChanged = false;
+
+		inputChanged = false;
 		this.setRowCount(rowCount);
 		return displayedAgreements;
+	}
+
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(SortOrder sortOrder) {
+		System.out.println("Setting order");
+		if (sortOrder != null && !this.sortOrder.equals(sortOrder)) {
+			this.sortOrder = sortOrder;
+			inputChanged = true;
+		}
 	}
 
 	public Date getFilterMinDate() {
@@ -146,13 +159,12 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	public void setFilterMinDate(Date filterMinDate) {
-		if(null == this.filterMinDate){
-			if(filterMinDate != null){
-				filterChanged = true;
+		if (null == this.filterMinDate) {
+			if (filterMinDate != null) {
+				inputChanged = true;
 			}
-		}
-		else if(!this.filterMinDate.equals(filterMinDate)){
-			filterChanged = true;
+		} else if (!this.filterMinDate.equals(filterMinDate)) {
+			inputChanged = true;
 		}
 		this.filterMinDate = filterMinDate;
 	}
@@ -162,28 +174,27 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	public void setFilterMaxDate(Date filterMaxDate) {
-		if(null == this.filterMaxDate){
-			if(filterMaxDate != null){
-				filterChanged = true;
+		if (null == this.filterMaxDate) {
+			if (filterMaxDate != null) {
+				inputChanged = true;
 			}
-		}
-		else if(!this.filterMaxDate.equals(filterMaxDate)){
-			filterChanged = true;
+		} else if (!this.filterMaxDate.equals(filterMaxDate)) {
+			inputChanged = true;
 		}
 		this.filterMaxDate = filterMaxDate;
 	}
-	
-	private void updateChiefId(Integer newValue){
-		if(currentChiefId != newValue){
+
+	private void updateChiefId(Integer newValue) {
+		if (currentChiefId != newValue) {
 			currentChiefId = newValue;
-			filterChanged = true;
+			inputChanged = true;
 		}
 	}
-	
-	private void updateCompanyId(Integer newValue){
-		if(currentCompanyId != newValue){
+
+	private void updateCompanyId(Integer newValue) {
+		if (currentCompanyId != newValue) {
 			currentCompanyId = newValue;
-			filterChanged = true;
+			inputChanged = true;
 		}
 	}
 
