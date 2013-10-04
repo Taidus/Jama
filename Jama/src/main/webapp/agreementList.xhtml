@@ -84,10 +84,14 @@
 			</p:column>
 
 			<p:column styleClass="button-right-column button-column">
-				<p:button styleClass="agr-list-button" icon="ui-icon-search"
-					outcome="done" />
-				<p:button styleClass="agr-list-button" icon="ui-icon-wrench"
-					outcome="cancel" />
+				<p:commandButton id="viewAgrBtn" styleClass="agr-list-button"
+					icon="ui-icon-search" />
+				<p:commandButton id="editAgrBtn" styleClass="agr-list-button"
+					icon="ui-icon-wrench" action="#{agreementListPB.editAgreement()}">
+					<f:setPropertyActionListener value="#{agr}"
+						target="#{agreementListPB.selectedValue}" />
+				</p:commandButton>
+
 			</p:column>
 
 		</p:dataTable>
