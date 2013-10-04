@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;

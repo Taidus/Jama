@@ -8,6 +8,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import daoLayer.AgreementDaoBean;
 import annotations.TransferObj;
@@ -27,14 +30,20 @@ public class AgreementManagerBean implements Serializable {
 	private Conversation conversation;
 	@EJB
 	private AgreementDaoBean agreementDao;
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
+	private EntityManager em;
 
-	// TODO aggiungere un po di eccezzioni
+	private boolean conversationninherited;
+
+	// TODO aggiungere un po' di eccezioni
 	private int selectedAgreementId = -1;
 	private int selectedInstalmentId = -1;
 	private Agreement agreement;
 	private Agreement transferObjAgreement;
 
 	public AgreementManagerBean() {
+		transferObjAgreement = new Agreement();
+		conversationninherited = false;
 
 	}
 
@@ -54,10 +63,13 @@ public class AgreementManagerBean implements Serializable {
 		this.selectedInstalmentId = selectedInstalmentId;
 	}
 
-	public void begin() {
+	private void begin() {
+		if (conversation.isTransient()) {
+			conversation.begin();
 
-		conversation.begin();
-
+		} else {
+			conversationninherited = true;
+		}
 	}
 
 	public String save() {
@@ -72,10 +84,24 @@ public class AgreementManagerBean implements Serializable {
 		return "/home.xhtml";
 	}
 
-	public void close() {
+	private String close() {
 
-		conversation.end();
+		if (!conversationninherited) {
+			conversation.end();
+		}
 		agreementDao.close();
+		em.clear();
+		
+		if (selectedAgreementId < 0) {
+			return "/home.xhtml";
+		} else {
+			return "/agreementList.xhtml";
+		}
+	}
+
+	public String cancel() {
+		return close();
+		
 	}
 
 	public Conversation getConversation() {
@@ -97,7 +123,6 @@ public class AgreementManagerBean implements Serializable {
 
 	public String createAgreement() {
 		begin();
-		transferObjAgreement = new Agreement();
 		return "/resources/sections/agreementWiz.xhtml";
 
 	}
@@ -112,8 +137,9 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public String modifyInstallment() {
-		begin();
-		initEditing();
+		//TODO
+//		begin();
+//		initEditing();
 		return "/resources/sections/InstallmentWiz.xhtml";
 
 	}

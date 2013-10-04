@@ -13,6 +13,9 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.primefaces.model.SortOrder;
+
+
 import businessLayer.Agreement;
 
 @Stateful
@@ -21,7 +24,7 @@ import businessLayer.Agreement;
 public class AgreementSearchService extends ResultPagerBean<Agreement> {
 
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId) {
+			Integer companyId, SortOrder order) {
 		currentPage = 0;
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -59,6 +62,16 @@ public class AgreementSearchService extends ResultPagerBean<Agreement> {
 			criteria.add(cb.equal(agr.get("company").get("id"), p));
 
 		}
+		
+		if(order == SortOrder.ASCENDING){
+			
+			c.orderBy(cb.asc(agr.<Date> get("approvalDate")));
+		}
+		else if(order == SortOrder.DESCENDING){
+			
+			c.orderBy(cb.desc(agr.<Date> get("approvalDate")));
+
+		}
 
 		if (criteria.size() != 0) {
 
@@ -86,7 +99,7 @@ public class AgreementSearchService extends ResultPagerBean<Agreement> {
 
 		} else {
 
-			query = em.createNamedQuery("Agreement.findAll", Agreement.class);
+			query = em.createQuery(c);
 		}
 
 	}

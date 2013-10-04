@@ -22,8 +22,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+//TODO ASC DESC
 @NamedQueries({
-@NamedQuery(name="Agreement.findAll",query="SELECT a FROM Agreement a")
+@NamedQuery(name="Agreement.findAll",query="SELECT a FROM Agreement a ORDER BY a.approvalDate")
 })
 public class Agreement implements Serializable {
 
