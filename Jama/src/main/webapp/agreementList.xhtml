@@ -39,6 +39,8 @@
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
 			selection="#{agreementListPB.selectedValue}" selectionMode="single"
 			rowKey="#{agr.id}">
+			
+			
 
 			<p:column id="chiefColumn" filterBy="#{agr.chief.id}"
 				headerText="#{msgs.chief}" filterMatchMode="exact"
@@ -52,8 +54,8 @@
 				<h:outputText value="#{agr.company.name}" />
 			</p:column>
 
-			<p:column id="dateColumn" styleClass="button-left-column">
-				<f:facet name="header">
+			<p:column id="dateColumn" styleClass="button-left-column" sortBy="#{agr.approvalDate}">
+				<f:facet name="header" >
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
 						<div style="display: block; width: 90%; margin: auto;">
