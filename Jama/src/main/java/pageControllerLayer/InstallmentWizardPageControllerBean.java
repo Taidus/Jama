@@ -8,11 +8,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
+import businessLayer.AbstractShareTable;
 import businessLayer.Installment;
 
 @Named("installmentWizardPCB")
 @ConversationScoped
-public class InstallmentWizardPageControllerBean implements Serializable {
+public class InstallmentWizardPageControllerBean extends WizardPageController implements Serializable {
 
 	/**
 	 * 
@@ -28,8 +29,8 @@ public class InstallmentWizardPageControllerBean implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		shareTableController = new ShareTableController(
-				installment.getShareTable());
+		initShares(getShareTable().getSharePerPersonnel());
+
 	}
 
 	public Installment getInstallment() {
@@ -42,6 +43,11 @@ public class InstallmentWizardPageControllerBean implements Serializable {
 
 	public ShareTableController getShareTableController() {
 		return shareTableController;
+	}
+
+	@Override
+	public AbstractShareTable getShareTable() {
+		return installment.getShareTable();
 	}
 
 }

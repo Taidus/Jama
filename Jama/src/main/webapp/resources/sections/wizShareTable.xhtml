@@ -6,8 +6,7 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
-	<composite:attribute name="shareTableController"></composite:attribute>
-	<composite:attribute name="percentBean"></composite:attribute>
+	<composite:attribute name="bean"></composite:attribute>
 	<composite:attribute name="editingDisable"></composite:attribute>
 	
 
@@ -26,7 +25,7 @@
 
 			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
 			<h:inputText id="atheneumCapitalBalance"
-				value="#{cc.attrs.shareTableController.shareTable.atheneumCapitalBalance}"
+				value="#{cc.attrs.bean.shareTable.atheneumCapitalBalance}"
 				label="#{msgs.shareTableCapitalBalance}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="atheneumCapitalBalanceError  percentAtheneumCapitalBalance" />
@@ -35,7 +34,7 @@
 
 			</h:inputText>
 			<h:outputText id="percentAtheneumCapitalBalance"
-				value="#{cc.attrs.percentBean.percentAtheneumCapitalBalance}">
+				value="#{cc.attrs.bean.percentAtheneumCapitalBalance}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -44,7 +43,7 @@
 
 			<h:outputText value="#{msgs.shareTableCommonBalance}:" />
 			<h:inputText id="atheneumCommonBalance"
-				value="#{cc.attrs.shareTableController.shareTable.atheneumCommonBalance}"
+				value="#{cc.attrs.bean.shareTable.atheneumCommonBalance}"
 				label="#{msgs.shareTableCommonBalance}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="atheneumCommonBalanceError percentAtheneumCommonBalance" />
@@ -52,7 +51,7 @@
 
 			</h:inputText>
 			<h:outputText id="percentAtheneumCommonBalance"
-				value="#{cc.attrs.percentBean.percentAtheneumCommonBalance}">
+				value="#{cc.attrs.bean.percentAtheneumCommonBalance}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="atheneumCommonBalance"
@@ -60,7 +59,7 @@
 
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
 			<h:inputText id="personnel"
-				value="#{cc.attrs.shareTableController.shareTable.personnel}"
+				value="#{cc.attrs.bean.shareTable.personnel}"
 				label="#{msgs.shareTablePersonnel}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="personnelError percentPersonnel" />
@@ -68,14 +67,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentPersonnel"
-				value="#{cc.attrs.percentBean.percentPersonnel}">
+				value="#{cc.attrs.bean.percentPersonnel}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="personnel" id="personnelError" />
 
 			<h:outputText value="#{msgs.shareTableStructures}:" />
 			<h:inputText id="structures"
-				value="#{cc.attrs.shareTableController.shareTable.structures}"
+				value="#{cc.attrs.bean.shareTable.structures}"
 				label="#{msgs.shareTableStructures}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="structuresError percentStructures" />
@@ -83,14 +82,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentStructures"
-				value="#{cc.attrs.percentBean.percentStructures}">
+				value="#{cc.attrs.bean.percentStructures}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="structures" id="structuresError" />
 
 			<h:outputText value="#{msgs.shareTableGoods}:" />
 			<h:inputText id="goodsAndServices"
-				value="#{cc.attrs.shareTableController.shareTable.goodsAndServices}"
+				value="#{cc.attrs.bean.shareTable.goodsAndServices}"
 				label="#{msgs.shareTableGoods}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="goodsAndServicesError percentGoodsAndServices" />
@@ -98,14 +97,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentGoodsAndServices"
-				value="#{cc.attrs.percentBean.percentGoodsAndServices}">
+				value="#{cc.attrs.bean.percentGoodsAndServices}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="goodsAndServices" id="goodsAndServicesError" />
 
 			<h:outputText value="#{msgs.shareTableTrip}:" />
 			<h:inputText id="businessTrip"
-				value="#{cc.attrs.shareTableController.shareTable.businessTrip}"
+				value="#{cc.attrs.bean.shareTable.businessTrip}"
 				label="#{msgs.shareTableTrip}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="businessTripError percentBusinessTrip" />
@@ -113,14 +112,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentBusinessTrip"
-				value="#{cc.attrs.percentBean.percentBusinessTrip}">
+				value="#{cc.attrs.bean.percentBusinessTrip}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="businessTrip" id="businessTripError" />
 
 			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
 			<h:inputText id="consumerMaterials"
-				value="#{cc.attrs.shareTableController.shareTable.consumerMaterials}"
+				value="#{cc.attrs.bean.shareTable.consumerMaterials}"
 				label="#{msgs.shareTableConsMaterials}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="consumerMaterialsError percentConsumerMaterials" />
@@ -128,14 +127,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentConsumerMaterials"
-				value="#{cc.attrs.percentBean.percentConsumerMaterials}">
+				value="#{cc.attrs.bean.percentConsumerMaterials}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="consumerMaterials" id="consumerMaterialsError" />
 
 			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
 			<h:inputText id="inventoryMaterials"
-				value="#{cc.attrs.shareTableController.shareTable.inventoryMaterials}"
+				value="#{cc.attrs.bean.shareTable.inventoryMaterials}"
 				label="#{msgs.shareTableInvMaterials}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="inventoryMaterialsError percentInventoryMaterials" />
@@ -143,14 +142,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentInventoryMaterials"
-				value="#{cc.attrs.percentBean.percentInventoryMaterials}">
+				value="#{cc.attrs.bean.percentInventoryMaterials}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="inventoryMaterials" id="inventoryMaterialsError" />
 
 			<h:outputText value="#{msgs.shareTableRentals}:" />
 			<h:inputText id="rentals"
-				value="#{cc.attrs.shareTableController.shareTable.rentals}"
+				value="#{cc.attrs.bean.shareTable.rentals}"
 				label="#{msgs.shareTableRentals}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="rentalsError percentRentals" />
@@ -158,14 +157,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentRentals"
-				value="#{cc.attrs.percentBean.percentRentals}">
+				value="#{cc.attrs.bean.percentRentals}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="rentals" id="rentalsError" />
 
 			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
 			<h:inputText id="personnelOnContract"
-				value="#{cc.attrs.shareTableController.shareTable.personnelOnContract}"
+				value="#{cc.attrs.bean.shareTable.personnelOnContract}"
 				label="#{msgs.shareTableContrPersonnel}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="personnelOnContractError percentPersonnelOnContract" />
@@ -173,14 +172,14 @@
 
 			</h:inputText>
 			<h:outputText id="percentPersonnelOnContract"
-				value="#{cc.attrs.percentBean.percentPersonnelOnContract}">
+				value="#{cc.attrs.bean.percentPersonnelOnContract}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="personnelOnContract" id="personnelOnContractError" />
 
 			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
 			<h:inputText id="otherCost"
-				value="#{cc.attrs.shareTableController.shareTable.otherCost}"
+				value="#{cc.attrs.bean.shareTable.otherCost}"
 				label="#{msgs.shareTableOtherCosts}" required="true" disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
 					render="otherCostError percentOtherCost" />
@@ -188,22 +187,22 @@
 
 			</h:inputText>
 			<h:outputText id="percentOtherCost"
-				value="#{cc.attrs.percentBean.percentOtherCost}">
+				value="#{cc.attrs.bean.percentOtherCost}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 			<h:message for="otherCost" id="otherCostError" />
 
 			<h:inputHidden value="needed" id="percentsCheck"
-				validator="#{cc.attrs.shareTableController.validate}" />
+				validator="#{cc.attrs.bean.validate}" />
 			<h:message styleClass="errorMessage" for="percentsCheck" />
 
 		</h:panelGrid>
 	</p:panel>
 
 	<p:dataTable id="personnelShares"
-		value="#{cc.attrs.shareTableController.shares}" var="share"
+		value="#{cc.attrs.bean.shares}" var="share"
 		selectionMode="single"
-		selection="#{cc.attrs.shareTableController.selectedShare}"
+		selection="#{cc.attrs.bean.selectedShare}"
 		rowKey="#{share}">
 
 		<f:facet name="header">
@@ -225,10 +224,10 @@
 
 			<f:facet name="footer">
 				<p:commandButton value="#{msgs.add}"
-					action="#{cc.attrs.shareTableController.addRow()}"
+					action="#{cc.attrs.bean.addRow()}"
 					update="personnelShares" process="personnelShares, @this" rendered="!#{cc.attrs.editingDisable}" />
 				<p:commandButton value="#{msgs.remove}"
-					action="#{cc.attrs.shareTableController.removeRow()}"
+					action="#{cc.attrs.bean.removeRow()}"
 					update="personnelShares" process="personnelShares, @this" rendered="!#{cc.attrs.editingDisable}" />
 			</f:facet>
 		</p:column>

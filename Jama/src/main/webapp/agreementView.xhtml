@@ -22,20 +22,18 @@
 
 			<p:tabView>
 
-					<p:tab id="tabDati" title="Dati">
-					<sections:agreementWizData editingDisable="true" />
+			<p:tab id="tabDati" title="Dati">
+					<sections:agreementWizData editingDisable="false" />
 
 				</p:tab>
 				<ui:include src="/resources/sections/agreementWizData.xhtml" />
 
 				<p:tab id="tabRip" title="Passo 2">
-					<sections:wizShareTable editingDisable="true"
-						shareTableController="#{agreementWizardPCB.shareTableController}"
-						percentBean="#{agreementWizardPCB}" />
+					<sections:wizShareTable editingDisable="false"
+						bean="#{agreementWizardPCB}" />
 				</p:tab>
 
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
-
 
 			</p:tabView>
 

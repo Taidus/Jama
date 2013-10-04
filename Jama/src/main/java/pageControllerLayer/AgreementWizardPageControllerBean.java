@@ -6,12 +6,14 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import annotations.TransferObj;
+import businessLayer.AbstractShareTable;
 import businessLayer.Agreement;
 
 @Named("agreementWizardPCB")
 @ConversationScoped
-public class AgreementWizardPageControllerBean implements Serializable {
+public class AgreementWizardPageControllerBean extends WizardPageController implements Serializable {
 	//TODO: modificare il getpercentuale per i sottocampi
 	
 	/**
@@ -21,17 +23,15 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	@Inject
 	@TransferObj
 	private Agreement agreement;
-	private ShareTableController shareTableController;
 
 	public AgreementWizardPageControllerBean() {
 	}
-
+	
 	@PostConstruct
-	private void init() {
-		shareTableController = new ShareTableController(
-				agreement.getShareTable());
+	private void init(){
 	}
 
+	
 	public Agreement getAgreement() {
 		return agreement;
 	}
@@ -40,30 +40,31 @@ public class AgreementWizardPageControllerBean implements Serializable {
 		this.agreement = agreement;
 	}
 
-	public ShareTableController getShareTableController() {
-		return shareTableController;
+		
+	private float computePercent(float percent){
+		return agreement.getWholeAmount()*percent/100;
 	}
 	
 	public float getPercentAtheneumCapitalBalance() {
-		return agreement.getShareTable().getAtheneumCapitalBalance()*agreement.getWholeAmount()/100;
+		return computePercent(agreement.getShareTable().getAtheneumCapitalBalance());
 	}
 
 
 
 	public float getPercentAtheneumCommonBalance() {
-		return agreement.getShareTable().getAtheneumCommonBalance()*agreement.getWholeAmount()/100;
+		return computePercent(agreement.getShareTable().getAtheneumCommonBalance());
 	}
 
 	
 
 	public float getPercentStructures() {
-		return agreement.getShareTable().getStructures()*agreement.getWholeAmount()/100;
+		return computePercent(agreement.getShareTable().getStructures());
 	}
 
 
 
 	public float getPercentPersonnel() {
-		return agreement.getShareTable().getPersonnel()*agreement.getWholeAmount()/100;
+		return computePercent(agreement.getShareTable().getPersonnel());
 	}
 
 	
@@ -75,42 +76,47 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	
 
 	public float getPercentGoodsAndServices() {
-		return agreement.getShareTable().getGoodsAndServices()*agreement.getWholeAmount()/100;
+		return computePercent(agreement.getShareTable().getGoodsAndServices());
 	}
 
 	
 	public float getPercentBusinessTrip() {
-		return agreement.getShareTable().getBusinessTrip()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
+		return computePercent(agreement.getShareTable().getBusinessTrip());
 	}
 
 	
 
 	public float getPercentConsumerMaterials() {
-		return agreement.getShareTable().getConsumerMaterials()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
+		return computePercent(agreement.getShareTable().getConsumerMaterials());
 	}
 
 	
 
 	public float getPercentInventoryMaterials() {
-		return agreement.getShareTable().getInventoryMaterials()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
+		return computePercent(agreement.getShareTable().getInventoryMaterials());
 	}
 
 
 
 	public float getPercentRentals() {
-		return agreement.getShareTable().getRentals()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
+		return computePercent(agreement.getShareTable().getRentals());
 	}
 
 	
 
 	public float getPercentPersonnelOnContract() {
-		return agreement.getShareTable().getPersonnelOnContract()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
+		return computePercent(agreement.getShareTable().getPersonnelOnContract());
 	}
 
 	
 
 	public float getPercentOtherCost() {
-		return agreement.getShareTable().getOtherCost()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
+		return computePercent(agreement.getShareTable().getOtherCost());
+	}
+
+	@Override
+	public AbstractShareTable getShareTable() {
+		return agreement.getShareTable();
 	}
 
 	
