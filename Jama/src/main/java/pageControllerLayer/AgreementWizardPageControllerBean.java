@@ -110,7 +110,7 @@ public class AgreementWizardPageControllerBean implements Serializable {
 	
 
 	public float getPercentOtherCost() {
-		return agreement.getShareTable().getOtherCost()*agreement.getWholeAmount()/100;
+		return agreement.getShareTable().getOtherCost()*agreement.getWholeAmount()*agreement.getShareTable().getGoodsAndServices()/(100*100);
 	}
 
 	
