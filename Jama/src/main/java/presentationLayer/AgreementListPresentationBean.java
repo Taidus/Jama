@@ -51,8 +51,8 @@ public class AgreementListPresentationBean implements Serializable {
 	
 	public void editAgreement(){
 		System.out.println(selectedValue.getId() + ": " + selectedValue.getChief() + ", " + selectedValue.getCompany());
-//		agrManager.setSelectedAgreementId(selectedValue.getId());
-//		agrManager.editAgreement();
+		agrManager.setSelectedAgreementId(selectedValue.getId());
+		agrManager.editAgreement();
 	}
 	
 	private void close(){

@@ -82,38 +82,6 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		}
 
 		displayedAgreements = new ArrayList<>();
-//		data = fetchedAgreements;
-
-		// filter
-		// for (Agreement agr : fetchedAgreements) {
-		// boolean match = true;
-		//
-		// for (Iterator<String> it = filters.keySet().iterator();
-		// it.hasNext();) {
-		// try {
-		// String filterProperty = it.next();
-		// String filterValue = filters.get(filterProperty);
-		// String fieldValue =
-		// String.valueOf(agr.getClass().getField(filterProperty).get(agr));
-		// System.out.println("Agr #" + agr.getId() + ": " + filterProperty +
-		// " = " + fieldValue);
-		//
-		// if (filterValue == null || fieldValue.startsWith(filterValue)) {
-		// match = true;
-		// } else {
-		// match = false;
-		// break;
-		// }
-		// } catch (Exception e) {
-		// System.err.println(e);
-		// match = false;
-		// }
-		// }
-		//
-		// if (match) {
-		// data.add(agr);
-		// }
-		// }
 		
 		Integer newChiefId = null;
 		Integer newCompanyId = null;
@@ -133,7 +101,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		System.out.println("Filter changed: " + filterChanged);		
 		
 		if(filterChanged){
-			agreementSearch.init(filterMinDate, filterMaxDate, currentChiefId, currentCompanyId);
+			agreementSearch.init(filterMinDate, filterMaxDate, currentChiefId, currentCompanyId, sortOrder);
 		}
 		agreementSearch.setPageSize(pageSize);
 		agreementSearch.setCurrentPage(first/pageSize);
@@ -142,6 +110,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 		// sort
 		if (sortField != null) {
+			System.out.println(sortField);
 			// Collections.sort(data, new LazySorter(sortField, sortOrder));
 		}
 
