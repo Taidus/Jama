@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+
+<h:head>
+	<h:outputStylesheet name="agreementWiz.css" library="css" />
+</h:head>
+
+<h:body>
+
+	<h:panelGrid width="100%" columns="2" columnClasses="col1">
+		<h:form id="agreementWiz">
+
+			<p:growl id="growl" sticky="true" showDetail="true" />
+			<input type="hidden" name="cid"
+				value='#{agreementManager.conversation.id}' />
+
+			<p:tabView>
+
+					<p:tab id="tabDati" title="Dati">
+					<sections:agreementWizData editingDisable="true" />
+
+				</p:tab>
+				<ui:include src="/resources/sections/agreementWizData.xhtml" />
+
+				<p:tab id="tabRip" title="Passo 2">
+					<sections:wizShareTable editingDisable="true"
+						shareTableController="#{agreementWizardPCB.shareTableController}"
+						percentBean="#{agreementWizardPCB}" />
+				</p:tab>
+
+				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
+
+
+			</p:tabView>
+
+			<h:commandButton value="#{msgs.cancel}"
+				action="#{agreementManager.cancel()}" immediate="true" />
+
+
+
+
+		</h:form>
+	</h:panelGrid>
+
+</h:body>
+</html>

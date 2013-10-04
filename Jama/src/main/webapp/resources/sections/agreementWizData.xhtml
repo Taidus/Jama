@@ -1,347 +1,367 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-	<ui:debug />
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
 
-	<p:tab id="tabDati" title="Dati">
+<composite:interface>
+	<composite:attribute name="editingDisable"></composite:attribute>
 
-		<p:panel header="Tabella dei dati generali">
+</composite:interface>
 
-			<p:panelGrid id="agrDataPanelGrid">
+<composite:implementation>
 
-				<p:row>
-					<p:column>
-						<h:outputText value="#{msgs.agrTitle}:" />
-					</p:column>
-
-					<p:column>
-						<h:inputTextarea id="title" cols="20" rows="4"
-							value="#{agreementWizardPCB.agreement.title}"
-							label="#{msgs.agrTitle}" required="true" />
-					</p:column>
 
-					<p:column colspan="2">
-						<h:message for="title" />
-					</p:column>
-				</p:row>
 
+	<p:panel header="Tabella dei dati generali">
 
-				<p:row>
-					<p:column>
-						<h:outputText value="#{msgs.protocolNumber}:" />
-					</p:column>
+		<p:panelGrid id="agrDataPanelGrid">
 
-					<p:column>
-						<h:inputText id="protocolNumber"
-							value="#{agreementWizardPCB.agreement.protocolNumber}"
-							label="#{msgs.protocolNumber}" required="true">
-							<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
-								integerOnly="true" />
-							<f:ajax event="blur" execute="@this" render="protocolNumberError" />
-						</h:inputText>
-					</p:column>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.agrTitle}:" />
+				</p:column>
 
-					<p:column colspan="2">
-						<h:message class="errorMessage" id="protocolNumberError"
-							for="protocolNumber" />
-					</p:column>
-				</p:row>
+				<p:column>
+					<h:inputTextarea id="title" cols="20" rows="4"
+						value="#{agreementWizardPCB.agreement.title}"
+						label="#{msgs.agrTitle}" required="true"
+						disabled="#{cc.attrs.editingDisable}" />
+				</p:column>
 
+				<p:column colspan="2">
+					<h:message for="title" />
+				</p:column>
+			</p:row>
 
-				<p:row>
 
-					<p:column>
-						<h:outputText value="#{msgs.department}:" />
-					</p:column>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.protocolNumber}:" />
+				</p:column>
 
-					<p:column colspan="3">
-						<h:outputText value="#{agreementWizardPCB.agreement.department}" />
-					</p:column>
-				</p:row>
+				<p:column>
+					<h:inputText id="protocolNumber"
+						value="#{agreementWizardPCB.agreement.protocolNumber}"
+						label="#{msgs.protocolNumber}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
+							integerOnly="true" />
+						<f:ajax event="blur" execute="@this" render="protocolNumberError" />
+					</h:inputText>
+				</p:column>
 
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="protocolNumberError"
+						for="protocolNumber" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.agrType}:" />
-					</p:column>
 
-					<p:column>
-						<h:selectOneMenu id="type"
-							value="#{agreementWizardPCB.agreement.type}"
-							label="#{msgs.agrType}" required="true">
-							<f:selectItems value="#{utilPB.agreementTypeItems}" />
-							<f:ajax event="blur" execute="@this" render="typeError" />
+			<p:row>
 
-						</h:selectOneMenu>
-					</p:column>
+				<p:column>
+					<h:outputText value="#{msgs.department}:" />
+				</p:column>
 
+				<p:column colspan="3">
+					<h:outputText value="#{agreementWizardPCB.agreement.department}" />
+				</p:column>
+			</p:row>
 
-					<p:column colspan="2">
-						<h:message class="errorMessage" id="typeError" for="type" />
-					</p:column>
-				</p:row>
 
+			<p:row>
 
-				<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.agrType}:" />
+				</p:column>
 
-					<p:column>
-						<h:outputText value="#{msgs.chief}:" />
-					</p:column>
+				<p:column>
+					<h:selectOneMenu id="type"
+						value="#{agreementWizardPCB.agreement.type}"
+						label="#{msgs.agrType}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:selectItems value="#{utilPB.agreementTypeItems}" />
+						<f:ajax event="blur" execute="@this" render="typeError" />
 
-					<p:column>
-						<p:selectOneMenu id="chiefMenu"
-							value="#{agreementWizardPCB.agreement.chief}"
-							label="#{msgs.chief}" required="true" filter="true"
-							filterMatchMode="contains">
-							<f:selectItems value="#{utilPB.chiefItems}" />
-							<f:converter binding="#{chiefConverter}" />
+					</h:selectOneMenu>
+				</p:column>
 
-						</p:selectOneMenu>
-					</p:column>
 
-					<p:column>
-						<p:commandButton value="#{msgs.add}" process="@this"
-							actionListener="#{chiefDialogPCB.clear()}"
-							oncomplete="w_chiefDialog.show()"
-							update=":#{p:component('chiefPanel')}">
-							<p:resetInput target=":#{p:component('chiefPanel')}" />
-						</p:commandButton>
-					</p:column>
-
-					<p:column>
-						<h:message class="errorMessage" for="chiefMenu" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="typeError" for="type" />
+				</p:column>
+			</p:row>
 
-					<p:column>
-						<h:outputText value="#{msgs.contactPerson}:" />
-					</p:column>
-
-					<p:column>
-						<h:inputText id="contact"
-							value="#{agreementWizardPCB.agreement.contactPerson}"
-							label="#{msgs.contactPerson}" required="true" />
-					</p:column>
-
-
-					<p:column colspan="2">
-						<h:message class="errorMessage" for="contact" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.company}:" />
-					</p:column>
-
-					<p:column>
-						<h:selectOneMenu id="companyMenu"
-							value="#{agreementWizardPCB.agreement.company}"
-							label="#{msgs.company}" required="true">
-							<f:selectItems value="#{utilPB.companyItems}" />
-							<f:converter binding="#{companyConverter}" />
-						</h:selectOneMenu>
-					</p:column>
-
-					<p:column>
-						<p:commandButton value="#{msgs.add}" process="@this"
-							actionListener="#{companyDialogPCB.clear()}"
-							oncomplete="w_companyDialog.show()"
-							update=":#{p:component('companyPanel')}">
-							<p:resetInput target=":#{p:component('companyPanel')}" />
-						</p:commandButton>
-					</p:column>
-
-					<p:column>
-						<h:message class="errorMessage" for="companyMenu" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.projectNumber}:" />
-					</p:column>
-
-					<p:column>
-						<h:inputText id="projectNumber"
-							value="#{agreementWizardPCB.agreement.CIA_projectNumber}"
-							label="#{msgs.projectNumber}" required="true">
-							<f:ajax event="blur" execute="@this" render="projectNumberError" />
-						</h:inputText>
-
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message class="errorMessage" id="projectNumberError"
-							for="projectNumber" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.agrInventory}:" />
-					</p:column>
-
-					<p:column>
-						<h:inputText id="inventoryNumber"
-							value="#{agreementWizardPCB.agreement.inventoryNumber}"
-							label="#{msgs.agrInventory}" required="true">
-							<f:ajax event="blur" execute="@this"
-								render="inventoryNumberError" />
-
-						</h:inputText>
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message class="errorMessage" id="inventoryNumberError"
-							for="inventoryNumber" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.taxableAmount}:" />
-					</p:column>
-
-					<p:column>
-						<h:inputText id="taxableAmount"
-							value="#{agreementWizardPCB.agreement.wholeTaxableAmount}"
-							label="#{msgs.taxableAmount}" required="true">
-							<f:convertNumber />
-							<f:validateDoubleRange minimum="0.0" />
-							<f:ajax render="amount taxAmountError" />
-						</h:inputText>
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message id="taxAmountError" class="errorMessage"
-							for="taxableAmount" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.iva}:" />
-					</p:column>
-
-					<p:column>
-						<h:inputText id="iva"
-							value="#{agreementWizardPCB.agreement.IVA_amount}"
-							label="#{msgs.iva}" required="true">
-							<f:convertNumber />
-							<f:validateDoubleRange minimum="0.0" maximum="100.0" />
-							<f:ajax render="amount ivaError" />
-						</h:inputText>
-					</p:column>
 
-					<p:column colspan="2">
-						<h:message id="ivaError" class="errorMessage" for="iva" />
-					</p:column>
-				</p:row>
+			<p:row>
 
+				<p:column>
+					<h:outputText value="#{msgs.chief}:" />
+				</p:column>
 
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.wholeAmount}:" />
-					</p:column>
-
-					<p:column colspan="3">
-						<h:outputText id="amount"
-							value="#{agreementWizardPCB.agreement.wholeAmount}"
-							readonly="true">
-							<f:convertNumber type="currency" currencySymbol="€" />
-						</h:outputText>
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.approvalDate}:" />
-					</p:column>
-
-					<p:column>
-						<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
-							readonlyInput="true" showOn="both" showOtherMonths="true"
-							required="true"
-							value="#{agreementWizardPCB.agreement.approvalDate}">
-							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-						</p:calendar>
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message class="errorMessage" for="approvalDate" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.beginDate}:" />
-					</p:column>
-
-					<p:column>
-						<p:calendar id="beginDate" pattern="dd/MM/yyyy"
-							readonlyInput="true" showOn="both" showOtherMonths="true"
-							required="true" value="#{agreementWizardPCB.agreement.beginDate}">
-							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-						</p:calendar>
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message class="errorMessage" for="beginDate" />
-					</p:column>
-				</p:row>
-
-
-				<p:row>
-
-					<p:column>
-						<h:outputText value="#{msgs.deadlineDate}:" />
-					</p:column>
-
-					<p:column>
-						<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
-							readonlyInput="true" showOn="both" showOtherMonths="true"
-							required="true"
-							value="#{agreementWizardPCB.agreement.deadlineDate}">
-							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-						</p:calendar>
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message class="errorMessage" for="deadlineDate" />
-					</p:column>
-				</p:row>
-
-
-
-			</p:panelGrid>
-
-		</p:panel>
-
-	</p:tab>
-
-
-
-</ui:composition>
+				<p:column>
+					<p:selectOneMenu id="chiefMenu"
+						value="#{agreementWizardPCB.agreement.chief}"
+						label="#{msgs.chief}" required="true" filter="true"
+						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}">
+						<f:selectItems value="#{utilPB.chiefItems}" />
+						<f:converter binding="#{chiefConverter}" />
+
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="#{msgs.add}" process="@this"
+						actionListener="#{chiefDialogPCB.clear()}"
+						oncomplete="w_chiefDialog.show()"
+						update=":#{p:component('chiefPanel')}"
+						rendered="!#{cc.attrs.editingDisable}">
+						<p:resetInput target=":#{p:component('chiefPanel')}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column>
+					<h:message class="errorMessage" for="chiefMenu" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.contactPerson}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="contact"
+						value="#{agreementWizardPCB.agreement.contactPerson}"
+						label="#{msgs.contactPerson}" required="true"
+						disabled="#{cc.attrs.editingDisable}" />
+				</p:column>
+
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="contact" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.company}:" />
+				</p:column>
+
+				<p:column>
+					<h:selectOneMenu id="companyMenu"
+						value="#{agreementWizardPCB.agreement.company}"
+						label="#{msgs.company}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:selectItems value="#{utilPB.companyItems}" />
+						<f:converter binding="#{companyConverter}" />
+					</h:selectOneMenu>
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="#{msgs.add}" process="@this"
+						actionListener="#{companyDialogPCB.clear()}"
+						oncomplete="w_companyDialog.show()"
+						update=":#{p:component('companyPanel')}"
+						rendered="!#{cc.attrs.editingDisable}">
+						<p:resetInput target=":#{p:component('companyPanel')}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column>
+					<h:message class="errorMessage" for="companyMenu" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.projectNumber}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="projectNumber"
+						value="#{agreementWizardPCB.agreement.CIA_projectNumber}"
+						label="#{msgs.projectNumber}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:ajax event="blur" execute="@this" render="projectNumberError" />
+					</h:inputText>
+
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="projectNumberError"
+						for="projectNumber" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.agrInventory}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="inventoryNumber"
+						value="#{agreementWizardPCB.agreement.inventoryNumber}"
+						label="#{msgs.agrInventory}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
+
+					</h:inputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="inventoryNumberError"
+						for="inventoryNumber" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.taxableAmount}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="taxableAmount"
+						value="#{agreementWizardPCB.agreement.wholeTaxableAmount}"
+						label="#{msgs.taxableAmount}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:convertNumber />
+						<f:validateDoubleRange minimum="0.0" />
+						<f:ajax render="amount taxAmountError" />
+					</h:inputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="taxAmountError" class="errorMessage"
+						for="taxableAmount" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.iva}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="iva"
+						value="#{agreementWizardPCB.agreement.IVA_amount}"
+						label="#{msgs.iva}" required="true"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:convertNumber />
+						<f:validateDoubleRange minimum="0.0" maximum="100.0" />
+						<f:ajax render="amount ivaError" />
+					</h:inputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="ivaError" class="errorMessage" for="iva" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.wholeAmount}:" />
+				</p:column>
+
+				<p:column colspan="3">
+					<h:outputText id="amount"
+						value="#{agreementWizardPCB.agreement.wholeAmount}"
+						readonly="true">
+						<f:convertNumber type="currency" currencySymbol="€" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.approvalDate}:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
+						readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true"
+						value="#{agreementWizardPCB.agreement.approvalDate}"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="approvalDate" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.beginDate}:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar id="beginDate" pattern="dd/MM/yyyy"
+						readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true" value="#{agreementWizardPCB.agreement.beginDate}"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="beginDate" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.deadlineDate}:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
+						readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true"
+						value="#{agreementWizardPCB.agreement.deadlineDate}"
+						disabled="#{cc.attrs.editingDisable}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="deadlineDate" />
+				</p:column>
+			</p:row>
+
+
+
+		</p:panelGrid>
+
+	</p:panel>
+
+
+
+
+</composite:implementation>
+</html>
 

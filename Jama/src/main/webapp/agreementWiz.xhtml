@@ -18,13 +18,18 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:wizard >
+			<p:wizard>
 
+				<p:tab id="tabDati" title="Dati">
+					<sections:agreementWizData editingDisable="false" />
+
+				</p:tab>
 				<ui:include src="/resources/sections/agreementWizData.xhtml" />
 
-				<p:tab  id="tabRip" title="Passo 2">
-					<sections:wizShareTable shareTableController ="#{agreementWizardPCB.shareTableController}"
-					percentBean="#{agreementWizardPCB}"/>
+				<p:tab id="tabRip" title="Passo 2">
+					<sections:wizShareTable editingDisable="false"
+						shareTableController="#{agreementWizardPCB.shareTableController}"
+						percentBean="#{agreementWizardPCB}" />
 				</p:tab>
 
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
@@ -32,7 +37,8 @@
 
 			</p:wizard>
 
-			<h:commandButton value="#{msgs.cancel}" action="#{agreementManager.cancel()}" immediate="true" />
+			<h:commandButton value="#{msgs.cancel}"
+				action="#{agreementManager.cancel()}" immediate="true" />
 
 
 

@@ -80,16 +80,17 @@ public class AgreementManagerBean implements Serializable {
 			agreement.cloneFields(transferObjAgreement);
 
 		}
-		close();
-		return "/home.xhtml";
+		
+		return close();
 	}
 
 	private String close() {
 
 		if (!conversationninherited) {
 			conversation.end();
+			agreementDao.close();
+
 		}
-		agreementDao.close();
 		em.clear();
 		
 		if (selectedAgreementId < 0) {
@@ -118,12 +119,12 @@ public class AgreementManagerBean implements Serializable {
 	public String editAgreement() {
 		begin();
 		initEditing();
-		return "/resources/sections/agreementWiz.xhtml";
+		return "/agreementWiz.xhtml";
 	}
 
 	public String createAgreement() {
 		begin();
-		return "/resources/sections/agreementWiz.xhtml";
+		return "/agreementWiz.xhtml";
 
 	}
 
