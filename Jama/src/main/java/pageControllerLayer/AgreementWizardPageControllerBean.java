@@ -9,13 +9,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
-import businessLayer.AbstractShareTable;
 import businessLayer.Agreement;
 
 @Named("agreementWizardPCB")
 @ConversationScoped
 public class AgreementWizardPageControllerBean  implements Serializable {
-	//TODO: modificare il getpercentuale per i sottocampi
 	
 	/**
 	 * 
@@ -38,7 +36,6 @@ public class AgreementWizardPageControllerBean  implements Serializable {
 	
 	private void onAgreementUpdate(@Observes AgreementEvent event){
 	
-		System.out.println(event.getDescription());
 		init();
 		
 	}

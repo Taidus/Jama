@@ -116,7 +116,7 @@ public class AgreementManagerBean implements Serializable {
 		return conversation;
 	}
 
-	private void initEditing() {
+	private void initAgreement() {
 
 		agreement = agreementDao.getById(selectedAgreementId);
 		transferObjAgreement.cloneFields(agreement);
@@ -125,7 +125,7 @@ public class AgreementManagerBean implements Serializable {
 
 	public String editAgreement() {
 		begin();
-		initEditing();
+		initAgreement();
 		agreementEvent.fire(new AgreementEvent("new Agreement"));
 		return "/agreementWiz.xhtml";
 	}
@@ -135,10 +135,20 @@ public class AgreementManagerBean implements Serializable {
 		return "/agreementWiz.xhtml";
 
 	}
+	
+	public String viewAgreement(){
+		
+		begin();
+		initAgreement();
+		agreementEvent.fire(new AgreementEvent("new Agreement"));
+		return "/agreementView.xhtml";
+
+		
+	}
 
 	public String addInstallment() {
 		begin();
-		initEditing();
+		initAgreement();
 		installmentEvent.fire(new InstallmentEvent("new Installment"));
 		Installment i = new Installment();
 		transferObjAgreement.getInstallments().add(i);
