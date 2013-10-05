@@ -19,23 +19,19 @@ import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
 @ConversationScoped
-public abstract class WizardPageController implements Serializable{
+public abstract class WizardPageController implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	public WizardPageController() {
 		shares = new ArrayList<PersonnelShare>();
-		}
-	
-	
-	
+	}
+
 	private List<PersonnelShare> shares;
 	private PersonnelShare selectedShare;
-
 
 	public PersonnelShare getSelectedShare() {
 		return selectedShare;
@@ -45,12 +41,14 @@ public abstract class WizardPageController implements Serializable{
 		this.selectedShare = selectedShare;
 	}
 
+	// XXX: ho messo una toppa al bug della modifica delle quote ma sta roba fa
+	// un pò schifo
 	public List<PersonnelShare> getShares() {
+		initShares(getShareTable().getSharePerPersonnel());
 		return shares;
 	}
 
-	public abstract AbstractShareTable getShareTable() ;
-	
+	public abstract AbstractShareTable getShareTable();
 
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
@@ -88,14 +86,17 @@ public abstract class WizardPageController implements Serializable{
 
 		float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
 				getShareTable().getAtheneumCommonBalance(),
-				getShareTable().getStructures(), getShareTable().getPersonnel(),
+				getShareTable().getStructures(),
+				getShareTable().getPersonnel(),
 				getShareTable().getGoodsAndServices() };
 
 		float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
 				getShareTable().getConsumerMaterials(),
-				getShareTable().getInventoryMaterials(), getShareTable().getRentals(),
-				getShareTable().getPersonnelOnContract(), getShareTable().getOtherCost() };
-		
+				getShareTable().getInventoryMaterials(),
+				getShareTable().getRentals(),
+				getShareTable().getPersonnelOnContract(),
+				getShareTable().getOtherCost() };
+
 		float[] personnelValues = createPersonnelValues(shares);
 
 		debug();
@@ -103,12 +104,14 @@ public abstract class WizardPageController implements Serializable{
 		sharesDoubleEntryCheck();
 
 		getShareTable().validate(mainValues, goodsAndServicesValues,
-				personnelValues, getShareTable().getGoodsAndServices(), getShareTable().getPersonnel());
+				personnelValues, getShareTable().getGoodsAndServices(),
+				getShareTable().getPersonnel());
 
 		fillAgreementPersonnelShares();
 	}
 
-	protected  void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
+	protected void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
+		shares = new ArrayList<PersonnelShare>();
 		Set<Entry<ChiefScientist, Float>> s = sharePerPersonnel.entrySet();
 		for (Iterator<Entry<ChiefScientist, Float>> it = s.iterator(); it
 				.hasNext();) {

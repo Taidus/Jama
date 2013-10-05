@@ -225,10 +225,10 @@
 			<f:facet name="footer">
 				<p:commandButton value="#{msgs.add}"
 					action="#{cc.attrs.bean.addRow()}"
-					update="personnelShares" process="personnelShares, @this" rendered="!#{cc.attrs.editingDisable}" />
+					update="personnelShares" process="personnelShares, @this" rendered="#{!cc.attrs.editingDisable}" />
 				<p:commandButton value="#{msgs.remove}"
 					action="#{cc.attrs.bean.removeRow()}"
-					update="personnelShares" process="personnelShares, @this" rendered="!#{cc.attrs.editingDisable}" />
+					update="personnelShares" process="personnelShares, @this" rendered="#{!cc.attrs.editingDisable}" />
 			</f:facet>
 		</p:column>
 
