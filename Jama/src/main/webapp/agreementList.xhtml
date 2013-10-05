@@ -66,8 +66,8 @@
 				<h:outputText value="#{agr.company.name}" />
 			</p:column>
 
-			<p:column id="agrTableDateColumn"
-				sortBy="#{agr.approvalDate}">
+			<p:column id="agrTableDateColumn" styleClass="button-left-column"
+				sortBy="#{agr.approvalDate}" >
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
@@ -96,6 +96,10 @@
 				<h:outputText value="#{agr.approvalDate}">
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
+				
+			</p:column>
+			
+			<p:column styleClass="button-right-column button-column">
 				<p:commandButton styleClass="agr-list-button"
 					icon="ui-icon-search" action="#{agreementListPB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
