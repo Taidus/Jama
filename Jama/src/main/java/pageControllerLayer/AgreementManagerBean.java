@@ -108,7 +108,7 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public String cancel() {
-		return close();
+		return close() + "?faces-redirect=true";
 		
 	}
 
@@ -127,7 +127,7 @@ public class AgreementManagerBean implements Serializable {
 		begin();
 		initAgreement();
 		agreementEvent.fire(new AgreementEvent("new Agreement"));
-		return "/agreementWiz.xhtml";
+		return "/agreementWiz.xhtml?faces-redirect=true";
 	}
 
 	public String createAgreement() {
@@ -141,7 +141,7 @@ public class AgreementManagerBean implements Serializable {
 		begin();
 		initAgreement();
 		agreementEvent.fire(new AgreementEvent("new Agreement"));
-		return "/agreementView.xhtml";
+		return "/agreementView.xhtml?faces-redirect=true";
 
 		
 	}

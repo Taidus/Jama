@@ -76,7 +76,7 @@ public class AgreementListPresentationBean implements Serializable {
 
 	public String backToHome() {
 		close();
-		return "home";
+		return "/home?faces-redirect=true";
 	}
 
 }
