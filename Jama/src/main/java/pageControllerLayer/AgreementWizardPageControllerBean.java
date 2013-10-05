@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +14,7 @@ import businessLayer.Agreement;
 
 @Named("agreementWizardPCB")
 @ConversationScoped
-public class AgreementWizardPageControllerBean extends WizardPageController implements Serializable {
+public class AgreementWizardPageControllerBean  implements Serializable {
 	//TODO: modificare il getpercentuale per i sottocampi
 	
 	/**
@@ -23,15 +24,32 @@ public class AgreementWizardPageControllerBean extends WizardPageController impl
 	@Inject
 	@TransferObj
 	private Agreement agreement;
+	private ShareTableController shareTableController;
 
 	public AgreementWizardPageControllerBean() {
 	}
 	
 	@PostConstruct
 	private void init(){
+		shareTableController = new ShareTableController(agreement.getShareTable());
 	}
+	
+		
+	
+	private void onAgreementUpdate(@Observes AgreementEvent event){
+	
+		System.out.println(event.getDescription());
+		init();
+		
+	}
+	
+	
 
 	
+	public ShareTableController getShareTableController() {
+		return shareTableController;
+	}
+
 	public Agreement getAgreement() {
 		return agreement;
 	}
@@ -114,10 +132,7 @@ public class AgreementWizardPageControllerBean extends WizardPageController impl
 		return computePercent(agreement.getShareTable().getOtherCost());
 	}
 
-	@Override
-	public AbstractShareTable getShareTable() {
-		return agreement.getShareTable();
-	}
+	
 
 	
 	

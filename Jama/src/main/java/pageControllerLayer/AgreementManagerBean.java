@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Event;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +35,12 @@ public class AgreementManagerBean implements Serializable {
 	private EntityManager em;
 
 	private boolean conversationninherited;
+	
+	
+	@Inject Event<AgreementEvent> agreementEvent;
+	@Inject Event<InstallmentEvent> installmentEvent;
+	
+	
 
 	// TODO aggiungere un po' di eccezioni
 	private int selectedAgreementId = -1;
@@ -119,6 +126,7 @@ public class AgreementManagerBean implements Serializable {
 	public String editAgreement() {
 		begin();
 		initEditing();
+		agreementEvent.fire(new AgreementEvent("new Agreement"));
 		return "/agreementWiz.xhtml";
 	}
 
@@ -131,6 +139,7 @@ public class AgreementManagerBean implements Serializable {
 	public String addInstallment() {
 		begin();
 		initEditing();
+		installmentEvent.fire(new InstallmentEvent("new Installment"));
 		Installment i = new Installment();
 		transferObjAgreement.getInstallments().add(i);
 		return "/resources/sections/InstallmentWiz.xhtml";
