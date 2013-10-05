@@ -18,16 +18,24 @@
 							jQuery(this).find(".agr-list-button").hide();
 							});
 		}
-			
-		jQuery(document).ready(setRowEvent);
+
+		function setFilters(chiefFilter, companyFilter){
+			jQuery("#agreementTable\\:agrTableChiefColumn\\:filter").val(chiefFilter);
+			jQuery("#agreementTable\\:agrTableCompanyColumn\\:filter").val(companyFilter);
+		}
+
+		jQuery(document).ready(function(){
+									setRowEvent();
+								});
+		
 	</script>
 </h:head>
-<h:body>
+<h:body onload="setFilters(#{agreementListPB.lazyModel.filterChiefId}, #{agreementListPB.lazyModel.filterCompanyId});">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid"
 			value='#{agreementListPB.conversation.id}' />
-
+		
 		<p:contextMenu for="agreementTable">
 			<p:menuitem value="#{msgs.view}" outcome="done" icon="ui-icon-search" />
 			<p:menuitem value="#{msgs.edit}" outcome="cancel"
@@ -89,7 +97,10 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 				<p:commandButton styleClass="agr-list-button"
-					icon="ui-icon-search" />
+					icon="ui-icon-search" >
+					<f:setPropertyActionListener value="#{agr}"
+						target="#{agreementListPB.selectedValue}" />
+				</p:commandButton>
 				<p:commandButton styleClass="agr-list-button"
 					icon="ui-icon-wrench" action="#{agreementListPB.editAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"

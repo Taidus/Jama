@@ -27,19 +27,16 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	private Date filterMinDate;
 	private Date filterMaxDate;
-	private Integer currentChiefId, currentCompanyId;
-	private boolean inputChanged;
+	private Integer filterChiefId, filterCompanyId;
+	private boolean inputChanged, ignoreTableFilters;
 	private SortOrder sortOrder;
 
 	public LazyAgreementDataModel() {
 		this.inputChanged = true;
-		this.currentChiefId = null;
-		this.currentCompanyId = null;
+		this.ignoreTableFilters = false;
+		this.filterChiefId = null;
+		this.filterCompanyId = null;
 		this.sortOrder = SortOrder.DESCENDING;
-	}
-
-	@PostConstruct
-	public void init() {
 	}
 
 	@Override
@@ -75,35 +72,38 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		System.out.println("First: " + first + "; page size: " + pageSize);
 		System.out.println("Min: " + filterMinDate + "; max: " + filterMaxDate);
 
+		System.out.println("Filters: ");
 		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
 			String key = it.next();
 			String value = filters.get(key);
-			System.out.println("[" + key + ", " + value + "]");
+			System.out.print("[" + key + ", " + value + "]   ");
 		}
 
 		displayedAgreements = new ArrayList<>();
 
-		Integer newChiefId = null;
-		Integer newCompanyId = null;
-		if (filters != null) {
-			String tmp = filters.get("chief.id");
-			if (tmp != null) {
-				newChiefId = Integer.parseInt(tmp);
+		if (!ignoreTableFilters) {
+			Integer newChiefId = null;
+			Integer newCompanyId = null;
+			if (filters != null) {
+				String tmp = filters.get("chief.id");
+				if (tmp != null) {
+					newChiefId = Integer.parseInt(tmp);
+				}
+				tmp = filters.get("company.id");
+				if (tmp != null) {
+					newCompanyId = Integer.parseInt(tmp);
+				}
 			}
-			tmp = filters.get("company.id");
-			if (tmp != null) {
-				newCompanyId = Integer.parseInt(tmp);
-			}
+			updateChiefId(newChiefId);
+			updateCompanyId(newCompanyId);
 		}
-		updateChiefId(newChiefId);
-		updateCompanyId(newCompanyId);
 		setSortOrder(sortOrder);
-		System.out.println("Chief ID: " + currentChiefId + "; company ID: " + currentCompanyId);
+		System.out.println("Chief ID: " + filterChiefId + "; company ID: " + filterCompanyId);
 		System.out.println("Order: " + sortOrder);
 		System.out.println("Filter changed: " + inputChanged);
 
 		if (inputChanged) {
-			agreementSearch.init(filterMinDate, filterMaxDate, currentChiefId, currentCompanyId, sortOrder);
+			agreementSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder);
 		}
 		agreementSearch.setPageSize(pageSize);
 		agreementSearch.setCurrentPage(first / pageSize);
@@ -138,8 +138,14 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		}
 
 		inputChanged = false;
+		ignoreTableFilters = false;
 		this.setRowCount(rowCount);
 		return displayedAgreements;
+	}
+
+	public void filterOnReload() {
+		inputChanged = true;
+		ignoreTableFilters = true;
 	}
 
 	public SortOrder getSortOrder() {
@@ -185,17 +191,29 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	private void updateChiefId(Integer newValue) {
-		if (currentChiefId != newValue) {
-			currentChiefId = newValue;
+		if (filterChiefId != newValue) {
+			filterChiefId = newValue;
 			inputChanged = true;
 		}
 	}
 
 	private void updateCompanyId(Integer newValue) {
-		if (currentCompanyId != newValue) {
-			currentCompanyId = newValue;
+		if (filterCompanyId != newValue) {
+			filterCompanyId = newValue;
 			inputChanged = true;
 		}
 	}
+
+	public Integer getFilterChiefId() {
+		System.out.println("Getting value: " + filterChiefId);
+		return (filterChiefId != null) ? filterChiefId : 0;
+	}
+
+	public Integer getFilterCompanyId() {
+		System.out.println("Getting value: " + filterCompanyId);
+		return (filterCompanyId != null) ? filterCompanyId : 0;
+	}
+	
+	
 
 }

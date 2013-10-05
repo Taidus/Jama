@@ -18,28 +18,33 @@ import daoLayer.ChiefScientistDaoBean;
 public class AgreementListPresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EJB private ChiefScientistDaoBean chiefDao;
-	@Inject private LazyAgreementDataModel lazyModel;
-	@Inject private AgreementManagerBean agrManager;
-	
-	@Inject private Conversation conversation;
-	
+	@EJB
+	private ChiefScientistDaoBean chiefDao;
+	@Inject
+	private LazyAgreementDataModel lazyModel;
+	@Inject
+	private AgreementManagerBean agrManager;
+
+	@Inject
+	private Conversation conversation;
+
 	private Agreement selectedValue;
 
-	public AgreementListPresentationBean() {}
-	
+	public AgreementListPresentationBean() {
+	}
+
 	@PostConstruct
-	public void init() {		
+	public void init() {
 		conversation.begin();
 	}
-	
+
 	public Conversation getConversation() {
 		return conversation;
 	}
-	
-	public LazyAgreementDataModel getLazyModel() {  
-        return lazyModel;
-    }
+
+	public LazyAgreementDataModel getLazyModel() {
+		return lazyModel;
+	}
 
 	public Agreement getSelectedValue() {
 		return selectedValue;
@@ -48,20 +53,26 @@ public class AgreementListPresentationBean implements Serializable {
 	public void setSelectedValue(Agreement selectedValue) {
 		this.selectedValue = selectedValue;
 	}
-	
-	public String editAgreement(){
-		System.out.println(selectedValue.getId() + ": " + selectedValue.getChief() + ", " + selectedValue.getCompany());
+
+	public String editAgreement() {
+		System.out.println("Agreement ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getCompleteName() + "; company: "
+				+ selectedValue.getCompany().getName() + "\n***");
+		lazyModel.filterOnReload();
 		agrManager.setSelectedAgreementId(selectedValue.getId());
 		return agrManager.editAgreement();
 	}
-	
-	private void close(){
+
+	private void close() {
 		conversation.end();
 	}
-	
-	public String backToHome(){
+
+	public String backToHome() {
 		close();
 		return "home";
+	}
+
+	public void print() {
+		System.out.println("====================================\nPRINTING! OH YEAH!\n=================================");
 	}
 
 }
