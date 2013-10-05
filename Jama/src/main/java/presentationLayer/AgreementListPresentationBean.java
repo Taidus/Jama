@@ -55,11 +55,19 @@ public class AgreementListPresentationBean implements Serializable {
 	}
 
 	public String editAgreement() {
-		System.out.println("Agreement ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getCompleteName() + "; company: "
+		System.out.println("Editing agreement with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getCompleteName() + "; company: "
 				+ selectedValue.getCompany().getName() + "\n***");
 		lazyModel.filterOnReload();
 		agrManager.setSelectedAgreementId(selectedValue.getId());
 		return agrManager.editAgreement();
+	}
+	
+	public String viewAgreement() {
+		System.out.println("Viewing agreement with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getCompleteName() + "; company: "
+				+ selectedValue.getCompany().getName() + "\n***");
+		lazyModel.filterOnReload();
+		agrManager.setSelectedAgreementId(selectedValue.getId());
+		return agrManager.viewAgreement();
 	}
 
 	private void close() {
@@ -69,10 +77,6 @@ public class AgreementListPresentationBean implements Serializable {
 	public String backToHome() {
 		close();
 		return "home";
-	}
-
-	public void print() {
-		System.out.println("====================================\nPRINTING! OH YEAH!\n=================================");
 	}
 
 }

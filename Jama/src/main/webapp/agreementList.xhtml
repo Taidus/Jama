@@ -97,7 +97,7 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 				<p:commandButton styleClass="agr-list-button"
-					icon="ui-icon-search" >
+					icon="ui-icon-search" action="#{agreementListPB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>
