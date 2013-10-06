@@ -55,19 +55,30 @@ public class AgreementListPresentationBean implements Serializable {
 	}
 
 	public String editAgreement() {
-		System.out.println("Editing agreement with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getCompleteName() + "; company: "
-				+ selectedValue.getCompany().getName() + "\n***");
+		print("Editing");
 		lazyModel.filterOnReload();
 		agrManager.setSelectedAgreementId(selectedValue.getId());
 		return agrManager.editAgreement();
 	}
-	
+
 	public String viewAgreement() {
-		System.out.println("Viewing agreement with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getCompleteName() + "; company: "
-				+ selectedValue.getCompany().getName() + "\n***");
+		print("Viewing");
 		lazyModel.filterOnReload();
 		agrManager.setSelectedAgreementId(selectedValue.getId());
 		return agrManager.viewAgreement();
+	}
+
+	public void deleteAgreement() {
+		print("Deleting");
+		// lazyModel.filterOnReload();
+		// agrManager.setSelectedAgreementId(selectedValue.getId());
+		// return agrManager.editAgreement();
+	}
+
+	private void print(String action) {
+		//TODO eliminare
+		System.out.println("***\n" + action + " agreement with ID: " + selectedValue.getId() + ". Chief: "
+				+ selectedValue.getChief().getCompleteName() + "; company: " + selectedValue.getCompany().getName() + "\n***");
 	}
 
 	private void close() {

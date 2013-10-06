@@ -92,13 +92,17 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	private String close() {
-
+		//TODO eliminare i system.out
 		if (!conversationninherited) {
+			System.out.println("Fail to load 1");
 			conversation.end();
+			System.out.println("Fail to load 2");
 			agreementDao.close();
 
 		}
+		System.out.println("Fail to load 3");
 		em.clear();
+		System.out.println("Fail to load 4");
 		
 		if (selectedAgreementId < 0) {
 			return "/home.xhtml";

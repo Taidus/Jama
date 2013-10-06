@@ -87,9 +87,9 @@
 							</p:calendar>
 						</div>
 						<p:commandButton value="#{msgs.filter}"
-							onclick="w_agrTable.filter()" />
+							onclick="w_agrTable.filter(); return false;" />
 						<p:commandButton value="#{msgs.reset}"
-							onclick="w_firstDate.setDate(null); w_lastDate.setDate(null); w_agrTable.filter();" />
+							onclick="w_firstDate.setDate(null); w_lastDate.setDate(null); w_agrTable.filter(); return false;" />
 					</h:form>
 				</f:facet>
 
@@ -104,6 +104,11 @@
 				</p:commandButton>
 				<p:commandButton styleClass="agr-list-button"
 					icon="ui-icon-wrench" action="#{agreementListPB.editAgreement()}">
+					<f:setPropertyActionListener value="#{agr}"
+						target="#{agreementListPB.selectedValue}" />
+				</p:commandButton>
+				<p:commandButton styleClass="agr-list-button"
+					icon="ui-icon-trash" action="#{agreementListPB.deleteAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>

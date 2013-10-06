@@ -36,9 +36,23 @@
 
 			</p:wizard>
 
-			<h:commandButton value="#{msgs.cancel}"
-				action="#{agreementManager.cancel()}" immediate="true" />
 
+			<ui:remove>
+				<p:commandButton value="#{msgs.cancel}"
+					action="#{agreementManager.cancel()}" immediate="true" />
+			</ui:remove>
+
+			<p:commandButton type="button" value="#{msgs.cancel}"
+				onclick="w_confirm.show();" />
+
+			<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
+				severity="alert" widgetVar="w_confirm">
+				<p:commandButton value="#{msgs.yes}"
+					action="#{agreementManager.cancel()}" immediate="true"
+					oncomplete="w_confirm.hide()" />
+				<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
+					type="button" />
+			</p:confirmDialog>
 
 
 
@@ -46,6 +60,8 @@
 	</h:panelGrid>
 
 	<br />
+
+
 
 	<p:dialog id="chiefDialog" header="#{msgs.newChiefTitle}"
 		widgetVar="w_chiefDialog" modal="true">
