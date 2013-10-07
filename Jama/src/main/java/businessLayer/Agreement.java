@@ -1,6 +1,7 @@
 package businessLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -61,7 +62,7 @@ public class Agreement implements Serializable {
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 	
-	@OneToMany(mappedBy="agreement",cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="agreement",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@OrderColumn
 	private List<Installment> installments;
 
@@ -75,10 +76,12 @@ public class Agreement implements Serializable {
 	
 	public Agreement() {
 		shareTable = new AgreementShareTable();
+		installments = new ArrayList<>();
 	}
 	
 	public void cloneFields(Agreement copy){
 		
+		this.id = copy.getId();
 		this.title = copy.getTitle();
 		this.protocolNumber = copy.getProtocolNumber();
 		this.type = copy.getType();
@@ -97,6 +100,11 @@ public class Agreement implements Serializable {
 		this.beginDate = copy.getBeginDate();
 		this.deadlineDate = copy.getDeadlineDate();
 		this.note = copy.getNote();
+		
+		
+		for(Installment i : installments){
+			i.setAgreement(this);
+		}
 		
 		
 		

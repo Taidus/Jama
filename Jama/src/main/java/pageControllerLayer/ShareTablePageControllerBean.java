@@ -1,15 +1,14 @@
-package oldClasses;
+package pageControllerLayer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -18,15 +17,10 @@ import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
-@ConversationScoped
-public abstract class AbstractWizardPageController implements Serializable {
+@RequestScoped
+public abstract class ShareTablePageControllerBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public AbstractWizardPageController() {
+	public ShareTablePageControllerBean() {
 		shares = new ArrayList<PersonnelShare>();
 	}
 
@@ -41,14 +35,10 @@ public abstract class AbstractWizardPageController implements Serializable {
 		this.selectedShare = selectedShare;
 	}
 
-	// XXX: ho messo una toppa al bug della modifica delle quote ma sta roba fa
-	// un pò schifo
 	public List<PersonnelShare> getShares() {
-		initShares(getShareTable().getSharePerPersonnel());
+
 		return shares;
 	}
-
-	public abstract AbstractShareTable getShareTable();
 
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
@@ -84,13 +74,15 @@ public abstract class AbstractWizardPageController implements Serializable {
 		// inventoryMaterials, rentals, personnelOnContract, otherCost };
 		// float[] personnelValues = createPersonnelValues(shares);
 
-		float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
+		float[] mainValues = {
+				getShareTable().getAtheneumCapitalBalance(),
 				getShareTable().getAtheneumCommonBalance(),
 				getShareTable().getStructures(),
 				getShareTable().getPersonnel(),
 				getShareTable().getGoodsAndServices() };
 
-		float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
+		float[] goodsAndServicesValues = {
+				getShareTable().getBusinessTrip(),
 				getShareTable().getConsumerMaterials(),
 				getShareTable().getInventoryMaterials(),
 				getShareTable().getRentals(),
@@ -109,9 +101,9 @@ public abstract class AbstractWizardPageController implements Serializable {
 
 		fillAgreementPersonnelShares();
 	}
-
+	
+	//find a solution
 	protected void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
-		shares = new ArrayList<PersonnelShare>();
 		Set<Entry<ChiefScientist, Float>> s = sharePerPersonnel.entrySet();
 		for (Iterator<Entry<ChiefScientist, Float>> it = s.iterator(); it
 				.hasNext();) {
@@ -211,5 +203,62 @@ public abstract class AbstractWizardPageController implements Serializable {
 	public void removeRow() {
 		shares.remove(selectedShare);
 	}
+
+	// metodi per le percentuali
+	private float computePercent(float percent) {
+		return getWholeAmount() * percent / 100;
+	}
+
+	public float getPercentAtheneumCapitalBalance() {
+		return computePercent(getShareTable()
+				.getAtheneumCapitalBalance());
+	}
+
+	public float getPercentAtheneumCommonBalance() {
+		return computePercent(getShareTable().getAtheneumCommonBalance());
+	}
+
+	public float getPercentStructures() {
+		return computePercent(getShareTable().getStructures());
+	}
+
+	public float getPercentPersonnel() {
+		return computePercent(getShareTable().getPersonnel());
+	}
+
+	// public Map<ChiefScientist, Float> getSharePerPersonnel() {
+	// return sharePerPersonnel;
+	// }
+
+	public float getPercentGoodsAndServices() {
+		return computePercent(getShareTable().getGoodsAndServices());
+	}
+
+	public float getPercentBusinessTrip() {
+		return computePercent(getShareTable().getBusinessTrip());
+	}
+
+	public float getPercentConsumerMaterials() {
+		return computePercent(getShareTable().getConsumerMaterials());
+	}
+
+	public float getPercentInventoryMaterials() {
+		return computePercent(getShareTable().getInventoryMaterials());
+	}
+
+	public float getPercentRentals() {
+		return computePercent(getShareTable().getRentals());
+	}
+
+	public float getPercentPersonnelOnContract() {
+		return computePercent(getShareTable().getPersonnelOnContract());
+	}
+
+	public float getPercentOtherCost() {
+		return computePercent(getShareTable().getOtherCost());
+	}
+	
+	public abstract AbstractShareTable getShareTable();
+	public abstract float getWholeAmount();
 
 }

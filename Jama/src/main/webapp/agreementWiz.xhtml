@@ -18,7 +18,7 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:wizard>
+			<p:wizard step="#{agreementWizardPBC.currentTabId}" flowListener="#{agreementWizardPBC.handleFlow}">
 
 				<p:tab id="tabDati" title="Dati">
 					<sections:agreementWizData editingDisable="false" />
@@ -28,7 +28,14 @@
 
 				<p:tab id="tabRip" title="Passo 2">
 					<sections:wizShareTable editingDisable="false"
-						bean="#{agreementWizardPCB}" />
+						bean="#{agreementShareTablePCB}" />
+				</p:tab>
+				
+				<p:tab id="tabInstallments" title="Passo 3">
+					<sections:agreementInstallmentsList>
+					</sections:agreementInstallmentsList>
+					
+				
 				</p:tab>
 
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />

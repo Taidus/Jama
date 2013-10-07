@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package oldClasses;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,23 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+
 import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
 public class ShareTableController {
 
-	private AbstractShareTable shareTable;
 	private List<PersonnelShare> shares;
 	private PersonnelShare selectedShare;
+	private ShareTableHolder holder;
 
-	public ShareTableController(AbstractShareTable shareTable) {
-		this.shareTable = shareTable;
+	public ShareTableController(ShareTableHolder shareTableHolder) {
+		this.holder = shareTableHolder;
 		shares = new ArrayList<PersonnelShare>();
-		initShares(shareTable.getSharePerPersonnel());
+		initShares(holder.getShareTable().getSharePerPersonnel());
 	}
 
 	public PersonnelShare getSelectedShare() {
@@ -35,11 +37,12 @@ public class ShareTableController {
 	}
 
 	public List<PersonnelShare> getShares() {
+		
 		return shares;
 	}
 
 	public AbstractShareTable getShareTable() {
-		return shareTable;
+		return holder.getShareTable();
 	}
 
 	public void validate(FacesContext context, UIComponent component,
@@ -76,15 +79,15 @@ public class ShareTableController {
 		// inventoryMaterials, rentals, personnelOnContract, otherCost };
 		// float[] personnelValues = createPersonnelValues(shares);
 
-		float[] mainValues = { shareTable.getAtheneumCapitalBalance(),
-				shareTable.getAtheneumCommonBalance(),
-				shareTable.getStructures(), shareTable.getPersonnel(),
-				shareTable.getGoodsAndServices() };
+		float[] mainValues = { holder.getShareTable().getAtheneumCapitalBalance(),
+				holder.getShareTable().getAtheneumCommonBalance(),
+				holder.getShareTable().getStructures(), holder.getShareTable().getPersonnel(),
+				holder.getShareTable().getGoodsAndServices() };
 
-		float[] goodsAndServicesValues = { shareTable.getBusinessTrip(),
-				shareTable.getConsumerMaterials(),
-				shareTable.getInventoryMaterials(), shareTable.getRentals(),
-				shareTable.getPersonnelOnContract(), shareTable.getOtherCost() };
+		float[] goodsAndServicesValues = { holder.getShareTable().getBusinessTrip(),
+				holder.getShareTable().getConsumerMaterials(),
+				holder.getShareTable().getInventoryMaterials(), holder.getShareTable().getRentals(),
+				holder.getShareTable().getPersonnelOnContract(), holder.getShareTable().getOtherCost() };
 		
 		float[] personnelValues = createPersonnelValues(shares);
 
@@ -92,8 +95,8 @@ public class ShareTableController {
 
 		sharesDoubleEntryCheck();
 
-		shareTable.validate(mainValues, goodsAndServicesValues,
-				personnelValues, shareTable.getGoodsAndServices(), shareTable.getPersonnel());
+		holder.getShareTable().validate(mainValues, goodsAndServicesValues,
+				personnelValues, holder.getShareTable().getGoodsAndServices(), holder.getShareTable().getPersonnel());
 
 		fillAgreementPersonnelShares();
 	}
@@ -146,7 +149,7 @@ public class ShareTableController {
 				m.put(p.getChiefScientist(), p.getShare());
 			}
 		}
-		shareTable.setSharePerPersonnel(m);
+		holder.getShareTable().setSharePerPersonnel(m);
 	}
 
 	private void debug() {
@@ -197,6 +200,81 @@ public class ShareTableController {
 
 	public void removeRow() {
 		shares.remove(selectedShare);
+	}
+	
+	
+	//metodi per le percentuali
+	private float computePercent(float percent){
+		return holder.getWholeAmount()*percent/100;
+	}
+	
+	public float getPercentAtheneumCapitalBalance() {
+		return computePercent(holder.getShareTable().getAtheneumCapitalBalance());
+	}
+
+
+
+	public float getPercentAtheneumCommonBalance() {
+		return computePercent(holder.getShareTable().getAtheneumCommonBalance());
+	}
+
+	
+
+	public float getPercentStructures() {
+		return computePercent(holder.getShareTable().getStructures());
+	}
+
+
+
+	public float getPercentPersonnel() {
+		return computePercent(holder.getShareTable().getPersonnel());
+	}
+
+	
+
+//	public Map<ChiefScientist, Float> getSharePerPersonnel() {
+//		return sharePerPersonnel;
+//	}
+
+	
+
+	public float getPercentGoodsAndServices() {
+		return computePercent(holder.getShareTable().getGoodsAndServices());
+	}
+
+	
+	public float getPercentBusinessTrip() {
+		return computePercent(holder.getShareTable().getBusinessTrip());
+	}
+
+	
+
+	public float getPercentConsumerMaterials() {
+		return computePercent(holder.getShareTable().getConsumerMaterials());
+	}
+
+	
+
+	public float getPercentInventoryMaterials() {
+		return computePercent(holder.getShareTable().getInventoryMaterials());
+	}
+
+
+
+	public float getPercentRentals() {
+		return computePercent(holder.getShareTable().getRentals());
+	}
+
+	
+
+	public float getPercentPersonnelOnContract() {
+		return computePercent(holder.getShareTable().getPersonnelOnContract());
+	}
+
+	
+
+	public float getPercentOtherCost() {
+		return computePercent(holder.getShareTable().getOtherCost());
 	}
 
 }

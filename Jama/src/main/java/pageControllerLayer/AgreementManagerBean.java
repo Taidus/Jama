@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.event.Event;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,10 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import daoLayer.AgreementDaoBean;
 import annotations.TransferObj;
 import businessLayer.Agreement;
-import businessLayer.Installment;
+import daoLayer.AgreementDaoBean;
 
 @Named("agreementManager")
 @ConversationScoped
@@ -35,21 +33,15 @@ public class AgreementManagerBean implements Serializable {
 	private EntityManager em;
 
 	private boolean conversationninherited;
-	
-	
-	@Inject Event<AgreementEvent> agreementEvent;
-	@Inject Event<InstallmentEvent> installmentEvent;
-	
-	
+
 
 	// TODO aggiungere un po' di eccezioni
 	private int selectedAgreementId = -1;
-	private int selectedInstalmentId = -1;
 	private Agreement agreement;
 	private Agreement transferObjAgreement;
 
 	public AgreementManagerBean() {
-		transferObjAgreement = new Agreement();
+		//transferObjAgreement = new Agreement();
 		conversationninherited = false;
 
 	}
@@ -62,13 +54,7 @@ public class AgreementManagerBean implements Serializable {
 		this.selectedAgreementId = selectedAgreementId;
 	}
 
-	public int getSelectedInstalmentId() {
-		return selectedInstalmentId;
-	}
-
-	public void setSelectedInstalmentId(int selectedInstalmentId) {
-		this.selectedInstalmentId = selectedInstalmentId;
-	}
+	
 
 	private void begin() {
 		if (conversation.isTransient()) {
@@ -80,13 +66,14 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public String save() {
+		
+		agreement.cloneFields(transferObjAgreement);
+		agreementDao.create(agreement);
 
-		if (selectedAgreementId < 0) {
-			agreementDao.create(transferObjAgreement);
-		} else {
-			agreement.cloneFields(transferObjAgreement);
 
-		}
+//		if (selectedAgreementId < 0) {
+//			agreementDao.create(transferObjAgreement);
+//		}
 		
 		return close();
 	}
@@ -121,7 +108,7 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	private void initAgreement() {
-
+		transferObjAgreement = new Agreement();
 		agreement = agreementDao.getById(selectedAgreementId);
 		transferObjAgreement.cloneFields(agreement);
 
@@ -130,12 +117,15 @@ public class AgreementManagerBean implements Serializable {
 	public String editAgreement() {
 		begin();
 		initAgreement();
-		agreementEvent.fire(new AgreementEvent("new Agreement"));
 		return "/agreementWiz.xhtml?faces-redirect=true";
 	}
 
 	public String createAgreement() {
+		agreement= new Agreement();
+		transferObjAgreement = new Agreement();
 		begin();
+		//check
+		//transferObjAgreement.cloneFields(agreement);
 		return "/agreementWiz.xhtml";
 
 	}
@@ -144,29 +134,10 @@ public class AgreementManagerBean implements Serializable {
 		
 		begin();
 		initAgreement();
-		agreementEvent.fire(new AgreementEvent("new Agreement"));
 		return "/agreementView.xhtml?faces-redirect=true";
 
-		
 	}
 
-	public String addInstallment() {
-		begin();
-		initAgreement();
-		installmentEvent.fire(new InstallmentEvent("new Installment"));
-		Installment i = new Installment();
-		transferObjAgreement.getInstallments().add(i);
-		return "/resources/sections/InstallmentWiz.xhtml";
-
-	}
-
-	public String modifyInstallment() {
-		//TODO
-//		begin();
-//		initEditing();
-		return "/resources/sections/InstallmentWiz.xhtml";
-
-	}
 
 	@Produces
 	@TransferObj
@@ -175,13 +146,10 @@ public class AgreementManagerBean implements Serializable {
 		return transferObjAgreement;
 	}
 
-	@Produces
-	@TransferObj
-	@ConversationScoped
-	public Installment getTransferObjAgreementInstallment() {
-
-		return transferObjAgreement.getInstallmentById(selectedInstalmentId);
-
+	public Agreement getAgreement() {
+		return transferObjAgreement;
 	}
+
+	
 
 }

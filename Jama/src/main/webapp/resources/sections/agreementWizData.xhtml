@@ -25,7 +25,7 @@
 
 				<p:column>
 					<h:inputTextarea id="title" cols="20" rows="4"
-						value="#{agreementWizardPCB.agreement.title}"
+						value="#{agreementManager.agreement.title}"
 						label="#{msgs.agrTitle}" required="true"
 						disabled="#{cc.attrs.editingDisable}" />
 				</p:column>
@@ -43,7 +43,7 @@
 
 				<p:column>
 					<h:inputText id="protocolNumber"
-						value="#{agreementWizardPCB.agreement.protocolNumber}"
+						value="#{agreementManager.agreement.protocolNumber}"
 						label="#{msgs.protocolNumber}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
@@ -66,7 +66,7 @@
 				</p:column>
 
 				<p:column colspan="3">
-					<h:outputText value="#{agreementWizardPCB.agreement.department}" />
+					<h:outputText value="#{agreementManager.agreement.department}" />
 				</p:column>
 			</p:row>
 
@@ -79,7 +79,7 @@
 
 				<p:column>
 					<h:selectOneMenu id="type"
-						value="#{agreementWizardPCB.agreement.type}"
+						value="#{agreementManager.agreement.type}"
 						label="#{msgs.agrType}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
@@ -103,7 +103,7 @@
 
 				<p:column>
 					<p:selectOneMenu id="chiefMenu"
-						value="#{agreementWizardPCB.agreement.chief}"
+						value="#{agreementManager.agreement.chief}"
 						label="#{msgs.chief}" required="true" filter="true"
 						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}">
 						<f:selectItems value="#{utilPB.chiefItems}" />
@@ -136,7 +136,7 @@
 
 				<p:column>
 					<h:inputText id="contact"
-						value="#{agreementWizardPCB.agreement.contactPerson}"
+						value="#{agreementManager.agreement.contactPerson}"
 						label="#{msgs.contactPerson}" required="true"
 						disabled="#{cc.attrs.editingDisable}" />
 				</p:column>
@@ -156,7 +156,7 @@
 
 				<p:column>
 					<h:selectOneMenu id="companyMenu"
-						value="#{agreementWizardPCB.agreement.company}"
+						value="#{agreementManager.agreement.company}"
 						label="#{msgs.company}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:selectItems value="#{utilPB.companyItems}" />
@@ -188,7 +188,7 @@
 
 				<p:column>
 					<h:inputText id="projectNumber"
-						value="#{agreementWizardPCB.agreement.CIA_projectNumber}"
+						value="#{agreementManager.agreement.CIA_projectNumber}"
 						label="#{msgs.projectNumber}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:ajax event="blur" execute="@this" render="projectNumberError" />
@@ -211,7 +211,7 @@
 
 				<p:column>
 					<h:inputText id="inventoryNumber"
-						value="#{agreementWizardPCB.agreement.inventoryNumber}"
+						value="#{agreementManager.agreement.inventoryNumber}"
 						label="#{msgs.agrInventory}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
@@ -234,7 +234,7 @@
 
 				<p:column>
 					<h:inputText id="taxableAmount"
-						value="#{agreementWizardPCB.agreement.wholeTaxableAmount}"
+						value="#{agreementManager.agreement.wholeTaxableAmount}"
 						label="#{msgs.taxableAmount}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertNumber />
@@ -258,7 +258,7 @@
 
 				<p:column>
 					<h:inputText id="iva"
-						value="#{agreementWizardPCB.agreement.IVA_amount}"
+						value="#{agreementManager.agreement.IVA_amount}"
 						label="#{msgs.iva}" required="true"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertNumber />
@@ -281,7 +281,7 @@
 
 				<p:column colspan="3">
 					<h:outputText id="amount"
-						value="#{agreementWizardPCB.agreement.wholeAmount}"
+						value="#{agreementManager.agreement.wholeAmount}"
 						readonly="true">
 						<f:convertNumber type="currency" currencySymbol="€" />
 					</h:outputText>
@@ -299,7 +299,7 @@
 					<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
 						required="true"
-						value="#{agreementWizardPCB.agreement.approvalDate}"
+						value="#{agreementManager.agreement.approvalDate}"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -320,7 +320,7 @@
 				<p:column>
 					<p:calendar id="beginDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true" value="#{agreementWizardPCB.agreement.beginDate}"
+						required="true" value="#{agreementManager.agreement.beginDate}"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -342,7 +342,7 @@
 					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
 						required="true"
-						value="#{agreementWizardPCB.agreement.deadlineDate}"
+						value="#{agreementManager.agreement.deadlineDate}"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>

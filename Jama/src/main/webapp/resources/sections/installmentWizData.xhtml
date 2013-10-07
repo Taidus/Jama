@@ -14,61 +14,61 @@
 
 				<h:outputText value="#{msgs.newInstDate}:" />
 				<p:calendar id="date" datePattern="dd/MM/yyyy" required="true"
-					value="#{installmentWizardPCB.installment.date}">
+					value="#{installmentManager.installment.date}">
 					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</p:calendar>
 				<h:message for="date" />
 
 				<h:outputText value="#{msgs.newInstAmount}:" />
 				<h:inputText id="amount"
-					value="#{installmentWizardPCB.installment.amount}"
+					value="#{installmentManager.installment.amount}"
 					label="#{msgs.newInstAmount}" required="true">
 				</h:inputText>
 				<h:message for="amount" />
 
 				<h:outputText value="#{msgs.newInstIva}:" />
 				<h:inputText id="iva"
-					value="#{installmentWizardPCB.installment.iva}"
+					value="#{installmentManager.installment.iva}"
 					label="#{msgs.newInstIva}" required="true">
 				</h:inputText>
 				<h:message for="iva" />
 
 				<h:outputText value="#{msgs.newInstVoucherNumber}:" />
 				<h:inputText id="voucherNumber"
-					value="#{installmentWizardPCB.installment.voucherNumber}"
+					value="#{installmentManager.installment.voucherNumber}"
 					label="#{msgs.newInstVoucherNumber}" required="true" />
 				<h:message for="voucherNumber" />
 
 				<h:outputText value="#{msgs.newInstVoucherDate}:" />
 				<p:calendar id="voucherDate" datePattern="dd/MM/yyyy"
 					required="true"
-					value="#{installmentWizardPCB.installment.voucherDate}">
+					value="#{installmentManager.installment.voucherDate}">
 					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</p:calendar>
 				<h:message for="voucherDate" />
 
 				<h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
 				<h:inputText id="ivaVoucherNumber"
-					value="#{installmentWizardPCB.installment.ivaVoucherNumber}"
+					value="#{installmentManager.installment.ivaVoucherNumber}"
 					label="#{msgs.newInstVoucherNumber}" required="true" />
 				<h:message for="ivaVoucherNumber" />
 
 				<h:outputText value="#{msgs.newInstPendingNumber}:" />
 				<h:inputText id="pendingNumber"
-					value="#{installmentWizardPCB.installment.pendingNumber}"
+					value="#{installmentManager.installment.pendingNumber}"
 					label="#{msgs.newInstPendingNumber}" required="true" />
 				<h:message for="pendingNumber" />
 
 				<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
 				<h:inputText id="invoiceNumber"
-					value="#{installmentWizardPCB.installment.invoiceNumber}"
+					value="#{installmentManager.installment.invoiceNumber}"
 					label="#{msgs.newInstInvoiceNumber}" required="true" />
 				<h:message for="invoiceNumber" />
 
 				<h:outputText value="#{msgs.newInstInvoiceDate}:" />
 				<p:calendar id="invoiceDate" datePattern="dd/MM/yyyy"
 					required="true"
-					value="#{installmentWizardPCB.installment.invoiceDate}">
+					value="#{installmentManager.installment.invoiceDate}">
 					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</p:calendar>
 				<h:message for="invoiceDate" />
@@ -76,7 +76,7 @@
 
 				<h:outputText value="#{msgs.newInstPaidInvoice}" />
 				<h:selectOneRadio id="paidInvoice"
-					value="#{installmentWizardPCB.installment.paidInvoice}">
+					value="#{installmentManager.installment.paidInvoice}">
 					<f:selectItem id="paidInvoiceYes" itemLabel="#{msgs.yes}"
 						itemValue="1" />
 					<f:selectItem id="paidInvoiceNo" itemLabel="#{msgs.no}"
@@ -86,14 +86,14 @@
 
 				<h:outputText value="#{msgs.newInstReportRequired}" />
 				<h:selectBooleanCheckbox
-					value="#{installmentWizardPCB.installment.reportRequired}"
+					value="#{installmentManager.installment.reportRequired}"
 					id="reportRequired" />
 
 				<br />
 
 				<h:outputText value="#{msgs.newInstNote}:" />
 				<h:inputTextarea id="notes" cols="20" rows="4"
-					value="#{installmentWizardPCB.installment.note}"
+					value="#{installmentManager.installment.note}"
 					label="#{msgs.newInstNote}" required="false" />
 				<h:message for="notes" />
 

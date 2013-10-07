@@ -8,43 +8,42 @@
 
 
 <h:head>
-	<h:outputStylesheet name="agreementWiz.css" library="css" />
+	<h:outputStylesheet name="installmentWiz.css" library="css" />
 </h:head>
 
 <h:body>
 
 	<h:panelGrid width="100%" columns="2" columnClasses="col1">
-		<h:form id="agreementWiz">
+		<h:form id="installmentWiz">
 
 			<p:growl id="growl" sticky="true" showDetail="true" />
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:tabView>
+			<p:wizard>
 
-			<p:tab id="tabDati" title="Dati">
-					<sections:agreementWizData editingDisable="true" />
-
-				</p:tab>
-				<ui:include src="/resources/sections/agreementWizData.xhtml" />
+				<ui:include src="/resources/sections/installmentWizData.xhtml" />
 
 				<p:tab id="tabRip" title="Passo 2">
-					<sections:wizShareTable editingDisable="true"
-						bean="#{agreementShareTablePCB}" />
+		
+		
+				
+
+					
 				</p:tab>
 
-				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
-
-			</p:tabView>
-
-			<h:commandButton value="#{msgs.cancel}"
-				action="#{agreementManager.cancel()}" immediate="true" />
+				<ui:include src="/resources/sections/installmentLastStep.xhtml" />
 
 
 
+			</p:wizard>
+
+			<h:commandButton value="#{msgs.cancel}" action="#{installmentManager.cancel()}" immediate="true"
+				ajax="false" />
 
 		</h:form>
 	</h:panelGrid>
 
+	<br />
 </h:body>
 </html>

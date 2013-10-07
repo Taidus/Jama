@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package oldClasses;
 
 import java.io.Serializable;
 
@@ -9,11 +9,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
+import businessLayer.AbstractShareTable;
 import businessLayer.Agreement;
 
 @Named("agreementWizardPCB")
 @ConversationScoped
-public class AgreementWizardPageControllerBean  implements Serializable {
+public class AgreementWizardPageControllerBean  implements Serializable,ShareTableHolder {
 	
 	/**
 	 * 
@@ -29,7 +30,7 @@ public class AgreementWizardPageControllerBean  implements Serializable {
 	
 	@PostConstruct
 	private void init(){
-		shareTableController = new ShareTableController(agreement.getShareTable());
+		shareTableController = new ShareTableController(this);
 	}
 	
 		
@@ -56,77 +57,16 @@ public class AgreementWizardPageControllerBean  implements Serializable {
 	}
 
 		
-	private float computePercent(float percent){
-		return agreement.getWholeAmount()*percent/100;
-	}
-	
-	public float getPercentAtheneumCapitalBalance() {
-		return computePercent(agreement.getShareTable().getAtheneumCapitalBalance());
-	}
-
-
-
-	public float getPercentAtheneumCommonBalance() {
-		return computePercent(agreement.getShareTable().getAtheneumCommonBalance());
-	}
-
 	
 
-	public float getPercentStructures() {
-		return computePercent(agreement.getShareTable().getStructures());
+	@Override
+	public AbstractShareTable getShareTable() {
+		return agreement.getShareTable();
 	}
 
-
-
-	public float getPercentPersonnel() {
-		return computePercent(agreement.getShareTable().getPersonnel());
-	}
-
-	
-
-//	public Map<ChiefScientist, Float> getSharePerPersonnel() {
-//		return sharePerPersonnel;
-//	}
-
-	
-
-	public float getPercentGoodsAndServices() {
-		return computePercent(agreement.getShareTable().getGoodsAndServices());
-	}
-
-	
-	public float getPercentBusinessTrip() {
-		return computePercent(agreement.getShareTable().getBusinessTrip());
-	}
-
-	
-
-	public float getPercentConsumerMaterials() {
-		return computePercent(agreement.getShareTable().getConsumerMaterials());
-	}
-
-	
-
-	public float getPercentInventoryMaterials() {
-		return computePercent(agreement.getShareTable().getInventoryMaterials());
-	}
-
-
-
-	public float getPercentRentals() {
-		return computePercent(agreement.getShareTable().getRentals());
-	}
-
-	
-
-	public float getPercentPersonnelOnContract() {
-		return computePercent(agreement.getShareTable().getPersonnelOnContract());
-	}
-
-	
-
-	public float getPercentOtherCost() {
-		return computePercent(agreement.getShareTable().getOtherCost());
+	@Override
+	public float getWholeAmount() {
+		return agreement.getWholeAmount();
 	}
 
 	

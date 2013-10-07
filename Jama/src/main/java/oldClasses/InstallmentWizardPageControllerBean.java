@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package oldClasses;
 
 import java.io.Serializable;
 
@@ -9,11 +9,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
+import businessLayer.AbstractShareTable;
 import businessLayer.Installment;
 
 @Named("installmentWizardPCB")
 @ConversationScoped
-public class InstallmentWizardPageControllerBean  implements Serializable {
+public class InstallmentWizardPageControllerBean  implements Serializable,ShareTableHolder {
 
 	/**
 	 * 
@@ -29,7 +30,7 @@ public class InstallmentWizardPageControllerBean  implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		shareTableController= new ShareTableController(installment.getShareTable());
+		shareTableController= new ShareTableController(this);
 	}
 
 	public Installment getInstallment() {
@@ -47,6 +48,16 @@ public class InstallmentWizardPageControllerBean  implements Serializable {
 	private void onInstallmentUpdate(@Observes InstallmentEvent event){
 		
 		init();
+	}
+
+	@Override
+	public AbstractShareTable getShareTable() {
+		return installment.getShareTable();
+	}
+
+	@Override
+	public float getWholeAmount() {
+		return installment.getAmount();
 	}
 
 	
