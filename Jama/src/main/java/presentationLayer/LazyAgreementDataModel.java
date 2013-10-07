@@ -103,6 +103,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		System.out.println("Filter changed: " + inputChanged);
 
 		if (inputChanged) {
+			System.out.println("Querying");
 			agreementSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder);
 		}
 		agreementSearch.setPageSize(pageSize);

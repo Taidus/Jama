@@ -15,13 +15,31 @@
 								jQuery(this).find(".agr-list-button").show();
 							})
 				.mouseout(function(){
-							jQuery(this).find(".agr-list-button").hide();
-							});
+								jQuery(this).find(".agr-list-button").hide();
+							})
+				.click(function(e){
+							jQuery("#tableContextMenu").hide();
+							jQuery("#agreementTable tr").removeClass("ui-state-highlight");
+							e.stopPropagation();
+						})
+				.removeClass("ui-state-highlight");
 		}
 
 		function setFilters(chiefFilter, companyFilter){
 			jQuery("#agreementTable\\:agrTableChiefColumn\\:filter").val(chiefFilter);
 			jQuery("#agreementTable\\:agrTableCompanyColumn\\:filter").val(companyFilter);
+		}
+
+		function calendarFilter(event, agrTable){
+			event.stopPropagation();
+			agrTable.filter(); 
+			return false;
+		}
+
+		function calendarReset(event, firstDate, lastDate, agrTable){ 
+			firstDate.setDate(null); 
+			lastDate.setDate(null);
+			return calendarFilter(event, agrTable);
 		}
 
 		jQuery(document).ready(function(){
@@ -30,16 +48,21 @@
 		
 	</script>
 </h:head>
-<h:body onload="setFilters(#{agreementListPB.lazyModel.filterChiefId}, #{agreementListPB.lazyModel.filterCompanyId});">
+<h:body
+	onload="setFilters(#{agreementListPB.lazyModel.filterChiefId}, #{agreementListPB.lazyModel.filterCompanyId});">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid"
 			value='#{agreementListPB.conversation.id}' />
-		
-		<p:contextMenu for="agreementTable">
-			<p:menuitem value="#{msgs.view}" outcome="done" icon="ui-icon-search" />
-			<p:menuitem value="#{msgs.edit}" outcome="cancel"
-				icon="ui-icon-wrench" />
+
+		<p:contextMenu id="tableContextMenu" widgetVar="w_tableContextMenu"
+			for="agreementTable">
+			<p:menuitem value="#{msgs.view}" icon="ui-icon-search"
+				actionListener="#{agreementListPB.viewAgreement()}" />
+			<p:menuitem value="#{msgs.edit}" icon="ui-icon-wrench"
+				action="#{agreementListPB.editAgreement()}" />
+			<p:menuitem value="#{msgs.remove}" icon="ui-icon-trash"
+				action="#{agreementListPB.deleteAgreement()}" />
 		</p:contextMenu>
 
 		<p:dataTable id="agreementTable" var="agr" widgetVar="w_agrTable"
@@ -49,10 +72,10 @@
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
 			selection="#{agreementListPB.selectedValue}" selectionMode="single"
 			rowKey="#{agr.id}" sortOrder="descending">
-			
-			<p:ajax event="filter" oncomplete="setRowEvent();"/>
-			<p:ajax event="sort" oncomplete="setRowEvent();"/>
-			<p:ajax event="page" oncomplete="setRowEvent();"/>
+
+			<p:ajax event="filter" oncomplete="setRowEvent();" />
+			<p:ajax event="sort" oncomplete="setRowEvent();" />
+			<p:ajax event="page" oncomplete="setRowEvent();" />
 
 			<p:column id="agrTableChiefColumn" filterBy="#{agr.chief.id}"
 				headerText="#{msgs.chief}" filterMatchMode="exact"
@@ -66,8 +89,7 @@
 				<h:outputText value="#{agr.company.name}" />
 			</p:column>
 
-			<p:column id="agrTableDateColumn"
-				sortBy="#{agr.approvalDate}" >
+			<p:column id="agrTableDateColumn" sortBy="#{agr.approvalDate}">
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
@@ -86,35 +108,35 @@
 								showOtherMonths="true">
 							</p:calendar>
 						</div>
-						<p:commandButton value="#{msgs.filter}"
-							onclick="w_agrTable.filter(); return false;" />
-						<p:commandButton value="#{msgs.reset}"
-							onclick="w_firstDate.setDate(null); w_lastDate.setDate(null); w_agrTable.filter(); return false;" />
+						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+							onclick="return calendarFilter(arguments[0], w_agrTable);" />
+						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+							onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_agrTable);" />
 					</h:form>
 				</f:facet>
 
 				<h:outputText value="#{agr.approvalDate}">
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
-				
-				<p:commandButton styleClass="agr-list-button"
-					icon="ui-icon-search" action="#{agreementListPB.viewAgreement()}">
+
+				<p:commandButton styleClass="agr-list-button" icon="ui-icon-search"
+					action="#{agreementListPB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="agr-list-button"
-					icon="ui-icon-wrench" action="#{agreementListPB.editAgreement()}">
+				<p:commandButton styleClass="agr-list-button" icon="ui-icon-wrench"
+					action="#{agreementListPB.editAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="agr-list-button"
-					icon="ui-icon-trash" action="#{agreementListPB.deleteAgreement()}">
+				<p:commandButton styleClass="agr-list-button" icon="ui-icon-trash"
+					action="#{agreementListPB.deleteAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>
-				
+
 			</p:column>
-			
+
 		</p:dataTable>
 
 

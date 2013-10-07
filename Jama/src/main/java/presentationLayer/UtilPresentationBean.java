@@ -62,7 +62,7 @@ public class UtilPresentationBean implements Serializable{
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		
 		SelectItem[] result = new SelectItem[chiefs.size()+1];
-		result[0] = new SelectItem("", "Select");
+		result[0] = new SelectItem("", "Tutti");
 		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
 			current = chiefs.get(i);
@@ -76,7 +76,7 @@ public class UtilPresentationBean implements Serializable{
 		List<Company> companies = companyDaoBean.getAll();
 		
 		SelectItem[] result = new SelectItem[companies.size()+1];
-		result[0] = new SelectItem("", "Select");
+		result[0] = new SelectItem("", "Tutte");
 		Company current = null;
 		for(int i=0; i< companies.size(); i++){
 			current = companies.get(i);
