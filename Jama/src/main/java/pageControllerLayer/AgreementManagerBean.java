@@ -150,6 +150,8 @@ public class AgreementManagerBean implements Serializable {
 		return transferObjAgreement;
 	}
 
-	
+	public void deleteAgreement() {
+		agreementDao.delete(selectedAgreementId);
+	}
 
 }

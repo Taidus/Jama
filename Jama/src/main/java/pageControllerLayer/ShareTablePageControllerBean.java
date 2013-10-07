@@ -18,6 +18,7 @@ import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
 @RequestScoped
+// FIXME: RequestScoped rompe l'aggiunta e la rimozione delle quote del personale
 public abstract class ShareTablePageControllerBean {
 
 	public ShareTablePageControllerBean() {
