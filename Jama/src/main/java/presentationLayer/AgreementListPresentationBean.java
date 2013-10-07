@@ -70,9 +70,9 @@ public class AgreementListPresentationBean implements Serializable {
 
 	public void deleteAgreement() {
 		print("Deleting");
-		// lazyModel.filterOnReload();
-		// agrManager.setSelectedAgreementId(selectedValue.getId());
-		// return agrManager.editAgreement();
+		lazyModel.filterOnReload();
+		agrManager.setSelectedAgreementId(selectedValue.getId());
+		agrManager.deleteAgreement();
 	}
 
 	private void print(String action) {

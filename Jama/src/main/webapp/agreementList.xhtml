@@ -108,9 +108,11 @@
 								showOtherMonths="true">
 							</p:calendar>
 						</div>
-						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						<p:commandButton id="calendarFilterBtn"
+							styleClass="filter-buttons" value="#{msgs.filter}"
 							onclick="return calendarFilter(arguments[0], w_agrTable);" />
-						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons"
+							value="#{msgs.reset}"
 							onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_agrTable);" />
 					</h:form>
 				</f:facet>
@@ -130,7 +132,8 @@
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>
 				<p:commandButton styleClass="agr-list-button" icon="ui-icon-trash"
-					action="#{agreementListPB.deleteAgreement()}">
+					action="#{agreementListPB.deleteAgreement()}"
+					update="agreementTable">
 					<f:setPropertyActionListener value="#{agr}"
 						target="#{agreementListPB.selectedValue}" />
 				</p:commandButton>
