@@ -60,7 +60,7 @@ public class InstallmentManagerBean implements Serializable {
 		//TODO
 //		begin();
 //		initEditing();
-		return "/resources/sections/InstallmentWiz.xhtml";
+		return "/installmentWiz.xhtml";
 
 	}
 	
