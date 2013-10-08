@@ -6,11 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
