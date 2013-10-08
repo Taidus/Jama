@@ -25,6 +25,7 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	private AgreementSearchService agreementSearch;
 
 	private List<Agreement> displayedAgreements;
+	private Agreement selectedValue;
 
 	private Date filterMinDate;
 	private Date filterMaxDate;
@@ -226,12 +227,11 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		return (filterCompanyId != null) ? filterCompanyId : 0;
 	}
 
-	public boolean hasPrevious() {
-		return true;
+	public Agreement getSelectedValue() {
+		return selectedValue;
 	}
 
-	public boolean hasNext() {
-		return true;
+	public void setSelectedValue(Agreement selectedValue) {
+		this.selectedValue = selectedValue;
 	}
-
 }

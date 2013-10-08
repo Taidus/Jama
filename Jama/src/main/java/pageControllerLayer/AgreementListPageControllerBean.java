@@ -1,4 +1,4 @@
-package presentationLayer;
+package pageControllerLayer;
 
 import java.io.Serializable;
 
@@ -9,13 +9,13 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pageControllerLayer.AgreementManagerBean;
+import presentationLayer.LazyAgreementDataModel;
 import businessLayer.Agreement;
 import daoLayer.ChiefScientistDaoBean;
 
-@Named("agreementListPB")
+@Named("agreementListPCB")
 @ConversationScoped
-public class AgreementListPresentationBean implements Serializable {
+public class AgreementListPageControllerBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -28,9 +28,8 @@ public class AgreementListPresentationBean implements Serializable {
 	@Inject
 	private Conversation conversation;
 
-	private Agreement selectedValue;
 
-	public AgreementListPresentationBean() {
+	public AgreementListPageControllerBean() {
 	}
 
 	@PostConstruct
@@ -46,37 +45,30 @@ public class AgreementListPresentationBean implements Serializable {
 		return lazyModel;
 	}
 
-	public Agreement getSelectedValue() {
-		return selectedValue;
-	}
-
-	public void setSelectedValue(Agreement selectedValue) {
-		this.selectedValue = selectedValue;
-	}
-
 	public String editAgreement() {
 		print("Editing");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedAgreementId(selectedValue.getId());
+		agrManager.setSelectedAgreementId(lazyModel.getSelectedValue().getId());
 		return agrManager.editAgreement();
 	}
 
 	public String viewAgreement() {
 		print("Viewing");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedAgreementId(selectedValue.getId());
+		agrManager.setSelectedAgreementId(lazyModel.getSelectedValue().getId());
 		return agrManager.viewAgreement();
 	}
 
 	public void deleteAgreement() {
 		print("Deleting");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedAgreementId(selectedValue.getId());
+		agrManager.setSelectedAgreementId(lazyModel.getSelectedValue().getId());
 		agrManager.deleteAgreement();
 	}
 
 	private void print(String action) {
 		//TODO eliminare
+		Agreement selectedValue = lazyModel.getSelectedValue();
 		System.out.println("***\n" + action + " agreement with ID: " + selectedValue.getId() + ". Chief: "
 				+ selectedValue.getChief().getCompleteName() + "; company: " + selectedValue.getCompany().getName() + "\n***");
 	}
