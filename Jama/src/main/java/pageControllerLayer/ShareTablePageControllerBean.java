@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -17,17 +16,34 @@ import javax.faces.validator.ValidatorException;
 import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
+import java.io.Serializable;
 
 @ConversationScoped
-// FIXME: RequestScoped rompe l'aggiunta e la rimozione delle quote del personale
-public abstract class ShareTablePageControllerBean {
+// FIXME: RequestScoped rompe l'aggiunta e la rimozione delle quote del
+// personale
+public abstract class ShareTablePageControllerBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public ShareTablePageControllerBean() {
 		shares = new ArrayList<PersonnelShare>();
+		toUpdate = true;
 	}
 
 	private List<PersonnelShare> shares;
 	private PersonnelShare selectedShare;
+	private boolean toUpdate;
+
+	public void toUpdate() {
+		toUpdate = true;
+	}
+
+	public void notToUpdate() {
+		toUpdate = false;
+	}
 
 	public PersonnelShare getSelectedShare() {
 		return selectedShare;
@@ -38,6 +54,11 @@ public abstract class ShareTablePageControllerBean {
 	}
 
 	public List<PersonnelShare> getShares() {
+		if (toUpdate) {
+			debug();
+			initShares(getShareTable().getSharePerPersonnel());
+			debug();
+		}
 
 		return shares;
 	}
@@ -76,15 +97,13 @@ public abstract class ShareTablePageControllerBean {
 		// inventoryMaterials, rentals, personnelOnContract, otherCost };
 		// float[] personnelValues = createPersonnelValues(shares);
 
-		float[] mainValues = {
-				getShareTable().getAtheneumCapitalBalance(),
+		float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
 				getShareTable().getAtheneumCommonBalance(),
 				getShareTable().getStructures(),
 				getShareTable().getPersonnel(),
 				getShareTable().getGoodsAndServices() };
 
-		float[] goodsAndServicesValues = {
-				getShareTable().getBusinessTrip(),
+		float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
 				getShareTable().getConsumerMaterials(),
 				getShareTable().getInventoryMaterials(),
 				getShareTable().getRentals(),
@@ -103,9 +122,10 @@ public abstract class ShareTablePageControllerBean {
 
 		fillAgreementPersonnelShares();
 	}
-	
-	//find a solution
+
+	// find a solution
 	protected void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
+		shares.clear();
 		Set<Entry<ChiefScientist, Float>> s = sharePerPersonnel.entrySet();
 		for (Iterator<Entry<ChiefScientist, Float>> it = s.iterator(); it
 				.hasNext();) {
@@ -199,10 +219,12 @@ public abstract class ShareTablePageControllerBean {
 	}
 
 	public void addRow() {
+		notToUpdate();
 		shares.add(new PersonnelShare());
 	}
 
 	public void removeRow() {
+		notToUpdate();
 		shares.remove(selectedShare);
 	}
 
@@ -210,14 +232,13 @@ public abstract class ShareTablePageControllerBean {
 	private float computePercent(float percent) {
 		return getWholeAmount() * percent / 100;
 	}
-	
+
 	private float computeRelativePercent(float percent, float relativePercent) {
 		return computePercent(relativePercent) * percent / 100;
 	}
 
 	public float getPercentAtheneumCapitalBalance() {
-		return computePercent(getShareTable()
-				.getAtheneumCapitalBalance());
+		return computePercent(getShareTable().getAtheneumCapitalBalance());
 	}
 
 	public float getPercentAtheneumCommonBalance() {
@@ -241,30 +262,37 @@ public abstract class ShareTablePageControllerBean {
 	}
 
 	public float getPercentBusinessTrip() {
-		return computeRelativePercent(getShareTable().getBusinessTrip(), getShareTable().getGoodsAndServices());
+		return computeRelativePercent(getShareTable().getBusinessTrip(),
+				getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentConsumerMaterials() {
-		return computeRelativePercent(getShareTable().getConsumerMaterials(), getShareTable().getGoodsAndServices());
+		return computeRelativePercent(getShareTable().getConsumerMaterials(),
+				getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentInventoryMaterials() {
-		return computeRelativePercent(getShareTable().getInventoryMaterials(), getShareTable().getGoodsAndServices());
+		return computeRelativePercent(getShareTable().getInventoryMaterials(),
+				getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentRentals() {
-		return computeRelativePercent(getShareTable().getRentals(), getShareTable().getGoodsAndServices());
+		return computeRelativePercent(getShareTable().getRentals(),
+				getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentPersonnelOnContract() {
-		return computeRelativePercent(getShareTable().getPersonnelOnContract(), getShareTable().getGoodsAndServices());
+		return computeRelativePercent(getShareTable().getPersonnelOnContract(),
+				getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentOtherCost() {
-		return computeRelativePercent(getShareTable().getOtherCost(), getShareTable().getGoodsAndServices());
+		return computeRelativePercent(getShareTable().getOtherCost(),
+				getShareTable().getGoodsAndServices());
 	}
-	
+
 	public abstract AbstractShareTable getShareTable();
+
 	public abstract float getWholeAmount();
 
 }
