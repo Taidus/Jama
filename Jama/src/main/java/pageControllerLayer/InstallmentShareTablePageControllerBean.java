@@ -1,7 +1,7 @@
 package pageControllerLayer;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 
 import annotations.TransferObj;
@@ -12,10 +12,14 @@ import businessLayer.AbstractShareTable;
 import businessLayer.Installment;
 
 @Named("installmentShareTablePCB")
-@RequestScoped
+@ConversationScoped
 public class InstallmentShareTablePageControllerBean extends
 		ShareTablePageControllerBean {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Inject @TransferObj
 	private Installment installment;
 

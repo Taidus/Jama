@@ -11,43 +11,44 @@
 
 </composite:interface>
 
-<composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
+<composite:implementation
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 
 
-	<p:panel header="Rate">
-
-		<p:panelGrid id="agrInstallmentsPanelGrid">
-
-			<p:row>
-
-				<p:column>
-
-					<h:outputText value="qui ci saranno le rate" />
-
-				</p:column>
-
-			</p:row>
-
-			<p:row>
-
-				<p:column>
-					
+	<p:dataTable var="installment" value="#{agreementManager.agreement.installments}">
+		<p:column headerText="data">
+			
+			<h:outputText value="#{installment.date}" >
+			<f:convertDateTime locale="it" dateStyle="full" />
+			</h:outputText>
+			
 		
-					<h:commandButton action="#{installmentManager.addInstallment()}"
-						value="Aggiungi una rata" ajax="false" immediate="true">
-					</h:commandButton>
-				
+		</p:column>
+		
+		<p:column headerText="importo">
+			<h:outputText value="#{installment.amount}" />
+		
+		</p:column>
+		
+		<p:column headerText="fattura pagata?">
+			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
+		
+		</p:column>
 
-				</p:column>
-
-			</p:row>
 
 
+	</p:dataTable>
 
-		</p:panelGrid>
 
-	</p:panel>
+
+
+	<h:commandButton action="#{installmentManager.addInstallment()}"
+		value="Aggiungi una rata" ajax="false" immediate="true">
+	</h:commandButton>
+
+
+
 
 
 

@@ -117,7 +117,7 @@
 						actionListener="#{chiefDialogPCB.clear()}"
 						oncomplete="w_chiefDialog.show()"
 						update=":#{p:component('chiefPanel')}"
-						rendered="!#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<p:resetInput target=":#{p:component('chiefPanel')}" />
 					</p:commandButton>
 				</p:column>
@@ -169,7 +169,7 @@
 						actionListener="#{companyDialogPCB.clear()}"
 						oncomplete="w_companyDialog.show()"
 						update=":#{p:component('companyPanel')}"
-						rendered="!#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<p:resetInput target=":#{p:component('companyPanel')}" />
 					</p:commandButton>
 				</p:column>

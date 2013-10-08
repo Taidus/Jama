@@ -63,7 +63,7 @@ public class Agreement implements Serializable {
 	private float wholeTaxableAmount;
 	
 	@OneToMany(mappedBy="agreement",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@OrderColumn
+	//@OrderColumn
 	private List<Installment> installments;
 
 	@Temporal(TemporalType.DATE)  private Date approvalDate;
