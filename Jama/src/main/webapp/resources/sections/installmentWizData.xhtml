@@ -75,13 +75,8 @@
 
 
 				<h:outputText value="#{msgs.newInstPaidInvoice}" />
-				<h:selectOneRadio id="paidInvoice"
-					value="#{installmentManager.installment.paidInvoice}">
-					<f:selectItem id="paidInvoiceYes" itemLabel="#{msgs.yes}"
-						itemValue="1" />
-					<f:selectItem id="paidInvoiceNo" itemLabel="#{msgs.no}"
-						itemValue="2" />
-				</h:selectOneRadio>
+				<h:selectBooleanCheckbox id="paidInvoice" value="#{installmentManager.installment.paidInvoice}" />
+				
 				<br />
 
 				<h:outputText value="#{msgs.newInstReportRequired}" />

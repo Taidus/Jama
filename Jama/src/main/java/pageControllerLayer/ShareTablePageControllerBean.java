@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,7 +18,7 @@ import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
-@RequestScoped
+@ConversationScoped
 // FIXME: RequestScoped rompe l'aggiunta e la rimozione delle quote del personale
 public abstract class ShareTablePageControllerBean {
 

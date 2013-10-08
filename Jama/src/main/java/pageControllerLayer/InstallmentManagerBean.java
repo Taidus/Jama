@@ -3,6 +3,7 @@ package pageControllerLayer;
 import java.io.Serializable;
 
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -66,7 +67,7 @@ public class InstallmentManagerBean implements Serializable {
 	
 	@Produces
 	@TransferObj
-	@ConversationScoped
+	@RequestScoped
 	public Installment getTransferObjAgreementInstallment() {
 
 		return transferObjInstallment;

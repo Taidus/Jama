@@ -12,7 +12,7 @@ import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
 import businessLayer.Agreement;
 
-@Named("agreementWizardPCB")
+@Named("agreementWizardPCBOLD")
 @ConversationScoped
 public class AgreementWizardPageControllerBean  implements Serializable,ShareTableHolder {
 	

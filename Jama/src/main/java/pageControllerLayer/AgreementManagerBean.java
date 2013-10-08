@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -79,17 +80,16 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	private String close() {
-		//TODO eliminare i system.out
+		
+		//serve per hibernate, sennò trova due riferimenti ad una stessa entità managed;
+		transferObjAgreement.setInstallments(null);
+		
 		if (!conversationninherited) {
-			System.out.println("Fail to load 1");
 			conversation.end();
-			System.out.println("Fail to load 2");
 			agreementDao.close();
 
 		}
-		System.out.println("Fail to load 3");
 		em.clear();
-		System.out.println("Fail to load 4");
 		
 		if (selectedAgreementId < 0) {
 			return "/home.xhtml";
@@ -109,6 +109,7 @@ public class AgreementManagerBean implements Serializable {
 
 	private void initAgreement() {
 		transferObjAgreement = new Agreement();
+		
 		agreement = agreementDao.getById(selectedAgreementId);
 		transferObjAgreement.cloneFields(agreement);
 
@@ -141,7 +142,7 @@ public class AgreementManagerBean implements Serializable {
 
 	@Produces
 	@TransferObj
-	@ConversationScoped
+	@RequestScoped
 	public Agreement getTransferObjAgreement() {
 		return transferObjAgreement;
 	}
