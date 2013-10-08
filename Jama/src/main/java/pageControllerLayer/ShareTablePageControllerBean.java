@@ -209,6 +209,10 @@ public abstract class ShareTablePageControllerBean {
 	private float computePercent(float percent) {
 		return getWholeAmount() * percent / 100;
 	}
+	
+	private float computeRelativePercent(float percent, float relativePercent) {
+		return computePercent(relativePercent) * percent / 100;
+	}
 
 	public float getPercentAtheneumCapitalBalance() {
 		return computePercent(getShareTable()
@@ -236,27 +240,27 @@ public abstract class ShareTablePageControllerBean {
 	}
 
 	public float getPercentBusinessTrip() {
-		return computePercent(getShareTable().getBusinessTrip());
+		return computeRelativePercent(getShareTable().getBusinessTrip(), getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentConsumerMaterials() {
-		return computePercent(getShareTable().getConsumerMaterials());
+		return computeRelativePercent(getShareTable().getConsumerMaterials(), getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentInventoryMaterials() {
-		return computePercent(getShareTable().getInventoryMaterials());
+		return computeRelativePercent(getShareTable().getInventoryMaterials(), getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentRentals() {
-		return computePercent(getShareTable().getRentals());
+		return computeRelativePercent(getShareTable().getRentals(), getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentPersonnelOnContract() {
-		return computePercent(getShareTable().getPersonnelOnContract());
+		return computeRelativePercent(getShareTable().getPersonnelOnContract(), getShareTable().getGoodsAndServices());
 	}
 
 	public float getPercentOtherCost() {
-		return computePercent(getShareTable().getOtherCost());
+		return computeRelativePercent(getShareTable().getOtherCost(), getShareTable().getGoodsAndServices());
 	}
 	
 	public abstract AbstractShareTable getShareTable();
