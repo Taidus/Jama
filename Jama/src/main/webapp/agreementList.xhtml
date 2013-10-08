@@ -49,28 +49,28 @@
 	</script>
 </h:head>
 <h:body
-	onload="setFilters(#{agreementListPB.lazyModel.filterChiefId}, #{agreementListPB.lazyModel.filterCompanyId});">
+	onload="setFilters(#{agreementListPCB.lazyModel.filterChiefId}, #{agreementListPCB.lazyModel.filterCompanyId});">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid"
-			value='#{agreementListPB.conversation.id}' />
+			value='#{agreementListPCB.conversation.id}' />
 
 		<p:contextMenu id="tableContextMenu" widgetVar="w_tableContextMenu"
 			for="agreementTable">
 			<p:menuitem value="#{msgs.view}" icon="ui-icon-search"
-				actionListener="#{agreementListPB.viewAgreement()}" />
+				actionListener="#{agreementListPCB.viewAgreement()}" />
 			<p:menuitem value="#{msgs.edit}" icon="ui-icon-wrench"
-				action="#{agreementListPB.editAgreement()}" />
+				action="#{agreementListPCB.editAgreement()}" />
 			<p:menuitem value="#{msgs.remove}" icon="ui-icon-trash"
-				action="#{agreementListPB.deleteAgreement()}" />
+				action="#{agreementListPCB.deleteAgreement()}" />
 		</p:contextMenu>
 
 		<p:dataTable id="agreementTable" var="agr" widgetVar="w_agrTable"
-			lazy="true" value="#{agreementListPB.lazyModel}"
+			lazy="true" value="#{agreementListPCB.lazyModel}"
 			emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10"
 			rowsPerPageTemplate="5,10,15"
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
-			selection="#{agreementListPB.selectedValue}" selectionMode="single"
+			selection="#{agreementListPCB.lazyModel.selectedValue}" selectionMode="single"
 			rowKey="#{agr.id}" sortOrder="descending">
 
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
@@ -96,14 +96,14 @@
 						<div style="display: block; width: 90%; margin: auto;">
 							<p:calendar id="firstDate" styleClass="calendarFilter"
 								widgetVar="w_firstDate"
-								value="#{agreementListPB.lazyModel.filterMinDate}"
+								value="#{agreementListPCB.lazyModel.filterMinDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both"
 								showOtherMonths="true">
 							</p:calendar>
 							-
 							<p:calendar id="lastDate" styleClass="calendarFilter"
 								widgetVar="w_lastDate"
-								value="#{agreementListPB.lazyModel.filterMaxDate}"
+								value="#{agreementListPCB.lazyModel.filterMaxDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both"
 								showOtherMonths="true">
 							</p:calendar>
@@ -122,20 +122,20 @@
 				</h:outputText>
 
 				<p:commandButton styleClass="agr-list-button" icon="ui-icon-search"
-					action="#{agreementListPB.viewAgreement()}">
+					action="#{agreementListPCB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
-						target="#{agreementListPB.selectedValue}" />
+						target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 				<p:commandButton styleClass="agr-list-button" icon="ui-icon-wrench"
-					action="#{agreementListPB.editAgreement()}">
+					action="#{agreementListPCB.editAgreement()}">
 					<f:setPropertyActionListener value="#{agr}"
-						target="#{agreementListPB.selectedValue}" />
+						target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 				<p:commandButton styleClass="agr-list-button" icon="ui-icon-trash"
-					action="#{agreementListPB.deleteAgreement()}"
+					action="#{agreementListPCB.deleteAgreement()}"
 					update="agreementTable">
 					<f:setPropertyActionListener value="#{agr}"
-						target="#{agreementListPB.selectedValue}" />
+						target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
 			</p:column>
@@ -143,7 +143,7 @@
 		</p:dataTable>
 
 
-		<h:commandButton action="#{agreementListPB.backToHome()}" value="Home"
+		<h:commandButton action="#{agreementListPCB.backToHome()}" value="Home"
 			immediate="true" />
 
 	</h:form>

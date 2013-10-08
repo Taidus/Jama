@@ -1,6 +1,7 @@
 package pageControllerLayer;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
@@ -124,6 +125,7 @@ public class AgreementManagerBean implements Serializable {
 	public String createAgreement() {
 		agreement= new Agreement();
 		transferObjAgreement = new Agreement();
+		insertRandomValues(transferObjAgreement); //TODO eliminare
 		begin();
 		//check
 		//transferObjAgreement.cloneFields(agreement);
@@ -153,6 +155,20 @@ public class AgreementManagerBean implements Serializable {
 
 	public void deleteAgreement() {
 		agreementDao.delete(selectedAgreementId);
+	}
+	
+	private void insertRandomValues(Agreement agr){
+		//TODO eliminare
+		agr.setTitle("Random title");
+		agr.setCIA_projectNumber(10000);
+		agr.setContactPerson("Random contact");
+		agr.setInventoryNumber(20000);
+		agr.setWholeTaxableAmount(99999);
+		agr.setProtocolNumber("30000");
+		agr.setApprovalDate(new Date());
+		agr.setBeginDate(new Date());
+		agr.setDeadlineDate(new Date());
+		
 	}
 
 }
