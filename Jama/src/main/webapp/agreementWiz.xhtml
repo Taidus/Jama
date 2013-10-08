@@ -55,7 +55,7 @@
 			<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
 				severity="alert" widgetVar="w_confirm">
 				<p:commandButton value="#{msgs.yes}"
-					action="#{agreementWizardPCB.cancel()}" immediate="true"
+					action="#{agreementWizardPCB.cancel()}" actionListener="#{agreementShareTablePCB.toUpdate()}" immediate="true"
 					oncomplete="w_confirm.hide()" />
 				<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
 					type="button" />
