@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -68,9 +69,9 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	@Override
 	public List<Agreement> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+		//TODO splittami
 		System.out.println("-----------------");
-		System.out.println("First: " + first + "; page size: " + pageSize);
-		System.out.println("Min: " + filterMinDate + "; max: " + filterMaxDate);
+		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Filters: ");
 		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -100,16 +101,18 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		setSortOrder(sortOrder);
 		System.out.println("Chief ID: " + filterChiefId + "; company ID: " + filterCompanyId);
 		System.out.println("Order: " + sortOrder);
-		System.out.println("Filter changed: " + inputChanged);
+		System.out.println("Input changed: " + inputChanged);
 
 		if (inputChanged) {
 			System.out.println("Querying");
 			agreementSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder);
 		}
 		agreementSearch.setPageSize(pageSize);
+		
 		agreementSearch.setCurrentPage(first / pageSize);
-
 		displayedAgreements = agreementSearch.getCurrentResults();
+		agreementSearch.next();
+		displayedAgreements.addAll(agreementSearch.getCurrentResults());
 
 		// sort
 		if (sortField != null) {
@@ -118,29 +121,37 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		}
 
 		// rowCount
-		int dataSize = displayedAgreements.size();
-		int rowCount = dataSize;
+		int rowCount;
+		if (displayedAgreements.size() == pageSize) {
+			displayedAgreements.add(null);
+
+		}
+		rowCount = displayedAgreements.size();
+		System.out.println("First: " + first + "; page size: " + pageSize + "; row count: " + rowCount);
 
 		// paginate
-		if (dataSize > pageSize) {
-			if (first + pageSize <= dataSize) {
-				displayedAgreements = displayedAgreements.subList(first, first + pageSize);
-			} else {
-				displayedAgreements = displayedAgreements.subList(first, first + (dataSize % pageSize));
-			}
-
-			// try {
-			// return data.subList(first, first + pageSize);
-			// } catch (IndexOutOfBoundsException e) {
-			// return data.subList(first, first + (dataSize % pageSize));
-			// }
-		} else if (dataSize == pageSize) {
-			rowCount++;
-		}
+		// if (dataSize > pageSize) {
+		// if (first + pageSize <= dataSize) {
+		// displayedAgreements = displayedAgreements.subList(first, first +
+		// pageSize);
+		// } else {
+		// displayedAgreements = displayedAgreements.subList(first, first +
+		// (dataSize % pageSize));
+		// }
+		//
+		// // try {
+		// // return data.subList(first, first + pageSize);
+		// // } catch (IndexOutOfBoundsException e) {
+		// // return data.subList(first, first + (dataSize % pageSize));
+		// // }
+		// } else if (dataSize == pageSize) {
+		// rowCount++;
+		// }
 
 		inputChanged = false;
 		ignoreTableFilters = false;
 		this.setRowCount(rowCount);
+		System.out.println("getRowCount = " + this.getRowCount());
 		return displayedAgreements;
 	}
 
@@ -214,7 +225,13 @@ public class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		System.out.println("Getting value: " + filterCompanyId);
 		return (filterCompanyId != null) ? filterCompanyId : 0;
 	}
-	
-	
+
+	public boolean hasPrevious() {
+		return true;
+	}
+
+	public boolean hasNext() {
+		return true;
+	}
 
 }
