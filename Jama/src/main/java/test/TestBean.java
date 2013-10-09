@@ -111,7 +111,7 @@ public class TestBean implements Serializable {
 		Date upper = new Date(c.getTimeInMillis());
 		searchService.setPageSize(1);
 		
-		searchService.init(lower, upper, chiefId, null);
+		searchService.init(lower, upper, chiefId, null, null);
 	}
 
 	public void doJob1() {
@@ -128,6 +128,12 @@ public class TestBean implements Serializable {
 	public void doJob3() {
 
 		searchService.previous();
+	}
+	
+	@AdminAllowed
+	public void doDelta(){
+		System.out.println("doDelta AdminAllowed");
+		
 	}
 
 }

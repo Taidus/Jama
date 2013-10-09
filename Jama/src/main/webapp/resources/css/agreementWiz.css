@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-#agreementWiz tr, #agreementWiz td{
+#agreementWiz tr, #agreementWiz td, #agreementEdit tr, #agreementEdit td {
 	border: none;
 }
 

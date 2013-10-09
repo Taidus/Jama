@@ -206,4 +206,20 @@ public class Installment implements Serializable {
 					Messages.getErrorMessage("err_installmentAmount"));
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Installment [id=" + id + ", date=" + date + ", wholeAmount="
+				+ wholeAmount + ", IVA_amount=" + IVA_amount
+				+ ", wholeTaxableAmount=" + wholeTaxableAmount
+				+ ", voucherNumber=" + voucherNumber + ", voucherDate="
+				+ voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber
+				+ ", pendingNumber=" + pendingNumber + ", invoiceNumber="
+				+ invoiceNumber + ", invoiceDate=" + invoiceDate
+				+ ", paidInvoice=" + paidInvoice + ", reportRequired="
+				+ reportRequired + ", note=" + note + ", agreement="
+				+ agreement + ", shareTable=" + shareTable + "]";
+	}
+	
+	
 }

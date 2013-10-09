@@ -86,7 +86,7 @@ public class Agreement implements Serializable {
 
 	public Agreement() {
 		shareTable = new AgreementShareTable();
-		installments = new ArrayList<>();
+		installments = new ArrayList<Installment>();
 	}
 
 	public void cloneFields(Agreement copy) {

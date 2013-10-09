@@ -7,20 +7,19 @@
 	xmlns:sections="http://java.sun.com/jsf/composite/sections"
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
-
 <h:head>
 	<h:outputStylesheet name="agreementWiz.css" library="css" />
 </h:head>
 <h:body>
 
-	<h:form id="agreementWiz">
+	<h:form id="agreementEdit">
 
-		<p:growl id="growl" sticky="true" showDetail="true" />
 		<input type="hidden" name="cid"
 			value='#{agreementManager.conversation.id}' />
 
-		<p:wizard step="#{agreementWizardPB.currentTabId}"
-			flowListener="#{agreementWizardPB.handleFlow}">
+		<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}"
+			>
+			<p:ajax event="tabChange" listener="#{agreementEditPB.handleFlow}"></p:ajax>
 
 			<p:tab id="tabDati" title="Dati">
 				<sections:agreementWizData editingDisable="false" />
@@ -43,13 +42,8 @@
 			<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
 
 
-		</p:wizard>
+		</p:tabView>
 
-
-		<ui:remove>
-			<p:commandButton value="#{msgs.cancel}"
-				action="#{agreementWizardPB.cancel()}" immediate="true" />
-		</ui:remove>
 
 		<p:commandButton type="button" value="#{msgs.cancel}"
 			onclick="w_confirm.show();" />
@@ -57,16 +51,22 @@
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
 			severity="alert" widgetVar="w_confirm">
 			<p:commandButton value="#{msgs.yes}"
-				action="#{agreementWizardPB.cancel()}"
+				action="#{agreementEditPB.cancel()}"
 				actionListener="#{agreementShareTablePCB.toUpdate()}"
 				immediate="true" oncomplete="w_confirm.hide()" />
 			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
 				type="button" />
 		</p:confirmDialog>
 
+		<p:commandButton value="#{msgs.save}"
+			action="#{agreementEditPB.save()}"
+			actionListener="#{agreementShareTablePCB.toUpdate()}" ajax="false" />
+
 
 
 	</h:form>
+
+
 
 
 	<dialogs:chiefDialog name="w_chiefDialog"></dialogs:chiefDialog>

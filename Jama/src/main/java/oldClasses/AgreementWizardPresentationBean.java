@@ -14,7 +14,7 @@ import businessLayer.Agreement;
 
 @Named("agreementWizardPCBOLD")
 @ConversationScoped
-public class AgreementWizardPageControllerBean  implements Serializable,ShareTableHolder {
+public class AgreementWizardPresentationBean  implements Serializable,ShareTableHolder {
 	
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class AgreementWizardPageControllerBean  implements Serializable,ShareTab
 	private Agreement agreement;
 	private ShareTableController shareTableController;
 
-	public AgreementWizardPageControllerBean() {
+	public AgreementWizardPresentationBean() {
 	}
 	
 	@PostConstruct

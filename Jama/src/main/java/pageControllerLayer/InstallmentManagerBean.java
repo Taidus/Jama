@@ -53,6 +53,7 @@ public class InstallmentManagerBean implements Serializable {
 	
 	public String save(){
 		
+		System.out.println("==========="+transferObjInstallment);
 		agreement.getInstallments().add(transferObjInstallment);
 		return "/agreementWiz.xhtml";
 	}

@@ -127,7 +127,7 @@ public class AgreementManagerBean implements Serializable {
 	public String editAgreement() {
 		begin();
 		initAgreement();
-		return "/agreementWiz.xhtml?faces-redirect=true";
+		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
 	public String createAgreement() {

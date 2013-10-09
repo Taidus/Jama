@@ -23,4 +23,10 @@
  <alternatives>
   <class>businessLayer.SimpleAgreementShareTableBuilder</class>
  </alternatives>
+ 
+
+    <interceptors>
+        <class>org.apache.deltaspike.security.impl.extension.SecurityInterceptor</class>
+    </interceptors>
+
 </beans>

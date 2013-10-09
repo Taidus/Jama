@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package presentationLayer;
 
 import java.io.Serializable;
 
@@ -8,9 +8,11 @@ import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
 
-@Named("agreementWizardPCB")
+import pageControllerLayer.AgreementManagerBean;
+
+@Named("agreementWizardPB")
 @ConversationScoped
-public class AgreementWizardPageBeanController implements Serializable {
+public class AgreementWizardPresentationBean implements Serializable {
 
 	/**
 	 * 
@@ -21,7 +23,7 @@ public class AgreementWizardPageBeanController implements Serializable {
 	
 	@Inject AgreementManagerBean manager;
 
-	public AgreementWizardPageBeanController() {
+	public AgreementWizardPresentationBean() {
 	}
 
 	public String getCurrentTabId() {
