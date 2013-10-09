@@ -1,9 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://java.sun.com/jsf/composite"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite"
 	xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 <composite:interface>
@@ -11,40 +7,56 @@
 
 </composite:interface>
 
-<composite:implementation
-	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+<composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+	<h:outputStylesheet name="table.css" library="css" />
 
 
-
-	<p:dataTable var="installment" value="#{agreementManager.agreement.installments}">
+	<p:dataTable id="installmentTable" var="installment" value="#{agreementManager.agreement.installments}">
 		<p:column headerText="#{msgs.date}">
-			
-			<h:outputText value="#{installment.date}" >
-			<f:convertDateTime locale="it" dateStyle="full" />
+
+			<h:outputText value="#{installment.date}">
+				<f:convertDateTime locale="it" dateStyle="full" />
 			</h:outputText>
-			
-		
+
+
 		</p:column>
-		
+
 		<p:column headerText="#{msgs.amount}">
 			<h:outputText value="#{installment.wholeAmount}" />
-		
+
 		</p:column>
-		
+
 		<p:column headerText="#{msgs.paidInvoice_Question}">
 			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
-		
+
+			<ui:remove>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="AZIONE DEL PCB">
+					<f:setPropertyActionListener value="#{installment}" target="SELECTED VALUE DEL PCB (CHE LO SETTA NEL MANAGER NELL'AZIONE)" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="AZIONE DEL PCB">
+					<f:setPropertyActionListener value="#{installment}" target="SELECTED VALUE DEL PCB (CHE LO SETTA NEL MANAGER NELL'AZIONE)" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
+					<f:setPropertyActionListener value="#{installment}" target="SELECTED VALUE DEL PCB (CHE LO SETTA NEL MANAGER NELL'AZIONE)" />
+				</p:commandButton>
+			</ui:remove>
+
+
 		</p:column>
 
 
 
 	</p:dataTable>
 
+	<ui:remove>
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
+			<p:commandButton value="#{msgs.yes}" action="AZIONE DEL PCB" immediate="true" update="installmentTable" oncomplete="w_confirm.hide();" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
+		</p:confirmDialog>
+	</ui:remove>
 
-
-
-	<h:commandButton action="#{installmentManager.addInstallment()}"
-		value="Aggiungi una rata" ajax="false" immediate="true">
+	<h:commandButton action="#{installmentManager.addInstallment()}" value="Aggiungi una rata" ajax="false" immediate="true">
 	</h:commandButton>
 
 
