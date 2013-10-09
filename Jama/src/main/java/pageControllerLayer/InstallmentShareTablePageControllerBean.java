@@ -17,20 +17,20 @@ import businessLayer.Installment;
 @ConversationScoped
 public class InstallmentShareTablePageControllerBean extends
 		ShareTablePageControllerBean {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Inject @TransferObj
+	@Inject
+	@TransferObj
 	private Installment installment;
 
 	public InstallmentShareTablePageControllerBean() {
-
 	}
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		initShares(getShareTable().getSharePerPersonnel());
 
 	}
@@ -44,13 +44,7 @@ public class InstallmentShareTablePageControllerBean extends
 	public float getWholeAmount() {
 		return installment.getWholeAmount();
 	}
-	
-	@Override
-	public void validate(FacesContext context, UIComponent component,
-			Object value) {
-		super.validate(context, component, value);
-	}
-	
+
 	public void validateAmount(FacesContext context, UIComponent component,
 			Object value) {
 		installment.validateAmount();

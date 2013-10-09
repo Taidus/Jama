@@ -18,24 +18,25 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:wizard step="#{agreementWizardPCB.currentTabId}" flowListener="#{agreementWizardPCB.handleFlow}">
+			<p:wizard step="#{agreementWizardPCB.currentTabId}"
+				flowListener="#{agreementWizardPCB.handleFlow}">
 
 				<p:tab id="tabDati" title="Dati">
 					<sections:agreementWizData editingDisable="false" />
 
 				</p:tab>
-				
+
 
 				<p:tab id="tabRip" title="Passo 2">
 					<sections:wizShareTable editingDisable="false"
 						bean="#{agreementShareTablePCB}" />
 				</p:tab>
-				
+
 				<p:tab id="tabInstallments" title="Passo 3">
 					<sections:agreementInstallmentsList>
 					</sections:agreementInstallmentsList>
-					
-				
+
+
 				</p:tab>
 
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
@@ -55,8 +56,9 @@
 			<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
 				severity="alert" widgetVar="w_confirm">
 				<p:commandButton value="#{msgs.yes}"
-					action="#{agreementWizardPCB.cancel()}" actionListener="#{agreementShareTablePCB.toUpdate()}" immediate="true"
-					oncomplete="w_confirm.hide()" />
+					action="#{agreementWizardPCB.cancel()}"
+					actionListener="#{agreementShareTablePCB.toUpdate()}"
+					immediate="true" oncomplete="w_confirm.hide()" />
 				<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
 					type="button" />
 			</p:confirmDialog>

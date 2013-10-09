@@ -226,7 +226,7 @@
 			<p:selectOneMenu id="chiefMenu" value="#{share.chiefScientist}"
 				label="#{msgs.chief}" filter="true" filterMatchMode="contains"
 				disabled="#{cc.attrs.editingDisable}"
-				onchange="#{agreementShareTablePCB.notToUpdate()}">
+				onchange="#{cc.attrs.bean.notToUpdate()}">
 				<f:selectItem itemLabel="Selezionare" itemValue="#{null}" />
 				<f:selectItems value="#{utilPB.chiefItems}" />
 				<f:converter binding="#{chiefConverterPersonnelShare}" />
