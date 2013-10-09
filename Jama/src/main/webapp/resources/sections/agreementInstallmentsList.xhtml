@@ -17,7 +17,7 @@
 
 
 	<p:dataTable var="installment" value="#{agreementManager.agreement.installments}">
-		<p:column headerText="data">
+		<p:column headerText="#{msgs.date}">
 			
 			<h:outputText value="#{installment.date}" >
 			<f:convertDateTime locale="it" dateStyle="full" />
@@ -26,12 +26,12 @@
 		
 		</p:column>
 		
-		<p:column headerText="importo">
+		<p:column headerText="#{msgs.amount}">
 			<h:outputText value="#{installment.amount}" />
 		
 		</p:column>
 		
-		<p:column headerText="fattura pagata?">
+		<p:column headerText="#{msgs.paidInvoice_Question}">
 			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 		
 		</p:column>

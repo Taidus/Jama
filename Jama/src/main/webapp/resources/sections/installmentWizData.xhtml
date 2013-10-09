@@ -19,10 +19,10 @@
 				</p:calendar>
 				<h:message for="date" />
 
-				<h:outputText value="#{msgs.newInstAmount}:" />
+				<h:outputText value="#{msgs.amount}:" />
 				<h:inputText id="amount"
 					value="#{installmentManager.installment.amount}"
-					label="#{msgs.newInstAmount}" required="true">
+					label="#{msgs.amount}" required="true">
 				</h:inputText>
 				<h:message for="amount" />
 
@@ -74,12 +74,12 @@
 				<h:message for="invoiceDate" />
 
 
-				<h:outputText value="#{msgs.newInstPaidInvoice}" />
+				<h:outputText value="#{msgs.paidInvoice_Question}" />
 				<h:selectBooleanCheckbox id="paidInvoice" value="#{installmentManager.installment.paidInvoice}" />
 				
 				<br />
 
-				<h:outputText value="#{msgs.newInstReportRequired}" />
+				<h:outputText value="#{msgs.reportRequired_Question}" />
 				<h:selectBooleanCheckbox
 					value="#{installmentManager.installment.reportRequired}"
 					id="reportRequired" />

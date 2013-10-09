@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,10 +24,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-//TODO ASC DESC
-@NamedQueries({
-@NamedQuery(name="Agreement.findAll",query="SELECT a FROM Agreement a ORDER BY a.approvalDate")
-})
+// TODO ASC DESC
+@NamedQueries({ @NamedQuery(name = "Agreement.findAll", query = "SELECT a FROM Agreement a ORDER BY a.approvalDate") })
 public class Agreement implements Serializable {
 
 	/**
@@ -34,23 +33,31 @@ public class Agreement implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-		
-	//TODO rimmettere i not null
+	// TODO rimmettere i not null
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@NotNull @Size(max=1000) private String title;
-	private String protocolNumber; //FIXME ma serve?
 
-	@NotNull private AgreementType type;
+	@NotNull
+	@Size(max = 1000)
+	private String title;
+	private String protocolNumber; // FIXME ma serve?
 
-	@ManyToOne @NotNull private ChiefScientist chief;
-	@NotNull private String contactPerson; //FIXME String o oggetto?
+	@NotNull
+	private AgreementType type;
 
-	@ManyToOne @NotNull	private Company company;
+	@ManyToOne
+	@NotNull
+	private ChiefScientist chief;
+	@NotNull
+	private String contactPerson; // FIXME String o oggetto?
 
-	@ManyToOne 	private Department department;
+	@ManyToOne
+	@NotNull
+	private Company company;
+
+	@ManyToOne
+	private Department department;
 
 	private int CIA_projectNumber;
 	private int inventoryNumber;
@@ -61,27 +68,31 @@ public class Agreement implements Serializable {
 	private float wholeAmount;
 	private float IVA_amount;
 	private float wholeTaxableAmount;
-	
-	@OneToMany(mappedBy="agreement",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	//@OrderColumn
+
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE })
+	@OrderBy("date DESC")
 	private List<Installment> installments;
 
-	@Temporal(TemporalType.DATE)  private Date approvalDate;
+	@Temporal(TemporalType.DATE)
+	private Date approvalDate;
 
-	@Temporal(TemporalType.DATE)  private Date beginDate;
+	@Temporal(TemporalType.DATE)
+	private Date beginDate;
 
-	@Temporal(TemporalType.DATE)  private Date deadlineDate;
+	@Temporal(TemporalType.DATE)
+	private Date deadlineDate;
 
 	private String note;
-	
+
 	public Agreement() {
 		shareTable = new AgreementShareTable();
 		installments = new ArrayList<>();
 	}
-	
-	public void cloneFields(Agreement copy){
-		
-		this.id = copy.getId();
+
+	public void cloneFields(Agreement copy) {
+
+		// this.id = copy.getId();
 		this.title = copy.getTitle();
 		this.protocolNumber = copy.getProtocolNumber();
 		this.type = copy.getType();
@@ -100,37 +111,29 @@ public class Agreement implements Serializable {
 		this.beginDate = copy.getBeginDate();
 		this.deadlineDate = copy.getDeadlineDate();
 		this.note = copy.getNote();
-		
-		
-		for(Installment i : installments){
+
+		for (Installment i : installments) {
 			i.setAgreement(this);
 		}
-		
-		
-		
+
 	}
-	
-	public Installment getInstallmentById(int id){
-		
+
+	public Installment getInstallmentById(int id) {
+
 		boolean found = false;
 		Installment result = null;
 		Iterator<Installment> i = installments.iterator();
-		while(found==false && i.hasNext()){
+		while (found == false && i.hasNext()) {
 			Installment current = i.next();
-			
-			if(current.getId() == id){
-				result=current;
+
+			if (current.getId() == id) {
+				result = current;
 			}
 		}
-		
-		return result;
-		
-	}
-	
-	
-	
-	
 
+		return result;
+
+	}
 
 	@Override
 	public String toString() {
@@ -146,10 +149,12 @@ public class Agreement implements Serializable {
 				+ ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
 	}
 
-
-
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -237,7 +242,8 @@ public class Agreement implements Serializable {
 	}
 
 	private void setWholeAmount() {
-		this.wholeAmount = this.wholeTaxableAmount*(100 + this.IVA_amount)/100;
+		this.wholeAmount = this.wholeTaxableAmount * (100 + this.IVA_amount)
+				/ 100;
 	}
 
 	public float getIVA_amount() {
@@ -265,7 +271,7 @@ public class Agreement implements Serializable {
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
 	}
-	
+
 	public List<Installment> getInstallments() {
 		return installments;
 	}

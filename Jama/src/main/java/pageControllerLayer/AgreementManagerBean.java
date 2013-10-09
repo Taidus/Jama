@@ -70,6 +70,9 @@ public class AgreementManagerBean implements Serializable {
 	public String save() {
 		
 		agreement.cloneFields(transferObjAgreement);
+		if(selectedAgreementId > 0){
+			agreement.setId(selectedAgreementId);
+		}
 		agreementDao.create(agreement);
 
 
@@ -85,12 +88,13 @@ public class AgreementManagerBean implements Serializable {
 		//serve per hibernate, sennò trova due riferimenti ad una stessa entità managed;
 		transferObjAgreement.setInstallments(null);
 		
+		
 		if (!conversationninherited) {
 			conversation.end();
 			agreementDao.close();
 
 		}
-		em.clear();
+		//em.clear();
 		
 		if (selectedAgreementId < 0) {
 			return "/home.xhtml";
