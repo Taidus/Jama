@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+
+#agreementTable .agr-list-button{
+	height: 20px;
+	width: 30px;
+	display: none;
+	float: right;
+}
