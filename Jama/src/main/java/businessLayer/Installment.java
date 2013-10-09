@@ -2,10 +2,14 @@ package businessLayer;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.faces.validator.ValidatorException;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import util.Messages;
 
 /**
  * Entity implementation class for Entity: Installment
@@ -19,27 +23,36 @@ public class Installment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Temporal(TemporalType.DATE) @NotNull private Date date;
-	
-	private float amount;
-	private float iva;
-	
-	@Min(0) private int voucherNumber;
-	
-	@Temporal(TemporalType.DATE) private Date voucherDate;
-	
-	@Min(0) private int ivaVoucherNumber;
-	@Min(0) private int pendingNumber;
-	@Min(0) private int invoiceNumber;
-	
-	@Temporal(TemporalType.DATE) private Date invoiceDate;
-	
+
+	@Temporal(TemporalType.DATE)
+	@NotNull
+	private Date date;
+
+	private float wholeAmount;
+	private float IVA_amount;
+	private float wholeTaxableAmount;
+
+	@Min(0)
+	private int voucherNumber;
+
+	@Temporal(TemporalType.DATE)
+	private Date voucherDate;
+
+	@Min(0)
+	private int ivaVoucherNumber;
+	@Min(0)
+	private int pendingNumber;
+	@Min(0)
+	private int invoiceNumber;
+
+	@Temporal(TemporalType.DATE)
+	private Date invoiceDate;
+
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
-	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Agreement agreement;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
@@ -49,7 +62,7 @@ public class Installment implements Serializable {
 	public Installment() {
 		this.shareTable = new InstallmentShareTable();
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
@@ -58,20 +71,31 @@ public class Installment implements Serializable {
 		this.date = date;
 	}
 
-	public float getAmount() {
-		return amount;
+	public float getWholeAmount() {
+		return wholeAmount;
 	}
 
-	public void setAmount(float amount) {
-		this.amount = amount;
+	private void setWholeAmount() {
+		this.wholeAmount = this.wholeTaxableAmount * (100 + this.IVA_amount)
+				/ 100;
 	}
 
-	public float getIva() {
-		return iva;
+	public void setWholeTaxableAmount(float wholeTaxableAmount) {
+		this.wholeTaxableAmount = wholeTaxableAmount;
+		setWholeAmount();
 	}
 
-	public void setIva(float iva) {
-		this.iva = iva;
+	public float getWholeTaxableAmount() {
+		return wholeTaxableAmount;
+	}
+
+	public float getIVA_amount() {
+		return IVA_amount;
+	}
+
+	public void setIVA_amount(float IVA_amount) {
+		this.IVA_amount = IVA_amount;
+		setWholeAmount();
 	}
 
 	public int getVoucherNumber() {
@@ -169,9 +193,17 @@ public class Installment implements Serializable {
 	public void setAgreement(Agreement agreement) {
 		this.agreement = agreement;
 	}
-	
-	public float getWholeAmount() {
-		return amount + amount*iva/100;
-	}
 
+	public void validateAmount() {
+		List<Installment> installments = agreement.getInstallments();
+		float sum = 0;
+		for (Installment installment : installments) {
+			sum += installment.getWholeAmount();
+		}
+		sum += this.wholeAmount;
+		if (sum > agreement.getWholeAmount()) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_installmentAmount"));
+		}
+	}
 }

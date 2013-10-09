@@ -66,7 +66,7 @@
 				label="#{msgs.shareTablePersonnel}" required="true"
 				disabled="#{cc.attrs.editingDisable}">
 				<f:ajax event="blur" execute="@this"
-					render="personnelError percentPersonnel" />
+					render="personnelError percentPersonnel personnelShares" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 
 			</h:inputText>
@@ -225,7 +225,8 @@
 
 			<p:selectOneMenu id="chiefMenu" value="#{share.chiefScientist}"
 				label="#{msgs.chief}" filter="true" filterMatchMode="contains"
-				disabled="#{cc.attrs.editingDisable}" onchange="#{agreementShareTablePCB.notToUpdate()}">
+				disabled="#{cc.attrs.editingDisable}"
+				onchange="#{agreementShareTablePCB.notToUpdate()}">
 				<f:selectItem itemLabel="Selezionare" itemValue="#{null}" />
 				<f:selectItems value="#{utilPB.chiefItems}" />
 				<f:converter binding="#{chiefConverterPersonnelShare}" />
@@ -251,12 +252,19 @@
 
 			<h:inputText id="share" value="#{share.share}" label="#{msgs.share}"
 				required="true">
-				<f:ajax event="blur" execute="@this" render="shareError" />
+				<f:ajax event="blur" execute="@this"
+					render="shareError percentPersonnelShare" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 
 			</h:inputText>
+			<h:outputText id="percentPersonnelShare"
+				value="#{cc.attrs.bean.computeRelativePercent(share.share, cc.attrs.bean.shareTable.personnel)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
 			<h:message styleClass="errorMessage" for="share" id="shareError" />
+
 		</p:column>
+
 
 	</p:dataTable>
 

@@ -19,8 +19,6 @@ import businessLayer.ChiefScientist;
 import java.io.Serializable;
 
 @ConversationScoped
-// FIXME: RequestScoped rompe l'aggiunta e la rimozione delle quote del
-// personale
 public abstract class ShareTablePageControllerBean implements Serializable {
 
 	/**
@@ -233,7 +231,7 @@ public abstract class ShareTablePageControllerBean implements Serializable {
 		return getWholeAmount() * percent / 100;
 	}
 
-	private float computeRelativePercent(float percent, float relativePercent) {
+	public float computeRelativePercent(float percent, float relativePercent) {
 		return computePercent(relativePercent) * percent / 100;
 	}
 
