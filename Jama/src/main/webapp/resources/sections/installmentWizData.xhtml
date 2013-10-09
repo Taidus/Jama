@@ -20,18 +20,28 @@
 				<h:message for="date" />
 
 				<h:outputText value="#{msgs.amount}:" />
-				<h:inputText id="amount"
-					value="#{installmentManager.installment.amount}"
+				<h:inputText id="taxableAmount"
+					value="#{installmentManager.installment.wholeTaxableAmount}"
 					label="#{msgs.amount}" required="true">
+					<f:ajax render="amount" />
 				</h:inputText>
-				<h:message for="amount" />
+				<h:message for="taxableAmount" />
 
 				<h:outputText value="#{msgs.newInstIva}:" />
 				<h:inputText id="iva"
-					value="#{installmentManager.installment.iva}"
+					value="#{installmentManager.installment.IVA_amount}"
 					label="#{msgs.newInstIva}" required="true">
+					<f:ajax render="amount" />
 				</h:inputText>
 				<h:message for="iva" />
+
+				<h:outputText value="#{msgs.wholeAmount}:" />
+				<h:outputText id="amount"
+					value="#{installmentManager.installment.wholeAmount}"
+					readonly="true">
+					<f:convertNumber type="currency" currencySymbol="€" />
+				</h:outputText>
+				<h:message for="amount" />
 
 				<h:outputText value="#{msgs.newInstVoucherNumber}:" />
 				<h:inputText id="voucherNumber"
@@ -75,8 +85,9 @@
 
 
 				<h:outputText value="#{msgs.paidInvoice_Question}" />
-				<h:selectBooleanCheckbox id="paidInvoice" value="#{installmentManager.installment.paidInvoice}" />
-				
+				<h:selectBooleanCheckbox id="paidInvoice"
+					value="#{installmentManager.installment.paidInvoice}" />
+
 				<br />
 
 				<h:outputText value="#{msgs.reportRequired_Question}" />
@@ -92,6 +103,9 @@
 					label="#{msgs.newInstNote}" required="false" />
 				<h:message for="notes" />
 
+				<h:inputHidden value="needed" id="percentsCheck"
+					validator="#{cc.attrs.bean.validate}" />
+				<h:message styleClass="errorMessage" for="percentsCheck" />
 
 			</h:panelGrid>
 
