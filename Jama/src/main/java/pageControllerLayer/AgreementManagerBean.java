@@ -70,9 +70,9 @@ public class AgreementManagerBean implements Serializable {
 	public String save() {
 		
 		agreement.cloneFields(transferObjAgreement);
-		if(selectedAgreementId > 0){
-			agreement.setId(selectedAgreementId);
-		}
+//		if(selectedAgreementId > 0){
+//			agreement.setId(selectedAgreementId);
+//		}
 		agreementDao.create(agreement);
 
 
