@@ -69,7 +69,7 @@ public class Agreement implements Serializable {
 	private float wholeTaxableAmount;
 
 	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE })
+			CascadeType.MERGE , CascadeType.REMOVE })
 	@OrderBy("date DESC")
 	private List<Installment> installments;
 
