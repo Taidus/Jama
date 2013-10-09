@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import util.Messages;
 
 @Entity
-public class AgreementShareTable extends AbstractShareTable implements Serializable{
+public class AgreementShareTable extends AbstractShareTable implements
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
 

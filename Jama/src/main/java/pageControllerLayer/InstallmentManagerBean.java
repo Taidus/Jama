@@ -12,7 +12,6 @@ import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Installment;
 
-
 @Named("installmentManager")
 @ConversationScoped
 public class InstallmentManagerBean implements Serializable {
@@ -21,12 +20,14 @@ public class InstallmentManagerBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Inject @TransferObj Agreement agreement;
-	
+
+	@Inject
+	@TransferObj
+	Agreement agreement;
+
 	private int selectedInstalmentId = -1;
 	private Installment transferObjInstallment;
-	
+
 	public int getSelectedInstalmentId() {
 		return selectedInstalmentId;
 	}
@@ -34,38 +35,37 @@ public class InstallmentManagerBean implements Serializable {
 	public void setSelectedInstalmentId(int selectedInstalmentId) {
 		this.selectedInstalmentId = selectedInstalmentId;
 	}
-	
 
 	public String addInstallment() {
-		
-		
-		//agreement.getInstallments().add(i);
-		transferObjInstallment= new Installment();
+
+		// agreement.getInstallments().add(i);
+		transferObjInstallment = new Installment();
 		transferObjInstallment.setAgreement(agreement);
 		return "/installmentWiz.xhtml";
 
 	}
-	
-	public String cancel(){
-		
+
+	public String cancel() {
+
 		return "/agreementWiz.xhtml";
 	}
-	
-	public String save(){
-		
-		System.out.println("==========="+transferObjInstallment);
+
+
+	public String save() {
+
+
 		agreement.getInstallments().add(transferObjInstallment);
 		return "/agreementWiz.xhtml";
 	}
 
 	public String modifyInstallment() {
-		//TODO
-//		begin();
-//		initEditing();
+		// TODO
+		// begin();
+		// initEditing();
 		return "/installmentWiz.xhtml";
 
 	}
-	
+
 	@Produces
 	@TransferObj
 	@RequestScoped
@@ -79,6 +79,19 @@ public class InstallmentManagerBean implements Serializable {
 		return transferObjInstallment;
 	}
 
-	
+	//TODO scrivere questo e quelli sotto
+	public String viewInstallment() {
+		System.out.println("*** Stai vedendo una rata");
+		return null;
+	}
+
+	public String editInstallment() {
+		System.out.println("*** Stai modificando una rata");
+		return null;
+	}
+
+	public void deleteInstallment() {
+		System.out.println("*** Stai rimuovendo una rata");
+	}
 
 }

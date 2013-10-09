@@ -61,6 +61,7 @@ public abstract class ShareTablePageControllerBean implements Serializable {
 		return shares;
 	}
 
+	// TODO: fare un refactor di sta roba
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
 

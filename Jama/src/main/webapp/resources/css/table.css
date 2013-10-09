@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+
+#agreementTable .list-row-button, #installmentTable .list-row-button{
+	height: 20px;
+	width: 30px;
+	display: none;
+	float: right;
+}

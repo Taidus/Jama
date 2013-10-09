@@ -24,7 +24,7 @@
 
 				<ui:include src="/resources/sections/installmentWizData.xhtml" />
 
-					<p:tab id="tabRip" title="Passo 2">
+				<p:tab id="tabRip" title="Passo 2">
 					<sections:wizShareTable editingDisable="false"
 						bean="#{installmentShareTablePCB}" />
 				</p:tab>
@@ -35,8 +35,10 @@
 
 			</p:wizard>
 
-			<h:commandButton value="#{msgs.cancel}" action="#{installmentManager.cancel()}" immediate="true"
-				ajax="false" />
+			<h:commandButton value="#{msgs.cancel}"
+				action="#{installmentManager.cancel()}"
+				actionListener="#{installmentShareTablePCB.toUpdate()}"
+				immediate="true" ajax="false" />
 
 		</h:form>
 	</h:panelGrid>

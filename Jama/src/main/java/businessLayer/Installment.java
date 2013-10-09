@@ -60,7 +60,7 @@ public class Installment implements Serializable {
 	private InstallmentShareTable shareTable;
 
 	public Installment() {
-		this.shareTable = new InstallmentShareTable();
+		this.shareTable = new InstallmentShareTable(this);
 	}
 
 	public Date getDate() {
@@ -207,6 +207,7 @@ public class Installment implements Serializable {
 		}
 	}
 
+
 	@Override
 	public String toString() {
 		return "Installment [id=" + id + ", date=" + date + ", wholeAmount="
@@ -222,4 +223,13 @@ public class Installment implements Serializable {
 	}
 	
 	
+	float[] getMainValuesAmounts() {
+		float[] mainValuesAmount = {
+				shareTable.getAtheneumCapitalBalance() * wholeAmount / 100,
+				shareTable.getAtheneumCommonBalance() * wholeAmount / 100,
+				shareTable.getPersonnel() * wholeAmount / 100,
+				shareTable.getStructures() * wholeAmount / 100,
+				shareTable.getGoodsAndServices() * wholeAmount / 100 };
+		return mainValuesAmount;
+	}
 }

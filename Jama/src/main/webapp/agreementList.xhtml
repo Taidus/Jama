@@ -4,15 +4,16 @@
 
 <h:head>
 	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="table.css" library="css" />
 
 	<script type="text/javascript">
 		function setRowEvent(){
 			jQuery('#agreementTable tr')
 				.mouseover(function(){
-								jQuery(this).find(".agr-list-button").show();
+								jQuery(this).find(".list-row-button").show();
 							})
 				.mouseout(function(){
-								jQuery(this).find(".agr-list-button").hide();
+								jQuery(this).find(".list-row-button").hide();
 							})
 				.click(function(e){
 							jQuery("#tableContextMenu").hide();
@@ -99,22 +100,23 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 
-				<p:commandButton styleClass="agr-list-button" icon="ui-icon-search" action="#{agreementListPCB.viewAgreement()}">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{agreementListPCB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="agr-list-button" icon="ui-icon-wrench" action="#{agreementListPCB.editAgreement()}">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{agreementListPCB.editAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
 					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
 				<ui:remove>
-					<p:commandButton styleClass="agr-list-button" icon="ui-icon-trash" action="#{agreementListPCB.deleteAgreement()}" update="agreementTable"
+					<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" action="#{agreementListPCB.deleteAgreement()}" update="agreementTable"
 						oncomplete="setRowEvent();">
 						<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 					</p:commandButton>
 				</ui:remove>
-				<p:commandButton styleClass="agr-list-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
-				</p:commandButton>
+				
 
 			</p:column>
 
