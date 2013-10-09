@@ -69,7 +69,7 @@ public class Agreement implements Serializable {
 	private float wholeTaxableAmount;
 
 	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE })
+			CascadeType.MERGE , CascadeType.REMOVE })
 	@OrderBy("date DESC")
 	private List<Installment> installments;
 
@@ -303,4 +303,13 @@ public class Agreement implements Serializable {
 		this.note = note;
 	}
 
+	float[] getMainValuesAmounts() {
+		float[] mainValuesAmount = {
+				shareTable.getAtheneumCapitalBalance() * wholeAmount / 100,
+				shareTable.getAtheneumCommonBalance() * wholeAmount / 100,
+				shareTable.getPersonnel() * wholeAmount / 100,
+				shareTable.getStructures() * wholeAmount / 100,
+				shareTable.getGoodsAndServices() * wholeAmount / 100 };
+		return mainValuesAmount;
+	}
 }

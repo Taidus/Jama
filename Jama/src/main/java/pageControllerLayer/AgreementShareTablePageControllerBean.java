@@ -14,20 +14,21 @@ import businessLayer.Agreement;
 @Named("agreementShareTablePCB")
 @ConversationScoped
 public class AgreementShareTablePageControllerBean extends
-		ShareTablePageControllerBean implements Serializable{
-	
+		ShareTablePageControllerBean implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Inject @TransferObj
+	@Inject
+	@TransferObj
 	private Agreement agreement;
 
 	public AgreementShareTablePageControllerBean() {
 	}
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		initShares(getShareTable().getSharePerPersonnel());
 
 	}
@@ -35,7 +36,7 @@ public class AgreementShareTablePageControllerBean extends
 	@Override
 	public AbstractShareTable getShareTable() {
 		return agreement.getShareTable();
-		
+
 	}
 
 	@Override
