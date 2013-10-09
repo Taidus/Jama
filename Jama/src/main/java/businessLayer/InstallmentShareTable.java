@@ -53,7 +53,7 @@ public class InstallmentShareTable extends AbstractShareTable {
 					Messages.getErrorMessage("err_shareTablePersonnel"));
 		}
 	}
-
+	
 	// XXX: sto nome fa schifo
 
 	// public boolean isValidWithOtherInstallments() throws

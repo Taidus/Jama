@@ -103,9 +103,9 @@
 					label="#{msgs.newInstNote}" required="false" />
 				<h:message for="notes" />
 
-				<h:inputHidden value="needed" id="percentsCheck"
-					validator="#{cc.attrs.bean.validate}" />
-				<h:message styleClass="errorMessage" for="percentsCheck" />
+				<h:inputHidden value="needed" id="amountCheck"
+					validator="#{installmentShareTablePCB.validateAmount}" />
+				<h:message styleClass="errorMessage" for="amountCheck" />
 
 			</h:panelGrid>
 

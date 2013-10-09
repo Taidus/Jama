@@ -2,6 +2,8 @@ package pageControllerLayer;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import annotations.TransferObj;
@@ -40,7 +42,18 @@ public class InstallmentShareTablePageControllerBean extends
 
 	@Override
 	public float getWholeAmount() {
-		return installment.getAmount();
+		return installment.getWholeAmount();
+	}
+	
+	@Override
+	public void validate(FacesContext context, UIComponent component,
+			Object value) {
+		super.validate(context, component, value);
+	}
+	
+	public void validateAmount(FacesContext context, UIComponent component,
+			Object value) {
+		installment.validateAmount();
 	}
 
 }

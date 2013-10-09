@@ -2,10 +2,14 @@ package businessLayer;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.faces.validator.ValidatorException;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import util.Messages;
 
 /**
  * Entity implementation class for Entity: Installment
@@ -80,11 +84,11 @@ public class Installment implements Serializable {
 		this.wholeTaxableAmount = wholeTaxableAmount;
 		setWholeAmount();
 	}
-	
+
 	public float getWholeTaxableAmount() {
 		return wholeTaxableAmount;
 	}
-	
+
 	public float getIVA_amount() {
 		return IVA_amount;
 	}
@@ -190,4 +194,16 @@ public class Installment implements Serializable {
 		this.agreement = agreement;
 	}
 
+	public void validateAmount() {
+		List<Installment> installments = agreement.getInstallments();
+		float sum = 0;
+		for (Installment installment : installments) {
+			sum += installment.getWholeAmount();
+		}
+		sum += this.wholeAmount;
+		if (sum > agreement.getWholeAmount()) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_installmentAmount"));
+		}
+	}
 }
