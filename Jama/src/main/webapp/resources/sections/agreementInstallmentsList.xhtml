@@ -12,7 +12,7 @@
 	<h:outputStylesheet name="table.css" library="css" />
 
 
-	<p:dataTable id="installmentTable" var="installment" value="#{agreementManager.agreement.installments}">
+	<p:dataTable id="installmentTable" var="installment" value="#{agreementManager.agreement.installments}" emptyMessage="#{msgs.noInstallmentFound}">
 		<p:column headerText="#{msgs.date}">
 
 			<h:outputText value="#{installment.date}">
