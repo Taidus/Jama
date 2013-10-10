@@ -64,12 +64,10 @@ public class Agreement implements Serializable {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private AgreementShareTable shareTable;
 
-	private float wholeAmount;
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE , CascadeType.REMOVE })
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@OrderBy("date DESC")
 	private List<Installment> installments;
 
@@ -102,7 +100,6 @@ public class Agreement implements Serializable {
 		this.CIA_projectNumber = copy.getCIA_projectNumber();
 		this.inventoryNumber = copy.getInventoryNumber();
 		this.shareTable = copy.getShareTable();
-		this.wholeAmount = copy.getWholeAmount();
 		this.IVA_amount = copy.getIVA_amount();
 		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
 		this.installments = copy.getInstallments();
@@ -136,16 +133,11 @@ public class Agreement implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber="
-				+ protocolNumber + ", type=" + type + ", chief=" + chief
-				+ ", contactPerson=" + contactPerson + ", company=" + company
-				+ ", department=" + department + ", CIA_projectNumber="
-				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber
-				+ ", shareTable=" + shareTable + ", wholeAmount=" + wholeAmount
-				+ ", IVA_amount=" + IVA_amount + ", wholeTaxableAmount="
-				+ wholeTaxableAmount + ", installments=" + installments
-				+ ", approvalDate=" + approvalDate + ", beginDate=" + beginDate
-				+ ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
+		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber=" + protocolNumber + ", type=" + type + ", chief=" + chief
+				+ ", contactPerson=" + contactPerson + ", company=" + company + ", department=" + department + ", CIA_projectNumber="
+				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber + ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
+				+ ", wholeTaxableAmount=" + wholeTaxableAmount + ", installments=" + installments + ", approvalDate=" + approvalDate + ", beginDate="
+				+ beginDate + ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
 	}
 
 	public int getId() {
@@ -237,13 +229,9 @@ public class Agreement implements Serializable {
 	}
 
 	public float getWholeAmount() {
-		return wholeAmount;
+		return this.wholeTaxableAmount * (100 + this.IVA_amount) / 100;
 	}
 
-	private void setWholeAmount() {
-		this.wholeAmount = this.wholeTaxableAmount * (100 + this.IVA_amount)
-				/ 100;
-	}
 
 	public float getIVA_amount() {
 		return IVA_amount;
@@ -251,7 +239,6 @@ public class Agreement implements Serializable {
 
 	public void setIVA_amount(float iVA_amount) {
 		IVA_amount = iVA_amount;
-		setWholeAmount();
 	}
 
 	public float getWholeTaxableAmount() {
@@ -260,7 +247,6 @@ public class Agreement implements Serializable {
 
 	public void setWholeTaxableAmount(float wholeTaxableAmount) {
 		this.wholeTaxableAmount = wholeTaxableAmount;
-		setWholeAmount();
 	}
 
 	public Date getApprovalDate() {
@@ -304,12 +290,10 @@ public class Agreement implements Serializable {
 	}
 
 	float[] getMainValuesAmounts() {
-		float[] mainValuesAmount = {
-				shareTable.getAtheneumCapitalBalance() * wholeAmount / 100,
-				shareTable.getAtheneumCommonBalance() * wholeAmount / 100,
-				shareTable.getPersonnel() * wholeAmount / 100,
-				shareTable.getStructures() * wholeAmount / 100,
-				shareTable.getGoodsAndServices() * wholeAmount / 100 };
+		//FIXME spostami
+		float[] mainValuesAmount = { shareTable.getAtheneumCapitalBalance() * getWholeAmount() / 100,
+				shareTable.getAtheneumCommonBalance() * getWholeAmount() / 100, shareTable.getPersonnel() * getWholeAmount() / 100,
+				shareTable.getStructures() * getWholeAmount() / 100, shareTable.getGoodsAndServices() * getWholeAmount() / 100 };
 		return mainValuesAmount;
 	}
 }

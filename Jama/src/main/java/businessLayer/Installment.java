@@ -28,7 +28,6 @@ public class Installment implements Serializable {
 	@NotNull
 	private Date date;
 
-	private float wholeAmount;
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 
@@ -72,17 +71,12 @@ public class Installment implements Serializable {
 	}
 
 	public float getWholeAmount() {
-		return wholeAmount;
-	}
-
-	private void setWholeAmount() {
-		this.wholeAmount = this.wholeTaxableAmount * (100 + this.IVA_amount)
+		return this.wholeTaxableAmount * (100 + this.IVA_amount)
 				/ 100;
 	}
 
 	public void setWholeTaxableAmount(float wholeTaxableAmount) {
 		this.wholeTaxableAmount = wholeTaxableAmount;
-		setWholeAmount();
 	}
 
 	public float getWholeTaxableAmount() {
@@ -95,7 +89,6 @@ public class Installment implements Serializable {
 
 	public void setIVA_amount(float IVA_amount) {
 		this.IVA_amount = IVA_amount;
-		setWholeAmount();
 	}
 
 	public int getVoucherNumber() {
@@ -200,7 +193,7 @@ public class Installment implements Serializable {
 		for (Installment installment : installments) {
 			sum += installment.getWholeAmount();
 		}
-		sum += this.wholeAmount;
+		sum += this.getWholeAmount();
 		if (sum > agreement.getWholeAmount()) {
 			throw new ValidatorException(
 					Messages.getErrorMessage("err_installmentAmount"));
@@ -210,8 +203,7 @@ public class Installment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Installment [id=" + id + ", date=" + date + ", wholeAmount="
-				+ wholeAmount + ", IVA_amount=" + IVA_amount
+		return "Installment [id=" + id + ", date=" + date  + ", IVA_amount=" + IVA_amount
 				+ ", wholeTaxableAmount=" + wholeTaxableAmount
 				+ ", voucherNumber=" + voucherNumber + ", voucherDate="
 				+ voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber
@@ -224,12 +216,13 @@ public class Installment implements Serializable {
 	
 	
 	float[] getMainValuesAmounts() {
+		//FIXME voglio andarmene da qui
 		float[] mainValuesAmount = {
-				shareTable.getAtheneumCapitalBalance() * wholeAmount / 100,
-				shareTable.getAtheneumCommonBalance() * wholeAmount / 100,
-				shareTable.getPersonnel() * wholeAmount / 100,
-				shareTable.getStructures() * wholeAmount / 100,
-				shareTable.getGoodsAndServices() * wholeAmount / 100 };
+				shareTable.getAtheneumCapitalBalance() * getWholeAmount() / 100,
+				shareTable.getAtheneumCommonBalance() * getWholeAmount() / 100,
+				shareTable.getPersonnel() * getWholeAmount() / 100,
+				shareTable.getStructures() * getWholeAmount() / 100,
+				shareTable.getGoodsAndServices() * getWholeAmount() / 100 };
 		return mainValuesAmount;
 	}
 }

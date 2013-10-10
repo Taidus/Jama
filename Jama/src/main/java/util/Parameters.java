@@ -10,9 +10,9 @@ import java.util.Properties;
 
 public class Parameters {
 
-	public static final Map<Double, Double> atheneumCapitalBalanceRateTable;
-	public static final double structuresRate;
-	public static final double atheneumCommonBalanceRate;
+	public static final Map<Float, Float> atheneumCapitalBalanceRateTable;
+	public static final float structuresRate;
+	public static final float atheneumCommonBalanceRate;
 
 	private static final String filePath = "src/main/resources/";
 
@@ -33,8 +33,8 @@ public class Parameters {
 			throw new IllegalStateException("Could not read " + propertiesFilePath);
 		}
 
-		structuresRate = Double.parseDouble(p.getProperty("structuresRate").trim());
-		atheneumCommonBalanceRate = Double.parseDouble(p.getProperty("atheneumCommonBalanceRate").trim());
+		structuresRate = Float.parseFloat(p.getProperty("structuresRate").trim());
+		atheneumCommonBalanceRate =Float.parseFloat(p.getProperty("atheneumCommonBalanceRate").trim());
 
 		propertiesFilePath = filePath + "atheneumRateTable.properties";
 		p = new Properties();
@@ -52,7 +52,7 @@ public class Parameters {
 
 		atheneumCapitalBalanceRateTable = new HashMap<>();
 		for (String property : p.stringPropertyNames()) {
-			atheneumCapitalBalanceRateTable.put(Double.parseDouble(property.trim()), Double.parseDouble(p.getProperty(property).trim()));
+			atheneumCapitalBalanceRateTable.put(Float.parseFloat(property.trim()), Float.parseFloat(p.getProperty(property).trim()));
 		}
 	}
 
