@@ -84,30 +84,28 @@ public abstract class AbstractWizardPageController implements Serializable {
 		// inventoryMaterials, rentals, personnelOnContract, otherCost };
 		// float[] personnelValues = createPersonnelValues(shares);
 
-		float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
-				getShareTable().getAtheneumCommonBalance(),
-				getShareTable().getStructures(),
-				getShareTable().getPersonnel(),
-				getShareTable().getGoodsAndServices() };
-
-		float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
-				getShareTable().getConsumerMaterials(),
-				getShareTable().getInventoryMaterials(),
-				getShareTable().getRentals(),
-				getShareTable().getPersonnelOnContract(),
-				getShareTable().getOtherCost() };
-
-		float[] personnelValues = createPersonnelValues(shares);
+		// float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
+		// getShareTable().getAtheneumCommonBalance(),
+		// getShareTable().getStructures(),
+		// getShareTable().getPersonnel(),
+		// getShareTable().getGoodsAndServices() };
+		//
+		// float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
+		// getShareTable().getConsumerMaterials(),
+		// getShareTable().getInventoryMaterials(),
+		// getShareTable().getRentals(),
+		// getShareTable().getPersonnelOnContract(),
+		// getShareTable().getOtherCost() };
+		//
+		// float[] personnelValues = createPersonnelValues(shares);
 
 		debug();
 
 		sharesDoubleEntryCheck();
-
-		getShareTable().validate(mainValues, goodsAndServicesValues,
-				personnelValues, getShareTable().getGoodsAndServices(),
-				getShareTable().getPersonnel());
-
 		fillAgreementPersonnelShares();
+		getShareTable().validate();
+
+		
 	}
 
 	protected void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
@@ -140,17 +138,17 @@ public abstract class AbstractWizardPageController implements Serializable {
 		}
 	}
 
-	private float[] createPersonnelValues(List<PersonnelShare> shares) {
-		float[] f = new float[shares.size()];
-		int i = 0;
-		for (PersonnelShare p : shares) {
-			if (p.getChiefScientist() != null) {
-				f[i] = p.getShare();
-				i++;
-			}
-		}
-		return f;
-	}
+	// private float[] createPersonnelValues(List<PersonnelShare> shares) {
+	// float[] f = new float[shares.size()];
+	// int i = 0;
+	// for (PersonnelShare p : shares) {
+	// if (p.getChiefScientist() != null) {
+	// f[i] = p.getShare();
+	// i++;
+	// }
+	// }
+	// return f;
+	// }
 
 	private void fillAgreementPersonnelShares() {
 		Map<ChiefScientist, Float> m = new HashMap<>();

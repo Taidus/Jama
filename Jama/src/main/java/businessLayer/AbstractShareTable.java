@@ -33,9 +33,7 @@ public abstract class AbstractShareTable {
 	protected float personnelOnContract;
 	protected float otherCost;
 
-	public abstract void validate(float[] mainValues,
-			float[] goodsAndServicesValues, float[] personnelValues,
-			float goodsAndServices, float personnel);
+	public abstract void validate();
 
 	protected final void initFields() {
 
@@ -144,18 +142,18 @@ public abstract class AbstractShareTable {
 		return id;
 	}
 
-	protected boolean arePersonnelValuesConsistent(float[] personnelValues,
-			float personnel) {
+	protected boolean arePersonnelValuesConsistent() {
 		float sum = 0;
-		for (float f : personnelValues) {
+		for (float f : sharePerPersonnel.values()) {
 			sum += f;
 		}
 		sum *= personnel / 100;
 		return MathUtil.doubleEquals(personnel, sum);
 	}
 
-	protected boolean areGoodsAndServicesValuesConsistent(
-			float[] goodsAndServicesValues, float goodsAndServices) {
+	protected boolean areGoodsAndServicesValuesConsistent() {
+		float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
+				inventoryMaterials, rentals, personnelOnContract, otherCost };
 		float sum = 0;
 		for (float f : goodsAndServicesValues) {
 			sum += f;
@@ -164,12 +162,14 @@ public abstract class AbstractShareTable {
 		return MathUtil.doubleEquals(goodsAndServices, sum);
 	}
 
-	protected boolean areMainValuesConsistent(float[] mainValues) {
+	protected boolean areMainValuesConsistent() {
+		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance,
+				structures, personnel, goodsAndServices };
 		float sum = 0;
 		for (float f : mainValues) {
 			sum += f;
 		}
-		return (!(sum < 100));
+		return MathUtil.doubleEquals(sum, 100);
 	}
 
 	protected void adjustMainValues(float total) {

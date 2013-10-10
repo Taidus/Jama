@@ -30,18 +30,16 @@ public class InstallmentShareTable extends AbstractShareTable {
 	}
 
 	@Override
-	public void validate(float[] mainValues, float[] goodsAndShareValues,
-			float[] personnelValues, float goodsAndServices, float personnel) {
-		if (!areMainValuesConsistent(mainValues)) {
+	public void validate() {
+		if (!areMainValuesConsistent()) {
 			throw new ValidatorException(
 					Messages.getErrorMessage("err_shareTableValues"));
 		}
-		if (!areGoodsAndServicesValuesConsistent(goodsAndShareValues,
-				goodsAndServices)) {
+		if (!areGoodsAndServicesValuesConsistent()) {
 			throw new ValidatorException(
 					Messages.getErrorMessage("err_shareTableGoods"));
 		}
-		if (!arePersonnelValuesConsistent(personnelValues, personnel)) {
+		if (!arePersonnelValuesConsistent()) {
 			throw new ValidatorException(
 					Messages.getErrorMessage("err_shareTablePersonnel"));
 		}

@@ -57,7 +57,7 @@ public class InstallmentWizardPageControllerBean  implements Serializable,ShareT
 
 	@Override
 	public float getWholeAmount() {
-		return installment.getAmount();
+		return installment.getWholeAmount();
 	}
 
 	
