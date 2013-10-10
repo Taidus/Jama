@@ -212,7 +212,8 @@
 
 	<p:dataTable id="personnelShares" value="#{cc.attrs.bean.shares}"
 		var="share" selectionMode="single"
-		selection="#{cc.attrs.bean.selectedShare}" rowKey="#{share}">
+		selection="#{cc.attrs.bean.selectedShare}" rowKey="#{share}"
+		emptyMessage="#{msgs.noShareFound}">
 
 		<f:facet name="header">
 				#{msgs.shareTablePersonnel}

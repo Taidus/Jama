@@ -13,9 +13,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import util.MathUtil;
 import util.Messages;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
+
 import java.io.Serializable;
 
 @ConversationScoped
@@ -61,7 +63,6 @@ public abstract class ShareTablePageControllerBean implements Serializable {
 		return shares;
 	}
 
-	// TODO: fare un refactor di sta roba
 	public void validate(FacesContext context, UIComponent component,
 			Object value) {
 
@@ -96,30 +97,26 @@ public abstract class ShareTablePageControllerBean implements Serializable {
 		// inventoryMaterials, rentals, personnelOnContract, otherCost };
 		// float[] personnelValues = createPersonnelValues(shares);
 
-		float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
-				getShareTable().getAtheneumCommonBalance(),
-				getShareTable().getStructures(),
-				getShareTable().getPersonnel(),
-				getShareTable().getGoodsAndServices() };
-
-		float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
-				getShareTable().getConsumerMaterials(),
-				getShareTable().getInventoryMaterials(),
-				getShareTable().getRentals(),
-				getShareTable().getPersonnelOnContract(),
-				getShareTable().getOtherCost() };
-
-		float[] personnelValues = createPersonnelValues(shares);
+		// float[] mainValues = { getShareTable().getAtheneumCapitalBalance(),
+		// getShareTable().getAtheneumCommonBalance(),
+		// getShareTable().getStructures(),
+		// getShareTable().getPersonnel(),
+		// getShareTable().getGoodsAndServices() };
+		//
+		// float[] goodsAndServicesValues = { getShareTable().getBusinessTrip(),
+		// getShareTable().getConsumerMaterials(),
+		// getShareTable().getInventoryMaterials(),
+		// getShareTable().getRentals(),
+		// getShareTable().getPersonnelOnContract(),
+		// getShareTable().getOtherCost() };
+		//
+		// float[] personnelValues = createPersonnelValues(shares);
 
 		debug();
-
 		sharesDoubleEntryCheck();
-
-		getShareTable().validate(mainValues, goodsAndServicesValues,
-				personnelValues, getShareTable().getGoodsAndServices(),
-				getShareTable().getPersonnel());
-
 		fillAgreementPersonnelShares();
+		getShareTable().validate();
+
 	}
 
 	// find a solution
@@ -153,22 +150,23 @@ public abstract class ShareTablePageControllerBean implements Serializable {
 		}
 	}
 
-	private float[] createPersonnelValues(List<PersonnelShare> shares) {
-		float[] f = new float[shares.size()];
-		int i = 0;
-		for (PersonnelShare p : shares) {
-			if (p.getChiefScientist() != null) {
-				f[i] = p.getShare();
-				i++;
-			}
-		}
-		return f;
-	}
+	// private float[] createPersonnelValues(List<PersonnelShare> shares) {
+	// float[] f = new float[shares.size()];
+	// int i = 0;
+	// for (PersonnelShare p : shares) {
+	// if (p.getChiefScientist() != null) {
+	// f[i] = p.getShare();
+	// i++;
+	// }
+	// }
+	// return f;
+	// }
 
 	private void fillAgreementPersonnelShares() {
 		Map<ChiefScientist, Float> m = new HashMap<>();
 		for (PersonnelShare p : shares) {
-			if (p.getChiefScientist() != null) {
+			if (p.getChiefScientist() != null
+					&& !MathUtil.doubleEquals(p.getShare(), 0)) {
 				m.put(p.getChiefScientist(), p.getShare());
 			}
 		}
