@@ -4,6 +4,7 @@
 
 <composite:interface>
 	<composite:attribute name="editingDisable"></composite:attribute>
+	<composite:attribute name="installmentOutcome"></composite:attribute>
 
 </composite:interface>
 
@@ -30,17 +31,17 @@
 		<p:column headerText="#{msgs.paidInvoice_Question}">
 			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 
-			<ui:remove>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="AZIONE DEL PCB">
-					<f:setPropertyActionListener value="#{installment}" target="SELECTED VALUE DEL PCB (CHE LO SETTA NEL MANAGER NELL'AZIONE)" />
+		
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentManager.viewInstallment()}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstalmentId}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="AZIONE DEL PCB">
-					<f:setPropertyActionListener value="#{installment}" target="SELECTED VALUE DEL PCB (CHE LO SETTA NEL MANAGER NELL'AZIONE)" />
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstalmentId}" />
 				</p:commandButton>
 				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{installment}" target="SELECTED VALUE DEL PCB (CHE LO SETTA NEL MANAGER NELL'AZIONE)" />
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstalmentId}" />
 				</p:commandButton>
-			</ui:remove>
+		
 
 
 		</p:column>
@@ -49,14 +50,15 @@
 
 	</p:dataTable>
 
-	<ui:remove>
+	
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
-			<p:commandButton value="#{msgs.yes}" action="AZIONE DEL PCB" immediate="true" update="installmentTable" oncomplete="w_confirm.hide();" />
+			<p:commandButton value="#{msgs.yes}" action="#{installmentManager.deleteInstallment()}" immediate="true" update="installmentTable" oncomplete="w_confirm.hide();" />
 			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
 		</p:confirmDialog>
-	</ui:remove>
+	
 
-	<h:commandButton action="#{installmentManager.addInstallment()}" value="Aggiungi una rata" ajax="false" immediate="true">
+	<h:commandButton action="#{installmentManager.addInstallment()}" value="Aggiungi una rata" ajax="false" immediate="true" >
+	<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
 	</h:commandButton>
 
 

@@ -38,6 +38,7 @@ public class AgreementManagerBean implements Serializable {
 
 
 	// TODO aggiungere un po' di eccezioni
+	//TODO spostare return indirizzi pagine
 	private int selectedAgreementId = -1;
 	private Agreement agreement;
 	private Agreement transferObjAgreement;
@@ -68,7 +69,7 @@ public class AgreementManagerBean implements Serializable {
 	}
 	
 
-	public String save() {
+	public void save() {
 		
 		agreement.cloneFields(transferObjAgreement);
 //		if(selectedAgreementId > 0){
@@ -81,10 +82,10 @@ public class AgreementManagerBean implements Serializable {
 //			agreementDao.create(transferObjAgreement);
 //		}
 		
-		return close();
+		close();
 	}
 
-	private String close() {
+	private void close() {
 		
 		
 		//serve per hibernate, sennò trova due riferimenti ad una stessa entità managed;
@@ -98,17 +99,9 @@ public class AgreementManagerBean implements Serializable {
 		}
 		
 	
-		
-		
-		if (selectedAgreementId < 0) {
-			return "/home.xhtml";
-		} else {
-			return "/agreementList.xhtml";
-		}
 	}
 
-	public String cancel() {
-		return close() + "?faces-redirect=true";
+	public void cancel() {
 		
 	}
 

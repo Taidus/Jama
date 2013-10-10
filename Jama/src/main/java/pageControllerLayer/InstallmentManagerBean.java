@@ -25,6 +25,7 @@ public class InstallmentManagerBean implements Serializable {
 	@TransferObj
 	Agreement agreement;
 
+	// TODO spostare return indirizzo pagina
 	private int selectedInstalmentId = -1;
 	private Installment transferObjInstallment;
 
@@ -45,17 +46,13 @@ public class InstallmentManagerBean implements Serializable {
 
 	}
 
-	public String cancel() {
+	public void cancel() {
 
-		return "/agreementWiz.xhtml";
 	}
 
-
-	public String save() {
-
+	public void save() {
 
 		agreement.getInstallments().add(transferObjInstallment);
-		return "/agreementWiz.xhtml";
 	}
 
 	public String modifyInstallment() {
@@ -79,7 +76,7 @@ public class InstallmentManagerBean implements Serializable {
 		return transferObjInstallment;
 	}
 
-	//TODO scrivere questo e quelli sotto
+	// TODO scrivere questo e quelli sotto
 	public String viewInstallment() {
 		System.out.println("*** Stai vedendo una rata");
 		return null;

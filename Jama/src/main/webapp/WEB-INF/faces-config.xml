@@ -27,6 +27,37 @@
     <!-- Write your navigation rules here. You are encouraged to use CDI 
         for creating @Named managed beans. -->
         
+    <navigation-rule>
+    	<navigation-case>
+    		<from-outcome>agreementEdit</from-outcome>
+    		<to-view-id>/agreementEdit.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-outcome>agreementCreate</from-outcome>
+    		<to-view-id>/agreementWiz.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-outcome>agreementView</from-outcome>
+    		<to-view-id>/agreementView.xhtml</to-view-id>
+    	</navigation-case>
+    		<navigation-case>
+    		<from-outcome>agreementList</from-outcome>
+    		<to-view-id>/agreementList.xhtml</to-view-id>
+    		<redirect />
+    	</navigation-case>
+    		<navigation-case>
+    		<from-outcome>home</from-outcome>
+    		<to-view-id>/home.xhtml</to-view-id>
+    		<redirect />
+    	</navigation-case>
+    		<navigation-case>
+    		<from-outcome>installmentCreate</from-outcome>
+    		<to-view-id>/agreementWiz.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    
+    
+    
     <application>
     
     	<resource-bundle>

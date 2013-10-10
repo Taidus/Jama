@@ -28,38 +28,36 @@ public class AgreementEditPresentationBean implements Serializable {
 	public AgreementEditPresentationBean() {
 	}
 
-	
-
 	public int getCurrentTabIndex() {
 		return currentTabIndex;
 	}
-	
-
 
 	public void setCurrentTabIndex(int currentTabIndex) {
 		this.currentTabIndex = currentTabIndex;
 
-		
 	}
-
-
 
 	public void handleFlow(TabChangeEvent event) {
 
-		 TabView tv = (TabView) event.getComponent(); 
-	        currentTabIndex = tv.getActiveIndex();
-	        System.out.println("================"+currentTabIndex);
+		TabView tv = (TabView) event.getComponent();
+		currentTabIndex = tv.getActiveIndex();
+		System.out.println("================" + currentTabIndex);
 
 	}
 
 	public String cancel() {
 		currentTabIndex = defaultTab;
-		return manager.cancel();
+		manager.cancel();
+		return "agreementList";
+
 	}
 
 	public String save() {
 		currentTabIndex = defaultTab;
-		return manager.save();
+		manager.save();
+		System.out.println("lisssyttttt");
+		return "agreementList";
+
 	}
 
 }

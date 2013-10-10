@@ -20,8 +20,9 @@ public class AgreementWizardPresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String currentTabId = defaultTab;
 	private static final String defaultTab = "tabDati";
-	
-	@Inject AgreementManagerBean manager;
+
+	@Inject
+	AgreementManagerBean manager;
 
 	public AgreementWizardPresentationBean() {
 	}
@@ -36,15 +37,19 @@ public class AgreementWizardPresentationBean implements Serializable {
 		return event.getNewStep();
 
 	}
-	
-	public String cancel(){
-		currentTabId=defaultTab;
-		return manager.cancel();
+
+	public String cancel() {
+		currentTabId = defaultTab;
+		manager.cancel();
+		return "home";
+
 	}
-	
-	public String save(){
-		currentTabId=defaultTab;
-		return manager.save();
+
+	public String save() {
+		currentTabId = defaultTab;
+		manager.save();
+		return "home";
+
 	}
 
 }
