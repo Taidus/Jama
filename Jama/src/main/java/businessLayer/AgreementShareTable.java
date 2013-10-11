@@ -16,15 +16,15 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 		initFields();
 	}
 
-	void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
+	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
 		this.atheneumCapitalBalance = atheneumCapitalBalance;
 	}
 
-	void setAtheneumCommonBalance(float atheneumCommonBalance) {
+	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
 		this.atheneumCommonBalance = atheneumCommonBalance;
 	}
 
-	void setStructures(float structures) {
+	public void setStructures(float structures) {
 		this.structures = structures;
 	}
 

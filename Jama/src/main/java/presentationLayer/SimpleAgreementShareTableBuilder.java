@@ -1,9 +1,10 @@
-package businessLayer;
+package presentationLayer;
 
 import java.util.Iterator;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import util.Parameters;
@@ -12,22 +13,26 @@ import util.Parameters;
 @Named("agrShareTableBuilder")
 @RequestScoped
 public class SimpleAgreementShareTableBuilder implements AgreementShareTableBuilder {
+	@Inject
+	private AgreementShareTablePresentationBean table;
 
 	public SimpleAgreementShareTableBuilder() {
 	}
 
 	@Override
-	public void build(AgreementShareTable table) {
+	public void build() {
 		float personnel = table.getPersonnel();
 
-		table.setAtheneumCommonBalance(personnel * Parameters.atheneumCommonBalanceRate);
-		table.setStructures(personnel * Parameters.structuresRate);
+		table.setAtheneumCommonBalance(Parameters.atheneumCommonBalanceRate);
+		table.setStructures(Parameters.structuresRate);
 
 		boolean found = false;
 		float rate = 0.0F;
 		Iterator<Float> it = Parameters.atheneumCapitalBalanceRateTable.keySet().iterator();
+		System.out.println("Quota personale nel build: " + personnel);
 		while (false == found && it.hasNext()) {
 			float threshold = it.next();
+			System.out.println("Soglia: " + threshold);
 			if (personnel <= threshold) {
 				rate = Parameters.atheneumCapitalBalanceRateTable.get(threshold);
 				found = true;
@@ -37,7 +42,7 @@ public class SimpleAgreementShareTableBuilder implements AgreementShareTableBuil
 			throw new IllegalStateException("Atheneum rate table is not valid");
 		}
 
-		table.setAtheneumCapitalBalance(personnel * rate);
+		table.setAtheneumCapitalBalance(rate);
 	}
 
 }
