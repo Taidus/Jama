@@ -22,13 +22,13 @@
 			<p:ajax event="tabChange" listener="#{agreementEditPB.handleFlow}"></p:ajax>
 
 			<p:tab id="tabDati" title="Dati">
-				<sections:agreementWizData editingDisable="false" />
+				<sections:agreementWizData editingDisable="false"  />
 
 			</p:tab>
 
 
 			<p:tab id="tabRip" title="Passo 2">
-				<sections:wizShareTable editingDisable="false"
+				<sections:wizShareTable editingDisable="false" agreementTable="true"
 					bean="#{agreementShareTablePCB}" />
 			</p:tab>
 

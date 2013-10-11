@@ -2,6 +2,9 @@ package businessLayer;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,108 +41,66 @@ public abstract class AbstractShareTable {
 	protected final void initFields() {
 
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
-
+		otherCost = 100F;
+		goodsAndServices = 100F;
 	}
 
 	public float getAtheneumCapitalBalance() {
 		return atheneumCapitalBalance;
 	}
 
-	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
-		this.atheneumCapitalBalance = atheneumCapitalBalance;
-	}
-
 	public float getAtheneumCommonBalance() {
 		return atheneumCommonBalance;
-	}
-
-	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
-		this.atheneumCommonBalance = atheneumCommonBalance;
 	}
 
 	public float getStructures() {
 		return structures;
 	}
 
-	public void setStructures(float structures) {
-		this.structures = structures;
-	}
-
 	public float getPersonnel() {
 		return personnel;
-	}
-
-	public void setPersonnel(float personnel) {
-		this.personnel = personnel;
 	}
 
 	public Map<ChiefScientist, Float> getSharePerPersonnel() {
 		return sharePerPersonnel;
 	}
 
-	public void setSharePerPersonnel(
-			Map<ChiefScientist, Float> sharePerPersonnel) {
-		this.sharePerPersonnel = sharePerPersonnel;
-	}
-
 	public float getGoodsAndServices() {
 		return goodsAndServices;
-	}
-
-	public void setGoodsAndServices(float goodsAndServices) {
-		this.goodsAndServices = goodsAndServices;
 	}
 
 	public float getBusinessTrip() {
 		return businessTrip;
 	}
 
-	public void setBusinessTrip(float businessTrip) {
-		this.businessTrip = businessTrip;
-	}
-
 	public float getConsumerMaterials() {
 		return consumerMaterials;
-	}
-
-	public void setConsumerMaterials(float consumerMaterials) {
-		this.consumerMaterials = consumerMaterials;
 	}
 
 	public float getInventoryMaterials() {
 		return inventoryMaterials;
 	}
 
-	public void setInventoryMaterials(float inventoryMaterials) {
-		this.inventoryMaterials = inventoryMaterials;
-	}
-
 	public float getRentals() {
 		return rentals;
-	}
-
-	public void setRentals(float rentals) {
-		this.rentals = rentals;
 	}
 
 	public float getPersonnelOnContract() {
 		return personnelOnContract;
 	}
 
-	public void setPersonnelOnContract(float personnelOnContract) {
-		this.personnelOnContract = personnelOnContract;
-	}
-
 	public float getOtherCost() {
 		return otherCost;
 	}
 
-	public void setOtherCost(float otherCost) {
-		this.otherCost = otherCost;
-	}
-
 	public int getId() {
 		return id;
+	}
+	
+
+	public void setSharePerPersonnel(Map<ChiefScientist, Float> sharePerPersonnel) {
+		//FIXME sta qui perché serve da altre parti. Questa cosa la dobbiamo decidere per bene
+		this.sharePerPersonnel = sharePerPersonnel;
 	}
 
 	protected boolean arePersonnelValuesConsistent() {
@@ -152,8 +113,7 @@ public abstract class AbstractShareTable {
 	}
 
 	protected boolean areGoodsAndServicesValuesConsistent() {
-		float[] goodsAndServicesValues = { businessTrip, consumerMaterials,
-				inventoryMaterials, rentals, personnelOnContract, otherCost };
+		float[] goodsAndServicesValues = { businessTrip, consumerMaterials, inventoryMaterials, rentals, personnelOnContract, otherCost };
 		float sum = 0;
 		for (float f : goodsAndServicesValues) {
 			sum += f;
@@ -163,8 +123,7 @@ public abstract class AbstractShareTable {
 	}
 
 	protected boolean areMainValuesConsistent() {
-		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance,
-				structures, personnel, goodsAndServices };
+		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance, structures, personnel, goodsAndServices };
 		float sum = 0;
 		for (float f : mainValues) {
 			sum += f;
@@ -174,6 +133,14 @@ public abstract class AbstractShareTable {
 
 	protected void adjustMainValues(float total) {
 		goodsAndServices += 100 - total;
+	}
+
+	public void updateGoodsAndServices(AjaxBehaviorEvent e) throws AbortProcessingException {
+		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
+
+		goodsAndServices = 100F - sum;
+		System.out.println("G&S aggiornato: " + goodsAndServices);
+
 	}
 
 }
