@@ -21,18 +21,18 @@
 			>
 			<p:ajax event="tabChange" listener="#{agreementEditPB.handleFlow}"></p:ajax>
 
-			<p:tab id="tabDati" title="Dati">
+			<p:tab id="tabDati" title="#{msgs.data_Tab}">
 				<sections:agreementWizData editingDisable="false"  />
 
 			</p:tab>
 
 
-			<p:tab id="tabRip" title="Passo 2">
+			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 				<sections:wizShareTable editingDisable="false" agreementTable="true"
 					bean="#{agreementShareTablePCB}" />
 			</p:tab>
 
-			<p:tab id="tabInstallments" title="Passo 3">
+			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
 				<sections:agreementInstallmentsList installmentOutcome="agreementEdit">
 				</sections:agreementInstallmentsList>
 

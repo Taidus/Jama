@@ -16,7 +16,6 @@
 	<h:panelGrid width="100%" columns="2" columnClasses="col1">
 		<h:form id="installmentWiz">
 
-			<p:growl id="growl" sticky="true" showDetail="true" />
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
@@ -24,7 +23,7 @@
 
 				<ui:include src="/resources/sections/installmentWizData.xhtml" />
 
-				<p:tab id="tabRip" title="Passo 2">
+				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 					<sections:wizShareTable editingDisable="false"
 						bean="#{installmentShareTablePCB}" />
 				</p:tab>

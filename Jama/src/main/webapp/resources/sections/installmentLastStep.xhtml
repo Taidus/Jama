@@ -5,18 +5,10 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<p:tab id="tabEnd" title="Passo 3">
-		<p:panel header="Empty">
+	<p:tab id="tabEnd" title="#{msgs.end__tab}">
 
-			<h:panelGrid columns="3" columnClasses="label, value, errorMessage"
-				styleClass="grid">
-
-
-				<h:outputText value="Fine " />
-				<br />
-				<br />
-
-			</h:panelGrid>
+					<h:outputText value="Fine " />
+		
 
 			<p:commandButton value="#{msgs.save}"
 				action="#{installmentWizardPB.save()}"
@@ -24,7 +16,7 @@
 
 
 
-		</p:panel>
+
 
 	</p:tab>
 
