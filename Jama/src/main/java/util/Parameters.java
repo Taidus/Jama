@@ -4,9 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
 public class Parameters {
 
@@ -14,7 +14,8 @@ public class Parameters {
 	public static final float structuresRate;
 	public static final float atheneumCommonBalanceRate;
 
-	private static final String filePath = "src/main/resources/";
+	//FIXME
+	private static final String filePath = "/usr/local/share/jboss/standalone/deployments/Jama.war/WEB-INF/classes/";
 
 	static {
 
@@ -50,7 +51,7 @@ public class Parameters {
 			throw new IllegalStateException("Could not read " + propertiesFilePath);
 		}
 
-		atheneumCapitalBalanceRateTable = new HashMap<>();
+		atheneumCapitalBalanceRateTable = new TreeMap<>();
 		for (String property : p.stringPropertyNames()) {
 			atheneumCapitalBalanceRateTable.put(Float.parseFloat(property.trim()), Float.parseFloat(p.getProperty(property).trim()));
 		}
