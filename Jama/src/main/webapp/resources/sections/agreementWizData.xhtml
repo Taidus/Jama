@@ -29,8 +29,10 @@
 						label="#{msgs.agrTitle}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" />
 
-					<h:outputText id="title_o" 	value="#{agreementManager.agreement.title}"
-						label="#{msgs.agrTitle}" rendered="#{cc.attrs.editingDisable == false}" />
+					<h:outputText id="title_o"
+						value="#{agreementManager.agreement.title}"
+						label="#{msgs.agrTitle}"
+						rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 				<p:column colspan="2">
@@ -90,11 +92,14 @@
 				<p:column>
 					<h:selectOneMenu id="type"
 						value="#{agreementManager.agreement.type}" label="#{msgs.agrType}"
-						required="true" disabled="#{cc.attrs.editingDisable}">
+						required="true" rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
 						<f:ajax event="blur" execute="@this" render="typeError" />
 
 					</h:selectOneMenu>
+
+					<h:outputText value="#{agreementManager.agreement.type}"
+						rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 
@@ -114,11 +119,16 @@
 					<p:selectOneMenu id="chiefMenu"
 						value="#{agreementManager.agreement.chief}" label="#{msgs.chief}"
 						required="true" filter="true" filterMatchMode="contains"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.chiefItems}" />
 						<f:converter binding="#{chiefConverter}" />
 
 					</p:selectOneMenu>
+
+					<h:outputText value="#{agreementManager.agreement.chief}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:converter binding="#{chiefConverter}" />
+					</h:outputText>
 				</p:column>
 
 				<p:column>
@@ -147,7 +157,9 @@
 					<h:inputText id="contact"
 						value="#{agreementManager.agreement.contactPerson}"
 						label="#{msgs.contactPerson}" required="true"
-						disabled="#{cc.attrs.editingDisable}" />
+						rendered="#{cc.attrs.editingDisable == false}" />
+					<h:outputText value="#{agreementManager.agreement.contactPerson}"
+						rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 
@@ -167,10 +179,15 @@
 					<h:selectOneMenu id="companyMenu"
 						value="#{agreementManager.agreement.company}"
 						label="#{msgs.company}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable==false}">
 						<f:selectItems value="#{utilPB.companyItems}" />
 						<f:converter binding="#{companyConverter}" />
 					</h:selectOneMenu>
+
+					<h:outputText value="#{agreementManager.agreement.company}"
+						rendered="#{cc.attrs.editingDisable==true}">
+						<f:converter binding="#{companyConverter}" />
+					</h:outputText>
 				</p:column>
 
 				<p:column>
@@ -199,9 +216,15 @@
 					<h:inputText id="projectNumber"
 						value="#{agreementManager.agreement.CIA_projectNumber}"
 						label="#{msgs.projectNumber}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable==false}">
 						<f:ajax event="blur" execute="@this" render="projectNumberError" />
 					</h:inputText>
+
+					<h:outputText id="projectNumber_o"
+						value="#{agreementManager.agreement.CIA_projectNumber}"
+						label="#{msgs.projectNumber}"
+						rendered="#{cc.attrs.editingDisable==true}">
+					</h:outputText>
 
 				</p:column>
 
@@ -222,10 +245,17 @@
 					<h:inputText id="inventoryNumber"
 						value="#{agreementManager.agreement.inventoryNumber}"
 						label="#{msgs.agrInventory}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable ==false}">
 						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
 
 					</h:inputText>
+
+					<h:outputText id="inventoryNumber_o"
+						value="#{agreementManager.agreement.inventoryNumber}"
+						label="#{msgs.agrInventory}"
+						rendered="#{cc.attrs.editingDisable ==true}">
+
+					</h:outputText>
 				</p:column>
 
 				<p:column colspan="2">
@@ -245,11 +275,17 @@
 					<h:inputText id="taxableAmount"
 						value="#{agreementManager.agreement.wholeTaxableAmount}"
 						label="#{msgs.taxableAmount}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber />
 						<f:validateDoubleRange minimum="0.0" />
 						<f:ajax render="amount taxAmountError" />
 					</h:inputText>
+
+					<h:outputText id="taxableAmount_o"
+						value="#{agreementManager.agreement.wholeTaxableAmount}"
+						label="#{msgs.taxableAmount}"
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
 				</p:column>
 
 				<p:column colspan="2">
@@ -269,11 +305,18 @@
 					<h:inputText id="iva"
 						value="#{agreementManager.agreement.IVA_amount}"
 						label="#{msgs.iva}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber />
 						<f:validateDoubleRange minimum="0.0" maximum="100.0" />
 						<f:ajax render="amount ivaError" />
 					</h:inputText>
+
+					<h:outputText id="iva_o"
+						value="#{agreementManager.agreement.IVA_amount}"
+						label="#{msgs.iva}" required="true"
+						rendered="#{cc.attrs.editingDisable == true}">
+
+					</h:outputText>
 				</p:column>
 
 				<p:column colspan="2">
@@ -307,9 +350,15 @@
 					<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
 						required="true" value="#{agreementManager.agreement.approvalDate}"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
+
+					<h:outputText id="approvalDate_o"
+						value="#{agreementManager.agreement.approvalDate}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 				<p:column colspan="2">
@@ -328,10 +377,18 @@
 					<p:calendar id="beginDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
 						required="true" value="#{agreementManager.agreement.beginDate}"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
+
+					<h:outputText id="beginDate_o"
+						value="#{agreementManager.agreement.beginDate}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+
 				</p:column>
+
 
 				<p:column colspan="2">
 					<h:message class="errorMessage" for="beginDate" />
@@ -349,9 +406,17 @@
 					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
 						required="true" value="#{agreementManager.agreement.deadlineDate}"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
+
+					<h:outputText id="deadlineDate_o"
+						value="#{agreementManager.agreement.deadlineDate}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+
 				</p:column>
 
 				<p:column colspan="2">

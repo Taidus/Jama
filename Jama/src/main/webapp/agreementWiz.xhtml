@@ -10,6 +10,8 @@
 
 <h:head>
 	<h:outputStylesheet name="agreementWiz.css" library="css" />
+	<h:outputScript name="onEnterPressInWiz.js" library="js" />
+	
 </h:head>
 <h:body>
 
@@ -34,7 +36,7 @@
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-				<sections:agreementInstallmentsList installmentOutcome="agreementCreate">
+				<sections:agreementInstallmentsList installmentOutcome="agreementCreate" editingDisable="false">
 				</sections:agreementInstallmentsList>
 
 

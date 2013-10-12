@@ -19,9 +19,9 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:tabView>
+			<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}">
 
-			<p:tab id="tabDati" title="#{msgs.data_Tab}">
+				<p:tab id="tabDati" title="#{msgs.data_Tab}">
 					<sections:agreementWizData editingDisable="true" />
 
 				</p:tab>
@@ -32,12 +32,22 @@
 						bean="#{agreementShareTablePCB}" />
 				</p:tab>
 
+				<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
+					<sections:agreementInstallmentsList
+						installmentOutcome="agreementView" editingDisable="true">
+					</sections:agreementInstallmentsList>
+
+
+				</p:tab>
+
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
 
 			</p:tabView>
 
-			<p:commandButton value="#{msgs.cancel}"
-				action="#{agreementManager.cancel()}" immediate="true" />
+
+	<p:commandButton value="back"
+			action="#{agreementEditPB.cancel()}"
+			actionListener="#{agreementShareTablePCB.toUpdate()}" ajax="false" />
 
 
 

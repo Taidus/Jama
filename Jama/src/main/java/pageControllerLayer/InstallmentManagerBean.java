@@ -66,6 +66,9 @@ public class InstallmentManagerBean implements Serializable {
 
 		}
 		
+		transferObjInstallment.setAgreement(null);
+		
+		
 	close();
 
 	}
@@ -75,14 +78,14 @@ public class InstallmentManagerBean implements Serializable {
 		selectedInstalmentId = -1;
 		
 	}
-
-	public String modifyInstallment() {
-		// TODO
-		// begin();
-		// initEditing();
-		return "/installmentWiz.xhtml";
-
-	}
+//
+//	public String modifyInstallment() {
+//		// TODO
+//		// begin();
+//		// initEditing();
+//		return "/installmentWiz.xhtml";
+//
+//	}
 
 	@Produces
 	@TransferObj
@@ -132,6 +135,8 @@ public class InstallmentManagerBean implements Serializable {
 		System.out.println("deleting manager");
 		Installment i = agreement.getInstallmentById(selectedInstalmentId);
 		agreement.getInstallments().remove(i);
+		
+		
 		i.setAgreement(null);
 	}
 

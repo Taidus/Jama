@@ -49,7 +49,7 @@ public class InstallmentWizardPresentationBean implements Serializable{
 	
 	public String viewInstallment() {
 		manager.viewInstallment();
-		return "installmentCreate";
+		return "installmentView";
 	}
 
 	public String editInstallment() {
