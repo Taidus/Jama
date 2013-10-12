@@ -39,10 +39,10 @@
 
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
 			<h:inputText id="personnel" value="#{agrShareTablePB.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
-				disabled="#{cc.attrs.editingDisable}">
+				disabled="#{cc.attrs.editingDisable}" validator="#{agrShareTablePB.validatePersonnel}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us"  />
 			</h:inputText>
 
 			<h:outputText id="percentPersonnel" value="#{agrShareTablePB.personnel*agrShareTablePB.wholeAmount/100}">

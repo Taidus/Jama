@@ -8,9 +8,12 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import util.InvalidValueException;
+import util.Messages;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
@@ -46,8 +49,9 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		this.otherCost = 100F;
 		this.goodsAndServices = 100F;
 	}
-	
-	@PostConstruct public void init(){
+
+	@PostConstruct
+	public void init() {
 		update();
 	}
 
@@ -118,25 +122,48 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	public void setPersonnel(float personnel) {
 		this.personnel = personnel;
 		System.out.println("Quota personale aggiornata: " + personnel);
-		update();
 	}
 
-	public void update() {
-		builder.build();
-		System.out.println("Campi aggiornati: athCapBal = " + atheneumCapitalBalance + ", athCommonBal = " + atheneumCommonBalance
-				+ ", structures = " + structures);
-		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
-		if(sum > 100){
+	private void update() {
+		try {
+			// il try-catch-throw è necessario anche qui perché il metodo non
+			// viene chiamato solo in seguito alla validazione: potrebbero
+			// esserci valori scorretti che non derivano dall'input dell'utente
+			// (e.g., il file di configurazione è errato)
+			builder.build();
+		} catch (InvalidValueException e) {
 			throw new IllegalStateException("Incorrect agreement share table values");
 		}
 
+		System.out.println("Campi aggiornati: athCapBal = " + atheneumCapitalBalance + ", athCommonBal = " + atheneumCommonBalance
+				+ ", structures = " + structures);
+		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
 		this.goodsAndServices = 100F - sum;
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 
 	}
-	
-	public void validatePersonnel(FacesContext context, UIComponent component,
-			Object value) {
+
+	public void validatePersonnel(FacesContext context, UIComponent component, Object value) {
+		float newPersonnel;
+		if(value instanceof Double){
+			newPersonnel = ((Double) value).floatValue();
+		}
+		else if(value instanceof Long){
+			newPersonnel = ((Long) value).floatValue();
+		}
+		else{
+			throw new IllegalStateException("Inserted input is not a number");
+		}
 		
+		float oldPersonnel = this.personnel;
+		this.personnel = newPersonnel;
+
+		try {
+			update();
+		} catch (IllegalStateException e) {
+			this.personnel = oldPersonnel;
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		}
+
 	}
 }

@@ -1,7 +1,7 @@
 package presentationLayer;
 
-
+import util.InvalidValueException;
 
 public interface AgreementShareTableBuilder {
-	public void build();
+	public void build() throws InvalidValueException;
 }
