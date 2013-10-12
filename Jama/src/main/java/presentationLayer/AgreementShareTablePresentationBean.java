@@ -7,10 +7,13 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.jboss.as.domain.management.security.WhoAmIOperation;
 
 import util.InvalidValueException;
 import util.Messages;
@@ -103,10 +106,6 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		return otherCost;
 	}
 
-	public float getWholeAmount() {
-		return agreement.getWholeAmount();
-	}
-
 	void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
 		this.atheneumCapitalBalance = atheneumCapitalBalance;
 	}
@@ -122,6 +121,26 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	public void setPersonnel(float personnel) {
 		this.personnel = personnel;
 		System.out.println("Quota personale aggiornata: " + personnel);
+	}
+
+	public void setBusinessTrip(float businessTrip) {
+		this.businessTrip = businessTrip;
+		updateOtherCosts();
+	}
+
+	public void setConsumerMaterials(float consumerMaterials) {
+		this.consumerMaterials = consumerMaterials;
+		updateOtherCosts();
+	}
+
+	public void setInventoryMaterials(float inventoryMaterials) {
+		this.inventoryMaterials = inventoryMaterials;
+		updateOtherCosts();
+	}
+
+	public void setRentals(float rentals) {
+		this.rentals = rentals;
+		updateOtherCosts();
 	}
 
 	private void update() {
@@ -140,21 +159,24 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
 		this.goodsAndServices = 100F - sum;
 		System.out.println("G&S aggiornato: " + goodsAndServices);
-
+	}
+	
+	private void updateOtherCosts(){
+		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+		this.otherCost = 100F - sum;
+		System.out.println("Other cost aggiornato: " + otherCost);
 	}
 
 	public void validatePersonnel(FacesContext context, UIComponent component, Object value) {
 		float newPersonnel;
-		if(value instanceof Double){
+		if (value instanceof Double) {
 			newPersonnel = ((Double) value).floatValue();
-		}
-		else if(value instanceof Long){
+		} else if (value instanceof Long) {
 			newPersonnel = ((Long) value).floatValue();
-		}
-		else{
+		} else {
 			throw new IllegalStateException("Inserted input is not a number");
 		}
-		
+
 		float oldPersonnel = this.personnel;
 		this.personnel = newPersonnel;
 
@@ -165,5 +187,85 @@ public class AgreementShareTablePresentationBean implements Serializable {
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 
+	}
+
+	public void validateBusinessTrip(FacesContext context, UIComponent component, Object value) {
+		float businessTrip;
+		if (value instanceof Double) {
+			businessTrip = ((Double) value).floatValue();
+		} else if (value instanceof Long) {
+			businessTrip = ((Long) value).floatValue();
+		} else {
+			throw new IllegalStateException("Inserted input is not a number");
+		}
+		
+		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+		System.out.println("Subfields sum: " + sum);
+		if(sum > 100F){
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		}
+
+	}
+	
+	public void validateRentals(FacesContext context, UIComponent component, Object value) {
+		float rentals;
+		if (value instanceof Double) {
+			rentals = ((Double) value).floatValue();
+		} else if (value instanceof Long) {
+			rentals = ((Long) value).floatValue();
+		} else {
+			throw new IllegalStateException("Inserted input is not a number");
+		}
+		
+		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+		System.out.println("Subfields sum: " + sum);
+		if(sum > 100F){
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		}
+
+	}
+	
+	public void validateInventoryMat(FacesContext context, UIComponent component, Object value) {
+		float inventoryMaterials;
+		if (value instanceof Double) {
+			inventoryMaterials = ((Double) value).floatValue();
+		} else if (value instanceof Long) {
+			inventoryMaterials = ((Long) value).floatValue();
+		} else {
+			throw new IllegalStateException("Inserted input is not a number");
+		}
+		
+		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+		System.out.println("Subfields sum: " + sum);
+		if(sum > 100F){
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		}
+
+	}
+	
+	public void validateConsumerMat(FacesContext context, UIComponent component, Object value) {
+		float consumerMaterials;
+		if (value instanceof Double) {
+			consumerMaterials = ((Double) value).floatValue();
+		} else if (value instanceof Long) {
+			consumerMaterials = ((Long) value).floatValue();
+		} else {
+			throw new IllegalStateException("Inserted input is not a number");
+		}
+		
+		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+		System.out.println("Subfields sum: " + sum);
+		if(sum > 100F){
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		}
+
+	}
+	
+	public float getPercentOfMainField(float field){
+		return agreement.getWholeAmount()*field/100;
+	}
+	
+	public float getPercentOfGoodsField(float field){
+		return getPercentOfMainField(goodsAndServices)*field/100;
 	}
 }
