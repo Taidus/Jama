@@ -103,6 +103,8 @@ public class AgreementManagerBean implements Serializable {
 
 	public void cancel() {
 		
+		close();
+		
 	}
 
 	public Conversation getConversation() {

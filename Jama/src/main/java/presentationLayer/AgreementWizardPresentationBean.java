@@ -18,22 +18,32 @@ public class AgreementWizardPresentationBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String currentTabId = defaultTab;
 	private static final String defaultTab = "tabDati";
+	private String currentTabId;
 
 	@Inject
 	AgreementManagerBean manager;
 
 	public AgreementWizardPresentationBean() {
+		currentTabId = defaultTab;
 	}
 
 	public String getCurrentTabId() {
 		return currentTabId;
 	}
 
+	public boolean isLastStep() {
+		if (currentTabId.equals("tabEnd")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public String handleFlow(FlowEvent event) {
 
 		currentTabId = event.getNewStep();
+
 		return event.getNewStep();
 
 	}

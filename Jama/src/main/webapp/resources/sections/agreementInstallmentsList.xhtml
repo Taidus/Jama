@@ -57,7 +57,7 @@
 					target="#{installmentManager.selectedInstalmentId}" />
 			</p:commandButton>
 			<p:commandButton styleClass="list-row-button" icon="ui-icon-trash"
-				oncomplete="w_confirm.show();">
+				oncomplete="delete_confirm.show();">
 				<f:setPropertyActionListener
 					target="#{installmentWizardPB.returnPage}"
 					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
@@ -76,11 +76,11 @@
 
 
 	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}"
-		severity="alert" widgetVar="w_confirm">
+		severity="alert" widgetVar="delete_confirm">
 		<p:commandButton value="#{msgs.yes}"
 			action="#{installmentWizardPB.deleteInstallment()}" immediate="true"
-			update="installmentTable" oncomplete="w_confirm.hide();" />
-		<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
+			update="installmentTable" oncomplete="delete_confirm.hide();" />
+		<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();"
 			type="button" />
 	</p:confirmDialog>
 

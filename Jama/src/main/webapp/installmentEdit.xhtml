@@ -27,16 +27,19 @@
 					bean="#{installmentShareTablePCB}" />
 			</p:tab>
 
-			<ui:include src="/resources/sections/installmentLastStep.xhtml" />
 
 
 
 		</p:tabView>
 		
-		<h:commandButton value="#{msgs.cancel}"
+		<p:commandButton value="#{msgs.cancel}"
 			action="#{installmentWizardPB.cancel()}"
 			actionListener="#{installmentShareTablePCB.toUpdate()}"
 			immediate="true" ajax="false" />
+			
+					<p:commandButton value="#{msgs.save}"
+				action="#{installmentWizardPB.save()}"
+				actionListener="#{agreementShareTablePCB.toUpdate()}" ajax="false" />
 
 	</h:form>
 

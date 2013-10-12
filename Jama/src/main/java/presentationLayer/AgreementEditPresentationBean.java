@@ -41,7 +41,6 @@ public class AgreementEditPresentationBean implements Serializable {
 
 		TabView tv = (TabView) event.getComponent();
 		currentTabIndex = tv.getActiveIndex();
-		System.out.println("================" + currentTabIndex);
 
 	}
 
@@ -55,7 +54,6 @@ public class AgreementEditPresentationBean implements Serializable {
 	public String save() {
 		currentTabIndex = defaultTab;
 		manager.save();
-		System.out.println("lisssyttttt");
 		return "agreementList";
 
 	}

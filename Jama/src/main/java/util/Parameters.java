@@ -15,7 +15,7 @@ public class Parameters {
 	public static final float atheneumCommonBalanceRate;
 
 	//FIXME
-	private static final String filePath = "/usr/local/share/jboss/standalone/deployments/Jama.war/WEB-INF/classes/";
+	private static final String filePath = "/home/giulio/Progetto Tesi/Applications/jboss-as-7.1.1.Final/standalone/deployments/Jama.war/WEB-INF/classes/";
 
 	static {
 
