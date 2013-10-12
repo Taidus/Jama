@@ -186,6 +186,30 @@ public class Installment implements Serializable {
 	public void setAgreement(Agreement agreement) {
 		this.agreement = agreement;
 	}
+	
+	public void copy(Installment copy){
+		//this.id = copy.id;
+		this.date = copy.date;
+		IVA_amount = copy.IVA_amount;
+		this.wholeTaxableAmount = copy.wholeTaxableAmount;
+		this.voucherNumber = copy.voucherNumber;
+		this.voucherDate = copy.voucherDate;
+		this.ivaVoucherNumber = copy.ivaVoucherNumber;
+		this.pendingNumber = copy.pendingNumber;
+		this.invoiceNumber = copy.invoiceNumber;
+		this.invoiceDate = copy.invoiceDate;
+		this.paidInvoice = copy.paidInvoice;
+		this.reportRequired = copy.reportRequired;
+		this.note = copy.note;
+		this.agreement = copy.agreement;
+		this.shareTable = copy.shareTable;
+		
+//		this.shareTable.setInstallment(copy);
+	}
+	
+	
+
+
 
 	public void validateAmount() {
 		List<Installment> installments = agreement.getInstallments();

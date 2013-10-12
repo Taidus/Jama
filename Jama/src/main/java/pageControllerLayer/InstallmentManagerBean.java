@@ -28,6 +28,7 @@ public class InstallmentManagerBean implements Serializable {
 	// TODO spostare return indirizzo pagina
 	private int selectedInstalmentId = -1;
 	private Installment transferObjInstallment;
+	private Installment installment;
 
 	public int getSelectedInstalmentId() {
 		return selectedInstalmentId;
@@ -35,11 +36,13 @@ public class InstallmentManagerBean implements Serializable {
 
 	public void setSelectedInstalmentId(int selectedInstalmentId) {
 		this.selectedInstalmentId = selectedInstalmentId;
+		System.out.println("selected=====" + selectedInstalmentId);
 	}
 
 	public String addInstallment() {
 
 		// agreement.getInstallments().add(i);
+		installment = new Installment();
 		transferObjInstallment = new Installment();
 		transferObjInstallment.setAgreement(agreement);
 		return "/installmentWiz.xhtml";
@@ -47,12 +50,30 @@ public class InstallmentManagerBean implements Serializable {
 	}
 
 	public void cancel() {
-
+		
+		close();
 	}
 
 	public void save() {
+		
+		installment.copy(transferObjInstallment);
 
-		agreement.getInstallments().add(transferObjInstallment);
+
+		if (selectedInstalmentId < 0) {
+			
+			
+			agreement.getInstallments().add(installment);
+
+		}
+		
+	close();
+
+	}
+	
+	public void close(){
+		
+		selectedInstalmentId = -1;
+		
 	}
 
 	public String modifyInstallment() {
@@ -67,6 +88,12 @@ public class InstallmentManagerBean implements Serializable {
 	@TransferObj
 	@RequestScoped
 	public Installment getTransferObjAgreementInstallment() {
+		
+		//TODO eliminare if
+		if(transferObjInstallment ==null){
+			transferObjInstallment = new Installment();
+			
+		}
 
 		return transferObjInstallment;
 
@@ -76,19 +103,36 @@ public class InstallmentManagerBean implements Serializable {
 		return transferObjInstallment;
 	}
 
-	// TODO scrivere questo e quelli sotto
-	public String viewInstallment() {
-		System.out.println("*** Stai vedendo una rata");
-		return null;
+		
+	private void initInstallment(){
+		
+		installment = agreement.getInstallmentById(selectedInstalmentId);
+		transferObjInstallment = new Installment();
+		transferObjInstallment.copy(installment);
+		
+	}
+	public void viewInstallment() {
+		
+		
+		initInstallment();
+		
+		
 	}
 
-	public String editInstallment() {
-		System.out.println("*** Stai modificando una rata");
-		return null;
+	public void editInstallment() {
+		
+		initInstallment();
+		installment = agreement.getInstallmentById(selectedInstalmentId);
+		transferObjInstallment = new Installment();
+		transferObjInstallment.copy(installment);
+
 	}
 
 	public void deleteInstallment() {
-		System.out.println("*** Stai rimuovendo una rata");
+		System.out.println("deleting manager");
+		Installment i = agreement.getInstallmentById(selectedInstalmentId);
+		agreement.getInstallments().remove(i);
+		i.setAgreement(null);
 	}
 
 }

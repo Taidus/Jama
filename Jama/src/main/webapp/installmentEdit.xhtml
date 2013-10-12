@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+
+<h:head>
+	<h:outputStylesheet name="installmentWiz.css" library="css" />
+</h:head>
+
+<h:body>
+
+	<h:form id="installmentEdit">
+
+		<input type="hidden" name="cid"
+			value='#{agreementManager.conversation.id}' />
+
+		<p:tabView>
+
+			<ui:include src="/resources/sections/installmentWizData.xhtml" />
+
+			<p:tab id="tabRip" title="Passo 2">
+				<sections:wizShareTable editingDisable="false"
+					bean="#{installmentShareTablePCB}" />
+			</p:tab>
+
+			<ui:include src="/resources/sections/installmentLastStep.xhtml" />
+
+
+
+		</p:tabView>
+		
+		<h:commandButton value="#{msgs.cancel}"
+			action="#{installmentWizardPB.cancel()}"
+			actionListener="#{installmentShareTablePCB.toUpdate()}"
+			immediate="true" ajax="false" />
+
+	</h:form>
+
+	<br />
+</h:body>
+</html>

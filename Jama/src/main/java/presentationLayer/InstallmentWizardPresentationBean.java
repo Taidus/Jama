@@ -47,5 +47,24 @@ public class InstallmentWizardPresentationBean implements Serializable{
 	}
 	
 	
+	public String viewInstallment() {
+		manager.viewInstallment();
+		return "installmentCreate";
+	}
+
+	public String editInstallment() {
+		manager.editInstallment();
+		return "installmentEdit";
+	}
+
+	public void deleteInstallment() {
+		System.out.println("chiamatooo");
+		manager.deleteInstallment();
+		System.out.println("DELETEEEEEE");
+		System.out.println(returnPage);
+		
+	}
+	
+	
 
 }

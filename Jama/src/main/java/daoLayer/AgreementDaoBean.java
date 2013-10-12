@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 
 import businessLayer.Agreement;
+import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
@@ -22,6 +23,10 @@ public class AgreementDaoBean {
 	}
 
 	public Agreement create(Agreement agreement) {
+		
+//		for(Installment i : agreement.getInstallments()){
+//			em.persist(i);
+//		}
 		em.persist(agreement);
 		return agreement;
 	}

@@ -1,5 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite"
 	xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 <composite:interface>
@@ -8,12 +12,15 @@
 
 </composite:interface>
 
-<composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
+<composite:implementation
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 	<h:outputStylesheet name="table.css" library="css" />
 
 
-	<p:dataTable id="installmentTable" var="installment" value="#{agreementManager.agreement.installments}" emptyMessage="#{msgs.noInstallmentFound}">
+	<p:dataTable id="installmentTable"  selectionMode="single" rowKey="#{installment.id}" var="installment"
+		value="#{agreementManager.agreement.installments}"
+		emptyMessage="#{msgs.noInstallmentFound}">
 		<p:column headerText="#{msgs.date}">
 
 			<h:outputText value="#{installment.date}">
@@ -29,19 +36,36 @@
 		</p:column>
 
 		<p:column headerText="#{msgs.paidInvoice_Question}">
-			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
+			<h:selectBooleanCheckbox value="#{installment.paidInvoice}"
+				disabled="true" />
 
-		
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentManager.viewInstallment()}">
-					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstalmentId}" />
-				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}">
-					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstalmentId}" />
-				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstalmentId}" />
-				</p:commandButton>
-		
+
+			<p:commandButton styleClass="list-row-button" icon="ui-icon-search"
+				action="#{installmentWizardPB.viewInstallment()}">
+				<f:setPropertyActionListener
+					target="#{installmentWizardPB.returnPage}"
+					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+				<f:setPropertyActionListener value="#{installment.id}"
+					target="#{installmentManager.selectedInstalmentId}" />
+			</p:commandButton>
+			<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench"
+				action="#{installmentWizardPB.editInstallment()}">
+				<f:setPropertyActionListener
+					target="#{installmentWizardPB.returnPage}"
+					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+				<f:setPropertyActionListener value="#{installment.id}"
+					target="#{installmentManager.selectedInstalmentId}" />
+			</p:commandButton>
+			<p:commandButton styleClass="list-row-button" icon="ui-icon-trash"
+				oncomplete="w_confirm.show();">
+				<f:setPropertyActionListener
+					target="#{installmentWizardPB.returnPage}"
+					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+				<f:setPropertyActionListener value="#{installment.id}"
+					target="#{installmentManager.selectedInstalmentId()}" />
+			</p:commandButton>
+
+
 
 
 		</p:column>
@@ -50,15 +74,22 @@
 
 	</p:dataTable>
 
-	
-		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
-			<p:commandButton value="#{msgs.yes}" action="#{installmentManager.deleteInstallment()}" immediate="true" update="installmentTable" oncomplete="w_confirm.hide();" />
-			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
-		</p:confirmDialog>
-	
 
-	<h:commandButton action="#{installmentManager.addInstallment()}" value="Aggiungi una rata" ajax="false" immediate="true" >
-	<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}"
+		severity="alert" widgetVar="w_confirm">
+		<p:commandButton value="#{msgs.yes}"
+			action="#{installmentWizardPB.deleteInstallment()}" immediate="true"
+			update="installmentTable" oncomplete="w_confirm.hide();" />
+		<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
+			type="button" />
+	</p:confirmDialog>
+
+
+	<h:commandButton action="#{installmentManager.addInstallment()}"
+		value="Aggiungi una rata" ajax="false" immediate="true">
+		<f:setPropertyActionListener
+			target="#{installmentWizardPB.returnPage}"
+			value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
 	</h:commandButton>
 
 

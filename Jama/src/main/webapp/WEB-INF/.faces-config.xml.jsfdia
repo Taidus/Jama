@@ -16,9 +16,15 @@
     TARGET="rules:#agreementList.xhtml" TITLE="agreementList" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="home::#home.xhtml" NAME="output4"
     PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="installmentCreate::#agreementWiz.xhtml"
-    NAME="output5" PATH="/agreementWiz.xhtml"
-    TARGET="rules:#agreementWiz.xhtml" TITLE="installmentCreate" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="installmentCreate::#installmentWiz.xhtml"
+    NAME="output5" PATH="/installmentWiz.xhtml"
+    TARGET="rules:#installmentWiz.xhtml" TITLE="installmentCreate" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="installmentEdit::#installmentEdit.xhtml"
+    NAME="output6" PATH="/installmentEdit.xhtml"
+    TARGET="rules:#installmentEdit.xhtml" TITLE="installmentEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="installmentView::#installmentView.xhtml"
+    NAME="output7" PATH="/installmentView.xhtml"
+    TARGET="rules:#installmentView.xhtml" TITLE="installmentView" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#home.xhtml" PATH="/home.xhtml"
@@ -31,4 +37,10 @@
   PATH="/agreementView.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#agreementWiz.xhtml"
   PATH="/agreementWiz.xhtml" SHAPE="304,305,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#installmentWiz.xhtml"
+  PATH="/installmentWiz.xhtml" SHAPE="304,305,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#installmentEdit.xhtml"
+  PATH="/installmentEdit.xhtml" SHAPE="304,337,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#installmentView.xhtml"
+  PATH="/installmentView.xhtml" SHAPE="304,369,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
