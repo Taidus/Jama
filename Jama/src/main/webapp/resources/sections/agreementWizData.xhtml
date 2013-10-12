@@ -27,7 +27,10 @@
 					<h:inputTextarea id="title" cols="20" rows="4"
 						value="#{agreementManager.agreement.title}"
 						label="#{msgs.agrTitle}" required="true"
-						disabled="#{cc.attrs.editingDisable}" />
+						rendered="#{cc.attrs.editingDisable == false}" />
+
+					<h:outputText id="title_o" 	value="#{agreementManager.agreement.title}"
+						label="#{msgs.agrTitle}" rendered="#{cc.attrs.editingDisable == false}" />
 				</p:column>
 
 				<p:column colspan="2">
@@ -45,11 +48,18 @@
 					<h:inputText id="protocolNumber"
 						value="#{agreementManager.agreement.protocolNumber}"
 						label="#{msgs.protocolNumber}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
 							integerOnly="true" />
 						<f:ajax event="blur" execute="@this" render="protocolNumberError" />
 					</h:inputText>
+
+					<h:outputText id="protocolNumber_o"
+						value="#{agreementManager.agreement.protocolNumber}"
+						label="#{msgs.protocolNumber}"
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+
 				</p:column>
 
 				<p:column colspan="2">
@@ -79,9 +89,8 @@
 
 				<p:column>
 					<h:selectOneMenu id="type"
-						value="#{agreementManager.agreement.type}"
-						label="#{msgs.agrType}" required="true"
-						disabled="#{cc.attrs.editingDisable}">
+						value="#{agreementManager.agreement.type}" label="#{msgs.agrType}"
+						required="true" disabled="#{cc.attrs.editingDisable}">
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
 						<f:ajax event="blur" execute="@this" render="typeError" />
 
@@ -103,9 +112,9 @@
 
 				<p:column>
 					<p:selectOneMenu id="chiefMenu"
-						value="#{agreementManager.agreement.chief}"
-						label="#{msgs.chief}" required="true" filter="true"
-						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}">
+						value="#{agreementManager.agreement.chief}" label="#{msgs.chief}"
+						required="true" filter="true" filterMatchMode="contains"
+						disabled="#{cc.attrs.editingDisable}">
 						<f:selectItems value="#{utilPB.chiefItems}" />
 						<f:converter binding="#{chiefConverter}" />
 
@@ -281,8 +290,7 @@
 
 				<p:column colspan="3">
 					<h:outputText id="amount"
-						value="#{agreementManager.agreement.wholeAmount}"
-						readonly="true">
+						value="#{agreementManager.agreement.wholeAmount}" readonly="true">
 						<f:convertNumber type="currency" currencySymbol="€" />
 					</h:outputText>
 				</p:column>
@@ -298,8 +306,7 @@
 				<p:column>
 					<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true"
-						value="#{agreementManager.agreement.approvalDate}"
+						required="true" value="#{agreementManager.agreement.approvalDate}"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -341,8 +348,7 @@
 				<p:column>
 					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
 						readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true"
-						value="#{agreementManager.agreement.deadlineDate}"
+						required="true" value="#{agreementManager.agreement.deadlineDate}"
 						disabled="#{cc.attrs.editingDisable}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
