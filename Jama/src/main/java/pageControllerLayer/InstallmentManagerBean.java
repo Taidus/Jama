@@ -132,12 +132,10 @@ public class InstallmentManagerBean implements Serializable {
 	}
 
 	public void deleteInstallment() {
-		System.out.println("deleting manager");
 		Installment i = agreement.getInstallmentById(selectedInstalmentId);
 		agreement.getInstallments().remove(i);
-		
-		
 		i.setAgreement(null);
+		close();
 	}
 
 }

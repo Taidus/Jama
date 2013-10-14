@@ -20,7 +20,9 @@
 
 		<p:tabView>
 
-			<ui:include src="/resources/sections/installmentWizData.xhtml" />
+			<p:tab id="tabDati" title="#{msgs.data_Tab}">
+				<sections:installmentWizData editingDisable="false"></sections:installmentWizData>
+			</p:tab>
 
 			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 				<sections:wizShareTable editingDisable="false"

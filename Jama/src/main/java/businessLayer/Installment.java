@@ -51,7 +51,7 @@ public class Installment implements Serializable {
 	private boolean reportRequired;
 	private String note;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	private Agreement agreement;
 
 	@OneToOne(cascade = CascadeType.PERSIST)

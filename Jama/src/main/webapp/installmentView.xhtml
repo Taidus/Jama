@@ -13,6 +13,8 @@
 
 <h:body>
 
+	
+
 	<h:form id="installmentEdit">
 
 		<input type="hidden" name="cid"
@@ -20,9 +22,12 @@
 
 		<p:tabView>
 
-			<ui:include src="/resources/sections/installmentWizData.xhtml" />
-
-			<p:tab id="tabRip" title="Passo 2">
+	
+			<p:tab id="tabDati" title="#{msgs.data_Tab}">
+				<sections:installmentWizData editingDisable="true"></sections:installmentWizData>
+			</p:tab>
+	
+			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 				<sections:wizShareTable editingDisable="true"
 					bean="#{installmentShareTablePCB}" />
 			</p:tab>
