@@ -5,18 +5,25 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-	
-	
 
 
-				<h:outputText value="allegati wannaBe" />
-		
+		<h:form>
 
-	
+			<p:growl id="messages" showDetail="true" />
 
+			<h:outputText value="Allegati caricati: " />
 
+			<p:dataList id="attchsList" value="#{attachmentsPB.attachments}"
+				var="file">
+				<h:outputText value="#{file.fileName}, #{file.fileType}" />
+			</p:dataList>
 
-		
+			<p:fileUpload auto="false"
+				fileUploadListener="#{attachmentsPB.handleFileUpload}"
+				mode="advanced" dragDropSupport="true" update="messages attchsList"
+				sizeLimit="100000"/>
+
+		</h:form>
 
 	</p:tab>
 

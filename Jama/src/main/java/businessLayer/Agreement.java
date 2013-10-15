@@ -81,10 +81,14 @@ public class Agreement implements Serializable {
 	private Date deadlineDate;
 
 	private String note;
+	
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST})
+	private List<Attachment> attachments;
 
 	public Agreement() {
 		shareTable = new AgreementShareTable();
-		installments = new ArrayList<Installment>();
+		installments = new ArrayList<>();
+		attachments = new ArrayList<>();
 	}
 
 	public void cloneFields(Agreement copy) {
@@ -107,6 +111,7 @@ public class Agreement implements Serializable {
 		this.beginDate = copy.getBeginDate();
 		this.deadlineDate = copy.getDeadlineDate();
 		this.note = copy.getNote();
+		this.attachments = copy.getAttachments();
 
 		for (Installment i : installments) {
 			i.setAgreement(this);
@@ -287,6 +292,15 @@ public class Agreement implements Serializable {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
 	}
 
 	float[] getMainValuesAmounts() {
