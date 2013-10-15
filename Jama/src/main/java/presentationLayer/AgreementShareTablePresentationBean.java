@@ -1,19 +1,19 @@
 package presentationLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.jboss.as.domain.management.security.WhoAmIOperation;
 
 import util.InvalidValueException;
 import util.Messages;
@@ -47,8 +47,54 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	private float personnelOnContract;
 	private float otherCost;
 
+	private ChiefScientist nextChiefToInsert;
+	private float nextShareToInsert;
+
+	private List<PersonnelShare> shares;
+	private PersonnelShare selectedShare;
+
+	public void addRow() {
+		PersonnelShare toInsert = new PersonnelShare(nextChiefToInsert,
+				nextShareToInsert);
+		shares.add(toInsert);
+		agreement.getShareTable().getSharePerPersonnel()
+				.put(toInsert.chiefScientist, toInsert.share);
+	}
+
+	public void removeRow() {
+		agreement.getShareTable().getSharePerPersonnel()
+				.remove(selectedShare.getChiefScientist());
+		shares.remove(selectedShare);
+	}
+
+	public List<PersonnelShare> getShares() {
+		shares.clear();
+		for (Entry<ChiefScientist, Float> e : agreement.getShareTable()
+				.getSharePerPersonnel().entrySet()) {
+			shares.add(new PersonnelShare(e.getKey(), e.getValue()));
+		}
+		return shares;
+	}
+
+	public ChiefScientist getNextChiefToInsert() {
+		return nextChiefToInsert;
+	}
+
+	public void setNextChiefToInsert(ChiefScientist nextChiefToInsert) {
+		this.nextChiefToInsert = nextChiefToInsert;
+	}
+
+	public float getNextShareToInsert() {
+		return nextShareToInsert;
+	}
+
+	public void setNextShareToInsert(float nextShareToInsert) {
+		this.nextShareToInsert = nextShareToInsert;
+	}
+
 	public AgreementShareTablePresentationBean() {
 		this.sharePerPersonnel = new HashMap<>();
+		this.shares = new ArrayList<>();
 		this.otherCost = 100F;
 		this.goodsAndServices = 100F;
 	}
@@ -151,23 +197,28 @@ public class AgreementShareTablePresentationBean implements Serializable {
 			// (e.g., il file di configurazione è errato)
 			builder.build();
 		} catch (InvalidValueException e) {
-			throw new IllegalStateException("Incorrect agreement share table values");
+			throw new IllegalStateException(
+					"Incorrect agreement share table values");
 		}
 
-		System.out.println("Campi aggiornati: athCapBal = " + atheneumCapitalBalance + ", athCommonBal = " + atheneumCommonBalance
-				+ ", structures = " + structures);
-		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
+		System.out.println("Campi aggiornati: athCapBal = "
+				+ atheneumCapitalBalance + ", athCommonBal = "
+				+ atheneumCommonBalance + ", structures = " + structures);
+		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures
+				+ personnel;
 		this.goodsAndServices = 100F - sum;
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
-	
-	private void updateOtherCosts(){
-		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+
+	private void updateOtherCosts() {
+		float sum = rentals + inventoryMaterials + consumerMaterials
+				+ businessTrip;
 		this.otherCost = 100F - sum;
 		System.out.println("Other cost aggiornato: " + otherCost);
 	}
 
-	public void validatePersonnel(FacesContext context, UIComponent component, Object value) {
+	public void validatePersonnel(FacesContext context, UIComponent component,
+			Object value) {
 		float newPersonnel;
 		if (value instanceof Double) {
 			newPersonnel = ((Double) value).floatValue();
@@ -184,12 +235,14 @@ public class AgreementShareTablePresentationBean implements Serializable {
 			update();
 		} catch (IllegalStateException e) {
 			this.personnel = oldPersonnel;
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 
 	}
 
-	public void validateBusinessTrip(FacesContext context, UIComponent component, Object value) {
+	public void validateBusinessTrip(FacesContext context,
+			UIComponent component, Object value) {
 		float businessTrip;
 		if (value instanceof Double) {
 			businessTrip = ((Double) value).floatValue();
@@ -198,16 +251,19 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		} else {
 			throw new IllegalStateException("Inserted input is not a number");
 		}
-		
-		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+
+		float sum = rentals + inventoryMaterials + consumerMaterials
+				+ businessTrip;
 		System.out.println("Subfields sum: " + sum);
-		if(sum > 100F){
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		if (sum > 100F) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 
 	}
-	
-	public void validateRentals(FacesContext context, UIComponent component, Object value) {
+
+	public void validateRentals(FacesContext context, UIComponent component,
+			Object value) {
 		float rentals;
 		if (value instanceof Double) {
 			rentals = ((Double) value).floatValue();
@@ -216,16 +272,19 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		} else {
 			throw new IllegalStateException("Inserted input is not a number");
 		}
-		
-		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+
+		float sum = rentals + inventoryMaterials + consumerMaterials
+				+ businessTrip;
 		System.out.println("Subfields sum: " + sum);
-		if(sum > 100F){
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		if (sum > 100F) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 
 	}
-	
-	public void validateInventoryMat(FacesContext context, UIComponent component, Object value) {
+
+	public void validateInventoryMat(FacesContext context,
+			UIComponent component, Object value) {
 		float inventoryMaterials;
 		if (value instanceof Double) {
 			inventoryMaterials = ((Double) value).floatValue();
@@ -234,16 +293,19 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		} else {
 			throw new IllegalStateException("Inserted input is not a number");
 		}
-		
-		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+
+		float sum = rentals + inventoryMaterials + consumerMaterials
+				+ businessTrip;
 		System.out.println("Subfields sum: " + sum);
-		if(sum > 100F){
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		if (sum > 100F) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 
 	}
-	
-	public void validateConsumerMat(FacesContext context, UIComponent component, Object value) {
+
+	public void validateConsumerMat(FacesContext context,
+			UIComponent component, Object value) {
 		float consumerMaterials;
 		if (value instanceof Double) {
 			consumerMaterials = ((Double) value).floatValue();
@@ -252,20 +314,62 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		} else {
 			throw new IllegalStateException("Inserted input is not a number");
 		}
-		
-		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip;
+
+		float sum = rentals + inventoryMaterials + consumerMaterials
+				+ businessTrip;
 		System.out.println("Subfields sum: " + sum);
-		if(sum > 100F){
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+		if (sum > 100F) {
+			throw new ValidatorException(
+					Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 
 	}
-	
-	public float getPercentOfMainField(float field){
-		return agreement.getWholeAmount()*field/100;
+
+	public float getPercentOfMainField(float field) {
+		return agreement.getWholeAmount() * field / 100;
 	}
-	
-	public float getPercentOfGoodsField(float field){
-		return getPercentOfMainField(goodsAndServices)*field/100;
+
+	public float getPercentOfGoodsField(float field) {
+		return getPercentOfMainField(goodsAndServices) * field / 100;
+	}
+
+	public PersonnelShare getSelectedShare() {
+		return selectedShare;
+	}
+
+	public void setSelectedShare(PersonnelShare selectedShare) {
+		this.selectedShare = selectedShare;
+	}
+
+	public static class PersonnelShare {
+		private ChiefScientist chiefScientist;
+		private float share;
+
+		public PersonnelShare(ChiefScientist chiefScientist, float share) {
+			this.chiefScientist = chiefScientist;
+			this.share = share;
+		}
+
+		public PersonnelShare() {
+			chiefScientist = null;
+			share = 0;
+		}
+
+		public ChiefScientist getChiefScientist() {
+			return chiefScientist;
+		}
+
+		public void setChiefScientist(ChiefScientist chiefScientist) {
+			this.chiefScientist = chiefScientist;
+		}
+
+		public float getShare() {
+			return share;
+		}
+
+		public void setShare(float share) {
+			this.share = share;
+		}
+
 	}
 }

@@ -105,7 +105,6 @@ public abstract class AbstractWizardPageController implements Serializable {
 		fillAgreementPersonnelShares();
 		getShareTable().validate();
 
-		
 	}
 
 	protected void initShares(Map<ChiefScientist, Float> sharePerPersonnel) {
@@ -170,7 +169,7 @@ public abstract class AbstractWizardPageController implements Serializable {
 		}
 	}
 
-	public static class PersonnelShare {
+	private static class PersonnelShare {
 		private ChiefScientist chiefScientist;
 		private float share;
 
