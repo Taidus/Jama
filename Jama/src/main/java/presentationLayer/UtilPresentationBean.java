@@ -1,24 +1,23 @@
 package presentationLayer;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
-import daoLayer.ChiefScientistDaoBean;
-import daoLayer.CompanyDaoBean;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
+import daoLayer.ChiefScientistDaoBean;
+import daoLayer.CompanyDaoBean;
 
 @Named("utilPB")
-@SessionScoped //FIXME
+@Dependent
 public class UtilPresentationBean implements Serializable{
-	/**
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@EJB private ChiefScientistDaoBean chiefDaoBean;
@@ -35,14 +34,7 @@ public class UtilPresentationBean implements Serializable{
 	
 	public SelectItem[] getChiefItems(){
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
-		
-		SelectItem[] result = new SelectItem[chiefs.size()];
-		ChiefScientist current = null;
-		for(int i=0; i< chiefs.size(); i++){
-			current = chiefs.get(i);
-			result[i] = new SelectItem(current, current.getCompleteName());
-		}
-		return result;
+		return getChiefsFromList(chiefs);
 	}
 	
 	public SelectItem[] getCompanyItems(){
@@ -62,7 +54,7 @@ public class UtilPresentationBean implements Serializable{
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		
 		SelectItem[] result = new SelectItem[chiefs.size()+1];
-		result[0] = new SelectItem("", "Tutti");
+		result[0] = new SelectItem("", "Tutti"); //FIXME lingua non dinamica. Anche quello sotto
 		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
 			current = chiefs.get(i);
@@ -81,6 +73,22 @@ public class UtilPresentationBean implements Serializable{
 		for(int i=0; i< companies.size(); i++){
 			current = companies.get(i);
 			result[i+1] = new SelectItem(current.getId(), current.getName());
+		}
+		return result;
+	}
+	
+	public SelectItem[] getChiefsItemsNotIn(Collection<ChiefScientist> list){
+		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
+		chiefs.removeAll(list);
+		return getChiefsFromList(chiefs);
+	}
+	
+	private SelectItem[] getChiefsFromList(List<ChiefScientist> list){
+		SelectItem[] result = new SelectItem[list.size()];
+		ChiefScientist current = null;
+		for(int i=0; i< list.size(); i++){
+			current = list.get(i);
+			result[i] = new SelectItem(current, current.getCompleteName());
 		}
 		return result;
 	}
