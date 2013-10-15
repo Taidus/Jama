@@ -21,7 +21,7 @@ public class SimpleAgreementShareTableBuilder implements AgreementShareTableBuil
 
 	@Override
 	public void build() throws InvalidValueException {
-		float personnel = table.getPersonnel();
+		float personnel = table.getTempPersonnel();
 		
 		float athCommBal = Parameters.atheneumCommonBalanceRate;
 		float struct = Parameters.structuresRate;
@@ -49,6 +49,7 @@ public class SimpleAgreementShareTableBuilder implements AgreementShareTableBuil
 		table.setAtheneumCommonBalance(athCommBal);
 		table.setStructures(struct);
 		table.setAtheneumCapitalBalance(athCapBal);
+		table.setPersonnel(personnel);
 	}
 
 }

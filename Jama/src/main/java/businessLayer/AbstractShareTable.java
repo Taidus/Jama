@@ -3,15 +3,13 @@ package businessLayer;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import util.MathUtil;
+import util.InvalidValueException;
 
 @MappedSuperclass
 public abstract class AbstractShareTable {
@@ -45,24 +43,76 @@ public abstract class AbstractShareTable {
 		goodsAndServices = 100F;
 	}
 
+	
+	
+	
+
+//	protected boolean arePersonnelValuesConsistent() {
+//		float sum = 0;
+//		for (float f : sharePerPersonnel.values()) {
+//			sum += f;
+//		}
+//		sum *= personnel / 100;
+//		return MathUtil.doubleEquals(personnel, sum);
+//	}
+//
+//	protected boolean areGoodsAndServicesValuesConsistent() {
+//		float[] goodsAndServicesValues = { businessTrip, consumerMaterials, inventoryMaterials, rentals, personnelOnContract, otherCost };
+//		float sum = 0;
+//		for (float f : goodsAndServicesValues) {
+//			sum += f;
+//		}
+//		sum *= goodsAndServices / 100;
+//		return MathUtil.doubleEquals(goodsAndServices, sum);
+//	}
+//
+//	protected boolean areMainValuesConsistent() {
+//		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance, structures, personnel, goodsAndServices };
+//		float sum = 0;
+//		for (float f : mainValues) {
+//			sum += f;
+//		}
+//		return MathUtil.doubleEquals(sum, 100);
+//	}
+//
+//	protected void adjustMainValues(float total) {
+//		goodsAndServices += 100 - total;
+//	}
+
+	public int getId() {
+		return id;
+	}
+
 	public float getAtheneumCapitalBalance() {
 		return atheneumCapitalBalance;
+	}
+
+	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
+		this.atheneumCapitalBalance = atheneumCapitalBalance;
 	}
 
 	public float getAtheneumCommonBalance() {
 		return atheneumCommonBalance;
 	}
 
+	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
+		this.atheneumCommonBalance = atheneumCommonBalance;
+	}
+
 	public float getStructures() {
 		return structures;
+	}
+
+	public void setStructures(float structures) {
+		this.structures = structures;
 	}
 
 	public float getPersonnel() {
 		return personnel;
 	}
 
-	public Map<ChiefScientist, Float> getSharePerPersonnel() {
-		return sharePerPersonnel;
+	public void setPersonnel(float personnel) {
+		this.personnel = personnel;
 	}
 
 	public float getGoodsAndServices() {
@@ -73,74 +123,68 @@ public abstract class AbstractShareTable {
 		return businessTrip;
 	}
 
+	public void setBusinessTrip(float businessTrip) {
+		this.businessTrip = businessTrip;
+	}
+
 	public float getConsumerMaterials() {
 		return consumerMaterials;
+	}
+
+	public void setConsumerMaterials(float consumerMaterials) {
+		this.consumerMaterials = consumerMaterials;
 	}
 
 	public float getInventoryMaterials() {
 		return inventoryMaterials;
 	}
 
+	public void setInventoryMaterials(float inventoryMaterials) {
+		this.inventoryMaterials = inventoryMaterials;
+	}
+
 	public float getRentals() {
 		return rentals;
+	}
+
+	public void setRentals(float rentals) {
+		this.rentals = rentals;
 	}
 
 	public float getPersonnelOnContract() {
 		return personnelOnContract;
 	}
 
+	public void setPersonnelOnContract(float personnelOnContract) {
+		this.personnelOnContract = personnelOnContract;
+	}
+
 	public float getOtherCost() {
 		return otherCost;
 	}
+	
+	public Map<ChiefScientist, Float> getSharePerPersonnel() {
+		return sharePerPersonnel;
+	}
 
-	public int getId() {
-		return id;
+
+	public void updateGoodsAndServices() throws InvalidValueException {
+		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
+		if(sum > 100F){
+			throw new InvalidValueException("Share table's values sum is greater than 100");
+		}
+		this.goodsAndServices = 100F - sum;
+		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
 	
-
-	public void setSharePerPersonnel(Map<ChiefScientist, Float> sharePerPersonnel) {
-		//FIXME sta qui perché serve da altre parti. Questa cosa la dobbiamo decidere per bene
-		this.sharePerPersonnel = sharePerPersonnel;
-	}
-
-	protected boolean arePersonnelValuesConsistent() {
-		float sum = 0;
-		for (float f : sharePerPersonnel.values()) {
-			sum += f;
+	public void updateOtherCosts() throws InvalidValueException {
+		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip + personnelOnContract;
+		System.out.println("Subfields sum: " + sum);
+		if (sum > 100F) {
+			throw new InvalidValueException("Share table's values sum is greater than 100");
 		}
-		sum *= personnel / 100;
-		return MathUtil.doubleEquals(personnel, sum);
-	}
-
-	protected boolean areGoodsAndServicesValuesConsistent() {
-		float[] goodsAndServicesValues = { businessTrip, consumerMaterials, inventoryMaterials, rentals, personnelOnContract, otherCost };
-		float sum = 0;
-		for (float f : goodsAndServicesValues) {
-			sum += f;
-		}
-		sum *= goodsAndServices / 100;
-		return MathUtil.doubleEquals(goodsAndServices, sum);
-	}
-
-	protected boolean areMainValuesConsistent() {
-		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance, structures, personnel, goodsAndServices };
-		float sum = 0;
-		for (float f : mainValues) {
-			sum += f;
-		}
-		return MathUtil.doubleEquals(sum, 100);
-	}
-
-	protected void adjustMainValues(float total) {
-		goodsAndServices += 100 - total;
-	}
-
-	public void updateGoodsAndServices(AjaxBehaviorEvent e) throws AbortProcessingException {
-		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
-
-		goodsAndServices = 100F - sum;
-		System.out.println("G&S aggiornato: " + goodsAndServices);
-
+		this.otherCost = 100F - sum;
+		System.out.println("Other cost aggiornato: " + otherCost);
 	}
 
 }

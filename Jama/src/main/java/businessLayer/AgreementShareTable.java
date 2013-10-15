@@ -16,42 +16,7 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 		initFields();
 	}
 
-	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
-		this.atheneumCapitalBalance = atheneumCapitalBalance;
-	}
-
-	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
-		this.atheneumCommonBalance = atheneumCommonBalance;
-	}
-
-	public void setStructures(float structures) {
-		this.structures = structures;
-	}
-
-	public void setPersonnel(float personnel) {
-		this.personnel = personnel;
-	}
-
-
-	public void setBusinessTrip(float businessTrip) {
-		this.businessTrip = businessTrip;
-	}
-
-	public void setConsumerMaterials(float consumerMaterials) {
-		this.consumerMaterials = consumerMaterials;
-	}
-
-	public void setInventoryMaterials(float inventoryMaterials) {
-		this.inventoryMaterials = inventoryMaterials;
-	}
-
-	public void setRentals(float rentals) {
-		this.rentals = rentals;
-	}
-
-	public void setPersonnelOnContract(float personnelOnContract) {
-		this.personnelOnContract = personnelOnContract;
-	}
+	
 
 	@Override
 	public void validate() {

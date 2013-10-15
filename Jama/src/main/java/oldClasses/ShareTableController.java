@@ -164,7 +164,7 @@ public class ShareTableController {
 		}
 	}
 
-	public static class PersonnelShare {
+	private static class PersonnelShare {
 		private ChiefScientist chiefScientist;
 		private float share;
 

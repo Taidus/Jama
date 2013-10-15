@@ -33,7 +33,8 @@ public class ChiefConverterPersonnelShare implements Converter {
 		if (value == null) {
 			return "";
 		}
-		return String.valueOf(((ChiefScientist) value).getId());
+		ChiefScientist c = (ChiefScientist) value;
+		return String.valueOf(c.getSurname() + " " + c.getName());
 	}
 
 }
