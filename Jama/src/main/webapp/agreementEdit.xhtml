@@ -51,15 +51,13 @@
 			severity="alert" widgetVar="w_confirm">
 			<p:commandButton value="#{msgs.yes}"
 				action="#{agreementEditPB.cancel()}"
-				actionListener="#{agreementShareTablePCB.toUpdate()}"
 				immediate="true" oncomplete="w_confirm.hide()" />
 			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
 				type="button" />
 		</p:confirmDialog>
 
 		<p:commandButton value="#{msgs.save}"
-			action="#{agreementEditPB.save()}"
-			actionListener="#{agreementShareTablePCB.toUpdate()}" ajax="false" />
+			action="#{agreementEditPB.save()}" ajax="false" />
 
 
 

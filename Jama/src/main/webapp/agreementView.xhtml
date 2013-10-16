@@ -19,7 +19,7 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:tabView dynamic="true" activeIndex="#{agreementEditPB.currentTabIndex}">
+			<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}">
 
 				<p:tab id="tabDati" title="#{msgs.data_Tab}">
 					<sections:agreementWizData editingDisable="true" />
@@ -28,10 +28,7 @@
 				<ui:include src="/resources/sections/agreementWizData.xhtml" />
 
 				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
-
-					<sections:agreementWizShareTable editingDisable="true"
-						 />
-
+					<sections:agreementWizShareTable editingDisable="true" />
 				</p:tab>
 
 				<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
