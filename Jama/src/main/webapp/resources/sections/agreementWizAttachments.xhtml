@@ -16,12 +16,16 @@
 			<p:dataList id="attchsList" value="#{attachmentsPB.attachments}"
 				var="file">
 				<h:outputText value="#{file.fileName}, #{file.fileType}" />
+				<p:commandButton id="downloadLink" value="Download" ajax="false"
+					icon="ui-icon-arrowthichk-s">
+					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
+				</p:commandButton>
 			</p:dataList>
 
 			<p:fileUpload auto="false"
 				fileUploadListener="#{attachmentsPB.handleFileUpload}"
 				mode="advanced" dragDropSupport="true" update="messages attchsList"
-				sizeLimit="100000"/>
+				sizeLimit="100000" />
 
 		</h:form>
 

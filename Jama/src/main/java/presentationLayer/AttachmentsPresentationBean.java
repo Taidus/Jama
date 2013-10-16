@@ -1,5 +1,7 @@
 package presentationLayer;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,8 +10,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import annotations.TransferObj;
@@ -52,6 +57,14 @@ public class AttachmentsPresentationBean implements Serializable {
 	public List<Attachment> getAttachments(){
 		
 		return agreement.getAttachments();
+		
+	}
+	
+	public StreamedContent getFile(Attachment a){
+		
+		ByteArrayInputStream stream = new ByteArrayInputStream(a.getContent());   
+		StreamedContent file = new DefaultStreamedContent(stream, a.getFileType(), a.getFileName());
+		return file;
 		
 	}
 
