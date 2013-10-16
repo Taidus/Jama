@@ -1,7 +1,6 @@
 package presentationLayer;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -29,43 +27,62 @@ public class AttachmentsPresentationBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Inject @TransferObj
+	private Attachment selectedAttachment;
+
+	@Inject
+	@TransferObj
 	private Agreement agreement;
 
 	public AttachmentsPresentationBean() {
 	}
-	
-	public void handleFileUpload(FileUploadEvent event){
-		
-		   FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
-	        FacesContext.getCurrentInstance().addMessage(null, msg); 
-		
+
+	public Attachment getSelectedAttachment() {
+		return selectedAttachment;
+	}
+
+	public void setSelectedAttachment(Attachment selectedAttachment) {
+		this.selectedAttachment = selectedAttachment;
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+
+		FacesMessage msg = new FacesMessage("Succesful", event.getFile()
+				.getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
 		UploadedFile file = event.getFile();
 		System.out.println("upload di : ");
 		System.out.println(file.getFileName());
-	
+
 		Attachment a = new Attachment();
 		a.setContent(file.getContents());
 		a.setFileName(file.getFileName());
 		a.setFileType(file.getContentType());
-		
+
 		agreement.getAttachments().add(a);
-		
+
 	}
-	
-	public List<Attachment> getAttachments(){
-		
+
+	public List<Attachment> getAttachments() {
+
 		return agreement.getAttachments();
-		
+
 	}
-	
-	public StreamedContent getFile(Attachment a){
-		
-		ByteArrayInputStream stream = new ByteArrayInputStream(a.getContent());   
-		StreamedContent file = new DefaultStreamedContent(stream, a.getFileType(), a.getFileName());
+
+	public StreamedContent getFile(Attachment a) {
+
+		ByteArrayInputStream stream = new ByteArrayInputStream(a.getContent());
+		StreamedContent file = new DefaultStreamedContent(stream,
+				a.getFileType(), a.getFileName());
 		return file;
+
+	}
+
+	public void removeFile() {
 		
+
+		agreement.getAttachments().remove(selectedAttachment);
+
 	}
 
 }

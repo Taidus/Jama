@@ -19,7 +19,7 @@
 			<input type="hidden" name="cid"
 				value='#{agreementManager.conversation.id}' />
 
-			<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}">
+			<p:tabView dynamic="true" activeIndex="#{agreementEditPB.currentTabIndex}">
 
 				<p:tab id="tabDati" title="#{msgs.data_Tab}">
 					<sections:agreementWizData editingDisable="true" />

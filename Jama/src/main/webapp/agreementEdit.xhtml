@@ -17,7 +17,7 @@
 		<input type="hidden" name="cid"
 			value='#{agreementManager.conversation.id}' />
 
-		<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}"
+		<p:tabView dynamic="true" activeIndex="#{agreementEditPB.currentTabIndex}"
 			>
 			<p:ajax event="tabChange" listener="#{agreementEditPB.handleFlow}"></p:ajax>
 

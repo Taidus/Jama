@@ -7,28 +7,52 @@
 	<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
 
 
-		<h:form>
+	
 
 			<p:growl id="messages" showDetail="true" />
 
 			<h:outputText value="Allegati caricati: " />
 
-			<p:dataList id="attchsList" value="#{attachmentsPB.attachments}"
+			<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}"
 				var="file">
-				<h:outputText value="#{file.fileName}, #{file.fileType}" />
-				<p:commandButton id="downloadLink" value="Download" ajax="false"
-					icon="ui-icon-arrowthichk-s">
-					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
-				</p:commandButton>
-			</p:dataList>
+				<p:column>
+					<p:commandLink id="downloadLink" ajax="false"
+						value="#{file.fileName}, #{file.fileType}">
+						<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
+					</p:commandLink>
+				</p:column>
+				<p:column>
+					<p:commandButton id="downloadButton" value="Download" ajax="false"
+						icon="ui-icon-arrowthichk-s">
+						<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
+					</p:commandButton>
+					<p:commandButton id="removeButton" value="remove" ajax="true"
+						oncomplete="w_confirm.show();">
+						<f:setPropertyActionListener
+							target="#{attachmentsPB.selectedAttachment}" value="#{file}">
+						</f:setPropertyActionListener>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
 
 			<p:fileUpload auto="false"
 				fileUploadListener="#{attachmentsPB.handleFileUpload}"
 				mode="advanced" dragDropSupport="true" update="messages attchsList"
-				sizeLimit="100000" />
+				sizeLimit="1000000" />
 
-		</h:form>
+
+
+			<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
+				severity="alert" widgetVar="w_confirm">
+				<p:commandButton value="#{msgs.yes}"
+					action="#{attachmentsPB.removeFile()}" immediate="true"
+					oncomplete="w_confirm.hide()" update="attchsList" />
+				<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
+					type="button" />
+			</p:confirmDialog>
+
+	
+
 
 	</p:tab>
-
 </ui:composition>
