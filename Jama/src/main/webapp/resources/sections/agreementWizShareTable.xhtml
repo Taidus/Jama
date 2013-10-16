@@ -244,7 +244,7 @@
 						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}" required="#{not empty param[save.clientId]}">
 						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
 						<f:selectItems value="#{utilPB.getChiefsItemsNotIn(agrShareTablePB.addedChiefs)}" />
-						<f:converter binding="#{chiefConverterPersonnelShare}" />
+						<f:converter binding="#{chiefConverter}" />
 						<f:ajax event="valueChange" execute="@this" />
 					</p:selectOneMenu>
 				</p:column>
