@@ -302,12 +302,4 @@ public class Agreement implements Serializable {
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
-
-	float[] getMainValuesAmounts() {
-		//FIXME spostami
-		float[] mainValuesAmount = { shareTable.getAtheneumCapitalBalance() * getWholeAmount() / 100,
-				shareTable.getAtheneumCommonBalance() * getWholeAmount() / 100, shareTable.getPersonnel() * getWholeAmount() / 100,
-				shareTable.getStructures() * getWholeAmount() / 100, shareTable.getGoodsAndServices() * getWholeAmount() / 100 };
-		return mainValuesAmount;
-	}
 }

@@ -1,14 +1,6 @@
 package businessLayer;
 
-import java.util.List;
-import java.util.Map;
-
-import businessLayer.AbstractShareTable;
-
-import javax.faces.validator.ValidatorException;
-import javax.persistence.*;
-
-import util.Messages;
+import javax.persistence.Entity;
 
 @Entity
 public class InstallmentShareTable extends AbstractShareTable {
@@ -23,35 +15,6 @@ public class InstallmentShareTable extends AbstractShareTable {
 	public InstallmentShareTable(Installment installment) {
 		//this.installment = installment;
 		initFields();
-	}
-
-
-//	public Installment getInstallment() {
-//		return installment;
-//	}
-//
-//	public void setInstallment(Installment installment) {
-//		this.installment = installment;
-//	}
-
-
-
-
-	@Override
-	public void validate() {
-		if (!areMainValuesConsistent()) {
-			throw new ValidatorException(
-					Messages.getErrorMessage("err_shareTableValues"));
-		}
-		if (!areGoodsAndServicesValuesConsistent()) {
-			throw new ValidatorException(
-					Messages.getErrorMessage("err_shareTableGoods"));
-		}
-		if (!arePersonnelValuesConsistent()) {
-			throw new ValidatorException(
-					Messages.getErrorMessage("err_shareTablePersonnel"));
-		}
-		validateWithOtherInstallments();
 	}
 
 	private void validateWithOtherInstallments() {

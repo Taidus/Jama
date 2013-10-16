@@ -237,16 +237,4 @@ public class Installment implements Serializable {
 				+ reportRequired + ", note=" + note + ", agreement="
 				+ agreement + ", shareTable=" + shareTable + "]";
 	}
-	
-	
-	float[] getMainValuesAmounts() {
-		//FIXME voglio andarmene da qui
-		float[] mainValuesAmount = {
-				shareTable.getAtheneumCapitalBalance() * getWholeAmount() / 100,
-				shareTable.getAtheneumCommonBalance() * getWholeAmount() / 100,
-				shareTable.getPersonnel() * getWholeAmount() / 100,
-				shareTable.getStructures() * getWholeAmount() / 100,
-				shareTable.getGoodsAndServices() * getWholeAmount() / 100 };
-		return mainValuesAmount;
-	}
 }

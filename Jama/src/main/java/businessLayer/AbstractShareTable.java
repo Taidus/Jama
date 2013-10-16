@@ -13,6 +13,7 @@ import util.InvalidValueException;
 
 @MappedSuperclass
 public abstract class AbstractShareTable {
+	//TODO cancellare stampe varie
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,50 +35,12 @@ public abstract class AbstractShareTable {
 	protected float personnelOnContract;
 	protected float otherCost;
 
-	public abstract void validate();
-
 	protected final void initFields() {
 
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
 		otherCost = 100F;
 		goodsAndServices = 100F;
 	}
-
-	
-	
-	
-
-//	protected boolean arePersonnelValuesConsistent() {
-//		float sum = 0;
-//		for (float f : sharePerPersonnel.values()) {
-//			sum += f;
-//		}
-//		sum *= personnel / 100;
-//		return MathUtil.doubleEquals(personnel, sum);
-//	}
-//
-//	protected boolean areGoodsAndServicesValuesConsistent() {
-//		float[] goodsAndServicesValues = { businessTrip, consumerMaterials, inventoryMaterials, rentals, personnelOnContract, otherCost };
-//		float sum = 0;
-//		for (float f : goodsAndServicesValues) {
-//			sum += f;
-//		}
-//		sum *= goodsAndServices / 100;
-//		return MathUtil.doubleEquals(goodsAndServices, sum);
-//	}
-//
-//	protected boolean areMainValuesConsistent() {
-//		float[] mainValues = { atheneumCapitalBalance, atheneumCommonBalance, structures, personnel, goodsAndServices };
-//		float sum = 0;
-//		for (float f : mainValues) {
-//			sum += f;
-//		}
-//		return MathUtil.doubleEquals(sum, 100);
-//	}
-//
-//	protected void adjustMainValues(float total) {
-//		goodsAndServices += 100 - total;
-//	}
 
 	public int getId() {
 		return id;
