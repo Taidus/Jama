@@ -28,6 +28,9 @@ public class ChiefConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
+		if(null == value){
+			return "";
+		}
 		return String.valueOf(((ChiefScientist) value).getId());
 	}
 

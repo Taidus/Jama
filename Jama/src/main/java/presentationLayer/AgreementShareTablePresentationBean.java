@@ -62,8 +62,8 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		System.out.println("Share added: \n\t" + agreement.getShareTable().getSharePerPersonnel());
 		newShare = new PersonnelShare();
 	}
-	
-	public void removeShare(PersonnelShare share){
+
+	public void removeShare(PersonnelShare share) {
 		agreement.getShareTable().getSharePerPersonnel().remove(share.chiefScientist);
 	}
 
@@ -276,23 +276,26 @@ public class AgreementShareTablePresentationBean implements Serializable {
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
 		}
 	}
-	
+
 	public void validatePersonnelShares(FacesContext context, UIComponent component, Object value) {
 		Map<ChiefScientist, Float> shares = agreement.getShareTable().getSharePerPersonnel();
 		float sum = 0F;
-		for(float f : shares.values()){
+		for (float f : shares.values()) {
 			sum += f;
 		}
-		if(!MathUtil.doubleEquals(sum, 100.0)){
+		if (!MathUtil.doubleEquals(getPersonnel() * sum / 100, getPersonnel())) {
+			// NB: il controllo deve essere eseguito in questo modo. Controllare
+			// che sum == 100 non funziona nel caso in cui personnel sia 0
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 		}
 	}
-	
-//	public void validatePersonnelShareChief(FacesContext context, UIComponent component, Object value) {
-//		if(null == value){
-//			throw new ValidatorException(new FacesMessage("Chief cannot be null"));
-//		}
-//	}
+
+	// public void validatePersonnelShareChief(FacesContext context, UIComponent
+	// component, Object value) {
+	// if(null == value){
+	// throw new ValidatorException(new FacesMessage("Chief cannot be null"));
+	// }
+	// }
 
 	public float getPercentOfMainField(float field) {
 		return agreement.getWholeAmount() * field / 100;
