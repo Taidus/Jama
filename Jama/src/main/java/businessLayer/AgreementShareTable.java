@@ -13,5 +13,4 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 		initFields();
 	}
 
-
 }

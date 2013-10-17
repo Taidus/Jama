@@ -19,7 +19,7 @@ import daoLayer.CompanyDaoBean;
 @Dependent
 public class UtilPresentationBean implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+	//FIXME usare Identifiable
 	@EJB private ChiefScientistDaoBean chiefDaoBean;
 	@EJB private CompanyDaoBean companyDaoBean;
 	
@@ -58,7 +58,7 @@ public class UtilPresentationBean implements Serializable{
 		ChiefScientist current = null;
 		for(int i=0; i< chiefs.size(); i++){
 			current = chiefs.get(i);
-			result[i+1] = new SelectItem(current.getId(), current.getCompleteName());
+			result[i+1] = new SelectItem(current.getId(), current.getName());
 		}
 		return result;
 	}
@@ -88,7 +88,7 @@ public class UtilPresentationBean implements Serializable{
 		ChiefScientist current = null;
 		for(int i=0; i< list.size(); i++){
 			current = list.get(i);
-			result[i] = new SelectItem(current, current.getCompleteName());
+			result[i] = new SelectItem(current, current.getName());
 		}
 		return result;
 	}

@@ -59,7 +59,7 @@ public class Installment implements Serializable {
 	private InstallmentShareTable shareTable;
 
 	public Installment() {
-		this.shareTable = new InstallmentShareTable(this);
+		this.shareTable = new InstallmentShareTable();
 	}
 
 	public Date getDate() {

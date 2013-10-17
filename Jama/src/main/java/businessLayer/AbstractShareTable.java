@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import util.InvalidValueException;
-
 @MappedSuperclass
 public abstract class AbstractShareTable {
 	//TODO cancellare stampe varie
@@ -36,7 +34,6 @@ public abstract class AbstractShareTable {
 	protected float otherCost;
 
 	protected final void initFields() {
-
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
 		otherCost = 100F;
 		goodsAndServices = 100F;
@@ -131,21 +128,15 @@ public abstract class AbstractShareTable {
 	}
 
 
-	public void updateGoodsAndServices() throws InvalidValueException {
+	public void updateGoodsAndServices() {
 		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
-		if(sum > 100F){
-			throw new InvalidValueException("Share table's values sum is greater than 100");
-		}
 		this.goodsAndServices = 100F - sum;
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
 	
-	public void updateOtherCosts() throws InvalidValueException {
+	public void updateOtherCosts() {
 		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip + personnelOnContract;
 		System.out.println("Subfields sum: " + sum);
-		if (sum > 100F) {
-			throw new InvalidValueException("Share table's values sum is greater than 100");
-		}
 		this.otherCost = 100F - sum;
 		System.out.println("Other cost aggiornato: " + otherCost);
 	}

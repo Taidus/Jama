@@ -14,7 +14,6 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import util.InvalidValueException;
 import util.MathUtil;
 import util.Messages;
 import annotations.TransferObj;
@@ -32,11 +31,9 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	private PersonnelShare selectedShare;
 	private PersonnelShare newShare;
 
-	private float tempPersonnel;
-	private float tempGoodsAndServicesSubfield;
-
 	public AgreementShareTablePresentationBean() {
 		newShare = new PersonnelShare();
+		// FIXME questo darà problemi
 	}
 
 	@PostConstruct
@@ -139,139 +136,52 @@ public class AgreementShareTablePresentationBean implements Serializable {
 
 	public void setPersonnel(float personnel) {
 		agreement.getShareTable().setPersonnel(personnel);
+		updateMainValues();
 		System.out.println("Quota personale aggiornata: " + personnel);
 	}
 
 	public void setBusinessTrip(float businessTrip) {
 		agreement.getShareTable().setBusinessTrip(businessTrip);
+		agreement.getShareTable().updateOtherCosts();
 	}
 
 	public void setConsumerMaterials(float consumerMaterials) {
 		agreement.getShareTable().setConsumerMaterials(consumerMaterials);
+		agreement.getShareTable().updateOtherCosts();
 	}
 
 	public void setInventoryMaterials(float inventoryMaterials) {
 		agreement.getShareTable().setInventoryMaterials(inventoryMaterials);
+		agreement.getShareTable().updateOtherCosts();
 	}
 
 	public void setRentals(float rentals) {
 		agreement.getShareTable().setRentals(rentals);
+		agreement.getShareTable().updateOtherCosts();
 	}
 
 	public void setPersonnelOnContract(float personnelOnContract) {
 		agreement.getShareTable().setPersonnelOnContract(personnelOnContract);
-	}
-
-	public float getTempPersonnel() {
-		return tempPersonnel;
+		agreement.getShareTable().updateOtherCosts();
 	}
 
 	private void updateMainValues() {
-		try {
-			// il try-catch-throw è necessario anche qui perché il metodo non
-			// viene chiamato solo in seguito alla validazione: potrebbero
-			// esserci valori scorretti che non derivano dall'input dell'utente
-			// (e.g., il file di configurazione è errato)
-			builder.build();
-		} catch (InvalidValueException e) {
-			throw new IllegalStateException("Incorrect agreement share table values");
-		}
-
+		builder.build();
 		System.out.println("Campi aggiornati: athCapBal = " + getAtheneumCapitalBalance() + ", athCommonBal = " + getAtheneumCommonBalance()
 				+ ", structures = " + getStructures());
-		try {
-			agreement.getShareTable().updateGoodsAndServices();
-		} catch (InvalidValueException e) {
-			// l'eccezione dovrebbe essere già stata gestita precedentemente. Se
-			// viene lanciata c'è qualcosa che non va
-			throw new RuntimeException("An exception was thrown when it should have already been managed.");
-		}
-	}
-
-	public void validatePersonnel(FacesContext context, UIComponent component, Object value) {
-		if (value instanceof Double) {
-			tempPersonnel = ((Double) value).floatValue();
-		} else if (value instanceof Long) {
-			tempPersonnel = ((Long) value).floatValue();
-		} else {
-			throw new IllegalStateException("Inserted input is not a number");
-		}
-
-		try {
-			updateMainValues();
-		} catch (IllegalStateException e) {
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
-		}
+		agreement.getShareTable().updateGoodsAndServices();
 
 	}
 
-	private void initTempSubfield(Object value) {
-		if (value instanceof Double) {
-			tempGoodsAndServicesSubfield = ((Double) value).floatValue();
-		} else if (value instanceof Long) {
-			tempGoodsAndServicesSubfield = ((Long) value).floatValue();
-		} else {
-			throw new IllegalStateException("Inserted input is not a number");
+	public void validateValues(FacesContext context, UIComponent component, Object value) {
+		if (agreement.getShareTable().getGoodsAndServices() < 0.0) {
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableValues"));
 		}
 	}
 
-	public void validateBusinessTrip(FacesContext context, UIComponent component, Object value) {
-		initTempSubfield(value);
-		float tmp = getBusinessTrip();
-		try {
-			setBusinessTrip(tempGoodsAndServicesSubfield);
-			agreement.getShareTable().updateOtherCosts();
-		} catch (InvalidValueException e) {
-			setBusinessTrip(tmp);
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
-		}
-	}
-
-	public void validateRentals(FacesContext context, UIComponent component, Object value) {
-		initTempSubfield(value);
-		float tmp = getRentals();
-		try {
-			setRentals(tempGoodsAndServicesSubfield);
-			agreement.getShareTable().updateOtherCosts();
-		} catch (InvalidValueException e) {
-			setRentals(tmp);
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
-		}
-	}
-
-	public void validateInventoryMat(FacesContext context, UIComponent component, Object value) {
-		initTempSubfield(value);
-		float tmp = getInventoryMaterials();
-		try {
-			setInventoryMaterials(tempGoodsAndServicesSubfield);
-			agreement.getShareTable().updateOtherCosts();
-		} catch (InvalidValueException e) {
-			setInventoryMaterials(tmp);
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
-		}
-	}
-
-	public void validateConsumerMat(FacesContext context, UIComponent component, Object value) {
-		initTempSubfield(value);
-		float tmp = getConsumerMaterials();
-		try {
-			setConsumerMaterials(tempGoodsAndServicesSubfield);
-			agreement.getShareTable().updateOtherCosts();
-		} catch (InvalidValueException e) {
-			setConsumerMaterials(tmp);
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
-		}
-	}
-
-	public void validatePersonnelOnContract(FacesContext context, UIComponent component, Object value) {
-		initTempSubfield(value);
-		float tmp = getPersonnelOnContract();
-		try {
-			setPersonnelOnContract(tempGoodsAndServicesSubfield);
-			agreement.getShareTable().updateOtherCosts();
-		} catch (InvalidValueException e) {
-			setPersonnelOnContract(tmp);
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTableInvalidInput"));
+	public void validateGoodsAndServices(FacesContext context, UIComponent component, Object value) {
+		if (agreement.getShareTable().getOtherCost() < 0.0) {
+			throw new ValidatorException(Messages.getErrorMessage("err_shareTableGoods"));
 		}
 	}
 
@@ -287,13 +197,6 @@ public class AgreementShareTablePresentationBean implements Serializable {
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 		}
 	}
-
-	// public void validatePersonnelShareChief(FacesContext context, UIComponent
-	// component, Object value) {
-	// if(null == value){
-	// throw new ValidatorException(new FacesMessage("Chief cannot be null"));
-	// }
-	// }
 
 	public float getPercentOfMainField(float field) {
 		return agreement.getWholeAmount() * field / 100;

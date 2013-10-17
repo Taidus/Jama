@@ -3,5 +3,5 @@ package presentationLayer;
 import util.InvalidValueException;
 
 public interface AgreementShareTableBuilder {
-	public void build() throws InvalidValueException;
+	public void build();
 }

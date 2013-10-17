@@ -39,7 +39,7 @@
 
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
 			<h:inputText id="personnel" value="#{agrShareTablePB.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
-				rendered="#{not cc.attrs.editingDisable}" validator="#{agrShareTablePB.validatePersonnel}">
+				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -79,10 +79,9 @@
 			<h:message for="goodsAndServices" id="goodsAndServicesError" />
 
 
-
 			<h:outputText value="#{msgs.shareTableTrip}:" />
 			<h:inputText id="businessTrip" value="#{agrShareTablePB.businessTrip}" label="#{msgs.shareTableTrip}" required="true"
-				rendered="#{not cc.attrs.editingDisable}" validator="#{agrShareTablePB.validateBusinessTrip}">
+				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -100,7 +99,7 @@
 
 			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
 			<h:inputText id="consumerMaterials" value="#{agrShareTablePB.consumerMaterials}" label="#{msgs.shareTableConsMaterials}" required="true"
-				rendered="#{not cc.attrs.editingDisable}" validator="#{agrShareTablePB.validateConsumerMat}">
+				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -118,7 +117,7 @@
 
 			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
 			<h:inputText id="inventoryMaterials" value="#{agrShareTablePB.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}" required="true"
-				rendered="#{not cc.attrs.editingDisable}" validator="#{agrShareTablePB.validateInventoryMat}">
+				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -136,7 +135,7 @@
 
 			<h:outputText value="#{msgs.shareTableRentals}:" />
 			<h:inputText id="rentals" value="#{agrShareTablePB.rentals}" label="#{msgs.shareTableRentals}" required="true"
-				rendered="#{not cc.attrs.editingDisable}" validator="#{agrShareTablePB.validateRentals}">
+				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -154,7 +153,7 @@
 
 			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
 			<h:inputText id="personnelOnContract" value="#{agrShareTablePB.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}" required="true"
-				rendered="#{not cc.attrs.editingDisable}" validator="#{agrShareTablePB.validatePersonnelOnContract}">
+				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="@form" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -182,7 +181,16 @@
 			<h:message for="otherCost" id="otherCostError" />
 
 		</h:panelGrid>
+		
+		<br />
 
+		<h:inputHidden value="needed" id="valuesCheck" validator="#{agrShareTablePB.validateValues}" />
+		<p:message styleClass="errorMessage" for="valuesCheck" />
+
+		<br />
+
+		<h:inputHidden value="needed" id="goodsCheck" validator="#{agrShareTablePB.validateGoodsAndServices}" />
+		<p:message styleClass="errorMessage" for="goodsCheck" />
 
 	</p:panel>
 
@@ -192,8 +200,9 @@
 
 
 		<h:inputHidden value="needed" id="percentsCheck" validator="#{agrShareTablePB.validatePersonnelShares}" />
-		<h:message styleClass="errorMessage" for="percentsCheck" />
-
+		<p:message styleClass="errorMessage" for="percentsCheck" />
+		
+		<br />
 
 		<p:dataTable id="personnelShares" value="#{agrShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}" emptyMessage="#{msgs.noShareFound}">
 

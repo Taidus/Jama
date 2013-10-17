@@ -7,7 +7,6 @@ import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import util.InvalidValueException;
 import util.Parameters;
 
 @Alternative
@@ -20,8 +19,8 @@ public class SimpleAgreementShareTableBuilder implements AgreementShareTableBuil
 	public SimpleAgreementShareTableBuilder() {}
 
 	@Override
-	public void build() throws InvalidValueException {
-		float personnel = table.getTempPersonnel();
+	public void build() {
+		float personnel = table.getPersonnel();
 		
 		float athCommBal = Parameters.atheneumCommonBalanceRate;
 		float struct = Parameters.structuresRate;
@@ -41,15 +40,10 @@ public class SimpleAgreementShareTableBuilder implements AgreementShareTableBuil
 		if (false == found) {
 			throw new IllegalStateException("Atheneum rate table is not valid");
 		}
-
-		if(athCommBal + athCapBal + struct + personnel > 100F){
-			throw new InvalidValueException();
-		}
 		
 		table.setAtheneumCommonBalance(athCommBal);
 		table.setStructures(struct);
 		table.setAtheneumCapitalBalance(athCapBal);
-		table.setPersonnel(personnel);
 	}
 
 }

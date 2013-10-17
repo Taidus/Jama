@@ -70,7 +70,7 @@ public class AgreementListPageControllerBean implements Serializable {
 		//TODO eliminare
 		Agreement selectedValue = lazyModel.getSelectedValue();
 		System.out.println("***\n" + action + " agreement with ID: " + selectedValue.getId() + ". Chief: "
-				+ selectedValue.getChief().getCompleteName() + "; company: " + selectedValue.getCompany().getName() + "\n***");
+				+ selectedValue.getChief().getName() + "; company: " + selectedValue.getCompany().getName() + "\n***");
 	}
 
 	private void close() {
