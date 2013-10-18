@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,6 +17,7 @@ import util.MathUtil;
 import util.Messages;
 import annotations.TransferObj;
 import businessLayer.Agreement;
+import businessLayer.AgreementShareTable;
 import businessLayer.ChiefScientist;
 
 @Named("agrShareTablePB")
@@ -26,7 +26,6 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject @TransferObj private Agreement agreement;
-	@Inject private AgreementShareTableBuilder builder;
 
 	private PersonnelShare selectedShare;
 	private PersonnelShare newShare;
@@ -34,12 +33,6 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	public AgreementShareTablePresentationBean() {
 		newShare = new PersonnelShare();
 		// FIXME questo darà problemi
-	}
-
-	@PostConstruct
-	public void init() {
-		updateMainValues();
-		// FIXME non basta metterlo nel postConstruct
 	}
 
 	public List<PersonnelShare> getShares() {
@@ -78,99 +71,8 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		return agreement.getShareTable().getSharePerPersonnel().keySet();
 	}
 
-	public float getAtheneumCapitalBalance() {
-		return agreement.getShareTable().getAtheneumCapitalBalance();
-	}
-
-	public float getAtheneumCommonBalance() {
-		return agreement.getShareTable().getAtheneumCommonBalance();
-	}
-
-	public float getStructures() {
-		return agreement.getShareTable().getStructures();
-	}
-
-	public float getPersonnel() {
-		return agreement.getShareTable().getPersonnel();
-	}
-
-	public float getGoodsAndServices() {
-		return agreement.getShareTable().getGoodsAndServices();
-	}
-
-	public float getBusinessTrip() {
-		return agreement.getShareTable().getBusinessTrip();
-	}
-
-	public float getConsumerMaterials() {
-		return agreement.getShareTable().getConsumerMaterials();
-	}
-
-	public float getInventoryMaterials() {
-		return agreement.getShareTable().getInventoryMaterials();
-	}
-
-	public float getRentals() {
-		return agreement.getShareTable().getRentals();
-	}
-
-	public float getPersonnelOnContract() {
-		return agreement.getShareTable().getPersonnelOnContract();
-	}
-
-	public float getOtherCost() {
-		return agreement.getShareTable().getOtherCost();
-	}
-
-	void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
-		agreement.getShareTable().setAtheneumCapitalBalance(atheneumCapitalBalance);
-	}
-
-	void setAtheneumCommonBalance(float atheneumCommonBalance) {
-		agreement.getShareTable().setAtheneumCommonBalance(atheneumCommonBalance);
-	}
-
-	void setStructures(float structures) {
-		agreement.getShareTable().setStructures(structures);
-	}
-
-	public void setPersonnel(float personnel) {
-		agreement.getShareTable().setPersonnel(personnel);
-		updateMainValues();
-		System.out.println("Quota personale aggiornata: " + personnel);
-	}
-
-	public void setBusinessTrip(float businessTrip) {
-		agreement.getShareTable().setBusinessTrip(businessTrip);
-		agreement.getShareTable().updateOtherCosts();
-	}
-
-	public void setConsumerMaterials(float consumerMaterials) {
-		agreement.getShareTable().setConsumerMaterials(consumerMaterials);
-		agreement.getShareTable().updateOtherCosts();
-	}
-
-	public void setInventoryMaterials(float inventoryMaterials) {
-		agreement.getShareTable().setInventoryMaterials(inventoryMaterials);
-		agreement.getShareTable().updateOtherCosts();
-	}
-
-	public void setRentals(float rentals) {
-		agreement.getShareTable().setRentals(rentals);
-		agreement.getShareTable().updateOtherCosts();
-	}
-
-	public void setPersonnelOnContract(float personnelOnContract) {
-		agreement.getShareTable().setPersonnelOnContract(personnelOnContract);
-		agreement.getShareTable().updateOtherCosts();
-	}
-
-	private void updateMainValues() {
-		builder.build();
-		System.out.println("Campi aggiornati: athCapBal = " + getAtheneumCapitalBalance() + ", athCommonBal = " + getAtheneumCommonBalance()
-				+ ", structures = " + getStructures());
-		agreement.getShareTable().updateGoodsAndServices();
-
+	public AgreementShareTable getShareTable() {
+		return agreement.getShareTable();
 	}
 
 	public void validateValues(FacesContext context, UIComponent component, Object value) {
@@ -191,7 +93,7 @@ public class AgreementShareTablePresentationBean implements Serializable {
 		for (float f : shares.values()) {
 			sum += f;
 		}
-		if (!MathUtil.doubleEquals(getPersonnel() * sum / 100, getPersonnel())) {
+		if (!MathUtil.doubleEquals(agreement.getShareTable().getPersonnel() * sum / 100, agreement.getShareTable().getPersonnel())) {
 			// NB: il controllo deve essere eseguito in questo modo. Controllare
 			// che sum == 100 non funziona nel caso in cui personnel sia 0
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
@@ -203,7 +105,7 @@ public class AgreementShareTablePresentationBean implements Serializable {
 	}
 
 	public float getPercentOfGoodsField(float field) {
-		return getPercentOfMainField(getGoodsAndServices()) * field / 100;
+		return getPercentOfMainField(agreement.getShareTable().getGoodsAndServices()) * field / 100;
 	}
 
 	public class PersonnelShare {
@@ -240,7 +142,7 @@ public class AgreementShareTablePresentationBean implements Serializable {
 
 		public float getPercentValue() {
 			System.out.println(">>> Percent value called");
-			return getPercentOfMainField(getPersonnel()) * value / 100;
+			return getPercentOfMainField(agreement.getShareTable().getPersonnel()) * value / 100;
 		}
 
 		@Override

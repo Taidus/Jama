@@ -86,7 +86,7 @@ public class Agreement implements Serializable {
 	private List<Attachment> attachments;
 
 	public Agreement() {
-		shareTable = new AgreementShareTable();
+//		shareTable = new AgreementShareTable();
 		installments = new ArrayList<>();
 		attachments = new ArrayList<>();
 	}
@@ -226,6 +226,14 @@ public class Agreement implements Serializable {
 	}
 
 	public AgreementShareTable getShareTable() {
+		if(null == shareTable){
+			if(null == department){
+				shareTable = new AgreementShareTable();
+			}
+			else{
+				shareTable = new AgreementShareTable(department);
+			}
+		}
 		return shareTable;
 	}
 

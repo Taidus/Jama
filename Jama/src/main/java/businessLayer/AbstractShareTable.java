@@ -49,6 +49,7 @@ public abstract class AbstractShareTable {
 
 	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
 		this.atheneumCapitalBalance = atheneumCapitalBalance;
+		updateGoodsAndServices();
 	}
 
 	public float getAtheneumCommonBalance() {
@@ -57,6 +58,7 @@ public abstract class AbstractShareTable {
 
 	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
 		this.atheneumCommonBalance = atheneumCommonBalance;
+		updateGoodsAndServices();
 	}
 
 	public float getStructures() {
@@ -65,6 +67,7 @@ public abstract class AbstractShareTable {
 
 	public void setStructures(float structures) {
 		this.structures = structures;
+		updateGoodsAndServices();
 	}
 
 	public float getPersonnel() {
@@ -73,6 +76,7 @@ public abstract class AbstractShareTable {
 
 	public void setPersonnel(float personnel) {
 		this.personnel = personnel;
+		updateGoodsAndServices();
 	}
 
 	public float getGoodsAndServices() {
@@ -85,6 +89,7 @@ public abstract class AbstractShareTable {
 
 	public void setBusinessTrip(float businessTrip) {
 		this.businessTrip = businessTrip;
+		updateOtherCosts();
 	}
 
 	public float getConsumerMaterials() {
@@ -93,6 +98,7 @@ public abstract class AbstractShareTable {
 
 	public void setConsumerMaterials(float consumerMaterials) {
 		this.consumerMaterials = consumerMaterials;
+		updateOtherCosts();
 	}
 
 	public float getInventoryMaterials() {
@@ -101,6 +107,7 @@ public abstract class AbstractShareTable {
 
 	public void setInventoryMaterials(float inventoryMaterials) {
 		this.inventoryMaterials = inventoryMaterials;
+		updateOtherCosts();
 	}
 
 	public float getRentals() {
@@ -109,6 +116,7 @@ public abstract class AbstractShareTable {
 
 	public void setRentals(float rentals) {
 		this.rentals = rentals;
+		updateOtherCosts();
 	}
 
 	public float getPersonnelOnContract() {
@@ -117,6 +125,7 @@ public abstract class AbstractShareTable {
 
 	public void setPersonnelOnContract(float personnelOnContract) {
 		this.personnelOnContract = personnelOnContract;
+		updateOtherCosts();
 	}
 
 	public float getOtherCost() {
@@ -128,15 +137,14 @@ public abstract class AbstractShareTable {
 	}
 
 
-	public void updateGoodsAndServices() {
+	protected void updateGoodsAndServices() {
 		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
 		this.goodsAndServices = 100F - sum;
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
 	
-	public void updateOtherCosts() {
+	protected void updateOtherCosts() {
 		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip + personnelOnContract;
-		System.out.println("Subfields sum: " + sum);
 		this.otherCost = 100F - sum;
 		System.out.println("Other cost aggiornato: " + otherCost);
 	}
