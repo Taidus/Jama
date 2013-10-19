@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 
 
+@NamedQuery(name = "AgreementShareTableFiller.findAll", query = "SELECT f FROM AgreementShareTableFiller f ") 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 
