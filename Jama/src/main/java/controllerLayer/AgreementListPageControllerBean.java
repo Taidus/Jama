@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package controllerLayer;
 
 import java.io.Serializable;
 

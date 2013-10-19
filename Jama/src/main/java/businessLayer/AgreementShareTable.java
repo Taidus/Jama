@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import util.FillerFactory;
+import controllerLayer.FillerFactoryBean;
 
 @Entity
 public class AgreementShareTable extends AbstractShareTable implements Serializable {
@@ -19,9 +19,12 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 		initFields();
 	}
 
-	public AgreementShareTable(Department dep) {
-		initFields();
-		filler = FillerFactory.getFiller(dep);
+	public AgreementShareTableFiller getFiller() {
+		return filler;
+	}
+
+	public void setFiller(AgreementShareTableFiller filler) {
+		this.filler = filler;
 		setPersonnel(0F);
 	}
 

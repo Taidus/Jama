@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.TabChangeEvent;
 
-import pageControllerLayer.AgreementManagerBean;
+import controllerLayer.AgreementManagerBean;
 
 @Named("agreementEditPB")
 @ConversationScoped

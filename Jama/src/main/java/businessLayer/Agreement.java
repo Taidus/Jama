@@ -237,14 +237,6 @@ public class Agreement implements Serializable {
 	}
 
 	public AgreementShareTable getShareTable() {
-		if(null == shareTable){
-			if(null == department){
-				shareTable = new AgreementShareTable();
-			}
-			else{
-				shareTable = new AgreementShareTable(department);
-			}
-		}
 		return shareTable;
 	}
 

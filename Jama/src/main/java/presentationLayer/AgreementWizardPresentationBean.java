@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
 
-import pageControllerLayer.AgreementManagerBean;
+import controllerLayer.AgreementManagerBean;
 
 @Named("agreementWizardPB")
 @ConversationScoped

@@ -23,7 +23,7 @@ public class FillerDaoBean {
 	}
 	
 	public List<AgreementShareTableFiller> getAll(){
-		return em.createNamedQuery("AgreementShareTableFiler.findAll",AgreementShareTableFiller.class).getResultList();
+		return em.createNamedQuery("AgreementShareTableFiller.findAll",AgreementShareTableFiller.class).getResultList();
 	}
 	
 	

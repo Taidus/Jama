@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package controllerLayer;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +16,8 @@ import javax.persistence.PersistenceContextType;
 
 import annotations.TransferObj;
 import businessLayer.Agreement;
+import businessLayer.AgreementShareTable;
+import businessLayer.Department;
 import daoLayer.AgreementDaoBean;
 
 @Named("agreementManager")
@@ -27,26 +29,22 @@ public class AgreementManagerBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private Conversation conversation;
-	@EJB
-	private AgreementDaoBean agreementDao;
-	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
-	private EntityManager em;
+	@Inject private Conversation conversation;
+	@Inject private FillerFactoryBean fillerFactory;
+	@EJB private AgreementDaoBean agreementDao;
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED) private EntityManager em;
 
 	private boolean conversationninherited;
 
-
 	// TODO aggiungere un po' di eccezioni
-	//TODO spostare return indirizzi pagine
+	// TODO spostare return indirizzi pagine
 	private int selectedAgreementId = -1;
 	private Agreement agreement;
 	private Agreement transferObjAgreement;
 
 	public AgreementManagerBean() {
-		//transferObjAgreement = new Agreement();
+		// transferObjAgreement = new Agreement();
 		conversationninherited = false;
-
 	}
 
 	public int getSelectedAgreementId() {
@@ -57,8 +55,6 @@ public class AgreementManagerBean implements Serializable {
 		this.selectedAgreementId = selectedAgreementId;
 	}
 
-	
-
 	private void begin() {
 		if (conversation.isTransient()) {
 			conversation.begin();
@@ -67,44 +63,35 @@ public class AgreementManagerBean implements Serializable {
 			conversationninherited = true;
 		}
 	}
-	
-
-	public void save() {
-		
-		agreement.cloneFields(transferObjAgreement);
-//		if(selectedAgreementId > 0){
-//			agreement.setId(selectedAgreementId);
-//		}
-		agreementDao.create(agreement);
-
-
-//		if (selectedAgreementId < 0) {
-//			agreementDao.create(transferObjAgreement);
-//		}
-		
-		close();
-	}
 
 	private void close() {
-		
-		
-		//serve per hibernate, sennò trova due riferimenti ad una stessa entità managed;
+		// serve per hibernate, sennò trova due riferimenti ad una stessa entità
+		// managed;
 		transferObjAgreement.setInstallments(null);
-		
-		
+
 		if (!conversationninherited) {
 			conversation.end();
 			agreementDao.close();
 
 		}
-		
+	}
 	
+
+	public void save() {
+		agreement.cloneFields(transferObjAgreement);
+		// if(selectedAgreementId > 0){
+		// agreement.setId(selectedAgreementId);
+		// }
+		agreementDao.create(agreement);
+
+		// if (selectedAgreementId < 0) {
+		// agreementDao.create(transferObjAgreement);
+		// }
+		close();
 	}
 
 	public void cancel() {
-		
 		close();
-		
 	}
 
 	public Conversation getConversation() {
@@ -113,7 +100,7 @@ public class AgreementManagerBean implements Serializable {
 
 	private void initAgreement() {
 		transferObjAgreement = new Agreement();
-		
+
 		agreement = agreementDao.getById(selectedAgreementId);
 		transferObjAgreement.cloneFields(agreement);
 
@@ -126,24 +113,24 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public String createAgreement() {
-		agreement= new Agreement();
+		agreement = new Agreement();
 		transferObjAgreement = new Agreement();
-		insertRandomValues(transferObjAgreement); //TODO eliminare
+		insertRandomValues(transferObjAgreement); // TODO eliminare
+		AgreementShareTable shareTable = new AgreementShareTable();
+		shareTable.setFiller(fillerFactory.getFiller(transferObjAgreement.getDepartment()));
+		transferObjAgreement.setShareTable(shareTable);
 		begin();
-		//check
-		//transferObjAgreement.cloneFields(agreement);
+		// check
+		// transferObjAgreement.cloneFields(agreement);
 		return "/agreementWiz.xhtml";
 
 	}
-	
-	public String viewAgreement(){
-		
+
+	public String viewAgreement() {
 		begin();
 		initAgreement();
 		return "/agreementView.xhtml?faces-redirect=true";
-
 	}
-
 
 	@Produces
 	@TransferObj
@@ -159,19 +146,24 @@ public class AgreementManagerBean implements Serializable {
 	public void deleteAgreement() {
 		agreementDao.delete(selectedAgreementId);
 	}
-	
-	private void insertRandomValues(Agreement agr){
-		//TODO eliminare
+
+	private void insertRandomValues(Agreement agr) {
+		// TODO eliminare
 		agr.setTitle("Random title");
 		agr.setCIA_projectNumber(10000);
 		agr.setContactPerson("Random contact");
 		agr.setInventoryNumber(20000);
+		Department d = new Department();
+		d.setCode("DSI/DINFO");
+		d.setName("ex Dipartimento di Sistemi e Informatica");
+		d.setRateDirectory("dsi");
+		agr.setDepartment(d);
 		agr.setWholeTaxableAmount(99999);
 		agr.setProtocolNumber("30000");
 		agr.setApprovalDate(new Date());
 		agr.setBeginDate(new Date());
 		agr.setDeadlineDate(new Date());
-		
+
 	}
 
 }

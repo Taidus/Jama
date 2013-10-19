@@ -1,4 +1,4 @@
-package pageControllerLayer;
+package controllerLayer;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

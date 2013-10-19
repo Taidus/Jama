@@ -6,7 +6,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pageControllerLayer.InstallmentManagerBean;
+import controllerLayer.InstallmentManagerBean;
 
 @Named("installmentWizardPB")
 @ConversationScoped
