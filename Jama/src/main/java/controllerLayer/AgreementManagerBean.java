@@ -19,6 +19,7 @@ import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
 import businessLayer.Department;
 import daoLayer.AgreementDaoBean;
+import daoLayer.DepartmentDaoBean;
 
 @Named("agreementManager")
 @ConversationScoped
@@ -32,8 +33,12 @@ public class AgreementManagerBean implements Serializable {
 	@Inject private Conversation conversation;
 	@Inject private FillerFactoryBean fillerFactory;
 	@EJB private AgreementDaoBean agreementDao;
+
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED) 
 	private EntityManager em;
+
+	@EJB private DepartmentDaoBean depDao;
+
 
 	private boolean conversationninherited;
 
@@ -159,6 +164,7 @@ public class AgreementManagerBean implements Serializable {
 		d.setCode("DSI/DINFO");
 		d.setName("ex Dipartimento di Sistemi e Informatica");
 		d.setRateDirectory("dsi");
+		depDao.createDepartment(d);
 		agr.setDepartment(d);
 		agr.setWholeTaxableAmount(99999);
 		agr.setProtocolNumber("30000");
