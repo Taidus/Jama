@@ -13,6 +13,10 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 	private Map<Float, Float> atheneumCapitalBalanceRateTable;
 	private float structuresRate;
 	private float atheneumCommonBalanceRate;
+	
+	public SimpleAgreementShareTableFiller() {
+		super();
+	}
 
 	public SimpleAgreementShareTableFiller(Map<Float, Float> atheneumCapitalBalanceRateTable, float structuresRate, float atheneumCommonBalanceRate) {
 		super();
