@@ -77,6 +77,8 @@
 			</p:column>
 
 			<p:column id="agrTableDateColumn" sortBy="#{agr.approvalDate}">
+			
+			
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
@@ -119,6 +121,14 @@
 				
 
 			</p:column>
+			
+			<p:column id="agrIsClosed"> 
+			
+					<h:selectBooleanCheckbox id="closedAgr"
+				value="#{agr.closed}"
+				disabled="true" />
+			
+			 </p:column>
 
 		</p:dataTable>
 

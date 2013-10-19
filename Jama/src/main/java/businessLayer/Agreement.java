@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import util.MathUtil;
+
 @Entity
 // TODO ASC DESC
 @NamedQueries({ @NamedQuery(name = "Agreement.findAll", query = "SELECT a FROM Agreement a ORDER BY a.approvalDate") })
@@ -49,7 +51,7 @@ public class Agreement implements Serializable {
 	@NotNull
 	private ChiefScientist chief;
 	@NotNull
-	private String contactPerson; // FIXME String o oggetto?
+	private String contactPerson;
 
 	@ManyToOne
 	@NotNull
@@ -66,8 +68,11 @@ public class Agreement implements Serializable {
 
 	private float IVA_amount;
 	private float wholeTaxableAmount;
+	private float spentAmount;
+	private float reservedAmount;
 
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE, CascadeType.REMOVE })
 	@OrderBy("date DESC")
 	private List<Installment> installments;
 
@@ -81,8 +86,8 @@ public class Agreement implements Serializable {
 	private Date deadlineDate;
 
 	private String note;
-	
-	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST})
+
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
 	private List<Attachment> attachments;
 
 	public Agreement() {
@@ -112,6 +117,8 @@ public class Agreement implements Serializable {
 		this.deadlineDate = copy.getDeadlineDate();
 		this.note = copy.getNote();
 		this.attachments = copy.getAttachments();
+		this.spentAmount = copy.getSpentAmount();
+		this.reservedAmount = copy.getReservedAmount();
 
 		for (Installment i : installments) {
 			i.setAgreement(this);
@@ -138,11 +145,16 @@ public class Agreement implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber=" + protocolNumber + ", type=" + type + ", chief=" + chief
-				+ ", contactPerson=" + contactPerson + ", company=" + company + ", department=" + department + ", CIA_projectNumber="
-				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber + ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
-				+ ", wholeTaxableAmount=" + wholeTaxableAmount + ", installments=" + installments + ", approvalDate=" + approvalDate + ", beginDate="
-				+ beginDate + ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
+		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber="
+				+ protocolNumber + ", type=" + type + ", chief=" + chief
+				+ ", contactPerson=" + contactPerson + ", company=" + company
+				+ ", department=" + department + ", CIA_projectNumber="
+				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber
+				+ ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
+				+ ", wholeTaxableAmount=" + wholeTaxableAmount
+				+ ", installments=" + installments + ", approvalDate="
+				+ approvalDate + ", beginDate=" + beginDate + ", deadlineDate="
+				+ deadlineDate + ", note=" + note + "]";
 	}
 
 	public int getId() {
@@ -237,7 +249,6 @@ public class Agreement implements Serializable {
 		return this.wholeTaxableAmount * (100 + this.IVA_amount) / 100;
 	}
 
-
 	public float getIVA_amount() {
 		return IVA_amount;
 	}
@@ -293,13 +304,48 @@ public class Agreement implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	
+
 	public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
+	}
+
+	public float getSpentAmount() {
+		return spentAmount;
+	}
+
+	public void setSpentAmount(float spentAmount) {
+		this.spentAmount = spentAmount;
+	}
+
+	public float getReservedAmount() {
+		return reservedAmount;
+	}
+
+	public void setReservedAmount(float reservedAmount) {
+		this.reservedAmount = reservedAmount;
+	}
+
+	public boolean isClosed() {
+
+		return MathUtil.doubleEquals(getWholeAmount(), spentAmount);
+
+	}
+
+	// fatturato
+	public float getTurnOver() {
+		float sum = 0;
+		for (Installment i : installments) {
+
+			if (i.isPaidInvoice()) {
+				sum += i.getWholeAmount();
+			}
+
+		}
+
+		return sum;
 	}
 }

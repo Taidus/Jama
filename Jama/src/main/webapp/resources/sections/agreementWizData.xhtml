@@ -340,6 +340,71 @@
 			</p:row>
 
 
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.reservedAmount}" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="reservedAmount"
+						value="#{agreementManager.agreement.reservedAmount}"
+						label="#{msgs.reservedAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertNumber />
+						<f:ajax event="blur" execute="@this" render="reservedAmountError" />
+						<f:validateDoubleRange minimum="0.0"
+							maximum="#{agreementManager.agreement.turnOver}" />
+					</h:inputText>
+
+					<h:outputText id="reservedAmount_o"
+						value="#{agreementManager.agreement.reservedAmount}"
+						label="#{msgs.reservedAmount}"
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="reservedAmountError" class="errorMessage"
+						for="reservedAmount" />
+				</p:column>
+			</p:row>
+			
+			
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.spentAmount}" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="spentAmount"
+						value="#{agreementManager.agreement.spentAmount}"
+						label="#{msgs.spentAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertNumber />
+						<f:ajax event="blur" execute="@this" render="spentAmountError" />
+						<f:validateDoubleRange minimum="0.0"
+							maximum="#{agreementManager.agreement.reservedAmount}" />
+					</h:inputText>
+
+					<h:outputText id="spentAmount_o"
+						value="#{agreementManager.agreement.spentAmount}"
+						label="#{msgs.spentAmount}"
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="spentAmountError" class="errorMessage"
+						for="spentAmount" />
+				</p:column>
+			</p:row>
+
+
+
+
 			<p:row>
 
 				<p:column>
