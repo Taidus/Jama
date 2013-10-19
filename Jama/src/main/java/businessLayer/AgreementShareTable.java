@@ -3,6 +3,7 @@ package businessLayer;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import util.FillerFactory;
 
@@ -10,6 +11,8 @@ import util.FillerFactory;
 public class AgreementShareTable extends AbstractShareTable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne
 	private AgreementShareTableFiller filler;
 
 	public AgreementShareTable() {

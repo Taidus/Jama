@@ -3,8 +3,13 @@ package businessLayer;
 import java.util.Iterator;
 import java.util.Map;
 
-public class SimpleAgreementShareTableFiller implements AgreementShareTableFiller {
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 
+@Entity
+public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
+
+	@ElementCollection
 	private Map<Float, Float> atheneumCapitalBalanceRateTable;
 	private float structuresRate;
 	private float atheneumCommonBalanceRate;
@@ -43,5 +48,45 @@ public class SimpleAgreementShareTableFiller implements AgreementShareTableFille
 		table.setStructures(struct);
 		table.setAtheneumCapitalBalance(athCapBal);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((atheneumCapitalBalanceRateTable == null) ? 0
+						: atheneumCapitalBalanceRateTable.hashCode());
+		result = prime * result
+				+ Float.floatToIntBits(atheneumCommonBalanceRate);
+		result = prime * result + Float.floatToIntBits(structuresRate);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SimpleAgreementShareTableFiller other = (SimpleAgreementShareTableFiller) obj;
+		if (atheneumCapitalBalanceRateTable == null) {
+			if (other.atheneumCapitalBalanceRateTable != null)
+				return false;
+		} else if (!atheneumCapitalBalanceRateTable
+				.equals(other.atheneumCapitalBalanceRateTable))
+			return false;
+		if (Float.floatToIntBits(atheneumCommonBalanceRate) != Float
+				.floatToIntBits(other.atheneumCommonBalanceRate))
+			return false;
+		if (Float.floatToIntBits(structuresRate) != Float
+				.floatToIntBits(other.structuresRate))
+			return false;
+		return true;
+	}
+	
+	
 
 }

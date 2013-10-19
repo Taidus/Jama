@@ -356,4 +356,6 @@ public class Agreement implements Serializable {
 
 		return sum;
 	}
+	
+	
 }
