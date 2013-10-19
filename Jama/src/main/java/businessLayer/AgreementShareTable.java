@@ -2,17 +2,16 @@ package businessLayer;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-
-import controllerLayer.FillerFactoryBean;
 
 @Entity
 public class AgreementShareTable extends AbstractShareTable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private AgreementShareTableFiller filler;
 
 	public AgreementShareTable() {
