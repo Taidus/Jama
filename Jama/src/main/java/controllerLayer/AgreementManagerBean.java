@@ -32,7 +32,8 @@ public class AgreementManagerBean implements Serializable {
 	@Inject private Conversation conversation;
 	@Inject private FillerFactoryBean fillerFactory;
 	@EJB private AgreementDaoBean agreementDao;
-	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED) private EntityManager em;
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED) 
+	private EntityManager em;
 
 	private boolean conversationninherited;
 
@@ -82,6 +83,7 @@ public class AgreementManagerBean implements Serializable {
 		// if(selectedAgreementId > 0){
 		// agreement.setId(selectedAgreementId);
 		// }
+		transferObjAgreement.getShareTable().setFiller(null);
 		agreementDao.create(agreement);
 
 		// if (selectedAgreementId < 0) {
