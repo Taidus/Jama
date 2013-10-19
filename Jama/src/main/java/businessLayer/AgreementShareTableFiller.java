@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 
 public abstract class AgreementShareTableFiller {
 	public abstract void fill(AgreementShareTable table);
+	
 	@Override
 	public abstract int hashCode();
 
