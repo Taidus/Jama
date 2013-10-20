@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panel header="#{msgs.annualRecap_Header}">
+
+		<p:dataTable id="annualRecapTable" selectionMode="none"
+			var="recapItem" value="#{agreementRecapPB.annualRecap}"
+			emptyMessage="#{msgs.noInstallmentFound}">
+			<p:column headerText="#{msgs.year}">
+
+				<h:outputText value="#{recapItem.year}">
+				</h:outputText>
+
+
+			</p:column>
+
+			<p:column headerText="#{msgs.debtNoteAmount}">
+				<h:outputText value="#{recapItem.wholeAmount}" />
+
+			</p:column>
+			<p:column headerText="#{msgs.turnOver}">
+				<h:outputText value="#{recapItem.wholeAmount}" />
+
+			</p:column>
+			<p:column headerText="#{msgs.ramainder}">
+				<h:outputText value="#{recapItem.remainder}" />
+
+			</p:column>
+
+
+		</p:dataTable>
+
+	</p:panel>
+
+	<p:panel header="#{msgs.totalRecap_Header}">
+
+		<p:panelGrid>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalAgreementAmount}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.agr.wholeAmount}" />
+
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalTurnOver}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalTurnOver}" />
+
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalRemainder}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainder}" />
+
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+	</p:panel>
+
+
+</ui:composition>

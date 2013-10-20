@@ -39,13 +39,20 @@
 
 				</p:tab>
 
+				<p:tab id="tabRecap" title="#{msgs.recap_Tab}">
+
+					<ui:include src="/resources/sections/agreementRecap.xhtml" />
+
+
+				</p:tab>
+
 				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
 
 			</p:tabView>
 
 
-	<p:commandButton value="back"
-			action="#{agreementEditPB.cancel()}" ajax="false" />
+			<p:commandButton value="back" action="#{agreementEditPB.cancel()}"
+				ajax="false" />
 
 
 

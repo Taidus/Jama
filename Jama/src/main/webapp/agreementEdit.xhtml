@@ -17,12 +17,12 @@
 		<input type="hidden" name="cid"
 			value='#{agreementManager.conversation.id}' />
 
-		<p:tabView dynamic="true" activeIndex="#{agreementEditPB.currentTabIndex}"
-			>
+		<p:tabView dynamic="true"
+			activeIndex="#{agreementEditPB.currentTabIndex}">
 			<p:ajax event="tabChange" listener="#{agreementEditPB.handleFlow}"></p:ajax>
 
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
-				<sections:agreementWizData editingDisable="false"  />
+				<sections:agreementWizData editingDisable="false" />
 
 			</p:tab>
 
@@ -32,8 +32,16 @@
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-				<sections:agreementInstallmentsList installmentOutcome="agreementEdit" editingDisable="false">
+				<sections:agreementInstallmentsList
+					installmentOutcome="agreementEdit" editingDisable="false">
 				</sections:agreementInstallmentsList>
+
+
+			</p:tab>
+
+			<p:tab id="tabRecap" title="#{msgs.recap_Tab}">
+
+				<ui:include src="/resources/sections/agreementRecap.xhtml" />
 
 
 			</p:tab>
@@ -50,8 +58,8 @@
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
 			severity="alert" widgetVar="w_confirm">
 			<p:commandButton value="#{msgs.yes}"
-				action="#{agreementEditPB.cancel()}"
-				immediate="true" oncomplete="w_confirm.hide()" />
+				action="#{agreementEditPB.cancel()}" immediate="true"
+				oncomplete="w_confirm.hide()" />
 			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
 				type="button" />
 		</p:confirmDialog>
