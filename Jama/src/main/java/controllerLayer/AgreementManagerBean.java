@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
@@ -23,6 +24,7 @@ import daoLayer.DepartmentDaoBean;
 
 @Named("agreementManager")
 @ConversationScoped
+@Stateful
 public class AgreementManagerBean implements Serializable {
 
 	/**
@@ -83,7 +85,6 @@ public class AgreementManagerBean implements Serializable {
 
 	public void save() {
 		agreement.cloneFields(transferObjAgreement);
-		transferObjAgreement.getShareTable().setFiller(null);
 		agreementDao.create(agreement);
 
 		close();
@@ -117,7 +118,7 @@ public class AgreementManagerBean implements Serializable {
 		// ereditato dai DAO usati in altri bean. E' necessario
 		// aprire un persistence context per evitare il detachament di alcune
 		// entità.
-		em.clear();
+		//em.clear();
 
 		agreement = new Agreement();
 		transferObjAgreement = new Agreement();

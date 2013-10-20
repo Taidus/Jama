@@ -6,6 +6,7 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import businessLayer.Company;
 
@@ -13,7 +14,7 @@ import businessLayer.Company;
 @ConversationScoped
 
 public class CompanyDaoBean {
-	@PersistenceContext(unitName = "primary")
+	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	public CompanyDaoBean() {

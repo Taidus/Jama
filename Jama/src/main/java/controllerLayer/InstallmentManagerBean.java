@@ -14,6 +14,7 @@ import businessLayer.Installment;
 
 @Named("installmentManager")
 @ConversationScoped
+
 public class InstallmentManagerBean implements Serializable {
 
 	/**

@@ -9,7 +9,7 @@ import javax.persistence.NamedQuery;
 
 @NamedQuery(name = "AgreementShareTableFiller.findAll", query = "SELECT f FROM AgreementShareTableFiller f ") 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.JOINED)
 
 public abstract class AgreementShareTableFiller {
 	public abstract void fill(AgreementShareTable table);

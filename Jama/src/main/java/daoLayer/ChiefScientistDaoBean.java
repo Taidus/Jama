@@ -6,6 +6,7 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import businessLayer.ChiefScientist;
 
@@ -14,7 +15,7 @@ import businessLayer.ChiefScientist;
 
 public class ChiefScientistDaoBean {
 
-	@PersistenceContext(unitName = "primary")
+	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	public ChiefScientistDaoBean() {
