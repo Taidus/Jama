@@ -3,7 +3,6 @@ package controllerLayer;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
@@ -11,23 +10,15 @@ import javax.inject.Named;
 
 import presentationLayer.LazyAgreementDataModel;
 import businessLayer.Agreement;
-import daoLayer.ChiefScientistDaoBean;
 
 @Named("agreementListPCB")
 @ConversationScoped
 public class AgreementListPageControllerBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EJB
-	private ChiefScientistDaoBean chiefDao;
-	@Inject
-	private LazyAgreementDataModel lazyModel;
-	@Inject
-	private AgreementManagerBean agrManager;
-
-	@Inject
-	private Conversation conversation;
-
+	@Inject private LazyAgreementDataModel lazyModel;
+	@Inject private AgreementManagerBean agrManager;
+	@Inject private Conversation conversation;
 
 	public AgreementListPageControllerBean() {
 	}
@@ -67,10 +58,10 @@ public class AgreementListPageControllerBean implements Serializable {
 	}
 
 	private void print(String action) {
-		//TODO eliminare
+		// TODO eliminare
 		Agreement selectedValue = lazyModel.getSelectedValue();
-		System.out.println("***\n" + action + " agreement with ID: " + selectedValue.getId() + ". Chief: "
-				+ selectedValue.getChief().getName() + "; company: " + selectedValue.getCompany().getName() + "\n***");
+		System.out.println("***\n" + action + " agreement with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getName()
+				+ "; company: " + selectedValue.getCompany().getName() + "\n***");
 	}
 
 	private void close() {
