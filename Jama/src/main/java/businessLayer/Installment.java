@@ -15,6 +15,7 @@ import util.Messages;
  * Entity implementation class for Entity: Installment
  * 
  */
+
 @Entity
 public class Installment implements Serializable {
 

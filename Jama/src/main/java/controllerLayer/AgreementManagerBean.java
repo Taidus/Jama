@@ -30,15 +30,18 @@ public class AgreementManagerBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Inject private Conversation conversation;
-	@Inject private FillerFactoryBean fillerFactory;
-	@EJB private AgreementDaoBean agreementDao;
+	@Inject
+	private Conversation conversation;
+	@Inject
+	private FillerFactoryBean fillerFactory;
+	@EJB
+	private AgreementDaoBean agreementDao;
 
-	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED) 
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
-	@EJB private DepartmentDaoBean depDao;
-
+	@EJB
+	private DepartmentDaoBean depDao;
 
 	private boolean conversationninherited;
 
@@ -49,7 +52,6 @@ public class AgreementManagerBean implements Serializable {
 	private Agreement transferObjAgreement;
 
 	public AgreementManagerBean() {
-		// transferObjAgreement = new Agreement();
 		conversationninherited = false;
 	}
 
@@ -71,9 +73,6 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	private void close() {
-		// serve per hibernate, sennò trova due riferimenti ad una stessa entità
-		// managed;
-		transferObjAgreement.setInstallments(null);
 
 		if (!conversationninherited) {
 			conversation.end();
@@ -81,19 +80,12 @@ public class AgreementManagerBean implements Serializable {
 
 		}
 	}
-	
 
 	public void save() {
 		agreement.cloneFields(transferObjAgreement);
-		// if(selectedAgreementId > 0){
-		// agreement.setId(selectedAgreementId);
-		// }
 		transferObjAgreement.getShareTable().setFiller(null);
 		agreementDao.create(agreement);
 
-		// if (selectedAgreementId < 0) {
-		// agreementDao.create(transferObjAgreement);
-		// }
 		close();
 	}
 
@@ -120,13 +112,22 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public String createAgreement() {
+
+		// questa riga causa l'apertura di un persistence context che viene poi
+		// ereditato dai DAO usati in altri bean. E' necessario
+		// aprire un persistence context per evitare il detachament di alcune
+		// entità.
+		em.clear();
+
 		agreement = new Agreement();
 		transferObjAgreement = new Agreement();
 		insertRandomValues(transferObjAgreement); // TODO eliminare
 		AgreementShareTable shareTable = new AgreementShareTable();
-		shareTable.setFiller(fillerFactory.getFiller(transferObjAgreement.getDepartment()));
+		shareTable.setFiller(fillerFactory.getFiller(transferObjAgreement
+				.getDepartment()));
 		transferObjAgreement.setShareTable(shareTable);
 		begin();
+
 		// check
 		// transferObjAgreement.cloneFields(agreement);
 		return "/agreementWiz.xhtml";
