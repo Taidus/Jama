@@ -12,11 +12,13 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractShareTable {
 	//TODO cancellare stampe varie
+	
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	
 	protected float atheneumCapitalBalance;
 	protected float atheneumCommonBalance;
 	protected float structures;
@@ -33,10 +35,29 @@ public abstract class AbstractShareTable {
 	protected float personnelOnContract;
 	protected float otherCost;
 
+	protected AbstractShareTable() {
+		super();
+	}
+	
 	protected final void initFields() {
 		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
 		otherCost = 100F;
 		goodsAndServices = 100F;
+	}
+	
+	protected void copy(AbstractShareTable copy){
+		this.atheneumCapitalBalance = copy.atheneumCapitalBalance;
+		this.atheneumCommonBalance = copy.atheneumCommonBalance;
+		this.structures = copy.structures;
+		this.personnel = copy.personnel;
+		this.sharePerPersonnel = new HashMap<>(copy.sharePerPersonnel);
+		this.goodsAndServices = copy.goodsAndServices;
+		this.businessTrip = copy.businessTrip;
+		this.consumerMaterials = copy.consumerMaterials;
+		this.inventoryMaterials = copy.inventoryMaterials;
+		this.rentals = copy.rentals;
+		this.personnelOnContract = copy.personnelOnContract;
+		this.otherCost = copy.otherCost;
 	}
 
 	public int getId() {

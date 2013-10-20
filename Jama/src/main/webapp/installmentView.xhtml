@@ -28,8 +28,7 @@
 			</p:tab>
 	
 			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
-				<sections:wizShareTable editingDisable="true"
-					bean="#{installmentShareTablePCB}" />
+				<sections:installmentWizShareTable editingDisable="true" />
 			</p:tab>
 
 
@@ -39,7 +38,6 @@
 		
 			<p:commandButton value="back"
 			action="#{installmentWizardPB.cancel()}"
-			actionListener="#{installmentShareTablePCB.toUpdate()}"
 			immediate="true" ajax="false" />
 			
 			

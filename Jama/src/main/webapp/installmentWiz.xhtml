@@ -1,10 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 
 <h:head>
@@ -16,16 +12,16 @@
 	<h:panelGrid width="100%" columns="2" columnClasses="col1">
 		<h:form id="installmentWiz">
 
-			<input type="hidden" name="cid"
-				value='#{agreementManager.conversation.id}' />
+			<input type="hidden" name="cid" value='#{agreementManager.conversation.id}' />
 
 			<p:wizard>
 
-				<ui:include src="/resources/sections/installmentWizData.xhtml" />
+				<p:tab id="tabDati" title="#{msgs.data_Tab}">
+					<sections:installmentWizData editingDisable="false"></sections:installmentWizData>
+				</p:tab>
 
 				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
-					<sections:wizShareTable editingDisable="false"
-						bean="#{installmentShareTablePCB}" />
+					<sections:installmentWizShareTable editingDisable="false" />
 				</p:tab>
 
 				<ui:include src="/resources/sections/installmentLastStep.xhtml" />
@@ -34,10 +30,7 @@
 
 			</p:wizard>
 
-			<p:commandButton value="#{msgs.cancel}"
-				action="#{installmentWizardPB.cancel()}"
-				actionListener="#{installmentShareTablePCB.toUpdate()}"
-				immediate="true" ajax="false" />
+			<p:commandButton value="#{msgs.cancel}" action="#{installmentWizardPB.cancel()}" immediate="true" ajax="false" />
 
 		</h:form>
 	</h:panelGrid>

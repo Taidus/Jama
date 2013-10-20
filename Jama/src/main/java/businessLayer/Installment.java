@@ -21,43 +21,29 @@ public class Installment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;
 
-	@Temporal(TemporalType.DATE)
-	@NotNull
-	private Date date;
+	@Temporal(TemporalType.DATE) @NotNull private Date date;
 
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 
-	@Min(0)
-	private int voucherNumber;
+	@Min(0) private int voucherNumber;
 
-	@Temporal(TemporalType.DATE)
-	private Date voucherDate;
+	@Temporal(TemporalType.DATE) private Date voucherDate;
 
-	@Min(0)
-	private int ivaVoucherNumber;
-	@Min(0)
-	private int pendingNumber;
-	@Min(0)
-	private int invoiceNumber;
+	@Min(0) private int ivaVoucherNumber;
+	@Min(0) private int pendingNumber;
+	@Min(0) private int invoiceNumber;
 
-	@Temporal(TemporalType.DATE)
-	private Date invoiceDate;
+	@Temporal(TemporalType.DATE) private Date invoiceDate;
 
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
 
-	@ManyToOne
-	private Agreement agreement;
-
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn
-	private InstallmentShareTable shareTable;
+	@ManyToOne private Agreement agreement;
+	@OneToOne(cascade = CascadeType.PERSIST) @JoinColumn private InstallmentShareTable shareTable;
 
 	public Installment() {
 		this.shareTable = new InstallmentShareTable();
@@ -72,8 +58,7 @@ public class Installment implements Serializable {
 	}
 
 	public float getWholeAmount() {
-		return this.wholeTaxableAmount * (100 + this.IVA_amount)
-				/ 100;
+		return this.wholeTaxableAmount * (100 + this.IVA_amount) / 100;
 	}
 
 	public void setWholeTaxableAmount(float wholeTaxableAmount) {
@@ -187,55 +172,38 @@ public class Installment implements Serializable {
 	public void setAgreement(Agreement agreement) {
 		this.agreement = agreement;
 	}
-	
-	public void copy(Installment copy){
-		//this.id = copy.id;
-		this.date = copy.date;
-		IVA_amount = copy.IVA_amount;
+
+	public void copy(Installment copy) {
+		// this.id = copy.id;
+		this.date = new Date(copy.date.getTime());
+		this.IVA_amount = copy.IVA_amount;
 		this.wholeTaxableAmount = copy.wholeTaxableAmount;
 		this.voucherNumber = copy.voucherNumber;
-		this.voucherDate = copy.voucherDate;
+		this.voucherDate = new Date(copy.voucherDate.getTime());
 		this.ivaVoucherNumber = copy.ivaVoucherNumber;
 		this.pendingNumber = copy.pendingNumber;
 		this.invoiceNumber = copy.invoiceNumber;
-		this.invoiceDate = copy.invoiceDate;
+		this.invoiceDate = new Date(copy.invoiceDate.getTime());
 		this.paidInvoice = copy.paidInvoice;
 		this.reportRequired = copy.reportRequired;
 		this.note = copy.note;
-		this.agreement = copy.agreement;
-		this.shareTable = copy.shareTable;
-		
-//		this.shareTable.setInstallment(copy);
-	}
-	
-	
+		this.agreement = new Agreement();
+		this.agreement.cloneFields(copy.agreement);
+		this.shareTable = new InstallmentShareTable();
+		this.shareTable.copy(copy.getShareTable());
 
-
-
-	public void validateAmount() {
-		List<Installment> installments = agreement.getInstallments();
-		float sum = 0;
-		for (Installment installment : installments) {
-			sum += installment.getWholeAmount();
-		}
-		sum += this.getWholeAmount();
-		if (sum > agreement.getWholeAmount()) {
-			throw new ValidatorException(
-					Messages.getErrorMessage("err_installmentAmount"));
-		}
+		// this.shareTable.setInstallment(copy);
 	}
 
+	public void initShareTableFromAgreement(Agreement agr){
+		this.shareTable.copy(agr.getShareTable());
+	}
 
 	@Override
 	public String toString() {
-		return "Installment [id=" + id + ", date=" + date  + ", IVA_amount=" + IVA_amount
-				+ ", wholeTaxableAmount=" + wholeTaxableAmount
-				+ ", voucherNumber=" + voucherNumber + ", voucherDate="
-				+ voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber
-				+ ", pendingNumber=" + pendingNumber + ", invoiceNumber="
-				+ invoiceNumber + ", invoiceDate=" + invoiceDate
-				+ ", paidInvoice=" + paidInvoice + ", reportRequired="
-				+ reportRequired + ", note=" + note + ", agreement="
-				+ agreement + ", shareTable=" + shareTable + "]";
+		return "Installment [id=" + id + ", date=" + date + ", IVA_amount=" + IVA_amount + ", wholeTaxableAmount=" + wholeTaxableAmount
+				+ ", voucherNumber=" + voucherNumber + ", voucherDate=" + voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber + ", pendingNumber="
+				+ pendingNumber + ", invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate + ", paidInvoice=" + paidInvoice
+				+ ", reportRequired=" + reportRequired + ", note=" + note + ", agreement=" + agreement + ", shareTable=" + shareTable + "]";
 	}
 }
