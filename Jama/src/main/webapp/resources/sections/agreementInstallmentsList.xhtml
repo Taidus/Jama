@@ -45,24 +45,24 @@
 				<f:setPropertyActionListener
 					target="#{installmentWizardPB.returnPage}"
 					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
-				<f:setPropertyActionListener value="#{installment.id}"
-					target="#{installmentManager.selectedInstalmentId}" />
+				<f:setPropertyActionListener value="#{installment}"
+					target="#{installmentManager.selectedInstallment}" />
 			</p:commandButton>
 			<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench"
 				action="#{installmentWizardPB.editInstallment()}" rendered="#{cc.attrs.editingDisable==false}">
 				<f:setPropertyActionListener
 					target="#{installmentWizardPB.returnPage}"
 					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
-				<f:setPropertyActionListener value="#{installment.id}"
-					target="#{installmentManager.selectedInstalmentId}" />
+				<f:setPropertyActionListener value="#{installment}"
+					target="#{installmentManager.selectedInstallment}" />
 			</p:commandButton>
 			<p:commandButton styleClass="list-row-button" icon="ui-icon-trash"
 				oncomplete="delete_confirm.show();" rendered="#{cc.attrs.editingDisable==false}">
 				<f:setPropertyActionListener
 					target="#{installmentWizardPB.returnPage}"
 					value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
-				<f:setPropertyActionListener value="#{installment.id}"
-					target="#{installmentManager.selectedInstalmentId()}" />
+				<f:setPropertyActionListener value="#{installment}"
+					target="#{installmentManager.selectedInstallment}" />
 			</p:commandButton>
 
 

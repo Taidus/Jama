@@ -26,17 +26,20 @@ public class InstallmentManagerBean implements Serializable {
 	Agreement agreement;
 
 	// TODO spostare return indirizzo pagina
-	private int selectedInstalmentId = -1;
+	private Installment selectedInstallment;
 	private Installment transferObjInstallment;
 	private Installment installment;
 
-	public int getSelectedInstalmentId() {
-		return selectedInstalmentId;
+	
+
+
+
+	public Installment getSelectedInstallment() {
+		return selectedInstallment;
 	}
 
-	public void setSelectedInstalmentId(int selectedInstalmentId) {
-		this.selectedInstalmentId = selectedInstalmentId;
-		System.out.println("selected=====" + selectedInstalmentId);
+	public void setSelectedInstallment(Installment selectedInstallment) {
+		this.selectedInstallment = selectedInstallment;
 	}
 
 	public String addInstallment() {
@@ -60,13 +63,14 @@ public class InstallmentManagerBean implements Serializable {
 		installment.copy(transferObjInstallment);
 
 
-		if (selectedInstalmentId < 0) {
+		if (selectedInstallment == null) {
 			
 			
 			agreement.getInstallments().add(installment);
 
 		}
 		
+		//TODO serve?
 		transferObjInstallment.setAgreement(null);
 		
 		
@@ -76,7 +80,7 @@ public class InstallmentManagerBean implements Serializable {
 	
 	public void close(){
 		
-		selectedInstalmentId = -1;
+		selectedInstallment = null;
 		
 	}
 //
@@ -110,9 +114,8 @@ public class InstallmentManagerBean implements Serializable {
 		
 	private void initInstallment(){
 		
-		installment = agreement.getInstallmentById(selectedInstalmentId);
 		transferObjInstallment = new Installment();
-		transferObjInstallment.copy(installment);
+		transferObjInstallment.copy(selectedInstallment);
 		
 	}
 	public void viewInstallment() {
@@ -126,16 +129,15 @@ public class InstallmentManagerBean implements Serializable {
 	public void editInstallment() {
 		
 		initInstallment();
-		installment = agreement.getInstallmentById(selectedInstalmentId);
 		transferObjInstallment = new Installment();
-		transferObjInstallment.copy(installment);
+		transferObjInstallment.copy(selectedInstallment);
 
 	}
 
 	public void deleteInstallment() {
-		Installment i = agreement.getInstallmentById(selectedInstalmentId);
-		agreement.getInstallments().remove(i);
-		i.setAgreement(null);
+		agreement.getInstallments().remove(selectedInstallment);
+		//TODO serve??
+		selectedInstallment.setAgreement(null);
 		close();
 	}
 
