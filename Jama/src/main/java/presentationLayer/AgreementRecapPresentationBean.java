@@ -60,6 +60,7 @@ public class AgreementRecapPresentationBean {
 		if(!agr.getInstallments().isEmpty()){
 		
 		Date d = agr.getInstallments().get(0).getDate();
+		System.out.println("Data 0: "+d);
 		Calendar currentDate = new GregorianCalendar();
 		currentDate.setTimeInMillis(d.getTime());
 
@@ -69,12 +70,15 @@ public class AgreementRecapPresentationBean {
 		for (Installment i : agr.getInstallments()) {
 
 			Calendar date = new GregorianCalendar();
-			currentDate.setTimeInMillis(i.getDate().getTime());
+			date.setTimeInMillis(i.getDate().getTime());
+			
+			System.out.println("CurrentDate: "+currentDate.get(Calendar.YEAR)+", DateInst :"+date.get(Calendar.YEAR));
+			
 
 			if (date.get(Calendar.YEAR) != currentDate.get(Calendar.YEAR)) {
-
+					
+				
 				float remainder = currentWholeAmount - currentpaid;
-				//cheack getTime
 				annualRecap.add(new RecapItem(remainder, currentWholeAmount,
 						currentpaid,currentDate.get(Calendar.YEAR)));
 				currentDate = date;
@@ -93,10 +97,22 @@ public class AgreementRecapPresentationBean {
 			}
 
 		}
+		
+		if(currentWholeAmount!=0){
+		
+		float remainder = currentWholeAmount - currentpaid;
+		annualRecap.add(new RecapItem(remainder, currentWholeAmount,
+				currentpaid,currentDate.get(Calendar.YEAR)));}
+		
+		
 		}
-
+		
+		
+		
+		//check 2 remainder
 		float totalRemainder = totalAmount - totalPaid;
-		totalRecap = new TotalRecap(totalAmount, totalPaid, totalRemainder);
+		float totalRemainderRespectToAgremeement = agr.getWholeAmount() - totalAmount;
+		totalRecap = new TotalRecap(totalAmount, totalPaid, totalRemainder,totalRemainderRespectToAgremeement);
 
 	}
 
@@ -137,26 +153,29 @@ public class AgreementRecapPresentationBean {
 		private float totalTurnOver;
 		// TODO scadenza / noin in scadenza
 		private float totalRemainder;
-
+		private float totalRemainderRespectToAgreement;
 		public TotalRecap(float agreementWholeAmount, float totalTurnOver,
-				float totalRemainder) {
+				float totalRemainder, float totalRemainderRespectToAgreement) {
 			super();
 			this.agreementWholeAmount = agreementWholeAmount;
 			this.totalTurnOver = totalTurnOver;
 			this.totalRemainder = totalRemainder;
+			this.totalRemainderRespectToAgreement = totalRemainderRespectToAgreement;
 		}
-
 		public float getAgreementWholeAmount() {
 			return agreementWholeAmount;
 		}
-
 		public float getTotalTurnOver() {
 			return totalTurnOver;
 		}
-
 		public float getTotalRemainder() {
 			return totalRemainder;
 		}
+		public float getTotalRemainderRespectToAgreement() {
+			return totalRemainderRespectToAgreement;
+		}
+
+		
 
 	}
 

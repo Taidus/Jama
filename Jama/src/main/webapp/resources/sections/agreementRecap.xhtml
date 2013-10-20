@@ -6,8 +6,7 @@
 
 	<p:panel header="#{msgs.annualRecap_Header}">
 
-		<p:dataTable id="annualRecapTable" selectionMode="none"
-			var="recapItem" value="#{agreementRecapPB.annualRecap}"
+		<p:dataTable id="annualRecapTable" var="recapItem" value="#{agreementRecapPB.annualRecap}"
 			emptyMessage="#{msgs.noInstallmentFound}">
 			<p:column headerText="#{msgs.year}">
 
@@ -22,7 +21,7 @@
 
 			</p:column>
 			<p:column headerText="#{msgs.turnOver}">
-				<h:outputText value="#{recapItem.wholeAmount}" />
+				<h:outputText value="#{recapItem.paid}" />
 
 			</p:column>
 			<p:column headerText="#{msgs.ramainder}">
@@ -61,10 +60,20 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.totalRemainder}" />
+					<h:outputText value="#{msgs.totalExpiringRemainder}" />
 				</p:column>
 				<p:column>
 					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainder}" />
+
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalNonExpiringRemainder}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainderRespectToAgreement}" />
 
 				</p:column>
 			</p:row>
