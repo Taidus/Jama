@@ -10,9 +10,8 @@ import javax.persistence.ManyToOne;
 public class AgreementShareTable extends AbstractShareTable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-	private AgreementShareTableFiller filler;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }) private AgreementShareTableFiller filler;
 
 	public AgreementShareTable() {
 		initFields();
@@ -27,15 +26,19 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 		setPersonnel(0F);
 	}
 
+	public void copy(AgreementShareTable copy) {
+		super.copy(copy);
+		this.filler = copy.filler;
+	}
+
 	@Override
 	public void setPersonnel(float personnel) {
 		super.setPersonnel(personnel);
-		if(filler != null){
+		if (filler != null) {
 			filler.fill(this);
-		}
-		else{
+		} else {
 			System.err.println("!!! Null filler");
-			//TODO lanciare eccezione
+			// TODO lanciare eccezione
 		}
 	}
 

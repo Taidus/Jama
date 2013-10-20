@@ -34,63 +34,44 @@ public class Agreement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// TODO rimmettere i not null
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;
 
-	@NotNull
-	@Size(max = 1000)
-	private String title;
+	@NotNull @Size(max = 1000) private String title;
 	private String protocolNumber; // FIXME ma serve?
 
-	@NotNull
-	private AgreementType type;
+	@NotNull private AgreementType type;
 
-	@ManyToOne
-	@NotNull
-	private ChiefScientist chief;
-	@NotNull
-	private String contactPerson;
+	@ManyToOne @NotNull private ChiefScientist chief;
+	@NotNull private String contactPerson;
 
-	@ManyToOne
-	@NotNull
-	private Company company;
+	@ManyToOne @NotNull private Company company;
 
-	@ManyToOne
-	private Department department;
+	@ManyToOne private Department department;
 
 	private int CIA_projectNumber;
 	private int inventoryNumber;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	private AgreementShareTable shareTable;
+	@OneToOne(cascade = CascadeType.PERSIST) private AgreementShareTable shareTable;
 
 	private float IVA_amount;
 	private float wholeTaxableAmount;
 	private float spentAmount;
 	private float reservedAmount;
 
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE, CascadeType.REMOVE })
-	@OrderBy("date DESC")
-	private List<Installment> installments;
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }) @OrderBy("date DESC") private List<Installment> installments;
 
-	@Temporal(TemporalType.DATE)
-	private Date approvalDate;
+	@Temporal(TemporalType.DATE) private Date approvalDate;
 
-	@Temporal(TemporalType.DATE)
-	private Date beginDate;
+	@Temporal(TemporalType.DATE) private Date beginDate;
 
-	@Temporal(TemporalType.DATE)
-	private Date deadlineDate;
+	@Temporal(TemporalType.DATE) private Date deadlineDate;
 
 	private String note;
 
-	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
-	private List<Attachment> attachments;
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST }) private List<Attachment> attachments;
 
 	public Agreement() {
-//		shareTable = new AgreementShareTable();
+		// shareTable = new AgreementShareTable();
 		installments = new ArrayList<>();
 		attachments = new ArrayList<>();
 	}
@@ -107,13 +88,16 @@ public class Agreement implements Serializable {
 		this.department = copy.getDepartment();
 		this.CIA_projectNumber = copy.getCIA_projectNumber();
 		this.inventoryNumber = copy.getInventoryNumber();
-		this.shareTable = copy.getShareTable();
+
+		this.shareTable = new AgreementShareTable();
+		this.shareTable.copy(copy.getShareTable());
+		this.installments = new ArrayList<>(copy.getInstallments());
+
 		this.IVA_amount = copy.getIVA_amount();
 		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
-		this.installments = copy.getInstallments();
-		this.approvalDate = copy.getApprovalDate();
-		this.beginDate = copy.getBeginDate();
-		this.deadlineDate = copy.getDeadlineDate();
+		this.approvalDate = new Date(copy.getApprovalDate().getTime());
+		this.beginDate = new Date(copy.getBeginDate().getTime());
+		this.deadlineDate = new Date(copy.getDeadlineDate().getTime());
 		this.note = copy.getNote();
 		this.attachments = copy.getAttachments();
 		this.spentAmount = copy.getSpentAmount();
@@ -144,16 +128,11 @@ public class Agreement implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber="
-				+ protocolNumber + ", type=" + type + ", chief=" + chief
-				+ ", contactPerson=" + contactPerson + ", company=" + company
-				+ ", department=" + department + ", CIA_projectNumber="
-				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber
-				+ ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
-				+ ", wholeTaxableAmount=" + wholeTaxableAmount
-				+ ", installments=" + installments + ", approvalDate="
-				+ approvalDate + ", beginDate=" + beginDate + ", deadlineDate="
-				+ deadlineDate + ", note=" + note + "]";
+		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber=" + protocolNumber + ", type=" + type + ", chief=" + chief
+				+ ", contactPerson=" + contactPerson + ", company=" + company + ", department=" + department + ", CIA_projectNumber="
+				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber + ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
+				+ ", wholeTaxableAmount=" + wholeTaxableAmount + ", installments=" + installments + ", approvalDate=" + approvalDate + ", beginDate="
+				+ beginDate + ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
 	}
 
 	public int getId() {
@@ -347,6 +326,5 @@ public class Agreement implements Serializable {
 
 		return sum;
 	}
-	
-	
+
 }

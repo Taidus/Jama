@@ -45,6 +45,7 @@ public class InstallmentManagerBean implements Serializable {
 		installment = new Installment();
 		transferObjInstallment = new Installment();
 		transferObjInstallment.setAgreement(agreement);
+		transferObjInstallment.initShareTableFromAgreement(agreement);
 		return "/installmentWiz.xhtml";
 
 	}

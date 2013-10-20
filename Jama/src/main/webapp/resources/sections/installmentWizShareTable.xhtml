@@ -11,15 +11,21 @@
 
 	<p:panel header="Tabella di ripartizione">
 
-		<h:panelGrid id="agrValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
+		<h:panelGrid id="instValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
 
 			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
-			<h:outputText id="atheneumCapitalBalance" value="#{agrShareTablePB.shareTable.atheneumCapitalBalance}">
+			<h:inputText id="atheneumCapitalBalance" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="atheneumCapitalBalance_o" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
 			<h:outputText id="percentAtheneumCapitalBalance"
-				value="#{agrShareTablePB.getPercentOfMainField(agrShareTablePB.shareTable.atheneumCapitalBalance)}">
+				value="#{instShareTablePB.getPercentOfMainField(instShareTablePB.shareTable.atheneumCapitalBalance)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -27,11 +33,18 @@
 
 
 			<h:outputText value="#{msgs.shareTableCommonBalance}:" />
-			<h:outputText id="atheneumCommonBalance" value="#{agrShareTablePB.shareTable.atheneumCommonBalance}">
+			<h:inputText id="atheneumCommonBalance" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" label="#{msgs.shareTableCommonBalance}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="atheneumCommonBalance_o" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentAtheneumCommonBalance" value="#{agrShareTablePB.getPercentOfMainField(agrShareTablePB.shareTable.atheneumCommonBalance)}">
+			<h:outputText id="percentAtheneumCommonBalance"
+				value="#{instShareTablePB.getPercentOfMainField(instShareTablePB.shareTable.atheneumCommonBalance)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -39,17 +52,17 @@
 
 
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
-			<h:inputText id="personnel" value="#{agrShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
+			<h:inputText id="personnel" value="#{instShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="agrValuesGrid personnelShares personnalShareInput" />
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="personnel_o" value="#{agrShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}">
+			<h:outputText id="personnel_o" value="#{instShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentPersonnel" value="#{agrShareTablePB.getPercentOfMainField(agrShareTablePB.shareTable.personnel)}">
+			<h:outputText id="percentPersonnel" value="#{instShareTablePB.getPercentOfMainField(instShareTablePB.shareTable.personnel)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -57,11 +70,17 @@
 
 
 			<h:outputText value="#{msgs.shareTableStructures}:" />
-			<h:outputText id="structures" value="#{agrShareTablePB.shareTable.structures}">
+			<h:inputText id="structures" value="#{instShareTablePB.shareTable.structures}" label="#{msgs.shareTableStructures}" required="true"
+				rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="structures_o" value="#{instShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentStructures" value="#{agrShareTablePB.getPercentOfMainField(agrShareTablePB.shareTable.structures)}">
+			<h:outputText id="percentStructures" value="#{instShareTablePB.getPercentOfMainField(instShareTablePB.shareTable.structures)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -69,29 +88,30 @@
 
 
 			<h:outputText value="#{msgs.shareTableGoods}:" />
-			<h:outputText id="goodsAndServices" value="#{agrShareTablePB.shareTable.goodsAndServices}">
+			<h:outputText id="goodsAndServices" value="#{instShareTablePB.shareTable.goodsAndServices}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentGoodsAndServices" value="#{agrShareTablePB.getPercentOfMainField(agrShareTablePB.shareTable.goodsAndServices)}">
+			<h:outputText id="percentGoodsAndServices" value="#{instShareTablePB.getPercentOfMainField(instShareTablePB.shareTable.goodsAndServices)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
 			<h:message for="goodsAndServices" id="goodsAndServicesError" />
 
 
+
 			<h:outputText value="#{msgs.shareTableTrip}:" />
-			<h:inputText id="businessTrip" value="#{agrShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}" required="true"
+			<h:inputText id="businessTrip" value="#{instShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="agrValuesGrid" />
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="businessTrip_o" value="#{agrShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}">
+			<h:outputText id="businessTrip_o" value="#{instShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentBusinessTrip" value="#{agrShareTablePB.getPercentOfGoodsField(agrShareTablePB.shareTable.businessTrip)}">
+			<h:outputText id="percentBusinessTrip" value="#{instShareTablePB.getPercentOfGoodsField(instShareTablePB.shareTable.businessTrip)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -99,17 +119,17 @@
 
 
 			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
-			<h:inputText id="consumerMaterials" value="#{agrShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}" required="true"
-				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="agrValuesGrid" />
+			<h:inputText id="consumerMaterials" value="#{instShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="consumerMaterials_o" value="#{agrShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}">
+			<h:outputText id="consumerMaterials_o" value="#{instShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentConsumerMaterials" value="#{agrShareTablePB.getPercentOfGoodsField(agrShareTablePB.shareTable.consumerMaterials)}">
+			<h:outputText id="percentConsumerMaterials" value="#{instShareTablePB.getPercentOfGoodsField(instShareTablePB.shareTable.consumerMaterials)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -117,17 +137,17 @@
 
 
 			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
-			<h:inputText id="inventoryMaterials" value="#{agrShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
+			<h:inputText id="inventoryMaterials" value="#{instShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="agrValuesGrid" />
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="inventoryMaterials_o" value="#{agrShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}">
+			<h:outputText id="inventoryMaterials_o" value="#{instShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentInventoryMaterials" value="#{agrShareTablePB.getPercentOfGoodsField(agrShareTablePB.shareTable.inventoryMaterials)}">
+			<h:outputText id="percentInventoryMaterials" value="#{instShareTablePB.getPercentOfGoodsField(instShareTablePB.shareTable.inventoryMaterials)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -135,17 +155,17 @@
 
 
 			<h:outputText value="#{msgs.shareTableRentals}:" />
-			<h:inputText id="rentals" value="#{agrShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
+			<h:inputText id="rentals" value="#{instShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="agrValuesGrid" />
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="rentals_o" value="#{agrShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}">
+			<h:outputText id="rentals_o" value="#{instShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentRentals" value="#{agrShareTablePB.getPercentOfGoodsField(agrShareTablePB.shareTable.rentals)}">
+			<h:outputText id="percentRentals" value="#{instShareTablePB.getPercentOfGoodsField(instShareTablePB.shareTable.rentals)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -153,17 +173,17 @@
 
 
 			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
-			<h:inputText id="personnelOnContract" value="#{agrShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
+			<h:inputText id="personnelOnContract" value="#{instShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="agrValuesGrid" />
+				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validateDoubleRange minimum="0" maximum="100" />
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="personnelOnContract_o" value="#{agrShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}">
+			<h:outputText id="personnelOnContract_o" value="#{instShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentPersonnelOnContract" value="#{agrShareTablePB.getPercentOfGoodsField(agrShareTablePB.shareTable.personnelOnContract)}">
+			<h:outputText id="percentPersonnelOnContract" value="#{instShareTablePB.getPercentOfGoodsField(instShareTablePB.shareTable.personnelOnContract)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -171,11 +191,11 @@
 
 
 			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
-			<h:outputText id="otherCost" value="#{agrShareTablePB.shareTable.otherCost}">
+			<h:outputText id="otherCost" value="#{instShareTablePB.shareTable.otherCost}">
 				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:outputText>
 
-			<h:outputText id="percentOtherCost" value="#{agrShareTablePB.getPercentOfGoodsField(agrShareTablePB.shareTable.otherCost)}">
+			<h:outputText id="percentOtherCost" value="#{instShareTablePB.getPercentOfGoodsField(instShareTablePB.shareTable.otherCost)}">
 				<f:convertNumber type="currency" currencySymbol="€" />
 			</h:outputText>
 
@@ -185,13 +205,14 @@
 
 		<br />
 
-		<h:inputHidden value="needed" id="valuesCheck" validator="#{agrShareTablePB.validateMainValues}" />
+		<h:inputHidden value="needed" id="valuesCheck" validator="#{instShareTablePB.validateMainValues}" />
 		<p:message styleClass="errorMessage" for="valuesCheck" />
 
 		<br />
 
-		<h:inputHidden value="needed" id="goodsCheck" validator="#{agrShareTablePB.validateGoodsAndServices}" />
+		<h:inputHidden value="needed" id="goodsCheck" validator="#{instShareTablePB.validateGoodsAndServices}" />
 		<p:message styleClass="errorMessage" for="goodsCheck" />
+
 
 	</p:panel>
 
@@ -200,12 +221,12 @@
 	<p:panel>
 
 
-		<h:inputHidden value="needed" id="percentsCheck" validator="#{agrShareTablePB.validatePersonnelShares}" />
-		<p:message styleClass="errorMessage" for="percentsCheck" />
+		<h:inputHidden value="needed" id="percentsCheck" validator="#{instShareTablePB.validatePersonnelShares}" />
+		<h:message styleClass="errorMessage" for="percentsCheck" />
 
-		<br />
 
-		<p:dataTable id="personnelShares" value="#{agrShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}" emptyMessage="#{msgs.noShareFound}">
+		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"
+			emptyMessage="#{msgs.noShareFound}">
 
 			<f:facet name="header">
 				<h:outputText value="#{msgs.shareTablePersonnel}" />
@@ -234,8 +255,8 @@
 			</p:column>
 
 			<p:column>
-				<p:commandButton value="#{msgs.remove}" action="#{agrShareTablePB.removeShare(share)}" update="@form"
-					process="@this" rendered="#{!cc.attrs.editingDisable}" />
+				<p:commandButton value="#{msgs.remove}" action="#{instShareTablePB.removeShare(share)}"
+					update="@form" process="@this" rendered="#{!cc.attrs.editingDisable}" />
 			</p:column>
 
 		</p:dataTable>
@@ -250,10 +271,10 @@
 				</p:column>
 
 				<p:column width="30%">
-					<p:selectOneMenu id="personnalShareChiefMenu" value="#{agrShareTablePB.newShare.chiefScientist}" label="#{msgs.chief}" filter="true"
+					<p:selectOneMenu id="personnalShareChiefMenu" value="#{instShareTablePB.newShare.chiefScientist}" label="#{msgs.chief}" filter="true"
 						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}" required="#{not empty param[save.clientId]}">
 						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
-						<f:selectItems value="#{utilPB.getChiefsItemsNotIn(agrShareTablePB.addedChiefs)}" />
+						<f:selectItems value="#{utilPB.getChiefsItemsNotIn(instShareTablePB.addedChiefs)}" />
 						<f:converter binding="#{chiefConverter}" />
 						<f:ajax event="valueChange" execute="@this" />
 					</p:selectOneMenu>
@@ -264,7 +285,7 @@
 				</p:column>
 
 				<p:column width="10%">
-					<h:inputText id="personnalShareValueInput" value="#{agrShareTablePB.newShare.value}" label="#{msgs.share}">
+					<h:inputText id="personnalShareValueInput" value="#{instShareTablePB.newShare.value}" label="#{msgs.share}">
 						<f:ajax event="valueChange" execute="@this" render="percentPersonnelShare personnalShareValueInputError" />
 						<f:validateDoubleRange minimum="0" maximum="100" />
 						<f:convertNumber maxFractionDigits="2" locale="en_us" />
@@ -272,13 +293,13 @@
 				</p:column>
 
 				<p:column width="10%">
-					<h:outputText id="percentPersonnelShare" value="#{agrShareTablePB.newShare.percentValue}">
+					<h:outputText id="percentPersonnelShare" value="#{instShareTablePB.newShare.percentValue}">
 						<f:convertNumber type="currency" currencySymbol="€" />
 					</h:outputText>
 				</p:column>
 
 				<p:column width="10%">
-					<p:commandButton value="#{msgs.add}" action="#{agrShareTablePB.addShare()}" update="personnalShareInput personnelShares"
+					<p:commandButton value="#{msgs.add}" action="#{instShareTablePB.addShare()}" update="personnalShareInput personnelShares"
 						process="personnalShareInput, @this" rendered="#{!cc.attrs.editingDisable}" binding="#{save}" />
 				</p:column>
 			</p:row>
