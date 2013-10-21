@@ -35,8 +35,10 @@ public abstract class FillerFactoryBean implements Serializable {
 		boolean found = false;
 		Iterator<AgreementShareTableFiller> it = fillers.iterator();
 		while(!found && it.hasNext()){
-			if(currentFiller.equals(it.next())){
+			AgreementShareTableFiller f = it.next();
+			if(currentFiller.equals(f)){
 				found = true;
+				currentFiller = f;
 			}
 		}
 		if(!found){
