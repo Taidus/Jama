@@ -3,7 +3,6 @@ package businessLayer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -136,6 +135,10 @@ public class Agreement implements Serializable {
 		installments.add(i);
 		
 	}
+	
+	public void removeInstallment(Installment i){
+		installments.remove(i);
+	}
 
 	@Override
 	public String toString() {
@@ -265,7 +268,9 @@ public class Agreement implements Serializable {
 	}
 
 	public List<Installment> getInstallments() {
-		return installments;
+		
+		//TODO check
+		return new ArrayList<>(installments);
 	}
 
 	public void setInstallments(List<Installment> installments) {

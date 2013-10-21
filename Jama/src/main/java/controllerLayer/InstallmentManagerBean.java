@@ -104,7 +104,8 @@ public class InstallmentManagerBean implements Serializable {
 
 	public void deleteInstallment() {
 		
-		agreement.getInstallments().remove(selectedInstallment);
+		//agreement.getInstallments().remove(selectedInstallment);
+		agreement.removeInstallment(selectedInstallment);
 		selectedInstallment.setAgreement(null);
 		close();
 	}
