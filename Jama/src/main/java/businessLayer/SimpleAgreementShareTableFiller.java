@@ -1,25 +1,16 @@
 package businessLayer;
 
 import java.util.Iterator;
-import java.util.SortedMap;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKeyColumn;
-
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
 
 @Entity
 public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 	@ElementCollection
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@MapKeyColumn(name = "hierarchyOrdering")
-	@Sort(type=SortType.NATURAL)
-	private SortedMap<Float, Float> atheneumCapitalBalanceRateTable;
+	private Map<Float, Float> atheneumCapitalBalanceRateTable;
 	
 	private float structuresRate;
 	private float atheneumCommonBalanceRate;
@@ -28,7 +19,7 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 		super();
 	}
 
-	public SimpleAgreementShareTableFiller(SortedMap<Float, Float> atheneumCapitalBalanceRateTable, float structuresRate, float atheneumCommonBalanceRate) {
+	public SimpleAgreementShareTableFiller(Map<Float, Float> atheneumCapitalBalanceRateTable, float structuresRate, float atheneumCommonBalanceRate) {
 		super();
 		this.atheneumCapitalBalanceRateTable = atheneumCapitalBalanceRateTable;
 		this.structuresRate = structuresRate;
