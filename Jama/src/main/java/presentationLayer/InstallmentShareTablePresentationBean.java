@@ -2,9 +2,13 @@ package presentationLayer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,16 +40,50 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		return installment.getWholeAmount();
 	}
 
-	public void validateWithOtherInstallments() {
-		Agreement agr = installment.getAgreement();
-		List<Installment> installments = agr.getInstallments();
-		List<AbstractShareTable> instShareTables = new ArrayList<>();
-		
-		for(Installment i : installments){
-			instShareTables.add(i.getShareTable());
+	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
+		try {
+			Agreement agr = installment.getAgreement();
+			List<Installment> installments = agr.getInstallments();
+			installments.add(installment);
+			List<List<Float>> instShareTablesAttributes = new ArrayList<>();
+
+			System.out.println(1);
+
+			for (int j = 0; j < installments.size(); j++) {
+				Installment i = installments.get(j);
+				System.out.print("Rata" + i + " : ");
+				instShareTablesAttributes.add(getMainAttributeList(i.getShareTable(), i.getWholeAmount()));
+				System.out.print("\t");
+			}
+
+			System.out.println(2);
+
+			System.out.print("Convenzione: ");
+			List<Float> l = getMainAttributeList(agr.getShareTable(), agr.getWholeAmount());
+			System.out.println(3);
+			System.out.print("\t");
+			List<Float> p = getSubAttributeList(agr.getShareTable(), getPercentOf(agr.getShareTable().getGoodsAndServices(), agr.getWholeAmount()));
+			System.out.println(4);
+
+			validateFields(l, instShareTablesAttributes);
+			System.out.println(5);
+
+			for (int j = 0; j < installments.size(); j++) {
+				Installment i = installments.get(j);
+				System.out.print("Rata" + i + " : ");
+				instShareTablesAttributes.add(getSubAttributeList(i.getShareTable(),
+						getPercentOf(i.getWholeAmount(), i.getShareTable().getGoodsAndServices())));
+				System.out.print("\t");
+			}
+			
+			System.out.println(6);
+
+			validateFields(p, instShareTablesAttributes);
+			System.out.println(7);
+		} catch (Exception | Error e) {
+			System.out.println("Blbl " + e);
+			throw e;
 		}
-		
-		validateFields(agr.getShareTable(), instShareTables);
 
 		// float[] mainValuesAmounts = installment.getMainValuesAmounts();
 		// for (Installment installment : installments) {
@@ -64,42 +102,50 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		// }
 		// }
 	}
-	
-	private void validateFields(AbstractShareTable agrST, List<AbstractShareTable> instSTs){
-		List<List<Float>> shareTablesAttributes = new ArrayList<>();
-		List<Float> agrAttributes = getAttributeList(agrST);
-		
-		for(AbstractShareTable st : instSTs){
-			shareTablesAttributes.add(getAttributeList(st));
-		}
-		
-		for(int i=0; i<agrAttributes.size(); i++){
+
+	private void validateFields(List<Float> agrAttributes, List<List<Float>> instAttrs) {
+		// XXX questo metodo e tutti quelli ad esso correlati sono osceni. Se si
+		// trova un meccanismo per non scrivere simili blasfemie è meglio
+
+		for (int i = 0; i < agrAttributes.size(); i++) {
 			float sum = 0F;
-			for(List<Float> l : shareTablesAttributes){
-				sum +=  l.get(i);
+			for (List<Float> l : instAttrs) {
+				sum += l.get(i);
 			}
-			if(sum > agrAttributes.get(i)){
+			if (sum > agrAttributes.get(i)) {
+				System.err.println("Errore sull'attributo principale #" + i + ": convenzione=" + agrAttributes.get(i) + ", rate=" + sum);
 				throw new ValidatorException(Messages.getErrorMessage("err_installmentShareTable"));
-				//FIXME errore più specifico
+				// FIXME errore più specifico
 			}
 		}
+
 	}
 
-	private List<Float> getAttributeList(AbstractShareTable t) {
+	private List<Float> getMainAttributeList(AbstractShareTable t, float wholeAmount) {
 		List<Float> attributes = new ArrayList<>();
 
-		attributes.add(t.getAtheneumCapitalBalance());
-		attributes.add(t.getAtheneumCommonBalance());
-		attributes.add(t.getStructures());
-		attributes.add(t.getPersonnel());
-		attributes.add(t.getGoodsAndServices());
+		attributes.add(getPercentOf(t.getAtheneumCapitalBalance(), wholeAmount));
+		attributes.add(getPercentOf(t.getAtheneumCommonBalance(), wholeAmount));
+		attributes.add(getPercentOf(t.getStructures(), wholeAmount));
+		attributes.add(getPercentOf(t.getPersonnel(), wholeAmount));
+		attributes.add(getPercentOf(t.getGoodsAndServices(), wholeAmount));
 
-		attributes.add(t.getBusinessTrip());
-		attributes.add(t.getInventoryMaterials());
-		attributes.add(t.getConsumerMaterials());
-		attributes.add(t.getRentals());
-		attributes.add(t.getPersonnelOnContract());
-		attributes.add(t.getOtherCost());
+		System.out.println(attributes);
+
+		return attributes;
+	}
+
+	private List<Float> getSubAttributeList(AbstractShareTable t, float wholeAmount) {
+		List<Float> attributes = new ArrayList<>();
+
+		attributes.add(getPercentOf(t.getBusinessTrip(), wholeAmount));
+		attributes.add(getPercentOf(t.getInventoryMaterials(), wholeAmount));
+		attributes.add(getPercentOf(t.getConsumerMaterials(), wholeAmount));
+		attributes.add(getPercentOf(t.getRentals(), wholeAmount));
+		attributes.add(getPercentOf(t.getPersonnelOnContract(), wholeAmount));
+		attributes.add(getPercentOf(t.getOtherCost(), wholeAmount));
+
+		System.out.println(attributes);
 
 		return attributes;
 	}

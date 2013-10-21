@@ -213,6 +213,12 @@
 		<h:inputHidden value="needed" id="goodsCheck" validator="#{instShareTablePB.validateGoodsAndServices}" />
 		<p:message styleClass="errorMessage" for="goodsCheck" />
 
+		<br />
+
+		<ui:remove>
+			<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" />
+			<p:message styleClass="errorMessage" for="otherInstCheck" />
+		</ui:remove>
 
 	</p:panel>
 
@@ -255,8 +261,8 @@
 			</p:column>
 
 			<p:column>
-				<p:commandButton value="#{msgs.remove}" action="#{instShareTablePB.removeShare(share)}"
-					update="@form" process="@this" rendered="#{!cc.attrs.editingDisable}" />
+				<p:commandButton value="#{msgs.remove}" action="#{instShareTablePB.removeShare(share)}" update="@form" process="@this"
+					rendered="#{!cc.attrs.editingDisable}" />
 			</p:column>
 
 		</p:dataTable>

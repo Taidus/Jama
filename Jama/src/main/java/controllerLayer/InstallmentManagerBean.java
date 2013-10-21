@@ -1,6 +1,7 @@
 package controllerLayer;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
@@ -41,6 +42,7 @@ public class InstallmentManagerBean implements Serializable {
 		transferObjInstallment = new Installment();
 		transferObjInstallment.setAgreement(agreement);
 		transferObjInstallment.initShareTableFromAgreement(agreement);
+		insertRandomValues(transferObjInstallment); //TODO eliminare
 		return "/installmentWiz.xhtml";
 
 	}
@@ -106,6 +108,15 @@ public class InstallmentManagerBean implements Serializable {
 		agreement.getInstallments().remove(selectedInstallment);
 		selectedInstallment.setAgreement(null);
 		close();
+	}
+	
+	private void insertRandomValues(Installment inst){
+		//TODO eliminare
+		
+		inst.setDate(new Date());
+		inst.setInvoiceDate(new Date());
+		inst.setVoucherDate(new Date());
+		
 	}
 
 }

@@ -27,7 +27,7 @@
 
 			<p:commandButton type="button" onclick="w_chiefDialog.hide();" value="#{msgs.cancel}" />
 			<p:commandButton value="#{msgs.save}" actionListener="#{chiefDialogPCB.save()}" update=":#{p:component('chiefMenu')}"
-				oncomplete="if (!args.validationFailed) w_chiefDialog.hide()" />
+				oncomplete="if (!args.validationFailed) {w_chiefDialog.hide();}" />
 
 		</h:form>
 

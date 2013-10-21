@@ -15,18 +15,19 @@ import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
 public abstract class ShareTablePresentationObj {
-	
+
 	private PersonnelShare selectedShare;
 	private PersonnelShare newShare;
-	
+
 	protected ShareTablePresentationObj() {
 		newShare = new PersonnelShare();
 		// FIXME questo darà "problemi"
 	}
-	
+
 	protected abstract AbstractShareTable getTransferObjShareTable();
+
 	protected abstract float getTransfetObjWholeAmount();
-	
+
 	public List<PersonnelShare> getShares() {
 		List<PersonnelShare> result = new ArrayList<>();
 		Map<ChiefScientist, Float> shares = getTransferObjShareTable().getSharePerPersonnel();
@@ -99,9 +100,9 @@ public abstract class ShareTablePresentationObj {
 	public float getPercentOfGoodsField(float field) {
 		return getPercentOfMainField(getTransferObjShareTable().getGoodsAndServices()) * field / 100;
 	}
-	
-	protected float getPercentOf(float percent, float amount){
-		return percent*amount/100;
+
+	protected float getPercentOf(float percent, float amount) {
+		return percent * amount / 100;
 	}
 
 	public class PersonnelShare {
