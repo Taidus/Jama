@@ -45,15 +45,17 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 			Agreement agr = installment.getAgreement();
 			List<Installment> installments = agr.getInstallments();
 			installments.add(installment);
-			List<List<Float>> instShareTablesAttributes = new ArrayList<>();
+			List<List<Float>> instShareTablesMainAttributes = new ArrayList<>();
+			List<List<Float>> instShareTablesSubAttributes = new ArrayList<>();
 
 			System.out.println(1);
 
-			for (int j = 0; j < installments.size(); j++) {
-				Installment i = installments.get(j);
-				System.out.print("Rata" + i + " : ");
-				instShareTablesAttributes.add(getMainAttributeList(i.getShareTable(), i.getWholeAmount()));
+			for (Installment i : installments) {
+				System.out.print("Rata" + i + " \n\t ");
+				instShareTablesMainAttributes.add(getMainAttributeList(i.getShareTable(), i.getWholeAmount()));
 				System.out.print("\t");
+				instShareTablesSubAttributes.add(getSubAttributeList(i.getShareTable(),
+						getPercentOf(i.getWholeAmount(), i.getShareTable().getGoodsAndServices())));
 			}
 
 			System.out.println(2);
@@ -65,21 +67,10 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 			List<Float> p = getSubAttributeList(agr.getShareTable(), getPercentOf(agr.getShareTable().getGoodsAndServices(), agr.getWholeAmount()));
 			System.out.println(4);
 
-			validateFields(l, instShareTablesAttributes);
+			validateFields(l, instShareTablesMainAttributes);
 			System.out.println(5);
-
-			for (int j = 0; j < installments.size(); j++) {
-				Installment i = installments.get(j);
-				System.out.print("Rata" + i + " : ");
-				instShareTablesAttributes.add(getSubAttributeList(i.getShareTable(),
-						getPercentOf(i.getWholeAmount(), i.getShareTable().getGoodsAndServices())));
-				System.out.print("\t");
-			}
-			
+			validateFields(p, instShareTablesSubAttributes);
 			System.out.println(6);
-
-			validateFields(p, instShareTablesAttributes);
-			System.out.println(7);
 		} catch (Exception | Error e) {
 			System.out.println("Blbl " + e);
 			throw e;

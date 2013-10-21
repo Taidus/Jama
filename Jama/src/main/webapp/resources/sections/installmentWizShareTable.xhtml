@@ -215,10 +215,8 @@
 
 		<br />
 
-		<ui:remove>
-			<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" />
-			<p:message styleClass="errorMessage" for="otherInstCheck" />
-		</ui:remove>
+		<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" />
+		<p:message styleClass="errorMessage" for="otherInstCheck" />
 
 	</p:panel>
 
