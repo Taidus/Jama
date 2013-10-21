@@ -56,7 +56,8 @@ public class InstallmentManagerBean implements Serializable {
 
 		if (selectedInstallment == null) {
 			installment.copy(transferObjInstallment);
-			agreement.getInstallments().add(installment);
+			//agreement.getInstallments().add(installment);
+			agreement.addInstallment(installment);
 		} else {
 
 			selectedInstallment.copy(transferObjInstallment);

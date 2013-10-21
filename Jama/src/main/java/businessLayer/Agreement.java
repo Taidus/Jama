@@ -130,6 +130,12 @@ public class Agreement implements Serializable {
 //		return result;
 //
 //	}
+	
+	public void addInstallment(Installment i){
+		i.setAgreement(this);
+		installments.add(i);
+		
+	}
 
 	@Override
 	public String toString() {
@@ -312,6 +318,7 @@ public class Agreement implements Serializable {
 
 	public void setReservedAmount(float reservedAmount) {
 		this.reservedAmount = reservedAmount;
+		System.out.println("set ReservedAmount");
 	}
 
 	public boolean isClosed() {

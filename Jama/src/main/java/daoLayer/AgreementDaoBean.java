@@ -24,9 +24,9 @@ public class AgreementDaoBean {
 
 	public Agreement create(Agreement agreement) {
 		
-		for(Installment i : agreement.getInstallments()){
-			i.setAgreement(agreement);
-		}
+//		for(Installment i : agreement.getInstallments()){
+//			i.setAgreement(agreement);
+//		}
 		em.persist(agreement);
 		return agreement;
 	}
