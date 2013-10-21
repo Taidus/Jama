@@ -20,6 +20,7 @@ import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
 import businessLayer.Department;
+import businessLayer.Installment;
 import daoLayer.AgreementDaoBean;
 import daoLayer.DepartmentDaoBean;
 
@@ -80,11 +81,11 @@ public class AgreementManagerBean implements Serializable {
 
 		if (!conversationninherited) {
 			conversation.end();
-			agreementDao.close();
 
 		}
 		
-		em.flush();
+		agreementDao.close();
+
 		
 	}
 
@@ -92,6 +93,9 @@ public class AgreementManagerBean implements Serializable {
 		
 		
 		agreement.cloneFields(transferObjAgreement);
+		
+		//FIXME workaround
+		em.merge(agreement);
 		agreementDao.create(agreement);
 
 		close();
@@ -107,9 +111,7 @@ public class AgreementManagerBean implements Serializable {
 
 	private void initAgreement() {
 		transferObjAgreement = new Agreement();
-
 		agreement = agreementDao.getById(selectedAgreementId);
-		agreementDao.close();
 		transferObjAgreement.cloneFields(agreement);
 
 	}
@@ -123,7 +125,6 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public String createAgreement() {
-
 	
 
 		agreement = new Agreement();

@@ -91,7 +91,7 @@ public class Agreement implements Serializable {
 
 		this.shareTable = new AgreementShareTable();
 		this.shareTable.copy(copy.getShareTable());
-		this.installments = new ArrayList<>(copy.getInstallments());
+		this.installments = new ArrayList<>();
 
 		this.IVA_amount = copy.getIVA_amount();
 		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
@@ -103,8 +103,11 @@ public class Agreement implements Serializable {
 		this.spentAmount = copy.getSpentAmount();
 		this.reservedAmount = copy.getReservedAmount();
 
-		for (Installment i : installments) {
-			i.setAgreement(this);
+		for (Installment i : copy.getInstallments()) {
+			Installment j = new Installment();
+			j.copy(i);
+			j.setAgreement(this);
+			this.installments.add(j);
 		}
 
 	}
