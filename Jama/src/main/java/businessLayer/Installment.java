@@ -175,7 +175,6 @@ public class Installment implements Serializable {
 
 	public void copy(Installment copy) {
 		
-		//TODO pensace
 		this.id = copy.id;
 		this.date = new Date(copy.date.getTime());
 		this.IVA_amount = copy.IVA_amount;
@@ -189,8 +188,7 @@ public class Installment implements Serializable {
 		this.paidInvoice = copy.paidInvoice;
 		this.reportRequired = copy.reportRequired;
 		this.note = copy.note;
-		//this.agreement = new Agreement();
-		//this.agreement.cloneFields(copy.agreement);
+		this.agreement = copy.getAgreement();
 		this.shareTable = new InstallmentShareTable();
 		this.shareTable.copy(copy.getShareTable());
 

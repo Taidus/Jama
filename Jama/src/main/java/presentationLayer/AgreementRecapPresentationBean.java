@@ -48,6 +48,7 @@ public class AgreementRecapPresentationBean {
 
 	@PostConstruct
 	public void init() {
+		System.out.println("building Recap");
 		annualRecap = new ArrayList<>();
 		compute();
 	}
@@ -60,7 +61,6 @@ public class AgreementRecapPresentationBean {
 		if(!agr.getInstallments().isEmpty()){
 		
 		Date d = agr.getInstallments().get(0).getDate();
-		System.out.println("Data 0: "+d);
 		Calendar currentDate = new GregorianCalendar();
 		currentDate.setTimeInMillis(d.getTime());
 
@@ -72,7 +72,6 @@ public class AgreementRecapPresentationBean {
 			Calendar date = new GregorianCalendar();
 			date.setTimeInMillis(i.getDate().getTime());
 			
-			System.out.println("CurrentDate: "+currentDate.get(Calendar.YEAR)+", DateInst :"+date.get(Calendar.YEAR));
 			
 
 			if (date.get(Calendar.YEAR) != currentDate.get(Calendar.YEAR)) {

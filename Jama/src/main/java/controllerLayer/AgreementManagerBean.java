@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
@@ -20,18 +22,15 @@ import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
 import businessLayer.Department;
-import businessLayer.Installment;
 import daoLayer.AgreementDaoBean;
 import daoLayer.DepartmentDaoBean;
 
 @Named("agreementManager")
 @ConversationScoped
 @Stateful
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class AgreementManagerBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -53,7 +52,6 @@ public class AgreementManagerBean implements Serializable {
 	// TODO spostare return indirizzi pagine
 	private int selectedAgreementId = -1;
 	private Agreement agreement;
-	private Agreement transferObjAgreement;
 
 	public AgreementManagerBean() {
 		conversationninherited = false;
@@ -81,23 +79,14 @@ public class AgreementManagerBean implements Serializable {
 
 		if (!conversationninherited) {
 			conversation.end();
-
 		}
-		
-		agreementDao.close();
-
-		
+		//agreementDao.close();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void save() {
-		
-		
-		agreement.cloneFields(transferObjAgreement);
-		
-		//FIXME workaround
-		em.merge(agreement);
-		agreementDao.create(agreement);
 
+		agreementDao.create(agreement);
 		close();
 	}
 
@@ -110,34 +99,27 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	private void initAgreement() {
-		transferObjAgreement = new Agreement();
 		agreement = agreementDao.getById(selectedAgreementId);
-		transferObjAgreement.cloneFields(agreement);
 
 	}
 
 	public String editAgreement() {
 		begin();
 		initAgreement();
-		System.out.println("editttt");
 
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
 	public String createAgreement() {
-	
 
 		agreement = new Agreement();
-		transferObjAgreement = new Agreement();
-		insertRandomValues(transferObjAgreement); // TODO eliminare
+		insertRandomValues(agreement); // TODO eliminare
 		AgreementShareTable shareTable = new AgreementShareTable();
-		shareTable.setFiller(fillerFactory.getFiller(transferObjAgreement
-				.getDepartment()));
-		transferObjAgreement.setShareTable(shareTable);
+		shareTable
+				.setFiller(fillerFactory.getFiller(agreement.getDepartment()));
+		agreement.setShareTable(shareTable);
 		begin();
 
-		// check
-		// transferObjAgreement.cloneFields(agreement);
 		return "/agreementWiz.xhtml";
 
 	}
@@ -152,11 +134,11 @@ public class AgreementManagerBean implements Serializable {
 	@TransferObj
 	@RequestScoped
 	public Agreement getTransferObjAgreement() {
-		return transferObjAgreement;
+		return agreement;
 	}
 
 	public Agreement getAgreement() {
-		return transferObjAgreement;
+		return agreement;
 	}
 
 	public void deleteAgreement() {

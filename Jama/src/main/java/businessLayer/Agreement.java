@@ -58,7 +58,9 @@ public class Agreement implements Serializable {
 	private float spentAmount;
 	private float reservedAmount;
 
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }) @OrderBy("date DESC") private List<Installment> installments;
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }) 
+	@OrderBy("date DESC") 
+	private List<Installment> installments;
 
 	@Temporal(TemporalType.DATE) private Date approvalDate;
 
@@ -76,58 +78,58 @@ public class Agreement implements Serializable {
 		attachments = new ArrayList<>();
 	}
 
-	public void cloneFields(Agreement copy) {
+//	public void cloneFields(Agreement copy) {
+//
+//		// this.id = copy.getId();
+//		this.title = copy.getTitle();
+//		this.protocolNumber = copy.getProtocolNumber();
+//		this.type = copy.getType();
+//		this.chief = copy.getChief();
+//		this.contactPerson = copy.getContactPerson();
+//		this.company = copy.getCompany();
+//		this.department = copy.getDepartment();
+//		this.CIA_projectNumber = copy.getCIA_projectNumber();
+//		this.inventoryNumber = copy.getInventoryNumber();
+//
+//		this.shareTable = new AgreementShareTable();
+//		this.shareTable.copy(copy.getShareTable());
+//		this.installments = new ArrayList<>();
+//
+//		this.IVA_amount = copy.getIVA_amount();
+//		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
+//		this.approvalDate = new Date(copy.getApprovalDate().getTime());
+//		this.beginDate = new Date(copy.getBeginDate().getTime());
+//		this.deadlineDate = new Date(copy.getDeadlineDate().getTime());
+//		this.note = copy.getNote();
+//		this.attachments = copy.getAttachments();
+//		this.spentAmount = copy.getSpentAmount();
+//		this.reservedAmount = copy.getReservedAmount();
+//
+//		for (Installment i : copy.getInstallments()) {
+//			Installment j = new Installment();
+//			j.copy(i);
+//			j.setAgreement(this);
+//			this.installments.add(j);
+//		}
+//
+//	}
 
-		// this.id = copy.getId();
-		this.title = copy.getTitle();
-		this.protocolNumber = copy.getProtocolNumber();
-		this.type = copy.getType();
-		this.chief = copy.getChief();
-		this.contactPerson = copy.getContactPerson();
-		this.company = copy.getCompany();
-		this.department = copy.getDepartment();
-		this.CIA_projectNumber = copy.getCIA_projectNumber();
-		this.inventoryNumber = copy.getInventoryNumber();
-
-		this.shareTable = new AgreementShareTable();
-		this.shareTable.copy(copy.getShareTable());
-		this.installments = new ArrayList<>();
-
-		this.IVA_amount = copy.getIVA_amount();
-		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
-		this.approvalDate = new Date(copy.getApprovalDate().getTime());
-		this.beginDate = new Date(copy.getBeginDate().getTime());
-		this.deadlineDate = new Date(copy.getDeadlineDate().getTime());
-		this.note = copy.getNote();
-		this.attachments = copy.getAttachments();
-		this.spentAmount = copy.getSpentAmount();
-		this.reservedAmount = copy.getReservedAmount();
-
-		for (Installment i : copy.getInstallments()) {
-			Installment j = new Installment();
-			j.copy(i);
-			j.setAgreement(this);
-			this.installments.add(j);
-		}
-
-	}
-
-	public Installment getInstallmentById(int id) {
-
-		boolean found = false;
-		Installment result = null;
-		Iterator<Installment> i = installments.iterator();
-		while (found == false && i.hasNext()) {
-			Installment current = i.next();
-
-			if (current.getId() == id) {
-				result = current;
-			}
-		}
-
-		return result;
-
-	}
+//	public Installment getInstallmentById(int id) {
+//
+//		boolean found = false;
+//		Installment result = null;
+//		Iterator<Installment> i = installments.iterator();
+//		while (found == false && i.hasNext()) {
+//			Installment current = i.next();
+//
+//			if (current.getId() == id) {
+//				result = current;
+//			}
+//		}
+//
+//		return result;
+//
+//	}
 
 	@Override
 	public String toString() {

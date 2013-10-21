@@ -278,7 +278,7 @@
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber />
 						<f:validateDoubleRange minimum="0.0" />
-						<f:ajax render="amount taxAmountError" />
+						<f:ajax execute="@this" render="amount taxAmountError" />
 					</h:inputText>
 
 					<h:outputText id="taxableAmount_o"
@@ -308,7 +308,7 @@
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber />
 						<f:validateDoubleRange minimum="0.0" maximum="100.0" />
-						<f:ajax render="amount ivaError" />
+						<f:ajax execute="@this" render="amount ivaError" />
 					</h:inputText>
 
 					<h:outputText id="iva_o"

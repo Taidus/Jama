@@ -23,15 +23,13 @@ public class InstallmentManagerBean implements Serializable {
 
 	@Inject
 	@TransferObj
-	Agreement agreement;
+	private Agreement agreement;
+
 
 	// TODO spostare return indirizzo pagina
 	private Installment selectedInstallment;
 	private Installment transferObjInstallment;
 	private Installment installment;
-
-	
-
 
 
 	public Installment getSelectedInstallment() {
@@ -44,7 +42,6 @@ public class InstallmentManagerBean implements Serializable {
 
 	public String addInstallment() {
 
-		// agreement.getInstallments().add(i);
 		installment = new Installment();
 		transferObjInstallment = new Installment();
 		transferObjInstallment.setAgreement(agreement);
@@ -63,16 +60,10 @@ public class InstallmentManagerBean implements Serializable {
 		installment.copy(transferObjInstallment);
 
 
-		if (selectedInstallment == null) {
-			
-			
+		if (selectedInstallment == null) {	
 			agreement.getInstallments().add(installment);
-
 		}
-		
-		//TODO serve?
-		transferObjInstallment.setAgreement(null);
-		
+			
 		
 	close();
 
@@ -83,27 +74,14 @@ public class InstallmentManagerBean implements Serializable {
 		selectedInstallment = null;
 		
 	}
-//
-//	public String modifyInstallment() {
-//		// TODO
-//		// begin();
-//		// initEditing();
-//		return "/installmentWiz.xhtml";
-//
-//	}
+
 
 	@Produces
 	@TransferObj
 	@RequestScoped
 	public Installment getTransferObjAgreementInstallment() {
 		
-		//TODO eliminare if
-		if(transferObjInstallment ==null){
-			transferObjInstallment = new Installment();
-			
-		}
-
-		return transferObjInstallment;
+			return transferObjInstallment;
 
 	}
 
@@ -118,26 +96,22 @@ public class InstallmentManagerBean implements Serializable {
 		transferObjInstallment.copy(selectedInstallment);
 		
 	}
+	
+	//TODO riunire?
 	public void viewInstallment() {
-		
-		
+
 		initInstallment();
-		
 		
 	}
 
 	public void editInstallment() {
 		
 		initInstallment();
-		transferObjInstallment = new Installment();
-		transferObjInstallment.copy(selectedInstallment);
 
 	}
 
 	public void deleteInstallment() {
 		agreement.getInstallments().remove(selectedInstallment);
-		//TODO serve??
-		selectedInstallment.setAgreement(null);
 		close();
 	}
 
