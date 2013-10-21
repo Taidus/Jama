@@ -1,7 +1,7 @@
 package businessLayer;
 
 import java.util.Iterator;
-import java.util.Map;
+import java.util.SortedMap;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 	@ElementCollection
-	private Map<Float, Float> atheneumCapitalBalanceRateTable;
+	private SortedMap<Float, Float> atheneumCapitalBalanceRateTable;
 	private float structuresRate;
 	private float atheneumCommonBalanceRate;
 	
@@ -18,7 +18,7 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 		super();
 	}
 
-	public SimpleAgreementShareTableFiller(Map<Float, Float> atheneumCapitalBalanceRateTable, float structuresRate, float atheneumCommonBalanceRate) {
+	public SimpleAgreementShareTableFiller(SortedMap<Float, Float> atheneumCapitalBalanceRateTable, float structuresRate, float atheneumCommonBalanceRate) {
 		super();
 		this.atheneumCapitalBalanceRateTable = atheneumCapitalBalanceRateTable;
 		this.structuresRate = structuresRate;
@@ -27,6 +27,8 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 	@Override
 	public void fill(AgreementShareTable table) {
+		System.out.println("Filler map: " + atheneumCapitalBalanceRateTable);
+		
 		float personnel = table.getPersonnel();
 
 		float athCommBal = atheneumCommonBalanceRate;
