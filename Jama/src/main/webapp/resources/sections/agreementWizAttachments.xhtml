@@ -14,7 +14,7 @@
 		<h:outputText value="Allegati caricati: " />
 
 		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}"
-			var="file">
+			var="file" emptyMessage="#{msgs.noAttachmentFound}">
 			<p:column>
 				<p:commandLink id="downloadLink" ajax="false"
 					value="#{file.fileName}, #{file.fileType}">
@@ -22,12 +22,12 @@
 				</p:commandLink>
 			</p:column>
 			<p:column>
-				<p:commandButton id="downloadButton"  ajax="false"
+				<p:commandButton id="downloadButton" ajax="false"
 					icon="ui-icon-arrowthichk-s">
 					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
 				</p:commandButton>
-				<p:tooltip for="downloadButton" value="Download"
-					showEffect="fade" hideEffect="fade" />
+				<p:tooltip for="downloadButton" value="Download" showEffect="fade"
+					hideEffect="fade" />
 				<p:commandButton id="removeButton" ajax="true"
 					oncomplete="w_confirm.show();" icon="ui-icon-trash">
 					<f:setPropertyActionListener
@@ -42,8 +42,7 @@
 		<p:fileUpload auto="false"
 			fileUploadListener="#{attachmentsPB.handleFileUpload}"
 			mode="advanced" dragDropSupport="true" update="messages attchsList"
-			sizeLimit="1000000" />
-
-
+			sizeLimit="1000000" cancelLabel="#{msgs.remove}"
+			uploadLabel="#{msgs.load}" label="#{msgs.choose}" />
 	</p:tab>
 </ui:composition>
