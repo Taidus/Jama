@@ -57,11 +57,14 @@ public class InstallmentManagerBean implements Serializable {
 
 	public void save() {
 		
-		installment.copy(transferObjInstallment);
+		//installment.copy(transferObjInstallment);
 
 
 		if (selectedInstallment == null) {	
 			agreement.getInstallments().add(installment);
+		}else{
+			
+			selectedInstallment.copy(transferObjInstallment);
 		}
 			
 		
@@ -91,7 +94,8 @@ public class InstallmentManagerBean implements Serializable {
 
 		
 	private void initInstallment(){
-		
+
+		installment = new Installment();
 		transferObjInstallment = new Installment();
 		transferObjInstallment.copy(selectedInstallment);
 		
@@ -112,6 +116,7 @@ public class InstallmentManagerBean implements Serializable {
 
 	public void deleteInstallment() {
 		agreement.getInstallments().remove(selectedInstallment);
+		selectedInstallment.setAgreement(null);
 		close();
 	}
 

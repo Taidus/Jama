@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -12,6 +14,8 @@ import javax.persistence.TypedQuery;
 import util.Config;
 
 @Stateful
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+
 public abstract class ResultPagerBean<T> {
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)

@@ -238,6 +238,7 @@ public class Agreement implements Serializable {
 
 	public void setIVA_amount(float iVA_amount) {
 		IVA_amount = iVA_amount;
+		System.out.println("setIVA");
 	}
 
 	public float getWholeTaxableAmount() {
@@ -246,6 +247,7 @@ public class Agreement implements Serializable {
 
 	public void setWholeTaxableAmount(float wholeTaxableAmount) {
 		this.wholeTaxableAmount = wholeTaxableAmount;
+		System.out.println("setAmount");
 	}
 
 	public Date getApprovalDate() {
