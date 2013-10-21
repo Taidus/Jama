@@ -45,18 +45,5 @@
 			sizeLimit="1000000" />
 
 
-
-		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
-			severity="alert" widgetVar="w_confirm">
-			<p:commandButton value="#{msgs.yes}"
-				action="#{attachmentsPB.removeFile()}" immediate="true"
-				oncomplete="w_confirm.hide()" update="attchsList" />
-			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
-				type="button" />
-		</p:confirmDialog>
-
-
-
-
 	</p:tab>
 </ui:composition>
