@@ -58,7 +58,8 @@ public class InstallmentManagerBean implements Serializable {
 
 		if (selectedInstallment == null) {
 			installment.copy(transferObjInstallment);
-			agreement.getInstallments().add(installment);
+			//agreement.getInstallments().add(installment);
+			agreement.addInstallment(installment);
 		} else {
 
 			selectedInstallment.copy(transferObjInstallment);
@@ -105,7 +106,8 @@ public class InstallmentManagerBean implements Serializable {
 
 	public void deleteInstallment() {
 		
-		agreement.getInstallments().remove(selectedInstallment);
+		//agreement.getInstallments().remove(selectedInstallment);
+		agreement.removeInstallment(selectedInstallment);
 		selectedInstallment.setAgreement(null);
 		close();
 	}
