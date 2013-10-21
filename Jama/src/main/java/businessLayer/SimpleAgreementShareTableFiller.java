@@ -2,22 +2,20 @@ package businessLayer;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
-
 @Entity
 public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
-	@ElementCollection
-	private Map<Float, Float> atheneumCapitalBalanceRateTable;
-
-	
+	@ElementCollection private Map<Float, Float> atheneumCapitalBalanceRateTable;
 
 	private float structuresRate;
 	private float atheneumCommonBalanceRate;
-	
+
 	public SimpleAgreementShareTableFiller() {
 		super();
 	}
@@ -32,7 +30,10 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 	@Override
 	public void fill(AgreementShareTable table) {
 		System.out.println("Filler map: " + atheneumCapitalBalanceRateTable);
-		
+		SortedMap<Float, Float> atheneumCapitalBalanceRateTable_sorted = getSortedMap();
+		// XXX soluzione di ripego perché le annotazoni di Hibernate sono
+		// stupide
+
 		float personnel = table.getPersonnel();
 
 		float athCommBal = atheneumCommonBalanceRate;
@@ -40,13 +41,13 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 		boolean found = false;
 		float athCapBal = 0.0F;
-		Iterator<Float> it = atheneumCapitalBalanceRateTable.keySet().iterator();
+		Iterator<Float> it = atheneumCapitalBalanceRateTable_sorted.keySet().iterator();
 		System.out.println("Quota personale nel build: " + personnel);
 		while (false == found && it.hasNext()) {
 			float threshold = it.next();
 			System.out.println("Soglia: " + threshold);
 			if (personnel <= threshold) {
-				athCapBal = atheneumCapitalBalanceRateTable.get(threshold);
+				athCapBal = atheneumCapitalBalanceRateTable_sorted.get(threshold);
 				found = true;
 			}
 		}
@@ -63,12 +64,8 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((atheneumCapitalBalanceRateTable == null) ? 0
-						: atheneumCapitalBalanceRateTable.hashCode());
-		result = prime * result
-				+ Float.floatToIntBits(atheneumCommonBalanceRate);
+		result = prime * result + ((atheneumCapitalBalanceRateTable == null) ? 0 : atheneumCapitalBalanceRateTable.hashCode());
+		result = prime * result + Float.floatToIntBits(atheneumCommonBalanceRate);
 		result = prime * result + Float.floatToIntBits(structuresRate);
 		return result;
 	}
@@ -85,18 +82,22 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 		if (atheneumCapitalBalanceRateTable == null) {
 			if (other.atheneumCapitalBalanceRateTable != null)
 				return false;
-		} else if (!atheneumCapitalBalanceRateTable
-				.equals(other.atheneumCapitalBalanceRateTable))
+		} else if (!atheneumCapitalBalanceRateTable.equals(other.atheneumCapitalBalanceRateTable))
 			return false;
-		if (Float.floatToIntBits(atheneumCommonBalanceRate) != Float
-				.floatToIntBits(other.atheneumCommonBalanceRate))
+		if (Float.floatToIntBits(atheneumCommonBalanceRate) != Float.floatToIntBits(other.atheneumCommonBalanceRate))
 			return false;
-		if (Float.floatToIntBits(structuresRate) != Float
-				.floatToIntBits(other.structuresRate))
+		if (Float.floatToIntBits(structuresRate) != Float.floatToIntBits(other.structuresRate))
 			return false;
 		return true;
 	}
-	
-	
+
+	private SortedMap<Float, Float> getSortedMap() {
+		SortedMap<Float, Float> map = new TreeMap<Float, Float>();
+		for (Float f : atheneumCapitalBalanceRateTable.keySet()) {
+			map.put(f, atheneumCapitalBalanceRateTable.get(f));
+		}
+		return map;
+
+	}
 
 }

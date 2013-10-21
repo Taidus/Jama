@@ -2,7 +2,11 @@ package controllerLayer;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import annotations.TransferObj;
+import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import daoLayer.ChiefScientistDaoBean;
 
@@ -10,7 +14,7 @@ import daoLayer.ChiefScientistDaoBean;
 @RequestScoped
 public class ChiefDialogPageControllerBean{
 	
-	//@Inject @Current private Agreement agreement;
+	@Inject @TransferObj private Agreement agreement;
 	
 	@EJB private ChiefScientistDaoBean chiefDao;
 	
@@ -30,7 +34,7 @@ public class ChiefDialogPageControllerBean{
 
 	public void save(){
 		chiefDao.createChiefScientist(chief);
-		//agreement.setChief(chief);
+		agreement.setChief(chief);
 	}
 	
 
