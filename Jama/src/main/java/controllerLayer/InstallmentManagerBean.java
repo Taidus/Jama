@@ -16,21 +16,16 @@ import businessLayer.Installment;
 @ConversationScoped
 public class InstallmentManagerBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	@TransferObj
 	private Agreement agreement;
 
-
 	// TODO spostare return indirizzo pagina
 	private Installment selectedInstallment;
 	private Installment transferObjInstallment;
 	private Installment installment;
-
 
 	public Installment getSelectedInstallment() {
 		return selectedInstallment;
@@ -51,70 +46,63 @@ public class InstallmentManagerBean implements Serializable {
 	}
 
 	public void cancel() {
-		
+
 		close();
 	}
 
 	public void save() {
-		
-		//installment.copy(transferObjInstallment);
 
+		// installment.copy(transferObjInstallment);
 
-		if (selectedInstallment == null) {	
+		if (selectedInstallment == null) {
+			installment.copy(transferObjInstallment);
 			agreement.getInstallments().add(installment);
-		}else{
-			
+		} else {
+
 			selectedInstallment.copy(transferObjInstallment);
 		}
-			
-		
-	close();
 
+		close();
 	}
-	
-	public void close(){
-		
+
+	public void close() {
+
 		selectedInstallment = null;
-		
 	}
-
 
 	@Produces
 	@TransferObj
 	@RequestScoped
 	public Installment getTransferObjAgreementInstallment() {
-		
-			return transferObjInstallment;
 
+		return transferObjInstallment;
 	}
 
 	public Installment getInstallment() {
 		return transferObjInstallment;
 	}
 
-		
-	private void initInstallment(){
+	private void initInstallment() {
 
 		installment = new Installment();
 		transferObjInstallment = new Installment();
 		transferObjInstallment.copy(selectedInstallment);
-		
+
 	}
-	
-	//TODO riunire?
+
+	// TODO riunire?
 	public void viewInstallment() {
 
 		initInstallment();
-		
 	}
 
 	public void editInstallment() {
-		
-		initInstallment();
 
+		initInstallment();
 	}
 
 	public void deleteInstallment() {
+		
 		agreement.getInstallments().remove(selectedInstallment);
 		selectedInstallment.setAgreement(null);
 		close();
