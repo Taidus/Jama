@@ -43,6 +43,6 @@
 			fileUploadListener="#{attachmentsPB.handleFileUpload}"
 			mode="advanced" dragDropSupport="true" update="messages attchsList"
 			sizeLimit="1000000" cancelLabel="#{msgs.remove}"
-			uploadLabel="#{msgs.load}" label="#{msgs.choose}" />
+			uploadLabel="#{msgs.load}" label="#{msgs.choose}" invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}"/>
 	</p:tab>
 </ui:composition>
