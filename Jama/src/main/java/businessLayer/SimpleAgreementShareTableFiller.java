@@ -5,11 +5,13 @@ import java.util.Map;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 	@ElementCollection
+	@OrderColumn
 	private Map<Float, Float> atheneumCapitalBalanceRateTable;
 	private float structuresRate;
 	private float atheneumCommonBalanceRate;

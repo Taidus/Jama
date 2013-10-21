@@ -83,6 +83,9 @@ public class AgreementManagerBean implements Serializable {
 			agreementDao.close();
 
 		}
+		
+		em.flush();
+		
 	}
 
 	public void save() {
@@ -106,6 +109,7 @@ public class AgreementManagerBean implements Serializable {
 		transferObjAgreement = new Agreement();
 
 		agreement = agreementDao.getById(selectedAgreementId);
+		agreementDao.close();
 		transferObjAgreement.cloneFields(agreement);
 
 	}
@@ -113,6 +117,8 @@ public class AgreementManagerBean implements Serializable {
 	public String editAgreement() {
 		begin();
 		initAgreement();
+		System.out.println("editttt");
+
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
