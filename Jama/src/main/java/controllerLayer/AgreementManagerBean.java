@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.ejb.EJB;
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -74,6 +75,7 @@ public class AgreementManagerBean implements Serializable {
 		}
 	}
 
+	@Remove
 	private void close() {
 
 		if (!conversationninherited) {
@@ -84,6 +86,8 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	public void save() {
+		
+		
 		agreement.cloneFields(transferObjAgreement);
 		agreementDao.create(agreement);
 
@@ -114,11 +118,7 @@ public class AgreementManagerBean implements Serializable {
 
 	public String createAgreement() {
 
-		// questa riga causa l'apertura di un persistence context che viene poi
-		// ereditato dai DAO usati in altri bean. E' necessario
-		// aprire un persistence context per evitare il detachament di alcune
-		// entità.
-		//em.clear();
+	
 
 		agreement = new Agreement();
 		transferObjAgreement = new Agreement();
@@ -168,7 +168,7 @@ public class AgreementManagerBean implements Serializable {
 		d.setRateDirectory("dsi");
 		depDao.createDepartment(d);
 		agr.setDepartment(d);
-		agr.setWholeTaxableAmount(99999);
+		agr.setWholeTaxableAmount(10000);
 		agr.setProtocolNumber("30000");
 		agr.setApprovalDate(new Date());
 		agr.setBeginDate(new Date());
