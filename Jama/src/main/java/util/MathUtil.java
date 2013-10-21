@@ -6,5 +6,4 @@ public class MathUtil {
 	public static boolean doubleEquals(double a, double b){
 		return Math.abs(a - b) < epsilon;
 	}
-
 }
