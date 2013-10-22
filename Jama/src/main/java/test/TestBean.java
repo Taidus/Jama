@@ -115,14 +115,15 @@ public class TestBean implements Serializable {
 		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
 		c.add(Calendar. DAY_OF_MONTH,3);
 		Date upper = new Date(c.getTimeInMillis());
-		searchService.setPageSize(1);
+		deadService.setPageSize(1);
 		
-		deadService.init(lower, upper, null, null, null);
+		System.out.println("Querying in dates: "+lower+", "+upper);
+
+		deadService.init(null, null, null, null, null);
 	}
 
 	public void doJob1() {
 		
-		//System.out.println("Querying in dates: "+lower+", "+upper);
 
 		System.out.println(deadService.getCurrentResults());
 
