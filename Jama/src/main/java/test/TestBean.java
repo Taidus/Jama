@@ -5,10 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
+import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 import businessLayer.Department;
@@ -16,6 +19,7 @@ import daoLayer.AgreementDaoBean;
 import daoLayer.AgreementSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
+import daoLayer.DeadLineSearchService;
 import daoLayer.DepartmentDaoBean;
 
 @Named
@@ -36,6 +40,8 @@ public class TestBean implements Serializable {
 	private CompanyDaoBean compDB;
 	@EJB
 	private AgreementSearchService searchService;
+	@EJB
+	private DeadLineSearchService deadService;
 	public TestBean() {
 	}
 
@@ -107,32 +113,35 @@ public class TestBean implements Serializable {
 		Date lower = new Date(Calendar.getInstance().getTimeInMillis());
 		Calendar c = new GregorianCalendar();
 		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
-		c.add(Calendar. DAY_OF_MONTH,1);
+		c.add(Calendar. DAY_OF_MONTH,3);
 		Date upper = new Date(c.getTimeInMillis());
 		searchService.setPageSize(1);
 		
-		searchService.init(lower, upper, chiefId, null, null);
+		deadService.init(lower, upper, null, null, null);
 	}
 
 	public void doJob1() {
+		
+		//System.out.println("Querying in dates: "+lower+", "+upper);
 
-		System.out.println(searchService.getCurrentResults());
+		System.out.println(deadService.getCurrentResults());
 
 	}
 
 	public void doJob2() {
 
-		searchService.next();
+		deadService.next();
 	}
 
 	public void doJob3() {
 
-		searchService.previous();
+		deadService.previous();
 	}
 	
-	@AdminAllowed
+	
 	public void doDelta(){
-		System.out.println("doDelta AdminAllowed");
+		Agreement a = agrSB.getAll().get(0);
+		System.out.println(a);
 		
 	}
 

@@ -9,7 +9,6 @@ import javax.enterprise.context.ConversationScoped;
 import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -21,7 +20,6 @@ import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
-//TODO ALL
 public class DeadLineSearchService extends ResultPagerBean<Agreement>{
 
 	public DeadLineSearchService() {
@@ -34,23 +32,22 @@ public class DeadLineSearchService extends ResultPagerBean<Agreement>{
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Agreement> c = cb.createQuery(Agreement.class);
 		Root<Agreement> agr = c.from(Agreement.class);
-		//Root<Installment> inst = c.from(Installment.class);
-		Join<Agreement,Installment> agrInst = agr.join("installments");
-		c.multiselect(agrInst).distinct(true);
+		Root<Installment> inst = c.from(Installment.class);
+		c.select(agr).distinct(true);
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
 		if (lowerDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
 			criteria.add(cb.greaterThanOrEqualTo(
-					agr.<Date> get("approvalDate"), p));
+					inst.<Date> get("date"), p));
 
 		}
 
 		if (upperDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
-			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("approvalDate"), p));
+			criteria.add(cb.lessThanOrEqualTo(inst.<Date> get("date"), p));
 
 		}
 
@@ -71,11 +68,11 @@ public class DeadLineSearchService extends ResultPagerBean<Agreement>{
 		
 		if(order == SortOrder.ASCENDING){
 			
-			c.orderBy(cb.asc(agr.<Date> get("approvalDate")));
+			c.orderBy(cb.asc(inst.<Date> get("date")));
 		}
 		else if(order == SortOrder.DESCENDING){
 			
-			c.orderBy(cb.desc(agr.<Date> get("approvalDate")));
+			c.orderBy(cb.desc(inst.<Date> get("date")));
 
 		}
 
