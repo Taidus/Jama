@@ -11,9 +11,7 @@ import javax.faces.context.FacesContext;
 
 public class Messages {
 	public static FacesMessage getErrorMessage(String resourceId) {
-		FacesMessage m = getMessage("messages", resourceId, null);
-		m.setSeverity(FacesMessage.SEVERITY_ERROR);
-		return m;
+		return getErrorMessage(resourceId, null);
 	}
 	
 	public static FacesMessage getErrorMessage(String resourceId, Object[] params) {
@@ -21,6 +19,23 @@ public class Messages {
 		m.setSeverity(FacesMessage.SEVERITY_ERROR);
 		return m;
 	}
+	
+	public static FacesMessage getMessage(String resourceId){
+		return getMessage("messages", resourceId, null);
+	}
+	
+	public static FacesMessage getMessage(String resourceId, Object[] params){
+		return getMessage("messages", resourceId, params);
+	}
+	
+	public static String getString(String resourceId){
+		return getString("messages", resourceId, null);
+	}
+	
+	public static String getString(String resourceId, Object[] params){
+		return getString("messages", resourceId, params);
+	}
+	
 
 	public static FacesMessage getMessage(String bundleName, String resourceId,
 			Object[] params) {

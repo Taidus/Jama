@@ -226,7 +226,7 @@
 
 
 		<h:inputHidden value="needed" id="percentsCheck" validator="#{instShareTablePB.validatePersonnelShares}" />
-		<h:message styleClass="errorMessage" for="percentsCheck" />
+		<p:message styleClass="errorMessage" for="percentsCheck" />
 
 
 		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"

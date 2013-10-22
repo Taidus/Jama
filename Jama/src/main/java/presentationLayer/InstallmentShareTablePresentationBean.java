@@ -2,9 +2,8 @@ package presentationLayer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
@@ -24,7 +23,9 @@ import businessLayer.Installment;
 public class InstallmentShareTablePresentationBean extends ShareTablePresentationObj implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Inject @TransferObj private Installment installment;
+	@Inject
+	@TransferObj
+	private Installment installment;
 
 	public InstallmentShareTablePresentationBean() {
 		super();
@@ -67,34 +68,24 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 			List<Float> p = getSubAttributeList(agr.getShareTable(), getPercentOf(agr.getShareTable().getGoodsAndServices(), agr.getWholeAmount()));
 			System.out.println(4);
 
-			validateFields(l, instShareTablesMainAttributes);
+			//devono essere nello stesso ordine in cui si aggiungono sotto! L'oscenità fatta codice
+			String[] mainAttr = { Messages.getString("shareTableCapitalBalance"), Messages.getString("shareTableCommonBalance"),
+					Messages.getString("shareTableStructures"), Messages.getString("shareTablePersonnel"), Messages.getString("shareTableGoods") };
+			String[] subAttr = { Messages.getString("shareTableTrip"), Messages.getString("shareTableInvMaterials"),
+					Messages.getString("shareTableConsMaterials"), Messages.getString("shareTableRentals"),
+					Messages.getString("shareTableContrPersonnel"), Messages.getString("shareTableOtherCosts") };
+
+			validateFields(l, instShareTablesMainAttributes, mainAttr);
 			System.out.println(5);
-			validateFields(p, instShareTablesSubAttributes);
+			validateFields(p, instShareTablesSubAttributes, subAttr);
 			System.out.println(6);
 		} catch (Exception | Error e) {
 			System.out.println("Blbl " + e);
 			throw e;
 		}
-
-		// float[] mainValuesAmounts = installment.getMainValuesAmounts();
-		// for (Installment installment : installments) {
-		// float[] installmentMainValuesAmount =
-		// installment.getMainValuesAmounts();
-		// for (int i = 0; i < mainValuesAmounts.length; i++) {
-		// mainValuesAmounts[i] += installmentMainValuesAmount[i];
-		// }
-		// }
-		// float[] agreementMainValuesAmounts =
-		// installment.getAgreement().getMainValuesAmounts();
-		// for (int i = 0; i < mainValuesAmounts.length; i++) {
-		// if (mainValuesAmounts[i] > agreementMainValuesAmounts[i]) {
-		// throw new
-		// ValidatorException(Messages.getErrorMessage("err_installmentShareTable"));
-		// }
-		// }
 	}
 
-	private void validateFields(List<Float> agrAttributes, List<List<Float>> instAttrs) {
+	private void validateFields(List<Float> agrAttributes, List<List<Float>> instAttrs, String[] attrNames) {
 		// XXX questo metodo e tutti quelli ad esso correlati sono osceni. Se si
 		// trova un meccanismo per non scrivere simili blasfemie è meglio
 
@@ -104,9 +95,9 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 				sum += l.get(i);
 			}
 			if (sum > agrAttributes.get(i)) {
-				System.err.println("Errore sull'attributo principale #" + i + ": convenzione=" + agrAttributes.get(i) + ", rate=" + sum);
-				throw new ValidatorException(Messages.getErrorMessage("err_installmentShareTable"));
-				// FIXME errore più specifico
+				System.err.println("Errore sull'attributo '" + attrNames[i] + "': convenzione=" + agrAttributes.get(i) + ", rate=" + sum);
+				Object[] params = { attrNames[i] };
+				throw new ValidatorException(Messages.getErrorMessage("err_installmentShareTable", params));
 			}
 		}
 
