@@ -32,13 +32,23 @@
 
 
 		</p:tabView>
-		
-		<p:commandButton value="#{msgs.cancel}"
-			action="#{installmentWizardPB.cancel()}"
-			immediate="true" ajax="false" />
-			
-					<p:commandButton value="#{msgs.save}"
-				action="#{installmentWizardPB.save()}" ajax="false" />
+
+
+		<p:commandButton value="#{msgs.save}"
+			action="#{installmentWizardPB.save()}" ajax="false" />
+
+
+		<p:commandButton type="button" value="#{msgs.cancel}"
+			onclick="w_confirm.show();" />
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
+			severity="alert" widgetVar="w_confirm">
+			<p:commandButton value="#{msgs.yes}"
+				action="#{installmentWizardPB.cancel()}" immediate="true"
+				oncomplete="w_confirm.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();"
+				type="button" />
+		</p:confirmDialog>
 
 	</h:form>
 

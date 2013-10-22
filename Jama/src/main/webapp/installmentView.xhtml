@@ -13,20 +13,20 @@
 
 <h:body>
 
-	
 
-	<h:form id="installmentEdit">
+
+	<h:form id="installmentView">
 
 		<input type="hidden" name="cid"
 			value='#{agreementManager.conversation.id}' />
 
 		<p:tabView>
 
-	
+
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
 				<sections:installmentWizData editingDisable="true"></sections:installmentWizData>
 			</p:tab>
-	
+
 			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 				<sections:installmentWizShareTable editingDisable="true" />
 			</p:tab>
@@ -35,12 +35,14 @@
 
 
 		</p:tabView>
-		
-			<p:commandButton value="back"
-			action="#{installmentWizardPB.cancel()}"
+
+		<p:commandButton value="back" action="#{installmentWizardPB.cancel()}"
 			immediate="true" ajax="false" />
-			
-			
+
+		<p:commandButton value="toEditMode" ajax="false"
+			action="#{installmentWizardPB.editInstallment()}"></p:commandButton>
+
+
 
 	</h:form>
 
