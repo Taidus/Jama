@@ -14,8 +14,8 @@
 
 
 			<h:outputText value="#{msgs.newInstDate}:" />
-			<p:calendar id="date" label="#{msgs.newInstDate}" datePattern="dd/MM/yyyy" required="true" value="#{installmentManager.installment.date}"
-				rendered="#{cc.attrs.editingDisable == false}">
+			<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+				value="#{installmentManager.installment.date}" rendered="#{cc.attrs.editingDisable == false}">
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</p:calendar>
 
@@ -68,7 +68,7 @@
 			<h:message for="voucherNumber" />
 
 			<h:outputText value="#{msgs.newInstVoucherDate}:" />
-			<p:calendar id="voucherDate" label="#{msgs.newInstVoucherDate}" datePattern="dd/MM/yyyy" required="true"
+			<p:calendar id="voucherDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
 				value="#{installmentManager.installment.voucherDate}" rendered="#{cc.attrs.editingDisable == false}">
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</p:calendar>
@@ -104,7 +104,7 @@
 			<h:message for="invoiceNumber" />
 
 			<h:outputText value="#{msgs.newInstInvoiceDate}:" />
-			<p:calendar id="invoiceDate" label="#{msgs.newInstInvoiceDate}" datePattern="dd/MM/yyyy" required="true"
+			<p:calendar id="invoiceDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
 				value="#{installmentManager.installment.invoiceDate}" rendered="#{cc.attrs.editingDisable == false}">
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</p:calendar>
