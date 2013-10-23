@@ -66,10 +66,6 @@
 			<p:column id="agrScheduleCompanyColumn" filterBy="#{agr.company.id}" headerText="#{msgs.company}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterCompanyItems}">
 				<h:outputText value="#{agr.company.name}" />
-
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{agreementSchedulePCB.viewAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{agreementSchedulePCB.lazyModel.selectedValue}" />
-				</p:commandButton>
 			</p:column>
 
 			<p:column id="agrScheduleDateColumn" >
