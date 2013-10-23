@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
-@NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c")
+@NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c ORDER BY c.surname")
 })
 public class ChiefScientist {
 	

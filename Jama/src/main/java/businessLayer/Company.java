@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c") })
+@NamedQueries({ @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c ORDER BY c.name") })
 public class Company {
 
 	@Id
