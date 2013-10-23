@@ -19,7 +19,7 @@ import daoLayer.AgreementDaoBean;
 import daoLayer.AgreementSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
-import daoLayer.DeadLineSearchService;
+import daoLayer.DeadlineSearchService;
 import daoLayer.DepartmentDaoBean;
 
 @Named
@@ -41,7 +41,7 @@ public class TestBean implements Serializable {
 	@EJB
 	private AgreementSearchService searchService;
 	@EJB
-	private DeadLineSearchService deadService;
+	private DeadlineSearchService deadService;
 	public TestBean() {
 	}
 
