@@ -1,0 +1,202 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" default="false" />
+</composite:interface>
+
+<composite:implementation>
+
+	<p:panel header="#{msgs.shareTable_Header}">
+
+		<h:panelGrid id="fundValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
+
+			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
+			<h:inputText id="atheneumCapitalBalance" value="#{fundShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="atheneumCapitalBalance_o" value="#{fundShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentAtheneumCapitalBalance"
+				value="#{fundShareTablePB.getPercentOfMainField(fundShareTablePB.shareTable.atheneumCapitalBalance)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message id="atheneumCapitalBalanceError" for="atheneumCapitalBalance" />
+
+
+			<h:outputText value="#{msgs.shareTableCommonBalance}:" />
+			<h:inputText id="atheneumCommonBalance" value="#{fundShareTablePB.shareTable.atheneumCommonBalance}" label="#{msgs.shareTableCommonBalance}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="atheneumCommonBalance_o" value="#{fundShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentAtheneumCommonBalance"
+				value="#{fundShareTablePB.getPercentOfMainField(fundShareTablePB.shareTable.atheneumCommonBalance)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="atheneumCommonBalance" id="atheneumCommonBalanceError" />
+
+
+			<h:outputText value="#{msgs.shareTableStructures}:" />
+			<h:inputText id="structures" value="#{fundShareTablePB.shareTable.structures}" label="#{msgs.shareTableStructures}" required="true"
+				rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="structures_o" value="#{fundShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentStructures" value="#{fundShareTablePB.getPercentOfMainField(fundShareTablePB.shareTable.structures)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="structures" id="structuresError" />
+
+
+			<h:outputText value="#{msgs.shareTableGoods}:" />
+			<h:outputText id="goodsAndServices" value="#{fundShareTablePB.shareTable.goodsAndServices}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentGoodsAndServices" value="#{fundShareTablePB.getPercentOfMainField(fundShareTablePB.shareTable.goodsAndServices)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="goodsAndServices" id="goodsAndServicesError" />
+
+
+
+			<h:outputText value="#{msgs.shareTableTrip}:" />
+			<h:inputText id="businessTrip" value="#{fundShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}" required="true"
+				rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="businessTrip_o" value="#{fundShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentBusinessTrip" value="#{fundShareTablePB.getPercentOfGoodsField(fundShareTablePB.shareTable.businessTrip)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="businessTrip" id="businessTripError" />
+
+
+			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
+			<h:inputText id="consumerMaterials" value="#{fundShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="consumerMaterials_o" value="#{fundShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentConsumerMaterials" value="#{fundShareTablePB.getPercentOfGoodsField(fundShareTablePB.shareTable.consumerMaterials)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="consumerMaterials" id="consumerMaterialsError" />
+
+
+			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
+			<h:inputText id="inventoryMaterials" value="#{fundShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="inventoryMaterials_o" value="#{fundShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentInventoryMaterials" value="#{fundShareTablePB.getPercentOfGoodsField(fundShareTablePB.shareTable.inventoryMaterials)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="inventoryMaterials" id="inventoryMaterialsError" />
+
+
+			<h:outputText value="#{msgs.shareTableRentals}:" />
+			<h:inputText id="rentals" value="#{fundShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
+				rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="rentals_o" value="#{fundShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentRentals" value="#{fundShareTablePB.getPercentOfGoodsField(fundShareTablePB.shareTable.rentals)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="rentals" id="rentalsError" />
+
+
+			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
+			<h:inputText id="personnelOnContract" value="#{fundShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
+				required="true" rendered="#{not cc.attrs.editingDisable}">
+				<f:ajax event="valueChange" execute="@this" render="fundValuesGrid personnelShares personnalShareInput" />
+				<f:validateDoubleRange minimum="0" maximum="100" />
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:inputText>
+			<h:outputText id="personnelOnContract_o" value="#{fundShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentPersonnelOnContract" value="#{fundShareTablePB.getPercentOfGoodsField(fundShareTablePB.shareTable.personnelOnContract)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="personnelOnContract" id="personnelOnContractError" />
+
+
+			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
+			<h:outputText id="otherCost" value="#{fundShareTablePB.shareTable.otherCost}">
+				<f:convertNumber maxFractionDigits="2" locale="en_us" />
+			</h:outputText>
+
+			<h:outputText id="percentOtherCost" value="#{fundShareTablePB.getPercentOfGoodsField(fundShareTablePB.shareTable.otherCost)}">
+				<f:convertNumber type="currency" currencySymbol="€" />
+			</h:outputText>
+
+			<h:message for="otherCost" id="otherCostError" />
+
+		</h:panelGrid>
+
+		<br />
+
+		<h:inputHidden value="needed" id="valuesCheck" validator="#{fundShareTablePB.validateMainValues}" />
+		<p:message styleClass="errorMessage" for="valuesCheck" />
+
+		<br />
+
+		<h:inputHidden value="needed" id="goodsCheck" validator="#{fundShareTablePB.validateGoodsAndServices}" />
+		<p:message styleClass="errorMessage" for="goodsCheck" />
+
+	</p:panel>
+
+	<br />
+
+</composite:implementation>
+
+</html>

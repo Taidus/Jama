@@ -1,15 +1,12 @@
 package presentationLayer;
 
-import java.awt.Component;
 import java.io.Serializable;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
-import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,8 +14,6 @@ import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 
 import util.Messages;
-import businessLayer.Agreement;
-import annotations.TransferObj;
 import controllerLayer.AgreementManagerBean;
 
 @Named("agreementWizardPB")
