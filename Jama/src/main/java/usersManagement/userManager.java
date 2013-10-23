@@ -45,6 +45,7 @@ public class userManager implements Serializable {
 			u = new User();
 			u.setRole(Role.ADMIN);
 			u.setSerialNumber(5101740);
+			u.setEmail("giulio.galvan@gmail.com");
 			userDao.create(u);
 		}
 		

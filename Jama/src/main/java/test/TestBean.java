@@ -9,8 +9,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import util.MailSender;
 import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
@@ -42,6 +44,9 @@ public class TestBean implements Serializable {
 	private AgreementSearchService searchService;
 	@EJB
 	private DeadlineSearchService deadService;
+	
+	@Inject
+	private MailSender mailSender;
 	public TestBean() {
 	}
 
@@ -141,8 +146,8 @@ public class TestBean implements Serializable {
 	
 	
 	public void doDelta(){
-		Agreement a = agrSB.getAll().get(0);
-		System.out.println(a);
+		
+		mailSender.sendToLoggedUser("nuovo", "g");
 		
 	}
 

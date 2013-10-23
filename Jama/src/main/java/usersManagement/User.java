@@ -18,6 +18,7 @@ public class User implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO) 
 	private int id;
 	private String password;
+	private String email;
 	
 	private int serialNumber;
 	@Enumerated(EnumType.STRING)
@@ -37,6 +38,15 @@ public class User implements Serializable {
 		}
 	}
 
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public int getSerialNumber() {
 		return serialNumber;
