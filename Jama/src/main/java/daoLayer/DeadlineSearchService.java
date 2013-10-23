@@ -20,9 +20,9 @@ import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
-public class DeadLineSearchService extends ResultPagerBean<Agreement>{
+public class DeadlineSearchService extends ResultPagerBean<Agreement>{
 
-	public DeadLineSearchService() {
+	public DeadlineSearchService() {
 	}
 	
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,

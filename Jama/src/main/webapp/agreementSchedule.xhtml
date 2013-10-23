@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="table.css" library="css" />
+
+	<h:outputScript name="hideShow.js" library="js" />
+
+	<script type="text/javascript">
+		function setRowEvent(){
+			setHideShow();
+		}
+
+		function setFilters(chiefFilter, companyFilter){
+			jQuery("#agrSchedule\\:agrTableChiefColumn\\:filter").val(chiefFilter);
+			jQuery("#agrSchedule\\:agrTableCompanyColumn\\:filter").val(companyFilter);
+		}
+
+		function calendarFilter(event, agrTable){
+			//event.stopPropagation();
+			agrTable.filter(); 
+			return false;
+		}
+
+		function calendarReset(event, firstDate, lastDate, agrTable){ 
+			firstDate.setDate(null); 
+			lastDate.setDate(null);
+			return calendarFilter(event, agrTable);
+		}
+
+		jQuery(document).ready(function(){
+									setRowEvent();
+								});
+		
+	</script>
+</h:head>
+
+<h:body onload="setFilters(#{agreementSchedulePCB.lazyModel.filterChiefId}, #{agreementSchedulePCB.lazyModel.filterCompanyId});">
+
+	<h:form prependId="false">
+		<input type="hidden" name="cid" value='#{agreementSchedulePCB.conversation.id}' />
+
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="agrSchedule">
+			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{agreementSchedulePCB.viewAgreement()}" />
+		</p:contextMenu>
+
+		<p:dataTable id="agrSchedule" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule" lazy="true" value="#{agreementSchedulePCB.lazyModel}"
+			emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{agreementSchedulePCB.lazyModel.selectedValue}"
+			selectionMode="single" rowKey="#{agr.id}">
+
+			<p:ajax event="filter" oncomplete="setRowEvent();" />
+			<p:ajax event="page" oncomplete="setRowEvent();" />
+
+			<p:column id="agrIsClosed">
+				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
+			</p:column>
+
+			<p:column id="agrScheduleChiefColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterChiefItems}">
+				<h:outputText value="#{agr.chief.completeName}" />
+			</p:column>
+
+			<p:column id="agrScheduleCompanyColumn" filterBy="#{agr.company.id}" headerText="#{msgs.company}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterCompanyItems}">
+				<h:outputText value="#{agr.company.name}" />
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{agreementSchedulePCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{agreementSchedulePCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column id="agrScheduleDateColumn" >
+
+
+				<f:facet name="header">
+					<h:outputText value="#{msgs.deadlineDate}" />
+					<h:form id="calendarFilters">
+						<div style="display: block; width: 90%; margin: auto;">
+							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{agreementSchedulePCB.lazyModel.filterMinDate}"
+								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+							</p:calendar>
+							-
+							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{agreementSchedulePCB.lazyModel.filterMaxDate}"
+								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+							</p:calendar>
+						</div>
+
+						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+							onclick="return calendarFilter(arguments[0], w_agrSchedule);" />
+						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+							onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_agrSchedule);" />
+					</h:form>
+				</f:facet>
+
+				<h:outputText value="#{agreementSchedulePCB.lazyModel.findClosestDeadline(agr)}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{agreementSchedulePCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{agreementSchedulePCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+
+			</p:column>
+
+		</p:dataTable>
+
+		<p:commandButton action="#{agreementSchedulePCB.backToHome()}" value="Home" immediate="true" />
+
+	</h:form>
+
+
+</h:body>
+</html>

@@ -35,7 +35,8 @@ function setHideShow(){
 		}).mouseout(function() {
 			jQuery(this).find(".list-row-button").hide();
 		}).click(function(e) {
-			jQuery("#attchsList tr").removeClass("ui-state-highlight");
+			jQuery("div[class*=contextMenu]").hide();
+			jQuery("div[class*=hideShow] tr").removeClass("ui-state-highlight");
 			e.stopPropagation();
 		}).removeClass("ui-state-highlight");
 	
