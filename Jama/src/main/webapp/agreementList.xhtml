@@ -66,6 +66,10 @@
 			<p:ajax event="sort" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent();" />
 
+			<p:column id="agrIsClosed">
+				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
+			</p:column>
+
 			<p:column id="agrTableChiefColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterChiefItems}">
 				<h:outputText value="#{agr.chief.completeName}" />
@@ -77,8 +81,8 @@
 			</p:column>
 
 			<p:column id="agrTableDateColumn" sortBy="#{agr.approvalDate}">
-			
-			
+
+
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
@@ -112,23 +116,7 @@
 					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
-				<ui:remove>
-					<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" action="#{agreementListPCB.deleteAgreement()}" update="agreementTable"
-						oncomplete="setRowEvent();">
-						<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
-					</p:commandButton>
-				</ui:remove>
-				
-
 			</p:column>
-			
-			<p:column id="agrIsClosed"> 
-			
-					<h:selectBooleanCheckbox id="closedAgr"
-				value="#{agr.closed}"
-				disabled="true" />
-			
-			 </p:column>
 
 		</p:dataTable>
 
