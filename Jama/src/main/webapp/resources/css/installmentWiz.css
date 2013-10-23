@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 
+/*
 .col1 { vertical-align:top; 
 }
 .wizard { }
@@ -15,6 +16,11 @@ bottom:0;
 height:23px;
 margin:0;
 padding:2px;
+}
+*/
+
+#installmentWiz tr, #installmentWiz td, #installmentEdit tr, #installmentEdit td {
+	border: none;
 }
 	       
 	       

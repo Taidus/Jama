@@ -2,7 +2,6 @@ package presentationLayer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.ConversationScoped;
@@ -42,6 +41,7 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	}
 
 	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
+		//TODO eliminare try-catch
 		try {
 			Agreement agr = installment.getAgreement();
 			List<Installment> installments = agr.getInstallments();
