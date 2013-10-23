@@ -1,0 +1,1 @@
+La parola che mi hai passato è ${word}.
