@@ -1,0 +1,344 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" />
+
+</composite:interface>
+
+<composite:implementation>
+
+	<p:panel header="#{msgs.data_header}">
+
+		<p:panelGrid>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.fundTitle}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputTextarea id="title" cols="20" rows="4" value="#{agreementManager.agreement.title}" label="#{msgs.fundTitle}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" />
+
+					<h:outputText id="title_o" value="#{agreementManager.agreement.title}" rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message for="title" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.protocolNumber}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="protocolNumber" value="#{agreementManager.agreement.protocolNumber}" label="#{msgs.protocolNumber}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6" integerOnly="true" />
+						<f:ajax event="blur" execute="@this" render="protocolNumberError" />
+					</h:inputText>
+
+					<h:outputText id="protocolNumber_o" value="#{agreementManager.agreement.protocolNumber}"
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="protocolNumberError" for="protocolNumber" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.department}:" />
+				</p:column>
+
+				<p:column colspan="3">
+					<h:outputText value="#{agreementManager.agreement.department.name}" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.chief}:" />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="chiefMenu" styleClass="chiefMenu" value="#{agreementManager.agreement.chief}" label="#{msgs.chief}" required="true"
+						filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
+						<f:selectItems value="#{utilPB.chiefItems}" />
+						<f:converter binding="#{chiefConverter}" />
+
+					</p:selectOneMenu>
+
+					<h:outputText value="#{agreementManager.agreement.chief}" rendered="#{cc.attrs.editingDisable == true}">
+						<f:converter binding="#{chiefConverter}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{chiefDialogPCB.clear()}" oncomplete="w_chiefDialog.show()"
+						update=":#{p:component('chiefPanel')}" rendered="#{cc.attrs.editingDisable == false}">
+						<p:resetInput target=":#{p:component('chiefPanel')}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column>
+					<h:message class="errorMessage" for="chiefMenu" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.contactPerson}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="contact" value="#{agreementManager.agreement.contactPerson}" label="#{msgs.contactPerson}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" />
+					<h:outputText value="#{agreementManager.agreement.contactPerson}" rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="contact" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.company}:" />
+				</p:column>
+
+				<p:column>
+					<h:selectOneMenu id="companyMenu" value="#{agreementManager.agreement.company}" label="#{msgs.company}" required="true"
+						rendered="#{cc.attrs.editingDisable==false}">
+						<f:selectItems value="#{utilPB.companyItems}" />
+						<f:converter binding="#{companyConverter}" />
+					</h:selectOneMenu>
+
+					<h:outputText value="#{agreementManager.agreement.company}" rendered="#{cc.attrs.editingDisable==true}">
+						<f:converter binding="#{companyConverter}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{companyDialogPCB.clear()}" oncomplete="w_companyDialog.show()"
+						update=":#{p:component('companyPanel')}" rendered="#{cc.attrs.editingDisable == false}">
+						<p:resetInput target=":#{p:component('companyPanel')}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column>
+					<h:message class="errorMessage" for="companyMenu" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.projectNumber}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="projectNumber" value="#{agreementManager.agreement.CIA_projectNumber}" label="#{msgs.projectNumber}" required="true"
+						rendered="#{cc.attrs.editingDisable==false}">
+						<f:ajax event="blur" execute="@this" render="projectNumberError" />
+					</h:inputText>
+
+					<h:outputText id="projectNumber_o" value="#{agreementManager.agreement.CIA_projectNumber}"
+						rendered="#{cc.attrs.editingDisable==true}">
+					</h:outputText>
+
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="projectNumberError" for="projectNumber" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.agrInventory}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="inventoryNumber" value="#{agreementManager.agreement.inventoryNumber}" label="#{msgs.agrInventory}" required="true"
+						rendered="#{cc.attrs.editingDisable ==false}">
+						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
+
+					</h:inputText>
+
+					<h:outputText id="inventoryNumber_o" value="#{agreementManager.agreement.inventoryNumber}" 
+						rendered="#{cc.attrs.editingDisable ==true}">
+
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" id="inventoryNumberError" for="inventoryNumber" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.taxableAmount}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="taxableAmount" value="#{agreementManager.agreement.wholeTaxableAmount}" label="#{msgs.taxableAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertNumber maxFractionDigits="2" locale="en_us" />
+						<f:validateDoubleRange minimum="0.0" />
+						<f:ajax render="@this" />
+					</h:inputText>
+
+					<h:outputText id="taxableAmount_o" value="#{agreementManager.agreement.wholeTaxableAmount}" 
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="taxAmountError" class="errorMessage" for="taxableAmount" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.reservedAmount}" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="reservedAmount" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertNumber />
+						<f:ajax event="blur" execute="@this spentAmount" render="reservedAmountError spentAmountError" />
+						<f:validateDoubleRange minimum="0.0" maximum="#{agreementManager.agreement.turnOver}" />
+					</h:inputText>
+
+					<h:outputText id="reservedAmount_o" value="#{agreementManager.agreement.reservedAmount}" 
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="reservedAmountError" class="errorMessage" for="reservedAmount" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.spentAmount}" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="spentAmount" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" validator="#{agreementWizardPB.validateSpentAmount}">
+						<f:convertNumber />
+						<f:ajax event="blur" execute="@this" render="spentAmountError" />
+						<!-- 						<f:validateDoubleRange minimum="0.0" -->
+						<!-- 							maximum="#{agreementManager.agreement.reservedAmount}" /> -->
+					</h:inputText>
+
+					<h:outputText id="spentAmount_o" value="#{agreementManager.agreement.spentAmount}" 
+						rendered="#{cc.attrs.editingDisable == true}">
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message id="spentAmountError" class="errorMessage" for="spentAmount" />
+				</p:column>
+			</p:row>
+			
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.approvalDate}:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar id="approvalDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+						value="#{agreementManager.agreement.approvalDate}" rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+
+					<h:outputText id="approvalDate_o" value="#{agreementManager.agreement.approvalDate}" rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="approvalDate" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.beginDate}:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar id="beginDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+						value="#{agreementManager.agreement.beginDate}" rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+
+					<h:outputText id="beginDate_o" value="#{agreementManager.agreement.beginDate}" rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+				</p:column>
+
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="beginDate" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.deadlineDate}:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+						value="#{agreementManager.agreement.deadlineDate}" rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+
+					<h:outputText id="deadlineDate_o" value="#{agreementManager.agreement.deadlineDate}" rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+
+				</p:column>
+
+				<p:column colspan="2">
+					<h:message class="errorMessage" for="deadlineDate" />
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+
+	</p:panel>
+
+
+
+
+</composite:implementation>
+</html>
+

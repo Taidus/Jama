@@ -21,7 +21,9 @@ public abstract class ShareTablePresentationObj {
 
 	protected ShareTablePresentationObj() {
 		newShare = new PersonnelShare();
-		// FIXME questo darà "problemi"
+		// FIXME questo darà "problemi" (inserisci, non salvi, esci e ritorni =
+		// stessi valori di prima. Però non dà fastidio, anzi, può essere una
+		// cosa positiva)
 	}
 
 	protected abstract AbstractShareTable getTransferObjShareTable();
