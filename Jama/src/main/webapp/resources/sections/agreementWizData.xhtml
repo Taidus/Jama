@@ -355,7 +355,7 @@
 						<f:convertNumber />
 						<f:ajax event="blur" execute="@this spentAmount" render="reservedAmountError spentAmountError" />
 						<f:validateDoubleRange minimum="0.0"
-							maximum="#{agreementManager.agreement.turnOver}" />
+							maximum="#{agreementManager.agreement.turnOver}"  />
 					</h:inputText>
 
 					<h:outputText id="reservedAmount_o"

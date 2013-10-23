@@ -18,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import security.AdminAllowed;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
@@ -109,7 +110,8 @@ public class AgreementManagerBean implements Serializable {
 
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
-
+	
+	@AdminAllowed
 	public String createAgreement() {
 
 		agreement = new Agreement();

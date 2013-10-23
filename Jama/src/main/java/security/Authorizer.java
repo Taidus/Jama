@@ -1,51 +1,44 @@
-/*
- * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
- * contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package test;
+package security;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.faces.context.FacesContext;
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import javax.interceptor.InvocationContext;
 
 import org.apache.deltaspike.security.api.authorization.Secures;
 
+import usersManagement.Role;
+import usersManagement.User;
+import annotations.Logged;
+
 /**
- * This Authorizer class implements behavior for our security binding types. This class is simply a CDI bean which declares
- * a @Secures method, qualified with the security binding annotation.
+ * This Authorizer class implements behavior for our security binding types.
+ * This class is simply a CDI bean which declares a @Secures method, qualified
+ * with the security binding annotation.
  * 
- * @author <a href="mailto:benevides@redhat.com">Rafael Benevides</a>
  * 
  */
-@ApplicationScoped
-public class CustomAuthorizer {
+@SessionScoped
+public class Authorizer implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	@Logged
+	private User loggedUser;
 
-    @Secures
-    @AdminAllowed
-    public boolean doAdminCheck(){
-    	return false;
-    }
-
-     @Secures
-    @EmployeeAllowed
-    public boolean doGuestCheck(){
-    	return false;
-    }
-    
-
+	@Secures
+	@AdminAllowed
+	public boolean doAdminCheck() {
+		
+		System.out.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
+		
+		if (loggedUser.hasRole(Role.ADMIN)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

@@ -16,6 +16,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
 
+import util.Messages;
 import businessLayer.Agreement;
 import annotations.TransferObj;
 import controllerLayer.AgreementManagerBean;
@@ -115,7 +116,7 @@ public class AgreementWizardPresentationBean implements Serializable {
 
 		if (spentAmount > reservedAmount) {
 			// System.out.println("dentro if");
-			FacesMessage message = new FacesMessage("errore prova");
+			FacesMessage message = Messages.getErrorMessage("err_agreementSpent");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(message);
 

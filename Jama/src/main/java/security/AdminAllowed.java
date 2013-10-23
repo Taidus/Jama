@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test;
+package security;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -24,12 +24,6 @@ import java.lang.annotation.Target;
 
 import org.apache.deltaspike.security.api.authorization.SecurityBindingType;
 
-/**
- * This annotation is used to to add authorization restrictions to beans and methods
- * 
- * @author <a href="mailto:benevides@redhat.com">Rafael Benevides</a>
- * 
- */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Documented
