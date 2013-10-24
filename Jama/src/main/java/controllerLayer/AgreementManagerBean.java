@@ -81,7 +81,7 @@ public class AgreementManagerBean implements Serializable {
 		if (!conversationninherited) {
 			conversation.end();
 		}
-		//agreementDao.close();
+		// agreementDao.close();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -110,8 +110,7 @@ public class AgreementManagerBean implements Serializable {
 
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
-	
-	@AdminAllowed
+
 	public String createAgreement() {
 
 		agreement = new Agreement();
@@ -143,6 +142,7 @@ public class AgreementManagerBean implements Serializable {
 		return agreement;
 	}
 
+	@AdminAllowed
 	public void deleteAgreement() {
 		agreementDao.delete(selectedAgreementId);
 	}

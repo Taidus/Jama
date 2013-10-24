@@ -32,13 +32,16 @@ public class Authorizer implements Serializable {
 	@Secures
 	@AdminAllowed
 	public boolean doAdminCheck() {
-		
-		System.out.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
-		
-		if (loggedUser.hasRole(Role.ADMIN)) {
-			return true;
-		} else {
-			return false;
-		}
+		System.out
+				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
+		return (loggedUser.hasRole(Role.ADMIN)) ? true : false;
+	}
+
+	@Secures
+	@ChiefScientistAllowed
+	public boolean doChiefScientistCheck() {
+		System.out
+				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
+		return (loggedUser.hasRole(Role.CHIEF_SCIENTIST)) ? true : false;
 	}
 }

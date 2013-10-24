@@ -1,26 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-	
-	<h:head>
-	</h:head>
-	
-	<h:body>
-	
+
+<h:head>
+</h:head>
+
+<h:body>
+
 	<h:form>
-	<h:outputText value="Please Login" />
-	<h:commandButton value="Login" action="#{userManager.login()}" />
-	
-	<br />
-	<br />
-	
-	<h:commandButton value="Stampa test FM" action="#{chiefConverter.testFM()}" />
+		<h:outputText value="Please Login" />
+		<h:panelGrid columns="2">
+			<h:outputText value="Matricola: " />
+			<p:inputText id="serialNumber" binding="#{serialNumber}" />
+			<h:outputText value="Password: " />
+			<p:password id="password" binding="#{password}" />
+		</h:panelGrid>
+		<p:commandButton value="Login"
+			action="#{userManager.login(serialNumber.value, password.value)}" />
+		<br />
+		<br />
+
+		<h:commandButton value="Stampa test FM"
+			action="#{chiefConverter.testFM()}" />
 	</h:form>
-	
-	
-	</h:body>
-	
+
+
+</h:body>
+
 </html>

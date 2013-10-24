@@ -14,7 +14,7 @@ import annotations.Logged;
 
 @Named("userManager")
 @SessionScoped
-public class userManager implements Serializable {
+public class UserManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private User loggedUser;
@@ -22,13 +22,14 @@ public class userManager implements Serializable {
 	private UserDaoBean userDao;
 	private User defaultUser;
 
-	public userManager() {
+	public UserManager() {
 	}
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		defaultUser = new User();
-		defaultUser.setRole(Role.GUEST);
+		// TODO: rimettere GUEST quando sarà tutto montato
+		defaultUser.setRole(Role.ADMIN);
 		loggedUser = defaultUser;
 	}
 
@@ -39,20 +40,15 @@ public class userManager implements Serializable {
 		return loggedUser;
 	}
 
-	public String login() {
-		User u = userDao.getBySerialNumber(5101740);
-		if (u == null) {
-			u = new User();
-			u.setRole(Role.ADMIN);
-			u.setSerialNumber(5101740);
-			u.setEmail("giulio.galvan@gmail.com");
-			userDao.create(u);
+	public String login(String serialNumber, String password) {
+		// TODO: controllo password
+		User u = userDao.getBySerialNumber(Integer.parseInt(serialNumber));
+		if (u != null) {
+			loggedUser = u;
+			System.out.println("User Login: loggedUser= " + u);
+			return "home";
 		}
-		
-		loggedUser = u;
-		System.out.println("User Login: loggedUser= "+u);
-
-		return "home";
+		return "login";
 	}
 
 	public void logout() {
