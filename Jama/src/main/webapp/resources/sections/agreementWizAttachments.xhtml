@@ -29,7 +29,7 @@
 				<p:tooltip for="downloadButton" value="Download" showEffect="fade"
 					hideEffect="fade" />
 				<p:commandButton id="removeButton" ajax="true"
-					oncomplete="w_confirm.show();" icon="ui-icon-trash">
+					oncomplete="w_confirmA.show();" icon="ui-icon-trash">
 					<f:setPropertyActionListener
 						target="#{attachmentsPB.selectedAttachment}" value="#{file}">
 					</f:setPropertyActionListener>
@@ -44,5 +44,21 @@
 			mode="advanced" dragDropSupport="true" update="messages attchsList"
 			sizeLimit="1000000" cancelLabel="#{msgs.remove}"
 			uploadLabel="#{msgs.load}" label="#{msgs.choose}" invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}"/>
+	
+	
+	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
+			severity="alert" widgetVar="w_confirmA">
+			<p:commandButton value="#{msgs.yes}"
+				action="#{attachmentsPB.removeFile()}" immediate="true"
+				oncomplete="w_confirmA.hide()" update="attchsList" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirmA.hide();"
+				type="button" />
+		</p:confirmDialog>
+	
+	
 	</p:tab>
+	
+	
+	
+	
 </ui:composition>
