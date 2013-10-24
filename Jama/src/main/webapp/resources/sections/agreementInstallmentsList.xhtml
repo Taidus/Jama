@@ -11,6 +11,8 @@
 <composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 	<h:outputStylesheet name="table.css" library="css" />
+	
+	<p:growl autoUpdate="true" />
 
 
 	<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
@@ -47,7 +49,7 @@
 				<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 			</p:commandButton>
 			<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed"
-				action="#{mailSender.send(installment)}">
+				action="#{mailSender.send(installment, false)}" >
 			</p:commandButton>
 
 

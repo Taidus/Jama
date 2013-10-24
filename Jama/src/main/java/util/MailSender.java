@@ -6,6 +6,8 @@ import java.io.StringWriter;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
@@ -30,9 +32,9 @@ public class MailSender implements Serializable {
 	@Resource(lookup = "java:jboss/mail/JaMail")
 	private Session mailSession;
 
-//	@Inject
-//	@Logged
-//	private User loggedUser;
+	// @Inject
+	// @Logged
+	// private User loggedUser;
 
 	private void _send(String recipientEmail, String subject, String text) {
 
@@ -57,24 +59,33 @@ public class MailSender implements Serializable {
 		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di sergente nella DeltaSpikeForce!");
 	}
 
-	public void send(Installment inst) throws IOException, TemplateException {
-		
+	public void send(Installment inst, boolean actuallySend) throws IOException, TemplateException {
+
 		TemplateFiller filler = new TemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
 		StringWriter out = new StringWriter();
 		// variabile di tipo StringWriter perché un Writer qualunque non va
 		// bene: serve che il metodo toString() restituisca esattamente la
 		// stringa che rappresenta il contenuto della mail
-		
+
 		Template temp = Config.fmconf.getTemplate(Config.mailTemplateFileName);
 		temp.process(filler, out);
 		String mailContent = out.toString();
 
-		//System.out.println("\n********************\n" + mailContent + "\n*********************");
-		_send("giulio.galvan@stud.unifi.it", "Comunicazione da Jama", mailContent);
-		_send("tommaso.levato@stud.unifi.it", "Comunicazione da Jama", mailContent);
-		_send("alessio.sarullo@stud.unifi.it", "Comunicazione da Jama", mailContent);
+		// System.out.println("\n********************\n" + mailContent +
+		// "\n*********************");
 		spam();
-		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+
+		if (actuallySend) {
+			_send("giulio.galvan@stud.unifi.it", "Comunicazione da Jama", mailContent);
+			_send("tommaso.levato@stud.unifi.it", "Comunicazione da Jama", mailContent);
+			_send("alessio.sarullo@stud.unifi.it", "Comunicazione da Jama", mailContent);
+
+			System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		} else {
+			System.out.println(" °°°°°°°°° Mail di spam inviata! °°°°°°°°°°°°°");
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
 	}
 
 	public static class TemplateFiller {
@@ -89,7 +100,7 @@ public class MailSender implements Serializable {
 			this.installment = installment;
 			this.mail1 = mail1;
 			this.mail2 = mail2;
-			this.installmentNumber = 1+ agreement.getInstallments().indexOf(installment);
+			this.installmentNumber = 1 + agreement.getInstallments().indexOf(installment);
 
 			if (installmentNumber <= 0) {
 				throw new IllegalStateException("Disallineamento tra la rata " + installment.getId() + " e la convenzione " + agreement.getId()
