@@ -18,6 +18,3 @@ class InstallmentEdit implements ViewConfig {
 @Secured(value = { AdminAccessDecisionVoter.class }, errorView = Login.class)
 class InstallmentWiz implements ViewConfig {
 }
-
-class Login implements ViewConfig {
-}
