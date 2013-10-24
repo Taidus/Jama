@@ -18,7 +18,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import security.AdminAllowed;
+import org.apache.deltaspike.security.api.authorization.Secured;
+
+import security.AdminAccessDecisionVoter;
+import security.Login;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
@@ -142,7 +145,7 @@ public class AgreementManagerBean implements Serializable {
 		return agreement;
 	}
 
-	@AdminAllowed
+	@Secured(value = { AdminAccessDecisionVoter.class }, errorView = Login.class)
 	public void deleteAgreement() {
 		agreementDao.delete(selectedAgreementId);
 	}
