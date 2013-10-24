@@ -25,26 +25,14 @@ import freemarker.template.TemplateException;
 @Named
 @SessionScoped
 public class MailSender implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Resource(lookup = "java:jboss/mail/JaMail")
 	private Session mailSession;
 
-	@Inject
-	@Logged
-	private User loggedUser;
-
-	private void sendToLoggedUser(String text, String subject) {
-		// XXX eliminare?
-
-		String recipientEmail = loggedUser.getEmail();
-		_send(recipientEmail, subject, text);
-
-	}
+//	@Inject
+//	@Logged
+//	private User loggedUser;
 
 	private void _send(String recipientEmail, String subject, String text) {
 
@@ -86,6 +74,7 @@ public class MailSender implements Serializable {
 		_send("tommaso.levato@stud.unifi.it", "Comunicazione da Jama", mailContent);
 		_send("alessio.sarullo@stud.unifi.it", "Comunicazione da Jama", mailContent);
 		spam();
+		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
 	}
 
 	public static class TemplateFiller {
