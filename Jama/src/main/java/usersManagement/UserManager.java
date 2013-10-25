@@ -1,6 +1,7 @@
 package usersManagement;
 
 import java.io.Serializable;
+import security.Principal;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -19,26 +20,24 @@ import annotations.Logged;
 public class UserManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private User loggedUser;
+	private Principal loggedUser;
 	@Inject
 	private UserDaoBean userDao;
-	private User defaultUser;
 
 	public UserManager() {
 	}
 
 	@PostConstruct
 	public void init() {
-		defaultUser = new User();
+		loggedUser = new Principal("Guest");
 		// TODO: rimettere GUEST quando sarà tutto montato
-		defaultUser.setRole(Role.ADMIN);
-		loggedUser = defaultUser;
+		loggedUser.addRole(Role.ADMIN);
 	}
 
 	@RequestScoped
 	@Produces
 	@Logged
-	public User getLoggedUser() {
+	public Principal getLoggedUser() {
 		return loggedUser;
 	}
 
@@ -46,7 +45,7 @@ public class UserManager implements Serializable {
 		// TODO: controllo password
 		User u = userDao.getBySerialNumber(Integer.parseInt(serialNumber));
 		if (u != null && u.login(password)) {
-			loggedUser = u;
+			loggedUser = new Principal(String.valueOf(u.getSerialNumber()));
 			System.out.println("User Login: loggedUser= " + u);
 			return "home";
 		} else {
@@ -58,7 +57,8 @@ public class UserManager implements Serializable {
 	}
 
 	public void logout() {
-		loggedUser = defaultUser;
+		loggedUser = new Principal("Guest");
+		loggedUser.addRole(Role.GUEST);
 		// TODO return value;
 	}
 

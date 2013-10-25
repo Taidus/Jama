@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.apache.deltaspike.security.api.authorization.Secures;
 
 import usersManagement.Role;
-import usersManagement.User;
 import annotations.Logged;
 
 /**
@@ -21,13 +20,10 @@ import annotations.Logged;
 @SessionScoped
 public class Authorizer implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Inject
 	@Logged
-	private User loggedUser;
+	private Principal loggedUser;
 
 	@Secures
 	@AdminAllowed

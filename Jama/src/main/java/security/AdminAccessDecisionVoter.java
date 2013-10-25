@@ -1,9 +1,11 @@
 package security;
 
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.security.api.authorization.AccessDecisionVoter;
@@ -17,6 +19,11 @@ public class AdminAccessDecisionVoter implements AccessDecisionVoter {
 	@Inject
 	private Authorizer authorizer;
 
+	private ResourceBundle getBundle() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.getApplication().getResourceBundle(context, "msgs");
+	}
+
 	@Override
 	public Set<SecurityViolation> checkPermission(
 			AccessDecisionVoterContext arg0) {
@@ -27,10 +34,11 @@ public class AdminAccessDecisionVoter implements AccessDecisionVoter {
 
 				@Override
 				public String getReason() {
-					return "Not Authorized. Role Needed: ADMIN";
+					return getBundle().getString("notAuthorized");
 				}
 			});
 		}
+		System.out.println(violations);
 		return violations;
 	}
 }
