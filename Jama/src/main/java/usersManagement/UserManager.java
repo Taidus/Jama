@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -43,12 +45,16 @@ public class UserManager implements Serializable {
 	public String login(String serialNumber, String password) {
 		// TODO: controllo password
 		User u = userDao.getBySerialNumber(Integer.parseInt(serialNumber));
-		if (u != null) {
+		if (u != null && u.login(password)) {
 			loggedUser = u;
 			System.out.println("User Login: loggedUser= " + u);
 			return "home";
+		} else {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Matricola o password errati", "Inserire i valori corretti");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			return "login";
 		}
-		return "login";
 	}
 
 	public void logout() {

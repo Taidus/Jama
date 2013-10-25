@@ -63,8 +63,8 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getPassword() {
-		return password;
+	public boolean login(String password) {
+		return this.password.equals(password);
 	}
 
 	@Override
