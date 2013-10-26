@@ -22,7 +22,7 @@ public class MoneyConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		return Money.of(Config.currency, new BigDecimal(value));
+		return Money.of(Config.currency, new BigDecimal(value).setScale(2));
 	}
 
 	@Override

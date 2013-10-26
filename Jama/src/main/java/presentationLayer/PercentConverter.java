@@ -21,7 +21,7 @@ public class PercentConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		return new Percent(new BigDecimal(value));
+		return new Percent(new BigDecimal(value).setScale(2));
 	}
 
 	@Override
