@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
 
@@ -42,7 +45,10 @@ import org.joda.convert.ToString;
  * <p>
  * This class is immutable and thread-safe.
  */
-public final class BigMoney implements BigMoneyProvider, Comparable<BigMoneyProvider>, Serializable {
+@Embeddable
+public  class BigMoney implements BigMoneyProvider, Comparable<BigMoneyProvider>, Serializable {
+	
+	public BigMoney(){}
 
     /**
      * The serialisation version.
@@ -56,11 +62,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable<BigMoneyProv
     /**
      * The currency, not null.
      */
-    private final CurrencyUnit currency;
+    @Embedded
+    private  CurrencyUnit currency;
     /**
      * The amount, not null.
      */
-    private final BigDecimal amount;
+    private  BigDecimal amount;
 
     //-----------------------------------------------------------------------
     /**

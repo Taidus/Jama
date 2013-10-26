@@ -29,6 +29,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.persistence.Embeddable;
+
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
 
@@ -45,12 +47,18 @@ import org.joda.convert.ToString;
  * <p>
  * This class is immutable and thread-safe.
  */
-public final class CurrencyUnit implements Comparable<CurrencyUnit>, Serializable {
+@Embeddable
+public  class CurrencyUnit implements Comparable<CurrencyUnit>, Serializable {
 
-    /**
+		
+	public CurrencyUnit(){
+		
+	}
+    
+	/**
      * The serialisation version.
      */
-    private static final long serialVersionUID = 327835287287L;
+	 private static final long serialVersionUID = 327835287287L;
     /**
      * Map of registered currencies by text code.
      */
@@ -115,15 +123,15 @@ public final class CurrencyUnit implements Comparable<CurrencyUnit>, Serializabl
     /**
      * The currency code, not null.
      */
-    private final String code;
+    private  String code;
     /**
      * The numeric currency code.
      */
-    private final short numericCode;
+    private  short numericCode;
     /**
      * The number of decimal places.
      */
-    private final short decimalPlaces;
+    private  short decimalPlaces;
 
     //-----------------------------------------------------------------------
     /**

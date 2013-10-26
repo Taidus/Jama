@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,20 +28,42 @@ public abstract class AbstractShareTable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE"))
 	protected Percent atheneumCapitalBalance;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_COMMON_BALANCE"))
 	protected Percent atheneumCommonBalance;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="STRUCTURES"))
 	protected Percent structures;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="PERSONNEL"))
 	protected Percent personnel;
 
 	@ElementCollection
 	protected Map<ChiefScientist, Percent> sharePerPersonnel;
 
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="GOODS_AND_SERVICES"))
 	protected Percent goodsAndServices;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="BUSINESS_TRIP"))
 	protected Percent businessTrip;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="CONSUMER_MATERIALS"))
 	protected Percent consumerMaterials;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="INVENTORY_MATERIALS"))
 	protected Percent inventoryMaterials;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="RENTALS"))
 	protected Percent rentals;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="PERSONNEL_ON_CONTRACT"))
 	protected Percent personnelOnContract;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="OTHER_COST"))
 	protected Percent otherCost;
 
 	protected AbstractShareTable() {

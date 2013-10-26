@@ -23,6 +23,10 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Transient;
+
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
 
@@ -43,7 +47,10 @@ import org.joda.convert.ToString;
  * <p>
  * This class is immutable and thread-safe.
  */
-public final class Money implements BigMoneyProvider, Comparable<BigMoneyProvider>, Serializable {
+@Embeddable
+public  class Money implements BigMoneyProvider, Comparable<BigMoneyProvider>, Serializable {
+	
+	public Money(){}
 
     /**
      * The serialisation version.
@@ -53,7 +60,8 @@ public final class Money implements BigMoneyProvider, Comparable<BigMoneyProvide
     /**
      * The money, not null.
      */
-    private final BigMoney money;
+    @Embedded
+    private  BigMoney money;
 
     //-----------------------------------------------------------------------
     /**

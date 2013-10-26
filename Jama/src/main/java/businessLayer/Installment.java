@@ -33,7 +33,9 @@ public class Installment implements Serializable {
 	@NotNull
 	private Date date;
 
+	@Embedded
 	private Percent IVA_amount;
+	@Embedded
 	private Money wholeTaxableAmount;
 
 	@Min(0)

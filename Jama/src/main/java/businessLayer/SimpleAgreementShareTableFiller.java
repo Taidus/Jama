@@ -5,7 +5,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import util.Percent;
@@ -14,9 +18,16 @@ import util.Percent;
 public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 	@ElementCollection
+	@AttributeOverrides({
+	@AttributeOverride(name="key.value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE_RATE_TABLE_KEY")),
+	@AttributeOverride(name="value.value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE_RATE_TABLE_VALUE"))})
 	private Map<Percent, Percent> atheneumCapitalBalanceRateTable;
-
+	
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="STRUCTURES_RATES"))
 	private Percent structuresRate;
+	@Embedded
+	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_COMMON_BALANCE"))
 	private Percent atheneumCommonBalanceRate;
 
 	public SimpleAgreementShareTableFiller() {

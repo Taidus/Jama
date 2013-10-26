@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -70,16 +74,40 @@ public class Agreement implements Serializable {
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private AgreementShareTable shareTable;
-
+	
+	@Embedded
 	private Percent IVA_amount;
 	
 	@Min(0)
+	@Embedded
+	@AttributeOverrides({
+	@AttributeOverride(name="money", column=@Column(name="WHOLE_TAXABLE_AMOUNT")),
+	@AttributeOverride(name="money.currency.code", column=@Column(name="WHOLE_TAXABLE_AMOUNT_CODE")),
+	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES")),
+	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE")),
+	@AttributeOverride(name="money.amount", column=@Column(name="WHOLE_TAXABLE_AMOUNT_AMOUNT"))})
 	private Money wholeTaxableAmount;
 	
 	@Min(0)
+	@Embedded
+	@AttributeOverrides({
+	@AttributeOverride(name="money", column=@Column(name="SPENT_AMOUNT")),
+	@AttributeOverride(name="money.currency.code", column=@Column(name="SPENT_AMOUNT_CODE")),
+	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="SPENT_AMOUNT_DECIMAL_PLACES")),
+	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="SPENT_AMOUNT_NUMERIC_CODE")),
+	@AttributeOverride(name="money.amount", column=@Column(name="SPENT_AMOUNT_AMOUNT"))})
+
 	private Money spentAmount;
 	
 	@Min(0)
+	@Embedded
+	@AttributeOverrides({
+	@AttributeOverride(name="money", column=@Column(name="RESERVED_AMOUNT")),
+	@AttributeOverride(name="money.currency.code", column=@Column(name="RESERVED_AMOUNT_CODE")),
+	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="RESERVED_AMOUNT_DECIMAL_PLACES")),
+	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="RESERVED_AMOUNT_NUMERIC_CODE")),
+	@AttributeOverride(name="money.amount", column=@Column(name="RESERVED_AMOUNT_AMOUNT"))})
+
 	private Money reservedAmount;
 
 	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)

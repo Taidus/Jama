@@ -5,9 +5,12 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Embeddable;
+
 import org.joda.money.Money;
 
-public final class Percent implements Comparable<Percent> {
+@Embeddable
+public  class Percent implements Comparable<Percent> {
 	public static final Percent ONE = new Percent(BigDecimal.ONE);
 	public static final Percent ZERO = new Percent(BigDecimal.ZERO);
 	
