@@ -237,6 +237,7 @@
 							<f:validateDoubleRange minimum="0.0" />
 						</ui:remove>
 						<f:converter binding="#{moneyConverter}" />
+						<f:validator binding="#{moneyValidator}" />
 						<f:ajax render="amount taxAmountError @this" />
 					</h:inputText>
 
@@ -244,7 +245,7 @@
 						rendered="#{cc.attrs.editingDisable == true}">
 						<ui:remove>
 							<f:converter binding="#{moneyConverter}">
-								<f:attribute name="plain" value="true" />
+								<f:attribute name="plain" value="false" />
 							</f:converter>
 						</ui:remove>
 					</h:outputText>
@@ -270,6 +271,7 @@
 							<f:validateDoubleRange minimum="0.0" maximum="100.0" />
 						</ui:remove>
 						<f:converter binding="#{percentConverter}" />
+						<f:validator binding="#{percentValidator}" />
 						<f:ajax render="amount ivaError" />
 					</h:inputText>
 
@@ -292,7 +294,8 @@
 
 				<p:column colspan="3">
 					<h:outputText id="amount" value="#{agreementManager.agreement.wholeAmount}" readonly="true">
-						<f:convertNumber type="currency" currencySymbol="€" />
+						<f:converter binding="#{moneyConverter}" />
+						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
 			</p:row>

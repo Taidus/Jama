@@ -1,28 +1,37 @@
 package presentationLayer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.inject.Named;
 
 import org.joda.money.Money;
+import org.joda.money.format.MoneyAmountStyle;
+import org.joda.money.format.MoneyFormatterBuilder;
 
 import util.Config;
+import util.Messages;
 
 @Named
 @RequestScoped
 public class MoneyConverter implements Converter {
-	// il valore viene convertito in e da numeri decimali (niente valuta o
-	// altro)
 
 	public MoneyConverter() {}
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		return Money.of(Config.currency, new BigDecimal(value).setScale(2));
+		// il valore viene convertito da numeri decimali, senza valuta
+		try{
+			return Money.of(Config.currency, new BigDecimal(value).setScale(2, RoundingMode.HALF_EVEN));
+		}
+		catch(NumberFormatException e){
+			throw new ConverterException(Messages.getErrorMessage("err_invalidAmount"));
+		}
 	}
 
 	@Override
@@ -30,13 +39,20 @@ public class MoneyConverter implements Converter {
 		if (null == value) {
 			return "";
 		}
-		
-		boolean plain = (boolean) component.getAttributes().get("plain");
-		if (plain)
+
+		Boolean plain = true;
+		try {
+			plain = Boolean.valueOf(component.getAttributes().get("plain").toString());
+		} catch (NullPointerException e) {
+			plain = true;
+		}
+
+		if (null == plain || true == plain)
 			return ((Money) value).getAmount().toPlainString();
 		else {
-			return ((Money) value).toString();
+			String s = new MoneyFormatterBuilder().appendAmount(MoneyAmountStyle.ASCII_DECIMAL_COMMA_GROUP3_DOT).appendCurrencySymbolLocalized()
+					.toFormatter(Config.locale).print(((Money) value));
+			return s;
 		}
 	}
-
 }

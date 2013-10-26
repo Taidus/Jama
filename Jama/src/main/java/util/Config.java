@@ -2,6 +2,7 @@ package util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 import org.joda.money.CurrencyUnit;
 
@@ -20,6 +21,7 @@ public class Config {
 	public static final Configuration fmconf;
 	public static final String mailTemplateFileName = "mailTemplate.ftl";
 	public static final CurrencyUnit currency = CurrencyUnit.EUR;
+	public static final Locale locale = Locale.ITALY;
 	
 	
 	static{

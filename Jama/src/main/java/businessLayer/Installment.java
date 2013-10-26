@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import org.joda.money.Money;
 
+import util.Config;
 import util.Messages;
 import util.Percent;
 
@@ -35,6 +36,7 @@ public class Installment implements Serializable {
 
 	@Embedded
 	private Percent IVA_amount;
+	
 	@Embedded
 	private Money wholeTaxableAmount;
 
@@ -66,6 +68,8 @@ public class Installment implements Serializable {
 
 	public Installment() {
 		this.shareTable = new InstallmentShareTable();
+		this.IVA_amount = Percent.ZERO;
+		this.wholeTaxableAmount = Money.zero(Config.currency);
 	}
 
 	public Date getDate() {

@@ -20,63 +20,80 @@ import util.Percent;
 
 @MappedSuperclass
 public abstract class AbstractShareTable {
-	//TODO cancellare stampe varie
-	
-	
+	// TODO cancellare stampe varie
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE"))
+	@AttributeOverride(name = "value", column = @Column(name = "ATHENEUM_CAPITAL_BALANCE"))
 	protected Percent atheneumCapitalBalance;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_COMMON_BALANCE"))
+	@AttributeOverride(name = "value", column = @Column(name = "ATHENEUM_COMMON_BALANCE"))
 	protected Percent atheneumCommonBalance;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="STRUCTURES"))
+	@AttributeOverride(name = "value", column = @Column(name = "STRUCTURES"))
 	protected Percent structures;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="PERSONNEL"))
+	@AttributeOverride(name = "value", column = @Column(name = "PERSONNEL"))
 	protected Percent personnel;
 
 	@ElementCollection
 	protected Map<ChiefScientist, Percent> sharePerPersonnel;
 
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="GOODS_AND_SERVICES"))
+	@AttributeOverride(name = "value", column = @Column(name = "GOODS_AND_SERVICES"))
 	protected Percent goodsAndServices;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="BUSINESS_TRIP"))
+	@AttributeOverride(name = "value", column = @Column(name = "BUSINESS_TRIP"))
 	protected Percent businessTrip;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="CONSUMER_MATERIALS"))
+	@AttributeOverride(name = "value", column = @Column(name = "CONSUMER_MATERIALS"))
 	protected Percent consumerMaterials;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="INVENTORY_MATERIALS"))
+	@AttributeOverride(name = "value", column = @Column(name = "INVENTORY_MATERIALS"))
 	protected Percent inventoryMaterials;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="RENTALS"))
+	@AttributeOverride(name = "value", column = @Column(name = "RENTALS"))
 	protected Percent rentals;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="PERSONNEL_ON_CONTRACT"))
+	@AttributeOverride(name = "value", column = @Column(name = "PERSONNEL_ON_CONTRACT"))
 	protected Percent personnelOnContract;
+
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="OTHER_COST"))
+	@AttributeOverride(name = "value", column = @Column(name = "OTHER_COST"))
 	protected Percent otherCost;
 
 	protected AbstractShareTable() {
 		super();
 	}
-	
+
 	protected final void initFields() {
-		sharePerPersonnel = new HashMap<>();
-		otherCost = Percent.ONE;
-		goodsAndServices = Percent.ONE;
+		this.atheneumCapitalBalance = new Percent();
+		this.atheneumCommonBalance = new Percent();
+		this.structures = new Percent();
+		this.personnel = new Percent();
+		this.businessTrip = new Percent();
+		this.consumerMaterials = new Percent();
+		this.inventoryMaterials = new Percent();
+		this.rentals = new Percent();
+		this.personnelOnContract = new Percent();
+
+		this.sharePerPersonnel = new HashMap<>();
+		this.otherCost = Percent.ONE;
+		this.goodsAndServices = Percent.ONE;
 	}
-	
-	protected void copy(AbstractShareTable copy){
+
+	protected void copy(AbstractShareTable copy) {
 		this.atheneumCapitalBalance = copy.atheneumCapitalBalance;
 		this.atheneumCommonBalance = copy.atheneumCommonBalance;
 		this.structures = copy.structures;
@@ -183,18 +200,17 @@ public abstract class AbstractShareTable {
 	public Percent getOtherCost() {
 		return otherCost;
 	}
-	
+
 	public Map<ChiefScientist, Percent> getSharePerPersonnel() {
 		return sharePerPersonnel;
 	}
-
 
 	protected void updateGoodsAndServices() {
 		Percent sum = atheneumCapitalBalance.addAll(atheneumCommonBalance, structures, personnel);
 		this.goodsAndServices = Percent.ONE.subtract(sum);
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
-	
+
 	protected void updateOtherCosts() {
 		Percent sum = rentals.addAll(inventoryMaterials, consumerMaterials, businessTrip, personnelOnContract);
 		this.otherCost = Percent.ONE.subtract(sum);
