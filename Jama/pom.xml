@@ -334,16 +334,9 @@
 			<artifactId>freemarker</artifactId>
 		</dependency>
 
-		<!-- Money -->
-
-		<dependency>
-			<groupId>org.joda</groupId>
-			<artifactId>joda-money</artifactId>
-			<version>0.9</version>
-		</dependency>
-
+		<!-- Money <dependency> <groupId>org.joda</groupId> <artifactId>joda-money</artifactId> 
+			<version>0.9</version> </dependency> -->
 	</dependencies>
-
 
 
 
