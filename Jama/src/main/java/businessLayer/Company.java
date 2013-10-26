@@ -16,8 +16,10 @@ public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@NotNull @Size(min=1, max=1000) private String name;
+
+	@NotNull
+	@Size(min = 1, max = 1000)
+	private String name;
 
 	public String getName() {
 		return name;

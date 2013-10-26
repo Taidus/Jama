@@ -12,6 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Alternative;
 
 import util.Config;
+import util.Percent;
 import businessLayer.SimpleAgreementShareTableFiller;
 
 @Alternative
@@ -19,8 +20,9 @@ import businessLayer.SimpleAgreementShareTableFiller;
 public class SimpleFillerFactoryBean extends FillerFactoryBean {
 	private static final long serialVersionUID = 1L;
 
-	public SimpleFillerFactoryBean() {}
-	
+	public SimpleFillerFactoryBean() {
+	}
+
 	@Override
 	protected SimpleAgreementShareTableFiller createFiller(String depDirectory) {
 		String depPath = Config.depRatesPath + depDirectory.toLowerCase() + "/";
@@ -40,8 +42,8 @@ public class SimpleFillerFactoryBean extends FillerFactoryBean {
 			throw new IllegalStateException("Could not read " + propertiesFilePath);
 		}
 
-		float structuresRate = Float.parseFloat(p.getProperty("structuresRate").trim());
-		float atheneumCommonBalanceRate = Float.parseFloat(p.getProperty("atheneumCommonBalanceRate").trim());
+		Percent structuresRate = Percent.normalizedValueOf(Double.parseDouble(p.getProperty("structuresRate").trim()));
+		Percent atheneumCommonBalanceRate = Percent.normalizedValueOf(Double.parseDouble(p.getProperty("atheneumCommonBalanceRate").trim()));
 
 		propertiesFilePath = depPath + "atheneumRateTable.properties";
 		p = new Properties();
@@ -58,9 +60,10 @@ public class SimpleFillerFactoryBean extends FillerFactoryBean {
 			throw new IllegalStateException("Could not read " + propertiesFilePath);
 		}
 
-		SortedMap<Float, Float> atheneumCapitalBalanceRateTable = new TreeMap<>();
+		SortedMap<Percent, Percent> atheneumCapitalBalanceRateTable = new TreeMap<>();
 		for (String property : p.stringPropertyNames()) {
-			atheneumCapitalBalanceRateTable.put(Float.parseFloat(property.trim()), Float.parseFloat(p.getProperty(property).trim()));
+			atheneumCapitalBalanceRateTable.put(Percent.normalizedValueOf(Double.parseDouble(property.trim())),
+					Percent.normalizedValueOf(Double.parseDouble(p.getProperty(property).trim())));
 		}
 
 		try {

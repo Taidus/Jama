@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import util.Percent;
+
 @Entity
 public class AgreementShareTable extends AbstractShareTable implements Serializable {
 
@@ -23,7 +25,7 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 
 	public void setFiller(AgreementShareTableFiller filler) {
 		this.filler = filler;
-		setPersonnel(0F);
+		setPersonnel(Percent.ZERO);
 	}
 
 	public void copy(AgreementShareTable copy) {
@@ -32,7 +34,7 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 	}
 
 	@Override
-	public void setPersonnel(float personnel) {
+	public void setPersonnel(Percent personnel) {
 		super.setPersonnel(personnel);
 		if (filler != null) {
 			filler.fill(this);

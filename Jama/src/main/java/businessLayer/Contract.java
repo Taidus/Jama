@@ -13,74 +13,84 @@ import util.MathUtil;
 
 /**
  * Entity implementation class for Entity: Contract
- *
+ * 
  */
 
 @MappedSuperclass
 public abstract class Contract implements Serializable {
-	
-	
 
-	
 	public Contract() {
 		// shareTable = new AgreementShareTable();
-				installments = new ArrayList<>();
-				attachments = new ArrayList<>();	}
+		installments = new ArrayList<>();
+		attachments = new ArrayList<>();
+	}
 
 	protected static final long serialVersionUID = 1L;
-	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO) protected int id;
- 
-	@NotNull @Size(max = 1000) protected String title;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected int id;
+
+	@NotNull
+	@Size(max = 1000)
+	protected String title;
 	protected String protocolNumber; // FIXME ma serve?
-	
-	@ManyToOne @NotNull protected ChiefScientist chief;
-	@NotNull protected String contactPerson;
 
-	@ManyToOne @NotNull protected Company company;
+	@ManyToOne
+	@NotNull
+	protected ChiefScientist chief;
+	@NotNull
+	protected String contactPerson;
 
-	@ManyToOne protected Department department;
+	@ManyToOne
+	@NotNull
+	protected Company company;
+
+	@ManyToOne
+	protected Department department;
 
 	protected int CIA_projectNumber;
 	protected int inventoryNumber;
-	
+
 	protected float spentAmount;
 	protected float reservedAmount;
-	
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch=FetchType.EAGER ) 
-	@OrderBy("date DESC") 
+
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OrderBy("date DESC")
 	protected List<Installment> installments;
-	
-	
-	@Temporal(TemporalType.DATE) protected Date approvalDate;
 
-	@Temporal(TemporalType.DATE) protected Date beginDate;
+	@Temporal(TemporalType.DATE)
+	protected Date approvalDate;
 
-	@Temporal(TemporalType.DATE) protected Date deadlineDate;
+	@Temporal(TemporalType.DATE)
+	protected Date beginDate;
+
+	@Temporal(TemporalType.DATE)
+	protected Date deadlineDate;
 
 	protected String note;
-	
-	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST }) protected List<Attachment> attachments;
-	
-	
-	
+
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	protected List<Attachment> attachments;
+
 	public abstract void addInstallment(Installment i);
+
 	public abstract float getWholeAmount();
+
 	public boolean isClosed() {
 
 		return MathUtil.doubleEquals(getWholeAmount(), spentAmount);
 
 	}
-	
-	public void removeInstallment(Installment i){
+
+	public void removeInstallment(Installment i) {
 		installments.remove(i);
 	}
-	
 
 	public int getId() {
 		return id;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -104,7 +114,7 @@ public abstract class Contract implements Serializable {
 	public void setContactPerson(String contactPerson) {
 		this.contactPerson = contactPerson;
 	}
-	
+
 	public ChiefScientist getChief() {
 		return chief;
 	}
@@ -144,6 +154,7 @@ public abstract class Contract implements Serializable {
 	public void setInventoryNumber(int inventoryNumber) {
 		this.inventoryNumber = inventoryNumber;
 	}
+
 	public Date getApprovalDate() {
 		return approvalDate;
 	}
@@ -153,8 +164,8 @@ public abstract class Contract implements Serializable {
 	}
 
 	public List<Installment> getInstallments() {
-		
-		//TODO check
+
+		// TODO check
 		return new ArrayList<>(installments);
 	}
 
@@ -210,7 +221,7 @@ public abstract class Contract implements Serializable {
 		this.reservedAmount = reservedAmount;
 		System.out.println("set ReservedAmount");
 	}
-	
+
 	// fatturato
 	public float getTurnOver() {
 		float sum = 0;
@@ -224,5 +235,5 @@ public abstract class Contract implements Serializable {
 
 		return sum;
 	}
-   
+
 }

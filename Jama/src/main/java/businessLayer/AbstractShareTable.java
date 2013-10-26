@@ -1,5 +1,6 @@
 package businessLayer;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import org.joda.money.Money;
+
+import util.Config;
+import util.Percent;
 
 @MappedSuperclass
 public abstract class AbstractShareTable {
@@ -19,30 +25,30 @@ public abstract class AbstractShareTable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	protected float atheneumCapitalBalance;
-	protected float atheneumCommonBalance;
-	protected float structures;
-	protected float personnel;
+	protected Percent atheneumCapitalBalance;
+	protected Percent atheneumCommonBalance;
+	protected Percent structures;
+	protected Percent personnel;
 
 	@ElementCollection
-	protected Map<ChiefScientist, Float> sharePerPersonnel;
+	protected Map<ChiefScientist, Percent> sharePerPersonnel;
 
-	protected float goodsAndServices;
-	protected float businessTrip;
-	protected float consumerMaterials;
-	protected float inventoryMaterials;
-	protected float rentals;
-	protected float personnelOnContract;
-	protected float otherCost;
+	protected Percent goodsAndServices;
+	protected Percent businessTrip;
+	protected Percent consumerMaterials;
+	protected Percent inventoryMaterials;
+	protected Percent rentals;
+	protected Percent personnelOnContract;
+	protected Percent otherCost;
 
 	protected AbstractShareTable() {
 		super();
 	}
 	
 	protected final void initFields() {
-		sharePerPersonnel = new HashMap<ChiefScientist, Float>();
-		otherCost = 100F;
-		goodsAndServices = 100F;
+		sharePerPersonnel = new HashMap<>();
+		otherCost = Percent.ONE;
+		goodsAndServices = Percent.ONE;
 	}
 	
 	protected void copy(AbstractShareTable copy){
@@ -64,109 +70,109 @@ public abstract class AbstractShareTable {
 		return id;
 	}
 
-	public float getAtheneumCapitalBalance() {
+	public Percent getAtheneumCapitalBalance() {
 		return atheneumCapitalBalance;
 	}
 
-	public void setAtheneumCapitalBalance(float atheneumCapitalBalance) {
+	public void setAtheneumCapitalBalance(Percent atheneumCapitalBalance) {
 		this.atheneumCapitalBalance = atheneumCapitalBalance;
 		updateGoodsAndServices();
 	}
 
-	public float getAtheneumCommonBalance() {
+	public Percent getAtheneumCommonBalance() {
 		return atheneumCommonBalance;
 	}
 
-	public void setAtheneumCommonBalance(float atheneumCommonBalance) {
+	public void setAtheneumCommonBalance(Percent atheneumCommonBalance) {
 		this.atheneumCommonBalance = atheneumCommonBalance;
 		updateGoodsAndServices();
 	}
 
-	public float getStructures() {
+	public Percent getStructures() {
 		return structures;
 	}
 
-	public void setStructures(float structures) {
+	public void setStructures(Percent structures) {
 		this.structures = structures;
 		updateGoodsAndServices();
 	}
 
-	public float getPersonnel() {
+	public Percent getPersonnel() {
 		return personnel;
 	}
 
-	public void setPersonnel(float personnel) {
+	public void setPersonnel(Percent personnel) {
 		this.personnel = personnel;
 		updateGoodsAndServices();
 	}
 
-	public float getGoodsAndServices() {
+	public Percent getGoodsAndServices() {
 		return goodsAndServices;
 	}
 
-	public float getBusinessTrip() {
+	public Percent getBusinessTrip() {
 		return businessTrip;
 	}
 
-	public void setBusinessTrip(float businessTrip) {
+	public void setBusinessTrip(Percent businessTrip) {
 		this.businessTrip = businessTrip;
 		updateOtherCosts();
 	}
 
-	public float getConsumerMaterials() {
+	public Percent getConsumerMaterials() {
 		return consumerMaterials;
 	}
 
-	public void setConsumerMaterials(float consumerMaterials) {
+	public void setConsumerMaterials(Percent consumerMaterials) {
 		this.consumerMaterials = consumerMaterials;
 		updateOtherCosts();
 	}
 
-	public float getInventoryMaterials() {
+	public Percent getInventoryMaterials() {
 		return inventoryMaterials;
 	}
 
-	public void setInventoryMaterials(float inventoryMaterials) {
+	public void setInventoryMaterials(Percent inventoryMaterials) {
 		this.inventoryMaterials = inventoryMaterials;
 		updateOtherCosts();
 	}
 
-	public float getRentals() {
+	public Percent getRentals() {
 		return rentals;
 	}
 
-	public void setRentals(float rentals) {
+	public void setRentals(Percent rentals) {
 		this.rentals = rentals;
 		updateOtherCosts();
 	}
 
-	public float getPersonnelOnContract() {
+	public Percent getPersonnelOnContract() {
 		return personnelOnContract;
 	}
 
-	public void setPersonnelOnContract(float personnelOnContract) {
+	public void setPersonnelOnContract(Percent personnelOnContract) {
 		this.personnelOnContract = personnelOnContract;
 		updateOtherCosts();
 	}
 
-	public float getOtherCost() {
+	public Percent getOtherCost() {
 		return otherCost;
 	}
 	
-	public Map<ChiefScientist, Float> getSharePerPersonnel() {
+	public Map<ChiefScientist, Percent> getSharePerPersonnel() {
 		return sharePerPersonnel;
 	}
 
 
 	protected void updateGoodsAndServices() {
-		float sum = atheneumCapitalBalance + atheneumCommonBalance + structures + personnel;
-		this.goodsAndServices = 100F - sum;
+		Percent sum = atheneumCapitalBalance.addAll(atheneumCommonBalance, structures, personnel);
+		this.goodsAndServices = Percent.ONE.subtract(sum);
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
 	
 	protected void updateOtherCosts() {
-		float sum = rentals + inventoryMaterials + consumerMaterials + businessTrip + personnelOnContract;
-		this.otherCost = 100F - sum;
+		Percent sum = rentals.addAll(inventoryMaterials, consumerMaterials, businessTrip, personnelOnContract);
+		this.otherCost = Percent.ONE.subtract(sum);
 		System.out.println("Other cost aggiornato: " + otherCost);
 	}
 

@@ -1,6 +1,7 @@
 package businessLayer;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.joda.money.Money;
+
 import util.Messages;
+import util.Percent;
 
 /**
  * Entity implementation class for Entity: Installment
@@ -21,29 +25,42 @@ public class Installment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-	@Temporal(TemporalType.DATE) @NotNull private Date date;
+	@Temporal(TemporalType.DATE)
+	@NotNull
+	private Date date;
 
-	private float IVA_amount;
-	private float wholeTaxableAmount;
+	private Percent IVA_amount;
+	private Money wholeTaxableAmount;
 
-	@Min(0) private int voucherNumber;
+	@Min(0)
+	private int voucherNumber;
 
-	@Temporal(TemporalType.DATE) private Date voucherDate;
+	@Temporal(TemporalType.DATE)
+	private Date voucherDate;
 
-	@Min(0) private int ivaVoucherNumber;
-	@Min(0) private int pendingNumber;
-	@Min(0) private int invoiceNumber;
+	@Min(0)
+	private int ivaVoucherNumber;
+	@Min(0)
+	private int pendingNumber;
+	@Min(0)
+	private int invoiceNumber;
 
-	@Temporal(TemporalType.DATE) private Date invoiceDate;
+	@Temporal(TemporalType.DATE)
+	private Date invoiceDate;
 
 	private boolean paidInvoice;
 	private boolean reportRequired;
 	private String note;
 
-	@ManyToOne private Agreement agreement;
-	@OneToOne(cascade = CascadeType.PERSIST) @JoinColumn private InstallmentShareTable shareTable;
+	@ManyToOne
+	private Agreement agreement;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn
+	private InstallmentShareTable shareTable;
 
 	public Installment() {
 		this.shareTable = new InstallmentShareTable();
@@ -57,24 +74,24 @@ public class Installment implements Serializable {
 		this.date = date;
 	}
 
-	public float getWholeAmount() {
-		return this.wholeTaxableAmount * (100 + this.IVA_amount) / 100;
+	public Money getWholeAmount() {
+		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
 	}
 
-	public void setWholeTaxableAmount(float wholeTaxableAmount) {
-		this.wholeTaxableAmount = wholeTaxableAmount;
-	}
-
-	public float getWholeTaxableAmount() {
+	public Money getWholeTaxableAmount() {
 		return wholeTaxableAmount;
 	}
 
-	public float getIVA_amount() {
+	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
+		this.wholeTaxableAmount = wholeTaxableAmount;
+	}
+
+	public Percent getIVA_amount() {
 		return IVA_amount;
 	}
 
-	public void setIVA_amount(float IVA_amount) {
-		this.IVA_amount = IVA_amount;
+	public void setIVA_amount(Percent iVA_amount) {
+		IVA_amount = iVA_amount;
 	}
 
 	public int getVoucherNumber() {
@@ -174,7 +191,7 @@ public class Installment implements Serializable {
 	}
 
 	public void copy(Installment copy) {
-		
+
 		this.id = copy.id;
 		this.date = new Date(copy.date.getTime());
 		this.IVA_amount = copy.IVA_amount;
@@ -195,7 +212,7 @@ public class Installment implements Serializable {
 		// this.shareTable.setInstallment(copy);
 	}
 
-	public void initShareTableFromAgreement(Agreement agr){
+	public void initShareTableFromAgreement(Agreement agr) {
 		this.shareTable.copy(agr.getShareTable());
 	}
 
@@ -204,6 +221,7 @@ public class Installment implements Serializable {
 		return "Installment [id=" + id + ", date=" + date + ", IVA_amount=" + IVA_amount + ", wholeTaxableAmount=" + wholeTaxableAmount
 				+ ", voucherNumber=" + voucherNumber + ", voucherDate=" + voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber + ", pendingNumber="
 				+ pendingNumber + ", invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate + ", paidInvoice=" + paidInvoice
-				+ ", reportRequired=" + reportRequired + ", note=" + note + ", agreement id=" + agreement.getId() + ", shareTable=" + shareTable + "]";
+				+ ", reportRequired=" + reportRequired + ", note=" + note + ", agreement id=" + agreement.getId() + ", shareTable=" + shareTable
+				+ "]";
 	}
 }

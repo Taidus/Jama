@@ -19,9 +19,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import org.apache.deltaspike.security.api.authorization.Secured;
+import org.joda.money.Money;
 
 import security.AdminAccessDecisionVoter;
 import security.Login;
+import util.Config;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.AgreementShareTable;
@@ -162,7 +164,7 @@ public class AgreementManagerBean implements Serializable {
 		d.setRateDirectory("dsi");
 		depDao.createDepartment(d);
 		agr.setDepartment(d);
-		agr.setWholeTaxableAmount(10000);
+		agr.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
 		agr.setProtocolNumber("30000");
 		agr.setApprovalDate(new Date());
 		agr.setBeginDate(new Date());

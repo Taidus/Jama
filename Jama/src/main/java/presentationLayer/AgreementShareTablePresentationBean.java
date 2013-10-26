@@ -6,6 +6,8 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.joda.money.Money;
+
 import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
 import businessLayer.Agreement;
@@ -27,7 +29,7 @@ public class AgreementShareTablePresentationBean extends ShareTablePresentationO
 	}
 	
 	@Override
-	protected float getTransfetObjWholeAmount() {
+	protected Money getTransfetObjWholeAmount() {
 		return agreement.getWholeAmount();
 	}
 

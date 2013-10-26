@@ -11,7 +11,11 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.joda.money.Money;
+
+import util.Config;
 import util.Messages;
+import util.Percent;
 import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
 import businessLayer.Agreement;
@@ -36,18 +40,18 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	}
 
 	@Override
-	protected float getTransfetObjWholeAmount() {
+	protected Money getTransfetObjWholeAmount() {
 		return installment.getWholeAmount();
 	}
 
 	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
-		//TODO eliminare try-catch
+		// TODO eliminare try-catch
 		try {
 			Agreement agr = installment.getAgreement();
 			List<Installment> installments = agr.getInstallments();
 			installments.add(installment);
-			List<List<Float>> instShareTablesMainAttributes = new ArrayList<>();
-			List<List<Float>> instShareTablesSubAttributes = new ArrayList<>();
+			List<List<Money>> instShareTablesMainAttributes = new ArrayList<>();
+			List<List<Money>> instShareTablesSubAttributes = new ArrayList<>();
 
 			System.out.println(1);
 
@@ -56,19 +60,20 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 				instShareTablesMainAttributes.add(getMainAttributeList(i.getShareTable(), i.getWholeAmount()));
 				System.out.print("\t");
 				instShareTablesSubAttributes.add(getSubAttributeList(i.getShareTable(),
-						getPercentOf(i.getWholeAmount(), i.getShareTable().getGoodsAndServices())));
+						i.getShareTable().getGoodsAndServices().computeOn(i.getWholeAmount())));
 			}
 
 			System.out.println(2);
 
 			System.out.print("Convenzione: ");
-			List<Float> l = getMainAttributeList(agr.getShareTable(), agr.getWholeAmount());
+			List<Money> l = getMainAttributeList(agr.getShareTable(), agr.getWholeAmount());
 			System.out.println(3);
 			System.out.print("\t");
-			List<Float> p = getSubAttributeList(agr.getShareTable(), getPercentOf(agr.getShareTable().getGoodsAndServices(), agr.getWholeAmount()));
+			List<Money> p = getSubAttributeList(agr.getShareTable(), agr.getShareTable().getGoodsAndServices().computeOn(agr.getWholeAmount()));
 			System.out.println(4);
 
-			//devono essere nello stesso ordine in cui si aggiungono sotto! L'oscenità fatta codice
+			// devono essere nello stesso ordine in cui si aggiungono sotto!
+			// L'oscenità fatta codice
 			String[] mainAttr = { Messages.getString("shareTableCapitalBalance"), Messages.getString("shareTableCommonBalance"),
 					Messages.getString("shareTableStructures"), Messages.getString("shareTablePersonnel"), Messages.getString("shareTableGoods") };
 			String[] subAttr = { Messages.getString("shareTableTrip"), Messages.getString("shareTableInvMaterials"),
@@ -85,16 +90,16 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		}
 	}
 
-	private void validateFields(List<Float> agrAttributes, List<List<Float>> instAttrs, String[] attrNames) {
+	private void validateFields(List<Money> agrAttributes, List<List<Money>> instAttrs, String[] attrNames) {
 		// XXX questo metodo e tutti quelli ad esso correlati sono osceni. Se si
 		// trova un meccanismo per non scrivere simili blasfemie è meglio
 
 		for (int i = 0; i < agrAttributes.size(); i++) {
-			float sum = 0F;
-			for (List<Float> l : instAttrs) {
-				sum += l.get(i);
+			Money sum = Money.zero(Config.currency);
+			for (List<Money> l : instAttrs) {
+				sum.plus(l.get(i));
 			}
-			if (sum > agrAttributes.get(i)) {
+			if (sum.isGreaterThan((agrAttributes.get(i)))) {
 				System.err.println("Errore sull'attributo '" + attrNames[i] + "': convenzione=" + agrAttributes.get(i) + ", rate=" + sum);
 				Object[] params = { attrNames[i] };
 				throw new ValidatorException(Messages.getErrorMessage("err_installmentShareTable", params));
@@ -103,29 +108,29 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 
 	}
 
-	private List<Float> getMainAttributeList(AbstractShareTable t, float wholeAmount) {
-		List<Float> attributes = new ArrayList<>();
+	private List<Money> getMainAttributeList(AbstractShareTable t, Money wholeAmount) {
+		List<Money> attributes = new ArrayList<>();
 
-		attributes.add(getPercentOf(t.getAtheneumCapitalBalance(), wholeAmount));
-		attributes.add(getPercentOf(t.getAtheneumCommonBalance(), wholeAmount));
-		attributes.add(getPercentOf(t.getStructures(), wholeAmount));
-		attributes.add(getPercentOf(t.getPersonnel(), wholeAmount));
-		attributes.add(getPercentOf(t.getGoodsAndServices(), wholeAmount));
+		attributes.add(t.getAtheneumCapitalBalance().computeOn(wholeAmount));
+		attributes.add(t.getAtheneumCommonBalance().computeOn(wholeAmount));
+		attributes.add(t.getStructures().computeOn(wholeAmount));
+		attributes.add(t.getPersonnel().computeOn(wholeAmount));
+		attributes.add(t.getGoodsAndServices().computeOn(wholeAmount));
 
 		System.out.println(attributes);
 
 		return attributes;
 	}
 
-	private List<Float> getSubAttributeList(AbstractShareTable t, float wholeAmount) {
-		List<Float> attributes = new ArrayList<>();
+	private List<Money> getSubAttributeList(AbstractShareTable t, Money wholeAmount) {
+		List<Money> attributes = new ArrayList<>();
 
-		attributes.add(getPercentOf(t.getBusinessTrip(), wholeAmount));
-		attributes.add(getPercentOf(t.getInventoryMaterials(), wholeAmount));
-		attributes.add(getPercentOf(t.getConsumerMaterials(), wholeAmount));
-		attributes.add(getPercentOf(t.getRentals(), wholeAmount));
-		attributes.add(getPercentOf(t.getPersonnelOnContract(), wholeAmount));
-		attributes.add(getPercentOf(t.getOtherCost(), wholeAmount));
+		attributes.add(t.getBusinessTrip().computeOn(wholeAmount));
+		attributes.add(t.getInventoryMaterials().computeOn(wholeAmount));
+		attributes.add(t.getConsumerMaterials().computeOn(wholeAmount));
+		attributes.add(t.getRentals().computeOn(wholeAmount));
+		attributes.add(t.getPersonnelOnContract().computeOn(wholeAmount));
+		attributes.add(t.getOtherCost().computeOn(wholeAmount));
 
 		System.out.println(attributes);
 

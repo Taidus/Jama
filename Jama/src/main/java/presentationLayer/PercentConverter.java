@@ -1,36 +1,35 @@
 package presentationLayer;
 
-import javax.ejb.EJB;
+import java.math.BigDecimal;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
-import businessLayer.ChiefScientist;
-import daoLayer.ChiefScientistDaoBean;
+import util.Percent;
 
 @Named
 @RequestScoped
-public class ChiefConverter implements Converter {
+public class PercentConverter implements Converter {
+	// oltre a svolgere le normali operazioni di conversione,
+	// normalizza/denormalizza i dati: a video compariranno valori tra 0 e 100,
+	// nel modello tra 0 e 1
 
-	@EJB
-	private ChiefScientistDaoBean chiefDaoBean;
-
-	public ChiefConverter() {}
+	public PercentConverter() {}
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		int id = Integer.parseInt(value);
-		return chiefDaoBean.getById(id);
+		return new Percent(new BigDecimal(value));
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (null == value) {
+		if(null == value){
 			return "";
 		}
-		return String.valueOf(((ChiefScientist) value).getId());
+		return ((Percent) value).getValue().multiply(BigDecimal.valueOf(100)).setScale(2).toPlainString();
 	}
 
 }

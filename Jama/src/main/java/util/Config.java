@@ -3,6 +3,8 @@ package util;
 import java.io.File;
 import java.io.IOException;
 
+import org.joda.money.CurrencyUnit;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateExceptionHandler;
@@ -17,6 +19,7 @@ public class Config {
 	public static final String depRatesPath = fileDir + "/" + "aliquoteDipartimenti/";
 	public static final Configuration fmconf;
 	public static final String mailTemplateFileName = "mailTemplate.ftl";
+	public static final CurrencyUnit currency = CurrencyUnit.EUR;
 	
 	
 	static{

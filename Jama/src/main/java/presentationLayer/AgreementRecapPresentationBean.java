@@ -11,6 +11,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.joda.money.Money;
+import org.joda.money.MoneyUtils;
+
+import util.Config;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Installment;
@@ -18,10 +22,6 @@ import businessLayer.Installment;
 @Named("agreementRecapPB")
 @RequestScoped
 public class AgreementRecapPresentationBean {
-
-	/**
-	 * 
-	 */
 	@Inject
 	@TransferObj
 	private Agreement agr;
@@ -39,8 +39,6 @@ public class AgreementRecapPresentationBean {
 	public List<RecapItem> getAnnualRecap() {
 		return annualRecap;
 	}
-	
-	
 
 	public Agreement getAgr() {
 		return agr;
@@ -55,126 +53,125 @@ public class AgreementRecapPresentationBean {
 
 	private void compute() {
 
-		float totalAmount = 0;
-		float totalPaid = 0;
-		
-		if(!agr.getInstallments().isEmpty()){
-		
-		Date d = agr.getInstallments().get(0).getDate();
-		Calendar currentDate = new GregorianCalendar();
-		currentDate.setTimeInMillis(d.getTime());
+		Money totalAmount = Money.zero(Config.currency);
+		Money totalPaid = Money.zero(Config.currency);
 
-		float currentWholeAmount = 0;
-		float currentpaid = 0;
+		if (!agr.getInstallments().isEmpty()) {
 
-		for (Installment i : agr.getInstallments()) {
+			Date d = agr.getInstallments().get(0).getDate();
+			Calendar currentDate = new GregorianCalendar();
+			currentDate.setTimeInMillis(d.getTime());
 
-			Calendar date = new GregorianCalendar();
-			date.setTimeInMillis(i.getDate().getTime());
-			
-			
+			Money currentWholeAmount = Money.zero(Config.currency);
+			Money currentpaid = Money.zero(Config.currency);
 
-			if (date.get(Calendar.YEAR) != currentDate.get(Calendar.YEAR)) {
-					
-				
-				float remainder = currentWholeAmount - currentpaid;
-				annualRecap.add(new RecapItem(remainder, currentWholeAmount,
-						currentpaid,currentDate.get(Calendar.YEAR)));
-				currentDate = date;
-				currentpaid = 0;
-				currentWholeAmount = 0;
+			for (Installment i : agr.getInstallments()) {
 
-			}
+				Calendar date = new GregorianCalendar();
+				date.setTimeInMillis(i.getDate().getTime());
 
-			currentWholeAmount += i.getWholeAmount();
-			totalAmount += i.getWholeAmount();
+				if (date.get(Calendar.YEAR) != currentDate.get(Calendar.YEAR)) {
 
-			if (i.isPaidInvoice()) {
-				currentpaid += i.getWholeAmount();
-				totalPaid += i.getWholeAmount();
+					Money remainder = currentWholeAmount.minus(currentpaid);
+					annualRecap.add(new RecapItem(remainder, currentWholeAmount, currentpaid, currentDate.get(Calendar.YEAR)));
+					currentDate = date;
+					currentpaid = Money.zero(Config.currency);
+					currentWholeAmount = Money.zero(Config.currency);
+
+				}
+
+				currentWholeAmount.plus(i.getWholeAmount());
+				totalAmount.plus(i.getWholeAmount());
+
+				if (i.isPaidInvoice()) {
+					currentpaid.plus(i.getWholeAmount());
+					totalPaid.plus(i.getWholeAmount());
+
+				}
 
 			}
 
+			if (!MoneyUtils.isZero(currentWholeAmount)) {
+
+				Money remainder = currentWholeAmount.minus(currentpaid);
+				annualRecap.add(new RecapItem(remainder, currentWholeAmount, currentpaid, currentDate.get(Calendar.YEAR)));
+			}
+
 		}
-		
-		if(currentWholeAmount!=0){
-		
-		float remainder = currentWholeAmount - currentpaid;
-		annualRecap.add(new RecapItem(remainder, currentWholeAmount,
-				currentpaid,currentDate.get(Calendar.YEAR)));}
-		
-		
-		}
-		
-		
-		
-		//check 2 remainder
-		float totalRemainder = totalAmount - totalPaid;
-		float totalRemainderRespectToAgremeement = agr.getWholeAmount() - totalAmount;
-		totalRecap = new TotalRecap(totalAmount, totalPaid, totalRemainder,totalRemainderRespectToAgremeement);
+
+		// check 2 remainder
+		Money totalRemainder = totalAmount.minus(totalPaid);
+		// float totalRemainderRespectToAgremeement = agr.getWholeAmount() -
+		// totalAmount;
+		// totalRecap = new TotalRecap(totalAmount, totalPaid,
+		// totalRemainder,totalRemainderRespectToAgremeement);
 
 	}
 
 	public static class RecapItem {
 
-		private float remainder;
-		private float wholeAmount;
-		private float paid;
+		private Money remainder;
+		private Money wholeAmount;
+		private Money paid;
 		private int year;
-		public RecapItem(float remainder, float wholeAmount, float paid,
-				int year) {
+
+		public RecapItem(Money remainder, Money wholeAmount, Money paid, int year) {
 			super();
 			this.remainder = remainder;
 			this.wholeAmount = wholeAmount;
 			this.paid = paid;
 			this.year = year;
 		}
-		public float getRemainder() {
+
+		public Money getRemainder() {
 			return remainder;
 		}
-		public float getWholeAmount() {
+
+		public Money getWholeAmount() {
 			return wholeAmount;
 		}
-		public float getPaid() {
+
+		public Money getPaid() {
 			return paid;
 		}
+
 		public int getYear() {
 			return year;
 		}
-
-		
 
 	}
 
 	public static class TotalRecap {
 
-		private float agreementWholeAmount;
-		private float totalTurnOver;
+		private Money agreementWholeAmount;
+		private Money totalTurnOver;
 		// TODO scadenza / noin in scadenza
-		private float totalRemainder;
-		private float totalRemainderRespectToAgreement;
-		public TotalRecap(float agreementWholeAmount, float totalTurnOver,
-				float totalRemainder, float totalRemainderRespectToAgreement) {
+		private Money totalRemainder;
+		private Money totalRemainderRespectToAgreement;
+
+		public TotalRecap(Money agreementWholeAmount, Money totalTurnOver, Money totalRemainder, Money totalRemainderRespectToAgreement) {
 			super();
 			this.agreementWholeAmount = agreementWholeAmount;
 			this.totalTurnOver = totalTurnOver;
 			this.totalRemainder = totalRemainder;
 			this.totalRemainderRespectToAgreement = totalRemainderRespectToAgreement;
 		}
-		public float getAgreementWholeAmount() {
+
+		public Money getAgreementWholeAmount() {
 			return agreementWholeAmount;
 		}
-		public float getTotalTurnOver() {
+
+		public Money getTotalTurnOver() {
 			return totalTurnOver;
 		}
-		public float getTotalRemainder() {
+
+		public Money getTotalRemainder() {
 			return totalRemainder;
 		}
-		public float getTotalRemainderRespectToAgreement() {
+
+		public Money getTotalRemainderRespectToAgreement() {
 			return totalRemainderRespectToAgreement;
 		}
-
-		
 
 	}
 

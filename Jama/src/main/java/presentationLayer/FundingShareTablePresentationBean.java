@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
+import org.joda.money.Money;
+
 import businessLayer.AbstractShareTable;
 
 @Named("fundShareTablePB")
@@ -24,9 +26,9 @@ public class FundingShareTablePresentationBean extends ShareTablePresentationObj
 	}
 
 	@Override
-	protected float getTransfetObjWholeAmount() {
+	protected Money getTransfetObjWholeAmount() {
 		// return funding.getWholeAmount();
-		return 0;
+		return null;
 	}
 
 }

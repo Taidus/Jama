@@ -8,19 +8,23 @@ import java.util.TreeMap;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
+import util.Percent;
+
 @Entity
 public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
-	@ElementCollection private Map<Float, Float> atheneumCapitalBalanceRateTable;
+	@ElementCollection
+	private Map<Percent, Percent> atheneumCapitalBalanceRateTable;
 
-	private float structuresRate;
-	private float atheneumCommonBalanceRate;
+	private Percent structuresRate;
+	private Percent atheneumCommonBalanceRate;
 
 	public SimpleAgreementShareTableFiller() {
 		super();
 	}
 
-	public SimpleAgreementShareTableFiller(Map<Float, Float> atheneumCapitalBalanceRateTable, float structuresRate, float atheneumCommonBalanceRate) {
+	public SimpleAgreementShareTableFiller(Map<Percent, Percent> atheneumCapitalBalanceRateTable, Percent structuresRate,
+			Percent atheneumCommonBalanceRate) {
 		super();
 		this.atheneumCapitalBalanceRateTable = atheneumCapitalBalanceRateTable;
 		this.structuresRate = structuresRate;
@@ -30,23 +34,23 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 	@Override
 	public void fill(AgreementShareTable table) {
 		System.out.println("Filler map: " + atheneumCapitalBalanceRateTable);
-		SortedMap<Float, Float> atheneumCapitalBalanceRateTable_sorted = getSortedMap();
+		SortedMap<Percent, Percent> atheneumCapitalBalanceRateTable_sorted = new TreeMap<>(atheneumCapitalBalanceRateTable);;
 		// XXX soluzione di ripego perché le annotazoni di Hibernate sono
 		// stupide
 
-		float personnel = table.getPersonnel();
+		Percent personnel = table.getPersonnel();
 
-		float athCommBal = atheneumCommonBalanceRate;
-		float struct = structuresRate;
+		Percent athCommBal = atheneumCommonBalanceRate;
+		Percent struct = structuresRate;
 
 		boolean found = false;
-		float athCapBal = 0.0F;
-		Iterator<Float> it = atheneumCapitalBalanceRateTable_sorted.keySet().iterator();
+		Percent athCapBal = Percent.ZERO;
+		Iterator<Percent> it = atheneumCapitalBalanceRateTable_sorted.keySet().iterator();
 		System.out.println("Quota personale nel build: " + personnel);
 		while (false == found && it.hasNext()) {
-			float threshold = it.next();
+			Percent threshold = it.next();
 			System.out.println("Soglia: " + threshold);
-			if (personnel <= threshold) {
+			if (!personnel.greaterThan(threshold)) {
 				athCapBal = atheneumCapitalBalanceRateTable_sorted.get(threshold);
 				found = true;
 			}
@@ -65,8 +69,8 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((atheneumCapitalBalanceRateTable == null) ? 0 : atheneumCapitalBalanceRateTable.hashCode());
-		result = prime * result + Float.floatToIntBits(atheneumCommonBalanceRate);
-		result = prime * result + Float.floatToIntBits(structuresRate);
+		result = prime * result + ((atheneumCommonBalanceRate == null) ? 0 : atheneumCommonBalanceRate.hashCode());
+		result = prime * result + ((structuresRate == null) ? 0 : structuresRate.hashCode());
 		return result;
 	}
 
@@ -84,20 +88,17 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 				return false;
 		} else if (!atheneumCapitalBalanceRateTable.equals(other.atheneumCapitalBalanceRateTable))
 			return false;
-		if (Float.floatToIntBits(atheneumCommonBalanceRate) != Float.floatToIntBits(other.atheneumCommonBalanceRate))
+		if (atheneumCommonBalanceRate == null) {
+			if (other.atheneumCommonBalanceRate != null)
+				return false;
+		} else if (!atheneumCommonBalanceRate.equals(other.atheneumCommonBalanceRate))
 			return false;
-		if (Float.floatToIntBits(structuresRate) != Float.floatToIntBits(other.structuresRate))
+		if (structuresRate == null) {
+			if (other.structuresRate != null)
+				return false;
+		} else if (!structuresRate.equals(other.structuresRate))
 			return false;
 		return true;
-	}
-
-	private SortedMap<Float, Float> getSortedMap() {
-		SortedMap<Float, Float> map = new TreeMap<Float, Float>();
-		for (Float f : atheneumCapitalBalanceRateTable.keySet()) {
-			map.put(f, atheneumCapitalBalanceRateTable.get(f));
-		}
-		return map;
-
 	}
 
 }

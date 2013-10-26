@@ -1,6 +1,8 @@
 package businessLayer;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,125 +21,154 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.joda.money.Money;
+
+import util.Config;
 import util.MathUtil;
+import util.Percent;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Agreement.findAll", query = "SELECT a FROM Agreement a ORDER BY a.approvalDate") })
 public class Agreement implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	// TODO rimmettere i not null
-	@Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;
+	// TODO rimettere i not null
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-	@NotNull @Size(max = 1000) private String title;
+	@NotNull
+	@Size(max = 1000)
+	private String title;
+	
 	private String protocolNumber; // FIXME ma serve?
 
-	@NotNull private AgreementType type;
+	@NotNull
+	private AgreementType type;
 
-	@ManyToOne @NotNull private ChiefScientist chief;
-	@NotNull private String contactPerson;
+	@ManyToOne
+	@NotNull
+	private ChiefScientist chief;
+	
+	@NotNull
+	private String contactPerson;
 
-	@ManyToOne @NotNull private Company company;
+	@ManyToOne
+	@NotNull
+	private Company company;
 
-	@ManyToOne private Department department;
+	@ManyToOne
+	private Department department;
 
 	private int CIA_projectNumber;
 	private int inventoryNumber;
 
-	@OneToOne(cascade = CascadeType.PERSIST) private AgreementShareTable shareTable;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private AgreementShareTable shareTable;
 
-	private float IVA_amount;
-	private float wholeTaxableAmount;
-	private float spentAmount;
-	private float reservedAmount;
+	private Percent IVA_amount;
+	
+	@Min(0)
+	private Money wholeTaxableAmount;
+	
+	@Min(0)
+	private Money spentAmount;
+	
+	@Min(0)
+	private Money reservedAmount;
 
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch=FetchType.EAGER ) 
-	@OrderBy("date DESC") 
+	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OrderBy("date DESC")
 	private List<Installment> installments;
 
-	@Temporal(TemporalType.DATE) private Date approvalDate;
+	@Temporal(TemporalType.DATE)
+	private Date approvalDate;
 
-	@Temporal(TemporalType.DATE) private Date beginDate;
+	@Temporal(TemporalType.DATE)
+	private Date beginDate;
 
-	@Temporal(TemporalType.DATE) private Date deadlineDate;
+	@Temporal(TemporalType.DATE)
+	private Date deadlineDate;
 
 	private String note;
 
-	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST }) private List<Attachment> attachments;
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	private List<Attachment> attachments;
 
 	public Agreement() {
 		// shareTable = new AgreementShareTable();
 		installments = new ArrayList<>();
 		attachments = new ArrayList<>();
+		wholeTaxableAmount = Money.zero(Config.currency);
+		spentAmount = Money.zero(Config.currency);
+		reservedAmount = Money.zero(Config.currency);
 	}
 
-//	public void cloneFields(Agreement copy) {
-//
-//		// this.id = copy.getId();
-//		this.title = copy.getTitle();
-//		this.protocolNumber = copy.getProtocolNumber();
-//		this.type = copy.getType();
-//		this.chief = copy.getChief();
-//		this.contactPerson = copy.getContactPerson();
-//		this.company = copy.getCompany();
-//		this.department = copy.getDepartment();
-//		this.CIA_projectNumber = copy.getCIA_projectNumber();
-//		this.inventoryNumber = copy.getInventoryNumber();
-//
-//		this.shareTable = new AgreementShareTable();
-//		this.shareTable.copy(copy.getShareTable());
-//		this.installments = new ArrayList<>();
-//
-//		this.IVA_amount = copy.getIVA_amount();
-//		this.wholeTaxableAmount = copy.getWholeTaxableAmount();
-//		this.approvalDate = new Date(copy.getApprovalDate().getTime());
-//		this.beginDate = new Date(copy.getBeginDate().getTime());
-//		this.deadlineDate = new Date(copy.getDeadlineDate().getTime());
-//		this.note = copy.getNote();
-//		this.attachments = copy.getAttachments();
-//		this.spentAmount = copy.getSpentAmount();
-//		this.reservedAmount = copy.getReservedAmount();
-//
-//		for (Installment i : copy.getInstallments()) {
-//			Installment j = new Installment();
-//			j.copy(i);
-//			j.setAgreement(this);
-//			this.installments.add(j);
-//		}
-//
-//	}
+	// public void cloneFields(Agreement copy) {
+	//
+	// // this.id = copy.getId();
+	// this.title = copy.getTitle();
+	// this.protocolNumber = copy.getProtocolNumber();
+	// this.type = copy.getType();
+	// this.chief = copy.getChief();
+	// this.contactPerson = copy.getContactPerson();
+	// this.company = copy.getCompany();
+	// this.department = copy.getDepartment();
+	// this.CIA_projectNumber = copy.getCIA_projectNumber();
+	// this.inventoryNumber = copy.getInventoryNumber();
+	//
+	// this.shareTable = new AgreementShareTable();
+	// this.shareTable.copy(copy.getShareTable());
+	// this.installments = new ArrayList<>();
+	//
+	// this.IVA_amount = copy.getIVA_amount();
+	// this.wholeTaxableAmount = copy.getWholeTaxableAmount();
+	// this.approvalDate = new Date(copy.getApprovalDate().getTime());
+	// this.beginDate = new Date(copy.getBeginDate().getTime());
+	// this.deadlineDate = new Date(copy.getDeadlineDate().getTime());
+	// this.note = copy.getNote();
+	// this.attachments = copy.getAttachments();
+	// this.spentAmount = copy.getSpentAmount();
+	// this.reservedAmount = copy.getReservedAmount();
+	//
+	// for (Installment i : copy.getInstallments()) {
+	// Installment j = new Installment();
+	// j.copy(i);
+	// j.setAgreement(this);
+	// this.installments.add(j);
+	// }
+	//
+	// }
 
-//	public Installment getInstallmentById(int id) {
-//
-//		boolean found = false;
-//		Installment result = null;
-//		Iterator<Installment> i = installments.iterator();
-//		while (found == false && i.hasNext()) {
-//			Installment current = i.next();
-//
-//			if (current.getId() == id) {
-//				result = current;
-//			}
-//		}
-//
-//		return result;
-//
-//	}
-	
-	public void addInstallment(Installment i){
+	// public Installment getInstallmentById(int id) {
+	//
+	// boolean found = false;
+	// Installment result = null;
+	// Iterator<Installment> i = installments.iterator();
+	// while (found == false && i.hasNext()) {
+	// Installment current = i.next();
+	//
+	// if (current.getId() == id) {
+	// result = current;
+	// }
+	// }
+	//
+	// return result;
+	//
+	// }
+
+	public void addInstallment(Installment i) {
 		i.setAgreement(this);
 		installments.add(i);
-		
+
 	}
-	
-	public void removeInstallment(Installment i){
+
+	public void removeInstallment(Installment i) {
 		installments.remove(i);
 	}
 
@@ -238,26 +269,40 @@ public class Agreement implements Serializable {
 		this.shareTable = shareTable;
 	}
 
-	public float getWholeAmount() {
-		return this.wholeTaxableAmount * (100 + this.IVA_amount) / 100;
+	public Money getWholeAmount() {
+		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
 	}
 
-	public float getIVA_amount() {
+	public Percent getIVA_amount() {
 		return IVA_amount;
 	}
 
-	public void setIVA_amount(float iVA_amount) {
+	public void setIVA_amount(Percent iVA_amount) {
 		IVA_amount = iVA_amount;
-		System.out.println("setIVA");
 	}
 
-	public float getWholeTaxableAmount() {
+	public Money getWholeTaxableAmount() {
 		return wholeTaxableAmount;
 	}
 
-	public void setWholeTaxableAmount(float wholeTaxableAmount) {
+	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
 		this.wholeTaxableAmount = wholeTaxableAmount;
-		System.out.println("setAmount");
+	}
+
+	public Money getSpentAmount() {
+		return spentAmount;
+	}
+
+	public void setSpentAmount(Money spentAmount) {
+		this.spentAmount = spentAmount;
+	}
+
+	public Money getReservedAmount() {
+		return reservedAmount;
+	}
+
+	public void setReservedAmount(Money reservedAmount) {
+		this.reservedAmount = reservedAmount;
 	}
 
 	public Date getApprovalDate() {
@@ -269,8 +314,8 @@ public class Agreement implements Serializable {
 	}
 
 	public List<Installment> getInstallments() {
-		
-		//TODO check
+
+		// TODO check
 		return new ArrayList<>(installments);
 	}
 
@@ -310,36 +355,21 @@ public class Agreement implements Serializable {
 		this.attachments = attachments;
 	}
 
-	public float getSpentAmount() {
-		return spentAmount;
-	}
-
-	public void setSpentAmount(float spentAmount) {
-		this.spentAmount = spentAmount;
-	}
-
-	public float getReservedAmount() {
-		return reservedAmount;
-	}
-
-	public void setReservedAmount(float reservedAmount) {
-		this.reservedAmount = reservedAmount;
-		System.out.println("set ReservedAmount");
-	}
+	
 
 	public boolean isClosed() {
 
-		return MathUtil.doubleEquals(getWholeAmount(), spentAmount);
+		return getWholeAmount().equals(spentAmount);
 
 	}
 
 	// fatturato
-	public float getTurnOver() {
-		float sum = 0;
+	public Money getTurnOver() {
+		Money sum = Money.zero(Config.currency);
 		for (Installment i : installments) {
 
 			if (i.isPaidInvoice()) {
-				sum += i.getWholeAmount();
+				sum.plus(i.getWholeAmount());
 			}
 
 		}

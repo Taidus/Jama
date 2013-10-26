@@ -1,28 +1,28 @@
 package presentationLayer;
 
-import javax.ejb.EJB;
+import java.math.BigDecimal;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
-import businessLayer.ChiefScientist;
-import daoLayer.ChiefScientistDaoBean;
+import org.joda.money.Money;
+
+import util.Config;
 
 @Named
 @RequestScoped
-public class ChiefConverter implements Converter {
+public class MoneyConverter implements Converter {
+	// il valore viene convertito in e da numeri decimali (niente valuta o
+	// altro)
 
-	@EJB
-	private ChiefScientistDaoBean chiefDaoBean;
-
-	public ChiefConverter() {}
+	public MoneyConverter() {}
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		int id = Integer.parseInt(value);
-		return chiefDaoBean.getById(id);
+		return Money.of(Config.currency, new BigDecimal(value));
 	}
 
 	@Override
@@ -30,7 +30,13 @@ public class ChiefConverter implements Converter {
 		if (null == value) {
 			return "";
 		}
-		return String.valueOf(((ChiefScientist) value).getId());
+		
+		boolean plain = (boolean) component.getAttributes().get("plain");
+		if (plain)
+			return ((Money) value).getAmount().toPlainString();
+		else {
+			return ((Money) value).toString();
+		}
 	}
 
 }

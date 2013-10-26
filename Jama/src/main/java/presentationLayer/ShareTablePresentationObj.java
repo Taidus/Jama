@@ -9,8 +9,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import util.MathUtil;
+import org.joda.money.Money;
+
 import util.Messages;
+import util.Percent;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
 
@@ -28,11 +30,11 @@ public abstract class ShareTablePresentationObj {
 
 	protected abstract AbstractShareTable getTransferObjShareTable();
 
-	protected abstract float getTransfetObjWholeAmount();
+	protected abstract Money getTransfetObjWholeAmount();
 
 	public List<PersonnelShare> getShares() {
 		List<PersonnelShare> result = new ArrayList<>();
-		Map<ChiefScientist, Float> shares = getTransferObjShareTable().getSharePerPersonnel();
+		Map<ChiefScientist, Percent> shares = getTransferObjShareTable().getSharePerPersonnel();
 		for (ChiefScientist chief : shares.keySet()) {
 			result.add(new PersonnelShare(chief, shares.get(chief)));
 		}
@@ -71,54 +73,61 @@ public abstract class ShareTablePresentationObj {
 	}
 
 	public void validateMainValues(FacesContext context, UIComponent component, Object value) {
-		if (getTransferObjShareTable().getGoodsAndServices() < 0.0) {
+		if (getTransferObjShareTable().getGoodsAndServices().lessThan(Percent.ZERO)) {
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTableValues"));
 		}
 	}
 
 	public void validateGoodsAndServices(FacesContext context, UIComponent component, Object value) {
-		if (getTransferObjShareTable().getOtherCost() < 0.0) {
+		if (getTransferObjShareTable().getOtherCost().lessThan(Percent.ZERO)) {
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTableGoods"));
 		}
 	}
 
 	public void validatePersonnelShares(FacesContext context, UIComponent component, Object value) {
-		Map<ChiefScientist, Float> shares = getTransferObjShareTable().getSharePerPersonnel();
-		float sum = 0F;
-		for (float f : shares.values()) {
-			sum += f;
+		// Map<ChiefScientist, Float> shares =
+		// getTransferObjShareTable().getSharePerPersonnel();
+		// float sum = 0F;
+		// for (float f : shares.values()) {
+		// sum += f;
+		// }
+		// if (!MathUtil.doubleEquals(getTransferObjShareTable().getPersonnel()
+		// * sum / 100, getTransferObjShareTable().getPersonnel())) {
+		// // NB: il controllo deve essere eseguito in questo modo. Controllare
+		// // che sum == 100 non funziona nel caso in cui personnel sia 0
+		// throw new
+		// ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
+		// }
+
+		Percent personnel = getTransferObjShareTable().getPersonnel();
+		if (!personnel.equals(Percent.ZERO)) {
+			Percent sum = Percent.ZERO.addAll(getTransferObjShareTable().getSharePerPersonnel().values());
+
+			if (!sum.equals(Percent.ONE)) {
+				throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
+			}
 		}
-		if (!MathUtil.doubleEquals(getTransferObjShareTable().getPersonnel() * sum / 100, getTransferObjShareTable().getPersonnel())) {
-			// NB: il controllo deve essere eseguito in questo modo. Controllare
-			// che sum == 100 non funziona nel caso in cui personnel sia 0
-			throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
-		}
 	}
 
-	public float getPercentOfMainField(float field) {
-		return getTransfetObjWholeAmount() * field / 100;
+	public Money computePercentOnWholeAmount(Percent percent) {
+		return percent.computeOn(getTransfetObjWholeAmount());
 	}
 
-	public float getPercentOfGoodsField(float field) {
-		return getPercentOfMainField(getTransferObjShareTable().getGoodsAndServices()) * field / 100;
-	}
-
-	protected float getPercentOf(float percent, float amount) {
-		return percent * amount / 100;
+	public Money computePercentOnGoodsAndServices(Percent percent) {
+		return percent.computeOn(computePercentOnWholeAmount(getTransferObjShareTable().getGoodsAndServices()));
 	}
 
 	public class PersonnelShare {
 		private ChiefScientist chiefScientist;
-		private float value;
+		private Percent value;
 
-		public PersonnelShare(ChiefScientist chiefScientist, float value) {
+		public PersonnelShare(ChiefScientist chiefScientist, Percent value) {
 			this.chiefScientist = chiefScientist;
 			this.value = value;
 		}
 
 		public PersonnelShare() {
 			chiefScientist = null;
-			value = 0;
 		}
 
 		public ChiefScientist getChiefScientist() {
@@ -130,18 +139,18 @@ public abstract class ShareTablePresentationObj {
 			this.chiefScientist = chiefScientist;
 		}
 
-		public float getValue() {
+		public Percent getValue() {
 			return value;
 		}
 
-		public void setValue(float value) {
-			System.out.println("Setting: " + value);
+		public void setValue(Percent value) {
+			System.out.println("Setting percent share: " + value);
 			this.value = value;
 		}
 
-		public float getPercentValue() {
-			System.out.println(">>> Percent value called");
-			return getPercentOfMainField(getTransferObjShareTable().getPersonnel()) * value / 100;
+		public Money getFlatAmount() {
+			System.out.println(">>> Computing flat amount");
+			return value.computeOn(computePercentOnWholeAmount(getTransferObjShareTable().getPersonnel()));
 		}
 
 		@Override
