@@ -6,36 +6,37 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
-import businessLayer.Agreement;
 import businessLayer.Company;
+import businessLayer.Contract;
 import daoLayer.CompanyDaoBean;
-
 
 @Named("companyDialogPCB")
 @RequestScoped
-public class CompanyDialogPageControllerBean{
-	
-	@Inject @TransferObj private Agreement agreement;
-	@EJB private CompanyDaoBean companyDao;
-	
+public class CompanyDialogPageControllerBean {
+
+	@Inject
+	@TransferObj
+	private Contract contract;
+	@EJB
+	private CompanyDaoBean companyDao;
+
 	private Company company;
 
 	public CompanyDialogPageControllerBean() {
 		this.company = new Company();
 	}
-	
+
 	public Company getCompany() {
 		return company;
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		this.company = new Company();
 	}
 
-	public void save(){
+	public void save() {
 		companyDao.create(company);
-		agreement.setCompany(company);
+		contract.setCompany(company);
 	}
-	
 
 }

@@ -10,14 +10,14 @@ import org.joda.money.Money;
 
 import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
-import businessLayer.Agreement;
+import businessLayer.Contract;
 
 @Named("agrShareTablePB")
 @ConversationScoped
 public class AgreementShareTablePresentationBean extends ShareTablePresentationObj implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Inject @TransferObj private Agreement agreement;
+	@Inject @TransferObj private Contract c;
 
 	public AgreementShareTablePresentationBean() {
 		super();
@@ -25,12 +25,12 @@ public class AgreementShareTablePresentationBean extends ShareTablePresentationO
 	
 	@Override
 	protected AbstractShareTable getTransferObjShareTable(){
-		return agreement.getShareTable();
+		return c.getShareTable();
 	}
 	
 	@Override
 	protected Money getTransfetObjWholeAmount() {
-		return agreement.getWholeAmount();
+		return c.getWholeAmount();
 	}
 
 }

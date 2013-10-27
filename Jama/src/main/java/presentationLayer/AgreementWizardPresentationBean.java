@@ -14,7 +14,7 @@ import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 
 import util.Messages;
-import controllerLayer.AgreementManagerBean;
+import controllerLayer.ContractManagerBean;
 
 @Named("agreementWizardPB")
 @ConversationScoped
@@ -28,7 +28,7 @@ public class AgreementWizardPresentationBean implements Serializable {
 	private String currentTabId;
 
 	@Inject
-	private AgreementManagerBean manager;
+	private ContractManagerBean manager;
 
 
 	public AgreementWizardPresentationBean() {

@@ -17,7 +17,7 @@ import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 import businessLayer.Department;
-import daoLayer.AgreementDaoBean;
+import daoLayer.ContractDaoBean;
 import daoLayer.AgreementSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
@@ -37,7 +37,7 @@ public class TestBean implements Serializable {
 	@EJB
 	private DepartmentDaoBean UARSB;
 	@EJB
-	private AgreementDaoBean agrSB;
+	private ContractDaoBean agrSB;
 	@EJB
 	private CompanyDaoBean compDB;
 	@EJB

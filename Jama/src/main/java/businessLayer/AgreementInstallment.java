@@ -22,66 +22,31 @@ import util.Percent;
  */
 
 @Entity
-public class Installment implements Serializable {
+public class AgreementInstallment extends Installment implements
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-
-	@Temporal(TemporalType.DATE)
-	@NotNull
-	private Date date;
-
 	@Embedded
 	private Percent IVA_amount;
-	
+
 	@Embedded
 	private Money wholeTaxableAmount;
 
 	@Min(0)
-	private int voucherNumber;
-
-	@Temporal(TemporalType.DATE)
-	private Date voucherDate;
-
-	@Min(0)
 	private int ivaVoucherNumber;
-	@Min(0)
-	private int pendingNumber;
-	@Min(0)
-	private int invoiceNumber;
 
-	@Temporal(TemporalType.DATE)
-	private Date invoiceDate;
+	
 
-	private boolean paidInvoice;
-	private boolean reportRequired;
-	private String note;
-
-	@ManyToOne
-	private Agreement agreement;
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn
-	private InstallmentShareTable shareTable;
-
-	public Installment() {
-		this.shareTable = new InstallmentShareTable();
+	public AgreementInstallment() {
 		this.IVA_amount = Percent.ZERO;
 		this.wholeTaxableAmount = Money.zero(Config.currency);
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
+	@Override
 	public Money getWholeAmount() {
-		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
+		return wholeTaxableAmount
+				.plus(IVA_amount.computeOn(wholeTaxableAmount));
 	}
 
 	public Money getWholeTaxableAmount() {
@@ -100,22 +65,6 @@ public class Installment implements Serializable {
 		IVA_amount = iVA_amount;
 	}
 
-	public int getVoucherNumber() {
-		return voucherNumber;
-	}
-
-	public void setVoucherNumber(int voucherNumber) {
-		this.voucherNumber = voucherNumber;
-	}
-
-	public Date getVoucherDate() {
-		return voucherDate;
-	}
-
-	public void setVoucherDate(Date voucherDate) {
-		this.voucherDate = voucherDate;
-	}
-
 	public int getIvaVoucherNumber() {
 		return ivaVoucherNumber;
 	}
@@ -124,110 +73,43 @@ public class Installment implements Serializable {
 		this.ivaVoucherNumber = ivaVoucherNumber;
 	}
 
-	public int getPendingNumber() {
-		return pendingNumber;
-	}
-
-	public void setPendingNumber(int pendingNumber) {
-		this.pendingNumber = pendingNumber;
-	}
-
-	public int getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-	public void setInvoiceNumber(int invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
-
-	public Date getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(Date invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
-
-	public boolean isPaidInvoice() {
-		return paidInvoice;
-	}
-
-	public void setPaidInvoice(boolean paidInvoice) {
-		this.paidInvoice = paidInvoice;
-	}
-
-	public boolean isReportRequired() {
-		return reportRequired;
-	}
-
-	public void setReportRequired(boolean reportRequired) {
-		this.reportRequired = reportRequired;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public InstallmentShareTable getShareTable() {
-		return shareTable;
-	}
-
-	public void setShareTable(InstallmentShareTable shareTable) {
-		this.shareTable = shareTable;
-	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public Agreement getAgreement() {
-		return agreement;
-	}
-
-	public void setAgreement(Agreement agreement) {
-		this.agreement = agreement;
-	}
-
+	@Override
 	public void copy(Installment copy) {
 
-		this.id = copy.id;
-		this.date = new Date(copy.date.getTime());
-		this.IVA_amount = copy.IVA_amount;
-		this.wholeTaxableAmount = copy.wholeTaxableAmount;
-		this.voucherNumber = copy.voucherNumber;
-		this.voucherDate = new Date(copy.voucherDate.getTime());
-		this.ivaVoucherNumber = copy.ivaVoucherNumber;
-		this.pendingNumber = copy.pendingNumber;
-		this.invoiceNumber = copy.invoiceNumber;
-		this.invoiceDate = new Date(copy.invoiceDate.getTime());
-		this.paidInvoice = copy.paidInvoice;
-		this.reportRequired = copy.reportRequired;
-		this.note = copy.note;
-		this.agreement = copy.getAgreement();
-		this.shareTable = new InstallmentShareTable();
-		this.shareTable.copy(copy.getShareTable());
+		if (copy instanceof AgreementInstallment) {
 
-		// this.shareTable.setInstallment(copy);
-	}
+			super.copy(copy);
 
-	public void initShareTableFromAgreement(Agreement agr) {
-		this.shareTable.copy(agr.getShareTable());
+			AgreementInstallment agrCopy = (AgreementInstallment) copy;
+
+			this.ivaVoucherNumber = agrCopy.ivaVoucherNumber;
+			this.wholeTaxableAmount = agrCopy.wholeTaxableAmount;
+			this.IVA_amount = agrCopy.IVA_amount;
+
+
+		} else
+			throw new IllegalArgumentException("Installment type mismatch");
+
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "Installment [id=" + id + ", date=" + date + ", IVA_amount=" + IVA_amount + ", wholeTaxableAmount=" + wholeTaxableAmount
-				+ ", voucherNumber=" + voucherNumber + ", voucherDate=" + voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber + ", pendingNumber="
-				+ pendingNumber + ", invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate + ", paidInvoice=" + paidInvoice
-				+ ", reportRequired=" + reportRequired + ", note=" + note + ", agreement id=" + agreement.getId() + ", shareTable=" + shareTable
-				+ "]";
+		return "Installment [id=" + id + ", date=" + date + ", IVA_amount="
+				+ IVA_amount + ", wholeTaxableAmount=" + wholeTaxableAmount
+				+ ", voucherNumber=" + voucherNumber + ", voucherDate="
+				+ voucherDate + ", ivaVoucherNumber=" + ivaVoucherNumber
+				+ ", pendingNumber=" + pendingNumber + ", invoiceNumber="
+				+ invoiceNumber + ", invoiceDate=" + invoiceDate
+				+ ", paidInvoice=" + paidInvoice + ", reportRequired="
+				+ reportRequired + ", note=" + note + ", agreement id="
+				+ contract.getId() + ", shareTable=" + shareTable + "]";
 	}
+
 }

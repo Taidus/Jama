@@ -15,10 +15,9 @@ import org.joda.money.Money;
 
 import util.Config;
 import util.Messages;
-import util.Percent;
 import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
-import businessLayer.Agreement;
+import businessLayer.Contract;
 import businessLayer.Installment;
 
 @Named("instShareTablePB")
@@ -47,8 +46,8 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
 		// TODO eliminare try-catch
 		try {
-			Agreement agr = installment.getAgreement();
-			List<Installment> installments = agr.getInstallments();
+			Contract c = installment.getContract();
+			List<Installment> installments = c.getInstallments();
 			installments.add(installment);
 			List<List<Money>> instShareTablesMainAttributes = new ArrayList<>();
 			List<List<Money>> instShareTablesSubAttributes = new ArrayList<>();
@@ -66,10 +65,10 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 			System.out.println(2);
 
 			System.out.print("Convenzione: ");
-			List<Money> l = getMainAttributeList(agr.getShareTable(), agr.getWholeAmount());
+			List<Money> l = getMainAttributeList(c.getShareTable(), c.getWholeAmount());
 			System.out.println(3);
 			System.out.print("\t");
-			List<Money> p = getSubAttributeList(agr.getShareTable(), agr.getShareTable().getGoodsAndServices().computeOn(agr.getWholeAmount()));
+			List<Money> p = getSubAttributeList(c.getShareTable(), c.getShareTable().getGoodsAndServices().computeOn(c.getWholeAmount()));
 			System.out.println(4);
 
 			// devono essere nello stesso ordine in cui si aggiungono sotto!

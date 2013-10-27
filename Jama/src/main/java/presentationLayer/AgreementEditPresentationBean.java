@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.TabChangeEvent;
 
-import controllerLayer.AgreementManagerBean;
+import controllerLayer.ContractManagerBean;
 
 @Named("agreementEditPB")
 @ConversationScoped
@@ -23,7 +23,7 @@ public class AgreementEditPresentationBean implements Serializable {
 	private static final int defaultTab = 0;
 
 	@Inject
-	AgreementManagerBean manager;
+	ContractManagerBean manager;
 
 	public AgreementEditPresentationBean() {
 	}

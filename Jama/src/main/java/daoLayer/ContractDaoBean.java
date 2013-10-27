@@ -11,38 +11,38 @@ import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 
 import businessLayer.Agreement;
-import businessLayer.Installment;
+import businessLayer.Contract;
 
 @Stateful
 @ConversationScoped
-public class AgreementDaoBean {
+public class ContractDaoBean {
 	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
-	public AgreementDaoBean() {
+	public ContractDaoBean() {
 	}
 
-	public Agreement create(Agreement agreement) {
+	public Contract create(Contract contract) {
 		
 //		for(Installment i : agreement.getInstallments()){
 //			i.setAgreement(agreement);
 //		}
-		em.persist(agreement);
-		return agreement;
+		em.persist(contract);
+		return contract;
 	}
 
 	public void delete(int id) {
 
-		Agreement agr = em.find(Agreement.class, id);
-		if (agr != null) {
+		Contract c = em.find(Contract.class, id);
+		if (c != null) {
 
-			em.remove(agr);
+			em.remove(c);
 		}
 	}
 
-	public Agreement getById(int id) {
+	public Contract getById(int id) {
 
-		return em.find(Agreement.class, id);
+		return em.find(Contract.class, id);
 
 	}
 	

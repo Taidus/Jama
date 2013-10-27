@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
 import org.primefaces.model.SortOrder;
 
 import businessLayer.Agreement;
-import businessLayer.Installment;
+import businessLayer.AgreementInstallment;
 
 @Stateful
 @ConversationScoped
@@ -32,7 +32,7 @@ public class DeadlineSearchService extends ResultPagerBean<Agreement>{
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Agreement> c = cb.createQuery(Agreement.class);
 		Root<Agreement> agr = c.from(Agreement.class);
-		Root<Installment> inst = c.from(Installment.class);
+		Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
 		c.select(agr).distinct(true).where(cb.equal(inst.get("agreement"), agr)).where(cb.equal(inst.get("paidInvoice"), false));
 
 		List<Predicate> criteria = new ArrayList<Predicate>();

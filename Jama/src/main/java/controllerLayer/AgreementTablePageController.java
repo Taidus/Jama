@@ -13,7 +13,7 @@ import presentationLayer.LazyAgreementDataModel;
 public abstract class AgreementTablePageController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Inject protected AgreementManagerBean agrManager;
+	@Inject protected ContractManagerBean agrManager;
 	@Inject protected Conversation conversation;
 
 	@PostConstruct

@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.joda.money.Money;
+
+import util.Config;
 import util.MathUtil;
 
 /**
@@ -16,34 +19,38 @@ import util.MathUtil;
  * 
  */
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Contract implements Serializable {
 
+	/**
+	 * 
+	 */
+	protected static final long serialVersionUID = 1L;
+
 	public Contract() {
-		// shareTable = new AgreementShareTable();
+		super();
 		installments = new ArrayList<>();
 		attachments = new ArrayList<>();
+		spentAmount = Money.zero(Config.currency);
+		reservedAmount = Money.zero(Config.currency);
 	}
-
-	protected static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected int id;
 
-	@NotNull
 	@Size(max = 1000)
 	protected String title;
-	protected String protocolNumber; // FIXME ma serve?
+
+	protected String protocolNumber;
 
 	@ManyToOne
-	@NotNull
 	protected ChiefScientist chief;
-	@NotNull
+
 	protected String contactPerson;
 
 	@ManyToOne
-	@NotNull
 	protected Company company;
 
 	@ManyToOne
@@ -52,12 +59,23 @@ public abstract class Contract implements Serializable {
 	protected int CIA_projectNumber;
 	protected int inventoryNumber;
 
-	protected float spentAmount;
-	protected float reservedAmount;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "money", column = @Column(name = "SPENT_AMOUNT")),
+			@AttributeOverride(name = "money.currency.code", column = @Column(name = "SPENT_AMOUNT_CODE")),
+			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "SPENT_AMOUNT_DECIMAL_PLACES")),
+			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "SPENT_AMOUNT_NUMERIC_CODE")),
+			@AttributeOverride(name = "money.amount", column = @Column(name = "SPENT_AMOUNT_AMOUNT")) })
+	protected Money spentAmount;
 
-	@OneToMany(mappedBy = "agreement", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
-	@OrderBy("date DESC")
-	protected List<Installment> installments;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "money", column = @Column(name = "RESERVED_AMOUNT")),
+			@AttributeOverride(name = "money.currency.code", column = @Column(name = "RESERVED_AMOUNT_CODE")),
+			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "RESERVED_AMOUNT_DECIMAL_PLACES")),
+			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "RESERVED_AMOUNT_NUMERIC_CODE")),
+			@AttributeOverride(name = "money.amount", column = @Column(name = "RESERVED_AMOUNT_AMOUNT")) })
+	protected Money reservedAmount;
 
 	@Temporal(TemporalType.DATE)
 	protected Date approvalDate;
@@ -70,16 +88,22 @@ public abstract class Contract implements Serializable {
 
 	protected String note;
 
+	@OneToMany(mappedBy = "contract", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OrderBy("date DESC")
+	protected List<Installment> installments;
+
 	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
 	protected List<Attachment> attachments;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	protected ContractShareTable shareTable;
+	
+	public abstract Money getWholeAmount();
 
-	public abstract void addInstallment(Installment i);
-
-	public abstract float getWholeAmount();
-
-	public boolean isClosed() {
-
-		return MathUtil.doubleEquals(getWholeAmount(), spentAmount);
+	public void addInstallment(Installment i) {
+		i.setContract(this);
+		installments.add(i);
 
 	}
 
@@ -89,6 +113,10 @@ public abstract class Contract implements Serializable {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -155,22 +183,28 @@ public abstract class Contract implements Serializable {
 		this.inventoryNumber = inventoryNumber;
 	}
 
+	public Money getSpentAmount() {
+		return spentAmount;
+	}
+
+	public void setSpentAmount(Money spentAmount) {
+		this.spentAmount = spentAmount;
+	}
+
+	public Money getReservedAmount() {
+		return reservedAmount;
+	}
+
+	public void setReservedAmount(Money reservedAmount) {
+		this.reservedAmount = reservedAmount;
+	}
+
 	public Date getApprovalDate() {
 		return approvalDate;
 	}
 
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
-	}
-
-	public List<Installment> getInstallments() {
-
-		// TODO check
-		return new ArrayList<>(installments);
-	}
-
-	public void setInstallments(List<Installment> installments) {
-		this.installments = installments;
 	}
 
 	public Date getBeginDate() {
@@ -196,6 +230,17 @@ public abstract class Contract implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public List<Installment> getInstallments() {
+
+		// TODO check
+		return new ArrayList<>(installments);
+	}
+
+	public void setInstallments(List<Installment> installments) {
+		this.installments = installments;
+	}
+
+	
 
 	public List<Attachment> getAttachments() {
 		return attachments;
@@ -204,36 +249,13 @@ public abstract class Contract implements Serializable {
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
-
-	public float getSpentAmount() {
-		return spentAmount;
+	
+	public ContractShareTable getShareTable() {
+		return shareTable;
 	}
 
-	public void setSpentAmount(float spentAmount) {
-		this.spentAmount = spentAmount;
-	}
-
-	public float getReservedAmount() {
-		return reservedAmount;
-	}
-
-	public void setReservedAmount(float reservedAmount) {
-		this.reservedAmount = reservedAmount;
-		System.out.println("set ReservedAmount");
-	}
-
-	// fatturato
-	public float getTurnOver() {
-		float sum = 0;
-		for (Installment i : installments) {
-
-			if (i.isPaidInvoice()) {
-				sum += i.getWholeAmount();
-			}
-
-		}
-
-		return sum;
+	public void setShareTable(ContractShareTable shareTable) {
+		this.shareTable = shareTable;
 	}
 
 }

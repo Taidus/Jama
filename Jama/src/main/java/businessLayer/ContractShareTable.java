@@ -9,13 +9,14 @@ import javax.persistence.ManyToOne;
 import util.Percent;
 
 @Entity
-public class AgreementShareTable extends AbstractShareTable implements Serializable {
+public class ContractShareTable extends AbstractShareTable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }) private AgreementShareTableFiller filler;
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }) 
+	private AgreementShareTableFiller filler;
 
-	public AgreementShareTable() {
+	public ContractShareTable() {
 		initFields();
 	}
 
@@ -28,7 +29,7 @@ public class AgreementShareTable extends AbstractShareTable implements Serializa
 		setPersonnel(Percent.ZERO);
 	}
 
-	public void copy(AgreementShareTable copy) {
+	public void copy(ContractShareTable copy) {
 		super.copy(copy);
 		this.filler = copy.filler;
 	}

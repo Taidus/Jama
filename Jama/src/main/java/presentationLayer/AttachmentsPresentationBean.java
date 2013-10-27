@@ -18,6 +18,7 @@ import org.primefaces.model.UploadedFile;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Attachment;
+import businessLayer.Contract;
 
 @Named("attachmentsPB")
 @ConversationScoped
@@ -31,7 +32,7 @@ public class AttachmentsPresentationBean implements Serializable {
 
 	@Inject
 	@TransferObj
-	private Agreement agreement;
+	private Contract contract;
 
 	public AttachmentsPresentationBean() {
 	}
@@ -59,13 +60,13 @@ public class AttachmentsPresentationBean implements Serializable {
 		a.setFileName(file.getFileName());
 		a.setFileType(file.getContentType());
 
-		agreement.getAttachments().add(a);
+		contract.getAttachments().add(a);
 
 	}
 
 	public List<Attachment> getAttachments() {
 
-		return agreement.getAttachments();
+		return contract.getAttachments();
 
 	}
 
@@ -81,7 +82,7 @@ public class AttachmentsPresentationBean implements Serializable {
 	public void removeFile() {
 		
 
-		agreement.getAttachments().remove(selectedAttachment);
+		contract.getAttachments().remove(selectedAttachment);
 
 	}
 

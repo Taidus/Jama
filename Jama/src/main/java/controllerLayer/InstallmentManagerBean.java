@@ -9,24 +9,31 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import annotations.Current;
 import annotations.TransferObj;
 import businessLayer.Agreement;
+import businessLayer.AgreementInstallment;
+import businessLayer.Contract;
 import businessLayer.Installment;
 
 @Named("installmentManager")
 @ConversationScoped
-public class InstallmentManagerBean implements Serializable {
+public  class InstallmentManagerBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
 
 	@Inject
 	@TransferObj
-	private Agreement agreement;
+	protected Contract contract;
+	
+	@Inject
+	@Current
+	private InstallmentProducer installmentProducer;
 
 	// TODO spostare return indirizzo pagina
-	private Installment selectedInstallment;
-	private Installment transferObjInstallment;
-	private Installment installment;
+	protected Installment selectedInstallment;
+	protected Installment transferObjInstallment;
+	protected Installment installment;
 
 	public Installment getSelectedInstallment() {
 		return selectedInstallment;
@@ -36,16 +43,6 @@ public class InstallmentManagerBean implements Serializable {
 		this.selectedInstallment = selectedInstallment;
 	}
 
-	public String addInstallment() {
-
-		installment = new Installment();
-		transferObjInstallment = new Installment();
-		transferObjInstallment.setAgreement(agreement);
-		transferObjInstallment.initShareTableFromAgreement(agreement);
-		insertRandomValues(transferObjInstallment); //TODO eliminare
-		return "/installmentWiz.xhtml";
-
-	}
 
 	public void cancel() {
 
@@ -59,7 +56,7 @@ public class InstallmentManagerBean implements Serializable {
 		if (selectedInstallment == null) {
 			installment.copy(transferObjInstallment);
 			//agreement.getInstallments().add(installment);
-			agreement.addInstallment(installment);
+			contract.addInstallment(installment);
 		} else {
 
 			selectedInstallment.copy(transferObjInstallment);
@@ -76,7 +73,7 @@ public class InstallmentManagerBean implements Serializable {
 	@Produces
 	@TransferObj
 	@RequestScoped
-	public Installment getTransferObjAgreementInstallment() {
+	public Installment getTransferObjInstallment() {
 
 		return transferObjInstallment;
 	}
@@ -85,10 +82,10 @@ public class InstallmentManagerBean implements Serializable {
 		return transferObjInstallment;
 	}
 
-	private void initInstallment() {
+	protected void initInstallment() {
 
-		installment = new Installment();
-		transferObjInstallment = new Installment();
+		installment = new AgreementInstallment();
+		transferObjInstallment = new AgreementInstallment();
 		transferObjInstallment.copy(selectedInstallment);
 
 	}
@@ -107,18 +104,27 @@ public class InstallmentManagerBean implements Serializable {
 	public void deleteInstallment() {
 		
 		//agreement.getInstallments().remove(selectedInstallment);
-		agreement.removeInstallment(selectedInstallment);
-		selectedInstallment.setAgreement(null);
+		contract.removeInstallment(selectedInstallment);
+		selectedInstallment.setContract(null);
 		close();
 	}
 	
-	private void insertRandomValues(Installment inst){
+	protected void insertRandomValues(AgreementInstallment inst){
 		//TODO eliminare
 		
 		inst.setDate(new Date());
 		inst.setInvoiceDate(new Date());
 		inst.setVoucherDate(new Date());
 		
+	}
+	
+	public String addInstallment(){
+		installment = installmentProducer.getNewInstallment();
+	transferObjInstallment = new AgreementInstallment();
+	transferObjInstallment.setContract(contract);
+	transferObjInstallment.initShareTableFromContract(contract);;
+	//insertRandomValues(transferObjInstallment); //TODO eliminare
+	return "/installmentWiz.xhtml";
 	}
 
 }

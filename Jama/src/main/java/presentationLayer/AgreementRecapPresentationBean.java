@@ -17,6 +17,8 @@ import org.joda.money.MoneyUtils;
 import util.Config;
 import annotations.TransferObj;
 import businessLayer.Agreement;
+import businessLayer.AgreementInstallment;
+import businessLayer.Contract;
 import businessLayer.Installment;
 
 @Named("agreementRecapPB")
@@ -24,7 +26,7 @@ import businessLayer.Installment;
 public class AgreementRecapPresentationBean {
 	@Inject
 	@TransferObj
-	private Agreement agr;
+	private Contract c;
 
 	private TotalRecap totalRecap;
 	private List<RecapItem> annualRecap;
@@ -40,8 +42,8 @@ public class AgreementRecapPresentationBean {
 		return annualRecap;
 	}
 
-	public Agreement getAgr() {
-		return agr;
+	public Contract getContract() {
+		return c;
 	}
 
 	@PostConstruct
@@ -56,16 +58,16 @@ public class AgreementRecapPresentationBean {
 		Money totalAmount = Money.zero(Config.currency);
 		Money totalPaid = Money.zero(Config.currency);
 
-		if (!agr.getInstallments().isEmpty()) {
+		if (!c.getInstallments().isEmpty()) {
 
-			Date d = agr.getInstallments().get(0).getDate();
+			Date d = c.getInstallments().get(0).getDate();
 			Calendar currentDate = new GregorianCalendar();
 			currentDate.setTimeInMillis(d.getTime());
 
 			Money currentWholeAmount = Money.zero(Config.currency);
 			Money currentpaid = Money.zero(Config.currency);
 
-			for (Installment i : agr.getInstallments()) {
+			for (Installment i : c.getInstallments()) {
 
 				Calendar date = new GregorianCalendar();
 				date.setTimeInMillis(i.getDate().getTime());

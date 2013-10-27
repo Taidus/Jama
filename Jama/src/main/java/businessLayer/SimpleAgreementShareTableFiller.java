@@ -43,7 +43,7 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 	}
 
 	@Override
-	public void fill(AgreementShareTable table) {
+	public void fill(ContractShareTable table) {
 		System.out.println("Filler map: " + atheneumCapitalBalanceRateTable);
 		SortedMap<Percent, Percent> atheneumCapitalBalanceRateTable_sorted = new TreeMap<>(atheneumCapitalBalanceRateTable);;
 		// XXX soluzione di ripego perché le annotazoni di Hibernate sono

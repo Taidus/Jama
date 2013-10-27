@@ -6,15 +6,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import annotations.TransferObj;
-import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
+import businessLayer.Contract;
 import daoLayer.ChiefScientistDaoBean;
 
 @Named("chiefDialogPCB")
 @RequestScoped
 public class ChiefDialogPageControllerBean{
 	
-	@Inject @TransferObj private Agreement agreement;
+	@Inject 
+	@TransferObj 
+	private Contract contract;
 	
 	@EJB private ChiefScientistDaoBean chiefDao;
 	
@@ -34,7 +36,7 @@ public class ChiefDialogPageControllerBean{
 
 	public void save(){
 		chiefDao.createChiefScientist(chief);
-		agreement.setChief(chief);
+		contract.setChief(chief);
 	}
 	
 

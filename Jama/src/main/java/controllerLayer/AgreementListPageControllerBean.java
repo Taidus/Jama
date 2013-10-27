@@ -26,21 +26,21 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 	public String viewAgreement() {
 		print("Viewing");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedAgreementId(lazyModel.getSelectedValue().getId());
+		agrManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		return agrManager.viewAgreement();
 	}
 
 	public String editAgreement() {
 		print("Editing");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedAgreementId(lazyModel.getSelectedValue().getId());
+		agrManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		return agrManager.editAgreement();
 	}
 
 	public void deleteAgreement() {
 		print("Deleting");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedAgreementId(lazyModel.getSelectedValue().getId());
+		agrManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		agrManager.deleteAgreement();
 	}
 

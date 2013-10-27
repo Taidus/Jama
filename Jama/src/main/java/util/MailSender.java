@@ -20,7 +20,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 import usersManagement.User;
 import annotations.Logged;
 import businessLayer.Agreement;
-import businessLayer.Installment;
+import businessLayer.AgreementInstallment;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -59,7 +59,7 @@ public class MailSender implements Serializable {
 		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di sergente nella DeltaSpikeForce!");
 	}
 
-	public void send(Installment inst, boolean actuallySend) throws IOException, TemplateException {
+	public void send(AgreementInstallment inst, boolean actuallySend) throws IOException, TemplateException {
 
 		TemplateFiller filler = new TemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
 		StringWriter out = new StringWriter();
@@ -90,11 +90,11 @@ public class MailSender implements Serializable {
 
 	public static class TemplateFiller {
 		private Agreement agreement;
-		private Installment installment;
+		private AgreementInstallment installment;
 		private String mail1, mail2;
 		private Integer installmentNumber;
 
-		public TemplateFiller(Installment installment, String mail1, String mail2) {
+		public TemplateFiller(AgreementInstallment installment, String mail1, String mail2) {
 			super();
 			this.agreement = installment.getAgreement();
 			this.installment = installment;
@@ -112,7 +112,7 @@ public class MailSender implements Serializable {
 			return agreement;
 		}
 
-		public Installment getInstallment() {
+		public AgreementInstallment getInstallment() {
 			return installment;
 		}
 

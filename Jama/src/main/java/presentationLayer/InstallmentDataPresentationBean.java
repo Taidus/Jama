@@ -14,6 +14,8 @@ import org.joda.money.Money;
 
 import util.Messages;
 import businessLayer.Agreement;
+import businessLayer.AgreementInstallment;
+import businessLayer.Contract;
 import businessLayer.Installment;
 import annotations.TransferObj;
 
@@ -30,15 +32,15 @@ public class InstallmentDataPresentationBean implements Serializable {
 	}
 
 	public void validateAmount(FacesContext context, UIComponent component, Object value) {
-		Agreement agr = installment.getAgreement();
-		List<Installment> installments = agr.getInstallments();
+		Contract c = installment.getContract();
+		List<Installment> installments = c.getInstallments();
 
 		Money sum = installment.getWholeAmount();
 		for (Installment i : installments) {
 			sum.plus(i.getWholeAmount());
 		}
 
-		if (sum.isGreaterThan(agr.getWholeAmount())) {
+		if (sum.isGreaterThan(c.getWholeAmount())) {
 			throw new ValidatorException(Messages.getErrorMessage("err_installmentAmount"));
 		}
 

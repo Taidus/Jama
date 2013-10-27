@@ -24,18 +24,20 @@ import org.joda.money.Money;
 import security.AdminAccessDecisionVoter;
 import security.Login;
 import util.Config;
+import annotations.Current;
 import annotations.TransferObj;
 import businessLayer.Agreement;
-import businessLayer.AgreementShareTable;
+import businessLayer.Contract;
+import businessLayer.ContractShareTable;
 import businessLayer.Department;
-import daoLayer.AgreementDaoBean;
+import daoLayer.ContractDaoBean;
 import daoLayer.DepartmentDaoBean;
 
-@Named("agreementManager")
+@Named("contractManager")
 @ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class AgreementManagerBean implements Serializable {
+public class ContractManagerBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +46,7 @@ public class AgreementManagerBean implements Serializable {
 	@Inject
 	private FillerFactoryBean fillerFactory;
 	@EJB
-	private AgreementDaoBean agreementDao;
+	private ContractDaoBean ContractDao;
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
@@ -56,19 +58,19 @@ public class AgreementManagerBean implements Serializable {
 
 	// TODO aggiungere un po' di eccezioni
 	// TODO spostare return indirizzi pagine
-	private int selectedAgreementId = -1;
-	private Agreement agreement;
+	private int selectedContractId = -1;
+	private Contract contract;
 
-	public AgreementManagerBean() {
+	public ContractManagerBean() {
 		conversationninherited = false;
 	}
 
-	public int getSelectedAgreementId() {
-		return selectedAgreementId;
+	public int getSelectedContractId() {
+		return selectedContractId;
 	}
 
-	public void setSelectedAgreementId(int selectedAgreementId) {
-		this.selectedAgreementId = selectedAgreementId;
+	public void setSelectedContractd(int selectedAgreementId) {
+		this.selectedContractId = selectedAgreementId;
 	}
 
 	private void begin() {
@@ -92,7 +94,7 @@ public class AgreementManagerBean implements Serializable {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void save() {
 
-		agreementDao.create(agreement);
+		ContractDao.create(contract);
 		close();
 	}
 
@@ -105,7 +107,7 @@ public class AgreementManagerBean implements Serializable {
 	}
 
 	private void initAgreement() {
-		agreement = agreementDao.getById(selectedAgreementId);
+		contract = ContractDao.getById(selectedContractId);
 
 	}
 
@@ -118,12 +120,12 @@ public class AgreementManagerBean implements Serializable {
 
 	public String createAgreement() {
 
-		agreement = new Agreement();
-		insertRandomValues(agreement); // TODO eliminare
-		AgreementShareTable shareTable = new AgreementShareTable();
+		contract = new Agreement();
+		//insertRandomValues(contract); // TODO eliminare
+		ContractShareTable shareTable = new ContractShareTable();
 		shareTable
-				.setFiller(fillerFactory.getFiller(agreement.getDepartment()));
-		agreement.setShareTable(shareTable);
+				.setFiller(fillerFactory.getFiller(contract.getDepartment()));
+		contract.setShareTable(shareTable);
 		begin();
 
 		return "/agreementWiz.xhtml";
@@ -139,17 +141,32 @@ public class AgreementManagerBean implements Serializable {
 	@Produces
 	@TransferObj
 	@RequestScoped
-	public Agreement getTransferObjAgreement() {
-		return agreement;
+	public Contract getTransferObjContract() {
+		return contract;
 	}
+	
+	@Produces
+	@RequestScoped
+	@Current
+	public InstallmentProducer getInstallmentManager(AgreementInstallmentProducer agrProd){
+		
+		if( contract instanceof Agreement){
+			return agrProd;
+		}
+		
+		else 
+			return null;
+	
+	}
+	
 
-	public Agreement getAgreement() {
-		return agreement;
+	public Contract getContract() {
+		return contract;
 	}
 
 	@Secured(value = { AdminAccessDecisionVoter.class }, errorView = Login.class)
 	public void deleteAgreement() {
-		agreementDao.delete(selectedAgreementId);
+		ContractDao.delete(selectedContractId);
 	}
 
 	private void insertRandomValues(Agreement agr) {
