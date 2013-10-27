@@ -8,6 +8,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 import util.Messages;
@@ -15,6 +16,7 @@ import util.Percent;
 
 @Named
 @RequestScoped
+@FacesConverter(forClass=Percent.class)
 public class PercentConverter implements Converter {
 	// oltre a svolgere le normali operazioni di conversione,
 	// normalizza/denormalizza i dati: a video compariranno valori tra 0 e 100,
@@ -24,11 +26,11 @@ public class PercentConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		try{
-			return new Percent(new BigDecimal(value).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN));
-		}catch(IllegalArgumentException e){
+		BigDecimal d = new BigDecimal(value).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN);
+		if(d.compareTo(BigDecimal.ONE) > 0){
 			throw new ConverterException(Messages.getErrorMessage("err_invalidValue"));
 		}
+		return new Percent(d);
 	}
 
 	@Override

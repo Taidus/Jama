@@ -57,7 +57,7 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 		boolean found = false;
 		Percent athCapBal = Percent.ZERO;
 		Iterator<Percent> it = atheneumCapitalBalanceRateTable_sorted.keySet().iterator();
-		System.out.println("Quota personale nel build: " + personnel);
+		System.out.println("Quota personale nel filler: " + personnel);
 		while (false == found && it.hasNext()) {
 			Percent threshold = it.next();
 			System.out.println("Soglia: " + threshold);

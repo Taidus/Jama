@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -20,8 +21,7 @@ import businessLayer.SimpleAgreementShareTableFiller;
 public class SimpleFillerFactoryBean extends FillerFactoryBean {
 	private static final long serialVersionUID = 1L;
 
-	public SimpleFillerFactoryBean() {
-	}
+	public SimpleFillerFactoryBean() {}
 
 	@Override
 	protected SimpleAgreementShareTableFiller createFiller(String depDirectory) {
@@ -42,8 +42,8 @@ public class SimpleFillerFactoryBean extends FillerFactoryBean {
 			throw new IllegalStateException("Could not read " + propertiesFilePath);
 		}
 
-		Percent structuresRate = Percent.normalizedValueOf(Double.parseDouble(p.getProperty("structuresRate").trim()));
-		Percent atheneumCommonBalanceRate = Percent.normalizedValueOf(Double.parseDouble(p.getProperty("atheneumCommonBalanceRate").trim()));
+		Percent structuresRate = Percent.normalizedValueOf(new BigDecimal(p.getProperty("structuresRate").trim()));
+		Percent atheneumCommonBalanceRate = Percent.normalizedValueOf(new BigDecimal(p.getProperty("atheneumCommonBalanceRate").trim()));
 
 		propertiesFilePath = depPath + "atheneumRateTable.properties";
 		p = new Properties();
@@ -62,8 +62,8 @@ public class SimpleFillerFactoryBean extends FillerFactoryBean {
 
 		SortedMap<Percent, Percent> atheneumCapitalBalanceRateTable = new TreeMap<>();
 		for (String property : p.stringPropertyNames()) {
-			atheneumCapitalBalanceRateTable.put(Percent.normalizedValueOf(Double.parseDouble(property.trim())),
-					Percent.normalizedValueOf(Double.parseDouble(p.getProperty(property).trim())));
+			atheneumCapitalBalanceRateTable.put(Percent.normalizedValueOf(new BigDecimal(property.trim())),
+					Percent.normalizedValueOf(new BigDecimal(p.getProperty(property).trim())));
 		}
 
 		try {

@@ -20,7 +20,7 @@
 		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}">
 
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
-				<sections:agreementWizData editingDisable="false" />
+				<sections:agreementWizData editingDisable="false" creating="true"/>
 
 			</p:tab>
 

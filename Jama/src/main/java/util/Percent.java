@@ -57,10 +57,10 @@ public class Percent implements Comparable<Percent> {
 
 	public Percent(BigDecimal value) {
 		super();
-		if (value.abs().compareTo(BigDecimal.ONE) > 0) {
-			throw new IllegalArgumentException("Illegal percent value (its absolute value is greater than 1)");
-		}
-		this.value = value;
+//		if (value.abs().compareTo(BigDecimal.ONE) > 0) {
+//			throw new IllegalArgumentException("Illegal percent value (its absolute value is greater than 1)");
+//		}
+		this.value = value.setScale(2, RoundingMode.HALF_EVEN);
 	}
 
 	public BigDecimal getValue() {
@@ -127,8 +127,9 @@ public class Percent implements Comparable<Percent> {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!value.equals(other.value)){
 			return false;
+		}
 		return true;
 	}
 

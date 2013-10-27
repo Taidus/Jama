@@ -19,7 +19,6 @@ public class PercentValidator implements Validator {
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		System.out.println("PercentValidator chiamato");
 		try{
 			Percent p = (Percent) value;
 			if(p.lessThan(Percent.ZERO) || p.greaterThan(Percent.ONE)){

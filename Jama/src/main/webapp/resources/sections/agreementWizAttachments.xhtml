@@ -1,8 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 
 	<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
 
@@ -13,52 +10,39 @@
 
 		<h:outputText value="Allegati caricati: " />
 
-		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}"
-			var="file" emptyMessage="#{msgs.noAttachmentFound}">
+		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}" var="file" emptyMessage="#{msgs.noAttachmentFound}">
 			<p:column>
-				<p:commandLink id="downloadLink" ajax="false"
-					value="#{file.fileName}, #{file.fileType}">
+				<p:commandLink id="downloadLink" ajax="false" value="#{file.fileName}, #{file.fileType}">
 					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
 				</p:commandLink>
 			</p:column>
 			<p:column>
-				<p:commandButton id="downloadButton" ajax="false"
-					icon="ui-icon-arrowthichk-s">
+				<p:commandButton id="downloadButton" ajax="false" icon="ui-icon-arrowthichk-s">
 					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
 				</p:commandButton>
-				<p:tooltip for="downloadButton" value="Download" showEffect="fade"
-					hideEffect="fade" />
-				<p:commandButton id="removeButton" ajax="true"
-					oncomplete="w_confirmA.show();" icon="ui-icon-trash">
-					<f:setPropertyActionListener
-						target="#{attachmentsPB.selectedAttachment}" value="#{file}">
+				<p:tooltip for="downloadButton" value="Download" showEffect="fade" hideEffect="fade" />
+				<p:commandButton id="removeButton" ajax="true" oncomplete="w_confirmA.show();" icon="ui-icon-trash">
+					<f:setPropertyActionListener target="#{attachmentsPB.selectedAttachment}" value="#{file}">
 					</f:setPropertyActionListener>
 				</p:commandButton>
-				<p:tooltip for="removeButton" value="#{msgs.remove}"
-					showEffect="fade" hideEffect="fade" />
+				<p:tooltip for="removeButton" value="#{msgs.remove}" showEffect="fade" hideEffect="fade" />
 			</p:column>
 		</p:dataTable>
 
-		<p:fileUpload auto="false"
-			fileUploadListener="#{attachmentsPB.handleFileUpload}"
-			mode="advanced" dragDropSupport="true" update="messages attchsList"
-			sizeLimit="1000000" cancelLabel="#{msgs.remove}"
-			uploadLabel="#{msgs.load}" label="#{msgs.choose}" invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}"/>
-	
-	
-	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
-			severity="alert" widgetVar="w_confirmA">
-			<p:commandButton value="#{msgs.yes}"
-				action="#{attachmentsPB.removeFile()}" immediate="true"
-				oncomplete="w_confirmA.hide()" update="attchsList" />
-			<p:commandButton value="#{msgs.no}" onclick="w_confirmA.hide();"
-				type="button" />
+		<p:fileUpload auto="false" fileUploadListener="#{attachmentsPB.handleFileUpload}" mode="advanced" dragDropSupport="true"
+			update="messages attchsList" sizeLimit="1000000" cancelLabel="#{msgs.remove}" uploadLabel="#{msgs.load}" label="#{msgs.choose}"
+			invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}" />
+
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirmA">
+			<p:commandButton value="#{msgs.yes}" action="#{attachmentsPB.removeFile()}" immediate="true" oncomplete="w_confirmA.hide()" update="attchsList" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirmA.hide();" type="button" />
 		</p:confirmDialog>
-	
-	
+
+
 	</p:tab>
-	
-	
-	
-	
+
+
+
+
 </ui:composition>
