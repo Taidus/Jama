@@ -2,8 +2,8 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
-	<composite:attribute name="editingDisable" />
-
+	<composite:attribute name="editingDisable" default="false" />
+	<composite:attribute name="creating" default="false" />
 </composite:interface>
 
 <composite:implementation>
@@ -27,7 +27,7 @@
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message for="title" />
+					<p:message for="title" />
 				</p:column>
 			</p:row>
 
@@ -51,13 +51,12 @@
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" id="protocolNumberError" for="protocolNumber" />
+					<p:message styleClass="errorMessage" id="protocolNumberError" for="protocolNumber" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.department}:" />
 				</p:column>
@@ -69,7 +68,6 @@
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.agrType}:" />
 				</p:column>
@@ -87,13 +85,12 @@
 
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" id="typeError" for="type" />
+					<p:message styleClass="errorMessage" id="typeError" for="type" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.chief}:" />
 				</p:column>
@@ -119,13 +116,12 @@
 				</p:column>
 
 				<p:column>
-					<h:message class="errorMessage" for="chiefMenu" />
+					<p:message styleClass="errorMessage" for="chiefMenu" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.contactPerson}:" />
 				</p:column>
@@ -138,13 +134,12 @@
 
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" for="contact" />
+					<p:message styleClass="errorMessage" for="contact" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.company}:" />
 				</p:column>
@@ -169,13 +164,12 @@
 				</p:column>
 
 				<p:column>
-					<h:message class="errorMessage" for="companyMenu" />
+					<p:message styleClass="errorMessage" for="companyMenu" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.projectNumber}:" />
 				</p:column>
@@ -193,13 +187,12 @@
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" id="projectNumberError" for="projectNumber" />
+					<p:message styleClass="errorMessage" id="projectNumberError" for="projectNumber" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.agrInventory}:" />
 				</p:column>
@@ -218,13 +211,12 @@
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" id="inventoryNumberError" for="inventoryNumber" />
+					<p:message styleClass="errorMessage" id="inventoryNumberError" for="inventoryNumber" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.taxableAmount}:" />
 				</p:column>
@@ -232,33 +224,23 @@
 				<p:column>
 					<h:inputText id="taxableAmount" value="#{agreementManager.agreement.wholeTaxableAmount}" label="#{msgs.taxableAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
-						<ui:remove>
-							<f:convertNumber maxFractionDigits="2" locale="en_us" />
-							<f:validateDoubleRange minimum="0.0" />
-						</ui:remove>
-						<f:converter binding="#{moneyConverter}" />
 						<f:validator binding="#{moneyValidator}" />
 						<f:ajax render="amount taxAmountError @this" />
 					</h:inputText>
 
 					<h:outputText id="taxableAmount_o" value="#{agreementManager.agreement.wholeTaxableAmount}" label="#{msgs.taxableAmount}"
 						rendered="#{cc.attrs.editingDisable == true}">
-						<ui:remove>
-							<f:converter binding="#{moneyConverter}">
-								<f:attribute name="plain" value="false" />
-							</f:converter>
-						</ui:remove>
+						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message id="taxAmountError" class="errorMessage" for="taxableAmount" />
+					<p:message id="taxAmountError" styleClass="errorMessage" for="taxableAmount" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.iva}:" />
 				</p:column>
@@ -266,97 +248,80 @@
 				<p:column>
 					<h:inputText id="iva" value="#{agreementManager.agreement.IVA_amount}" label="#{msgs.iva}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
-						<ui:remove>
-							<f:convertNumber />
-							<f:validateDoubleRange minimum="0.0" maximum="100.0" />
-						</ui:remove>
-						<f:converter binding="#{percentConverter}" />
 						<f:validator binding="#{percentValidator}" />
 						<f:ajax render="amount ivaError" />
 					</h:inputText>
 
-					<h:outputText id="iva_o" value="#{agreementManager.agreement.IVA_amount}" label="#{msgs.iva}" required="true"
-						rendered="#{cc.attrs.editingDisable == true}">
-					</h:outputText>
+					<h:outputText id="iva_o" value="#{agreementManager.agreement.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message id="ivaError" class="errorMessage" for="iva" />
+					<p:message id="ivaError" styleClass="errorMessage" for="iva" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.wholeAmount}:" />
 				</p:column>
 
 				<p:column colspan="3">
 					<h:outputText id="amount" value="#{agreementManager.agreement.wholeAmount}" readonly="true">
-						<f:converter binding="#{moneyConverter}" />
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
 			</p:row>
 
-			<ui:remove>
 
-				<p:row>
+			<p:row rendered="#{not cc.attrs.creating}">
+				<p:column>
+					<h:outputText value="#{msgs.reservedAmount}" />
+				</p:column>
 
-					<p:column>
-						<h:outputText value="#{msgs.reservedAmount}" />
-					</p:column>
+				<p:column>
+					<h:inputText id="reservedAmount" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" validator="#{agreementWizardPB.validateReservedAmount}">
+						<f:ajax event="blur" execute="@this spentAmount" render="reservedAmountError spentAmountError" />
+					</h:inputText>
 
-					<p:column>
-						<h:inputText id="reservedAmount" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}" required="true"
-							rendered="#{cc.attrs.editingDisable == false}">
-							<f:convertNumber />
-							<f:ajax event="blur" execute="@this spentAmount" render="reservedAmountError spentAmountError" />
-							<f:validateDoubleRange minimum="0.0" maximum="#{agreementManager.agreement.turnOver}" />
-						</h:inputText>
+					<h:outputText id="reservedAmount_o" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
 
-						<h:outputText id="reservedAmount_o" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}"
-							rendered="#{cc.attrs.editingDisable == true}">
-						</h:outputText>
-					</p:column>
-
-					<p:column colspan="2">
-						<h:message id="reservedAmountError" class="errorMessage" for="reservedAmount" />
-					</p:column>
-				</p:row>
+				<p:column colspan="2">
+					<p:message id="reservedAmountError" styleClass="errorMessage" for="reservedAmount" />
+				</p:column>
+			</p:row>
 
 
-				<p:row>
+			<p:row rendered="#{not cc.attrs.creating}">
+				<p:column>
+					<h:outputText value="#{msgs.spentAmount}" />
+				</p:column>
 
-					<p:column>
-						<h:outputText value="#{msgs.spentAmount}" />
-					</p:column>
+				<p:column>
+					<h:inputText id="spentAmount" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" validator="#{agreementWizardPB.validateSpentAmount}">
+						<f:ajax event="blur" execute="@this" render="spentAmountError" />
+					</h:inputText>
 
-					<p:column>
-						<h:inputText id="spentAmount" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}" required="true"
-							rendered="#{cc.attrs.editingDisable == false}" validator="#{agreementWizardPB.validateSpentAmount}">
-							<f:convertNumber />
-							<f:ajax event="blur" execute="@this" render="spentAmountError" />
-							<!-- 						<f:validateDoubleRange minimum="0.0" -->
-							<!-- 							maximum="#{agreementManager.agreement.reservedAmount}" /> -->
-						</h:inputText>
+					<h:outputText id="spentAmount_o" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
 
-						<h:outputText id="spentAmount_o" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}"
-							rendered="#{cc.attrs.editingDisable == true}">
-						</h:outputText>
-					</p:column>
+				<p:column colspan="2">
+					<p:message id="spentAmountError" styleClass="errorMessage" for="spentAmount" />
+				</p:column>
+			</p:row>
 
-					<p:column colspan="2">
-						<h:message id="spentAmountError" class="errorMessage" for="spentAmount" />
-					</p:column>
-				</p:row>
-
-			</ui:remove>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.approvalDate}:" />
 				</p:column>
@@ -373,13 +338,12 @@
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" for="approvalDate" />
+					<p:message styleClass="errorMessage" for="approvalDate" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.beginDate}:" />
 				</p:column>
@@ -398,13 +362,12 @@
 
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" for="beginDate" />
+					<p:message styleClass="errorMessage" for="beginDate" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-
 				<p:column>
 					<h:outputText value="#{msgs.deadlineDate}:" />
 				</p:column>
@@ -423,7 +386,7 @@
 				</p:column>
 
 				<p:column colspan="2">
-					<h:message class="errorMessage" for="deadlineDate" />
+					<p:message styleClass="errorMessage" for="deadlineDate" />
 				</p:column>
 			</p:row>
 

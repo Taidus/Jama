@@ -8,6 +8,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 import org.joda.money.Money;
@@ -19,6 +20,7 @@ import util.Messages;
 
 @Named
 @RequestScoped
+@FacesConverter(forClass=Money.class)
 public class MoneyConverter implements Converter {
 
 	public MoneyConverter() {}

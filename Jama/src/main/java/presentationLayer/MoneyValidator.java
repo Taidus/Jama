@@ -20,9 +20,9 @@ public class MoneyValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		//TODO eliminare stampe
-		System.out.println("Validator chiamato");
 		try{
-			if(((Money) value).isNegative()){
+			Money amount = (Money) value;
+			if(amount.isNegative()){
 				throw new ValidatorException(Messages.getErrorMessage("err_negativeAmount"));
 			}
 		}catch(ClassCastException e){

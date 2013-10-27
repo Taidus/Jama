@@ -1,34 +1,31 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 
 	<p:panel header="#{msgs.annualRecap_Header}">
 
-		<p:dataTable id="annualRecapTable" var="recapItem" value="#{agreementRecapPB.annualRecap}"
-			emptyMessage="#{msgs.noInstallmentFound}">
+		<p:dataTable id="annualRecapTable" var="recapItem" value="#{agreementRecapPB.annualRecap}" emptyMessage="#{msgs.noInstallmentFound}">
+
 			<p:column headerText="#{msgs.year}">
-
-				<h:outputText value="#{recapItem.year}">
-				</h:outputText>
-
-
+				<h:outputText value="#{recapItem.year}" />
 			</p:column>
 
 			<p:column headerText="#{msgs.debtNoteAmount}">
-				<h:outputText value="#{recapItem.wholeAmount}" />
-
+				<h:outputText value="#{recapItem.wholeAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
 			</p:column>
+
 			<p:column headerText="#{msgs.turnOver}">
-				<h:outputText value="#{recapItem.paid}" />
-
+				<h:outputText value="#{recapItem.paid}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
 			</p:column>
+
 			<p:column headerText="#{msgs.ramainder}">
-				<h:outputText value="#{recapItem.remainder}" />
-
+				<h:outputText value="#{recapItem.remainder}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
 			</p:column>
-
 
 		</p:dataTable>
 
@@ -43,17 +40,20 @@
 					<h:outputText value="#{msgs.totalAgreementAmount}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{agreementRecapPB.agr.wholeAmount}" />
-
+					<h:outputText value="#{agreementRecapPB.agr.wholeAmount}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
 				</p:column>
 			</p:row>
+
 			<p:row>
 				<p:column>
 					<h:outputText value="#{msgs.totalTurnOver}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{agreementRecapPB.totalRecap.totalTurnOver}" />
-
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalTurnOver}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
 				</p:column>
 			</p:row>
 
@@ -63,18 +63,20 @@
 					<h:outputText value="#{msgs.totalExpiringRemainder}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainder}" />
-
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainder}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
 				</p:column>
 			</p:row>
-			
+
 			<p:row>
 				<p:column>
 					<h:outputText value="#{msgs.totalNonExpiringRemainder}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainderRespectToAgreement}" />
-
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainderRespectToAgreement}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
 				</p:column>
 			</p:row>
 		</p:panelGrid>

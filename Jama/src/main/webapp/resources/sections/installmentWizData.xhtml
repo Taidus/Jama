@@ -23,41 +23,39 @@
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</h:outputText>
 
-			<h:message class="errorMessage" for="date" />
+			<p:message styleClass="errorMessage" for="date" />
 
 
 			<h:outputText value="#{msgs.amount}:" />
 			<h:inputText id="taxableAmount" value="#{installmentManager.installment.wholeTaxableAmount}" label="#{msgs.amount}" required="true"
 				rendered="#{cc.attrs.editingDisable == false}">
-				<f:validateDoubleRange minimum="0.0" />
+				<f:validator binding="#{moneyValidator}" />
 				<f:ajax execute="@this" render="amount taxAmountError" />
 			</h:inputText>
 			<h:outputText id="taxableAmount_o" value="#{installmentManager.installment.wholeTaxableAmount}" rendered="#{cc.attrs.editingDisable == true}">
-				<f:convertNumber type="currency" currencySymbol="€" />
+				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<h:message id="taxAmountError" class="errorMessage" for="taxableAmount" />
+			<p:message id="taxAmountError" styleClass="errorMessage" for="taxableAmount" />
 
 
 			<h:outputText value="#{msgs.newInstIva}:" />
 			<h:inputText id="iva" value="#{installmentManager.installment.IVA_amount}" label="#{msgs.newInstIva}" required="true"
 				rendered="#{cc.attrs.editingDisable == false}">
-				<f:convertNumber />
-				<f:validateDoubleRange minimum="0.0" maximum="100.0" />
+				<f:validator binding="#{percentValidator}" />
 				<f:ajax execute="@this" render="amount ivaError" />
 			</h:inputText>
-			<h:outputText id="iva_o" value="#{installmentManager.installment.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}">
-				<f:convertNumber type="currency" currencySymbol="€" />
-			</h:outputText>
+			<h:outputText id="iva_o" value="#{installmentManager.installment.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}" />
 
-			<h:message id="ivaError" class="errorMessage" for="iva" />
+			<p:message id="ivaError" styleClass="errorMessage" for="iva" />
 
 
 			<h:outputText value="#{msgs.wholeAmount}:" />
 			<h:outputText id="amount" value="#{installmentManager.installment.wholeAmount}" readonly="true">
-				<f:convertNumber type="currency" currencySymbol="€" />
+				<f:attribute name="plain" value="false" />
 			</h:outputText>
-			<h:message for="amount" />
+			<p:message for="amount" />
+
 
 			<h:outputText value="#{msgs.newInstVoucherNumber}:" />
 			<h:inputText id="voucherNumber" value="#{installmentManager.installment.voucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true"
@@ -65,7 +63,7 @@
 
 			<h:outputText id="voucherNumber_o" value="#{installmentManager.installment.voucherNumber}" rendered="#{cc.attrs.editingDisable == true}" />
 
-			<h:message for="voucherNumber" />
+			<p:message for="voucherNumber" />
 
 			<h:outputText value="#{msgs.newInstVoucherDate}:" />
 			<p:calendar id="voucherDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
@@ -77,15 +75,18 @@
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</h:outputText>
 
-			<h:message class="errorMessage" for="voucherDate" />
+			<p:message styleClass="errorMessage" for="voucherDate" />
+
 
 			<h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
 			<h:inputText id="ivaVoucherNumber" value="#{installmentManager.installment.ivaVoucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}" />
+				rendered="#{cc.attrs.editingDisable == false}">
+				<f:validator binding="#{percentValidator}" />
+			</h:inputText>
 
 			<h:outputText id="ivaVoucherNumber_o" value="#{installmentManager.installment.ivaVoucherNumber}" rendered="#{cc.attrs.editingDisable == true}" />
 
-			<h:message for="ivaVoucherNumber" />
+			<p:message for="ivaVoucherNumber" />
 
 
 
@@ -94,14 +95,14 @@
 				rendered="#{cc.attrs.editingDisable == false}" />
 
 			<h:outputText id="pendingNumber_o" value="#{installmentManager.installment.pendingNumber}" rendered="#{cc.attrs.editingDisable == true}" />
-			<h:message for="pendingNumber" />
+			<p:message for="pendingNumber" />
 
 			<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
 			<h:inputText id="invoiceNumber" value="#{installmentManager.installment.invoiceNumber}" label="#{msgs.newInstInvoiceNumber}" required="true"
 				rendered="#{cc.attrs.editingDisable == false}" />
 
 			<h:outputText id="invoiceNumber_o" value="#{installmentManager.installment.invoiceNumber}" rendered="#{cc.attrs.editingDisable == true}" />
-			<h:message for="invoiceNumber" />
+			<p:message for="invoiceNumber" />
 
 			<h:outputText value="#{msgs.newInstInvoiceDate}:" />
 			<p:calendar id="invoiceDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
@@ -112,7 +113,7 @@
 			<h:outputText id="invoiceDate_o" value="#{installmentManager.installment.invoiceDate}" rendered="#{cc.attrs.editingDisable == true}">
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</h:outputText>
-			<h:message for="invoiceDate" />
+			<p:message for="invoiceDate" />
 
 
 			<h:outputText value="#{msgs.paidInvoice_Question}" />
@@ -130,7 +131,7 @@
 				rendered="#{cc.attrs.editingDisable == false}" />
 
 			<h:outputText id="notes_o" value="#{installmentManager.installment.note}" rendered="#{cc.attrs.editingDisable == true}" />
-			<h:message for="notes" />
+			<p:message for="notes" />
 
 			<h:inputHidden value="needed" id="amountCheck" validator="#{instDataPB.validateAmount}" />
 			<p:message styleClass="errorMessage" for="amountCheck" />

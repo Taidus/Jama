@@ -11,7 +11,7 @@
 <composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
 
 	<h:outputStylesheet name="table.css" library="css" />
-	
+
 	<p:growl autoUpdate="true" />
 
 
@@ -27,8 +27,9 @@
 		</p:column>
 
 		<p:column headerText="#{msgs.amount}">
-			<h:outputText value="#{installment.wholeAmount}" />
-
+			<h:outputText value="#{installment.wholeAmount}" >
+				<f:attribute name="plain" value="false" />
+			</h:outputText>
 		</p:column>
 
 		<p:column headerText="#{msgs.paidInvoice_Question}">
@@ -48,8 +49,7 @@
 				<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
 				<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 			</p:commandButton>
-			<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed"
-				action="#{mailSender.send(installment, false)}" >
+			<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.send(installment, false)}">
 			</p:commandButton>
 
 
@@ -70,10 +70,11 @@
 
 	<h:commandButton action="#{installmentManager.addInstallment()}" value="Aggiungi una rata" ajax="false" immediate="true"
 		rendered="#{cc.attrs.editingDisable == false}">
-		<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+		<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}" />
 	</h:commandButton>
 
 
+	<br />
 
 
 

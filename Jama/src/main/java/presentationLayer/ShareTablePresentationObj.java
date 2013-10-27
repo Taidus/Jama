@@ -101,8 +101,9 @@ public abstract class ShareTablePresentationObj {
 
 		Percent personnel = getTransferObjShareTable().getPersonnel();
 		if (!personnel.equals(Percent.ZERO)) {
-			Percent sum = Percent.ZERO.addAll(getTransferObjShareTable().getSharePerPersonnel().values());
-
+			System.out.println("Valori: " + getTransferObjShareTable().getSharePerPersonnel().values());
+			Percent sum = Percent.sum(getTransferObjShareTable().getSharePerPersonnel().values());
+			System.out.println("Somma: " + sum);
 			if (!sum.equals(Percent.ONE)) {
 				throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 			}
@@ -127,7 +128,8 @@ public abstract class ShareTablePresentationObj {
 		}
 
 		public PersonnelShare() {
-			chiefScientist = null;
+			this.chiefScientist = null;
+			this.value = Percent.ZERO;
 		}
 
 		public ChiefScientist getChiefScientist() {
@@ -149,7 +151,6 @@ public abstract class ShareTablePresentationObj {
 		}
 
 		public Money getFlatAmount() {
-			System.out.println(">>> Computing flat amount");
 			return value.computeOn(computePercentOnWholeAmount(getTransferObjShareTable().getPersonnel()));
 		}
 
