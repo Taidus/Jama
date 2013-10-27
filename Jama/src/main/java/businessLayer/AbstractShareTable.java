@@ -206,14 +206,19 @@ public abstract class AbstractShareTable {
 	}
 
 	protected void updateGoodsAndServices() {
-		Percent sum = atheneumCapitalBalance.addAll(atheneumCommonBalance, structures, personnel);
-		this.goodsAndServices = Percent.ONE.subtract(sum);
+		System.out.println("- AthCapBal: " + atheneumCapitalBalance );
+		System.out.println("- AthComBal: " + atheneumCommonBalance );
+		System.out.println("- Structures: " + structures );
+		System.out.println("- Personnel: " + personnel );
+		Percent sum = Percent.sum(atheneumCapitalBalance, atheneumCommonBalance, structures, personnel);
+		System.out.println("Sum: " + sum);
+		this.goodsAndServices = Percent.subtract(Percent.ONE, sum);
 		System.out.println("G&S aggiornato: " + goodsAndServices);
 	}
 
 	protected void updateOtherCosts() {
-		Percent sum = rentals.addAll(inventoryMaterials, consumerMaterials, businessTrip, personnelOnContract);
-		this.otherCost = Percent.ONE.subtract(sum);
+		Percent sum = Percent.sum(rentals, inventoryMaterials, consumerMaterials, businessTrip, personnelOnContract);
+		this.otherCost = Percent.subtract(Percent.ONE, sum);
 		System.out.println("Other cost aggiornato: " + otherCost);
 	}
 
