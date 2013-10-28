@@ -13,6 +13,7 @@ import org.joda.money.Money;
 
 import util.Config;
 import util.MathUtil;
+import util.Percent;
 
 /**
  * Entity implementation class for Entity: Contract
@@ -34,6 +35,8 @@ public abstract class Contract implements Serializable {
 		attachments = new ArrayList<>();
 		spentAmount = Money.zero(Config.currency);
 		reservedAmount = Money.zero(Config.currency);
+		IVA_amount = Percent.ZERO;
+		wholeTaxableAmount = Money.zero(Config.currency);
 	}
 
 	@Id
@@ -76,6 +79,19 @@ public abstract class Contract implements Serializable {
 			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "RESERVED_AMOUNT_NUMERIC_CODE")),
 			@AttributeOverride(name = "money.amount", column = @Column(name = "RESERVED_AMOUNT_AMOUNT")) })
 	protected Money reservedAmount;
+	
+	
+	@Embedded
+	protected Percent IVA_amount;
+	
+	@Embedded
+	@AttributeOverrides({
+	@AttributeOverride(name="money", column=@Column(name="WHOLE_TAXABLE_AMOUNT")),
+	@AttributeOverride(name="money.currency.code", column=@Column(name="WHOLE_TAXABLE_AMOUNT_CODE")),
+	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES")),
+	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE")),
+	@AttributeOverride(name="money.amount", column=@Column(name="WHOLE_TAXABLE_AMOUNT_AMOUNT"))})
+	protected Money wholeTaxableAmount;
 
 	@Temporal(TemporalType.DATE)
 	protected Date approvalDate;
@@ -99,7 +115,22 @@ public abstract class Contract implements Serializable {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	protected ContractShareTable shareTable;
 	
-	public abstract Money getWholeAmount();
+	public Money getWholeTaxableAmount() {
+		return wholeTaxableAmount;
+	}
+
+	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
+		this.wholeTaxableAmount = wholeTaxableAmount;
+	}
+	
+	
+	public Money getWholeAmount() {
+		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
+	}
+
+	public Percent getIVA_amount() {
+		return IVA_amount;
+	}
 
 	public void addInstallment(Installment i) {
 		i.setContract(this);

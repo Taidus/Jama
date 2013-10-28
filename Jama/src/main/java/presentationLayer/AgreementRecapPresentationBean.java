@@ -2,6 +2,8 @@ package presentationLayer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -55,8 +57,22 @@ public class AgreementRecapPresentationBean {
 
 		Money totalAmount = Money.zero(Config.currency);
 		Money totalPaid = Money.zero(Config.currency);
+		
+		List<Installment> orderedInstallments = new ArrayList<>(c.getInstallments());
+		Collections.sort(orderedInstallments, new Comparator<Installment>() {
 
-		if (!c.getInstallments().isEmpty()) {
+			@Override
+			public int compare(Installment o1, Installment o2) {
+				if(o1.getDate().after(o2.getDate())){
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+		});
+
+		if (!orderedInstallments.isEmpty()) {
 
 			Date d = c.getInstallments().get(0).getDate();
 			Calendar currentDate = new GregorianCalendar();
@@ -65,7 +81,9 @@ public class AgreementRecapPresentationBean {
 			Money currentWholeAmount = Money.zero(Config.currency);
 			Money currentpaid = Money.zero(Config.currency);
 
-			for (Installment i : c.getInstallments()) {
+			for (Installment i : orderedInstallments) {
+				
+				System.out.println("INSTALLMENT ADD * !!!"+i);
 
 				Calendar date = new GregorianCalendar();
 				date.setTimeInMillis(i.getDate().getTime());
@@ -103,7 +121,10 @@ public class AgreementRecapPresentationBean {
 		Money totalRemainder = totalAmount.minus(totalPaid);
 		Money totalRemainderRespectToAgremeement = c.getWholeAmount().minus(totalAmount);
 		totalRecap = new TotalRecap(totalAmount, totalPaid, totalRemainder, totalRemainderRespectToAgremeement);
-
+		
+		for(RecapItem r : annualRecap){
+		System.out.println(r);
+		}
 	}
 
 	public static class RecapItem {
@@ -135,6 +156,12 @@ public class AgreementRecapPresentationBean {
 
 		public int getYear() {
 			return year;
+		}
+
+		@Override
+		public String toString() {
+			return "RecapItem [remainder=" + remainder + ", wholeAmount="
+					+ wholeAmount + ", paid=" + paid + ", year=" + year + "]";
 		}
 
 	}
@@ -170,6 +197,16 @@ public class AgreementRecapPresentationBean {
 		public Money getTotalRemainderRespectToAgreement() {
 			return totalRemainderRespectToAgreement;
 		}
+
+		@Override
+		public String toString() {
+			return "TotalRecap [agreementWholeAmount=" + agreementWholeAmount
+					+ ", totalTurnOver=" + totalTurnOver + ", totalRemainder="
+					+ totalRemainder + ", totalRemainderRespectToAgreement="
+					+ totalRemainderRespectToAgreement + "]";
+		}
+		
+		
 
 	}
 

@@ -184,7 +184,7 @@ public class ContractManagerBean implements Serializable {
 		d.setRateDirectory("dsi");
 		depDao.createDepartment(d);
 		c.setDepartment(d);
-//		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
+		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
 		c.setProtocolNumber("30000");
 		c.setApprovalDate(new Date());
 		c.setBeginDate(new Date());

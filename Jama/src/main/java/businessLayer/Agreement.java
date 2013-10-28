@@ -41,43 +41,26 @@ import util.Percent;
 public class Agreement extends Contract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
-
 	private AgreementType type;
-	
-	@Embedded
-	private Percent IVA_amount;
-	
-	@Embedded
-	@AttributeOverrides({
-	@AttributeOverride(name="money", column=@Column(name="WHOLE_TAXABLE_AMOUNT")),
-	@AttributeOverride(name="money.currency.code", column=@Column(name="WHOLE_TAXABLE_AMOUNT_CODE")),
-	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES")),
-	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE")),
-	@AttributeOverride(name="money.amount", column=@Column(name="WHOLE_TAXABLE_AMOUNT_AMOUNT"))})
-	private Money wholeTaxableAmount;
-
 
 	public Agreement() {
 		super();
-		
-		IVA_amount = Percent.ZERO;
-		wholeTaxableAmount = Money.zero(Config.currency);
-	
+
 	}
 
-	
-	
 	@Override
 	public String toString() {
-		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber=" + protocolNumber + ", type=" + type + ", chief=" + chief
-				+ ", contactPerson=" + contactPerson + ", company=" + company + ", department=" + department + ", CIA_projectNumber="
-				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber + ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
-				+ ", wholeTaxableAmount=" + wholeTaxableAmount + ", installments=" + installments + ", approvalDate=" + approvalDate + ", beginDate="
-				+ beginDate + ", deadlineDate=" + deadlineDate + ", note=" + note + "]";
+		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber="
+				+ protocolNumber + ", type=" + type + ", chief=" + chief
+				+ ", contactPerson=" + contactPerson + ", company=" + company
+				+ ", department=" + department + ", CIA_projectNumber="
+				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber
+				+ ", shareTable=" + shareTable + ", IVA_amount=" + IVA_amount
+				+ ", wholeTaxableAmount=" + wholeTaxableAmount
+				+ ", installments=" + installments + ", approvalDate="
+				+ approvalDate + ", beginDate=" + beginDate + ", deadlineDate="
+				+ deadlineDate + ", note=" + note + "]";
 	}
-
-	
 
 	public AgreementType getType() {
 		return type;
@@ -87,36 +70,14 @@ public class Agreement extends Contract implements Serializable {
 		this.type = type;
 	}
 
-	
-	@Override
-	public Money getWholeAmount() {
-		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
-	}
-
-	public Percent getIVA_amount() {
-		return IVA_amount;
-	}
-
 	public void setIVA_amount(Percent iVA_amount) {
 		IVA_amount = iVA_amount;
 	}
-
-	public Money getWholeTaxableAmount() {
-		return wholeTaxableAmount;
-	}
-
-	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
-		this.wholeTaxableAmount = wholeTaxableAmount;
-	}
-
-
 
 	public boolean isClosed() {
 
 		return getWholeAmount().equals(spentAmount);
 
 	}
-
-
 
 }

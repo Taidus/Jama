@@ -162,7 +162,6 @@ public abstract class Installment implements Serializable {
 
 	public void copy(Installment copy) {
 		
-		System.out.println("COPYYYYYYYY====");
 		
 		this.id = copy.id;
 		this.date = new Date(copy.date.getTime());
