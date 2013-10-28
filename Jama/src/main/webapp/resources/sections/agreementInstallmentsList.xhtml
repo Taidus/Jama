@@ -16,7 +16,7 @@
 
 
 	<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
-		value="#{agreementManager.agreement.installments}" emptyMessage="#{msgs.noInstallmentFound}">
+		value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
 		<p:column headerText="#{msgs.date}">
 
 			<h:outputText value="#{installment.date}">

@@ -33,7 +33,8 @@ public class DeadlineSearchService extends ResultPagerBean<Agreement>{
 		CriteriaQuery<Agreement> c = cb.createQuery(Agreement.class);
 		Root<Agreement> agr = c.from(Agreement.class);
 		Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
-		c.select(agr).distinct(true).where(cb.equal(inst.get("agreement"), agr)).where(cb.equal(inst.get("paidInvoice"), false));
+		//TODO funziona sul serio?
+		c.select(agr).distinct(true).where(cb.equal(inst.get("contract"), agr)).where(cb.equal(inst.get("paidInvoice"), false));
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
 		if (lowerDate != null) {

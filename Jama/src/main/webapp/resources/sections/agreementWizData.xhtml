@@ -20,10 +20,10 @@
 				</p:column>
 
 				<p:column>
-					<h:inputTextarea id="title" cols="20" rows="4" value="#{agreementManager.agreement.title}" label="#{msgs.agrTitle}" required="true"
+					<h:inputTextarea id="title" cols="20" rows="4" value="#{contractManager.contract.title}" label="#{msgs.agrTitle}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" />
 
-					<h:outputText id="title_o" value="#{agreementManager.agreement.title}" label="#{msgs.agrTitle}" rendered="#{cc.attrs.editingDisable == true}" />
+					<h:outputText id="title_o" value="#{contractManager.contract.title}" label="#{msgs.agrTitle}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 				<p:column colspan="2">
@@ -38,13 +38,13 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="protocolNumber" value="#{agreementManager.agreement.protocolNumber}" label="#{msgs.protocolNumber}" required="true"
+					<h:inputText id="protocolNumber" value="#{contractManager.contract.protocolNumber}" label="#{msgs.protocolNumber}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6" integerOnly="true" />
 						<f:ajax event="blur" execute="@this" render="protocolNumberError" />
 					</h:inputText>
 
-					<h:outputText id="protocolNumber_o" value="#{agreementManager.agreement.protocolNumber}" label="#{msgs.protocolNumber}"
+					<h:outputText id="protocolNumber_o" value="#{contractManager.contract.protocolNumber}" label="#{msgs.protocolNumber}"
 						rendered="#{cc.attrs.editingDisable == true}">
 					</h:outputText>
 
@@ -62,7 +62,7 @@
 				</p:column>
 
 				<p:column colspan="3">
-					<h:outputText value="#{agreementManager.agreement.department.name}" />
+					<h:outputText value="#{contractManager.contract.department.name}" />
 				</p:column>
 			</p:row>
 
@@ -73,14 +73,14 @@
 				</p:column>
 
 				<p:column>
-					<h:selectOneMenu id="type" value="#{agreementManager.agreement.type}" label="#{msgs.agrType}" required="true"
+					<h:selectOneMenu id="type" value="#{contractManager.contract.type}" label="#{msgs.agrType}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
 						<f:ajax event="blur" execute="@this" render="typeError" />
 
 					</h:selectOneMenu>
 
-					<h:outputText value="#{agreementManager.agreement.type}" rendered="#{cc.attrs.editingDisable == true}" />
+					<h:outputText value="#{contractManager.contract.type}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 
@@ -96,14 +96,14 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="chiefMenu" styleClass="chiefMenu" value="#{agreementManager.agreement.chief}" label="#{msgs.chief}" required="true"
+					<p:selectOneMenu id="chiefMenu" styleClass="chiefMenu" value="#{contractManager.contract.chief}" label="#{msgs.chief}" required="true"
 						filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.chiefItems}" />
 						<f:converter binding="#{chiefConverter}" />
 
 					</p:selectOneMenu>
 
-					<h:outputText value="#{agreementManager.agreement.chief}" rendered="#{cc.attrs.editingDisable == true}">
+					<h:outputText value="#{contractManager.contract.chief}" rendered="#{cc.attrs.editingDisable == true}">
 						<f:converter binding="#{chiefConverter}" />
 					</h:outputText>
 				</p:column>
@@ -127,9 +127,9 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="contact" value="#{agreementManager.agreement.contactPerson}" label="#{msgs.contactPerson}" required="true"
+					<h:inputText id="contact" value="#{contractManager.contract.contactPerson}" label="#{msgs.contactPerson}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" />
-					<h:outputText value="#{agreementManager.agreement.contactPerson}" rendered="#{cc.attrs.editingDisable == true}" />
+					<h:outputText value="#{contractManager.contract.contactPerson}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 
@@ -145,13 +145,13 @@
 				</p:column>
 
 				<p:column>
-					<h:selectOneMenu id="companyMenu" value="#{agreementManager.agreement.company}" label="#{msgs.company}" required="true"
+					<h:selectOneMenu id="companyMenu" value="#{contractManager.contract.company}" label="#{msgs.company}" required="true"
 						rendered="#{cc.attrs.editingDisable==false}">
 						<f:selectItems value="#{utilPB.companyItems}" />
 						<f:converter binding="#{companyConverter}" />
 					</h:selectOneMenu>
 
-					<h:outputText value="#{agreementManager.agreement.company}" rendered="#{cc.attrs.editingDisable==true}">
+					<h:outputText value="#{contractManager.contract.company}" rendered="#{cc.attrs.editingDisable==true}">
 						<f:converter binding="#{companyConverter}" />
 					</h:outputText>
 				</p:column>
@@ -175,12 +175,12 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="projectNumber" value="#{agreementManager.agreement.CIA_projectNumber}" label="#{msgs.projectNumber}" required="true"
+					<h:inputText id="projectNumber" value="#{contractManager.contract.CIA_projectNumber}" label="#{msgs.projectNumber}" required="true"
 						rendered="#{cc.attrs.editingDisable==false}">
 						<f:ajax event="blur" execute="@this" render="projectNumberError" />
 					</h:inputText>
 
-					<h:outputText id="projectNumber_o" value="#{agreementManager.agreement.CIA_projectNumber}" label="#{msgs.projectNumber}"
+					<h:outputText id="projectNumber_o" value="#{contractManager.contract.CIA_projectNumber}" label="#{msgs.projectNumber}"
 						rendered="#{cc.attrs.editingDisable==true}">
 					</h:outputText>
 
@@ -198,13 +198,13 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="inventoryNumber" value="#{agreementManager.agreement.inventoryNumber}" label="#{msgs.agrInventory}" required="true"
+					<h:inputText id="inventoryNumber" value="#{contractManager.contract.inventoryNumber}" label="#{msgs.agrInventory}" required="true"
 						rendered="#{cc.attrs.editingDisable ==false}">
 						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
 
 					</h:inputText>
 
-					<h:outputText id="inventoryNumber_o" value="#{agreementManager.agreement.inventoryNumber}" label="#{msgs.agrInventory}"
+					<h:outputText id="inventoryNumber_o" value="#{contractManager.contract.inventoryNumber}" label="#{msgs.agrInventory}"
 						rendered="#{cc.attrs.editingDisable ==true}">
 
 					</h:outputText>
@@ -222,13 +222,13 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="taxableAmount" value="#{agreementManager.agreement.wholeTaxableAmount}" label="#{msgs.taxableAmount}" required="true"
+					<h:inputText id="taxableAmount" value="#{contractManager.contract.wholeTaxableAmount}" label="#{msgs.taxableAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:validator binding="#{moneyValidator}" />
 						<f:ajax render="amount taxAmountError @this" />
 					</h:inputText>
 
-					<h:outputText id="taxableAmount_o" value="#{agreementManager.agreement.wholeTaxableAmount}" label="#{msgs.taxableAmount}"
+					<h:outputText id="taxableAmount_o" value="#{contractManager.contract.wholeTaxableAmount}" label="#{msgs.taxableAmount}"
 						rendered="#{cc.attrs.editingDisable == true}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
@@ -246,13 +246,13 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="iva" value="#{agreementManager.agreement.IVA_amount}" label="#{msgs.iva}" required="true"
+					<h:inputText id="iva" value="#{contractManager.contract.IVA_amount}" label="#{msgs.iva}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:validator binding="#{percentValidator}" />
 						<f:ajax render="amount ivaError" />
 					</h:inputText>
 
-					<h:outputText id="iva_o" value="#{agreementManager.agreement.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}" />
+					<h:outputText id="iva_o" value="#{contractManager.contract.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 				<p:column colspan="2">
@@ -267,7 +267,7 @@
 				</p:column>
 
 				<p:column colspan="3">
-					<h:outputText id="amount" value="#{agreementManager.agreement.wholeAmount}" readonly="true">
+					<h:outputText id="amount" value="#{contractManager.contract.wholeAmount}" readonly="true">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
@@ -280,12 +280,12 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="reservedAmount" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}" required="true"
+					<h:inputText id="reservedAmount" value="#{contractManager.contract.reservedAmount}" label="#{msgs.reservedAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" validator="#{agreementWizardPB.validateReservedAmount}">
 						<f:ajax event="blur" execute="@this spentAmount" render="reservedAmountError spentAmountError" />
 					</h:inputText>
 
-					<h:outputText id="reservedAmount_o" value="#{agreementManager.agreement.reservedAmount}" label="#{msgs.reservedAmount}"
+					<h:outputText id="reservedAmount_o" value="#{contractManager.contract.reservedAmount}" label="#{msgs.reservedAmount}"
 						rendered="#{cc.attrs.editingDisable == true}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
@@ -303,12 +303,12 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="spentAmount" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}" required="true"
+					<h:inputText id="spentAmount" value="#{contractManager.contract.spentAmount}" label="#{msgs.spentAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" validator="#{agreementWizardPB.validateSpentAmount}">
 						<f:ajax event="blur" execute="@this" render="spentAmountError" />
 					</h:inputText>
 
-					<h:outputText id="spentAmount_o" value="#{agreementManager.agreement.spentAmount}" label="#{msgs.spentAmount}"
+					<h:outputText id="spentAmount_o" value="#{contractManager.contract.spentAmount}" label="#{msgs.spentAmount}"
 						rendered="#{cc.attrs.editingDisable == true}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
@@ -328,11 +328,11 @@
 
 				<p:column>
 					<p:calendar id="approvalDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{agreementManager.agreement.approvalDate}" rendered="#{cc.attrs.editingDisable == false}">
+						value="#{contractManager.contract.approvalDate}" rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 
-					<h:outputText id="approvalDate_o" value="#{agreementManager.agreement.approvalDate}" rendered="#{cc.attrs.editingDisable == true}">
+					<h:outputText id="approvalDate_o" value="#{contractManager.contract.approvalDate}" rendered="#{cc.attrs.editingDisable == true}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -350,11 +350,11 @@
 
 				<p:column>
 					<p:calendar id="beginDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{agreementManager.agreement.beginDate}" rendered="#{cc.attrs.editingDisable == false}">
+						value="#{contractManager.contract.beginDate}" rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 
-					<h:outputText id="beginDate_o" value="#{agreementManager.agreement.beginDate}" rendered="#{cc.attrs.editingDisable == true}">
+					<h:outputText id="beginDate_o" value="#{contractManager.contract.beginDate}" rendered="#{cc.attrs.editingDisable == true}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</h:outputText>
 
@@ -374,11 +374,11 @@
 
 				<p:column>
 					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{agreementManager.agreement.deadlineDate}" rendered="#{cc.attrs.editingDisable == false}">
+						value="#{contractManager.contract.deadlineDate}" rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 
-					<h:outputText id="deadlineDate_o" value="#{agreementManager.agreement.deadlineDate}" rendered="#{cc.attrs.editingDisable == true}">
+					<h:outputText id="deadlineDate_o" value="#{contractManager.contract.deadlineDate}" rendered="#{cc.attrs.editingDisable == true}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</h:outputText>
 

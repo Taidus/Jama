@@ -99,7 +99,7 @@ public class AgreementWizardPresentationBean implements Serializable {
 	public void validateReservedAmount(FacesContext context, UIComponent component, Object value) {
 		Money reservedAmount = (Money) value;
 		try {
-			if (reservedAmount.isGreaterThan(manager.getAgreement().getTurnOver())) {
+			if (reservedAmount.isGreaterThan(manager.getContract().getTurnOver())) {
 				throw new ValidatorException(Messages.getErrorMessage("err_agreementReserved"));
 			}
 			if (reservedAmount.isNegative()) {

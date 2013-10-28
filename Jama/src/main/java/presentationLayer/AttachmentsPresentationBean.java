@@ -16,7 +16,6 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import annotations.TransferObj;
-import businessLayer.Agreement;
 import businessLayer.Attachment;
 import businessLayer.Contract;
 
@@ -35,6 +34,7 @@ public class AttachmentsPresentationBean implements Serializable {
 	private Contract contract;
 
 	public AttachmentsPresentationBean() {
+		
 	}
 
 	public Attachment getSelectedAttachment() {
@@ -46,6 +46,8 @@ public class AttachmentsPresentationBean implements Serializable {
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
+		
+		System.out.println("HANDLE UPLOAD ==============");
 
 		FacesMessage msg = new FacesMessage("Succesful", event.getFile()
 				.getFileName() + " is uploaded.");
@@ -65,6 +67,7 @@ public class AttachmentsPresentationBean implements Serializable {
 	}
 
 	public List<Attachment> getAttachments() {
+
 
 		return contract.getAttachments();
 

@@ -240,8 +240,6 @@ public abstract class Contract implements Serializable {
 		this.installments = installments;
 	}
 
-	
-
 	public List<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -256,6 +254,20 @@ public abstract class Contract implements Serializable {
 
 	public void setShareTable(ContractShareTable shareTable) {
 		this.shareTable = shareTable;
+	}
+	
+	// fatturato
+	public Money getTurnOver() {
+		Money sum = Money.zero(Config.currency);
+		for (Installment i : installments) {
+
+			if (i.isPaidInvoice()) {
+				sum.plus(i.getWholeAmount());
+			}
+
+		}
+
+		return sum;
 	}
 
 }

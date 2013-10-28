@@ -10,6 +10,7 @@ import javax.enterprise.context.Dependent;
 
 import businessLayer.Agreement;
 import businessLayer.AgreementInstallment;
+import businessLayer.Installment;
 import daoLayer.DeadlineSearchService;
 
 @Dependent
@@ -42,11 +43,11 @@ public class LazyAgreementScheduleDataModel extends LazyAgreementDataModel {
 	}
 
 	public Date findClosestDeadline(Agreement agr) {
-		List<AgreementInstallment> insts = agr.getInstallments();
+		List<Installment> insts = agr.getInstallments();
 		Date closestDeadline = null;
 		
 		boolean found = false;
-		Iterator<AgreementInstallment> it = insts.iterator();
+		Iterator<Installment> it = insts.iterator();
 		while(it.hasNext() && !found){
 			closestDeadline = it.next().getDate();
 			if(null == filterMinDate || !closestDeadline.before(filterMinDate)){

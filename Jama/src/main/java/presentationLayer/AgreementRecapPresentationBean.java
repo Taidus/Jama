@@ -21,6 +21,8 @@ import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.Installment;
 
+
+//TODO renaming Contract e caso no installments
 @Named("agreementRecapPB")
 @RequestScoped
 public class AgreementRecapPresentationBean {
@@ -68,6 +70,7 @@ public class AgreementRecapPresentationBean {
 			Money currentpaid = Money.zero(Config.currency);
 
 			for (Installment i : c.getInstallments()) {
+				
 
 				Calendar date = new GregorianCalendar();
 				date.setTimeInMillis(i.getDate().getTime());

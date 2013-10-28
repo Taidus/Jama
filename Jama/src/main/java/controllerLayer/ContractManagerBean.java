@@ -121,7 +121,7 @@ public class ContractManagerBean implements Serializable {
 	public String createAgreement() {
 
 		contract = new Agreement();
-		//insertRandomValues(contract); // TODO eliminare
+		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
 		shareTable
 				.setFiller(fillerFactory.getFiller(contract.getDepartment()));
@@ -169,23 +169,26 @@ public class ContractManagerBean implements Serializable {
 		ContractDao.delete(selectedContractId);
 	}
 
-	private void insertRandomValues(Agreement agr) {
+	private void insertRandomValues(Contract c) {
+		
+		System.err.println("RANDOM VALUESSSS");
+		
 		// TODO eliminare
-		agr.setTitle("Random title");
-		agr.setCIA_projectNumber(10000);
-		agr.setContactPerson("Random contact");
-		agr.setInventoryNumber(20000);
+		c.setTitle("Random title");
+		c.setCIA_projectNumber(10000);
+		c.setContactPerson("Random contact");
+		c.setInventoryNumber(20000);
 		Department d = new Department();
 		d.setCode("DSI/DINFO");
 		d.setName("ex Dipartimento di Sistemi e Informatica");
 		d.setRateDirectory("dsi");
 		depDao.createDepartment(d);
-		agr.setDepartment(d);
-		agr.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
-		agr.setProtocolNumber("30000");
-		agr.setApprovalDate(new Date());
-		agr.setBeginDate(new Date());
-		agr.setDeadlineDate(new Date());
+		c.setDepartment(d);
+//		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
+		c.setProtocolNumber("30000");
+		c.setApprovalDate(new Date());
+		c.setBeginDate(new Date());
+		c.setDeadlineDate(new Date());
 
 	}
 

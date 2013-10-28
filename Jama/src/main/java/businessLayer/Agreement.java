@@ -117,18 +117,6 @@ public class Agreement extends Contract implements Serializable {
 
 	}
 
-	// fatturato
-	public Money getTurnOver() {
-		Money sum = Money.zero(Config.currency);
-		for (Installment i : installments) {
 
-			if (i.isPaidInvoice()) {
-				sum.plus(i.getWholeAmount());
-			}
-
-		}
-
-		return sum;
-	}
 
 }
