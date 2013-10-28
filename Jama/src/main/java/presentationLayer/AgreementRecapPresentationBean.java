@@ -16,11 +16,8 @@ import org.joda.money.MoneyUtils;
 
 import util.Config;
 import annotations.TransferObj;
-import businessLayer.Agreement;
-import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.Installment;
-
 
 //TODO renaming Contract e caso no installments
 @Named("agreementRecapPB")
@@ -33,8 +30,7 @@ public class AgreementRecapPresentationBean {
 	private TotalRecap totalRecap;
 	private List<RecapItem> annualRecap;
 
-	public AgreementRecapPresentationBean() {
-	}
+	public AgreementRecapPresentationBean() {}
 
 	public TotalRecap getTotalRecap() {
 		return totalRecap;
@@ -70,7 +66,6 @@ public class AgreementRecapPresentationBean {
 			Money currentpaid = Money.zero(Config.currency);
 
 			for (Installment i : c.getInstallments()) {
-				
 
 				Calendar date = new GregorianCalendar();
 				date.setTimeInMillis(i.getDate().getTime());
@@ -106,10 +101,8 @@ public class AgreementRecapPresentationBean {
 
 		// check 2 remainder
 		Money totalRemainder = totalAmount.minus(totalPaid);
-		// float totalRemainderRespectToAgremeement = agr.getWholeAmount() -
-		// totalAmount;
-		// totalRecap = new TotalRecap(totalAmount, totalPaid,
-		// totalRemainder,totalRemainderRespectToAgremeement);
+		Money totalRemainderRespectToAgremeement = c.getWholeAmount().minus(totalAmount);
+		totalRecap = new TotalRecap(totalAmount, totalPaid, totalRemainder, totalRemainderRespectToAgremeement);
 
 	}
 
