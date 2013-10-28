@@ -81,7 +81,6 @@
 			<h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
 			<h:inputText id="ivaVoucherNumber" value="#{installmentManager.installment.ivaVoucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true"
 				rendered="#{cc.attrs.editingDisable == false}">
-				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 
 			<h:outputText id="ivaVoucherNumber_o" value="#{installmentManager.installment.ivaVoucherNumber}" rendered="#{cc.attrs.editingDisable == true}" />
