@@ -19,7 +19,7 @@
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
-			<h:outputText id="atheneumCapitalBalance_o" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="atheneumCapitalBalance_o" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}" />
 
 			<h:outputText id="percentAtheneumCapitalBalance"
 				value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.atheneumCapitalBalance)}">
@@ -34,9 +34,8 @@
 				required="true" rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="atheneumCommonBalance_o" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="atheneumCommonBalance_o" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}" />
 
 			<h:outputText id="percentAtheneumCommonBalance"
 				value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.atheneumCommonBalance)}">
@@ -51,9 +50,8 @@
 				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="personnel_o" value="#{instShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="personnel_o" value="#{instShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}" />
 
 			<h:outputText id="percentPersonnel" value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.personnel)}">
 				<f:attribute name="plain" value="false" />
@@ -67,9 +65,8 @@
 				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="structures_o" value="#{instShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="structures_o" value="#{instShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}" />
 
 			<h:outputText id="percentStructures" value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.structures)}">
 				<f:attribute name="plain" value="false" />
@@ -79,7 +76,7 @@
 
 
 			<h:outputText value="#{msgs.shareTableGoods}:" />
-			<h:outputText id="goodsAndServices" value="#{instShareTablePB.shareTable.goodsAndServices}"/>
+			<h:outputText id="goodsAndServices" value="#{instShareTablePB.shareTable.goodsAndServices}" />
 
 			<h:outputText id="percentGoodsAndServices" value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.goodsAndServices)}">
 				<f:attribute name="plain" value="false" />
@@ -94,9 +91,8 @@
 				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="businessTrip_o" value="#{instShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="businessTrip_o" value="#{instShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}" />
 
 			<h:outputText id="percentBusinessTrip" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.businessTrip)}">
 				<f:attribute name="plain" value="false" />
@@ -110,11 +106,11 @@
 				required="true" rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="consumerMaterials_o" value="#{instShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="consumerMaterials_o" value="#{instShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}" />
 
-			<h:outputText id="percentConsumerMaterials" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.consumerMaterials)}">
+			<h:outputText id="percentConsumerMaterials"
+				value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.consumerMaterials)}">
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
@@ -126,11 +122,11 @@
 				required="true" rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="inventoryMaterials_o" value="#{instShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="inventoryMaterials_o" value="#{instShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}" />
 
-			<h:outputText id="percentInventoryMaterials" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.inventoryMaterials)}">
+			<h:outputText id="percentInventoryMaterials"
+				value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.inventoryMaterials)}">
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
@@ -142,9 +138,8 @@
 				rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="rentals_o" value="#{instShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="rentals_o" value="#{instShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}" />
 
 			<h:outputText id="percentRentals" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.rentals)}">
 				<f:attribute name="plain" value="false" />
@@ -158,11 +153,11 @@
 				required="true" rendered="#{not cc.attrs.editingDisable}">
 				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
-				<f:convertNumber maxFractionDigits="2" locale="en_us" />
 			</h:inputText>
-			<h:outputText id="personnelOnContract_o" value="#{instShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}"/>
+			<h:outputText id="personnelOnContract_o" value="#{instShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}" />
 
-			<h:outputText id="percentPersonnelOnContract" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.personnelOnContract)}">
+			<h:outputText id="percentPersonnelOnContract"
+				value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.personnelOnContract)}">
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
@@ -170,7 +165,7 @@
 
 
 			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
-			<h:outputText id="otherCost" value="#{instShareTablePB.shareTable.otherCost}"/>
+			<h:outputText id="otherCost" value="#{instShareTablePB.shareTable.otherCost}" />
 
 			<h:outputText id="percentOtherCost" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.otherCost)}">
 				<f:attribute name="plain" value="false" />
@@ -268,8 +263,7 @@
 				<p:column width="10%">
 					<h:inputText id="personnalShareValueInput" value="#{instShareTablePB.newShare.value}" label="#{msgs.share}">
 						<f:ajax event="valueChange" execute="@this" render="percentPersonnelShare personnalShareValueInputError" />
-				<f:validator binding="#{percentValidator}" />
-						<f:convertNumber maxFractionDigits="2" locale="en_us" />
+						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 				</p:column>
 
