@@ -46,7 +46,11 @@
 
 				</p:tab>
 
-				<ui:include src="/resources/sections/agreementWizAttachments.xhtml" />
+						<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
+			<sections:agreementWizAttachments
+					editingDisable="true">
+				</sections:agreementWizAttachments>
+			</p:tab>
 
 			</p:tabView>
 

@@ -20,11 +20,11 @@ import businessLayer.AgreementInstallment;
 
 @Stateful
 @ConversationScoped
-public class DeadlineSearchService extends ResultPagerBean<Agreement>{
+public class DeadlineSearchService extends ResultPagerBean<Agreement> {
 
 	public DeadlineSearchService() {
 	}
-	
+
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order) {
 		currentPage = 0;
@@ -32,23 +32,29 @@ public class DeadlineSearchService extends ResultPagerBean<Agreement>{
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Agreement> c = cb.createQuery(Agreement.class);
 		Root<Agreement> agr = c.from(Agreement.class);
-		Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
-		//TODO funziona sul serio?
-		c.select(agr).distinct(true).where(cb.equal(inst.get("contract"), agr)).where(cb.equal(inst.get("paidInvoice"), false));
+		//Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
+	
+		// TODO funziona sul serio?
+		c.select(agr).distinct(true).where(	cb.equal(agr.join("installments").get("paidInvoice"), true));
+//		c.select(agr)
+//				.distinct(true)
+//						.where(cb.equal(agr,
+//						inst.get("contract")));
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
+		
+//		criteria.add(cb.equal(inst.get("paidInvoice"), false));
 		if (lowerDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
-			criteria.add(cb.greaterThanOrEqualTo(
-					inst.<Date> get("date"), p));
+			criteria.add(cb.greaterThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
 
 		}
 
 		if (upperDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
-			criteria.add(cb.lessThanOrEqualTo(inst.<Date> get("date"), p));
+			criteria.add(cb.lessThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
 
 		}
 
@@ -66,14 +72,13 @@ public class DeadlineSearchService extends ResultPagerBean<Agreement>{
 			criteria.add(cb.equal(agr.get("company").get("id"), p));
 
 		}
-		
-		if(order == SortOrder.ASCENDING){
-			
-			c.orderBy(cb.asc(inst.<Date> get("date")));
-		}
-		else if(order == SortOrder.DESCENDING){
-			
-			c.orderBy(cb.desc(inst.<Date> get("date")));
+
+		if (order == SortOrder.ASCENDING) {
+
+			c.orderBy(cb.asc(agr.join("installments").<Date> get("date")));
+		} else if (order == SortOrder.DESCENDING) {
+
+			c.orderBy(cb.desc(agr.join("installments").<Date> get("date")));
 
 		}
 

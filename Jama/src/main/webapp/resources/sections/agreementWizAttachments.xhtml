@@ -1,7 +1,12 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 
-	<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" default="false" />
+</composite:interface>
+
+<composite:implementation>
 
 
 
@@ -31,7 +36,7 @@
 
 		<p:fileUpload auto="false" fileUploadListener="#{attachmentsPB.handleFileUpload}" mode="advanced" dragDropSupport="true"
 			update="messages attchsList" sizeLimit="1000000" cancelLabel="#{msgs.remove}" uploadLabel="#{msgs.load}" label="#{msgs.choose}"
-			invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}" />
+			invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}" rendered="#{cc.attrs.editingDisable == false}" />
 
 
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirmA">
@@ -40,9 +45,6 @@
 		</p:confirmDialog>
 
 
-	</p:tab>
+</composite:implementation>
+</html>
 
-
-
-
-</ui:composition>

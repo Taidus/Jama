@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.joda.money.Money;
+
+import util.Percent;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -43,6 +46,12 @@ public abstract class Installment implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	protected Date date;
+	
+	@Embedded
+	protected Percent IVA_amount;
+
+	@Embedded
+	protected Money wholeTaxableAmount;
 
 	@Min(0)
 	protected int voucherNumber;
@@ -74,7 +83,6 @@ public abstract class Installment implements Serializable {
 		this.contract = c;
 	}
 
-	public abstract Money getWholeAmount();
 
 	public Date getDate() {
 		return date;
@@ -159,8 +167,27 @@ public abstract class Installment implements Serializable {
 	public void setShareTable(InstallmentShareTable shareTable) {
 		this.shareTable = shareTable;
 	}
+	
+	public Money getWholeAmount() {
+		return wholeTaxableAmount
+				.plus(IVA_amount.computeOn(wholeTaxableAmount));
+	}
 
-	public void copy(Installment copy) {
+	public Money getWholeTaxableAmount() {
+		return wholeTaxableAmount;
+	}
+
+	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
+		this.wholeTaxableAmount = wholeTaxableAmount;
+	}
+
+	public Percent getIVA_amount() {
+		return IVA_amount;
+	}
+	
+	public abstract void copy(Installment copy);
+
+	protected void _copy(Installment copy) {
 		
 		
 		this.id = copy.id;
