@@ -28,7 +28,7 @@
       <jta-data-source>java:jboss/datasources/JamaDS</jta-data-source>
       <properties>
 		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-		<property name="hibernate.hbm2ddl.auto" value="create-update"/>
+		<property name="hibernate.hbm2ddl.auto" value="create"/>
 		<property name="hibernate.transaction.jta.platform"
 			value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
 	</properties>

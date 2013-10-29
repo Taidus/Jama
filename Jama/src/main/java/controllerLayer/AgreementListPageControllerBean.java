@@ -31,14 +31,14 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 		contractManager.setFiltersParamList((lazyModel.getFiltersAsParameterList()));
 		System.out.println(lazyModel.getFiltersAsParameterList());
 		lazyModel.setFilterMaxDate(new Date());
-		return contractManager.viewAgreement();
+		return contractManager.viewContract();
 	}
 
 	public String editAgreement() {
 		print("Editing");
 		lazyModel.filterOnReload();
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		return contractManager.editAgreement();
+		return contractManager.editContract();
 	}
 
 	public void deleteAgreement() {

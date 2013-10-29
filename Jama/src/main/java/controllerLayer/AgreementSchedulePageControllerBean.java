@@ -24,7 +24,7 @@ public class AgreementSchedulePageControllerBean extends AgreementTablePageContr
 	public String viewAgreement() {
 		lazyModel.filterOnReload();
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		return contractManager.viewAgreement();
+		return contractManager.viewContract();
 	}
 
 }

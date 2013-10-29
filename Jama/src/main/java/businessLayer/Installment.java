@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import org.joda.money.Money;
 
+import util.Config;
 import util.Percent;
 
 @Entity
@@ -34,6 +35,8 @@ public abstract class Installment implements Serializable {
 
 	public Installment() {
 		this.shareTable = new InstallmentShareTable();
+		this.wholeTaxableAmount = Money.zero(Config.currency);
+
 	}
 
 	@Id

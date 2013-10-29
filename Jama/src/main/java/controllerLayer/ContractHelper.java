@@ -2,8 +2,9 @@ package controllerLayer;
 
 import businessLayer.Installment;
 
-public interface InstallmentProducer {
+public interface ContractHelper {
 	public Installment getNewInstallment();
+	public boolean renderIvaComponents();
 
 
 }
