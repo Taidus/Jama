@@ -57,16 +57,15 @@ public class AgreementRecapPresentationBean {
 
 		Money totalAmount = Money.zero(Config.currency);
 		Money totalPaid = Money.zero(Config.currency);
-		
+
 		List<Installment> orderedInstallments = new ArrayList<>(c.getInstallments());
 		Collections.sort(orderedInstallments, new Comparator<Installment>() {
 
 			@Override
 			public int compare(Installment o1, Installment o2) {
-				if(o1.getDate().after(o2.getDate())){
+				if (o1.getDate().after(o2.getDate())) {
 					return 1;
-				}
-				else {
+				} else {
 					return -1;
 				}
 			}
@@ -74,7 +73,7 @@ public class AgreementRecapPresentationBean {
 
 		if (!orderedInstallments.isEmpty()) {
 
-			Date d = c.getInstallments().get(0).getDate();
+			Date d = orderedInstallments.get(0).getDate();
 			Calendar currentDate = new GregorianCalendar();
 			currentDate.setTimeInMillis(d.getTime());
 
@@ -82,8 +81,8 @@ public class AgreementRecapPresentationBean {
 			Money currentpaid = Money.zero(Config.currency);
 
 			for (Installment i : orderedInstallments) {
-				
-				System.out.println("INSTALLMENT ADD * !!!"+i);
+
+				System.out.println("INSTALLMENT ADD * !!! " + i);
 
 				Calendar date = new GregorianCalendar();
 				date.setTimeInMillis(i.getDate().getTime());
@@ -98,12 +97,12 @@ public class AgreementRecapPresentationBean {
 
 				}
 
-				currentWholeAmount.plus(i.getWholeAmount());
-				totalAmount.plus(i.getWholeAmount());
+				currentWholeAmount = currentWholeAmount.plus(i.getWholeAmount());
+				totalAmount = totalAmount.plus(i.getWholeAmount());
 
 				if (i.isPaidInvoice()) {
-					currentpaid.plus(i.getWholeAmount());
-					totalPaid.plus(i.getWholeAmount());
+					currentpaid = currentpaid.plus(i.getWholeAmount());
+					totalPaid = totalPaid.plus(i.getWholeAmount());
 
 				}
 
@@ -121,9 +120,9 @@ public class AgreementRecapPresentationBean {
 		Money totalRemainder = totalAmount.minus(totalPaid);
 		Money totalRemainderRespectToAgremeement = c.getWholeAmount().minus(totalAmount);
 		totalRecap = new TotalRecap(totalAmount, totalPaid, totalRemainder, totalRemainderRespectToAgremeement);
-		
-		for(RecapItem r : annualRecap){
-		System.out.println(r);
+
+		for (RecapItem r : annualRecap) {
+			System.out.println(r);
 		}
 	}
 
@@ -160,8 +159,7 @@ public class AgreementRecapPresentationBean {
 
 		@Override
 		public String toString() {
-			return "RecapItem [remainder=" + remainder + ", wholeAmount="
-					+ wholeAmount + ", paid=" + paid + ", year=" + year + "]";
+			return "RecapItem [remainder=" + remainder + ", wholeAmount=" + wholeAmount + ", paid=" + paid + ", year=" + year + "]";
 		}
 
 	}
@@ -200,13 +198,9 @@ public class AgreementRecapPresentationBean {
 
 		@Override
 		public String toString() {
-			return "TotalRecap [agreementWholeAmount=" + agreementWholeAmount
-					+ ", totalTurnOver=" + totalTurnOver + ", totalRemainder="
-					+ totalRemainder + ", totalRemainderRespectToAgreement="
-					+ totalRemainderRespectToAgreement + "]";
+			return "TotalRecap [agreementWholeAmount=" + agreementWholeAmount + ", totalTurnOver=" + totalTurnOver + ", totalRemainder="
+					+ totalRemainder + ", totalRemainderRespectToAgreement=" + totalRemainderRespectToAgreement + "]";
 		}
-		
-		
 
 	}
 
