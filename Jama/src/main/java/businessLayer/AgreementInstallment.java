@@ -63,7 +63,7 @@ public class AgreementInstallment extends Installment implements
 
 		if (copy instanceof AgreementInstallment) {
 
-			super.copy(copy);
+			super._copy(copy);
 
 			AgreementInstallment agrCopy = (AgreementInstallment) copy;
 

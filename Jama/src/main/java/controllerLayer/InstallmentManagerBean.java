@@ -51,7 +51,6 @@ public  class InstallmentManagerBean implements Serializable {
 
 	public void save() {
 		
-		System.out.println("SAVE=====INSTALLMENT");
 
 		// installment.copy(transferObjInstallment);
 

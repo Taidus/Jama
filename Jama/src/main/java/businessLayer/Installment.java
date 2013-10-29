@@ -184,8 +184,10 @@ public abstract class Installment implements Serializable {
 	public Percent getIVA_amount() {
 		return IVA_amount;
 	}
+	
+	public abstract void copy(Installment copy);
 
-	public void copy(Installment copy) {
+	protected void _copy(Installment copy) {
 		
 		
 		this.id = copy.id;
