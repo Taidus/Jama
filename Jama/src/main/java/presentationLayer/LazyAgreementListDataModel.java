@@ -1,5 +1,6 @@
 package presentationLayer;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 	}
 
 	public void setFilterMaxDate(Date filterMaxDate) {
+		System.out.println("################################################### Setting max date to " + filterMaxDate);
 		this.filterMaxDate = filterMaxDate;
 	}
 
@@ -50,6 +52,8 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
 	}
+	
+	
 
 	@Override
 	protected List<Agreement> getData(int first, int pageSize, Map<String, String> filters) {
@@ -67,7 +71,7 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 
 		return result;
 	}
-	
+
 	@Override
 	protected void updateFields(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 		super.updateFields(first, pageSize, sortField, sortOrder, filters);
@@ -75,4 +79,19 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 		System.out.println("Order: " + sortOrder);
 	}
 
+	@Override
+	protected FilterList initFilterList() {
+		FilterList l = new FilterList();
+		if (filterMinDate != null) {
+			l.put("fmindate", String.valueOf(filterMinDate.getTime()));
+		}
+		if (filterMaxDate != null) {
+			l.put("fmaxdate", String.valueOf(filterMaxDate.getTime()));
+
+		}
+		if (sortOrder != null) {
+			l.put("sortorder", sortOrder.toString());
+		}
+		return l;
+	}
 }

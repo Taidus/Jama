@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 
+import presentationLayer.LazyAgreementDataModel.FilterList;
 import businessLayer.Agreement;
-import businessLayer.AgreementInstallment;
 import businessLayer.Installment;
 import daoLayer.DeadlineSearchService;
 
@@ -74,5 +74,17 @@ public class LazyAgreementScheduleDataModel extends LazyAgreementDataModel {
 
 		return result;
 	}
+	
+	@Override
+	protected FilterList initFilterList() {
+		FilterList l = new FilterList();
+		if (filterMinDate != null) {
+			l.put("fmindate", String.valueOf(filterMinDate.getTime()));
+		}
+		if (filterMaxDate != null) {
+			l.put("fmaxdate", String.valueOf(filterMaxDate.getTime()));
 
+		}
+		return l;
+	}
 }

@@ -14,16 +14,12 @@ import controllerLayer.ContractManagerBean;
 @Named("agreementEditPB")
 @ConversationScoped
 public class AgreementEditPresentationBean implements Serializable {
-
-	/**
-		 * 
-		 */
 	private static final long serialVersionUID = 1L;
 	private int currentTabIndex = defaultTab;
 	private static final int defaultTab = 0;
 
 	@Inject
-	ContractManagerBean manager;
+	private ContractManagerBean manager;
 
 	public AgreementEditPresentationBean() {
 	}
@@ -47,15 +43,19 @@ public class AgreementEditPresentationBean implements Serializable {
 	public String cancel() {
 		currentTabIndex = defaultTab;
 		manager.cancel();
-		return "agreementList";
+		return getListLink();
 
 	}
 
 	public String save() {
 		currentTabIndex = defaultTab;
 		manager.save();
-		return "agreementList";
+		return getListLink();
 
+	}
+	
+	private String getListLink(){
+		return "agreementList?faces-redirect=true&" + manager.getFiltersParamList();
 	}
 
 }

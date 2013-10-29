@@ -72,7 +72,6 @@ public class Percent implements Comparable<Percent> {
 	}
 
 	public Money computeOn(Money amount) {
-		System.out.println("Value: " + value + "; money: " + amount);
 		return amount.multipliedBy(value, RoundingMode.HALF_EVEN);
 	}
 

@@ -1,5 +1,6 @@
 package presentationLayer;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,6 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	@Override
 	public List<Agreement> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-
 		updateFields(first, pageSize, sortField, sortOrder, filters);
 		displayedAgreements = getData(first, pageSize, filters);
 
@@ -134,6 +134,7 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	public void setFilterChiefId(Integer filterChiefId) {
+		System.out.println("################################################### Setting filter chief id to " + filterChiefId);
 		this.filterChiefId = filterChiefId;
 	}
 
@@ -143,12 +144,14 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	public Integer getFilterChiefId() {
 		System.out.println("Getting value: " + filterChiefId);
-		return (filterChiefId != null) ? filterChiefId : 0;
+		// return (filterChiefId != null) ? filterChiefId : 0;
+		return filterChiefId;
 	}
 
 	public Integer getFilterCompanyId() {
 		System.out.println("Getting value: " + filterCompanyId);
-		return (filterCompanyId != null) ? filterCompanyId : 0;
+//		return (filterCompanyId != null) ? filterCompanyId : 0;
+		return filterCompanyId;
 	}
 
 	public Agreement getSelectedValue() {
@@ -157,5 +160,49 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	public void setSelectedValue(Agreement selectedValue) {
 		this.selectedValue = selectedValue;
+	}
+
+	public final String getFiltersAsParameterList() {
+		FilterList l = initFilterList();
+		if (filterChiefId != null) {
+			l.put("fchiefid",  filterChiefId.toString());
+		}
+		if(filterCompanyId != null){
+			l.put("fcompid", filterCompanyId.toString());
+		}
+		return l.asParameterList();
+	}
+	
+	protected abstract FilterList initFilterList();
+
+	public static final class FilterList {
+		private Map<String, String> filters;
+
+		protected FilterList() {
+			super();
+			this.filters = new HashMap<>();
+		}
+
+		protected void put(String key, String value) {
+			filters.put(key, value);
+		}
+
+		public String get(String key) {
+			return filters.get(key);
+		}
+
+		public String asParameterList() {
+			String result = "";
+
+			for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+				String s = it.next();
+				result += s + "=" + filters.get(s);
+				if (it.hasNext()) {
+					result += "&";
+				}
+			}
+
+			return result;
+		}
 	}
 }

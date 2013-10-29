@@ -1,6 +1,7 @@
 package controllerLayer;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
@@ -26,22 +27,25 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 	public String viewAgreement() {
 		print("Viewing");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		return agrManager.viewAgreement();
+		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
+		contractManager.setFiltersParamList((lazyModel.getFiltersAsParameterList()));
+		System.out.println(lazyModel.getFiltersAsParameterList());
+		lazyModel.setFilterMaxDate(new Date());
+		return contractManager.viewAgreement();
 	}
 
 	public String editAgreement() {
 		print("Editing");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		return agrManager.editAgreement();
+		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
+		return contractManager.editAgreement();
 	}
 
 	public void deleteAgreement() {
 		print("Deleting");
 		lazyModel.filterOnReload();
-		agrManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		agrManager.deleteContract();
+		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
+		contractManager.deleteContract();
 	}
 
 	private void print(String action) {
