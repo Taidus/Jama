@@ -56,6 +56,7 @@ public class ContractManagerBean implements Serializable {
 	private DepartmentDaoBean depDao;
 
 	private boolean conversationninherited;
+	private String filtersParamList;
 
 	// TODO aggiungere un po' di eccezioni
 	// TODO spostare return indirizzi pagine
@@ -64,6 +65,14 @@ public class ContractManagerBean implements Serializable {
 
 	public ContractManagerBean() {
 		conversationninherited = false;
+	}
+	
+	public String getFiltersParamList() {
+		return filtersParamList;
+	}
+
+	public void setFiltersParamList(String filtersParamList) {
+		this.filtersParamList = filtersParamList;
 	}
 
 	public int getSelectedContractId() {
@@ -212,5 +221,6 @@ public class ContractManagerBean implements Serializable {
 		c.setDeadlineDate(new Date());
 
 	}
+	
 
 }
