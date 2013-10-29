@@ -74,10 +74,6 @@ public class Agreement extends Contract implements Serializable {
 		IVA_amount = iVA_amount;
 	}
 
-	public boolean isClosed() {
-
-		return getWholeAmount().equals(spentAmount);
-
-	}
+	
 
 }

@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -17,10 +16,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
-import usersManagement.User;
-import annotations.Logged;
-import businessLayer.Agreement;
-import businessLayer.AgreementInstallment;
+import businessLayer.Contract;
+import businessLayer.Installment;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -59,7 +56,7 @@ public class MailSender implements Serializable {
 		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di sergente nella DeltaSpikeForce!");
 	}
 
-	public void send(AgreementInstallment inst, boolean actuallySend) throws IOException, TemplateException {
+	public void send(Installment inst, boolean actuallySend) throws IOException, TemplateException {
 
 		TemplateFiller filler = new TemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
 		StringWriter out = new StringWriter();
@@ -89,30 +86,30 @@ public class MailSender implements Serializable {
 	}
 
 	public static class TemplateFiller {
-		private Agreement agreement;
-		private AgreementInstallment installment;
+		private Contract contract;
+		private Installment installment;
 		private String mail1, mail2;
 		private Integer installmentNumber;
 
-		public TemplateFiller(AgreementInstallment installment, String mail1, String mail2) {
+		public TemplateFiller(Installment installment, String mail1, String mail2) {
 			super();
-			this.agreement = installment.getAgreement();
+			this.contract = installment.getContract();
 			this.installment = installment;
 			this.mail1 = mail1;
 			this.mail2 = mail2;
-			this.installmentNumber = 1 + agreement.getInstallments().indexOf(installment);
+			this.installmentNumber = 1 + contract.getInstallments().indexOf(installment);
 
 			if (installmentNumber <= 0) {
-				throw new IllegalStateException("Disallineamento tra la rata " + installment.getId() + " e la convenzione " + agreement.getId()
+				throw new IllegalStateException("Disallineamento tra la rata " + installment.getId() + " e la convenzione " + contract.getId()
 						+ " (la convenzione non ha un riferimento alla rata)");
 			}
 		}
 
-		public Agreement getAgreement() {
-			return agreement;
+		public Contract getContract() {
+			return contract;
 		}
 
-		public AgreementInstallment getInstallment() {
+		public Installment getInstallment() {
 			return installment;
 		}
 

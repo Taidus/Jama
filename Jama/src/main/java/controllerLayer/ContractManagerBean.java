@@ -30,6 +30,7 @@ import businessLayer.Agreement;
 import businessLayer.Contract;
 import businessLayer.ContractShareTable;
 import businessLayer.Department;
+import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
 import daoLayer.DepartmentDaoBean;
 
@@ -106,36 +107,58 @@ public class ContractManagerBean implements Serializable {
 		return conversation;
 	}
 
-	private void initAgreement() {
+	private void initContract() {
+		begin();
 		contract = ContractDao.getById(selectedContractId);
 
 	}
 
 	public String editAgreement() {
-		begin();
-		initAgreement();
-
+		// begin();
+		initContract();
 		return "/agreementEdit.xhtml?faces-redirect=true";
+	}
+
+	//TODO return page
+	public String editFunding() {
+		initContract();
+		return "";
+	}
+
+	private void createContract() {
+		insertRandomValues(contract); // TODO eliminare
+		ContractShareTable shareTable = new ContractShareTable();
+		shareTable.setFiller(fillerFactory.getFiller(contract.getDepartment()));
+		contract.setShareTable(shareTable);
+		begin();
+
 	}
 
 	public String createAgreement() {
 
 		contract = new Agreement();
-		insertRandomValues(contract); // TODO eliminare
-		ContractShareTable shareTable = new ContractShareTable();
-		shareTable
-				.setFiller(fillerFactory.getFiller(contract.getDepartment()));
-		contract.setShareTable(shareTable);
-		begin();
-
+		createContract();
 		return "/agreementWiz.xhtml";
 
 	}
 
+	// TODO return page
+	public String createFunding() {
+		contract = new Funding();
+		createContract();
+		return "";
+
+	}
+
 	public String viewAgreement() {
-		begin();
-		initAgreement();
+		//begin();
+		initContract();
 		return "/agreementView.xhtml?faces-redirect=true";
+	}
+	
+	public String viewFunding(){
+		initContract();
+		return "";
 	}
 
 	@Produces
@@ -144,36 +167,34 @@ public class ContractManagerBean implements Serializable {
 	public Contract getTransferObjContract() {
 		return contract;
 	}
-	
+
 	@Produces
 	@RequestScoped
 	@Current
-	public InstallmentProducer getInstallmentManager(AgreementInstallmentProducer agrProd){
-		
-		if( contract instanceof Agreement){
+	public InstallmentProducer getInstallmentManager(
+			AgreementInstallmentProducer agrProd) {
+
+		if (contract instanceof Agreement) {
 			return agrProd;
 		}
-		
-		else 
+
+		else
 			return null;
-	
+
 	}
-	
 
 	public Contract getContract() {
 		return contract;
 	}
 
 	@Secured(value = { AdminAccessDecisionVoter.class }, errorView = Login.class)
-	public void deleteAgreement() {
+	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
 	}
 
+	// TODO eliminare
 	private void insertRandomValues(Contract c) {
-		
-		System.err.println("RANDOM VALUESSSS");
-		
-		// TODO eliminare
+
 		c.setTitle("Random title");
 		c.setCIA_projectNumber(10000);
 		c.setContactPerson("Random contact");

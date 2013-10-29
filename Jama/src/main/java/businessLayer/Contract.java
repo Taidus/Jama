@@ -300,5 +300,11 @@ public abstract class Contract implements Serializable {
 
 		return sum;
 	}
+	
+	public boolean isClosed() {
+
+		return getWholeAmount().equals(spentAmount);
+
+	}
 
 }
