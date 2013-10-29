@@ -27,11 +27,7 @@ public class AgreementInstallment extends Installment implements
 
 	private static final long serialVersionUID = 1L;
 
-	@Embedded
-	private Percent IVA_amount;
-
-	@Embedded
-	private Money wholeTaxableAmount;
+	
 
 	@Min(0)
 	private int ivaVoucherNumber;
@@ -43,23 +39,7 @@ public class AgreementInstallment extends Installment implements
 		this.wholeTaxableAmount = Money.zero(Config.currency);
 	}
 
-	@Override
-	public Money getWholeAmount() {
-		return wholeTaxableAmount
-				.plus(IVA_amount.computeOn(wholeTaxableAmount));
-	}
-
-	public Money getWholeTaxableAmount() {
-		return wholeTaxableAmount;
-	}
-
-	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
-		this.wholeTaxableAmount = wholeTaxableAmount;
-	}
-
-	public Percent getIVA_amount() {
-		return IVA_amount;
-	}
+	
 
 	public void setIVA_amount(Percent iVA_amount) {
 		IVA_amount = iVA_amount;

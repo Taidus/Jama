@@ -147,7 +147,7 @@ public class TestBean implements Serializable {
 	
 	public void doDelta(){
 		
-		mailSender.sendToLoggedUser("nuovo", "g");
+		//mailSender.sendToLoggedUser("nuovo", "g");
 		
 	}
 
