@@ -36,7 +36,7 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		//Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
 	
 		// TODO funziona sul serio?
-		c.select(agr).distinct(true).where(	cb.equal(agr.join("installments").get("paidInvoice"), true));
+		c.select(agr).distinct(true).where(	cb.equal(agr.join("installments").get("paidInvoice"), false));
 //		c.select(agr)
 //				.distinct(true)
 //						.where(cb.equal(agr,
