@@ -32,6 +32,7 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 	}
 
 	public void setFilterMinDate(Date filterMinDate) {
+		System.out.println("################################################### Setting min date to " + filterMaxDate);
 		this.filterMinDate = filterMinDate;
 	}
 
@@ -49,20 +50,25 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 	}
 
 	public void setSortOrder(SortOrder sortOrder) {
+		System.out.println("################################################### Setting sort order to " + sortOrder);
 		this.sortOrder = sortOrder;
 	}
 	
+	public void closeService(){
+		agreementSearch.finished();
+	}
 	
-
 	@Override
-	protected List<Agreement> getData(int first, int pageSize, Map<String, String> filters) {
+	protected List<Agreement> getData(Map<String, String> filters) {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
 		agreementSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder);
 
-		agreementSearch.setPageSize(pageSize);
-		agreementSearch.setCurrentPage(first / pageSize);
+		agreementSearch.setPageSize(pageRows);
+//		int currentPage = (pageSize != 0) ? first / pageSize : 0;
+		int currentPage = pageFirst / pageRows;
+		agreementSearch.setCurrentPage(currentPage);
 
 		List<Agreement> result = agreementSearch.getCurrentResults();
 		agreementSearch.next();
@@ -72,8 +78,8 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 	}
 
 	@Override
-	protected void updateFields(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-		super.updateFields(first, pageSize, sortField, sortOrder, filters);
+	protected void updateFields(String sortField, SortOrder sortOrder, Map<String, String> filters) {
+		super.updateFields(sortField, sortOrder, filters);
 		setSortOrder(sortOrder);
 		System.out.println("Order: " + sortOrder);
 	}

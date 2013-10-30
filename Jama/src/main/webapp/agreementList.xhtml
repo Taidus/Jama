@@ -3,12 +3,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
-	<f:viewParam name="fchiefid" value="#{agreementListPCB.lazyModel.filterChiefId}" />
-	<f:viewParam name="fcompid" value="#{agreementListPCB.lazyModel.filterCompanyId}" />
-	<f:viewParam name="fmindate" value="#{agreementListPCB.lazyModel.filterMinDate}" />
-	<f:viewParam name="fmaxdate" value="#{agreementListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}" />
-	<f:viewParam name="sortorder" value="#{agreementListPCB.lazyModel.sortOrder}" />
-
+	<f:viewParam name="chief.id" value="#{agreementListPCB.lazyModel.filterChiefId}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{agreementListPCB.lazyModel.filterCompanyId}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmindate" value="#{agreementListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmaxdate" value="#{agreementListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="sortorder" value="#{agreementListPCB.lazyModel.sortOrder}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{agreementListPCB.lazyModel.pageFirst}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{agreementListPCB.lazyModel.pageRows}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	
+	<f:event listener="#{agreementListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
 
 <h:head>
@@ -55,7 +60,7 @@
 		
 	</script>
 </h:head>
-<h:body onload="setFilters(#{agreementListPCB.lazyModel.filterChiefId}, #{agreementListPCB.lazyModel.filterCompanyId});">
+<h:body onload="setFilters('#{agreementListPCB.lazyModel.filterChiefId}', '#{agreementListPCB.lazyModel.filterCompanyId}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{agreementListPCB.conversation.id}' />
@@ -66,8 +71,8 @@
 			<p:menuitem value="#{msgs.remove}" icon="ui-icon-trash" action="#{agreementListPCB.deleteAgreement()}" />
 		</p:contextMenu>
 
-		<p:dataTable id="agreementTable" var="agr" widgetVar="w_agrTable" lazy="true" value="#{agreementListPCB.lazyModel}"
-			emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+		<p:dataTable id="agreementTable" binding="#{agreementListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable" lazy="true"
+			value="#{agreementListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{agreementListPCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}" sortOrder="descending">
 

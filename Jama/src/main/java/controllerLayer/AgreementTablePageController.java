@@ -29,7 +29,10 @@ public abstract class AgreementTablePageController implements Serializable {
 
 	protected void close() {
 		conversation.end();
+		closeModel();
 	}
+	
+	protected abstract void closeModel();
 
 	public String backToHome() {
 		close();

@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 
-import presentationLayer.LazyAgreementDataModel.FilterList;
 import businessLayer.Agreement;
 import businessLayer.Installment;
 import daoLayer.DeadlineSearchService;
@@ -41,6 +40,10 @@ public class LazyAgreementScheduleDataModel extends LazyAgreementDataModel {
 	public void setFilterMaxDate(Date filterMaxDate) {
 		this.filterMaxDate = filterMaxDate;
 	}
+	
+	public void closeService(){
+		searchService.finished();
+	}
 
 	public Date findClosestDeadline(Agreement agr) {
 		List<Installment> insts = agr.getInstallments();
@@ -59,14 +62,16 @@ public class LazyAgreementScheduleDataModel extends LazyAgreementDataModel {
 	}
 
 	@Override
-	protected List<Agreement> getData(int first, int pageSize, Map<String, String> filters) {
+	protected List<Agreement> getData(Map<String, String> filters) {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
 		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null);
 
-		searchService.setPageSize(pageSize);
-		searchService.setCurrentPage(first / pageSize);
+		searchService.setPageSize(pageRows);
+//		int currentPage = (pageSize != 0) ? first / pageSize : 0;
+		int currentPage = pageFirst / pageRows;
+		searchService.setCurrentPage(currentPage);
 
 		List<Agreement> result = searchService.getCurrentResults();
 		searchService.next();

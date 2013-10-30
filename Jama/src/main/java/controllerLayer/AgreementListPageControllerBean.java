@@ -23,6 +23,11 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 		return lazyModel;
 	}
 	
+	@Override
+	protected void closeModel() {
+		lazyModel.closeService();
+	}
+	
 	public void printDel(){
 		//TODO eliminare
 		System.out.println("+++++++++++++++++++++++++++++++++++++");
@@ -31,24 +36,25 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 	public String viewAgreement() {
 		close();
 		print("Viewing");
-		lazyModel.filterOnReload();
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		contractManager.setFiltersParamList((lazyModel.getFiltersAsParameterList()));
 		System.out.println(lazyModel.getFiltersAsParameterList());
 //		lazyModel.setFilterMaxDate(new Date());
-		return contractManager.viewAgreement();
+		return contractManager.viewContract();
 	}
 
 	public String editAgreement() {
+		close();
 		print("Editing");
-		lazyModel.filterOnReload();
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		return contractManager.editAgreement();
+		contractManager.setFiltersParamList((lazyModel.getFiltersAsParameterList()));
+		System.out.println(lazyModel.getFiltersAsParameterList());
+		return contractManager.editContract();
 	}
 
 	public void deleteAgreement() {
+		close();
 		print("Deleting");
-		lazyModel.filterOnReload();
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		contractManager.deleteContract();
 	}
