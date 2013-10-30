@@ -17,12 +17,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
-
-import org.apache.deltaspike.security.api.authorization.Secured;
 import org.joda.money.Money;
-
-import security.AdminAccessDecisionVoter;
-import security.Login;
 import util.Config;
 import annotations.Current;
 import annotations.TransferObj;
@@ -66,7 +61,7 @@ public class ContractManagerBean implements Serializable {
 	public ContractManagerBean() {
 		conversationninherited = false;
 	}
-	
+
 	public String getFiltersParamList() {
 		return filtersParamList;
 	}
@@ -84,8 +79,8 @@ public class ContractManagerBean implements Serializable {
 	}
 
 	private void begin() {
-		System.out.println("Conversation Inherited="+conversationninherited);
-		
+		System.out.println("Conversation Inherited=" + conversationninherited);
+
 		if (conversation.isTransient()) {
 			conversation.begin();
 
@@ -104,16 +99,13 @@ public class ContractManagerBean implements Serializable {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	
 	public void save() {
-		
 		System.out.println("SAVE");
 
 		ContractDao.create(contract);
 		close();
 	}
-	
-	
+
 	public void cancel() {
 		System.out.println("CANCEL");
 		close();
@@ -125,7 +117,7 @@ public class ContractManagerBean implements Serializable {
 
 	private void initContract() {
 		begin();
-//		contract = ContractDao.getById(selectedContractId);
+		// contract = ContractDao.getById(selectedContractId);
 		contract = em.find(Contract.class, selectedContractId);
 
 	}
@@ -136,7 +128,6 @@ public class ContractManagerBean implements Serializable {
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
-	
 	private String createContract() {
 		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
@@ -151,24 +142,21 @@ public class ContractManagerBean implements Serializable {
 
 		contract = new Agreement();
 		return createContract();
-		
 
 	}
 
 	public String createFunding() {
 		contract = new Funding();
 		return createContract();
-	
 
 	}
 
 	public String viewContract() {
-		//begin();
+		// begin();
 		initContract();
 		return "/agreementView.xhtml?faces-redirect=true";
 	}
-	
-	
+
 	@Produces
 	@TransferObj
 	@RequestScoped
@@ -179,16 +167,16 @@ public class ContractManagerBean implements Serializable {
 	@Produces
 	@RequestScoped
 	@Current
-	public ContractHelper getInstallmentManager(
-			AgreementHelper agrHelper, FundingHelper funHelper) {
+	public ContractHelper getInstallmentManager(AgreementHelper agrHelper,
+			FundingHelper funHelper) {
 
 		if (contract instanceof Agreement) {
 			return agrHelper;
 		}
 
-		else if(contract instanceof Funding){
-			return funHelper ;}
-		else {
+		else if (contract instanceof Funding) {
+			return funHelper;
+		} else {
 			return null;
 		}
 
@@ -198,7 +186,6 @@ public class ContractManagerBean implements Serializable {
 		return contract;
 	}
 
-	@Secured(value = { AdminAccessDecisionVoter.class }, errorView = Login.class)
 	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
 	}
@@ -223,6 +210,5 @@ public class ContractManagerBean implements Serializable {
 		c.setDeadlineDate(new Date());
 
 	}
-	
 
 }

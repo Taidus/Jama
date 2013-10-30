@@ -1,0 +1,5 @@
+package usersManagement;
+
+public enum Permission {
+	VIEW_CONTRACTS, ALTER_CONTRACTS, DELETE_CONTRACTS, VIEW_OWN_CONTRACTS, CREATE_USER;
+}

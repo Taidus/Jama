@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.apache.deltaspike.security.api.authorization.Secures;
 
+import usersManagement.Permission;
 import usersManagement.Role;
 import annotations.Logged;
 
@@ -26,11 +27,12 @@ public class Authorizer implements Serializable {
 	private Principal loggedUser;
 
 	@Secures
-	@AdminAllowed
+	@AlterContractsAllowed
 	public boolean doAdminCheck() {
 		System.out
 				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
-		return (loggedUser.hasRole(Role.ADMIN)) ? true : false;
+		return (loggedUser.hasPermission(Permission.ALTER_CONTRACTS)) ? true
+				: false;
 	}
 
 	@Secures
@@ -38,6 +40,7 @@ public class Authorizer implements Serializable {
 	public boolean doChiefScientistCheck() {
 		System.out
 				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
-		return (loggedUser.hasRole(Role.CHIEF_SCIENTIST)) ? true : false;
+		return (loggedUser.hasPermission(Permission.VIEW_OWN_CONTRACTS)) ? true
+				: false;
 	}
 }

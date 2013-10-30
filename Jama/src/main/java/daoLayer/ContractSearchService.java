@@ -15,7 +15,7 @@ import javax.persistence.criteria.Root;
 
 import org.primefaces.model.SortOrder;
 
-import security.AdminAllowed;
+import security.AlterContractsAllowed;
 import security.ChiefScientistAllowed;
 import security.Principal;
 import annotations.Logged;
@@ -39,7 +39,7 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 		
 	}
 	
-	@AdminAllowed
+	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
 		

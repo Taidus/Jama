@@ -15,7 +15,7 @@ import javax.persistence.criteria.Root;
 
 import org.primefaces.model.SortOrder;
 
-import security.AdminAllowed;
+import security.AlterContractsAllowed;
 import businessLayer.Contract;
 
 @Stateful
@@ -25,7 +25,7 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 	public DeadlineSearchService() {
 	}
 
-	@AdminAllowed
+	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
 		currentPage = 0;

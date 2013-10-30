@@ -3,35 +3,37 @@ package security;
 import java.util.ArrayList;
 import java.util.List;
 
+import usersManagement.Permission;
 import usersManagement.Role;
 
 public class Principal {
 	private String serialNumber;
 
-	private List<String> roles;
+	private List<String> permissions = new ArrayList<>();
 
 	public Principal() {
 		// TODO: di serialNumber che ci metto?
 		serialNumber = "Guest";
-		roles = new ArrayList<String>();
-		roles.add(Role.GUEST.toString());
+		// FIXME: rimettere GUEST quando sarà tutto montato
+		setPermissions(Role.ADMIN.getPermissions());
 	}
 
-	public Principal(String serialNumber) {
+	public Principal(String serialNumber, Role role) {
 		this.serialNumber = serialNumber;
-		this.roles = new ArrayList<String>();
+		setPermissions(role.getPermissions());
 	}
-	
+
 	public String getSerialNumber() {
 		return serialNumber;
 	}
-
-	public void addRole(Role role) {
-		roles.add(role.toString());
+	
+	public boolean hasPermission(Permission toCheck) {
+		return permissions.contains(toCheck.toString());
 	}
 
-	public boolean hasRole(Role role) {
-		return roles.contains(role.toString());
+	private void setPermissions(List<Permission> permissions) {
+		for (Permission toAdd : permissions)
+			this.permissions.add(toAdd.toString());
 	}
 
 }

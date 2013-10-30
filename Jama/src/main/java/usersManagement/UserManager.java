@@ -31,7 +31,6 @@ public class UserManager implements Serializable {
 	public void init() {
 		loggedUser = new Principal();
 		// TODO: rimettere GUEST quando sarà tutto montato
-		loggedUser.addRole(Role.ADMIN);
 	}
 
 	@RequestScoped
@@ -44,8 +43,7 @@ public class UserManager implements Serializable {
 	public String login(String serialNumber, String password) {
 		User u = userDao.getBySerialNumber(Integer.parseInt(serialNumber));
 		if (u != null && u.login(password)) {
-			loggedUser = new Principal(String.valueOf(u.getSerialNumber()));
-			loggedUser.addRole(u.getRole());
+			loggedUser = new Principal(String.valueOf(u.getSerialNumber()), u.getRole());
 			System.out.println("User Login: loggedUser= " + u);
 			return "home";
 		} else {
