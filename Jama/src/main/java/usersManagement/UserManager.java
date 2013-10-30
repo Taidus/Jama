@@ -29,7 +29,7 @@ public class UserManager implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		loggedUser = new Principal("Guest");
+		loggedUser = new Principal();
 		// TODO: rimettere GUEST quando sarà tutto montato
 		loggedUser.addRole(Role.ADMIN);
 	}
@@ -42,7 +42,6 @@ public class UserManager implements Serializable {
 	}
 
 	public String login(String serialNumber, String password) {
-		// TODO: controllo password
 		User u = userDao.getBySerialNumber(Integer.parseInt(serialNumber));
 		if (u != null && u.login(password)) {
 			loggedUser = new Principal(String.valueOf(u.getSerialNumber()));
@@ -58,8 +57,7 @@ public class UserManager implements Serializable {
 	}
 
 	public void logout() {
-		loggedUser = new Principal("Guest");
-		loggedUser.addRole(Role.GUEST);
+		loggedUser = new Principal();
 		// TODO return value;
 	}
 
