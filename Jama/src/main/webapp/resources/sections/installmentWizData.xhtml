@@ -1,5 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="editingDisable" default="false" />
@@ -10,129 +14,295 @@
 
 	<p:panel header="#{msgs.data_header}">
 
-		<h:panelGrid columns="3" columnClasses="label, value, errorMessage" styleClass="grid">
+		<h:panelGrid id="instPanelGrid">
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstDate}:" />
+				</p:column>
+				<p:column>
+					<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true"
+						showOn="both" showOtherMonths="true" required="true"
+						value="#{installmentManager.installment.date}"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
+
+				<p:column>
+					<h:outputText id="date_o"
+						value="#{installmentManager.installment.date}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:message styleClass="errorMessage" for="date" />
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+
+					<h:outputText value="#{msgs.amount}:" />
+				</p:column>
+				<p:column>
+
+					<h:inputText id="taxableAmount"
+						value="#{installmentManager.installment.wholeTaxableAmount}"
+						label="#{msgs.amount}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:validator binding="#{moneyValidator}" />
+						<f:ajax execute="@this" render="amount taxAmountError" />
+					</h:inputText>
+				</p:column>
+				<p:column>
+
+					<h:outputText id="taxableAmount_o"
+						value="#{installmentManager.installment.wholeTaxableAmount}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+
+					<p:message id="taxAmountError" styleClass="errorMessage"
+						for="taxableAmount" />
+				</p:column>
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstIva}:"
+						rendered="#{agreementWizardPB.renderIvaComponents()==true and agreementWizardPB.renderIvaComponents()==true}" />
+				</p:column>
+				<p:column>
+					<h:inputText id="iva"
+						value="#{installmentManager.installment.IVA_amount}"
+						label="#{msgs.newInstIva}" required="true"
+						rendered="#{cc.attrs.editingDisable == false and agreementWizardPB.renderIvaComponents()==true}">
+						<f:validator binding="#{percentValidator}" />
+						<f:ajax execute="@this" render="amount ivaError" />
+					</h:inputText>
+				</p:column>
+				<p:column>
+					<h:outputText id="iva_o"
+						value="#{installmentManager.installment.IVA_amount}"
+						rendered="#{cc.attrs.editingDisable == true and agreementWizardPB.renderIvaComponents()==true}" />
+				</p:column>
+				<p:column>
+					<p:message id="ivaError" styleClass="errorMessage" for="iva" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.wholeAmount}:" />
+				</p:column>
+				<p:column>
+					<h:outputText id="amount"
+						value="#{installmentManager.installment.wholeAmount}"
+						readonly="true">
+						<f:attribute name="plain" value="false" />
+
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<p:message for="amount" />
+				</p:column>
+			</p:row>
 
 
-			<h:outputText value="#{msgs.newInstDate}:" />
-			<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-				value="#{installmentManager.installment.date}" rendered="#{cc.attrs.editingDisable == false}">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</p:calendar>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstVoucherNumber}:" />
+				</p:column>
+				<p:column>
+					<h:inputText id="voucherNumber"
+						value="#{installmentManager.installment.voucherNumber}"
+						label="#{msgs.newInstVoucherNumber}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" />
+				</p:column>
 
-			<h:outputText id="date_o" value="#{installmentManager.installment.date}" rendered="#{cc.attrs.editingDisable == true}">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</h:outputText>
+				<p:column>
+					<h:outputText id="voucherNumber_o"
+						value="#{installmentManager.installment.voucherNumber}"
+						rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
 
-			<p:message styleClass="errorMessage" for="date" />
+				<p:column>
+					<p:message for="voucherNumber" />
+				</p:column>
+			</p:row>
 
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstVoucherDate}:" />
+				</p:column>
+				<p:column>
+					<p:calendar id="voucherDate" pattern="dd/MM/yyyy"
+						readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true"
+						value="#{installmentManager.installment.voucherDate}"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
 
-			<h:outputText value="#{msgs.amount}:" />
-			<h:inputText id="taxableAmount" value="#{installmentManager.installment.wholeTaxableAmount}" label="#{msgs.amount}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}">
-				<f:validator binding="#{moneyValidator}" />
-				<f:ajax execute="@this" render="amount taxAmountError" />
-			</h:inputText>
-			<h:outputText id="taxableAmount_o" value="#{installmentManager.installment.wholeTaxableAmount}" rendered="#{cc.attrs.editingDisable == true}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
+				<p:column>
+					<h:outputText id="voucherDate_o"
+						value="#{installmentManager.installment.voucherDate}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
 
-			<p:message id="taxAmountError" styleClass="errorMessage" for="taxableAmount" />
+				<p:column>
+					<p:message styleClass="errorMessage" for="voucherDate" />
+				</p:column>
+			</p:row>
 
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstIvaVoucherNumber}:"
+						rendered="agreementWizardPB.renderIvaComponents()==true and agreementWizardPB.renderIvaComponents()==true" />
+				</p:column>
+				<p:column>
+					<h:inputText id="ivaVoucherNumber"
+						value="#{installmentManager.installment.ivaVoucherNumber}"
+						label="#{msgs.newInstVoucherNumber}" required="true"
+						rendered="#{cc.attrs.editingDisable == false and agreementWizardPB.renderIvaComponents()==true}">
+					</h:inputText>
+				</p:column>
 
-			<h:outputText value="#{msgs.newInstIva}:" />
-			<h:inputText id="iva" value="#{installmentManager.installment.IVA_amount}" label="#{msgs.newInstIva}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}">
-				<f:validator binding="#{percentValidator}" />
-				<f:ajax execute="@this" render="amount ivaError" />
-			</h:inputText>
-			<h:outputText id="iva_o" value="#{installmentManager.installment.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}" />
+				<p:column>
+					<h:outputText id="ivaVoucherNumber_o"
+						value="#{installmentManager.installment.ivaVoucherNumber}"
+						rendered="#{cc.attrs.editingDisable == true and agreementWizardPB.renderIvaComponents()==true}" />
+				</p:column>
 
-			<p:message id="ivaError" styleClass="errorMessage" for="iva" />
-
-
-			<h:outputText value="#{msgs.wholeAmount}:" />
-			<h:outputText id="amount" value="#{installmentManager.installment.wholeAmount}" readonly="true">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="amount" />
-
-
-			<h:outputText value="#{msgs.newInstVoucherNumber}:" />
-			<h:inputText id="voucherNumber" value="#{installmentManager.installment.voucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}" />
-
-			<h:outputText id="voucherNumber_o" value="#{installmentManager.installment.voucherNumber}" rendered="#{cc.attrs.editingDisable == true}" />
-
-			<p:message for="voucherNumber" />
-
-			<h:outputText value="#{msgs.newInstVoucherDate}:" />
-			<p:calendar id="voucherDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-				value="#{installmentManager.installment.voucherDate}" rendered="#{cc.attrs.editingDisable == false}">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</p:calendar>
-
-			<h:outputText id="voucherDate_o" value="#{installmentManager.installment.voucherDate}" rendered="#{cc.attrs.editingDisable == true}">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</h:outputText>
-
-			<p:message styleClass="errorMessage" for="voucherDate" />
-
-
-			<h:outputText value="#{msgs.newInstIvaVoucherNumber}:" />
-			<h:inputText id="ivaVoucherNumber" value="#{installmentManager.installment.ivaVoucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}">
-			</h:inputText>
-
-			<h:outputText id="ivaVoucherNumber_o" value="#{installmentManager.installment.ivaVoucherNumber}" rendered="#{cc.attrs.editingDisable == true}" />
-
-			<p:message for="ivaVoucherNumber" />
-
+				<p:column>
+					<p:message for="ivaVoucherNumber" />
+				</p:column>
+			</p:row>
 
 
-			<h:outputText value="#{msgs.newInstPendingNumber}:" />
-			<h:inputText id="pendingNumber" value="#{installmentManager.installment.pendingNumber}" label="#{msgs.newInstPendingNumber}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstPendingNumber}:" />
+				</p:column>
+				<p:column>
+					<h:inputText id="pendingNumber"
+						value="#{installmentManager.installment.pendingNumber}"
+						label="#{msgs.newInstPendingNumber}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" />
+				</p:column>
 
-			<h:outputText id="pendingNumber_o" value="#{installmentManager.installment.pendingNumber}" rendered="#{cc.attrs.editingDisable == true}" />
-			<p:message for="pendingNumber" />
+				<p:column>
+					<h:outputText id="pendingNumber_o"
+						value="#{installmentManager.installment.pendingNumber}"
+						rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+				<p:column>
+					<p:message for="pendingNumber" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
+				</p:column>
+				<p:column>
+					<h:inputText id="invoiceNumber"
+						value="#{installmentManager.installment.invoiceNumber}"
+						label="#{msgs.newInstInvoiceNumber}" required="true"
+						rendered="#{cc.attrs.editingDisable == false}" />
+				</p:column>
 
-			<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
-			<h:inputText id="invoiceNumber" value="#{installmentManager.installment.invoiceNumber}" label="#{msgs.newInstInvoiceNumber}" required="true"
-				rendered="#{cc.attrs.editingDisable == false}" />
+				<p:column>
+					<h:outputText id="invoiceNumber_o"
+						value="#{installmentManager.installment.invoiceNumber}"
+						rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+				<p:column>
+					<p:message for="invoiceNumber" />
+				</p:column>
+			</p:row>
 
-			<h:outputText id="invoiceNumber_o" value="#{installmentManager.installment.invoiceNumber}" rendered="#{cc.attrs.editingDisable == true}" />
-			<p:message for="invoiceNumber" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstInvoiceDate}:" />
+				</p:column>
+				<p:column>
+					<p:calendar id="invoiceDate" pattern="dd/MM/yyyy"
+						readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true"
+						value="#{installmentManager.installment.invoiceDate}"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
 
-			<h:outputText value="#{msgs.newInstInvoiceDate}:" />
-			<p:calendar id="invoiceDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-				value="#{installmentManager.installment.invoiceDate}" rendered="#{cc.attrs.editingDisable == false}">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</p:calendar>
+				<p:column>
+					<h:outputText id="invoiceDate_o"
+						value="#{installmentManager.installment.invoiceDate}"
+						rendered="#{cc.attrs.editingDisable == true}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<p:message for="invoiceDate" />
+				</p:column>
+			</p:row>
 
-			<h:outputText id="invoiceDate_o" value="#{installmentManager.installment.invoiceDate}" rendered="#{cc.attrs.editingDisable == true}">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</h:outputText>
-			<p:message for="invoiceDate" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.paidInvoice_Question}" />
+				</p:column>
+				<p:column>
+					<h:selectBooleanCheckbox id="paidInvoice"
+						value="#{installmentManager.installment.paidInvoice}"
+						disabled="#{cc.attrs.editingDisable == true}" />
+				</p:column>
 
+			</p:row>
 
-			<h:outputText value="#{msgs.paidInvoice_Question}" />
-			<h:selectBooleanCheckbox id="paidInvoice" value="#{installmentManager.installment.paidInvoice}" disabled="#{cc.attrs.editingDisable == true}" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.reportRequired_Question}" />
+				</p:column>
+				<p:column>
+					<h:selectBooleanCheckbox
+						value="#{installmentManager.installment.reportRequired}"
+						id="reportRequired" disabled="#{cc.attrs.editingDisable == true}" />
+				</p:column>
 
-			<br />
+			</p:row>
 
-			<h:outputText value="#{msgs.reportRequired_Question}" />
-			<h:selectBooleanCheckbox value="#{installmentManager.installment.reportRequired}" id="reportRequired" disabled="#{cc.attrs.editingDisable == true}" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstNote}:" />
+				</p:column>
+				<p:column>
+					<h:inputTextarea id="notes" cols="20" rows="4"
+						value="#{installmentManager.installment.note}"
+						label="#{msgs.newInstNote}" required="false"
+						rendered="#{cc.attrs.editingDisable == false}" />
+				</p:column>
 
-			<br />
+				<p:column>
+					<h:outputText id="notes_o"
+						value="#{installmentManager.installment.note}"
+						rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+				<p:column>
+					<p:message for="notes" />
+				</p:column>
+			</p:row>
 
-			<h:outputText value="#{msgs.newInstNote}:" />
-			<h:inputTextarea id="notes" cols="20" rows="4" value="#{installmentManager.installment.note}" label="#{msgs.newInstNote}" required="false"
-				rendered="#{cc.attrs.editingDisable == false}" />
-
-			<h:outputText id="notes_o" value="#{installmentManager.installment.note}" rendered="#{cc.attrs.editingDisable == true}" />
-			<p:message for="notes" />
-
-			<h:inputHidden value="needed" id="amountCheck" validator="#{instDataPB.validateAmount}" />
+			<h:inputHidden value="needed" id="amountCheck"
+				validator="#{instDataPB.validateAmount}" />
 			<p:message styleClass="errorMessage" for="amountCheck" />
 
 		</h:panelGrid>

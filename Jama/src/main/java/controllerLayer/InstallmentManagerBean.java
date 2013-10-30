@@ -28,7 +28,7 @@ public  class InstallmentManagerBean implements Serializable {
 	
 	@Inject
 	@Current
-	private InstallmentProducer installmentProducer;
+	private ContractHelper installmentProducer;
 
 	// TODO spostare return indirizzo pagina
 	protected Installment selectedInstallment;

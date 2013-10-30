@@ -36,7 +36,6 @@ public class AgreementInstallment extends Installment implements
 
 	public AgreementInstallment() {
 		this.IVA_amount = Percent.ZERO;
-		this.wholeTaxableAmount = Money.zero(Config.currency);
 	}
 
 	

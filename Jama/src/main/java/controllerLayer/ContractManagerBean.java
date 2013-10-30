@@ -122,54 +122,45 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
-	public String editAgreement() {
+	public String editContract() {
 		// begin();
 		initContract();
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
-	//TODO return page
-	public String editFunding() {
-		initContract();
-		return "";
-	}
-
-	private void createContract() {
+	
+	private String createContract() {
 		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
 		shareTable.setFiller(fillerFactory.getFiller(contract.getDepartment()));
 		contract.setShareTable(shareTable);
 		begin();
+		return "/agreementWiz.xhtml";
 
 	}
 
 	public String createAgreement() {
 
 		contract = new Agreement();
-		createContract();
-		return "/agreementWiz.xhtml";
+		return createContract();
+		
 
 	}
 
-	// TODO return page
 	public String createFunding() {
 		contract = new Funding();
-		createContract();
-		return "";
+		return createContract();
+	
 
 	}
 
-	public String viewAgreement() {
+	public String viewContract() {
 		//begin();
 		initContract();
 		return "/agreementView.xhtml?faces-redirect=true";
 	}
 	
-	public String viewFunding(){
-		initContract();
-		return "";
-	}
-
+	
 	@Produces
 	@TransferObj
 	@RequestScoped
@@ -180,15 +171,18 @@ public class ContractManagerBean implements Serializable {
 	@Produces
 	@RequestScoped
 	@Current
-	public InstallmentProducer getInstallmentManager(
-			AgreementInstallmentProducer agrProd) {
+	public ContractHelper getInstallmentManager(
+			AgreementHelper agrHelper, FundingHelper funHelper) {
 
 		if (contract instanceof Agreement) {
-			return agrProd;
+			return agrHelper;
 		}
 
-		else
+		else if(contract instanceof Funding){
+			return funHelper ;}
+		else {
 			return null;
+		}
 
 	}
 

@@ -13,7 +13,10 @@ import javax.inject.Named;
 import org.joda.money.Money;
 import org.primefaces.event.FlowEvent;
 
+import annotations.Current;
+import businessLayer.Agreement;
 import util.Messages;
+import controllerLayer.ContractHelper;
 import controllerLayer.ContractManagerBean;
 
 @Named("agreementWizardPB")
@@ -27,6 +30,8 @@ public class AgreementWizardPresentationBean implements Serializable {
 
 	@Inject
 	private ContractManagerBean manager;
+	@Inject @Current
+	private ContractHelper helper;
 
 	public AgreementWizardPresentationBean() {
 		currentTabId = defaultTab;
@@ -64,6 +69,12 @@ public class AgreementWizardPresentationBean implements Serializable {
 		manager.save();
 		return "home";
 
+	}
+	
+	public boolean renderIvaComponents(){
+		
+		return helper.renderIvaComponents();
+		
 	}
 
 	// public void validateReserved(ValueChangeEvent event) {

@@ -6,7 +6,7 @@ import businessLayer.AgreementInstallment;
 import businessLayer.Installment;
 
 @RequestScoped
-public class AgreementInstallmentProducer implements InstallmentProducer{
+public class AgreementHelper implements ContractHelper{
 
 	@Override
 	public Installment getNewInstallment() {
@@ -14,6 +14,11 @@ public class AgreementInstallmentProducer implements InstallmentProducer{
 		return new AgreementInstallment();
 		
 
+	}
+
+	@Override
+	public boolean renderIvaComponents() {
+		return true;
 	}
 
 }

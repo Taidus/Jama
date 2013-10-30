@@ -2,8 +2,11 @@ package businessLayer;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+
 import util.Percent;
 
+@Entity
 public class FundingInstallment extends Installment implements Serializable {
 
 	/**
