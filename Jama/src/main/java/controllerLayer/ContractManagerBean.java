@@ -17,7 +17,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+
 import org.joda.money.Money;
+
 import util.Config;
 import annotations.Current;
 import annotations.TransferObj;
@@ -139,7 +141,8 @@ public class ContractManagerBean implements Serializable {
 	}
 
 	public String createAgreement() {
-
+		System.out
+				.println("createAgreement() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		contract = new Agreement();
 		return createContract();
 

@@ -1,14 +1,10 @@
 package security;
 
 import java.io.Serializable;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-
 import org.apache.deltaspike.security.api.authorization.Secures;
-
 import usersManagement.Permission;
-import usersManagement.Role;
 import annotations.Logged;
 
 /**
@@ -28,7 +24,7 @@ public class Authorizer implements Serializable {
 
 	@Secures
 	@AlterContractsAllowed
-	public boolean doAdminCheck() {
+	public boolean canAlterContracts() {
 		System.out
 				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
 		return (loggedUser.hasPermission(Permission.ALTER_CONTRACTS)) ? true
@@ -37,10 +33,11 @@ public class Authorizer implements Serializable {
 
 	@Secures
 	@ChiefScientistAllowed
+	//FIXME: per ora è finto
 	public boolean doChiefScientistCheck() {
 		System.out
 				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
-		return (loggedUser.hasPermission(Permission.VIEW_OWN_CONTRACTS)) ? true
-				: false;
+		return true;
 	}
+
 }

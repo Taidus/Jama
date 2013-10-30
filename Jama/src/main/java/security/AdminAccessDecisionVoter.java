@@ -28,7 +28,7 @@ public class AdminAccessDecisionVoter implements AccessDecisionVoter {
 	public Set<SecurityViolation> checkPermission(
 			AccessDecisionVoterContext arg0) {
 		Set<SecurityViolation> violations = new HashSet<>();
-		if (!authorizer.doAdminCheck()) {
+		if (!authorizer.canAlterContracts()) {
 			violations.add(new SecurityViolation() {
 				private static final long serialVersionUID = 1L;
 
