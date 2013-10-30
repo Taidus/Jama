@@ -6,8 +6,9 @@
 	<f:viewParam name="fchiefid" value="#{agreementListPCB.lazyModel.filterChiefId}" />
 	<f:viewParam name="fcompid" value="#{agreementListPCB.lazyModel.filterCompanyId}" />
 	<f:viewParam name="fmindate" value="#{agreementListPCB.lazyModel.filterMinDate}" />
-	<f:viewParam name="fmaxdate" value="#{agreementListPCB.lazyModel.filterMaxDate}" />
+	<f:viewParam name="fmaxdate" value="#{agreementListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}" />
 	<f:viewParam name="sortorder" value="#{agreementListPCB.lazyModel.sortOrder}" />
+
 </f:metadata>
 
 <h:head>

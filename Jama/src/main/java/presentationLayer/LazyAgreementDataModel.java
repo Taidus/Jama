@@ -88,20 +88,21 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		// }
 
 		ignoreTableFilters = false;
+		System.out.println("--------------------------------------------");
 		return displayedAgreements;
 	}
 
 	protected void updateFields(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-		// TODO splittami
 		/* TODO Blocco stampe. Eliminare */
 		System.out.println("-----------------");
 
-		System.out.println("Filters: ");
+		System.out.print("Filters: { ");
 		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
 			String key = it.next();
 			String value = filters.get(key);
 			System.out.print("[" + key + ", " + value + "]   ");
 		}
+		System.out.println("}");
 		/* Fine blocco stampe. Ce ne sono altre, però! */
 
 		updateChiefAndCompany(filters);
@@ -111,25 +112,25 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	protected abstract List<Agreement> getData(int first, int pageSize, Map<String, String> filters);
 
 	protected void updateChiefAndCompany(Map<String, String> filters) {
-		if (!ignoreTableFilters) {
+		if (!ignoreTableFilters && filters != null) {
 			Integer newChiefId = null;
 			Integer newCompanyId = null;
-			if (filters != null) {
-				String tmp = filters.get("chief.id");
-				if (tmp != null) {
-					newChiefId = Integer.parseInt(tmp);
-				}
-				tmp = filters.get("company.id");
-				if (tmp != null) {
-					newCompanyId = Integer.parseInt(tmp);
-				}
+			String tmp = filters.get("chief.id");
+			if (tmp != null) {
+				newChiefId = Integer.parseInt(tmp);
+			}
+			tmp = filters.get("company.id");
+			if (tmp != null) {
+				newCompanyId = Integer.parseInt(tmp);
 			}
 			setFilterChiefId(newChiefId);
 			setFilterCompanyId(newCompanyId);
+
 		}
 	}
 
 	public void filterOnReload() {
+		System.out.println("Ignore = true");
 		ignoreTableFilters = true;
 	}
 
@@ -143,14 +144,14 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	public Integer getFilterChiefId() {
-		System.out.println("Getting value: " + filterChiefId);
+		System.out.println("Getting chief value: " + filterChiefId);
 		// return (filterChiefId != null) ? filterChiefId : 0;
 		return filterChiefId;
 	}
 
 	public Integer getFilterCompanyId() {
-		System.out.println("Getting value: " + filterCompanyId);
-//		return (filterCompanyId != null) ? filterCompanyId : 0;
+		System.out.println("Getting company value: " + filterCompanyId);
+		// return (filterCompanyId != null) ? filterCompanyId : 0;
 		return filterCompanyId;
 	}
 
@@ -165,14 +166,14 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	public final String getFiltersAsParameterList() {
 		FilterList l = initFilterList();
 		if (filterChiefId != null) {
-			l.put("fchiefid",  filterChiefId.toString());
+			l.put("fchiefid", filterChiefId.toString());
 		}
-		if(filterCompanyId != null){
+		if (filterCompanyId != null) {
 			l.put("fcompid", filterCompanyId.toString());
 		}
 		return l.asParameterList();
 	}
-	
+
 	protected abstract FilterList initFilterList();
 
 	public static final class FilterList {
