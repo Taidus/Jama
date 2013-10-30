@@ -49,7 +49,6 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 	public void deleteAgreement() {
 		print("Deleting");
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
-		close();
 		contractManager.deleteContract();
 	}
 
