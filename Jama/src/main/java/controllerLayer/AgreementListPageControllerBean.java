@@ -22,38 +22,31 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 	public LazyContractDataModel getLazyModel() {
 		return lazyModel;
 	}
-	
+
 	@Override
 	protected void closeModel() {
 		lazyModel.closeService();
 	}
-	
-	public void printDel(){
-		//TODO eliminare
-		System.out.println("+++++++++++++++++++++++++++++++++++++");
-	}
 
 	public String viewAgreement() {
-		close();
 		print("Viewing");
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		contractManager.setFiltersParamList((lazyModel.getFiltersAsParameterList()));
 		System.out.println(lazyModel.getFiltersAsParameterList());
-//		lazyModel.setFilterMaxDate(new Date());
+		close();
 		return contractManager.viewContract();
 	}
 
 	public String editAgreement() {
-		close();
 		print("Editing");
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		contractManager.setFiltersParamList((lazyModel.getFiltersAsParameterList()));
 		System.out.println(lazyModel.getFiltersAsParameterList());
+		close();
 		return contractManager.editContract();
 	}
 
 	public void deleteAgreement() {
-		close();
 		print("Deleting");
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		contractManager.deleteContract();
