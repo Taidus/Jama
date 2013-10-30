@@ -15,21 +15,47 @@ import javax.persistence.criteria.Root;
 
 import org.primefaces.model.SortOrder;
 
-
-import businessLayer.Agreement;
+import security.AdminAllowed;
+import security.ChiefScientistAllowed;
+import security.Principal;
+import annotations.Logged;
+import businessLayer.Contract;
 
 @Stateful
 @ConversationScoped
 
-public class AgreementSearchService extends ResultPagerBean<Agreement> {
-
+public class AgreementSearchService extends ResultPagerBean<Contract> {
+	
+	@Logged
+	private Principal principal;
+	
+	@ChiefScientistAllowed
+	public void initWithLoggedUserCode(Date lowerDate, Date upperDate, Integer chiefId,
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass){
+		
+		String code = principal.getSerialNumber();
+		
+		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass, code);
+		
+	}
+	
+	@AdminAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order) {
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
+		
+		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass , null);
+		
+	}
+
+	private void _init(Date lowerDate, Date upperDate, Integer chiefId,
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, String principalSerialNumber) {
 		currentPage = 0;
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Agreement> c = cb.createQuery(Agreement.class);
-		Root<Agreement> agr = c.from(Agreement.class);
+		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
+		Root<? extends Contract> agr;
+		
+		agr = c.from(contractClass);
 		c.select(agr);
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
@@ -61,6 +87,11 @@ public class AgreementSearchService extends ResultPagerBean<Agreement> {
 					"companyId");
 			criteria.add(cb.equal(agr.get("company").get("id"), p));
 
+		}
+		if(principalSerialNumber != null){
+			ParameterExpression<String> p = cb.parameter(String.class,
+					"principalSerialNumber");
+			criteria.add(cb.equal(agr.get("chief").get("serialNumber"), p));
 		}
 		
 		if(order == SortOrder.ASCENDING){
@@ -95,6 +126,9 @@ public class AgreementSearchService extends ResultPagerBean<Agreement> {
 			}
 			if (companyId != null) {
 				query.setParameter("companyId", companyId);
+			}
+			if (principalSerialNumber != null) {
+				query.setParameter("principalSerialNumber", principalSerialNumber);
 			}
 
 		} else {
