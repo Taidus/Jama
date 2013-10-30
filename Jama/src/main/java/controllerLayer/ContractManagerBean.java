@@ -84,6 +84,8 @@ public class ContractManagerBean implements Serializable {
 	}
 
 	private void begin() {
+		System.out.println("Conversation Inherited="+conversationninherited);
+		
 		if (conversation.isTransient()) {
 			conversation.begin();
 
@@ -102,13 +104,18 @@ public class ContractManagerBean implements Serializable {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	
 	public void save() {
+		
+		System.out.println("SAVE");
 
 		ContractDao.create(contract);
 		close();
 	}
-
+	
+	
 	public void cancel() {
+		System.out.println("CANCEL");
 		close();
 	}
 
@@ -118,7 +125,8 @@ public class ContractManagerBean implements Serializable {
 
 	private void initContract() {
 		begin();
-		contract = ContractDao.getById(selectedContractId);
+//		contract = ContractDao.getById(selectedContractId);
+		contract = em.find(Contract.class, selectedContractId);
 
 	}
 
