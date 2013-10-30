@@ -6,10 +6,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"serialNumber"})
+    )
 @NamedQueries({
 @NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c ORDER BY c.surname")
 })
@@ -19,9 +24,22 @@ public class ChiefScientist {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@NotNull @Size(min=1, max=100) private String name;
-	@NotNull @Size(min=1, max=100) private String surname;
+	@Size(min=1, max=100) 
+	private String name;
+	@Size(min=1, max=100) 
+	private String surname;
 	
+	
+	private String serialNumber;
+	
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -56,6 +74,8 @@ public class ChiefScientist {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((serialNumber == null) ? 0 : serialNumber.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
@@ -76,6 +96,11 @@ public class ChiefScientist {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (serialNumber == null) {
+			if (other.serialNumber != null)
+				return false;
+		} else if (!serialNumber.equals(other.serialNumber))
+			return false;
 		if (surname == null) {
 			if (other.surname != null)
 				return false;
@@ -83,6 +108,8 @@ public class ChiefScientist {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 	

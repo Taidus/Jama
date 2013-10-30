@@ -15,23 +15,24 @@ import javax.persistence.criteria.Root;
 
 import org.primefaces.model.SortOrder;
 
-import businessLayer.Agreement;
-import businessLayer.AgreementInstallment;
+import security.AdminAllowed;
+import businessLayer.Contract;
 
 @Stateful
 @ConversationScoped
-public class DeadlineSearchService extends ResultPagerBean<Agreement> {
+public class DeadlineSearchService extends ResultPagerBean<Contract> {
 
 	public DeadlineSearchService() {
 	}
 
+	@AdminAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order) {
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
 		currentPage = 0;
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Agreement> c = cb.createQuery(Agreement.class);
-		Root<Agreement> agr = c.from(Agreement.class);
+		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
+		Root<? extends Contract> agr = c.from(contractClass);
 		//Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
 	
 		// TODO funziona sul serio?

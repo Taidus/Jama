@@ -16,7 +16,9 @@ import util.MailSender;
 import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
+import businessLayer.Contract;
 import businessLayer.Department;
+import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
 import daoLayer.AgreementSearchService;
 import daoLayer.ChiefScientistDaoBean;
@@ -120,28 +122,28 @@ public class TestBean implements Serializable {
 		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
 		c.add(Calendar. DAY_OF_MONTH,3);
 		Date upper = new Date(c.getTimeInMillis());
-		deadService.setPageSize(1);
+		searchService.setPageSize(1);
 		
 		System.out.println("Querying in dates: "+lower+", "+upper);
 
-		deadService.init(null, null, null, null, null);
+		searchService.init(null, null, null, null, null,Funding.class);
 	}
 
 	public void doJob1() {
 		
 
-		System.out.println(deadService.getCurrentResults());
+		System.out.println(searchService.getCurrentResults());
 
 	}
 
 	public void doJob2() {
 
-		deadService.next();
+		searchService.next();
 	}
 
 	public void doJob3() {
 
-		deadService.previous();
+		searchService.previous();
 	}
 	
 	
