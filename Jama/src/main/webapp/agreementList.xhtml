@@ -4,7 +4,8 @@
 
 <f:metadata>
 	<f:viewParam name="chief.id" value="#{agreementListPCB.lazyModel.filterChiefId}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="company.id" value="#{agreementListPCB.lazyModel.filterCompanyId}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{agreementListPCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="fmindate" value="#{agreementListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
 		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="fmaxdate" value="#{agreementListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
@@ -12,7 +13,7 @@
 	<f:viewParam name="sortorder" value="#{agreementListPCB.lazyModel.sortOrder}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="first" value="#{agreementListPCB.lazyModel.pageFirst}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{agreementListPCB.lazyModel.pageRows}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	
+
 	<f:event listener="#{agreementListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
 
@@ -120,13 +121,13 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{agreementListPCB.viewAgreement()}">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{agreementListPCB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{agreementListPCB.editAgreement()}">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{agreementListPCB.editAgreement()}">
 					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-trash" oncomplete="w_confirm.show();">
 					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
