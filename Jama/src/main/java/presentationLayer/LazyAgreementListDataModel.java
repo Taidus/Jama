@@ -10,14 +10,15 @@ import javax.enterprise.context.Dependent;
 import org.primefaces.model.SortOrder;
 
 import businessLayer.Agreement;
-import daoLayer.AgreementSearchService;
+import businessLayer.Contract;
+import daoLayer.ContractSearchService;
 
 @Dependent
-public class LazyAgreementListDataModel extends LazyAgreementDataModel {
+public class LazyAgreementListDataModel extends LazyContractDataModel {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private AgreementSearchService agreementSearch;
+	private ContractSearchService contractSearch;
 
 	private Date filterMinDate, filterMaxDate;
 	protected SortOrder sortOrder;
@@ -55,24 +56,24 @@ public class LazyAgreementListDataModel extends LazyAgreementDataModel {
 	}
 	
 	public void closeService(){
-		agreementSearch.finished();
+		contractSearch.finished();
 	}
 	
 	@Override
-	protected List<Agreement> getData(Map<String, String> filters) {
+	protected List<Contract> getData(Map<String, String> filters) {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
-		agreementSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder);
+		contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder, Agreement.class);
 
-		agreementSearch.setPageSize(pageRows);
+		contractSearch.setPageSize(pageRows);
 //		int currentPage = (pageSize != 0) ? first / pageSize : 0;
 		int currentPage = pageFirst / pageRows;
-		agreementSearch.setCurrentPage(currentPage);
+		contractSearch.setCurrentPage(currentPage);
 
-		List<Agreement> result = agreementSearch.getCurrentResults();
-		agreementSearch.next();
-		result.addAll(agreementSearch.getCurrentResults());
+		List<Contract> result = contractSearch.getCurrentResults();
+		contractSearch.next();
+		result.addAll(contractSearch.getCurrentResults());
 
 		return result;
 	}

@@ -9,9 +9,9 @@ import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import businessLayer.Agreement;
+import businessLayer.Contract;
 
-public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
+public abstract class LazyContractDataModel extends LazyDataModel<Contract> {
 	// NB: i filtri di PF lavorano con chiavi di tipo stringa. Queste stesse
 	// chiavi vengono utilizzate anche nel passaggio dei parametri via URL. Per
 	// un corretto funzionamento della tabella, le chiavi relative ad uno stesso
@@ -22,26 +22,26 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 	protected DataTable dataTable;
 
-	protected List<Agreement> displayedAgreements;
+	protected List<Contract> displayedContracts;
 	protected int pageFirst, pageRows;
-	protected Agreement selectedValue;
+	protected Contract selectedValue;
 
 	protected Integer filterChiefId, filterCompanyId;
 	protected boolean ignoreUiTableFilters;
 
-	public LazyAgreementDataModel() {
+	public LazyContractDataModel() {
 		this.ignoreUiTableFilters = false;
 		this.filterChiefId = null;
 		this.filterCompanyId = null;
 	}
 
 	@Override
-	public final Agreement getRowData(String rowKey) {
+	public final Contract getRowData(String rowKey) {
 		int key = Integer.parseInt(rowKey);
 
-		Agreement current = null;
+		Contract current = null;
 		boolean found = false;
-		Iterator<Agreement> it = displayedAgreements.iterator();
+		Iterator<Contract> it = displayedContracts.iterator();
 
 		while (false == found && it.hasNext()) {
 			current = it.next();
@@ -58,20 +58,20 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	@Override
-	public final Object getRowKey(Agreement agr) {
+	public final Object getRowKey(Contract agr) {
 		return agr.getId();
 	}
 
 	@Override
-	public final List<Agreement> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+	public final List<Contract> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 		this.pageFirst = first;
 		this.pageRows = pageSize;
 		updateFields(sortField, sortOrder, filters);
-		displayedAgreements = getData(filters);
+		displayedContracts = getData(filters);
 
 		// rowCount
 		int rowCount;
-		rowCount = displayedAgreements.size();
+		rowCount = displayedContracts.size();
 		this.setRowCount(rowCount);
 		System.out.println("getRowCount = " + this.getRowCount());
 		System.out.println("First: " + first + "; pageFirst: " + pageFirst + "; page size: " + pageSize + "; pageRows: " + pageRows + "; row count: "
@@ -79,7 +79,7 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 
 		ignoreUiTableFilters = false;
 		System.out.println("--------------------------------------------");
-		return displayedAgreements;
+		return displayedContracts;
 	}
 
 	protected void updateFields(String sortField, SortOrder sortOrder, Map<String, String> filters) {
@@ -99,7 +99,7 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		System.out.println("Chief ID: " + filterChiefId + "; company ID: " + filterCompanyId);
 	}
 
-	protected abstract List<Agreement> getData(Map<String, String> filters);
+	protected abstract List<Contract> getData(Map<String, String> filters);
 
 	protected void updateChiefAndCompany(Map<String, String> filters) {
 		if (!ignoreUiTableFilters && filters != null) {
@@ -176,11 +176,11 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 		return filterCompanyId;
 	}
 
-	public Agreement getSelectedValue() {
+	public Contract getSelectedValue() {
 		return selectedValue;
 	}
 
-	public void setSelectedValue(Agreement selectedValue) {
+	public void setSelectedValue(Contract selectedValue) {
 		this.selectedValue = selectedValue;
 	}
 
@@ -198,6 +198,7 @@ public abstract class LazyAgreementDataModel extends LazyDataModel<Agreement> {
 	}
 
 	public void setPageRows(int pageRows) {
+		System.out.println("IO NON DOVREI ESSERE CHIAMATO SENZA MOTIVO! AEJThàwi rhwpo nrphtb");
 		this.pageRows = pageRows;
 	}
 

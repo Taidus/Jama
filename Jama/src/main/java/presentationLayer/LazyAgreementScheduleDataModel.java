@@ -9,11 +9,12 @@ import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 
 import businessLayer.Agreement;
+import businessLayer.Contract;
 import businessLayer.Installment;
 import daoLayer.DeadlineSearchService;
 
 @Dependent
-public class LazyAgreementScheduleDataModel extends LazyAgreementDataModel {
+public class LazyAgreementScheduleDataModel extends LazyContractDataModel {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -62,18 +63,18 @@ public class LazyAgreementScheduleDataModel extends LazyAgreementDataModel {
 	}
 
 	@Override
-	protected List<Agreement> getData(Map<String, String> filters) {
+	protected List<Contract> getData(Map<String, String> filters) {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
-		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null);
+		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null, Agreement.class);
 
 		searchService.setPageSize(pageRows);
 //		int currentPage = (pageSize != 0) ? first / pageSize : 0;
 		int currentPage = pageFirst / pageRows;
 		searchService.setCurrentPage(currentPage);
 
-		List<Agreement> result = searchService.getCurrentResults();
+		List<Contract> result = searchService.getCurrentResults();
 		searchService.next();
 		result.addAll(searchService.getCurrentResults());
 

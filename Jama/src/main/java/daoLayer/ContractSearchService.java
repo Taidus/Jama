@@ -24,7 +24,7 @@ import businessLayer.Contract;
 @Stateful
 @ConversationScoped
 
-public class AgreementSearchService extends ResultPagerBean<Contract> {
+public class ContractSearchService extends ResultPagerBean<Contract> {
 	
 	@Logged
 	private Principal principal;

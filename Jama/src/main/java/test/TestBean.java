@@ -20,7 +20,7 @@ import businessLayer.Contract;
 import businessLayer.Department;
 import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
-import daoLayer.AgreementSearchService;
+import daoLayer.ContractSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
 import daoLayer.DeadlineSearchService;
@@ -43,7 +43,7 @@ public class TestBean implements Serializable {
 	@EJB
 	private CompanyDaoBean compDB;
 	@EJB
-	private AgreementSearchService searchService;
+	private ContractSearchService searchService;
 	@EJB
 	private DeadlineSearchService deadService;
 	

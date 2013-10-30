@@ -7,7 +7,7 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 
-import presentationLayer.LazyAgreementDataModel;
+import presentationLayer.LazyContractDataModel;
 
 @ConversationScoped
 public abstract class AgreementTablePageController implements Serializable {
@@ -25,7 +25,7 @@ public abstract class AgreementTablePageController implements Serializable {
 		return conversation;
 	}
 
-	public abstract LazyAgreementDataModel getLazyModel();
+	public abstract LazyContractDataModel getLazyModel();
 
 	protected void close() {
 		conversation.end();

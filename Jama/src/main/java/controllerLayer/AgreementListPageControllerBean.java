@@ -6,9 +6,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import presentationLayer.LazyAgreementDataModel;
 import presentationLayer.LazyAgreementListDataModel;
-import businessLayer.Agreement;
+import presentationLayer.LazyContractDataModel;
+import businessLayer.Contract;
 
 @Named("agreementListPCB")
 @ConversationScoped
@@ -19,7 +19,7 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 	private LazyAgreementListDataModel lazyModel;
 
 	@Override
-	public LazyAgreementDataModel getLazyModel() {
+	public LazyContractDataModel getLazyModel() {
 		return lazyModel;
 	}
 	
@@ -61,8 +61,8 @@ public class AgreementListPageControllerBean extends AgreementTablePageControlle
 
 	private void print(String action) {
 		// TODO eliminare
-		Agreement selectedValue = lazyModel.getSelectedValue();
-		System.out.println("***\n" + action + " agreement with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getName()
+		Contract selectedValue = lazyModel.getSelectedValue();
+		System.out.println("***\n" + action + " contract with ID: " + selectedValue.getId() + ". Chief: " + selectedValue.getChief().getName()
 				+ "; company: " + selectedValue.getCompany().getName() + "\n***");
 	}
 }
