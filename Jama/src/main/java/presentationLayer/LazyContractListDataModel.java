@@ -14,7 +14,7 @@ import businessLayer.Contract;
 import daoLayer.ContractSearchService;
 
 @Dependent
-public class LazyAgreementListDataModel extends LazyContractDataModel {
+public class LazyContractListDataModel extends LazyContractDataModel {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -23,7 +23,7 @@ public class LazyAgreementListDataModel extends LazyContractDataModel {
 	private Date filterMinDate, filterMaxDate;
 	protected SortOrder sortOrder;
 
-	public LazyAgreementListDataModel() {
+	public LazyContractListDataModel() {
 		super();
 		this.sortOrder = SortOrder.DESCENDING;
 	}

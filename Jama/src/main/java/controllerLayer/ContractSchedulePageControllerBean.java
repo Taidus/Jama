@@ -6,18 +6,18 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import presentationLayer.LazyAgreementScheduleDataModel;
+import presentationLayer.LazyContractScheduleDataModel;
 
-@Named("agreementSchedulePCB")
+@Named("contractSchedulePCB")
 @ConversationScoped
-public class AgreementSchedulePageControllerBean extends AgreementTablePageController implements Serializable {
+public class ContractSchedulePageControllerBean extends ContractTablePageController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private LazyAgreementScheduleDataModel lazyModel;
+	private LazyContractScheduleDataModel lazyModel;
 
 	@Override
-	public LazyAgreementScheduleDataModel getLazyModel() {
+	public LazyContractScheduleDataModel getLazyModel() {
 		return lazyModel;
 	}
 
@@ -27,9 +27,9 @@ public class AgreementSchedulePageControllerBean extends AgreementTablePageContr
 	}
 
 	public String viewAgreement() {
-		close();
 		contractManager.setSelectedContractd(lazyModel.getSelectedValue().getId());
 		contractManager.setFiltersParamList(lazyModel.getFiltersAsParameterList());
+		close();
 		return contractManager.viewContract();
 	}
 

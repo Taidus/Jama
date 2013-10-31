@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import presentationLayer.LazyContractDataModel;
 
 @ConversationScoped
-public abstract class AgreementTablePageController implements Serializable {
+public abstract class ContractTablePageController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject protected ContractManagerBean contractManager;

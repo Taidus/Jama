@@ -1,6 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	
+<f:metadata>
+	<f:viewParam name="chief.id" value="#{contractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{contractListPCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmindate" value="#{contractListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmaxdate" value="#{contractListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{contractListPCB.lazyModel.pageFirst}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{contractListPCB.lazyModel.pageRows}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+
+	<f:event listener="#{contractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
+</f:metadata>
 
 <h:head>
 	<h:outputStylesheet name="home.css" library="css" />
@@ -37,18 +51,18 @@
 	</script>
 </h:head>
 
-<h:body onload="setFilters(#{agreementSchedulePCB.lazyModel.filterChiefId}, #{agreementSchedulePCB.lazyModel.filterCompanyId});">
+<h:body onload="setFilters(#{contractSchedulePCB.lazyModel.filterChiefId}, #{contractSchedulePCB.lazyModel.filterCompanyId});">
 
 	<h:form prependId="false">
-		<input type="hidden" name="cid" value='#{agreementSchedulePCB.conversation.id}' />
+		<input type="hidden" name="cid" value='#{contractSchedulePCB.conversation.id}' />
 
 		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="agrSchedule">
-			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{agreementSchedulePCB.viewAgreement()}" />
+			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{contractSchedulePCB.viewAgreement()}" />
 		</p:contextMenu>
 
-		<p:dataTable id="agrSchedule" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule" lazy="true" value="#{agreementSchedulePCB.lazyModel}"
+		<p:dataTable id="agrSchedule" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule" lazy="true" value="#{contractSchedulePCB.lazyModel}"
 			emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
-			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{agreementSchedulePCB.lazyModel.selectedValue}"
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{contractSchedulePCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}">
 
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
@@ -75,11 +89,11 @@
 					<h:outputText value="#{msgs.deadlineDate}" />
 					<h:form id="calendarFilters">
 						<div style="display: block; width: 90%; margin: auto;">
-							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{agreementSchedulePCB.lazyModel.filterMinDate}"
+							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{contractSchedulePCB.lazyModel.filterMinDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 							</p:calendar>
 							-
-							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{agreementSchedulePCB.lazyModel.filterMaxDate}"
+							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{contractSchedulePCB.lazyModel.filterMaxDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 							</p:calendar>
 						</div>
@@ -91,19 +105,19 @@
 					</h:form>
 				</f:facet>
 
-				<h:outputText value="#{agreementSchedulePCB.lazyModel.findClosestDeadline(agr)}">
+				<h:outputText value="#{contractSchedulePCB.lazyModel.findClosestDeadline(agr)}">
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{agreementSchedulePCB.viewAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{agreementSchedulePCB.lazyModel.selectedValue}" />
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{contractSchedulePCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{contractSchedulePCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
 			</p:column>
 
 		</p:dataTable>
 
-		<p:commandButton action="#{agreementSchedulePCB.backToHome()}" value="Home" immediate="true" />
+		<p:commandButton action="#{contractSchedulePCB.backToHome()}" value="Home" immediate="true" />
 
 	</h:form>
 

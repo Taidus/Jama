@@ -14,7 +14,7 @@ import businessLayer.Installment;
 import daoLayer.DeadlineSearchService;
 
 @Dependent
-public class LazyAgreementScheduleDataModel extends LazyContractDataModel {
+public class LazyContractScheduleDataModel extends LazyContractDataModel {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -22,7 +22,7 @@ public class LazyAgreementScheduleDataModel extends LazyContractDataModel {
 
 	private Date filterMinDate, filterMaxDate;
 
-	public LazyAgreementScheduleDataModel() {
+	public LazyContractScheduleDataModel() {
 		super();
 	}
 

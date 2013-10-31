@@ -6,17 +6,17 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import presentationLayer.LazyAgreementListDataModel;
+import presentationLayer.LazyContractListDataModel;
 import presentationLayer.LazyContractDataModel;
 import businessLayer.Contract;
 
-@Named("agreementListPCB")
+@Named("contractListPCB")
 @ConversationScoped
-public class AgreementListPageControllerBean extends AgreementTablePageController implements Serializable {
+public class ContractListPageControllerBean extends ContractTablePageController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private LazyAgreementListDataModel lazyModel;
+	private LazyContractListDataModel lazyModel;
 
 	@Override
 	public LazyContractDataModel getLazyModel() {

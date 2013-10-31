@@ -3,18 +3,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
-	<f:viewParam name="chief.id" value="#{agreementListPCB.lazyModel.filterChiefId}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="company.id" value="#{agreementListPCB.lazyModel.filterCompanyId}"
-		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="fmindate" value="#{agreementListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
-		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="fmaxdate" value="#{agreementListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
-		valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="sortorder" value="#{agreementListPCB.lazyModel.sortOrder}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="first" value="#{agreementListPCB.lazyModel.pageFirst}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="rows" value="#{agreementListPCB.lazyModel.pageRows}" valueChangeListener="#{agreementListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="chief.id" value="#{contractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{contractListPCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmindate" value="#{contractListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmaxdate" value="#{contractListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="sortorder" value="#{contractListPCB.lazyModel.sortOrder}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{contractListPCB.lazyModel.pageFirst}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{contractListPCB.lazyModel.pageRows}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
 
-	<f:event listener="#{agreementListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
+	<f:event listener="#{contractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
 
 <h:head>
@@ -61,20 +61,20 @@
 		
 	</script>
 </h:head>
-<h:body onload="setFilters('#{agreementListPCB.lazyModel.filterChiefId}', '#{agreementListPCB.lazyModel.filterCompanyId}');">
+<h:body onload="setFilters('#{contractListPCB.lazyModel.filterChiefId}', '#{contractListPCB.lazyModel.filterCompanyId}');">
 
 	<h:form prependId="false">
-		<input type="hidden" name="cid" value='#{agreementListPCB.conversation.id}' />
+		<input type="hidden" name="cid" value='#{contractListPCB.conversation.id}' />
 
 		<p:contextMenu id="tableContextMenu" widgetVar="w_tableContextMenu" for="agreementTable">
-			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{agreementListPCB.viewAgreement()}" />
-			<p:menuitem value="#{msgs.edit}" icon="ui-icon-wrench" action="#{agreementListPCB.editAgreement()}" />
-			<p:menuitem value="#{msgs.remove}" icon="ui-icon-trash" action="#{agreementListPCB.deleteAgreement()}" />
+			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{contractListPCB.viewAgreement()}" />
+			<p:menuitem value="#{msgs.edit}" icon="ui-icon-wrench" action="#{contractListPCB.editAgreement()}" />
+			<p:menuitem value="#{msgs.remove}" icon="ui-icon-trash" action="#{contractListPCB.deleteAgreement()}" />
 		</p:contextMenu>
 
-		<p:dataTable id="agreementTable" binding="#{agreementListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable" lazy="true"
-			value="#{agreementListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
-			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{agreementListPCB.lazyModel.selectedValue}"
+		<p:dataTable id="agreementTable" binding="#{contractListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable" lazy="true"
+			value="#{contractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{contractListPCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}" sortOrder="descending">
 
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
@@ -102,11 +102,11 @@
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
 						<div style="display: block; width: 90%; margin: auto;">
-							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{agreementListPCB.lazyModel.filterMinDate}"
+							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{contractListPCB.lazyModel.filterMinDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 							</p:calendar>
 							-
-							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{agreementListPCB.lazyModel.filterMaxDate}"
+							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{contractListPCB.lazyModel.filterMaxDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 							</p:calendar>
 						</div>
@@ -121,14 +121,14 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{agreementListPCB.viewAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{contractListPCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{contractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{agreementListPCB.editAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{contractListPCB.editAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{contractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{agr}" target="#{agreementListPCB.lazyModel.selectedValue}" />
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
+					<f:setPropertyActionListener value="#{agr}" target="#{contractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
 			</p:column>
@@ -136,12 +136,12 @@
 		</p:dataTable>
 
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
-			<p:commandButton value="#{msgs.yes}" action="#{agreementListPCB.deleteAgreement()}" immediate="true" update="agreementTable"
+			<p:commandButton value="#{msgs.yes}" action="#{contractListPCB.deleteAgreement()}" immediate="true" update="agreementTable"
 				oncomplete="w_confirm.hide(); setRowEvent();" />
 			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
 		</p:confirmDialog>
 
-		<p:commandButton action="#{agreementListPCB.backToHome()}" value="Home" immediate="true" />
+		<p:commandButton action="#{contractListPCB.backToHome()}" value="Home" immediate="true" />
 
 	</h:form>
 
