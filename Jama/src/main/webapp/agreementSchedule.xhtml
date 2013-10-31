@@ -3,17 +3,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 	
 <f:metadata>
-	<f:viewParam name="chief.id" value="#{contractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="company.id" value="#{contractListPCB.lazyModel.filterCompanyId}"
-		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="fmindate" value="#{contractListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
-		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="fmaxdate" value="#{contractListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
-		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="first" value="#{contractListPCB.lazyModel.pageFirst}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="rows" value="#{contractListPCB.lazyModel.pageRows}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="chief.id" value="#{contractSchedulePCB.lazyModel.filterChiefId}" valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{contractSchedulePCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmindate" value="#{contractSchedulePCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmaxdate" value="#{contractSchedulePCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{contractSchedulePCB.lazyModel.pageFirst}" valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{contractSchedulePCB.lazyModel.pageRows}" valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
 
-	<f:event listener="#{contractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
+	<f:event listener="#{contractSchedulePCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
 
 <h:head>
