@@ -9,9 +9,10 @@ import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import daoLayer.ResultPagerBean;
 import businessLayer.Contract;
 
-public abstract class LazyContractDataModel extends LazyDataModel<Contract> {
+public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract> {
 	// NB: i filtri di PF lavorano con chiavi di tipo stringa. Queste stesse
 	// chiavi vengono utilizzate anche nel passaggio dei parametri via URL. Per
 	// un corretto funzionamento della tabella, le chiavi relative ad uno stesso
@@ -26,14 +27,13 @@ public abstract class LazyContractDataModel extends LazyDataModel<Contract> {
 	protected int pageFirst, pageRows;
 	protected Contract selectedValue;
 
-	protected Integer filterChiefId, filterCompanyId;
 	protected boolean ignoreUiTableFilters;
 
-	public LazyContractDataModel() {
+
+	public ContractTableLazyDataModel() {
 		this.ignoreUiTableFilters = false;
-		this.filterChiefId = null;
-		this.filterCompanyId = null;
 	}
+
 
 	@Override
 	public final Contract getRowData(String rowKey) {
@@ -57,15 +57,30 @@ public abstract class LazyContractDataModel extends LazyDataModel<Contract> {
 		return current;
 	}
 
+
 	@Override
-	public final Object getRowKey(Contract agr) {
-		return agr.getId();
+	public final Object getRowKey(Contract contract) {
+		return contract.getId();
 	}
+
 
 	@Override
 	public final List<Contract> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 		this.pageFirst = first;
 		this.pageRows = pageSize;
+
+		/* TODO Blocco stampe. Eliminare */
+		System.out.println("-----------------");
+
+		System.out.print("Filters: { ");
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			String key = it.next();
+			String value = filters.get(key);
+			System.out.print("[" + key + ", " + value + "]   ");
+		}
+		System.out.println("}");
+		/* Fine blocco stampe. Ce ne sono altre, però! */
+
 		updateFields(sortField, sortOrder, filters);
 		displayedContracts = getData(filters);
 
@@ -82,46 +97,74 @@ public abstract class LazyContractDataModel extends LazyDataModel<Contract> {
 		return displayedContracts;
 	}
 
-	protected void updateFields(String sortField, SortOrder sortOrder, Map<String, String> filters) {
-		/* TODO Blocco stampe. Eliminare */
-		System.out.println("-----------------");
 
-		System.out.print("Filters: { ");
-		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-			String key = it.next();
-			String value = filters.get(key);
-			System.out.print("[" + key + ", " + value + "]   ");
-		}
-		System.out.println("}");
-		/* Fine blocco stampe. Ce ne sono altre, però! */
+	protected List<Contract> getData(Map<String, String> filters) {
+		initPager(filters);
 
-		updateChiefAndCompany(filters);
-		System.out.println("Chief ID: " + filterChiefId + "; company ID: " + filterCompanyId);
+		getPager().setPageSize(pageRows);
+		// int currentPage = (pageSize != 0) ? first / pageSize : 0;
+		int currentPage = pageFirst / pageRows;
+		getPager().setCurrentPage(currentPage);
+
+		List<Contract> result = getPager().getCurrentResults();
+		getPager().next();
+		result.addAll(getPager().getCurrentResults());
+
+		return result;
 	}
 
-	protected abstract List<Contract> getData(Map<String, String> filters);
 
-	protected void updateChiefAndCompany(Map<String, String> filters) {
-		if (!ignoreUiTableFilters && filters != null) {
-			Integer newChiefId = null;
-			Integer newCompanyId = null;
-			String tmp = filters.get("chief.id");
-			if (tmp != null) {
-				newChiefId = Integer.parseInt(tmp);
-			}
-			tmp = filters.get("company.id");
-			if (tmp != null) {
-				newCompanyId = Integer.parseInt(tmp);
-			}
-			setFilterChiefId(newChiefId);
-			setFilterCompanyId(newCompanyId);
-		}
+	protected abstract void updateFields(String sortField, SortOrder sortOrder, Map<String, String> filters);
+
+
+	protected abstract void initPager(Map<String, String> filters);
+
+
+	public Contract getSelectedValue() {
+		return selectedValue;
 	}
+
+
+	public void setSelectedValue(Contract selectedValue) {
+		this.selectedValue = selectedValue;
+	}
+
+
+	public int getPageFirst() {
+		return pageFirst;
+	}
+
+
+	public void setPageFirst(int pageFirst) {
+		this.pageFirst = pageFirst;
+	}
+
+
+	public int getPageRows() {
+		return pageRows;
+	}
+
+
+	public void setPageRows(int pageRows) {
+		this.pageRows = pageRows;
+	}
+
+
+	public DataTable getDataTable() {
+		return dataTable;
+	}
+
+
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
+
 
 	public void filterOnReload() {
 		System.out.println("Filtering on reload");
 		ignoreUiTableFilters = true;
 	}
+
 
 	public void loadTableFilters() {
 		if (ignoreUiTableFilters) {
@@ -154,98 +197,51 @@ public abstract class LazyContractDataModel extends LazyDataModel<Contract> {
 		}
 	}
 
-	public void setFilterChiefId(Integer filterChiefId) {
-		System.out.println("################################################### Setting filter chief id to " + filterChiefId);
-		this.filterChiefId = filterChiefId;
-	}
-
-	public void setFilterCompanyId(Integer filterCompanyId) {
-		System.out.println("################################################### Setting filter comp id to " + filterCompanyId);
-		this.filterCompanyId = filterCompanyId;
-	}
-
-	public Integer getFilterChiefId() {
-		System.out.println("Getting chief value: " + filterChiefId);
-		// return (filterChiefId != null) ? filterChiefId : 0;
-		return filterChiefId;
-	}
-
-	public Integer getFilterCompanyId() {
-		System.out.println("Getting company value: " + filterCompanyId);
-		// return (filterCompanyId != null) ? filterCompanyId : 0;
-		return filterCompanyId;
-	}
-
-	public Contract getSelectedValue() {
-		return selectedValue;
-	}
-
-	public void setSelectedValue(Contract selectedValue) {
-		this.selectedValue = selectedValue;
-	}
-
-	public int getPageFirst() {
-		return pageFirst;
-	}
-
-	public void setPageFirst(int pageFirst) {
-		System.out.println("IO NON DOVREI ESSERE CHIAMATO SENZA MOTIVO!");
-		this.pageFirst = pageFirst;
-	}
-
-	public int getPageRows() {
-		return pageRows;
-	}
-
-	public void setPageRows(int pageRows) {
-		System.out.println("IO NON DOVREI ESSERE CHIAMATO SENZA MOTIVO! AEJThàwi rhwpo nrphtb");
-		this.pageRows = pageRows;
-	}
-
-	public DataTable getDataTable() {
-		return dataTable;
-	}
-
-	public void setDataTable(DataTable dataTable) {
-		this.dataTable = dataTable;
-	}
 
 	public final String getFiltersAsParameterList() {
 		return buildFilterList().asParameterList();
 	}
 
+
 	private FilterList buildFilterList() {
 		FilterList l = initFilterList();
-
 		l.put("first", String.valueOf(pageFirst));
 		l.put("rows", String.valueOf(pageRows));
-		if (filterChiefId != null) {
-			l.put("chief.id", filterChiefId.toString());
-		}
-		if (filterCompanyId != null) {
-			l.put("company.id", filterCompanyId.toString());
-		}
-
 		return l;
 	}
 
+
 	protected abstract FilterList initFilterList();
+
+
+	public void closePager() {
+		getPager().finished();
+	}
+
+
+	protected abstract ResultPagerBean<Contract> getPager();
+
+
 
 	public static final class FilterList {
 		private Map<String, String> filters;
+
 
 		protected FilterList() {
 			super();
 			this.filters = new HashMap<>();
 		}
 
+
 		protected void put(String key, String value) {
 			filters.put(key, value);
 		}
 
+
 		public String get(String key) {
 			return filters.get(key);
 		}
+
 
 		public String asParameterList() {
 			String result = "";

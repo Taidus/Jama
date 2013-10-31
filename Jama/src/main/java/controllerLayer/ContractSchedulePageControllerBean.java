@@ -6,7 +6,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import presentationLayer.LazyContractScheduleDataModel;
+import presentationLayer.OperatorContractScheduleLDM;
 
 @Named("contractSchedulePCB")
 @ConversationScoped
@@ -14,16 +14,16 @@ public class ContractSchedulePageControllerBean extends ContractTablePageControl
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private LazyContractScheduleDataModel lazyModel;
+	private OperatorContractScheduleLDM lazyModel;
 
 	@Override
-	public LazyContractScheduleDataModel getLazyModel() {
+	public OperatorContractScheduleLDM getLazyModel() {
 		return lazyModel;
 	}
 
 	@Override
 	protected void closeModel() {
-		lazyModel.closeService();
+		lazyModel.closePager();
 	}
 
 	public String viewAgreement() {

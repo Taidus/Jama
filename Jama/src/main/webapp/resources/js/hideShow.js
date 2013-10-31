@@ -1,31 +1,3 @@
-/**
- * 
- */
-function setRowEvent() {
-	
-	/*$("div[class*=hideShow]").ready(function(){
-		alert("ready");
-		setHideShow();
-	});
-	
-	$("div[class*=hideShow]").change(function(){
-		alert("change");
-		setHideShow();
-	});
-	
-	$("div[class*=hideShow]").submit(function(){
-		alert("submit");
-		setHideShow();
-	});
-	*/
-	
-
-
-
-	
-	
-}
-
 function setHideShow(){
 	
 	$("div[class*=hideShow] tr").find(".list-row-button").hide();
@@ -43,27 +15,3 @@ function setHideShow(){
 	
 	
 }
-
-
-/*
-
-$(document).ready(function(){
-	setRowEvent();
-	
-});
-
-$(document).change(function(){
-	alert("documentChange");
-	setRowEvent();
-	
-});
-
-
-
-*/
-
-
-
-
-
-

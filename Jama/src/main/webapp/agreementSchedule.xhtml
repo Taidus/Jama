@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-	
+
 <f:metadata>
-	<f:viewParam name="chief.id" value="#{contractSchedulePCB.lazyModel.filterChiefId}" valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="chief.id" value="#{contractSchedulePCB.lazyModel.filterChiefId}"
+		valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{contractSchedulePCB.lazyModel.filterCompanyId}"
 		valueChangeListener="#{contractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="fmindate" value="#{contractSchedulePCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
@@ -20,34 +21,18 @@
 	<h:outputStylesheet name="home.css" library="css" />
 	<h:outputStylesheet name="table.css" library="css" />
 
+	<h:outputScript name="filters.js" library="js" />
 	<h:outputScript name="hideShow.js" library="js" />
+
 
 	<script type="text/javascript">
 		function setRowEvent(){
 			setHideShow();
 		}
 
-		function setFilters(chiefFilter, companyFilter){
-			jQuery("#agrSchedule\\:agrTableChiefColumn\\:filter").val(chiefFilter);
-			jQuery("#agrSchedule\\:agrTableCompanyColumn\\:filter").val(companyFilter);
-		}
-
-		function calendarFilter(event, agrTable){
-			//event.stopPropagation();
-			agrTable.filter(); 
-			return false;
-		}
-
-		function calendarReset(event, firstDate, lastDate, agrTable){ 
-			firstDate.setDate(null); 
-			lastDate.setDate(null);
-			return calendarFilter(event, agrTable);
-		}
-
-		jQuery(document).ready(function(){
-									setRowEvent();
-								});
-		
+		jQuery(document).ready(function() {
+			setRowEvent();
+		});
 	</script>
 </h:head>
 
@@ -55,9 +40,9 @@
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{contractSchedulePCB.conversation.id}' />
-
+		
 		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="agrSchedule">
-			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{contractSchedulePCB.viewAgreement()}" />
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{contractSchedulePCB.viewAgreement()}" />
 		</p:contextMenu>
 
 		<p:dataTable id="agrSchedule" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule" lazy="true" value="#{contractSchedulePCB.lazyModel}"
@@ -82,7 +67,7 @@
 				<h:outputText value="#{agr.company.name}" />
 			</p:column>
 
-			<p:column id="agrScheduleDateColumn" >
+			<p:column id="agrScheduleDateColumn">
 
 
 				<f:facet name="header">

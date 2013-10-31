@@ -6,8 +6,8 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import presentationLayer.LazyContractListDataModel;
-import presentationLayer.LazyContractDataModel;
+import presentationLayer.OperatorContractListLDM;
+import presentationLayer.ContractTableLazyDataModel;
 import businessLayer.Contract;
 
 @Named("contractListPCB")
@@ -16,16 +16,16 @@ public class ContractListPageControllerBean extends ContractTablePageController 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private LazyContractListDataModel lazyModel;
+	private OperatorContractListLDM lazyModel;
 
 	@Override
-	public LazyContractDataModel getLazyModel() {
+	public ContractTableLazyDataModel getLazyModel() {
 		return lazyModel;
 	}
 
 	@Override
 	protected void closeModel() {
-		lazyModel.closeService();
+		lazyModel.closePager();
 	}
 
 	public String viewAgreement() {
