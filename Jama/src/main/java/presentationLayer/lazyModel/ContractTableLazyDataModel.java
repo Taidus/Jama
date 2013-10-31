@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.lazyModel;
 
 import java.util.HashMap;
 import java.util.Iterator;

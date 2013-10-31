@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.lazyModel;
 
 import java.util.Date;
 import java.util.Map;
@@ -117,16 +117,16 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 			l.put("company.id", filterCompanyId.toString());
 		}
 		if (filterContractMinDate != null) {
-			l.put("fmindate", String.valueOf(filterContractMinDate.getTime()));
+			l.put("fcontrmindate", String.valueOf(filterContractMinDate.getTime()));
 		}
 		if (filterContractMaxDate != null) {
-			l.put("fmaxdate", String.valueOf(filterContractMaxDate.getTime()));
+			l.put("fcontrmaxdate", String.valueOf(filterContractMaxDate.getTime()));
 		}
 		if (filterInstMinDate != null) {
-			l.put("fmaxdate", String.valueOf(filterInstMinDate.getTime()));
+			l.put("finstmindate", String.valueOf(filterInstMinDate.getTime()));
 		}
 		if (filterInstMaxDate != null) {
-			l.put("fmindate", String.valueOf(filterInstMaxDate.getTime()));
+			l.put("finstmaxdate", String.valueOf(filterInstMaxDate.getTime()));
 		}
 
 		return l;

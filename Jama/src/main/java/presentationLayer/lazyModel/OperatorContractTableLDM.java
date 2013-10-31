@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.lazyModel;
 
 import java.util.Date;
 import java.util.Map;
