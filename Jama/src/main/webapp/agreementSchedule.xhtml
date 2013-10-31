@@ -51,7 +51,7 @@
 	</script>
 </h:head>
 
-<h:body onload="setFilters(#{contractSchedulePCB.lazyModel.filterChiefId}, #{contractSchedulePCB.lazyModel.filterCompanyId});">
+<h:body onload="setFilters('#{contractSchedulePCB.lazyModel.filterChiefId}', '#{contractSchedulePCB.lazyModel.filterCompanyId}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{contractSchedulePCB.conversation.id}' />
