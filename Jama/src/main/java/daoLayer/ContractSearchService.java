@@ -113,6 +113,7 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			criteria.add(cb.equal(agr.get("chief").get("serialNumber"), p));
 		}
 		if (closed != null) {
+			System.out.println("Query. Closed = " + closed);
 			ParameterExpression<Boolean> p = cb.parameter(Boolean.class, "closed");
 			criteria.add(cb.equal(agr.get("closed"), p));
 		}

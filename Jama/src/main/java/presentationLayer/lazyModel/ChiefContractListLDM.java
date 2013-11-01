@@ -42,6 +42,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 
 
 	public void setFilterActiveContract(Boolean filterActiveContract) {
+		System.out.println("Vuoi convenzioni chiuse? " + filterActiveContract);
 		this.filterActiveContract = filterActiveContract;
 	}
 
@@ -107,8 +108,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 			setFilterCompanyId(newCompanyId);
 
 			Boolean newFilterAct = null;
-			tmp = filters.get("closed");
-			System.out.println("Filter[closed]:" + newFilterAct);
+			tmp = filters.get("closedString");
 			if (tmp != null) {
 				newFilterAct = Boolean.valueOf(tmp);
 			}
@@ -135,7 +135,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 		FilterList l = new FilterList();
 
 		if (filterActiveContract != null) {
-			l.put("closed", filterActiveContract.toString());
+			l.put("closedString", filterActiveContract.toString());
 		}
 		if (filterCompanyId != null) {
 			l.put("company.id", filterCompanyId.toString());

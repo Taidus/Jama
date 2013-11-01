@@ -312,7 +312,7 @@ public abstract class Contract implements Serializable {
 		for (Installment i : installments) {
 
 			if (i.isPaidInvoice()) {
-				sum.plus(i.getWholeAmount());
+				sum = sum.plus(i.getWholeAmount());
 			}
 
 		}
@@ -329,6 +329,10 @@ public abstract class Contract implements Serializable {
 
 		return getWholeAmount().equals(getTurnOver());
 
+	}
+	
+	public String getClosedString(){
+		return String.valueOf(isClosed());
 	}
 
 	public void setClosed(boolean closed) {
