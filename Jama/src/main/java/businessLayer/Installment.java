@@ -13,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +27,7 @@ import util.Percent;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@NamedQuery(name="Installment.findInstallmentsWithNearDeadLine", query="SELECT  i FROM Installment i WHERE i.date = :date  AND i.paidInvoice = FALSE")
 public abstract class Installment implements Serializable {
 
 	/**

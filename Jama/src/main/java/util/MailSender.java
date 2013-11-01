@@ -53,7 +53,7 @@ public class MailSender implements Serializable {
 	private void spam() {
 		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
 		// spam a Damaz?
-		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di sergente nella DeltaSpikeForce!");
+		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di capitano nella DeltaSpikeForce!");
 	}
 
 	public void send(Installment inst, boolean actuallySend) throws IOException, TemplateException {
