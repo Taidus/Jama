@@ -63,12 +63,18 @@
 				<h:outputText value="#{contract.company.name}" />
 			</p:column>
 
-			<p:column headerText="fffffffatturato">
-				<h:outputText value="#{contract.turnOver}" />
+			<p:column headerText="fatturato">
+				<h:outputText value="#{contract.turnOver}">
+					<f:converter binding="#{moneyConverter}" />
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
 			</p:column>
 
-			<p:column headerText="Sganciate la grana! (AKA residuo)">
-				<h:outputText value="#{contract.wholeAmount - contract.turnOver}" />
+			<p:column headerText="residuo">
+				<h:outputText value="#{contract.wholeAmount - contract.turnOver}">
+					<f:converter binding="#{moneyConverter}" />
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
 			</p:column>
 
 			<p:column>
@@ -102,7 +108,7 @@
 			<p:column>
 
 				<f:facet name="header">
-					<h:outputText value="Qualcosa come 'Prossima data di scadenza'" />
+					<h:outputText value="prossima data di scadenza'" />
 					<br />
 					<h:form>
 						<div style="display: block; width: 90%; margin: auto;">
