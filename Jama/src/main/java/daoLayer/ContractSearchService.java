@@ -30,14 +30,14 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 	@ChiefScientistAllowed
 	public void initWithLoggedUserCode(Date lowerDeadLineDate,
-			Date upperDeadLineDate, Integer chiefId, Integer companyId,
+			Date upperDeadLineDate, Integer companyId,
 			SortOrder order, Class<? extends Contract> contractClass,
 			Boolean closed, Date lowerInstDeadlineDate,
 			Date upperInstDeadlineDate) {
 
 		String code = principal.getSerialNumber();
 
-		_init(lowerDeadLineDate, upperDeadLineDate, chiefId, companyId, order,
+		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order,
 				contractClass, code, closed, upperInstDeadlineDate,
 				lowerInstDeadlineDate);
 

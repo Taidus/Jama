@@ -37,7 +37,7 @@ public class Scheduler {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.SECOND, 15);
-		long period = 900;
+		long period = 90000;
 		timer.schedule(contractDeadLineTimer, new Date(cal.getTimeInMillis()), period);
 		
 	}
