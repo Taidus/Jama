@@ -53,6 +53,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 
 
 	public void setFilterContractMinDate(Date filterContractMinDate) {
+		System.out.println("TTTTTTTTTTTTTTTTTTTT filterContractMinDate" + filterContractMinDate);
 		this.filterContractMinDate = filterContractMinDate;
 	}
 
@@ -73,6 +74,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 
 
 	public void setFilterInstMinDate(Date filterInstMinDate) {
+		System.out.println("TTTTTTTTTTTTTTTTTTTT filterInstMinDate" + filterInstMinDate);
 		this.filterInstMinDate = filterInstMinDate;
 	}
 

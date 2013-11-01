@@ -92,9 +92,9 @@
 								value="#{chiefContractListPCB.lazyModel.filterContractMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 							</p:calendar>
 						</div>
-						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						<p:commandButton id="calendarContrFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
 							onclick="return calendarFilter(arguments[0], w_chContrList);" />
-						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						<p:commandButton id="calendarContrResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
 							onclick="return calendarReset(arguments[0], w_firstContractDate, w_lastContractDate, w_chContrList);" />
 					</h:form>
 				</f:facet>
@@ -108,23 +108,21 @@
 			<p:column>
 
 				<f:facet name="header">
-					<h:outputText value="prossima data di scadenza'" />
+					<h:outputText value="prossima data di scadenza" />
 					<br />
-					<h:form>
-						<div style="display: block; width: 90%; margin: auto;">
-							<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"
-								value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
-							</p:calendar>
-							-
-							<p:calendar styleClass="calendarFilter" widgetVar="w_lastInstDate" showOn="both" showOtherMonths="true"
-								value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
-							</p:calendar>
-						</div>
-						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
-							onclick="return calendarFilter(arguments[0], w_chContrList);" />
-						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
-							onclick="return calendarReset(arguments[0], w_firstInstDate, w_lastInstDate, w_chContrList);" />
-					</h:form>
+					<div style="display: block; width: 90%; margin: auto;">
+						<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+						-
+						<p:calendar styleClass="calendarFilter" widgetVar="w_lastInstDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+					<p:commandButton id="calendarInstFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						onclick="return calendarFilter(arguments[0], w_chContrList);" />
+					<p:commandButton id="calendarInstResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						onclick="return calendarReset(arguments[0], w_firstInstDate, w_lastInstDate, w_chContrList);" />
 				</f:facet>
 
 				<h:outputText value="#{utilPB.findClosestDeadline(contract, chiefContractListPCB.lazyModel.filterInstMinDate)}">
