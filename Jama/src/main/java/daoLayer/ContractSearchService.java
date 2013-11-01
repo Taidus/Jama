@@ -30,10 +30,9 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 	@ChiefScientistAllowed
 	public void initWithLoggedUserCode(Date lowerDeadLineDate,
-			Date upperDeadLineDate, Integer companyId,
-			SortOrder order, Class<? extends Contract> contractClass,
-			Boolean closed, Date lowerInstDeadlineDate,
-			Date upperInstDeadlineDate) {
+			Date upperDeadLineDate, Integer companyId, SortOrder order,
+			Class<? extends Contract> contractClass, Boolean closed,
+			Date lowerInstDeadlineDate, Date upperInstDeadlineDate) {
 
 		String code = principal.getSerialNumber();
 
@@ -66,12 +65,14 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 		agr = c.from(contractClass);
 		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
-			c.select(agr);
-		} else {
+
 			c.select(agr)
 					.distinct(true)
 					.where(cb.equal(
 							agr.join("installments").get("paidInvoice"), false));
+		} else {
+
+			c.select(agr);
 		}
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
@@ -152,14 +153,16 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			}
 
 			query = em.createQuery(c);
-			
+
 			if (lowerInstDeadlineDate != null) {
-				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+				query.setParameter("lowerInstDate", lowerInstDeadlineDate,
+						TemporalType.DATE);
 			}
 			if (upperInstDeadlineDate != null) {
-				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+				query.setParameter("upperInstDate", upperInstDeadlineDate,
+						TemporalType.DATE);
 			}
-			
+
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);
 			}
