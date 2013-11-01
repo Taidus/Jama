@@ -3,78 +3,52 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
-	<f:viewParam name="chief.id" value="#{contractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="company.id" value="#{contractListPCB.lazyModel.filterCompanyId}"
-		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="fmindate" value="#{contractListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
-		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="fmaxdate" value="#{contractListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
-		valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="sortorder" value="#{contractListPCB.lazyModel.sortOrder}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="first" value="#{contractListPCB.lazyModel.pageFirst}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="rows" value="#{contractListPCB.lazyModel.pageRows}" valueChangeListener="#{contractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="chief.id" value="#{opContractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{opContractListPCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmindate" value="#{opContractListPCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmaxdate" value="#{opContractListPCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="sortorder" value="#{opContractListPCB.lazyModel.sortOrder}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{opContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{opContractListPCB.lazyModel.pageRows}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 
-	<f:event listener="#{contractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
+	<f:event listener="#{opContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
 
 <h:head>
 	<h:outputStylesheet name="home.css" library="css" />
 	<h:outputStylesheet name="table.css" library="css" />
 
+	<h:outputScript name="filters.js" library="js" />
+	<h:outputScript name="hideShow.js" library="js" />
+
+
 	<script type="text/javascript">
 		function setRowEvent(){
-			jQuery('#agreementTable tr')
-				.mouseover(function(){
-								jQuery(this).find(".list-row-button").show();
-							})
-				.mouseout(function(){
-								jQuery(this).find(".list-row-button").hide();
-							})
-				.click(function(e){
-							jQuery("#tableContextMenu").hide();
-							jQuery("#agreementTable tr").removeClass("ui-state-highlight");
-							e.stopPropagation();
-						})
-				.removeClass("ui-state-highlight");
+			setHideShow();
 		}
 
-		function setFilters(chiefFilter, companyFilter){
-			jQuery("#agreementTable\\:agrTableChiefColumn\\:filter").val(chiefFilter);
-			jQuery("#agreementTable\\:agrTableCompanyColumn\\:filter").val(companyFilter);
-		}
-
-		function calendarFilter(event, agrTable){
-			event.stopPropagation();
-			agrTable.filter(); 
-			return false;
-		}
-
-		function calendarReset(event, firstDate, lastDate, agrTable){ 
-			firstDate.setDate(null); 
-			lastDate.setDate(null);
-			return calendarFilter(event, agrTable);
-		}
-
-		jQuery(document).ready(function(){
-									setRowEvent();
-								});
-		
+		jQuery(document).ready(function() {
+			setRowEvent();
+		});
 	</script>
 </h:head>
-<h:body onload="setFilters('#{contractListPCB.lazyModel.filterChiefId}', '#{contractListPCB.lazyModel.filterCompanyId}');">
+<h:body onload="setFilters('#{opContractListPCB.lazyModel.filterChiefId}', '#{opContractListPCB.lazyModel.filterCompanyId}');">
 
 	<h:form prependId="false">
-		<input type="hidden" name="cid" value='#{contractListPCB.conversation.id}' />
+		<input type="hidden" name="cid" value='#{opContractListPCB.conversation.id}' />
 
-		<p:contextMenu id="tableContextMenu" widgetVar="w_tableContextMenu" for="agreementTable">
-			<p:menuitem value="#{msgs.view}" icon="ui-icon-search" actionListener="#{contractListPCB.viewAgreement()}" />
-			<p:menuitem value="#{msgs.edit}" icon="ui-icon-wrench" action="#{contractListPCB.editAgreement()}" />
-			<p:menuitem value="#{msgs.remove}" icon="ui-icon-trash" action="#{contractListPCB.deleteAgreement()}" />
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="agreementTable">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{opContractListPCB.viewAgreement()}" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="#{opContractListPCB.editAgreement()}" />
+			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="w_confirm.show();" />
 		</p:contextMenu>
 
-		<p:dataTable id="agreementTable" binding="#{contractListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable" lazy="true"
-			value="#{contractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
-			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{contractListPCB.lazyModel.selectedValue}"
+		<p:dataTable id="agreementTable" styleClass="hideShow" binding="#{opContractListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable"
+			lazy="true" value="#{opContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractListPCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}" sortOrder="descending">
 
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
@@ -85,28 +59,27 @@
 				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
 			</p:column>
 
-			<p:column id="agrTableChiefColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
+			<p:column id="agrTableChiefColumn" styleClass="chiefFilterColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterChiefItems}">
 				<h:outputText value="#{agr.chief.completeName}" />
 			</p:column>
 
-			<p:column id="agrTableCompanyColumn" filterBy="#{agr.company.id}" headerText="#{msgs.company}" filterMatchMode="exact"
-				filterOptions="#{utilPB.filterCompanyItems}">
+			<p:column id="agrTableCompanyColumn" styleClass="companyFilterColumn" filterBy="#{agr.company.id}" headerText="#{msgs.company}"
+				filterMatchMode="exact" filterOptions="#{utilPB.filterCompanyItems}">
 				<h:outputText value="#{agr.company.name}" />
 			</p:column>
 
 			<p:column id="agrTableDateColumn" sortBy="#{agr.approvalDate}">
 
-
 				<f:facet name="header">
 	                	#{msgs.approvalDate}  
 					<h:form id="calendarFilters">
 						<div style="display: block; width: 90%; margin: auto;">
-							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{contractListPCB.lazyModel.filterMinDate}"
+							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 							</p:calendar>
 							-
-							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{contractListPCB.lazyModel.filterMaxDate}"
+							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractListPCB.lazyModel.filterMaxDate}"
 								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 							</p:calendar>
 						</div>
@@ -121,27 +94,29 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{contractListPCB.viewAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{contractListPCB.lazyModel.selectedValue}" />
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{opContractListPCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{contractListPCB.editAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{contractListPCB.lazyModel.selectedValue}" />
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{opContractListPCB.editAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{agr}" target="#{contractListPCB.lazyModel.selectedValue}" />
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 
 			</p:column>
 
 		</p:dataTable>
 
+		<br />
+
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
-			<p:commandButton value="#{msgs.yes}" action="#{contractListPCB.deleteAgreement()}" immediate="true" update="agreementTable"
+			<p:commandButton value="#{msgs.yes}" action="#{opContractListPCB.deleteAgreement()}" immediate="true" update="agreementTable"
 				oncomplete="w_confirm.hide(); setRowEvent();" />
 			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
 		</p:confirmDialog>
 
-		<p:commandButton action="#{contractListPCB.backToHome()}" value="Home" immediate="true" />
+		<p:commandButton action="#{opContractListPCB.backToHome()}" value="Home" immediate="true" />
 
 	</h:form>
 

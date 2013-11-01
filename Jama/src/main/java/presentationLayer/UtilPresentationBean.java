@@ -2,6 +2,8 @@ package presentationLayer;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,6 +14,8 @@ import javax.inject.Named;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
+import businessLayer.Contract;
+import businessLayer.Installment;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
 
@@ -19,7 +23,7 @@ import daoLayer.CompanyDaoBean;
 @Dependent
 public class UtilPresentationBean implements Serializable{
 	private static final long serialVersionUID = 1L;
-	//FIXME usare Identifiable
+	
 	@EJB private ChiefScientistDaoBean chiefDaoBean;
 	@EJB private CompanyDaoBean companyDaoBean;
 	
@@ -91,6 +95,22 @@ public class UtilPresentationBean implements Serializable{
 			result[i] = new SelectItem(current, current.getCompleteName());
 		}
 		return result;
+	}
+	
+	public Date findClosestDeadline(Contract contract, Date minDate) {
+		List<Installment> insts = contract.getInstallments();
+		Date closestDeadline = null;
+
+		boolean found = false;
+		Iterator<Installment> it = insts.iterator();
+		while (it.hasNext() && !found) {
+			closestDeadline = it.next().getDate();
+			if (null == minDate || !closestDeadline.before(minDate)) {
+				found = true;
+			}
+		}
+
+		return closestDeadline;
 	}
 	
 	
