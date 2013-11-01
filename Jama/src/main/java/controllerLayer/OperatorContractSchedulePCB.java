@@ -26,6 +26,12 @@ public class OperatorContractSchedulePCB extends ContractTablePageController {
 
 
 	@Override
+	protected String getProvenancePage() {
+		return "agreementSchedule";
+	}
+
+
+	@Override
 	public String viewAgreement() {
 		return super.viewAgreement();
 	}

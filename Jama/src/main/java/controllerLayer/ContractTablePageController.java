@@ -13,7 +13,7 @@ import presentationLayer.lazyModel.ContractTableLazyDataModel;
 @ConversationScoped
 public abstract class ContractTablePageController implements Serializable {
 	private static final long serialVersionUID = -121442773357311865L;
-	
+
 	@Inject
 	protected ContractManagerBean contractManager;
 	@Inject
@@ -34,22 +34,19 @@ public abstract class ContractTablePageController implements Serializable {
 	public abstract ContractTableLazyDataModel getLazyModel();
 
 
+	protected abstract String getProvenancePage();
+
+
 	protected String viewAgreement() {
 		print("Viewing");
-		contractManager.setSelectedContractd(getLazyModel().getSelectedValue().getId());
-		contractManager.setFiltersParamList((getLazyModel().getFiltersAsParameterList()));
-		System.out.println(getLazyModel().getFiltersAsParameterList());
-		close();
+		setupPageChange();
 		return contractManager.viewContract();
 	}
 
 
 	protected String editAgreement() {
 		print("Editing");
-		contractManager.setSelectedContractd(getLazyModel().getSelectedValue().getId());
-		contractManager.setFiltersParamList((getLazyModel().getFiltersAsParameterList()));
-		System.out.println(getLazyModel().getFiltersAsParameterList());
-		close();
+		setupPageChange();
 		return contractManager.editContract();
 	}
 
@@ -58,6 +55,15 @@ public abstract class ContractTablePageController implements Serializable {
 		print("Deleting");
 		contractManager.setSelectedContractd(getLazyModel().getSelectedValue().getId());
 		contractManager.deleteContract();
+	}
+
+
+	private void setupPageChange() {
+		contractManager.setSelectedContractd(getLazyModel().getSelectedValue().getId());
+		contractManager.setFiltersParamList((getLazyModel().getFiltersAsParameterList()));
+		contractManager.setProvenancePage(getProvenancePage());
+		System.out.println(getLazyModel().getFiltersAsParameterList());
+		close();
 	}
 
 

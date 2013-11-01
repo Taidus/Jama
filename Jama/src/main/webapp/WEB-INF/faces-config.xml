@@ -40,6 +40,12 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>agreementSchedule</from-outcome>
+			<to-view-id>/agreementSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>home</from-outcome>
 			<to-view-id>/home.xhtml</to-view-id>
 			<redirect />
@@ -55,6 +61,11 @@
 		<navigation-case>
 			<from-outcome>installmentView</from-outcome>
 			<to-view-id>/installmentView.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chiefContractList</from-outcome>
+			<to-view-id>/chiefContractList.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 
 	</navigation-rule>

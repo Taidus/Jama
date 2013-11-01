@@ -23,17 +23,26 @@ public class OperatorContractListPCB extends ContractTablePageController {
 	public ContractTableLazyDataModel getLazyModel() {
 		return lazyModel;
 	}
-	
+
+
+	@Override
+	protected String getProvenancePage() {
+		return "agreementList";
+	}
+
+
 	@Override
 	public String viewAgreement() {
 		return super.viewAgreement();
 	}
-	
+
+
 	@Override
 	public String editAgreement() {
 		return super.editAgreement();
 	}
-	
+
+
 	@Override
 	public void deleteAgreement() {
 		super.deleteAgreement();

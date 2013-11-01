@@ -26,6 +26,12 @@ public class ChiefContractListPCB extends ContractTablePageController {
 
 
 	@Override
+	protected String getProvenancePage() {
+		return "chiefContractList";
+	}
+
+
+	@Override
 	public String viewAgreement() {
 		return super.viewAgreement();
 	}
