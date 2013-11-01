@@ -57,8 +57,10 @@
 
 			<p:commandButton value="back" action="#{agreementEditPB.cancel()}"
 				ajax="false" />
+			<ui:remove>
 			<p:commandButton action="#{contractManager.editContract()}" value="toEditMode" 
 			ajax="false"></p:commandButton>
+			</ui:remove>
 
 
 

@@ -80,6 +80,8 @@ public abstract class Contract implements Serializable {
 
 	protected int CIA_projectNumber;
 	protected int inventoryNumber;
+	
+	private boolean closed;
 
 	@Embedded
 	@AttributeOverrides({
@@ -335,8 +337,8 @@ public abstract class Contract implements Serializable {
 		return String.valueOf(isClosed());
 	}
 
-	public void setClosed(boolean closed) {
-		//serve ad Hibernate perchè è stupido
+	private void setClosed(boolean closed) {
+		this.closed = closed;
 	}
 	
 	

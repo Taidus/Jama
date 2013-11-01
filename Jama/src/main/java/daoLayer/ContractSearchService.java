@@ -169,6 +169,7 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 			query = em.createQuery(c);
 		}
+		
 
 	}
 
