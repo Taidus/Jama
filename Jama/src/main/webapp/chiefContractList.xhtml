@@ -54,7 +54,7 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow();" />
 
-			<p:column filterBy="#{contract.closed}" filterOptions="#{utilPB.getBooleanFilter('A', 'C')}">
+			<p:column filterBy="#{contract.closed}" filterOptions="#{utilPB.getBooleanFilter('Kiusa', 'Aprt')}">
 				<h:selectBooleanCheckbox value="#{contract.closed}" disabled="true" />
 			</p:column>
 
@@ -71,7 +71,7 @@
 			</p:column>
 
 			<p:column headerText="residuo">
-				<h:outputText value="#{contract.wholeAmount - contract.turnOver}">
+				<h:outputText value="#{contract.remainder}">
 					<f:converter binding="#{moneyConverter}" />
 					<f:attribute name="plain" value="false" />
 				</h:outputText>

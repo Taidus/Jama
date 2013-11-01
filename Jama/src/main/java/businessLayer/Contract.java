@@ -320,6 +320,10 @@ public abstract class Contract implements Serializable {
 		return sum;
 	}
 	
+	public Money getRemainder(){
+		return getWholeAmount().minus(getTurnOver());
+	}
+	
 	@Access(AccessType.PROPERTY)
 	public boolean isClosed() {
 
