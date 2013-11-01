@@ -3,6 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
+	<f:viewParam name="closed" value="#{chiefContractListPCB.lazyModel.filterActiveContract}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{chiefContractListPCB.lazyModel.filterCompanyId}"
 		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="fcontrmindate" value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" converter="#{dateFromLong}"
@@ -52,7 +54,7 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow();" />
 
-			<p:column>
+			<p:column filterBy="#{contract.closed}" filterOptions="#{utilPB.booleanList('A', 'C')}">
 				<h:selectBooleanCheckbox value="#{contract.closed}" disabled="true" />
 			</p:column>
 
@@ -65,8 +67,8 @@
 				<h:outputText value="#{contract.turnOver}" />
 			</p:column>
 
-			<p:column headerText="Sganciate la grana!">
-				<h:outputText value="Residuo. Quale campo è?" />
+			<p:column headerText="Sganciate la grana! (AKA residuo)">
+				<h:outputText value="#{contract.wholeAmount - contract.turnOver}" />
 			</p:column>
 
 			<p:column>

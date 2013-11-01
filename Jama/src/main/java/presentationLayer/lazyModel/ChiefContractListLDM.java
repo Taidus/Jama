@@ -22,6 +22,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 
 	protected Date filterContractMinDate, filterContractMaxDate, filterInstMinDate, filterInstMaxDate;
 	protected Integer filterCompanyId;
+	protected Boolean filterActiveContract;
 
 
 	public ChiefContractListLDM() {
@@ -31,6 +32,17 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 		this.filterInstMinDate = null;
 		this.filterInstMaxDate = null;
 		this.filterCompanyId = null;
+		this.filterActiveContract = null;
+	}
+
+
+	public Boolean getFilterActiveContract() {
+		return filterActiveContract;
+	}
+
+
+	public void setFilterActiveContract(Boolean filterActiveContract) {
+		this.filterActiveContract = filterActiveContract;
 	}
 
 
@@ -93,8 +105,16 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 				newCompanyId = Integer.parseInt(tmp);
 			}
 			setFilterCompanyId(newCompanyId);
+
+			Boolean newFilterAct = null;
+			tmp = filters.get("closed");
+			System.out.println("Filter[closed]:" + newFilterAct);
+			if (tmp != null) {
+				newFilterAct = Boolean.valueOf(tmp);
+			}
+			setFilterActiveContract(newFilterAct);
 		}
-		System.out.println("Company ID: " + filterCompanyId);
+		System.out.println("Company ID: " + filterCompanyId + "; closed: " + filterActiveContract);
 	}
 
 
@@ -104,7 +124,8 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 		System.out.println("Installment: min date = " + filterInstMinDate + "; max date = " + filterInstMaxDate);
 
 		System.out.println("Querying");
-		contractSearch.initWithLoggedUserCode(filterContractMinDate, filterContractMaxDate, null, filterCompanyId, null, Agreement.class);
+		contractSearch.initWithLoggedUserCode(filterContractMinDate, filterContractMaxDate, filterCompanyId, null, Agreement.class,
+				filterActiveContract, filterInstMinDate, filterInstMaxDate);
 
 	}
 
@@ -113,6 +134,9 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 	protected FilterList initFilterList() {
 		FilterList l = new FilterList();
 
+		if (filterActiveContract != null) {
+			l.put("closed", filterActiveContract.toString());
+		}
 		if (filterCompanyId != null) {
 			l.put("company.id", filterCompanyId.toString());
 		}
