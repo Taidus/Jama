@@ -30,20 +30,20 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 	private Principal principal;
 	
 	@ChiefScientistAllowed
-	public void initWithLoggedUserCode(Date lowerDate, Date upperDate, Integer chiefId,
+	public void initWithLoggedUserCode(Date lowerDeadLineDate, Date upperDeadLineDate, Integer chiefId,
 			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, Boolean closed){
 		
 		String code = principal.getSerialNumber();
 		
-		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass, code, closed);
+		_init(lowerDeadLineDate, upperDeadLineDate, chiefId, companyId, order, contractClass, code, closed);
 		
 	}
 	
 	@AlterContractsAllowed
-	public void init(Date lowerDate, Date upperDate, Integer chiefId,
+	public void init(Date lowerDeadLineDate, Date upperDeadLineDate, Integer chiefId,
 			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, Boolean closed) {
 		
-		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass , null, closed);
+		_init(lowerDeadLineDate, upperDeadLineDate, chiefId, companyId, order, contractClass , null, closed);
 		
 	}
 
@@ -63,14 +63,14 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
 			criteria.add(cb.greaterThanOrEqualTo(
-					agr.<Date> get("approvalDate"), p));
+					agr.<Date> get("deadlineDate"), p));
 
 		}
 
 		if (upperDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
-			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("approvalDate"), p));
+			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("deadlineDate"), p));
 
 		}
 
@@ -104,11 +104,11 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 		
 		if(order == SortOrder.ASCENDING){
 			
-			c.orderBy(cb.asc(agr.<Date> get("approvalDate")));
+			c.orderBy(cb.asc(agr.<Date> get("deadlineDate")));
 		}
 		else if(order == SortOrder.DESCENDING){
 			
-			c.orderBy(cb.desc(agr.<Date> get("approvalDate")));
+			c.orderBy(cb.desc(agr.<Date> get("deadlineDate")));
 
 		}
 
