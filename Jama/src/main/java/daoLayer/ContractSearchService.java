@@ -37,7 +37,7 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 		String code = principal.getSerialNumber();
 
-		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order, contractClass, code, closed, upperInstDeadlineDate, lowerInstDeadlineDate);
+		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order, contractClass, code, closed, lowerInstDeadlineDate, upperInstDeadlineDate);
 
 	}
 

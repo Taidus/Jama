@@ -23,6 +23,10 @@ public class Config {
 	public static final CurrencyUnit currency = CurrencyUnit.EUR;
 	public static final Locale locale = Locale.ITALY;
 	
+	//TODO file di configurazione
+	public static final int dailyScheduledTaskExecutionHour = 3;
+	public static final int daysBeforeDeadlineExpriration = 15;
+	
 	
 	static{
 		fmconf = new Configuration();
