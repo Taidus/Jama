@@ -63,6 +63,7 @@ public abstract class Contract implements Serializable {
 
 	@Size(max = 1000)
 	protected String title;
+	
 
 	protected String protocolNumber;
 
@@ -325,5 +326,13 @@ public abstract class Contract implements Serializable {
 		return getWholeAmount().equals(getTurnOver());
 
 	}
+
+	public void setClosed(boolean closed) {
+		//serve ad Hibernate perchè è stupido
+	}
+	
+	
+	
+	
 
 }
