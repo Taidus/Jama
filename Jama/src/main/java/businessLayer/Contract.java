@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
@@ -37,6 +39,7 @@ import util.Percent;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Access(AccessType.FIELD)
 public abstract class Contract implements Serializable {
 
 	/**
@@ -316,9 +319,10 @@ public abstract class Contract implements Serializable {
 		return sum;
 	}
 	
+	@Access(AccessType.PROPERTY)
 	public boolean isClosed() {
 
-		return getWholeAmount().equals(spentAmount);
+		return getWholeAmount().equals(getTurnOver());
 
 	}
 

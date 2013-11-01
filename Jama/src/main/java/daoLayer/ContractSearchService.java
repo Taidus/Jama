@@ -31,24 +31,24 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 	
 	@ChiefScientistAllowed
 	public void initWithLoggedUserCode(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass){
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, Boolean closed){
 		
 		String code = principal.getSerialNumber();
 		
-		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass, code);
+		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass, code, closed);
 		
 	}
 	
 	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, Boolean closed) {
 		
-		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass , null);
+		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass , null, closed);
 		
 	}
 
 	private void _init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, String principalSerialNumber) {
+			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, String principalSerialNumber, Boolean closed) {
 		currentPage = 0;
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -93,6 +93,14 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 					"principalSerialNumber");
 			criteria.add(cb.equal(agr.get("chief").get("serialNumber"), p));
 		}
+		if(closed != null){
+			ParameterExpression<Boolean> p = cb.parameter(Boolean.class,
+					"closed");
+			criteria.add(cb.equal(agr.get("closed"), p));
+		}
+		
+		
+		
 		
 		if(order == SortOrder.ASCENDING){
 			
@@ -129,6 +137,9 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			}
 			if (principalSerialNumber != null) {
 				query.setParameter("principalSerialNumber", principalSerialNumber);
+			}
+			if (closed != null) {
+				query.setParameter("closed", closed);
 			}
 
 		} else {
