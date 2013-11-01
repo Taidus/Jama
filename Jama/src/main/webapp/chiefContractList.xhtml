@@ -54,7 +54,7 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow();" />
 
-			<p:column filterBy="#{contract.closed}" filterOptions="#{utilPB.booleanList('A', 'C')}">
+			<p:column filterBy="#{contract.closed}" filterOptions="#{utilPB.getBooleanFilter('A', 'C')}">
 				<h:selectBooleanCheckbox value="#{contract.closed}" disabled="true" />
 			</p:column>
 

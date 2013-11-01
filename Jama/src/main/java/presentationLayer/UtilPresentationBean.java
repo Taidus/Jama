@@ -108,7 +108,7 @@ public class UtilPresentationBean implements Serializable {
 	}
 
 
-	public SelectItem[] getBooleanList() {
+	public SelectItem[] getBooleanFilter() {
 		return getBooleanFilter(Boolean.TRUE.toString(), Boolean.FALSE.toString());
 	}
 
