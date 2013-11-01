@@ -15,8 +15,8 @@
 		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="finstmaxdate" value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" converter="#{dateFromLong}"
 		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="first" value="#{opContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="rows" value="#{opContractListPCB.lazyModel.pageRows}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{chiefContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{chiefContractListPCB.lazyModel.pageRows}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 
 	<f:event listener="#{chiefContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
@@ -76,7 +76,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{msgs.deadlineDate}" />
 					<br />
-					<h:form id="calendarFilters">
+					<h:form>
 						<div style="display: block; width: 90%; margin: auto;">
 							<p:calendar styleClass="calendarFilter" widgetVar="w_firstContractDate" showOn="both" showOtherMonths="true"
 								value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
@@ -104,7 +104,7 @@
 				<f:facet name="header">
 					<h:outputText value="Qualcosa come 'Prossima data di scadenza'" />
 					<br />
-					<h:form id="calendarFilters">
+					<h:form>
 						<div style="display: block; width: 90%; margin: auto;">
 							<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"
 								value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
