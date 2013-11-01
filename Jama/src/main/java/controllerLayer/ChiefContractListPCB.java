@@ -27,7 +27,7 @@ public class ChiefContractListPCB extends ContractTablePageController {
 
 	@Override
 	protected String getProvenancePage() {
-		return "chiefContractList";
+		return "chiefContractList.xhtml?faces-redirect=true";
 	}
 
 

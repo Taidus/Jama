@@ -27,7 +27,7 @@ public class OperatorContractListPCB extends ContractTablePageController {
 
 	@Override
 	protected String getProvenancePage() {
-		return "agreementList";
+		return "agreementList.xhtml?faces-redirect=true";
 	}
 
 

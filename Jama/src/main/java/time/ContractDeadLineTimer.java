@@ -1,5 +1,6 @@
 package time;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.persistence.TypedQuery;
 import businessLayer.Installment;
 import util.MailSender;
 import daoLayer.InstallmentDaoBean;
+import freemarker.template.TemplateException;
 
 @Stateful
 @ApplicationScoped
@@ -58,9 +60,16 @@ public class ContractDeadLineTimer extends TimerTask {
 			 
 			
 			System.out.println("Sto eseguendo ContractDeadLineTimer");
-			System.out.println(query.getResultList());
+			for(Installment i : query.getResultList()){
+				
+				try {
+					mailSender.notifyDeadLine(i, true);
+				} catch (IOException | TemplateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
-			//sostituire stampe con mail
 
 			
 		}

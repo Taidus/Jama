@@ -55,8 +55,19 @@ public class MailSender implements Serializable {
 		// spam a Damaz?
 		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di capitano nella DeltaSpikeForce!");
 	}
+	
+	//TODO implementare
+	public void notifyCreation(Contract c){
+		System.out.println("mail di notifica creazione contratto simulata");
+	};
+	
+	//TODO implementare
+	public void notifyClosure(Contract c){
+		System.out.println("mail di notifica chiusura contratto simulata");
 
-	public void send(Installment inst, boolean actuallySend) throws IOException, TemplateException {
+	}
+
+	public void notifyDeadLine(Installment inst, boolean actuallySend) throws IOException, TemplateException {
 
 		TemplateFiller filler = new TemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
 		StringWriter out = new StringWriter();

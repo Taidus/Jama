@@ -27,7 +27,7 @@ public class OperatorContractSchedulePCB extends ContractTablePageController {
 
 	@Override
 	protected String getProvenancePage() {
-		return "agreementSchedule";
+		return "agreementSchedule.xhtml?faces-redirect=true";
 	}
 
 
