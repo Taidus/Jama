@@ -14,6 +14,15 @@ function setCompanyFilter(companyFilter) {
 	jQuery("th[class*=companyFilterColumn] select.ui-column-filter").val(companyFilter);
 }
 
+function setClosedContractsFilter(closedFilter){
+	jQuery("th[class*=closedFilterColumn] select.ui-column-filter").val(closedFilter);
+}
+
+function setChiefListFilters(companyFilter, closedFilter){
+	setCompanyFilter(companyFilter);
+	setClosedContractsFilter(closedFilter);
+}
+
 function calendarFilter(event, table) {
 	event.stopPropagation();
 	table.filter();

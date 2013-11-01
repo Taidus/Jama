@@ -11,6 +11,7 @@ import javax.enterprise.context.Dependent;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
+import util.Messages;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
@@ -64,8 +65,7 @@ public class UtilPresentationBean implements Serializable {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 
 		SelectItem[] result = new SelectItem[chiefs.size() + 1];
-		result[0] = new SelectItem("", "Tutti"); // FIXME lingua non dinamica.
-													// Anche quello sotto
+		result[0] = new SelectItem("", Messages.getString("allM")); 
 		ChiefScientist current = null;
 		for (int i = 0; i < chiefs.size(); i++) {
 			current = chiefs.get(i);
@@ -80,7 +80,7 @@ public class UtilPresentationBean implements Serializable {
 		List<Company> companies = companyDaoBean.getAll();
 
 		SelectItem[] result = new SelectItem[companies.size() + 1];
-		result[0] = new SelectItem("", "Tutte");
+		result[0] = new SelectItem("", Messages.getString("allF"));
 		Company current = null;
 		for (int i = 0; i < companies.size(); i++) {
 			current = companies.get(i);
@@ -115,8 +115,7 @@ public class UtilPresentationBean implements Serializable {
 
 	public SelectItem[] getBooleanFilter(String trueLabel, String falseLabel) {
 		SelectItem[] result = new SelectItem[3];
-		result[0] = new SelectItem("", "Tutti"); // FIXME lingua non
-														// dinamica
+		result[0] = new SelectItem("", Messages.getString("allM")); 
 		result[1] = new SelectItem(Boolean.TRUE.toString(), trueLabel);
 		result[2] = new SelectItem(Boolean.FALSE.toString(), falseLabel);
 		return result;

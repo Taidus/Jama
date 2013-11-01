@@ -3,7 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
-	<f:viewParam name="closed" value="#{chiefContractListPCB.lazyModel.filterActiveContract}"
+	<f:viewParam name="closedString" value="#{chiefContractListPCB.lazyModel.filterClosedContract}"
 		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{chiefContractListPCB.lazyModel.filterCompanyId}"
 		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
@@ -37,7 +37,7 @@
 
 </h:head>
 
-<h:body onload="setCompanyFilter('#{chiefContractListPCB.lazyModel.filterCompanyId}');">
+<h:body onload="setChiefListFilters('#{chiefContractListPCB.lazyModel.filterCompanyId}', '#{chiefContractListPCB.lazyModel.filterClosedContract}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{chiefContractListPCB.conversation.id}' />
@@ -54,7 +54,8 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow();" />
 
-			<p:column filterBy="#{contract.closedString}" filterOptions="#{utilPB.getBooleanFilter('Kiusa', 'Aprt')}">
+			<p:column styleClass="closedFilterColumn" filterBy="#{contract.closedString}"
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}">
 				<h:selectBooleanCheckbox value="#{contract.closed}" disabled="true" />
 			</p:column>
 
@@ -63,14 +64,14 @@
 				<h:outputText value="#{contract.company.name}" />
 			</p:column>
 
-			<p:column headerText="fatturato">
+			<p:column headerText="#{msgs.turnOver}">
 				<h:outputText value="#{contract.turnOver}">
 					<f:converter binding="#{moneyConverter}" />
 					<f:attribute name="plain" value="false" />
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="residuo">
+			<p:column headerText="#{msgs.remainder}">
 				<h:outputText value="#{contract.remainder}">
 					<f:converter binding="#{moneyConverter}" />
 					<f:attribute name="plain" value="false" />
@@ -108,7 +109,7 @@
 			<p:column>
 
 				<f:facet name="header">
-					<h:outputText value="prossima data di scadenza" />
+					<h:outputText value="#{msgs.nextDeadline}" />
 					<br />
 					<div style="display: block; width: 90%; margin: auto;">
 						<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"

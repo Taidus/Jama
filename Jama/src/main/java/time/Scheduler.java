@@ -13,39 +13,36 @@ import javax.inject.Named;
 
 import util.Config;
 
-
 @ApplicationScoped
 @Singleton
 @Startup
 @Named("scheduler")
 public class Scheduler {
-	
+
 	@Inject
 	private ContractDeadLineTimer contractDeadLineTimer;
-	
 
-	public Scheduler() {
-	}
+
+	public Scheduler() {}
+
 
 	@PostConstruct
-	public void schedule(){
-		
+	public void schedule() {
+
 		Calendar deadLineDate = Calendar.getInstance();
 		deadLineDate.add(Calendar.DAY_OF_MONTH, Config.daysBeforeDeadlineExpriration);
-		
+
 		Timer timer = new Timer();
 		contractDeadLineTimer.setDate(deadLineDate);
 
-		
 		Calendar cal = Calendar.getInstance();
-		if(cal.get(Calendar.HOUR_OF_DAY) >= Config.dailyScheduledTaskExecutionHour){
-			cal.add(Calendar.DAY_OF_MONTH, 1);			
+		if (cal.get(Calendar.HOUR_OF_DAY) >= Config.dailyScheduledTaskExecutionHour) {
+			cal.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		cal.set(Calendar.HOUR_OF_DAY, Config.dailyScheduledTaskExecutionHour);
-		long period = 1000*60*60*24;
+		long period = 1000 * 60 * 60 * 24;
 		timer.schedule(contractDeadLineTimer, new Date(cal.getTimeInMillis()), period);
-		
-	}
 
+	}
 
 }

@@ -338,6 +338,7 @@ public abstract class Contract implements Serializable {
 	}
 
 	private void setClosed(boolean closed) {
+		// serve ad Hibernate
 		this.closed = closed;
 	}
 	

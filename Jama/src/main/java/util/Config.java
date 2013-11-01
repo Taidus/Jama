@@ -11,35 +11,40 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.Version;
 
-
 public class Config {
 
 	public static int defaultPageSize = 30;
 
 	private static final String fileDir = "../standalone/deployments/Jama.war/WEB-INF/classes";
 	public static final String depRatesPath = fileDir + "/" + "aliquoteDipartimenti/";
+	private static final String mailTemplateDir = fileDir + "/" + "mailTemplates";
+	
 	public static final Configuration fmconf;
-	public static final String mailTemplateFileName = "mailTemplate.ftl";
+	public static final String instDeadlineTemplateFileName = "template_scadenzaRata.ftl";
+	public static final String contractCreationTemplateFileName = "template_creazioneContratto.ftl";
+	public static final String contractClosureTemplateFileName = "template_chiusuraContratto.ftl";
+	
 	public static final CurrencyUnit currency = CurrencyUnit.EUR;
 	public static final Locale locale = Locale.ITALY;
-	
-	//TODO file di configurazione
+
+	// TODO file di configurazione
 	public static final int dailyScheduledTaskExecutionHour = 3;
 	public static final int daysBeforeDeadlineExpriration = 15;
-	
-	
-	static{
+
+	static {
 		fmconf = new Configuration();
 
-		// Specify the data source where the template files come from. Here I set a
+		// Specify the data source where the template files come from. Here I
+		// set a
 		// plain directory for it, but non-file-system are possible too:
 		try {
-			fmconf.setDirectoryForTemplateLoading(new File(Config.fileDir));
+			fmconf.setDirectoryForTemplateLoading(new File(Config.mailTemplateDir));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		// Specify how templates will see the data-model. This is an advanced topic...
+		// Specify how templates will see the data-model. This is an advanced
+		// topic...
 		// for now just use this:
 		fmconf.setObjectWrapper(new DefaultObjectWrapper());
 
@@ -47,13 +52,17 @@ public class Config {
 		// a good choice in most applications:
 		fmconf.setDefaultEncoding("UTF-8");
 
-		// Sets how errors will appear. Here we assume we are developing HTML pages.
-		// For production systems TemplateExceptionHandler.RETHROW_HANDLER is better.
+		// Sets how errors will appear. Here we assume we are developing HTML
+		// pages.
+		// For production systems TemplateExceptionHandler.RETHROW_HANDLER is
+		// better.
 		fmconf.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
 
 		// At least in new projects, specify that you want the fixes that aren't
-		// 100% backward compatible too (these are very low-risk changes as far as the
+		// 100% backward compatible too (these are very low-risk changes as far
+		// as the
 		// 1st and 2nd version number remains):
-		fmconf.setIncompatibleImprovements(new Version(2, 3, 20));  // FreeMarker 2.3.20
+		fmconf.setIncompatibleImprovements(new Version(2, 3, 20)); // FreeMarker
+																	// 2.3.20
 	}
 }

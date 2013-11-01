@@ -29,6 +29,7 @@ public class MailSender implements Serializable {
 	@Resource(lookup = "java:jboss/mail/JaMail")
 	private Session mailSession;
 
+
 	// @Inject
 	// @Logged
 	// private User loggedUser;
@@ -50,32 +51,86 @@ public class MailSender implements Serializable {
 
 	}
 
+
 	private void spam() {
 		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
 		// spam a Damaz?
 		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di capitano nella DeltaSpikeForce!");
 	}
-	
-	//TODO implementare
-	public void notifyCreation(Contract c){
+
+
+	public void notifyCreation(Contract c) throws TemplateException, IOException {
 		System.out.println("mail di notifica creazione contratto simulata");
-	};
-	
-	//TODO implementare
-	public void notifyClosure(Contract c){
-		System.out.println("mail di notifica chiusura contratto simulata");
 
-	}
-
-	public void notifyDeadLine(Installment inst, boolean actuallySend) throws IOException, TemplateException {
-
-		TemplateFiller filler = new TemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
+		ContractTemplateFiller filler = new ContractTemplateFiller(c, "pippo@jama.jam");
 		StringWriter out = new StringWriter();
 		// variabile di tipo StringWriter perché un Writer qualunque non va
 		// bene: serve che il metodo toString() restituisca esattamente la
 		// stringa che rappresenta il contenuto della mail
 
-		Template temp = Config.fmconf.getTemplate(Config.mailTemplateFileName);
+		Template temp = Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
+		temp.process(filler, out);
+		String mailContent = out.toString();
+
+		// System.out.println("\n********************\n" + mailContent +
+		// "\n*********************");
+		spam();
+
+		_send("giulio.galvan@stud.unifi.it", "Jama: nuovo contratto", mailContent);
+		_send("tommaso.levato@stud.unifi.it", "Jama: nuovo contratto", mailContent);
+		_send("alessio.sarullo@stud.unifi.it", "Jama: nuovo contratto", mailContent);
+
+		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+	};
+
+
+	// TODO implementare
+	public void notifyClosure(Contract c) throws IOException, TemplateException {
+		System.out.println("mail di notifica chiusura contratto simulata");
+
+		ContractTemplateFiller filler = new ContractTemplateFiller(c, "pippo@jama.jam");
+		StringWriter out = new StringWriter();
+		// variabile di tipo StringWriter perché un Writer qualunque non va
+		// bene: serve che il metodo toString() restituisca esattamente la
+		// stringa che rappresenta il contenuto della mail
+
+		Template temp = Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
+		temp.process(filler, out);
+		String mailContent = out.toString();
+
+		// System.out.println("\n********************\n" + mailContent +
+		// "\n*********************");
+		spam();
+
+//		_send("giulio.galvan@stud.unifi.it", "Jama: chiusura contratto", mailContent);
+//		_send("tommaso.levato@stud.unifi.it", "Jama: chiusura contratto", mailContent);
+		_send("alessio.sarullo@stud.unifi.it", "Jama: chiusura contratto", mailContent);
+
+		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+	}
+
+
+	public void notifyDeadline(Installment inst) throws IOException, TemplateException {
+		// alla fine rimarrà solo questo metodo, l'overload verrà cancellato
+		notifyDeadline(inst, true);
+	}
+
+
+	public void notifyDeadline(Installment inst, boolean actuallySend) throws IOException, TemplateException {
+		// TODO il campo actuallySend serve per non intasare le mail in fase di
+		// sviluppo e testing. Va eliminato
+
+		InstallmentTemplateFiller filler = new InstallmentTemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
+		StringWriter out = new StringWriter();
+		// variabile di tipo StringWriter perché un Writer qualunque non va
+		// bene: serve che il metodo toString() restituisca esattamente la
+		// stringa che rappresenta il contenuto della mail
+
+		Template temp = Config.fmconf.getTemplate(Config.instDeadlineTemplateFileName);
 		temp.process(filler, out);
 		String mailContent = out.toString();
 
@@ -84,9 +139,9 @@ public class MailSender implements Serializable {
 		spam();
 
 		if (actuallySend) {
-			_send("giulio.galvan@stud.unifi.it", "Comunicazione da Jama", mailContent);
-			_send("tommaso.levato@stud.unifi.it", "Comunicazione da Jama", mailContent);
-			_send("alessio.sarullo@stud.unifi.it", "Comunicazione da Jama", mailContent);
+			_send("giulio.galvan@stud.unifi.it", "Jama: la scadenza è vicina", mailContent);
+			_send("tommaso.levato@stud.unifi.it", "Jama: la scadenza è vicina", mailContent);
+			_send("alessio.sarullo@stud.unifi.it", "Jama: la scadenza è vicina", mailContent);
 
 			System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
 		} else {
@@ -96,13 +151,16 @@ public class MailSender implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
 	}
 
-	public static class TemplateFiller {
+
+
+	public static class InstallmentTemplateFiller {
 		private Contract contract;
 		private Installment installment;
 		private String mail1, mail2;
 		private Integer installmentNumber;
 
-		public TemplateFiller(Installment installment, String mail1, String mail2) {
+
+		public InstallmentTemplateFiller(Installment installment, String mail1, String mail2) {
 			super();
 			this.contract = installment.getContract();
 			this.installment = installment;
@@ -116,24 +174,54 @@ public class MailSender implements Serializable {
 			}
 		}
 
+
 		public Contract getContract() {
 			return contract;
 		}
+
 
 		public Installment getInstallment() {
 			return installment;
 		}
 
+
 		public Integer getInstallmentNumber() {
 			return installmentNumber;
 		}
+
 
 		public String getMail1() {
 			return mail1;
 		}
 
+
 		public String getMail2() {
 			return mail2;
+		}
+
+	}
+
+
+
+	public static class ContractTemplateFiller {
+		private Contract contract;
+		private String mail;
+
+
+		public ContractTemplateFiller(Contract contract, String mail) {
+			super();
+			this.contract = contract;
+			this.mail = mail;
+		}
+
+
+		public Contract getContract() {
+			return contract;
+		}
+
+
+		public String getMail() {
+			return mail;
 		}
 
 	}

@@ -22,7 +22,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 
 	protected Date filterContractMinDate, filterContractMaxDate, filterInstMinDate, filterInstMaxDate;
 	protected Integer filterCompanyId;
-	protected Boolean filterActiveContract;
+	protected Boolean filterClosedContract;
 
 
 	public ChiefContractListLDM() {
@@ -32,18 +32,18 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 		this.filterInstMinDate = null;
 		this.filterInstMaxDate = null;
 		this.filterCompanyId = null;
-		this.filterActiveContract = null;
+		this.filterClosedContract = null;
 	}
 
 
-	public Boolean getFilterActiveContract() {
-		return filterActiveContract;
+	public Boolean getFilterClosedContract() {
+		return filterClosedContract;
 	}
 
 
-	public void setFilterActiveContract(Boolean filterActiveContract) {
-		System.out.println("Vuoi convenzioni chiuse? " + filterActiveContract);
-		this.filterActiveContract = filterActiveContract;
+	public void setFilterClosedContract(Boolean filterClosedContract) {
+		System.out.println("Vuoi convenzioni chiuse? " + filterClosedContract);
+		this.filterClosedContract = filterClosedContract;
 	}
 
 
@@ -109,14 +109,14 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 			}
 			setFilterCompanyId(newCompanyId);
 
-			Boolean newFilterAct = null;
+			Boolean newFilterClosed = null;
 			tmp = filters.get("closedString");
 			if (tmp != null) {
-				newFilterAct = Boolean.valueOf(tmp);
+				newFilterClosed = Boolean.valueOf(tmp);
 			}
-			setFilterActiveContract(newFilterAct);
+			setFilterClosedContract(newFilterClosed);
 		}
-		System.out.println("Company ID: " + filterCompanyId + "; closed: " + filterActiveContract);
+		System.out.println("Company ID: " + filterCompanyId + "; closed: " + filterClosedContract);
 	}
 
 
@@ -127,7 +127,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 
 		System.out.println("Querying");
 		contractSearch.initWithLoggedUserCode(filterContractMinDate, filterContractMaxDate, filterCompanyId, null, Agreement.class,
-				filterActiveContract, filterInstMinDate, filterInstMaxDate);
+				filterClosedContract, filterInstMinDate, filterInstMaxDate);
 
 	}
 
@@ -136,8 +136,8 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 	protected FilterList initFilterList() {
 		FilterList l = new FilterList();
 
-		if (filterActiveContract != null) {
-			l.put("closedString", filterActiveContract.toString());
+		if (filterClosedContract != null) {
+			l.put("closedString", filterClosedContract.toString());
 		}
 		if (filterCompanyId != null) {
 			l.put("company.id", filterCompanyId.toString());
