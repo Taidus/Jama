@@ -63,10 +63,10 @@
 	</p:confirmDialog>
 
 
-	<h:commandButton action="#{installmentManager.addInstallment()}" value="Aggiungi una rata" ajax="false" immediate="true"
+	<p:commandButton action="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}" ajax="false" immediate="true"
 		rendered="#{cc.attrs.editingDisable == false}">
 		<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}" />
-	</h:commandButton>
+	</p:commandButton>
 
 
 	<br />

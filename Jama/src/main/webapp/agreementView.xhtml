@@ -38,14 +38,14 @@
 				</p:tab>
 
 				<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-					<sections:agreementWizAttachments editingDisable="#{userManager.loggedUser}">
+					<sections:agreementWizAttachments editingDisable="#{userManager.loggedUser.hasRole('CHIEF_SCIENTIST')==false }">
 					</sections:agreementWizAttachments>
 				</p:tab>
 
 			</p:tabView>
 
 
-			<p:commandButton value="back" action="#{agreementEditPB.cancel()}" ajax="false" />
+			<p:commandButton value="#{msgs.previous}" action="#{agreementEditPB.cancel()}" ajax="false" />
 			
 			<ui:remove>
 				<p:commandButton action="#{contractManager.editContract()}" value="toEditMode" ajax="false"></p:commandButton>
