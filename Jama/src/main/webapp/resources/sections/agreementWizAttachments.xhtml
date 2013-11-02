@@ -9,11 +9,10 @@
 <composite:implementation>
 
 
-
+		<p:panel header="#{msgs.attachments_header}">
 
 		<p:growl id="messages" showDetail="true" />
 
-		<h:outputText value="#{msgs.attachments_list_title}" />
 
 		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}" var="file" emptyMessage="#{msgs.noAttachmentFound}">
 			<p:column>
@@ -39,6 +38,7 @@
 			update="messages attchsList" sizeLimit="1000000" cancelLabel="#{msgs.remove}" uploadLabel="#{msgs.load}" 
 			invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}" rendered="#{cc.attrs.editingDisable == false}" />
 
+	</p:panel>
 
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirmA">
 			<p:commandButton value="#{msgs.yes}" action="#{attachmentsPB.removeFile()}" immediate="true" oncomplete="w_confirmA.hide()" update="attchsList" />
