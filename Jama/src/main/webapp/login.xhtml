@@ -7,24 +7,34 @@
 
 
 <h:head>
+
+	<h:outputStylesheet library="css" name="login.css"></h:outputStylesheet>
 </h:head>
 
 <h:body>
 
 	<h:form>
-		<p:messages id="messages" showDetail="false" autoUpdate="true"
-			closable="true" />
+		<p:panel styleClass="centered">
 
-		<h:panelGrid columns="2">
-			<h:outputText value="#{msgs.serialNumber}: " />
-			<p:inputText id="serialNumber" binding="#{serialNumber}" required="true" label="#{msgs.serialNumber}"/>
-			<h:outputText value="#{msgs.password}: " />
-			<p:password id="password" binding="#{password}" />
-		</h:panelGrid>
-		<p:commandButton value="Login"
-			action="#{userManager.login(serialNumber.value, password.value)}" />
-		<br />
-		<br />
+			<h1>
+				<h:outputText value="#{msgs.login_welcome}" />
+			</h1>
+
+			<h:panelGrid columns="2" styleClass="centered">
+				<h:outputText value="#{msgs.serialNumber}: " />
+				<p:inputText id="serialNumber" binding="#{serialNumber}"
+					required="true" label="#{msgs.serialNumber}" />
+				<h:outputText value="#{msgs.password}: " />
+				<p:password id="password" binding="#{password}" required="true" />
+			</h:panelGrid>
+			<p:commandButton value="Login"
+				action="#{userManager.login(serialNumber.value, password.value)}" />
+			<br />
+			<br />
+		</p:panel>
+		
+					<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" />
 	</h:form>
 
 

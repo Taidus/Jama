@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+.centered {
+	margin:auto;
+	text-align: center;
+	padding:20px;
+}
+
+h1{
+		text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        font: 70px 'LeagueGothicRegular';
+        width: 940px;
+        margin: auto;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        text-align: center;
+        
+}
