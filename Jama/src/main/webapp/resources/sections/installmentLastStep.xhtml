@@ -7,13 +7,14 @@
 
 	<p:tab id="tabEnd" title="#{msgs.end__tab}">
 
-					<h:outputText value="Fine " />
-		
 
-			<p:commandButton value="#{msgs.save}"
-				action="#{installmentWizardPB.save()}" ajax="false" />
+		<p:panel>
+			<h:outputText value="#{msgs.instCongr} " />
 
 
+		</p:panel>
+		<p:commandButton value="#{msgs.save}"
+			action="#{installmentWizardPB.save()}" ajax="false" />
 
 
 
