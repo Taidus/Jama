@@ -36,7 +36,7 @@
 				</p:tab>
 
 				<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-					<sections:agreementWizAttachments editingDisable="true">
+					<sections:agreementWizAttachments editingDisable="#{userManager.loggedUser}">
 					</sections:agreementWizAttachments>
 				</p:tab>
 

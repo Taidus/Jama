@@ -58,5 +58,7 @@ public class UserManager implements Serializable {
 		loggedUser = new Principal();
 		// TODO return value;
 	}
+	
+	
 
 }
