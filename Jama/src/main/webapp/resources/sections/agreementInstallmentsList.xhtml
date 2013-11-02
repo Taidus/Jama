@@ -17,24 +17,21 @@
 
 	<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
 		value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
-		<p:column headerText="#{msgs.date}">
 
+		<p:column headerText="#{msgs.date}">
 			<h:outputText value="#{installment.date}">
 				<f:convertDateTime locale="it" dateStyle="full" />
 			</h:outputText>
-
-
 		</p:column>
 
 		<p:column headerText="#{msgs.amount}">
-			<h:outputText value="#{installment.wholeAmount}" >
+			<h:outputText value="#{installment.wholeAmount}">
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 		</p:column>
 
 		<p:column headerText="#{msgs.paidInvoice_Question}">
 			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
-
 
 			<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentWizardPB.viewInstallment()}">
 				<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
@@ -51,8 +48,6 @@
 			</p:commandButton>
 			<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyDeadline(installment, false)}">
 			</p:commandButton>
-
-
 
 		</p:column>
 

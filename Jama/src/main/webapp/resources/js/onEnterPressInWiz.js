@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 function enterNext() {
 	alert("sssss");
 
