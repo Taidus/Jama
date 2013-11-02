@@ -14,66 +14,63 @@
 
 	<p:growl autoUpdate="true" />
 
+	<p:panel styleClass="semiEmptyPanel relative">
+		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
+			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
 
-	<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
-		value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
+			<p:column headerText="#{msgs.date}">
+				<h:outputText value="#{installment.date}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+			</p:column>
 
-		<p:column headerText="#{msgs.date}">
-			<h:outputText value="#{installment.date}">
-				<f:convertDateTime locale="it" dateStyle="full" />
-			</h:outputText>
-		</p:column>
+			<p:column headerText="#{msgs.amount}">
+				<h:outputText value="#{installment.wholeAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
 
-		<p:column headerText="#{msgs.amount}">
-			<h:outputText value="#{installment.wholeAmount}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-		</p:column>
+			<p:column headerText="#{msgs.paidInvoice_Question}">
+				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 
-		<p:column headerText="#{msgs.paidInvoice_Question}">
-			<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentWizardPB.viewInstallment()}">
+					<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentWizardPB.editInstallment()}"
+					rendered="#{cc.attrs.editingDisable==false}">
+					<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();"
+					rendered="#{cc.attrs.editingDisable==false}">
+					<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyDeadline(installment, false)}">
+				</p:commandButton>
 
-			<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentWizardPB.viewInstallment()}">
-				<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
-				<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
-			</p:commandButton>
-			<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentWizardPB.editInstallment()}"
-				rendered="#{cc.attrs.editingDisable==false}">
-				<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
-				<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
-			</p:commandButton>
-			<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{cc.attrs.editingDisable==false}">
-				<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}"></f:setPropertyActionListener>
-				<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
-			</p:commandButton>
-			<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyDeadline(installment, false)}">
-			</p:commandButton>
-
-		</p:column>
-
-
-
-	</p:dataTable>
-
-
-	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="delete_confirm">
-		<p:commandButton value="#{msgs.yes}" action="#{installmentWizardPB.deleteInstallment()}" immediate="true" update="installmentTable"
-			oncomplete="delete_confirm.hide();" />
-		<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();" type="button" />
-	</p:confirmDialog>
-
-
-	<p:commandButton action="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}" ajax="false" immediate="true"
-		rendered="#{cc.attrs.editingDisable == false}">
-		<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}" />
-	</p:commandButton>
-
-
-	<br />
+			</p:column>
 
 
 
+		</p:dataTable>
 
 
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="delete_confirm">
+			<p:commandButton value="#{msgs.yes}" action="#{installmentWizardPB.deleteInstallment()}" immediate="true" update="installmentTable"
+				oncomplete="delete_confirm.hide();" />
+			<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();" type="button" />
+		</p:confirmDialog>
+
+
+		<p:commandButton styleClass="addInstBtn" action="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}" ajax="false"
+			immediate="true" rendered="#{cc.attrs.editingDisable == false}">
+			<f:setPropertyActionListener target="#{installmentWizardPB.returnPage}" value="#{cc.attrs.installmentOutcome}" />
+		</p:commandButton>
+
+
+		<br />
+	</p:panel>
 </composite:implementation>
 </html>

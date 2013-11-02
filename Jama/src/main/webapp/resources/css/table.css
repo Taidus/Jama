@@ -16,3 +16,12 @@
 	display: none;
 	float: right !important;
 }
+
+.hide-column-names table thead tr {
+    display: none !important;
+}
+
+.addInstBtn{
+	position: absolute !important;
+	bottom: 10 !important;
+}

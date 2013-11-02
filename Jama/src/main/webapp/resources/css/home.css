@@ -1,18 +1,26 @@
 @CHARSET "UTF-8";
 
-.buttons{
-
+.buttons {
 	display: block;
-	width:200px;
-	margin-top:30px;
-	
+	width: 200px;
+	margin-top: 30px;
 }
 
-.text{
-	
-	font-size:30px;
+.semiEmptyPanel{
+	min-height: 400px !important;
 }
 
+.relative{
+	position: relative !important;
+}
+
+.saveButton {
+	float: right !important;
+}
+
+.text {
+	font-size: 30px;
+}
 
 /*
 #agreementTable .button-right-column{
