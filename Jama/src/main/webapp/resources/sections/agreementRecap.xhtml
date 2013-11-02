@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 
-	<p:panel header="#{msgs.annualRecap_Header}">
+	<p:panel header="#{msgs.annualRecap_Header}" styleClass="semiEmptyPanel">
 
 		<p:dataTable id="annualRecapTable" var="recapItem" value="#{agreementRecapPB.annualRecap}" emptyMessage="#{msgs.noInstallmentFound}">
 
@@ -21,7 +21,7 @@
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="#{msgs.ramainder}">
+			<p:column headerText="#{msgs.remainder}">
 				<h:outputText value="#{recapItem.remainder}">
 					<f:attribute name="plain" value="false" />
 				</h:outputText>
