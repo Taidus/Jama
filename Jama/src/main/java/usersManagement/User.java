@@ -19,7 +19,7 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 
-	private int serialNumber;
+	private String serialNumber;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
@@ -39,11 +39,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public int getSerialNumber() {
+	public String getSerialNumber() {
 		return serialNumber;
 	}
 
-	public void setSerialNumber(int serialNumber) {
+	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
 	}
 
@@ -64,6 +64,7 @@ public class User implements Serializable {
 	}
 
 	public boolean login(String password) {
+		// TODO: mettere encryption
 		return this.password.equals(password);
 	}
 
