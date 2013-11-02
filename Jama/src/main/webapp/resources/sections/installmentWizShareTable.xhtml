@@ -11,7 +11,7 @@
 
 	<p:panel header="#{msgs.shareTable_Header}">
 
-		<h:panelGrid id="instValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
+		<p:panelGrid id="instValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
 
 			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
 			<h:inputText id="atheneumCapitalBalance" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
@@ -173,7 +173,7 @@
 
 			<p:message for="otherCost" id="otherCostError" />
 
-		</h:panelGrid>
+		</p:panelGrid>
 
 		<br />
 
