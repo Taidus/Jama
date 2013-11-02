@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,84 +24,106 @@ import businessLayer.Contract;
 
 @Stateful
 @ConversationScoped
-
 public class ContractSearchService extends ResultPagerBean<Contract> {
-	
+
+	@Inject
 	@Logged
 	private Principal principal;
-	
+
+
 	@ChiefScientistAllowed
-	public void initWithLoggedUserCode(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass){
-		
+	public void initWithLoggedUserCode(Date lowerDeadLineDate, Date upperDeadLineDate, Integer companyId, SortOrder order,
+			Class<? extends Contract> contractClass, Boolean closed, Date lowerInstDeadlineDate, Date upperInstDeadlineDate) {
+
 		String code = principal.getSerialNumber();
-		
-		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass, code);
-		
-	}
-	
-	@AlterContractsAllowed
-	public void init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
-		
-		_init(lowerDate, upperDate, chiefId, companyId, order, contractClass , null);
-		
+
+		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order, contractClass, code, closed, lowerInstDeadlineDate, upperInstDeadlineDate);
+
 	}
 
-	private void _init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass, String principalSerialNumber) {
+
+	@AlterContractsAllowed
+	public void init(Date lowerDeadLineDate, Date upperDeadLineDate, Integer chiefId, Integer companyId, SortOrder order,
+			Class<? extends Contract> contractClass, Boolean closed) {
+
+		_init(lowerDeadLineDate, upperDeadLineDate, chiefId, companyId, order, contractClass, null, closed, null, null);
+
+	}
+
+
+	private void _init(Date lowerDate, Date upperDate, Integer chiefId, Integer companyId, SortOrder order, Class<? extends Contract> contractClass,
+			String principalSerialNumber, Boolean closed, Date lowerInstDeadlineDate, Date upperInstDeadlineDate) {
 		currentPage = 0;
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
 		Root<? extends Contract> agr;
-		
+
 		agr = c.from(contractClass);
-		c.select(agr);
+		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
+
+			c.select(agr).distinct(true).where(cb.equal(agr.join("installments").get("paidInvoice"), false));
+		} else {
+
+			c.select(agr);
+		}
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
+
+		if (lowerInstDeadlineDate != null) {
+
+			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerInstDate");
+			criteria.add(cb.greaterThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
+		}
+
+		if (upperInstDeadlineDate != null) {
+
+			ParameterExpression<Date> p = cb.parameter(Date.class, "upperInstDate");
+			criteria.add(cb.lessThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
+		}
+
 		if (lowerDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
-			criteria.add(cb.greaterThanOrEqualTo(
-					agr.<Date> get("approvalDate"), p));
+			criteria.add(cb.greaterThanOrEqualTo(agr.<Date> get("deadlineDate"), p));
 
 		}
 
 		if (upperDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
-			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("approvalDate"), p));
+			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("deadlineDate"), p));
 
 		}
 
 		if (chiefId != null) {
 
-			ParameterExpression<Integer> p = cb.parameter(Integer.class,
-					"chiefId");
+			ParameterExpression<Integer> p = cb.parameter(Integer.class, "chiefId");
 			criteria.add(cb.equal(agr.get("chief").get("id"), p));
 
 		}
 		if (companyId != null) {
 
-			ParameterExpression<Integer> p = cb.parameter(Integer.class,
-					"companyId");
+			ParameterExpression<Integer> p = cb.parameter(Integer.class, "companyId");
 			criteria.add(cb.equal(agr.get("company").get("id"), p));
 
 		}
-		if(principalSerialNumber != null){
-			ParameterExpression<String> p = cb.parameter(String.class,
-					"principalSerialNumber");
+		if (principalSerialNumber != null) {
+			ParameterExpression<String> p = cb.parameter(String.class, "principalSerialNumber");
 			criteria.add(cb.equal(agr.get("chief").get("serialNumber"), p));
 		}
-		
-		if(order == SortOrder.ASCENDING){
-			
-			c.orderBy(cb.asc(agr.<Date> get("approvalDate")));
+		if (closed != null) {
+			System.out.println("Query. Closed = " + closed);
+			ParameterExpression<Boolean> p = cb.parameter(Boolean.class, "closed");
+			criteria.add(cb.equal(agr.get("closed"), p));
 		}
-		else if(order == SortOrder.DESCENDING){
-			
-			c.orderBy(cb.desc(agr.<Date> get("approvalDate")));
+
+		if (order == SortOrder.ASCENDING) {
+
+			c.orderBy(cb.asc(agr.<Date> get("deadlineDate")));
+		} else if (order == SortOrder.DESCENDING) {
+
+			c.orderBy(cb.desc(agr.<Date> get("deadlineDate")));
 
 		}
 
@@ -115,6 +138,14 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			}
 
 			query = em.createQuery(c);
+
+			if (lowerInstDeadlineDate != null) {
+				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+			}
+			if (upperInstDeadlineDate != null) {
+				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+			}
+
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);
 			}
@@ -130,11 +161,15 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			if (principalSerialNumber != null) {
 				query.setParameter("principalSerialNumber", principalSerialNumber);
 			}
+			if (closed != null) {
+				query.setParameter("closed", closed);
+			}
 
 		} else {
 
 			query = em.createQuery(c);
 		}
+		
 
 	}
 

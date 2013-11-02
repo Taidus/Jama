@@ -55,7 +55,7 @@ public class AgreementEditPresentationBean implements Serializable {
 	}
 	
 	private String getListLink(){
-		return "agreementList?faces-redirect=true&" + manager.getFiltersParamList();
+		return manager.getProvenancePage()+"&" + manager.getFiltersParamList();
 	}
 
 }

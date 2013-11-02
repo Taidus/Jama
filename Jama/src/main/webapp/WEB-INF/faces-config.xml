@@ -25,20 +25,29 @@
 		<navigation-case>
 			<from-outcome>agreementEdit</from-outcome>
 			<to-view-id>/agreementEdit.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>agreementCreate</from-outcome>
 			<to-view-id>/agreementWiz.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>agreementView</from-outcome>
 			<to-view-id>/agreementView.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>agreementList</from-outcome>
 			<to-view-id>/agreementList.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>agreementSchedule</from-outcome>
+			<to-view-id>/agreementSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
 		<navigation-case>
 			<from-outcome>home</from-outcome>
 			<to-view-id>/home.xhtml</to-view-id>
@@ -47,14 +56,22 @@
 		<navigation-case>
 			<from-outcome>installmentCreate</from-outcome>
 			<to-view-id>/installmentWiz.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>installmentEdit</from-outcome>
 			<to-view-id>/installmentEdit.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>installmentView</from-outcome>
 			<to-view-id>/installmentView.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>chiefContractList</from-outcome>
+			<to-view-id>/chiefContractList.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 
 	</navigation-rule>

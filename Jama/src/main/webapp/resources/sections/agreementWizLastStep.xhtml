@@ -4,8 +4,17 @@
 	<p:tab id="tabEnd" title="#{msgs.end__tab}">
 
 		<h:outputText value="#{msgs.agrCongr}" />
+		
+		<p:growl autoUpdate="true" />
+
 		<br />
+
 		<p:commandButton value="#{msgs.save}" action="#{agreementWizardPB.save()}" ajax="false" />
+
+		<br />
+
+		<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyClosure(contractManager.contract)}"
+			value="Test mail" />
 
 	</p:tab>
 

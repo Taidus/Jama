@@ -5,14 +5,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.joda.money.Money;
 
 import util.Config;
-import util.MathUtil;
 import util.Percent;
 
 /**
@@ -22,6 +39,7 @@ import util.Percent;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Access(AccessType.FIELD)
 public abstract class Contract implements Serializable {
 
 	/**
@@ -45,6 +63,7 @@ public abstract class Contract implements Serializable {
 
 	@Size(max = 1000)
 	protected String title;
+	
 
 	protected String protocolNumber;
 
@@ -61,6 +80,8 @@ public abstract class Contract implements Serializable {
 
 	protected int CIA_projectNumber;
 	protected int inventoryNumber;
+	
+	private boolean closed;
 
 	@Embedded
 	@AttributeOverrides({
@@ -293,7 +314,7 @@ public abstract class Contract implements Serializable {
 		for (Installment i : installments) {
 
 			if (i.isPaidInvoice()) {
-				sum.plus(i.getWholeAmount());
+				sum = sum.plus(i.getWholeAmount());
 			}
 
 		}
@@ -301,10 +322,28 @@ public abstract class Contract implements Serializable {
 		return sum;
 	}
 	
+	public Money getRemainder(){
+		return getWholeAmount().minus(getTurnOver());
+	}
+	
+	@Access(AccessType.PROPERTY)
 	public boolean isClosed() {
 
-		return getWholeAmount().equals(spentAmount);
+		return getWholeAmount().equals(getTurnOver());
 
 	}
+	
+	public String getClosedString(){
+		return String.valueOf(isClosed());
+	}
+
+	private void setClosed(boolean closed) {
+		// serve ad Hibernate
+		this.closed = closed;
+	}
+	
+	
+	
+	
 
 }

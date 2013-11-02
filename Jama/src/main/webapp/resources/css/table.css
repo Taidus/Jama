@@ -1,9 +1,18 @@
 @CHARSET "UTF-8";
 
-
-#agreementTable .list-row-button, #installmentTable .list-row-button, #agrSchedule .list-row-button{
+/*
+#agreementTable .list-row-button, #installmentTable .list-row-button, #agrSchedule .list-row-button, #chiefContractList .list-row-button{
 	height: 20px;
 	width: 30px;
 	display: none;
 	float: right;
+}
+*/
+
+
+.list-row-button{
+	height: 20px !important;
+	width: 30px !important;
+	display: none;
+	float: right !important;
 }

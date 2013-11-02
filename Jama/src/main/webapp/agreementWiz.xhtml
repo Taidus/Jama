@@ -6,10 +6,12 @@
 
 <h:head>
 	<h:outputStylesheet name="agreementWiz.css" library="css" />
+
 	<h:outputScript name="onEnterPressInWiz.js" library="js" />
+	<h:outputScript name="hideShow.js" library="js" />
 
 </h:head>
-<h:body>
+<h:body onload="setHideShow();">
 
 
 	<h:form id="agreementWiz">
@@ -20,31 +22,23 @@
 		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}">
 
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
-				<sections:agreementWizData editingDisable="false" creating="true"/>
-
+				<sections:agreementWizData editingDisable="false" creating="true" />
 			</p:tab>
-
 
 			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 				<sections:agreementWizShareTable editingDisable="false" />
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-				<sections:agreementInstallmentsList installmentOutcome="agreementCreate" editingDisable="false">
-				</sections:agreementInstallmentsList>
-
-
+				<sections:agreementInstallmentsList installmentOutcome="agreementCreate" editingDisable="false" />
 			</p:tab>
 
-					<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-			<sections:agreementWizAttachments
-					editingDisable="false">
+			<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
+				<sections:agreementWizAttachments editingDisable="false">
 				</sections:agreementWizAttachments>
 			</p:tab>
 
 			<ui:include src="/resources/sections/agreementWizLastStep.xhtml" />
-
-
 
 		</p:wizard>
 
