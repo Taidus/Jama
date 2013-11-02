@@ -117,12 +117,10 @@
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.chiefItems}" />
 						<f:converter binding="#{chiefConverter}" />
-
 					</p:selectOneMenu>
 
-					<h:outputText value="#{contractManager.contract.chief}"
+					<h:outputText value="#{contractManager.contract.chief.completeName}"
 						rendered="#{cc.attrs.editingDisable == true}">
-						<f:converter binding="#{chiefConverter}" />
 					</h:outputText>
 				</p:column>
 
@@ -177,9 +175,8 @@
 						<f:converter binding="#{companyConverter}" />
 					</h:selectOneMenu>
 
-					<h:outputText value="#{contractManager.contract.company}"
+					<h:outputText value="#{contractManager.contract.company.name}"
 						rendered="#{cc.attrs.editingDisable==true}">
-						<f:converter binding="#{companyConverter}" />
 					</h:outputText>
 				</p:column>
 

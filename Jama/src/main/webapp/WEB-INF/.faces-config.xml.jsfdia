@@ -17,12 +17,11 @@
    <PROCESS-ITEM-OUTPUT ID="agreementSchedule::#agreementSchedule.xhtml"
     NAME="output4" PATH="/agreementSchedule.xhtml"
     TARGET="rules:#agreementSchedule.xhtml" TITLE="agreementSchedule" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="home::#home.xhtml" NAME="output5"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="installmentCreate::#installmentWiz.xhtml"
-    NAME="output5" PATH="/installmentWiz.xhtml"
+    NAME="output6" PATH="/installmentWiz.xhtml"
     TARGET="rules:#installmentWiz.xhtml" TITLE="installmentCreate" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="installmentEdit::#installmentEdit.xhtml"
-    NAME="output6" PATH="/installmentEdit.xhtml"
-    TARGET="rules:#installmentEdit.xhtml" TITLE="installmentEdit" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="installmentView::#installmentView.xhtml"
     NAME="output7" PATH="/installmentView.xhtml"
     TARGET="rules:#installmentView.xhtml" TITLE="installmentView" model-entity="JSFProcessItemOutput"/>
