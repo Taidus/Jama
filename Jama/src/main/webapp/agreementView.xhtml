@@ -5,9 +5,11 @@
 
 <h:head>
 	<h:outputStylesheet name="agreementWiz.css" library="css" />
+	
+	<h:outputScript name="hideShow.js" library="js" />
 </h:head>
 
-<h:body>
+<h:body onload="setHideShow();">
 
 	<h:panelGrid width="100%" columns="2" columnClasses="col1">
 		<h:form id="agreementWiz">
