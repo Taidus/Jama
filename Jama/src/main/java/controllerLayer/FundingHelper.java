@@ -16,4 +16,9 @@ public class FundingHelper implements ContractHelper {
 		return false;
 	}
 
+	@Override
+	public boolean renderType() {
+		return false;
+	}
+
 }

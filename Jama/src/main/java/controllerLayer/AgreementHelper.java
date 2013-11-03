@@ -21,4 +21,9 @@ public class AgreementHelper implements ContractHelper{
 		return true;
 	}
 
+	@Override
+	public boolean renderType() {
+		return true;
+	}
+
 }

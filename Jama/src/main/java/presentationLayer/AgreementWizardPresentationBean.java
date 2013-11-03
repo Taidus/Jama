@@ -67,4 +67,8 @@ public class AgreementWizardPresentationBean implements Serializable {
 	public boolean renderIvaComponents() {
 		return helper.renderIvaComponents();
 	}
+	
+	public boolean renderType(){
+		return helper.renderType();
+	}
 }
