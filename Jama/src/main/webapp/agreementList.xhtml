@@ -13,6 +13,8 @@
 	<f:viewParam name="sortorder" value="#{opContractListPCB.lazyModel.sortOrder}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="first" value="#{opContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{opContractListPCB.lazyModel.pageRows}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="class" value="#{opContractListPCB.lazyModel.filterContractClass}"
+		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 
 	<f:event listener="#{opContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
@@ -35,7 +37,8 @@
 		});
 	</script>
 </h:head>
-<h:body onload="setFilters('#{opContractListPCB.lazyModel.filterChiefId}', '#{opContractListPCB.lazyModel.filterCompanyId}');">
+<h:body
+	onload="setOpListFilters('#{opContractListPCB.lazyModel.filterChiefId}', '#{opContractListPCB.lazyModel.filterCompanyId}', '#{opContractListPCB.lazyModel.filterContractClass}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{opContractListPCB.conversation.id}' />
@@ -55,6 +58,10 @@
 			<p:ajax event="sort" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent();" />
 
+			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}">
+				<h:outputText value="#{agr.class.name}" />
+			</p:column>
+
 			<p:column id="agrIsClosed">
 				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
 			</p:column>
@@ -72,8 +79,8 @@
 			<p:column id="agrTableDateColumn" sortBy="#{agr.approvalDate}">
 
 				<f:facet name="header">
-	                <h:outputText value="#{msgs.deadlineDate}" />
-					<br /> 
+					<h:outputText value="#{msgs.deadlineDate}" />
+					<br />
 					<h:form id="calendarFilters">
 						<div style="display: block; width: 90%; margin: auto;">
 							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"

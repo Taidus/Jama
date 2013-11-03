@@ -61,56 +61,62 @@ public class MailSender implements Serializable {
 
 	public void notifyCreation(Contract c) throws TemplateException, IOException {
 		System.out.println("mail di notifica creazione contratto simulata");
-
-		ContractTemplateFiller filler = new ContractTemplateFiller(c, "pippo@jama.jam");
-		StringWriter out = new StringWriter();
-		// variabile di tipo StringWriter perché un Writer qualunque non va
-		// bene: serve che il metodo toString() restituisca esattamente la
-		// stringa che rappresenta il contenuto della mail
-
-		Template temp = Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
-		temp.process(filler, out);
-		String mailContent = out.toString();
-
-		// System.out.println("\n********************\n" + mailContent +
-		// "\n*********************");
-		spam();
-
-		_send("giulio.galvan@stud.unifi.it", "Jama: nuovo contratto", mailContent);
-		_send("tommaso.levato@stud.unifi.it", "Jama: nuovo contratto", mailContent);
-		_send("alessio.sarullo@stud.unifi.it", "Jama: nuovo contratto", mailContent);
-
-		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
-
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		/*
+		 * ContractTemplateFiller filler = new ContractTemplateFiller(c,
+		 * "pippo@jama.jam"); StringWriter out = new StringWriter(); //
+		 * variabile di tipo StringWriter perché un Writer qualunque non va //
+		 * bene: serve che il metodo toString() restituisca esattamente la //
+		 * stringa che rappresenta il contenuto della mail
+		 * 
+		 * Template temp =
+		 * Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
+		 * temp.process(filler, out); String mailContent = out.toString();
+		 * 
+		 * // System.out.println("\n********************\n" + mailContent + //
+		 * "\n*********************"); spam();
+		 * 
+		 * _send("giulio.galvan@stud.unifi.it", "Jama: nuovo contratto",
+		 * mailContent); _send("tommaso.levato@stud.unifi.it",
+		 * "Jama: nuovo contratto", mailContent);
+		 * _send("alessio.sarullo@stud.unifi.it", "Jama: nuovo contratto",
+		 * mailContent);
+		 * 
+		 * System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		 * 
+		 * FacesContext.getCurrentInstance().addMessage(null, new
+		 * FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		 */
 	};
 
 
 	// TODO implementare
 	public void notifyClosure(Contract c) throws IOException, TemplateException {
 		System.out.println("mail di notifica chiusura contratto simulata");
-
-		ContractTemplateFiller filler = new ContractTemplateFiller(c, "pippo@jama.jam");
-		StringWriter out = new StringWriter();
-		// variabile di tipo StringWriter perché un Writer qualunque non va
-		// bene: serve che il metodo toString() restituisca esattamente la
-		// stringa che rappresenta il contenuto della mail
-
-		Template temp = Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
-		temp.process(filler, out);
-		String mailContent = out.toString();
-
-		// System.out.println("\n********************\n" + mailContent +
-		// "\n*********************");
-		spam();
-
-//		_send("giulio.galvan@stud.unifi.it", "Jama: chiusura contratto", mailContent);
-//		_send("tommaso.levato@stud.unifi.it", "Jama: chiusura contratto", mailContent);
-		_send("alessio.sarullo@stud.unifi.it", "Jama: chiusura contratto", mailContent);
-
-		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
-
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		/*
+		 * ContractTemplateFiller filler = new ContractTemplateFiller(c,
+		 * "pippo@jama.jam"); StringWriter out = new StringWriter(); //
+		 * variabile di tipo StringWriter perché un Writer qualunque non va //
+		 * bene: serve che il metodo toString() restituisca esattamente la //
+		 * stringa che rappresenta il contenuto della mail
+		 * 
+		 * Template temp =
+		 * Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
+		 * temp.process(filler, out); String mailContent = out.toString();
+		 * 
+		 * // System.out.println("\n********************\n" + mailContent + //
+		 * "\n*********************"); spam();
+		 * 
+		 * // _send("giulio.galvan@stud.unifi.it", "Jama: chiusura contratto",
+		 * // mailContent); // _send("tommaso.levato@stud.unifi.it",
+		 * "Jama: chiusura contratto", // mailContent);
+		 * _send("alessio.sarullo@stud.unifi.it", "Jama: chiusura contratto",
+		 * mailContent);
+		 * 
+		 * System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		 * 
+		 * FacesContext.getCurrentInstance().addMessage(null, new
+		 * FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		 */
 	}
 
 
@@ -123,6 +129,7 @@ public class MailSender implements Serializable {
 	public void notifyDeadline(Installment inst, boolean actuallySend) throws IOException, TemplateException {
 		// TODO il campo actuallySend serve per non intasare le mail in fase di
 		// sviluppo e testing. Va eliminato
+		actuallySend = false;
 
 		InstallmentTemplateFiller filler = new InstallmentTemplateFiller(inst, "pluto@jama.jam", "topolino@jama.jam");
 		StringWriter out = new StringWriter();

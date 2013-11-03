@@ -17,6 +17,7 @@ import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 import businessLayer.Contract;
+import businessLayer.Funding;
 import businessLayer.Installment;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
@@ -25,7 +26,6 @@ import daoLayer.CompanyDaoBean;
 @Dependent
 public class UtilPresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@EJB
 	private ChiefScientistDaoBean chiefDaoBean;
 	@EJB
@@ -49,9 +49,7 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public SelectItem[] getCompanyItems() {
-
 		List<Company> companies = companyDaoBean.getAll();
-
 		SelectItem[] result = new SelectItem[companies.size()];
 		Company current = null;
 		for (int i = 0; i < companies.size(); i++) {
@@ -64,9 +62,8 @@ public class UtilPresentationBean implements Serializable {
 
 	public SelectItem[] getFilterChiefItems() {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
-
 		SelectItem[] result = new SelectItem[chiefs.size() + 1];
-		result[0] = new SelectItem("", Messages.getString("allM")); 
+		result[0] = new SelectItem("", Messages.getString("allM"));
 		ChiefScientist current = null;
 		for (int i = 0; i < chiefs.size(); i++) {
 			current = chiefs.get(i);
@@ -77,9 +74,7 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public SelectItem[] getFilterCompanyItems() {
-
 		List<Company> companies = companyDaoBean.getAll();
-
 		SelectItem[] result = new SelectItem[companies.size() + 1];
 		result[0] = new SelectItem("", Messages.getString("allF"));
 		Company current = null;
@@ -116,14 +111,27 @@ public class UtilPresentationBean implements Serializable {
 
 	public SelectItem[] getBooleanFilter(String trueLabel, String falseLabel) {
 		SelectItem[] result = new SelectItem[3];
-		result[0] = new SelectItem("", Messages.getString("allM")); 
+		result[0] = new SelectItem("", Messages.getString("allM"));
 		result[1] = new SelectItem(Boolean.TRUE.toString(), trueLabel);
 		result[2] = new SelectItem(Boolean.FALSE.toString(), falseLabel);
 		return result;
 	}
-	
-	public SelectItem[] getContractFilter(){
-		SelectItem[] result = {new SelectItem(Agreement.class)};
+
+
+	/*
+	 * public SelectItem[] getContractFilter() { ContractType[] types =
+	 * ContractType.values(); SelectItem[] result = new SelectItem[types.length
+	 * + 1]; result[0] = new SelectItem("", Messages.getString("allM")); for
+	 * (int i = 0; i < types.length; i++) { result[i + 1] = new
+	 * SelectItem(types[i].getRelatedClass(), types[i].getRelatedClassName()); }
+	 * return result; }
+	 */
+
+	public SelectItem[] getContractFilter() {
+		SelectItem[] result = new SelectItem[3];
+		result[0] = new SelectItem(Contract.class.getName(), Messages.getString("allM"));
+		result[1] = new SelectItem(Agreement.class.getName(), Messages.getString("agreement"));
+		result[2] = new SelectItem(Funding.class.getName(), Messages.getString("funding"));
 		return result;
 	}
 
@@ -131,7 +139,6 @@ public class UtilPresentationBean implements Serializable {
 	public Date findClosestDeadline(Contract contract, Date minDate) {
 		List<Installment> insts = contract.getInstallments();
 		Date closestDeadline = null;
-
 		boolean found = false;
 		Iterator<Installment> it = insts.iterator();
 		while (it.hasNext() && !found) {
@@ -140,11 +147,9 @@ public class UtilPresentationBean implements Serializable {
 				found = true;
 			}
 		}
-
 		return closestDeadline;
 	}
 
 
 	public UtilPresentationBean() {}
-
 }

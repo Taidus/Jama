@@ -44,13 +44,21 @@ public class OperatorContractListLDM extends OperatorContractTableLDM {
 		return contractSearch;
 	}
 
+
 	@Override
 	protected void initPager(Map<String, String> filters) {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
-		contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder, Agreement.class, null);
-//		contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder, Agreement.class);
+		try {
+			contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder,
+					(Class<? extends Contract>) Class.forName(filterContractClass), null);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			//TODO gestire l'eccezione
+		}
+		// contractSearch.init(filterMinDate, filterMaxDate, filterChiefId,
+		// filterCompanyId, sortOrder, Agreement.class, null);
 	}
 
 
