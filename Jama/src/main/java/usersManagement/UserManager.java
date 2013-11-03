@@ -23,6 +23,7 @@ public class UserManager implements Serializable {
 	private Principal loggedUser;
 	@Inject
 	private UserDaoBean userDao;
+	private String insertedSerialNumber;
 
 	public UserManager() {
 	}
@@ -39,10 +40,12 @@ public class UserManager implements Serializable {
 		return loggedUser;
 	}
 
-	public String login(String serialNumber, String password) {
-		User u = userDao.getBySerialNumber(serialNumber);
+	public String login(String password) {
+		User u = userDao.getBySerialNumber(insertedSerialNumber);
 		if (u != null && u.login(password)) {
-			loggedUser = new Principal(u.getName(),u.getSurname(),u.getEmail(),String.valueOf(u.getSerialNumber()), u.getRole());
+			loggedUser = new Principal(u.getName(), u.getSurname(),
+					u.getEmail(), String.valueOf(u.getSerialNumber()),
+					u.getRole());
 			System.out.println("User Login: loggedUser= " + u);
 			return "home";
 		} else {
@@ -57,7 +60,13 @@ public class UserManager implements Serializable {
 		loggedUser = new Principal();
 		return "login";
 	}
-	
-	
+
+	public String getInsertedSerialNumber() {
+		return insertedSerialNumber;
+	}
+
+	public void setInsertedSerialNumber(String insertedSerialNumber) {
+		this.insertedSerialNumber = insertedSerialNumber;
+	}
 
 }

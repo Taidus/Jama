@@ -19,11 +19,11 @@
 
 			<h:panelGrid columns="2" styleClass="centered">
 				<h:outputText value="#{msgs.serialNumber}: " />
-				<p:inputText id="serialNumber" binding="#{serialNumber}" required="true" label="#{msgs.serialNumber}" />
+				<p:inputText id="serialNumber" value="#{userManager.insertedSerialNumber}" required="true" label="#{msgs.serialNumber}" />
 				<h:outputText value="#{msgs.password}: " />
 				<p:password id="password" binding="#{password}" required="true" />
 			</h:panelGrid>
-			<p:commandButton value="Login" action="#{userManager.login(serialNumber.value, password.value)}" />
+			<p:commandButton value="#{msgs.login}" action="#{userManager.login(password.value)}" />
 			<br />
 			<br />
 		</p:panel>
