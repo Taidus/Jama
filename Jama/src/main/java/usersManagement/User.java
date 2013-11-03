@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import util.Encryptor;
+
 /**
  * Entity implementation class for Entity: User
  * 
@@ -84,7 +86,7 @@ public class User implements Serializable {
 
 	public boolean login(String password) {
 		// TODO: mettere encryption
-		return this.password.equals(password);
+		return this.password.equals(Encryptor.encrypt(password));
 	}
 
 	@Override
