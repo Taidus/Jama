@@ -16,7 +16,7 @@ import util.Percent;
 
 @Named
 @RequestScoped
-@FacesConverter(forClass=Percent.class)
+@FacesConverter(forClass = Percent.class)
 public class PercentConverter implements Converter {
 	// oltre a svolgere le normali operazioni di conversione,
 	// normalizza/denormalizza i dati: a video compariranno valori tra 0 e 100,
@@ -24,18 +24,24 @@ public class PercentConverter implements Converter {
 
 	public PercentConverter() {}
 
+
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		BigDecimal d = new BigDecimal(value).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN);
-		if(d.compareTo(BigDecimal.ONE) > 0){
+		try {
+			BigDecimal d = new BigDecimal(value).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN);
+			if (d.compareTo(BigDecimal.ONE) > 0) {
+				throw new ConverterException(Messages.getErrorMessage("err_invalidValue"));
+			}
+			return new Percent(d);
+		} catch (NumberFormatException e) {
 			throw new ConverterException(Messages.getErrorMessage("err_invalidValue"));
 		}
-		return new Percent(d);
 	}
+
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if(null == value){
+		if (null == value) {
 			return "";
 		}
 		return ((Percent) value).getValue().multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN).toPlainString();

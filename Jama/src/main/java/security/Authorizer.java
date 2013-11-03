@@ -33,11 +33,15 @@ public class Authorizer implements Serializable {
 
 	@Secures
 	@ChiefScientistAllowed
-	//FIXME: per ora è finto
+	// FIXME: per ora è finto
 	public boolean doChiefScientistCheck() {
 		System.out
 				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
 		return true;
+	}
+
+	public boolean canViewHome() {
+		return (loggedUser.hasPermission(Permission.VIEW_HOME)) ? true : false;
 	}
 
 }
