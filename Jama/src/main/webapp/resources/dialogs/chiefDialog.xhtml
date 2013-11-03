@@ -15,22 +15,22 @@
 
 				<h:outputText value="#{msgs.name}:" />
 				<h:inputText id="chiefFirstName" value="#{chiefDialogPCB.chief.name}" label="#{msgs.name}" required="true" />
-				<h:message for="chiefFirstName" />
+				<p:message for="chiefFirstName" />
 
 				<h:outputText value="#{msgs.surname}:" />
 				<h:inputText id="chiefLastName" value="#{chiefDialogPCB.chief.surname}" label="#{msgs.surname}" required="true" />
-				<h:message for="chiefLastName" />
+				<p:message for="chiefLastName" />
 				
-				<h:outputText value="serialllll" />
-				<h:inputText id="chiefSerialNumber" value="#{chiefDialogPCB.chief.serialNumber}" label="ddd" required="true" />
-				<h:message for="chiefSerialNumber" />
+				<h:outputText value="#{msgs.serialNumber}" />
+				<h:inputText id="chiefSerialNumber" value="#{chiefDialogPCB.chief.serialNumber}" label="#{msgs.serialNumber}" required="true" />
+				<p:message for="chiefSerialNumber" />
 
 				<br />
 
 			</h:panelGrid>
 
 			<p:commandButton type="button" onclick="w_chiefDialog.hide();" value="#{msgs.cancel}" />
-			<p:commandButton value="#{msgs.save}" actionListener="#{chiefDialogPCB.save()}" update=":#{p:component('chiefMenu')}"
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{chiefDialogPCB.save()}" update="@form :#{p:component('chiefMenu')}"
 				oncomplete="if (!args.validationFailed) {w_chiefDialog.hide();}" />
 
 		</h:form>
