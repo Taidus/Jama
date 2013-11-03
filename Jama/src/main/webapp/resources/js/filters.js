@@ -18,6 +18,16 @@ function setClosedContractsFilter(closedFilter){
 	jQuery("th[class*=closedFilterColumn] select.ui-column-filter").val(closedFilter);
 }
 
+function setContractTypeFilter(typeFilter){
+	jQuery("th[class*=contractTypeColumn] select.ui-column-filter").val(typeFilter);
+}
+
+function setOpListFilters(chiefFilter, companyFilter, typeFilter) {
+	setChiefFilter(chiefFilter);
+	setCompanyFilter(companyFilter);
+	setContractTypeFilter(typeFilter);
+}
+
 function setChiefListFilters(companyFilter, closedFilter){
 	setCompanyFilter(companyFilter);
 	setClosedContractsFilter(closedFilter);
