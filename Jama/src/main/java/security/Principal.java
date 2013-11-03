@@ -62,8 +62,6 @@ public class Principal {
 	}
 
 	public boolean hasRole(Role toCheck) {
-		System.out.println("Check Role : " + toCheck + " , answer ="
-				+ role.equals(toCheck));
 		return role.equals(toCheck);
 	}
 

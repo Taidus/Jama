@@ -1,6 +1,7 @@
 package usersManagement;
 
 import java.io.Serializable;
+import java.security.GeneralSecurityException;
 
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String password;
+	private byte[] password;
 	private String email;
 	private String name;
 	private String surname;
@@ -63,10 +64,9 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(byte[] password) {
 		this.password = password;
 	}
-	
 
 	public String getName() {
 		return name;
@@ -85,8 +85,20 @@ public class User implements Serializable {
 	}
 
 	public boolean login(String password) {
-		// TODO: mettere encryption
-		return this.password.equals(Encryptor.encrypt(password));
+
+		try {
+
+			byte[] encrypted = Encryptor.encrypt(password);
+			// XXX nn so perchè equals su array di byte nn funziona!
+			return new String(encrypted).equals(new String(this.password));
+
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+
 	}
 
 	@Override

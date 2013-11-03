@@ -18,4 +18,4 @@
 -- You can use this file to load seed data into the database using SQL statements
 --insert into Member (id, name, email, phone_number) values (0, 'John Smith', 'john.smith@mailinator.com', '2125551212') 
 
-insert into User (id, email, name, password, role, serialNumber, surname) values (0,"ciccio.pasticcio@pasticcino.com","ciccio","e��U�gg�=���","CHIEF_SCIENTIST","d612m","pasticcio"), (1,"ciccio.capopasticcio@pasticcino.com","capo","e��U�gg�=���","ADMIN","d612f","pasticcio");
+--insert into User (id, email, name, password, role, serialNumber, surname) values (0,"ciccio.pasticcio@pasticcino.com","ciccio",BINARY("pastrullo"),"CHIEF_SCIENTIST","d612m","pasticcio"), (1,"ciccio.capopasticcio@pasticcino.com","capo",BINARY("pastrullo"),"ADMIN","d612f","pasticcio");
