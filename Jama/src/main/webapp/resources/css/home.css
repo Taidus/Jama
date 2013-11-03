@@ -7,6 +7,7 @@
 .center {
 	text-align: center !important;
 	margin: auto !important;
+	margin-bottom:30px;
 }
 
 #actionPanel {

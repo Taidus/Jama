@@ -13,7 +13,7 @@ import org.apache.deltaspike.security.api.authorization.AccessDecisionVoterConte
 import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 
 @ApplicationScoped
-public class AdminAccessDecisionVoter implements AccessDecisionVoter {
+public class OperatorAccessDecisionVoter implements AccessDecisionVoter {
 	private static final long serialVersionUID = 1L;
 
 	@Inject

@@ -48,7 +48,7 @@ public class Initializer {
 			admin.setEmail("ciccio.capopasticcio@pasticcino.com");
 			admin.setName("CiccioCapo");
 			admin.setSurname("Pasticcio");
-			admin.setRole(Role.ADMIN);
+			admin.setRole(Role.OPERATOR);
 			em.persist(admin);
 		}
 
@@ -73,6 +73,31 @@ public class Initializer {
 			teacher.setSurname("Pasticcio");
 			teacher.setRole(Role.CHIEF_SCIENTIST);
 			em.persist(teacher);
+		}
+		
+		String operatorSerialNumber = "d612o";
+
+		
+		
+		if (em.createNamedQuery("User.findBySerialNumber")
+				.setParameter("number", operatorSerialNumber).getResultList()
+				.isEmpty()) {
+
+			User operator = new User();
+			byte[] operatorPassword;
+			try {
+				operatorPassword = Encryptor.encrypt("pastrullo");
+				operator.setPassword(operatorPassword);
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			operator.setSerialNumber(operatorSerialNumber);
+			operator.setEmail("ciccio.pasticcere@pasticcino.com");
+			operator.setName("Ciccio");
+			operator.setSurname("Pasticcere");
+			operator.setRole(Role.ADMIN);
+			em.persist(operator);
 		}
 
 	}

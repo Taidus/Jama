@@ -26,7 +26,7 @@
 
 			<p:panel header="#{msgs.available_actions}" styleClass="center" id="actionPanel">
 			
-				<p:panelGrid rendered="#{userManager.loggedUser.hasRole('ADMIN')==true}" styleClass="center">
+				<p:panelGrid rendered="#{userManager.loggedUser.hasRole('OPERATOR')==true}" styleClass="center">
 				
 					<p:row>
 						<p:column>
@@ -53,6 +53,17 @@
 					<p:row>
 						<p:column>
 							<p:button value="#{msgs.view_contracts}" outcome="chiefContractList" styleClass="buttons" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+				<p:panelGrid rendered="#{userManager.loggedUser.hasRole('ADMIN')==true}" styleClass="center">
+					<p:row>
+						<p:column>
+							<p:button value="#{msgs.create_user}"  styleClass="buttons" />
+						</p:column>
+						<p:column>
+							<p:button value="#{msgs.view_users}"  styleClass="buttons" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

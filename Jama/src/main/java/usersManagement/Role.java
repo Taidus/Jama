@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Role {
-	ADMIN(new Permission[] { Permission.ALTER_CONTRACTS,
+	OPERATOR(new Permission[] { Permission.ALTER_CONTRACTS,
 			Permission.DELETE_CONTRACTS, Permission.VIEW_CONTRACTS,
 			Permission.VIEW_HOME }),
 
 	CHIEF_SCIENTIST(new Permission[] { Permission.VIEW_OWN_CONTRACTS,
 			Permission.VIEW_HOME }),
+			
+	ADMIN(new Permission[]{Permission.VIEW_HOME}),
 
 	GUEST(new Permission[] {});
 
