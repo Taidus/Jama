@@ -92,13 +92,13 @@
 					<br />
 					<h:form>
 						<div style="display: block; margin: auto;">
-							<h:outputText value="#{msgs.from}" />
+							<h:outputText value="#{msgs.from}: " />
 							<p:calendar styleClass="calendarFilter" widgetVar="w_firstContractDate" showOn="both" showOtherMonths="true"
 								value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 							</p:calendar>
 						</div>
 						<div style="display: block; margin: auto;">
-							<h:outputText value="#{msgs.to}" />
+							<h:outputText value="#{msgs.to}: " />
 							<p:calendar styleClass="calendarFilter" widgetVar="w_lastContractDate" showOn="both" showOtherMonths="true"
 								value="#{chiefContractListPCB.lazyModel.filterContractMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 							</p:calendar>
@@ -122,13 +122,13 @@
 					<h:outputText value="#{msgs.nextDeadline}" />
 					<br />
 					<div style="display: block; margin: auto;">
-						<h:outputText value="#{msgs.from}" />
+						<h:outputText value="#{msgs.from}: " />
 						<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"
 							value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 						</p:calendar>
 					</div>
 					<div style="display: block; margin: auto;">
-						<h:outputText value="#{msgs.to}" />
+						<h:outputText value="#{msgs.to}: " />
 						<p:calendar styleClass="calendarFilter" widgetVar="w_lastInstDate" showOn="both" showOtherMonths="true"
 							value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 						</p:calendar>
