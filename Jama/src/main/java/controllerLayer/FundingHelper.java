@@ -21,4 +21,11 @@ public class FundingHelper implements ContractHelper {
 		return false;
 	}
 
+	@Override
+	public boolean renderPersonnelQuotes() {
+		return false;
+	}
+	
+	
+
 }

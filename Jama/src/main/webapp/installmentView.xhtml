@@ -36,12 +36,13 @@
 
 		</p:tabView>
 
-		<p:commandButton value="back" action="#{installmentWizardPB.cancel()}"
+		<p:commandButton value="#{msgs.close}" action="#{installmentWizardPB.cancel()}"
 			immediate="true" ajax="false" />
-
+		
+		<ui:remove>
 		<p:commandButton value="toEditMode" ajax="false"
 			action="#{installmentWizardPB.editInstallment()}"></p:commandButton>
-
+	</ui:remove>
 
 
 	</h:form>

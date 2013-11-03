@@ -77,4 +77,8 @@ public class AgreementWizardPresentationBean implements Serializable {
 	public boolean renderType(){
 		return helper.renderType();
 	}
+	
+	public boolean renderPersonnelQuotes(){
+		return helper.renderPersonnelQuotes();
+	}
 }
