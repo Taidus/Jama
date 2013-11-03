@@ -12,6 +12,10 @@ import util.Encryptor;
  * 
  */
 @Entity
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"serialNumber"})
+    )
 @NamedQueries({ @NamedQuery(name = "User.findBySerialNumber", query = "SELECT u FROM User U where u.serialNumber= :number ") })
 public class User implements Serializable {
 
