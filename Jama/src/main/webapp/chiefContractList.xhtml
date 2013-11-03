@@ -57,12 +57,12 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow();" />
 
-			<p:column styleClass="contractTypeColumn" filterBy="#{contract.class}" filterOptions="#{utilPB.contractFilter}">
+			<p:column styleClass="contractTypeColumn" filterBy="#{contract.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
 				<h:outputText value="#{utilPB.getNameFromClass(contract.class)}" />
 			</p:column>
 
 			<p:column styleClass="closedFilterColumn" filterBy="#{contract.closedString}"
-				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}">
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
 				<h:selectBooleanCheckbox value="#{contract.closed}" disabled="true" />
 			</p:column>
 

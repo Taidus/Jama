@@ -199,7 +199,7 @@ public class ContractManagerBean implements Serializable {
 		begin();
 		creatingNewContract = true;
 		editingClosedContract = false;
-		return "/agreementWiz.xhtml";
+		return "agreementCreate";
 
 	}
 
