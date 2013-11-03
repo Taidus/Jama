@@ -10,7 +10,7 @@
 
 <h:body>
 
-	<h:form>
+	<h:form prependId="false">
 		<p:panel styleClass="centered">
 
 			<h1>
@@ -23,6 +23,7 @@
 				<h:outputText value="#{msgs.password}: " />
 				<p:password id="password" binding="#{password}" required="true" />
 			</h:panelGrid>
+			
 			<p:commandButton value="#{msgs.login}" action="#{userManager.login(password.value)}" />
 			<br />
 			<br />
