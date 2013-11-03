@@ -60,12 +60,6 @@ public class AgreementWizardPresentationBean implements Serializable {
 	public String save() {
 		currentTabId = defaultTab;
 		manager.save();
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return "home";
 	}
 

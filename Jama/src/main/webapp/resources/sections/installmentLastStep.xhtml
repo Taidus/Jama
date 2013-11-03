@@ -1,9 +1,7 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 
+	<h:outputStylesheet library="css" name="home.css" />
 
 	<p:tab id="tabEnd" title="#{msgs.end__tab}">
 
@@ -12,9 +10,10 @@
 			<h:outputText value="#{msgs.instCongr} " />
 
 
-		</p:panel>
-		<p:commandButton value="#{msgs.save}"
-			action="#{installmentWizardPB.save()}" ajax="false" />
+		</p:panel>		
+		<p:commandButton id="instSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" action="#{installmentWizardPB.save()}"/>
+
+		<p:blockUI block="instSaveButton" trigger="instSaveButton"/>
 
 
 
