@@ -11,12 +11,9 @@
 	<h:outputScript name="hideShow.js" library="js" />
 
 </h:head>
-<h:body onload="setHideShow();">
-
+<h:body>
 
 	<h:form id="agreementWiz">
-
-
 		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
 		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}">
@@ -25,7 +22,7 @@
 				<sections:agreementWizData editingDisable="false" creating="true" />
 			</p:tab>
 
-			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" >
+			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
 				<sections:agreementWizShareTable editingDisable="false" />
 			</p:tab>
 
@@ -34,14 +31,12 @@
 			</p:tab>
 
 			<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-				<sections:agreementWizAttachments editingDisable="false">
-				</sections:agreementWizAttachments>
+				<sections:agreementWizAttachments editingDisable="false" />
 			</p:tab>
 
 			<ui:include src="/resources/sections/agreementWizLastStep.xhtml" />
 
 		</p:wizard>
-
 
 		<br />
 
@@ -56,16 +51,9 @@
 
 	</h:form>
 
-
-	<dialogs:chiefDialog name="w_chiefDialog"></dialogs:chiefDialog>
-
-	<dialogs:companyDialog name="w_companyDialog">
-	</dialogs:companyDialog>
-
-	<dialogs:personnelShareDialog name="w_personnelShare"></dialogs:personnelShareDialog>
-
-
-
+	<dialogs:chiefDialog name="w_chiefDialog" />
+	<dialogs:companyDialog name="w_companyDialog" />
+	<dialogs:personnelShareDialog name="w_personnelShare" />
 
 </h:body>
 </html>
