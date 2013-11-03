@@ -3,6 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
+	<f:viewParam name="class" value="#{opContractSchedulePCB.lazyModel.filterContractClass}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="chief.id" value="#{opContractSchedulePCB.lazyModel.filterChiefId}"
 		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{opContractSchedulePCB.lazyModel.filterCompanyId}"
@@ -11,7 +13,8 @@
 		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="fmaxdate" value="#{opContractSchedulePCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
 		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="first" value="#{opContractSchedulePCB.lazyModel.pageFirst}" valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{opContractSchedulePCB.lazyModel.pageFirst}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{opContractSchedulePCB.lazyModel.pageRows}" valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 
 	<f:event listener="#{opContractSchedulePCB.lazyModel.loadTableFilters}" type="preRenderView" />
@@ -36,11 +39,12 @@
 	</script>
 </h:head>
 
-<h:body onload="setFilters('#{opContractSchedulePCB.lazyModel.filterChiefId}', '#{opContractSchedulePCB.lazyModel.filterCompanyId}');">
+<h:body
+	onload="setOpScheduleFilters('#{opContractSchedulePCB.lazyModel.filterChiefId}', '#{opContractSchedulePCB.lazyModel.filterCompanyId}', '#{opContractSchedulePCB.lazyModel.filterContractClass}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{opContractSchedulePCB.conversation.id}' />
-		
+
 		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="agrSchedule">
 			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{opContractSchedulePCB.viewAgreement()}" />
 		</p:contextMenu>
@@ -52,6 +56,10 @@
 
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent();" />
+
+			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}">
+				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
+			</p:column>
 
 			<p:column id="agrIsClosed">
 				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />

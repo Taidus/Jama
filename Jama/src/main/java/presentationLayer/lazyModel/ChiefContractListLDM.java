@@ -8,7 +8,6 @@ import javax.enterprise.context.Dependent;
 
 import org.primefaces.model.SortOrder;
 
-import businessLayer.Agreement;
 import businessLayer.Contract;
 import daoLayer.ContractSearchService;
 import daoLayer.ResultPagerBean;
@@ -114,6 +113,8 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 			if (tmp != null) {
 				newFilterClosed = Boolean.valueOf(tmp);
 			}
+
+			setFilterContractClass(filters.get("class"));
 			setFilterClosedContract(newFilterClosed);
 		}
 		System.out.println("Company ID: " + filterCompanyId + "; closed: " + filterClosedContract);
@@ -126,7 +127,7 @@ public class ChiefContractListLDM extends ContractTableLazyDataModel {
 		System.out.println("Installment: min date = " + filterInstMinDate + "; max date = " + filterInstMaxDate);
 
 		System.out.println("Querying");
-		contractSearch.initWithLoggedUserCode(filterContractMinDate, filterContractMaxDate, filterCompanyId, null, Agreement.class,
+		contractSearch.initWithLoggedUserCode(filterContractMinDate, filterContractMaxDate, filterCompanyId, null, getClassFromFilter(),
 				filterClosedContract, filterInstMinDate, filterInstMaxDate);
 
 	}

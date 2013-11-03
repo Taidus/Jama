@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 
-import businessLayer.Agreement;
 import businessLayer.Contract;
 import daoLayer.DeadlineSearchService;
 import daoLayer.ResultPagerBean;
@@ -34,6 +33,6 @@ public class OperatorContractScheduleLDM extends OperatorContractTableLDM {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
-		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null, Agreement.class);
+		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null, getClassFromFilter());
 	}
 }

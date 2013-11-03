@@ -3,6 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
+	<f:viewParam name="class" value="#{opContractListPCB.lazyModel.filterContractClass}"
+		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="chief.id" value="#{opContractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{opContractListPCB.lazyModel.filterCompanyId}"
 		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
@@ -13,8 +15,7 @@
 	<f:viewParam name="sortorder" value="#{opContractListPCB.lazyModel.sortOrder}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="first" value="#{opContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{opContractListPCB.lazyModel.pageRows}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
-	<f:viewParam name="class" value="#{opContractListPCB.lazyModel.filterContractClass}"
-		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+
 
 	<f:event listener="#{opContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
@@ -59,7 +60,7 @@
 			<p:ajax event="page" oncomplete="setRowEvent();" />
 
 			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}">
-				<h:outputText value="#{agr.class.name}" />
+				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
 			</p:column>
 
 			<p:column id="agrIsClosed">

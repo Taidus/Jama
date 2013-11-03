@@ -7,7 +7,6 @@ import javax.enterprise.context.Dependent;
 
 import org.primefaces.model.SortOrder;
 
-import businessLayer.Agreement;
 import businessLayer.Contract;
 import daoLayer.ContractSearchService;
 import daoLayer.ResultPagerBean;
@@ -50,13 +49,8 @@ public class OperatorContractListLDM extends OperatorContractTableLDM {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
-		try {
-			contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder,
-					(Class<? extends Contract>) Class.forName(filterContractClass), null);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			//TODO gestire l'eccezione
-		}
+		contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder, getClassFromFilter(), null);
+
 		// contractSearch.init(filterMinDate, filterMaxDate, filterChiefId,
 		// filterCompanyId, sortOrder, Agreement.class, null);
 	}

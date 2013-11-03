@@ -156,7 +156,22 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 
 
 	public void setFilterContractClass(String filterContractClass) {
-		this.filterContractClass = filterContractClass;
+		if (null == filterContractClass) {
+			this.filterContractClass = Contract.class.getName();
+		} else {
+			this.filterContractClass = filterContractClass;
+		}
+	}
+
+
+	protected Class<? extends Contract> getClassFromFilter() {
+		try {
+			return (Class<? extends Contract>) Class.forName(filterContractClass);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Illegal Contract class: " + filterContractClass);
+			// TODO rivedere la gestione dell'eccezione, se serve
+		}
 	}
 
 

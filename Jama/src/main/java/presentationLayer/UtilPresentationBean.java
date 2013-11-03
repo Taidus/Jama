@@ -3,8 +3,10 @@ package presentationLayer;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
@@ -30,6 +32,19 @@ public class UtilPresentationBean implements Serializable {
 	private ChiefScientistDaoBean chiefDaoBean;
 	@EJB
 	private CompanyDaoBean companyDaoBean;
+	
+	private static final Map<Class<? extends Contract>, String> contractTypeName;
+	
+	static{
+		contractTypeName = new HashMap<>();
+		contractTypeName.put(Contract.class, Messages.getString("contract"));
+		contractTypeName.put(Agreement.class, Messages.getString("agreement"));
+		contractTypeName.put(Funding.class, Messages.getString("funding"));
+	}
+	
+	public String getNameFromClass(Class<? extends Contract> c){
+		return contractTypeName.get(c);
+	}
 
 
 	public SelectItem[] getAgreementTypeItems() {

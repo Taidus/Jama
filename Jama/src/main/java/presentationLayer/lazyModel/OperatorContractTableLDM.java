@@ -77,14 +77,13 @@ public abstract class OperatorContractTableLDM extends ContractTableLazyDataMode
 			if (tmp != null) {
 				newChiefId = Integer.parseInt(tmp);
 			}
+
 			tmp = filters.get("company.id");
 			if (tmp != null) {
 				newCompanyId = Integer.parseInt(tmp);
 			}
-			tmp = filters.get("class");
-			if(tmp != null){
-				setFilterContractClass(tmp);
-			}
+
+			setFilterContractClass(filters.get("class"));
 			setFilterChiefId(newChiefId);
 			setFilterCompanyId(newCompanyId);
 		}
