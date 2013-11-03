@@ -1,9 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://java.sun.com/jsf/composite">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="name"></composite:attribute>
@@ -12,28 +8,21 @@
 
 <composite:implementation>
 
-	<p:dialog id="companyDialog" header="#{msgs.newCompanyTitle}"
-		widgetVar="#{cc.attrs.name}" modal="true">
+	<p:dialog id="companyDialog" header="#{msgs.newCompanyTitle}" widgetVar="#{cc.attrs.name}" modal="true">
 		<h:form>
 
-			<h:panelGrid id="companyPanel" columns="3"
-				columnClasses="label, value, errorMessage" styleClass="grid">
+			<h:panelGrid id="companyPanel" columns="3" columnClasses="label, value, errorMessage" styleClass="grid">
 
 				<h:outputText value="#{msgs.name}:" />
-				<h:inputText id="companyName"
-					value="#{companyDialogPCB.company.name}" label="#{msgs.name}"
-					required="true" />
+				<h:inputText id="companyName" value="#{companyDialogPCB.company.name}" label="#{msgs.name}" required="true" />
 				<h:message for="companyName" />
 
 				<br />
 
 			</h:panelGrid>
 
-			<p:commandButton type="button" onclick="w_companyDialog.hide();"
-				value="#{msgs.cancel}" />
-			<p:commandButton value="#{msgs.save}"
-				actionListener="#{companyDialogPCB.save()}"
-				update=":#{p:component('companyMenu')}"
+			<p:commandButton type="button" onclick="w_companyDialog.hide();" value="#{msgs.cancel}" />
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyDialogPCB.save()}" update="@form :#{p:component('companyMenu')}"
 				oncomplete="if (!args.validationFailed) w_companyDialog.hide()" />
 
 		</h:form>
