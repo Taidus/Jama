@@ -29,6 +29,10 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
 		currentPage = 0;
+		
+		if(contractClass==null){
+			contractClass = Contract.class;
+		}
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
