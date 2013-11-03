@@ -49,8 +49,8 @@
 			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{opContractSchedulePCB.viewAgreement()}" />
 		</p:contextMenu>
 
-		<p:dataTable id="agrSchedule" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule" lazy="true" value="#{opContractSchedulePCB.lazyModel}"
-			emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+		<p:dataTable id="agrSchedule" binding="#{opContractSchedulePCB.lazyModel.dataTable}" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule"
+			lazy="true" value="#{opContractSchedulePCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractSchedulePCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}">
 
