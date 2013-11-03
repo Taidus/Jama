@@ -3,6 +3,8 @@ package businessLayer;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -13,6 +15,7 @@ import util.Percent;
 public class Agreement extends Contract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Enumerated(EnumType.STRING)
 	private AgreementType type;
 
 	public Agreement() {

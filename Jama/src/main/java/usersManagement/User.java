@@ -18,6 +18,8 @@ public class User implements Serializable {
 	private int id;
 	private String password;
 	private String email;
+	private String name;
+	private String surname;
 
 	private String serialNumber;
 	@Enumerated(EnumType.STRING)
@@ -61,6 +63,23 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public boolean login(String password) {
