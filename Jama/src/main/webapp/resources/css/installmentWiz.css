@@ -19,7 +19,7 @@ padding:2px;
 }
 */
 
-#installmentWiz tr, #installmentWiz td, #installmentEdit tr, #installmentEdit td {
+#installmentWiz tr, #installmentWiz td, #installmentEdit tr, #installmentEdit td, #installmentView tr, #installmentView td{
 	border: none;
 }
 	       

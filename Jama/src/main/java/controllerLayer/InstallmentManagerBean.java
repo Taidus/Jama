@@ -28,7 +28,7 @@ public  class InstallmentManagerBean implements Serializable {
 	
 	@Inject
 	@Current
-	private ContractHelper installmentProducer;
+	private ContractHelper helper;
 
 	// TODO spostare return indirizzo pagina
 	protected Installment selectedInstallment;
@@ -85,8 +85,8 @@ public  class InstallmentManagerBean implements Serializable {
 
 	protected void initInstallment() {
 
-		installment = new AgreementInstallment();
-		transferObjInstallment = new AgreementInstallment();
+		installment = helper.getNewInstallment();
+		transferObjInstallment = helper.getNewInstallment();
 		transferObjInstallment.copy(selectedInstallment);
 
 	}
@@ -120,8 +120,8 @@ public  class InstallmentManagerBean implements Serializable {
 	}
 	
 	public String addInstallment(){
-		installment = installmentProducer.getNewInstallment();
-	transferObjInstallment = new AgreementInstallment();
+		installment = helper.getNewInstallment();
+	transferObjInstallment = helper.getNewInstallment();
 	transferObjInstallment.setContract(contract);
 	transferObjInstallment.initShareTableFromContract(contract);;
 	//insertRandomValues(transferObjInstallment); //TODO eliminare

@@ -26,4 +26,9 @@ public class AgreementHelper implements ContractHelper{
 		return true;
 	}
 
+	@Override
+	public boolean renderPersonnelQuotes() {
+		return true;
+	}
+
 }
