@@ -23,6 +23,9 @@ class AgreementList implements ViewConfig {
 class InstallmentWiz implements ViewConfig {
 }
 
+@Secured(value = { HomeAccessDecisionVoter.class }, errorView = Login.class)
+class Home implements ViewConfig {}
+
 @Secured(value = { AdminAccessDecisionVoter.class }, errorView = Login.class)
 class AgreementSchedule implements ViewConfig {
 }
