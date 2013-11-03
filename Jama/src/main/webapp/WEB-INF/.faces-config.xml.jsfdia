@@ -19,15 +19,14 @@
     TARGET="rules:#agreementSchedule.xhtml" TITLE="agreementSchedule" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="home::#home.xhtml" NAME="output5"
     PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="installmentCreate::#installmentWiz.xhtml"
-    NAME="output6" PATH="/installmentWiz.xhtml"
-    TARGET="rules:#installmentWiz.xhtml" TITLE="installmentCreate" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="login::#login.xhtml" NAME="output6"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="installmentEdit::#installmentEdit.xhtml"
+    NAME="output7" PATH="/installmentEdit.xhtml"
+    TARGET="rules:#installmentEdit.xhtml" TITLE="installmentEdit" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="installmentView::#installmentView.xhtml"
-    NAME="output7" PATH="/installmentView.xhtml"
+    NAME="output8" PATH="/installmentView.xhtml"
     TARGET="rules:#installmentView.xhtml" TITLE="installmentView" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="chiefContractList::#chiefContractList.xhtml"
-    NAME="output8" PATH="/chiefContractList.xhtml"
-    TARGET="rules:#chiefContractList.xhtml" TITLE="chiefContractList" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#home.xhtml" PATH="/home.xhtml"
@@ -50,4 +49,6 @@
   PATH="/chiefContractList.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#agreementSchedule.xhtml"
   PATH="/agreementSchedule.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

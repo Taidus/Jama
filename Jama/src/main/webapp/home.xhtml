@@ -1,6 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:sections="http://java.sun.com/jsf/composite/sections">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections"
+	xmlns:p="http://primefaces.org/ui">
 
 
 
@@ -8,14 +12,66 @@
 	<h:outputStylesheet name="home.css" library="css" />
 </h:head>
 <h:body>
-	<h:form>
-		<h:outputText value="Cosa vuoi fare oggi?" styleClass="text" />
-		<h:commandButton value="Crea Convenzione" action="#{contractManager.createAgreement()}" styleClass="buttons" />
-		<h:commandButton action="#{contractManager.createFunding()}" value="Crea Contributo" styleClass="buttons" />
-		<h:button value="Lista convenzioni" outcome="agreementList" styleClass="buttons" />
-		<h:button value="Scadenzario" outcome="agreementSchedule" styleClass="buttons" />
-		<h:button value="Lista convenzioni docente" outcome="chiefContractList" styleClass="buttons" />
+
+	<p:toolbar>
+		<p:toolbarGroup align="left">
+			<h:outputText
+				value="#{msgs.user}: #{userManager.loggedUser.name} #{userManager.loggedUser.surname}" />
+
+		</p:toolbarGroup>
+
+		<p:toolbarGroup align="right">
+			<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
+				value="#{msgs.logout}" action="#{userManager.logout}">
+
+			</p:commandButton>
+
+		</p:toolbarGroup>
+	</p:toolbar>
+	<h:form prependId="false">
+	<div class="center">
+
+	<p:panel header="#{msgs.available_actions}" styleClass="center" id="actionPanel">
+		<p:panelGrid
+			rendered="#{userManager.loggedUser.hasRole('ADMIN')==true}" styleClass="center">
+			<p:row>
+				<p:column>
+					<p:commandButton value="#{msgs.create_agreement}"
+						action="#{contractManager.createAgreement}" styleClass="buttons" />
+				</p:column>
+				<p:column>
+					<p:commandButton action="#{contractManager.createFunding()}"
+						value="#{msgs.create_funding}" styleClass="buttons" />
+				</p:column>
+
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:button value="#{msgs.view_contracts}" outcome="agreementList"
+						styleClass="buttons" />
+				</p:column>
+				<p:column>
+					<p:button value="#{msgs.view_deadlines}" outcome="agreementSchedule"
+						styleClass="buttons" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:panelGrid
+			rendered="#{userManager.loggedUser.hasRole('CHIEF_SCIENTIST')==true}" styleClass="center">
+
+
+			<p:row>
+				<p:column>
+					<p:button value="#{msgs.view_contracts}"
+						outcome="chiefContractList" styleClass="buttons" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		</p:panel>
+		</div>
 	</h:form>
+	
 </h:body>
 
 

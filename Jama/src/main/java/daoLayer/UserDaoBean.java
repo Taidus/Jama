@@ -40,7 +40,7 @@ public class UserDaoBean {
 
 	}
 
-	public User getBySerialNumber(int serialNumber) {
+	public User getBySerialNumber(String serialNumber) {
 		
 		try{
 		
