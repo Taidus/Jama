@@ -38,7 +38,9 @@ public abstract class Installment implements Serializable {
 	public Installment() {
 		this.shareTable = new InstallmentShareTable();
 		this.wholeTaxableAmount = Money.zero(Config.currency);
-
+		this.date = new Date();
+		this.invoiceDate = new Date();
+		this.voucherDate = new Date();
 	}
 
 	@Id

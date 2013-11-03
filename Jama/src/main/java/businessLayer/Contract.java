@@ -55,6 +55,9 @@ public abstract class Contract implements Serializable {
 		reservedAmount = Money.zero(Config.currency);
 		IVA_amount = Percent.ZERO;
 		wholeTaxableAmount = Money.zero(Config.currency);
+		approvalDate = new Date();
+		deadlineDate = new Date();
+		beginDate = new Date();
 	}
 
 	@Id

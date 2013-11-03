@@ -332,7 +332,7 @@
 						value="#{contractManager.contract.reservedAmount}"
 						label="#{msgs.reservedAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}"
-						validator="#{agreementWizardPB.validateReservedAmount}">
+						validator="#{contractDataPB.validateReservedAmount}">
 						<f:ajax event="blur" execute="@this spentAmount"
 							render="reservedAmountError spentAmountError" />
 					</h:inputText>
@@ -362,7 +362,7 @@
 						value="#{contractManager.contract.spentAmount}"
 						label="#{msgs.spentAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}"
-						validator="#{agreementWizardPB.validateSpentAmount}">
+						validator="#{contractDataPB.validateSpentAmount}">
 						<f:ajax event="blur" execute="@this" render="spentAmountError" />
 					</h:inputText>
 
