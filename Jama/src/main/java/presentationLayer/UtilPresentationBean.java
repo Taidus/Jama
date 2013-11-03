@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 import util.Messages;
+import businessLayer.Agreement;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
@@ -118,6 +119,11 @@ public class UtilPresentationBean implements Serializable {
 		result[0] = new SelectItem("", Messages.getString("allM")); 
 		result[1] = new SelectItem(Boolean.TRUE.toString(), trueLabel);
 		result[2] = new SelectItem(Boolean.FALSE.toString(), falseLabel);
+		return result;
+	}
+	
+	public SelectItem[] getContractFilter(){
+		SelectItem[] result = {new SelectItem(Agreement.class)};
 		return result;
 	}
 

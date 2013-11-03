@@ -1,6 +1,7 @@
 package presentationLayer;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
@@ -60,7 +61,23 @@ public class ContractDataPresentationBean implements Serializable {
 		} catch (ClassCastException e) {
 			throw new ValidatorException(Messages.getErrorMessage("err_invalidAmount"));
 		}
+	}
+	
+	public void validateDeadlineDate(FacesContext context, UIComponent component, Object value) {
+		System.out.println("Validate deadline");
 
+		try {
+			Date deadline = (Date) value;
+			Date begin = (Date) ((UIInput) component.findComponent("beginDate")).getValue();
+			System.out.println("deadline: " + deadline + ", begin: " + begin);
+
+			if (deadline.before(begin)) {
+				// System.out.println("dentro if");
+				throw new ValidatorException(Messages.getErrorMessage("err_invalidDeadline"));
+			}
+		} catch (ClassCastException e) {
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue"));
+		}
 	}
 
 }
