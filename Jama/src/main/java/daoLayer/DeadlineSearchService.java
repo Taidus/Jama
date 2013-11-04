@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -16,50 +18,64 @@ import javax.persistence.criteria.Root;
 import org.primefaces.model.SortOrder;
 
 import security.AlterContractsAllowed;
+import security.Principal;
+import annotations.Logged;
 import businessLayer.Contract;
 
 @Stateful
 @ConversationScoped
 public class DeadlineSearchService extends ResultPagerBean<Contract> {
+	
+	@Inject
+	@Logged
+	private Principal principal;
 
 	public DeadlineSearchService() {
+		
+	
 	}
 
 	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
-			Integer companyId, SortOrder order, Class<? extends Contract> contractClass) {
+			Integer companyId, SortOrder order,
+			Class<? extends Contract> contractClass) {
 		currentPage = 0;
-		
-		if(contractClass==null){
+
+		if (contractClass == null) {
 			contractClass = Contract.class;
 		}
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
 		Root<? extends Contract> agr = c.from(contractClass);
-		//Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
-	
+		// Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
+
 		// TODO funziona sul serio?
-		c.select(agr).distinct(true).where(	cb.equal(agr.join("installments").get("paidInvoice"), false));
-//		c.select(agr)
-//				.distinct(true)
-//						.where(cb.equal(agr,
-//						inst.get("contract")));
+		c.select(agr)
+				.distinct(true)
+				.where(cb.equal(agr.join("installments").get("paidInvoice"),
+						false));
+		// c.select(agr)
+		// .distinct(true)
+		// .where(cb.equal(agr,
+		// inst.get("contract")));
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
-		
-//		criteria.add(cb.equal(inst.get("paidInvoice"), false));
+
+		// criteria.add(cb.equal(inst.get("paidInvoice"), false));
 		if (lowerDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
-			criteria.add(cb.greaterThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
+			criteria.add(cb.greaterThanOrEqualTo(agr.join("installments")
+					.<Date> get("date"), p));
 
 		}
 
 		if (upperDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
-			criteria.add(cb.lessThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
+			criteria.add(cb.lessThanOrEqualTo(agr.join("installments")
+					.<Date> get("date"), p));
 
 		}
 
@@ -85,6 +101,15 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 
 			c.orderBy(cb.desc(agr.join("installments").<Date> get("date")));
 
+		}
+
+		List<String> codes = principal.getBelongingDepthsCodes();
+
+		if (codes != null && (!codes.isEmpty())) {
+
+			Expression<String> exp = agr.get("department").get("code");
+			Predicate predicate = exp.in(codes);
+			criteria.add(predicate);
 		}
 
 		if (criteria.size() != 0) {

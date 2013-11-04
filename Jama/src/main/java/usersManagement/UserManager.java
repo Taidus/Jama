@@ -43,9 +43,7 @@ public class UserManager implements Serializable {
 	public String login(String password) {
 		User u = userDao.getBySerialNumber(insertedSerialNumber);
 		if (u != null && u.login(password)) {
-			loggedUser = new Principal(u.getName(), u.getSurname(),
-					u.getEmail(), String.valueOf(u.getSerialNumber()),
-					u.getRole());
+			loggedUser = new Principal(u);
 			System.out.println("User Login: loggedUser= " + u);
 			return "home";
 		} else {

@@ -6,9 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d") })
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"code"})
+    )
+@NamedQueries({ @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d") ,
+@NamedQuery(name="Department.findByCode", query="SELECT d FROM Department d where d.code = :code")})
 public class Department {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;

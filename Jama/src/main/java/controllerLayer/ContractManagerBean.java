@@ -21,9 +21,11 @@ import javax.persistence.PersistenceContextType;
 
 import org.joda.money.Money;
 
+import security.Principal;
 import util.Config;
 import util.MailSender;
 import annotations.Current;
+import annotations.Logged;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Contract;
@@ -57,8 +59,12 @@ public class ContractManagerBean implements Serializable {
 
 	@Inject
 	private MailSender mailSender;
+	
+	@Inject
+	@Logged
+	private Principal principal;
 
-	private boolean conversationninherited;
+//	private boolean conversationninherited;
 	private String filtersParamList;
 	private String provenancePage;
 
@@ -269,12 +275,12 @@ public class ContractManagerBean implements Serializable {
 		c.setCIA_projectNumber(10000);
 		c.setContactPerson("Random contact");
 		c.setInventoryNumber(20000);
-		Department d = new Department();
-		d.setCode("DSI/DINFO");
-		d.setName("ex Dipartimento di Sistemi e Informatica");
-		d.setRateDirectory("dsi");
-		depDao.createDepartment(d);
-		c.setDepartment(d);
+//		Department d = new Department();
+//		d.setCode("DSI/DINFO");
+//		d.setName("ex Dipartimento di Sistemi e Informatica");
+//		d.setRateDirectory("dsi");
+//		depDao.createDepartment(d);
+		c.setDepartment(depDao.getByCode(principal.getBelongingDepthsCodes().get(0)));
 		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
 		c.setProtocolNumber("30000");
 		c.setApprovalDate(new Date());

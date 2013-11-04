@@ -1,19 +1,19 @@
 package util;
 
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
-import javax.persistence.PersistenceException;
 
 import usersManagement.Role;
 import usersManagement.User;
+import businessLayer.Department;
 
 @ApplicationScoped
 @Singleton
@@ -28,6 +28,25 @@ public class Initializer {
 
 	@PostConstruct
 	public void init() {
+		
+		String depCode = "DSI/DINFO";
+		Department d;
+		
+		List<Department> depList = em.createNamedQuery("Department.findByCode", Department.class).setParameter("code", depCode).getResultList();
+		
+		if(depList.isEmpty()){
+		
+		d = new Department();
+		d.setCode(depCode);
+		d.setName("ex Dipartimento di Sistemi e Informatica");
+		d.setRateDirectory("dsi");
+		em.persist(d);
+		
+		}
+		else{
+			d = depList.get(0);
+		}
+		
 
 		String adminSerialNumber = "d612f";
 
@@ -49,6 +68,8 @@ public class Initializer {
 			admin.setName("CiccioCapo");
 			admin.setSurname("Pasticcio");
 			admin.setRole(Role.OPERATOR);
+			
+			admin.addDepartment(d);
 			em.persist(admin);
 		}
 
@@ -72,6 +93,7 @@ public class Initializer {
 			teacher.setName("Ciccio");
 			teacher.setSurname("Pasticcio");
 			teacher.setRole(Role.CHIEF_SCIENTIST);
+			teacher.addDepartment(d);
 			em.persist(teacher);
 		}
 		
