@@ -38,7 +38,7 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
-			Class<? extends Contract> contractClass) {
+			Class<? extends Contract> contractClass, Boolean closed ) {
 		currentPage = 0;
 
 		if (contractClass == null) {
@@ -50,7 +50,6 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		Root<? extends Contract> agr = c.from(contractClass);
 		// Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
 
-		// TODO funziona sul serio?
 		c.select(agr)
 				.distinct(true)
 				.where(cb.equal(agr.join("installments").get("paidInvoice"),
@@ -111,6 +110,11 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 			Predicate predicate = exp.in(codes);
 			criteria.add(predicate);
 		}
+		
+		if (closed != null) {
+			ParameterExpression<Boolean> p = cb.parameter(Boolean.class, "closed");
+			criteria.add(cb.equal(agr.get("closed"), p));
+		}
 
 		if (criteria.size() != 0) {
 
@@ -134,6 +138,9 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 			}
 			if (companyId != null) {
 				query.setParameter("companyId", companyId);
+			}
+			if (closed != null) {
+				query.setParameter("closed", closed);
 			}
 
 		} else {
