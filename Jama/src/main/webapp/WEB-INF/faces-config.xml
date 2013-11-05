@@ -78,6 +78,11 @@
 			<to-view-id>/chiefContractList.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+			<navigation-case>
+			<from-outcome>userWiz</from-outcome>
+			<to-view-id>/userWiz.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 
 	</navigation-rule>
 

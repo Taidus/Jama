@@ -55,10 +55,8 @@ public class Initializer {
 				.isEmpty()) {
 
 			User admin = new User();
-			byte[] adminPassword;
 			try {
-				adminPassword = Encryptor.encrypt("pastrullo");
-				admin.setPassword(adminPassword);
+				admin.setPassword("pastrullo");
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -80,10 +78,8 @@ public class Initializer {
 				.isEmpty()) {
 
 			User teacher = new User();
-			byte[] teacherPassword;
 			try {
-				teacherPassword = Encryptor.encrypt("pastrullo");
-				teacher.setPassword(teacherPassword);
+				teacher.setPassword("pastrullo");
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -106,10 +102,8 @@ public class Initializer {
 				.isEmpty()) {
 
 			User operator = new User();
-			byte[] operatorPassword;
 			try {
-				operatorPassword = Encryptor.encrypt("pastrullo");
-				operator.setPassword(operatorPassword);
+				operator.setPassword("pastrullo");
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

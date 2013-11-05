@@ -76,8 +76,8 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public void setPassword(byte[] password) {
-		this.password = password;
+	public void setPassword(String password) throws GeneralSecurityException {
+		this.password = Encryptor.encrypt(password);
 	}
 
 	public String getName() {

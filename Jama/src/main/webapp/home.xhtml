@@ -60,7 +60,7 @@
 				<p:panelGrid rendered="#{userManager.loggedUser.hasRole('ADMIN')==true}" styleClass="center">
 					<p:row>
 						<p:column>
-							<p:button value="#{msgs.create_user}"  styleClass="buttons" />
+							<p:commandButton action="#{userEditor.createUser()}" value="#{msgs.create_user}"  styleClass="buttons" />
 						</p:column>
 						<p:column>
 							<p:button value="#{msgs.view_users}"  styleClass="buttons" />

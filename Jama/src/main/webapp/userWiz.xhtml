@@ -1,466 +1,127 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections"
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
+<h:head>
+</h:head>
+<h:body>
 
-<p:panel header="#{msgs.userWiz_header}">
+	<h:form id="usrForm">
+	
+			<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
+	
+		<p:panel header="#{msgs.userWiz_header}">
 
-		<p:panelGrid id="usrDataPanelGrid">
+			<p:panelGrid id="usrDataPanelGrid">
 
-			<p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.name}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="name" value="#{userEditor.user.name}"
+							label="#{msgs.name}" required="true">
+						</h:inputText>
+
+					</p:column>
+
+					<p:column colspan="2">
+						<p:message for="name" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.surname}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="surname" value="#{userEditor.user.surname}"
+							label="#{msgs.surname}" required="true">
+						</h:inputText>
+					</p:column>
+
+					<p:column colspan="2">
+						<p:message for="surname" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.department}:" />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="depthMenu" styleClass="depthMenu"
+							value="#{userEditor.selectedDept}" label="#{msgs.department}"
+							required="true" filter="true" filterMatchMode="contains">
+							<f:selectItems value="#{utilPB.depthItems}" />
+							<f:converter binding="#{departmentConverter}" />
+						</p:selectOneMenu>
+
+					</p:column>
+
+					<p:column>
+						<p:message styleClass="errorMessage" for="depthMenu" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+				
+					
+					<p:column>
+						<h:outputText value="#{msgs.password}" />
+					</p:column>
+					
+					<p:column>
+						<p:password id="password" required="true" match="confirmPassword" value="#{userEditor.password}">
+							<f:ajax event="blur" ></f:ajax>
+						</p:password>
+						
+					</p:column>
+					
+					
+					
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.confirmPassword}" />
+					</p:column>
+					<p:column>
+					<p:password id="confirmPassword" required="true">
+				
+					</p:password>
+					</p:column>
+
+					
+
+				</p:row>
+				
+				<p:row>
+				
 				<p:column>
-					<h:outputText value="#{msgs.agrTitle}:" />
+						<p:message id="confirmPasswordError" styleClass="errorMessage" autoUpdate="true"
+							for="confirmPassword" />
 				</p:column>
+				
+				</p:row>
 
-				<p:column>
-					<h:inputTextarea id="title" cols="20" rows="4"
-						value="#{contractManager.contract.title}" label="#{msgs.agrTitle}"
-						required="true" rendered="#{cc.attrs.editingDisable == false}" />
 
-					<h:outputText id="title_o"
-						value="#{contractManager.contract.title}" label="#{msgs.agrTitle}"
-						rendered="#{cc.attrs.editingDisable == true}" />
-				</p:column>
+			</p:panelGrid>
 
-				<p:column colspan="2">
-					<p:message for="title" />
-				</p:column>
-			</p:row>
 
 
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.protocolNumber}:" />
-				</p:column>
+		</p:panel>
 
-				<p:column>
-					<h:inputText id="protocolNumber"
-						value="#{contractManager.contract.protocolNumber}"
-						label="#{msgs.protocolNumber}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6"
-							integerOnly="true" />
-						<f:ajax event="blur" execute="@this" render="protocolNumberError" />
-					</h:inputText>
+		<p:commandButton value="#{msgs.save}" action="#{userEditor.save()}"
+			ajax="false" />
 
-					<h:outputText id="protocolNumber_o"
-						value="#{contractManager.contract.protocolNumber}"
-						label="#{msgs.protocolNumber}"
-						rendered="#{cc.attrs.editingDisable == true}">
-					</h:outputText>
-
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" id="protocolNumberError"
-						for="protocolNumber" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.department}:" />
-				</p:column>
-
-				<p:column colspan="3">
-					<h:outputText value="#{contractManager.contract.department.name}" />
-				</p:column>
-			</p:row>
-
-
-			<p:row rendered="#{agreementWizardPB.renderType()==true}">
-				<p:column>
-					<h:outputText value="#{msgs.agrType}:" />
-				</p:column>
-
-				<p:column>
-					<h:selectOneMenu id="type" value="#{contractManager.contract.type}"
-						label="#{msgs.agrType}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<f:selectItems value="#{utilPB.agreementTypeItems}" />
-						<f:ajax event="blur" execute="@this" render="typeError" />
-
-					</h:selectOneMenu>
-
-					<h:outputText value="#{contractManager.contract.type}"
-						rendered="#{cc.attrs.editingDisable == true}" />
-				</p:column>
-
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" id="typeError" for="type" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.chief}:" />
-				</p:column>
-
-				<p:column>
-					<p:selectOneMenu id="chiefMenu" styleClass="chiefMenu"
-						value="#{contractManager.contract.chief}" label="#{msgs.chief}"
-						required="true" filter="true" filterMatchMode="contains"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<f:selectItems value="#{utilPB.chiefItems}" />
-						<f:converter binding="#{chiefConverter}" />
-					</p:selectOneMenu>
-
-					<h:outputText
-						value="#{contractManager.contract.chief.completeName}"
-						rendered="#{cc.attrs.editingDisable == true}">
-					</h:outputText>
-				</p:column>
-
-				<p:column>
-					<p:commandButton value="#{msgs.add}" process="@this"
-						actionListener="#{chiefDialogPCB.clear()}"
-						oncomplete="w_chiefDialog.show()"
-						update=":#{p:component('chiefPanel')}"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<p:resetInput target=":#{p:component('chiefPanel')}" />
-					</p:commandButton>
-				</p:column>
-
-				<p:column>
-					<p:message styleClass="errorMessage" for="chiefMenu" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.contactPerson}:" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="contact"
-						value="#{contractManager.contract.contactPerson}"
-						label="#{msgs.contactPerson}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}" />
-					<h:outputText value="#{contractManager.contract.contactPerson}"
-						rendered="#{cc.attrs.editingDisable == true}" />
-				</p:column>
-
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" for="contact" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.company}:" />
-				</p:column>
-
-				<p:column>
-					<h:selectOneMenu id="companyMenu"
-						value="#{contractManager.contract.company}"
-						label="#{msgs.company}" required="true"
-						rendered="#{cc.attrs.editingDisable==false}">
-						<f:selectItems value="#{utilPB.companyItems}" />
-						<f:converter binding="#{companyConverter}" />
-					</h:selectOneMenu>
-
-					<h:outputText value="#{contractManager.contract.company.name}"
-						rendered="#{cc.attrs.editingDisable==true}">
-					</h:outputText>
-				</p:column>
-
-				<p:column>
-					<p:commandButton value="#{msgs.add}" process="@this"
-						actionListener="#{companyDialogPCB.clear()}"
-						oncomplete="w_companyDialog.show()"
-						update=":#{p:component('companyPanel')}"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<p:resetInput target=":#{p:component('companyPanel')}" />
-					</p:commandButton>
-				</p:column>
-
-				<p:column>
-					<p:message styleClass="errorMessage" for="companyMenu" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.projectNumber}:" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="projectNumber"
-						value="#{contractManager.contract.CIA_projectNumber}"
-						label="#{msgs.projectNumber}" required="true"
-						rendered="#{cc.attrs.editingDisable==false}">
-						<f:ajax event="blur" execute="@this" render="projectNumberError" />
-					</h:inputText>
-
-					<h:outputText id="projectNumber_o"
-						value="#{contractManager.contract.CIA_projectNumber}"
-						label="#{msgs.projectNumber}"
-						rendered="#{cc.attrs.editingDisable==true}">
-					</h:outputText>
-
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" id="projectNumberError"
-						for="projectNumber" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.agrInventory}:" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="inventoryNumber"
-						value="#{contractManager.contract.inventoryNumber}"
-						label="#{msgs.agrInventory}" required="true"
-						rendered="#{cc.attrs.editingDisable ==false}">
-						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
-
-					</h:inputText>
-
-					<h:outputText id="inventoryNumber_o"
-						value="#{contractManager.contract.inventoryNumber}"
-						label="#{msgs.agrInventory}"
-						rendered="#{cc.attrs.editingDisable ==true}">
-
-					</h:outputText>
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" id="inventoryNumberError"
-						for="inventoryNumber" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.taxableAmount}:" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="taxableAmount"
-						value="#{contractManager.contract.wholeTaxableAmount}"
-						label="#{msgs.taxableAmount}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<f:validator binding="#{moneyValidator}" />
-						<f:ajax render="amount taxAmountError @this" />
-					</h:inputText>
-
-					<h:outputText id="taxableAmount_o"
-						value="#{contractManager.contract.wholeTaxableAmount}"
-						label="#{msgs.taxableAmount}"
-						rendered="#{cc.attrs.editingDisable == true}">
-						<f:attribute name="plain" value="false" />
-					</h:outputText>
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message id="taxAmountError" styleClass="errorMessage"
-						for="taxableAmount" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.iva}:"
-						rendered="#{agreementWizardPB.renderIvaComponents()==true}" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="iva"
-						value="#{contractManager.contract.IVA_amount}" label="#{msgs.iva}"
-						required="true"
-						rendered="#{(cc.attrs.editingDisable == false) and (agreementWizardPB.renderIvaComponents()==true) }">
-						<f:validator binding="#{percentValidator}" />
-						<f:ajax render="amount ivaError" />
-					</h:inputText>
-
-					<h:outputText id="iva_o"
-						value="#{contractManager.contract.IVA_amount}"
-						rendered="#{cc.attrs.editingDisable == true and agreementWizardPB.renderIvaComponents()==true }" />
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message id="ivaError" styleClass="errorMessage" for="iva" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.wholeAmount}:" />
-				</p:column>
-
-				<p:column colspan="3">
-					<h:outputText id="amount"
-						value="#{contractManager.contract.wholeAmount}" readonly="true">
-						<f:attribute name="plain" value="false" />
-					</h:outputText>
-				</p:column>
-			</p:row>
-
-
-			<p:row rendered="#{not cc.attrs.creating}">
-				<p:column>
-					<h:outputText value="#{msgs.reservedAmount}" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="reservedAmount"
-						value="#{contractManager.contract.reservedAmount}"
-						label="#{msgs.reservedAmount}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}"
-						validator="#{contractDataPB.validateReservedAmount}">
-						<f:ajax event="blur" execute="@this spentAmount"
-							render="reservedAmountError spentAmountError" />
-					</h:inputText>
-
-					<h:outputText id="reservedAmount_o"
-						value="#{contractManager.contract.reservedAmount}"
-						label="#{msgs.reservedAmount}"
-						rendered="#{cc.attrs.editingDisable == true}">
-						<f:attribute name="plain" value="false" />
-					</h:outputText>
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message id="reservedAmountError" styleClass="errorMessage"
-						for="reservedAmount" />
-				</p:column>
-			</p:row>
-
-
-			<p:row rendered="#{not cc.attrs.creating}">
-				<p:column>
-					<h:outputText value="#{msgs.spentAmount}" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="spentAmount"
-						value="#{contractManager.contract.spentAmount}"
-						label="#{msgs.spentAmount}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}"
-						validator="#{contractDataPB.validateSpentAmount}">
-						<f:ajax event="blur" execute="@this" render="spentAmountError" />
-					</h:inputText>
-
-					<h:outputText id="spentAmount_o"
-						value="#{contractManager.contract.spentAmount}"
-						label="#{msgs.spentAmount}"
-						rendered="#{cc.attrs.editingDisable == true}">
-						<f:attribute name="plain" value="false" />
-					</h:outputText>
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message id="spentAmountError" styleClass="errorMessage"
-						for="spentAmount" />
-				</p:column>
-			</p:row>
-
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.approvalDate}:" />
-				</p:column>
-
-				<p:column>
-					<p:calendar id="approvalDate" pattern="dd/MM/yyyy"
-						readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true" value="#{contractManager.contract.approvalDate}"
-						rendered="#{cc.attrs.editingDisable == false}" navigator="true">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</p:calendar>
-
-					<h:outputText id="approvalDate_o"
-						value="#{contractManager.contract.approvalDate}"
-						rendered="#{cc.attrs.editingDisable == true}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" for="approvalDate" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.beginDate}:" />
-				</p:column>
-
-				<p:column>
-					<p:calendar id="beginDate" pattern="dd/MM/yyyy"
-						readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true" value="#{contractManager.contract.beginDate}"
-						rendered="#{cc.attrs.editingDisable == false}" navigator="true">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</p:calendar>
-
-					<h:outputText id="beginDate_o"
-						value="#{contractManager.contract.beginDate}"
-						rendered="#{cc.attrs.editingDisable == true}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</h:outputText>
-
-				</p:column>
-
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" for="beginDate" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.deadlineDate}:" />
-				</p:column>
-
-				<p:column>
-					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy"
-						readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true" value="#{contractManager.contract.deadlineDate}"
-						rendered="#{cc.attrs.editingDisable == false}" navigator="true"
-						validator="#{contractDataPB.validateDeadlineDate}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</p:calendar>
-
-					<h:outputText id="deadlineDate_o"
-						value="#{contractManager.contract.deadlineDate}"
-						rendered="#{cc.attrs.editingDisable == true}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</h:outputText>
-
-
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" for="deadlineDate" />
-				</p:column>
-			</p:row>
-
-
-
-		</p:panelGrid>
-
-	</p:panel>
-
-
-
+	</h:form>
+</h:body>
 </html>

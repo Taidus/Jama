@@ -30,4 +30,5 @@ class Home implements ViewConfig {}
 class AgreementSchedule implements ViewConfig {
 }
 
+
 class Login implements ViewConfig {}

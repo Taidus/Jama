@@ -90,5 +90,9 @@ public class Department {
 			return false;
 		return true;
 	}
+	
+	public String getCompleteName(){
+		return this.name + " " + this.code;
+	}
 
 }

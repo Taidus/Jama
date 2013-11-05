@@ -42,8 +42,11 @@ import freemarker.template.TemplateException;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ContractManagerBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8944924025517129577L;
 	@Inject
 	private Conversation conversation;
 	@Inject
@@ -171,7 +174,6 @@ public class ContractManagerBean implements Serializable {
 
 
 	public void cancel() {
-		System.out.println("CANCEL");
 		close();
 	}
 
