@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections" xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" />
+	<composite:attribute name="installmentOutcome" />
+	<composite:attribute name="panelId" type="java.lang.String" required="true" />
+	<composite:attribute name="dialogWidgetVar" type="java.lang.String" required="true" />
+	<composite:attribute name="dialogId" type="java.lang.String" required="true" />
+
+</composite:interface>
+
+<composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+	<h:outputStylesheet name="table.css" library="css" />
+	<h:outputStylesheet name="home.css" library="css" />
+
+	<p:growl autoUpdate="true" />
+
+	<p:panel id="#{cc.attrs.panelId}" styleClass="semiEmptyPanel relative">
+		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
+			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
+
+			<p:column headerText="#{msgs.date}">
+				<h:outputText value="#{installment.date}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.amount}">
+				<h:outputText value="#{installment.wholeAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.paidInvoice_Question}">
+				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentWizardPB.viewInstallment()}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentWizardPB.editInstallment()}"
+					rendered="#{cc.attrs.editingDisable==false}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();"
+					rendered="#{cc.attrs.editingDisable==false}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+				<ui:remove>
+					<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyDeadline(installment)}">
+					</p:commandButton>
+				</ui:remove>
+
+			</p:column>
+
+
+
+		</p:dataTable>
+
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="delete_confirm">
+			<p:commandButton value="#{msgs.yes}" action="#{installmentWizardPB.deleteInstallment()}" immediate="true" update="installmentTable"
+				oncomplete="delete_confirm.hide();" />
+			<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();" type="button" />
+		</p:confirmDialog>
+
+		<ui:remove>
+			<p:commandButton styleClass="addInstBtn" action="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}" ajax="false"
+				immediate="true" rendered="#{cc.attrs.editingDisable == false}">
+			</p:commandButton>
+		</ui:remove>
+
+		<p:commandButton styleClass="addInstBtn" process="@this" actionListener="#{installmentWizardPB.addInstallment()}" value="#{msgs.add_installment}"
+			oncomplete="#{cc.attrs.dialogWidgetVar}.show()" update=":#{p:component(cc.attrs.dialogId)}" rendered="#{cc.attrs.editingDisable == false}">
+			<p:resetInput target=":#{p:component(cc.attrs.dialogId)}" />
+		</p:commandButton>
+
+
+		<br />
+	</p:panel>
+
+</composite:implementation>
+</html>
