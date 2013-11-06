@@ -5,7 +5,7 @@
 
 <h:head>
 	<h:outputStylesheet name="agreementWiz.css" library="css" />
-	
+
 	<h:outputScript name="hideShow.js" library="js" />
 </h:head>
 
@@ -21,7 +21,7 @@
 				<p:tab id="tabDati" title="#{msgs.data_Tab}">
 					<sections:agreementWizData editingDisable="true" />
 				</p:tab>
-				
+
 				<ui:include src="/resources/sections/agreementWizData.xhtml" />
 
 				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
@@ -29,7 +29,8 @@
 				</p:tab>
 
 				<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-					<sections:agreementInstallmentsList installmentOutcome="agreementView" editingDisable="true">
+					<sections:agreementInstallmentsList installmentOutcome="agreementView" editingDisable="true" dialogId="instDialog" dialogWidgetVar="w_instDialog"
+						panelId="contractInstTablePanel">
 					</sections:agreementInstallmentsList>
 				</p:tab>
 
@@ -46,7 +47,7 @@
 
 
 			<p:commandButton value="#{msgs.previous}" action="#{agreementEditPB.cancel()}" ajax="false" />
-			
+
 			<ui:remove>
 				<p:commandButton action="#{contractManager.editContract()}" value="toEditMode" ajax="false"></p:commandButton>
 			</ui:remove>

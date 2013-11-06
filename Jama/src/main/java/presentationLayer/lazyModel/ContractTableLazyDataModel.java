@@ -116,7 +116,7 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 		getPager().next();
 		result.addAll(getPager().getCurrentResults());
 
-		this.totalRows = result.size() + pageFirst;
+		this.totalRows = getPager().getResultNumber().intValue();
 		// chiederlo alla query
 
 		return result;
