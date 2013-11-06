@@ -167,7 +167,7 @@ public class ContractManagerBean implements Serializable {
 			e.printStackTrace();
 			//TODO gestire l'eccezione, se necessario
 		}
-
+		
 		ContractDao.create(contract);
 		close();
 	}

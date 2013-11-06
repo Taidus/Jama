@@ -24,6 +24,7 @@ public abstract class ResultPagerBean<T> {
 	protected int currentPage;
 	protected int pageSize = Config.defaultPageSize;
 	protected TypedQuery<T> query;
+	protected TypedQuery<Long> countQuery;
 
 	public ResultPagerBean() {
 	}
@@ -54,8 +55,13 @@ public abstract class ResultPagerBean<T> {
 		return query.setFirstResult(currentPage * pageSize)
 				.setMaxResults(pageSize).getResultList();
 	}
+	
+	public Long getResultNumber(){
+		return countQuery.getSingleResult();
+	}
 
 	public int getPageSize() {
+		
 		return pageSize;
 	}
 

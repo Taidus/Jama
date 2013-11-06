@@ -126,7 +126,7 @@ public class TestBean implements Serializable {
 		
 		System.out.println("Querying in dates: "+lower+", "+upper);
 
-		deadService.init(null, null, null, null, null,Agreement.class);
+		deadService.init(null, null, null, null, null,Agreement.class, null);
 	}
 
 	public void doJob1() {
@@ -149,7 +149,7 @@ public class TestBean implements Serializable {
 	
 	public void doDelta(){
 		
-		//mailSender.sendToLoggedUser("nuovo", "g");
+		System.out.println(deadService.getResultNumber());
 		
 	}
 

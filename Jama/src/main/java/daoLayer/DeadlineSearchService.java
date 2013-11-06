@@ -11,6 +11,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -21,6 +23,7 @@ import security.AlterContractsAllowed;
 import security.Principal;
 import annotations.Logged;
 import businessLayer.Contract;
+import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
@@ -35,7 +38,7 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 	
 	}
 
-	@AlterContractsAllowed
+//	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass, Boolean closed ) {
@@ -48,18 +51,36 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
 		Root<? extends Contract> agr = c.from(contractClass);
+		agr.alias("agr_alias");
 		// Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
+		
+		//countQuery
+		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
+		Root<? extends Contract> agr2 = countC.from(c.getResultType());
+		agr2.alias("agr_alias");
+		countC.select(cb.countDistinct(agr));
 
 		c.select(agr)
-				.distinct(true)
-				.where(cb.equal(agr.join("installments").get("paidInvoice"),
-						false));
+				.distinct(true);
+	
 		// c.select(agr)
 		// .distinct(true)
 		// .where(cb.equal(agr,
 		// inst.get("contract")));
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
+	
+		
+		
+		Join<? extends Contract,Installment> join = agr.join("installments",JoinType.INNER);
+		join.alias("join");
+		
+		Join<? extends Contract,Installment> join2 = agr2.join("installments",JoinType.INNER);
+		join2.alias("join");
+		
+		criteria.add((cb.equal(join.get("paidInvoice"),
+				false)));
+		
 
 		// criteria.add(cb.equal(inst.get("paidInvoice"), false));
 		if (lowerDate != null) {
@@ -120,32 +141,49 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 
 			if (criteria.size() == 1) {
 				c.where(criteria.get(0));
+				countC.where(criteria.get(0));
 			}
 
 			else {
 				c.where(cb.and(criteria.toArray(new Predicate[0])));
+				countC.where(cb.and(criteria.toArray(new Predicate[0])));
+
+				
 			}
 
 			query = em.createQuery(c);
+			countQuery = em.createQuery(countC);
+			
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);
+				countQuery.setParameter("lowerDate", lowerDate, TemporalType.DATE);
+
 			}
 			if (upperDate != null) {
 				query.setParameter("upperDate", upperDate, TemporalType.DATE);
+				countQuery.setParameter("upperDate", upperDate, TemporalType.DATE);
+
 			}
 			if (chiefId != null) {
 				query.setParameter("chiefId", chiefId);
+				countQuery.setParameter("chiefId", chiefId);
+
 			}
 			if (companyId != null) {
 				query.setParameter("companyId", companyId);
+				countQuery.setParameter("companyId", companyId);
 			}
 			if (closed != null) {
 				query.setParameter("closed", closed);
+				countQuery.setParameter("closed", closed);
+
 			}
 
 		} else {
 
 			query = em.createQuery(c);
+			countQuery = em.createQuery(countC);
+
 		}
 
 	}

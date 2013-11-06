@@ -11,6 +11,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -22,6 +24,7 @@ import security.ChiefScientistAllowed;
 import security.Principal;
 import annotations.Logged;
 import businessLayer.Contract;
+import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
@@ -62,29 +65,48 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
-		Root<? extends Contract> agr;
+		Root<? extends Contract> agr = c.from(contractClass);
+		agr.alias("agr_alias");
+		
+		
+		c.select(agr).distinct(true);
+		
+		//count query
+		
+		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
+		countC.select(cb.countDistinct(agr));
+		Root<? extends Contract> agr2 = countC.from(contractClass);
+		agr2.alias("agr_alias");
 
-		agr = c.from(contractClass);
+		
+		Join<? extends Contract,Installment> join = agr.join("installments",JoinType.INNER);
+		join.alias("join");
+		
+		Join<? extends Contract,Installment> join2 = agr2.join("installments",JoinType.INNER);
+		join2.alias("join");
+		
+		
+		List<Predicate> criteria = new ArrayList<Predicate>();
+
+
+		
 		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
 
-			c.select(agr).distinct(true).where(cb.equal(agr.join("installments").get("paidInvoice"), false));
-		} else {
+			criteria.add(cb.equal(join.get("paidInvoice"), false));
 
-			c.select(agr);
-		}
-
-		List<Predicate> criteria = new ArrayList<Predicate>();
+		} 
+		
 
 		if (lowerInstDeadlineDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerInstDate");
-			criteria.add(cb.greaterThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
+			criteria.add(cb.greaterThanOrEqualTo(join.<Date> get("date"), p));
 		}
 
 		if (upperInstDeadlineDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperInstDate");
-			criteria.add(cb.lessThanOrEqualTo(agr.join("installments").<Date> get("date"), p));
+			criteria.add(cb.lessThanOrEqualTo(join.<Date> get("date"), p));
 		}
 
 		if (lowerDate != null) {
@@ -140,54 +162,70 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			criteria.add(predicate);
 		}
 		
-		
-		
-		
-		
-		
-		
+
 
 		if (criteria.size() != 0) {
 
 			if (criteria.size() == 1) {
 				c.where(criteria.get(0));
+				countC.where(criteria.get(0));
 			}
 
 			else {
 				c.where(cb.and(criteria.toArray(new Predicate[0])));
+				countC.where(cb.and(criteria.toArray(new Predicate[0])));
 			}
 
 			query = em.createQuery(c);
+			countQuery = em.createQuery(countC);
 
 			if (lowerInstDeadlineDate != null) {
 				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+				countQuery.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+
 			}
 			if (upperInstDeadlineDate != null) {
 				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+				countQuery.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+
 			}
 
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);
+				countQuery.setParameter("lowerDate", lowerDate, TemporalType.DATE);
+
 			}
 			if (upperDate != null) {
 				query.setParameter("upperDate", upperDate, TemporalType.DATE);
+				countQuery.setParameter("upperDate", upperDate, TemporalType.DATE);
+
 			}
 			if (chiefId != null) {
 				query.setParameter("chiefId", chiefId);
+				countQuery.setParameter("chiefId", chiefId);
+
 			}
 			if (companyId != null) {
 				query.setParameter("companyId", companyId);
+				countQuery.setParameter("companyId", companyId);
+
 			}
 			if (principalSerialNumber != null) {
 				query.setParameter("principalSerialNumber", principalSerialNumber);
+				countQuery.setParameter("principalSerialNumber", principalSerialNumber);
+
 			}
 			if (closed != null) {
 				query.setParameter("closed", closed);
+				countQuery.setParameter("closed", closed);
+
 			}
 
 		} else {
 
 			query = em.createQuery(c);
+			countQuery = em.createQuery(countC);
+
 		}
 		
 
