@@ -19,6 +19,10 @@
 		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="first" value="#{chiefContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{chiefContractListPCB.lazyModel.pageRows}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="totalRows" value="#{chiefContractListPCB.lazyModel.totalRows}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+
+
 
 	<f:event listener="#{chiefContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>

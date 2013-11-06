@@ -1,10 +1,8 @@
 package controllerLayer;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -19,16 +17,7 @@ public abstract class FillerFactoryBean implements Serializable {
 
 	@Inject protected FillerDaoBean fillerDao;
 
-	protected Map<Department, AgreementShareTableFiller> cache = new HashMap<>();
-
 	public AgreementShareTableFiller getFiller(Department dep) {
-		if (!cache.containsKey(dep)) {
-			cache.put(dep, findFiller(dep));
-		}
-		return cache.get(dep);
-	}
-
-	protected AgreementShareTableFiller findFiller(Department dep) {
 		List<AgreementShareTableFiller> fillers = fillerDao.getAll();
 		AgreementShareTableFiller currentFiller = createFiller(dep.getRateDirectory());
 		

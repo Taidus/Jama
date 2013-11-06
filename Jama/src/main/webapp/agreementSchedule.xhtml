@@ -5,6 +5,8 @@
 <f:metadata>
 	<f:viewParam name="class" value="#{opContractSchedulePCB.lazyModel.filterContractClass}"
 		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="closedString" value="#{opContractSchedulePCB.lazyModel.filterClosedContract}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="chief.id" value="#{opContractSchedulePCB.lazyModel.filterChiefId}"
 		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{opContractSchedulePCB.lazyModel.filterCompanyId}"
@@ -16,6 +18,9 @@
 	<f:viewParam name="first" value="#{opContractSchedulePCB.lazyModel.pageFirst}"
 		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{opContractSchedulePCB.lazyModel.pageRows}" valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="totalRows" value="#{opContractSchedulePCB.lazyModel.totalRows}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+
 
 	<f:event listener="#{opContractSchedulePCB.lazyModel.loadTableFilters}" type="preRenderView" />
 </f:metadata>
@@ -40,7 +45,7 @@
 </h:head>
 
 <h:body
-	onload="setOpScheduleFilters('#{opContractSchedulePCB.lazyModel.filterChiefId}', '#{opContractSchedulePCB.lazyModel.filterCompanyId}', '#{opContractSchedulePCB.lazyModel.filterContractClass}');">
+	onload="setOpScheduleFilters('#{opContractSchedulePCB.lazyModel.filterChiefId}', '#{opContractSchedulePCB.lazyModel.filterCompanyId}', '#{opContractSchedulePCB.lazyModel.filterClosedContract}', '#{opContractSchedulePCB.lazyModel.filterContractClass}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{opContractSchedulePCB.conversation.id}' />
@@ -57,11 +62,12 @@
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent();" />
 
-			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}">
+			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
 				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
 			</p:column>
 
-			<p:column id="agrIsClosed">
+			<p:column id="agrIsClosed" styleClass="closedFilterColumn" filterBy="#{agr.closedString}"
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
 				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
 			</p:column>
 

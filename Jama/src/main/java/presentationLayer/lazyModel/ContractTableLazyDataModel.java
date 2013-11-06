@@ -17,23 +17,23 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 	// chiavi vengono utilizzate anche nel passaggio dei parametri via URL. Per
 	// un corretto funzionamento della tabella, le chiavi relative ad uno stesso
 	// parametro devono coincidere (i.e., chiave filtro = chiave parametro URL).
-	// Essendo String, questa uguaglianza va mantenuta "a mano".
+	// Questa uguaglianza viene mantenuta "a mano" (quindi bisogna prestare
+	// attenzione se si modificano le chiavi, perché bisogna cambiarle in più
+	// punti, anche nel relativo xhtml).
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7443717427722158551L;
 
 	protected DataTable dataTable;
 
 	protected List<Contract> displayedContracts;
-	protected int pageFirst, pageRows;
+	protected int pageFirst, pageRows, totalRows;
 	protected Contract selectedValue;
 
 	protected boolean ignoreUiTableFilters;
-	protected String filterContractClass;
 
 
 	public ContractTableLazyDataModel() {
 		this.ignoreUiTableFilters = false;
-		this.filterContractClass = Contract.class.getName();
 	}
 
 
@@ -78,13 +78,26 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 		/* Fine blocco stampe. Ce ne sono altre, però! */
 		updateFields(sortField, sortOrder, filters);
 		displayedContracts = getData(filters);
+
 		// rowCount
-		int rowCount;
-		rowCount = displayedContracts.size();
-		this.setRowCount(rowCount);
+		// this.setRowCount(displayedContracts.size());
+		this.setRowCount(totalRows);
 		System.out.println("getRowCount = " + this.getRowCount());
-		System.out.println("First: " + first + "; pageFirst: " + pageFirst + "; page size: " + pageSize + "; pageRows: " + pageRows + "; row count: "
-				+ rowCount);
+		System.out.println("First: " + first + "; pageFirst: " + pageFirst + "|| page size: " + pageSize + "; pageRows: " + pageRows);
+
+		// System.out.println("First: " + dataTable.getFirst() + "; page: " +
+		// dataTable.getPage() + "; page count: " + dataTable.getPageCount()
+		// + "; rows to render: " + dataTable.getRowsToRender() + "; rows: " +
+		// dataTable.getRows());
+
+		// RequestContext requestContext = RequestContext.getCurrentInstance();
+		// if (requestContext != null) {
+		// System.out.println("Param total records: " +
+		// requestContext.getCallbackParams().get("totalRecords"));
+		// requestContext.addCallbackParam("totalRecords",
+		// lazyModel.getRowCount());
+		// }
+
 		ignoreUiTableFilters = false;
 		System.out.println("--------------------------------------------");
 		return displayedContracts;
@@ -94,13 +107,46 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 	protected List<Contract> getData(Map<String, String> filters) {
 		initPager(filters);
 		getPager().setPageSize(pageRows);
+
 		// int currentPage = (pageSize != 0) ? first / pageSize : 0;
 		int currentPage = pageFirst / pageRows;
 		getPager().setCurrentPage(currentPage);
+
 		List<Contract> result = getPager().getCurrentResults();
 		getPager().next();
 		result.addAll(getPager().getCurrentResults());
+
+		this.totalRows = result.size() + pageFirst;
+		// chiederlo alla query
+
 		return result;
+
+		// initPager(filters);
+		// getPager().setPageSize(pageRows);
+		//
+		// // int currentPage = (pageSize != 0) ? first / pageSize : 0;
+		// List<Contract> result = new ArrayList<>();
+		// int currentPage = pageFirst / pageRows;
+		// int pageToFetch = 2;
+		//
+		// if (currentPage > 0) {
+		// pageToFetch++;
+		// currentPage--;
+		// }
+		//
+		// ResultPagerBean<Contract> pager = getPager();
+		// for (int i = 0; i < pageToFetch; i++) {
+		// pager.setCurrentPage(currentPage + i);
+		// result.addAll(pager.getCurrentResults());
+		// }
+		//
+		// System.out.print("{ ");
+		// for(Contract c : result){
+		// System.out.print(c.getId() + " ");
+		// }
+		// System.out.println("} [" + result.get(pageFirst).getId() + "]");
+		//
+		// return result;
 	}
 
 
@@ -140,6 +186,16 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 	}
 
 
+	public int getTotalRows() {
+		return totalRows;
+	}
+
+
+	public void setTotalRows(int totalRows) {
+		this.totalRows = totalRows;
+	}
+
+
 	public DataTable getDataTable() {
 		return dataTable;
 	}
@@ -147,31 +203,6 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 
 	public void setDataTable(DataTable dataTable) {
 		this.dataTable = dataTable;
-	}
-
-
-	public String getFilterContractClass() {
-		return filterContractClass;
-	}
-
-
-	public void setFilterContractClass(String filterContractClass) {
-		if (null == filterContractClass) {
-			this.filterContractClass = Contract.class.getName();
-		} else {
-			this.filterContractClass = filterContractClass;
-		}
-	}
-
-
-	protected Class<? extends Contract> getClassFromFilter() {
-		try {
-			return (Class<? extends Contract>) Class.forName(filterContractClass);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new IllegalStateException("Illegal Contract class: " + filterContractClass);
-			// TODO rivedere la gestione dell'eccezione, se serve
-		}
 	}
 
 
@@ -202,7 +233,6 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 				try {
 					int value = Integer.parseInt(filters.get("rows"));
 					dataTable.setRows((value > 0) ? value : 10);
-					// XXX controllare se setRows è il metodo giusto
 				} catch (NumberFormatException e) {}
 			}
 		}
@@ -218,7 +248,7 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 		FilterList l = initFilterList();
 		l.put("first", String.valueOf(pageFirst));
 		l.put("rows", String.valueOf(pageRows));
-		l.put("class", filterContractClass.toString());
+		l.put("totalRows", String.valueOf(totalRows));
 		return l;
 	}
 
@@ -267,4 +297,5 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 			return result;
 		}
 	}
+
 }
