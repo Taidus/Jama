@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections"
+	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
+
+<h:head>
+</h:head>
+<h:body>
+
+	<h:form id="usrForm">
+	
+			<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
+	
+		<p:panel header="#{msgs.userWiz_header}">
+
+			<p:panelGrid id="usrDataPanelGrid">
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.name}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="name" value="#{userEditor.user.name}"
+							label="#{msgs.name}" required="true">
+						</h:inputText>
+
+					</p:column>
+
+					<p:column colspan="2">
+						<p:message for="name" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.surname}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="surname" value="#{userEditor.user.surname}"
+							label="#{msgs.surname}" required="true">
+						</h:inputText>
+					</p:column>
+
+					<p:column colspan="2">
+						<p:message for="surname" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.department}:" />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="depthMenu" styleClass="depthMenu"
+							value="#{userEditor.selectedDept}" label="#{msgs.department}"
+							required="true" filter="true" filterMatchMode="contains">
+							<f:selectItems value="#{utilPB.depthItems}" />
+							<f:converter binding="#{departmentConverter}" />
+						</p:selectOneMenu>
+
+					</p:column>
+
+					<p:column>
+						<p:message styleClass="errorMessage" for="depthMenu" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+				
+					
+					<p:column>
+						<h:outputText value="#{msgs.password}" />
+					</p:column>
+					
+					<p:column>
+						<p:password id="password" required="true" match="confirmPassword" value="#{userEditor.password}">
+							<f:ajax event="blur" ></f:ajax>
+						</p:password>
+						
+					</p:column>
+					
+					
+					
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.confirmPassword}" />
+					</p:column>
+					<p:column>
+					<p:password id="confirmPassword" required="true">
+				
+					</p:password>
+					</p:column>
+
+					
+
+				</p:row>
+				
+				<p:row>
+				
+				<p:column>
+						<p:message id="confirmPasswordError" styleClass="errorMessage" autoUpdate="true"
+							for="confirmPassword" />
+				</p:column>
+				
+				</p:row>
+
+
+			</p:panelGrid>
+
+
+
+		</p:panel>
+
+		<p:commandButton value="#{msgs.save}" action="#{userEditor.save()}"
+			ajax="false" />
+
+	</h:form>
+</h:body>
+</html>

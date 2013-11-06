@@ -44,7 +44,6 @@ public class ContractDataPresentationBean implements Serializable {
 
 
 	public void validateSpentAmount(FacesContext context, UIComponent component, Object value) {
-		System.out.println("Validate spent amount");
 
 		try {
 			Money spentAmount = (Money) value;
@@ -64,7 +63,6 @@ public class ContractDataPresentationBean implements Serializable {
 	}
 	
 	public void validateDeadlineDate(FacesContext context, UIComponent component, Object value) {
-		System.out.println("Validate deadline");
 
 		try {
 			Date deadline = (Date) value;

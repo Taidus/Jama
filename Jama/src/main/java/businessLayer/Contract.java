@@ -42,10 +42,7 @@ import util.Percent;
 @Access(AccessType.FIELD)
 public abstract class Contract implements Serializable {
 
-	/**
-	 * 
-	 */
-	protected static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4462547331383503646L;
 
 	public Contract() {
 		super();

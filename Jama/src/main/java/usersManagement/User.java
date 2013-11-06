@@ -2,9 +2,12 @@ package usersManagement;
 
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
+import businessLayer.Department;
 import util.Encryptor;
 
 /**
@@ -27,6 +30,10 @@ public class User implements Serializable {
 	private String email;
 	private String name;
 	private String surname;
+	
+	//molti o uno solo???????
+	@ManyToMany
+	private List<Department> belongingDepths;
 
 	private String serialNumber;
 	@Enumerated(EnumType.STRING)
@@ -34,6 +41,7 @@ public class User implements Serializable {
 
 	public User() {
 		super();
+		belongingDepths = new ArrayList<>();
 	}
 
 	public boolean hasRole(Role role) {
@@ -68,8 +76,8 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public void setPassword(byte[] password) {
-		this.password = password;
+	public void setPassword(String password) throws GeneralSecurityException {
+		this.password = Encryptor.encrypt(password);
 	}
 
 	public String getName() {
@@ -86,6 +94,26 @@ public class User implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public List<Department> getBelongingDepths() {
+		return belongingDepths;
+	}
+
+	public void setBelongingDepths(List<Department> belongingDepths) {
+		this.belongingDepths = belongingDepths;
+	}
+	
+	public void addDepartment(Department d){
+		belongingDepths.add(d);
+	}
+	
+	public List<String> getBelongingDepthsCodes(){
+		List<String> result = new ArrayList<>();
+		for(Department d : belongingDepths){
+			result.add(d.getCode());
+		}
+		return result;
 	}
 
 	public boolean login(String password) {

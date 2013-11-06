@@ -19,10 +19,12 @@ import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
 import businessLayer.Contract;
+import businessLayer.Department;
 import businessLayer.Funding;
 import businessLayer.Installment;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
+import daoLayer.DepartmentDaoBean;
 
 @Named("utilPB")
 @Dependent
@@ -32,6 +34,8 @@ public class UtilPresentationBean implements Serializable {
 	private ChiefScientistDaoBean chiefDaoBean;
 	@EJB
 	private CompanyDaoBean companyDaoBean;
+	@EJB
+	private DepartmentDaoBean depthDao;
 	
 	private static final Map<Class<? extends Contract>, String> contractTypeName;
 	
@@ -60,6 +64,17 @@ public class UtilPresentationBean implements Serializable {
 	public SelectItem[] getChiefItems() {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		return getChiefsFromList(chiefs);
+	}
+	
+	public SelectItem[] getDepthItems(){
+		List<Department> depths = depthDao.getAll();
+		SelectItem[] result = new SelectItem[depths.size()];
+		Department current = null;
+		for (int i = 0; i < depths.size(); i++) {
+			current = depths.get(i);
+			result[i] = new SelectItem(current, current.getCompleteName());
+		}
+		return result;
 	}
 
 

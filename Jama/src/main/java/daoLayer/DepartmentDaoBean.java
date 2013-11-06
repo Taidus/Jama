@@ -42,6 +42,10 @@ public class DepartmentDaoBean {
 		return em.find(Department.class,id);
 	}
 	
+	public Department getByCode(String code){
+		return em.createNamedQuery("Department.findByCode", Department.class).setParameter("code", code).getSingleResult();
+	}
+	
 	
 	public List<Department> getAll(){
 		

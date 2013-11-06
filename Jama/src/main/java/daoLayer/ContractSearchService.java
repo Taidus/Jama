@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -117,7 +118,6 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			criteria.add(cb.equal(agr.get("chief").get("serialNumber"), p));
 		}
 		if (closed != null) {
-			System.out.println("Query. Closed = " + closed);
 			ParameterExpression<Boolean> p = cb.parameter(Boolean.class, "closed");
 			criteria.add(cb.equal(agr.get("closed"), p));
 		}
@@ -130,6 +130,22 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			c.orderBy(cb.desc(agr.<Date> get("deadlineDate")));
 
 		}
+		
+		List<String> codes = principal.getBelongingDepthsCodes();
+		
+		if(codes != null && (!codes.isEmpty())){
+		
+			Expression<String> exp = agr.get("department").get("code");
+			Predicate predicate = exp.in(codes);
+			criteria.add(predicate);
+		}
+		
+		
+		
+		
+		
+		
+		
 
 		if (criteria.size() != 0) {
 
