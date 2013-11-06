@@ -38,7 +38,6 @@ public class OperatorAccessDecisionVoter implements AccessDecisionVoter {
 				}
 			});
 		}
-		System.out.println(violations);
 		return violations;
 	}
 }

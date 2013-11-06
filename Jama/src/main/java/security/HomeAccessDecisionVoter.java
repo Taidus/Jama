@@ -37,7 +37,6 @@ public class HomeAccessDecisionVoter implements AccessDecisionVoter {
 				}
 			});
 		}
-		System.out.println(violations);
 		return violations;
 	}
 

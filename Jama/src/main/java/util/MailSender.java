@@ -35,6 +35,7 @@ public class MailSender implements Serializable {
 	// private User loggedUser;
 
 	private void _send(String recipientEmail, String subject, String text) {
+		//TODO addRecipient etc
 
 		// MimeMessage message = new MimeMessage(mailSession);
 		// try {

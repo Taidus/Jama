@@ -44,7 +44,6 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 
 	@Override
 	public void fill(ContractShareTable table) {
-		System.out.println("Filler map: " + atheneumCapitalBalanceRateTable);
 		SortedMap<Percent, Percent> atheneumCapitalBalanceRateTable_sorted = new TreeMap<>(atheneumCapitalBalanceRateTable);;
 		// XXX soluzione di ripego perché le annotazoni di Hibernate sono
 		// stupide
@@ -57,10 +56,8 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 		boolean found = false;
 		Percent athCapBal = Percent.ZERO;
 		Iterator<Percent> it = atheneumCapitalBalanceRateTable_sorted.keySet().iterator();
-		System.out.println("Quota personale nel filler: " + personnel);
 		while (false == found && it.hasNext()) {
 			Percent threshold = it.next();
-			System.out.println("Soglia: " + threshold);
 			if (!personnel.greaterThan(threshold)) {
 				athCapBal = atheneumCapitalBalanceRateTable_sorted.get(threshold);
 				found = true;

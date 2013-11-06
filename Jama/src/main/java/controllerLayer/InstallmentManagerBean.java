@@ -11,7 +11,6 @@ import javax.inject.Named;
 
 import annotations.Current;
 import annotations.TransferObj;
-import businessLayer.Agreement;
 import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.Installment;

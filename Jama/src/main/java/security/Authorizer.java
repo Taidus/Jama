@@ -25,8 +25,6 @@ public class Authorizer implements Serializable {
 	@Secures
 	@AlterContractsAllowed
 	public boolean canAlterContracts() {
-		System.out
-				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
 		return (loggedUser.hasPermission(Permission.ALTER_CONTRACTS)) ? true
 				: false;
 	}
@@ -35,8 +33,6 @@ public class Authorizer implements Serializable {
 	@ChiefScientistAllowed
 	// FIXME: per ora è finto
 	public boolean doChiefScientistCheck() {
-		System.out
-				.println("Controllo di sicurezza in corso, prego depositare le armi nella vaschetta");
 		return true;
 	}
 

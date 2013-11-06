@@ -44,32 +44,21 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	}
 
 	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
-		// TODO eliminare try-catch
-		try {
 			Contract c = installment.getContract();
 			List<Installment> installments = c.getInstallments();
 			installments.add(installment);
 			List<List<Money>> instShareTablesMainAttributes = new ArrayList<>();
 			List<List<Money>> instShareTablesSubAttributes = new ArrayList<>();
 
-			System.out.println(1);
 
 			for (Installment i : installments) {
-				System.out.print("Rata" + i + " \n\t ");
 				instShareTablesMainAttributes.add(getMainAttributeList(i.getShareTable(), i.getWholeAmount()));
-				System.out.print("\t");
 				instShareTablesSubAttributes.add(getSubAttributeList(i.getShareTable(),
 						i.getShareTable().getGoodsAndServices().computeOn(i.getWholeAmount())));
 			}
 
-			System.out.println(2);
-
-			System.out.print("Convenzione: ");
 			List<Money> l = getMainAttributeList(c.getShareTable(), c.getWholeAmount());
-			System.out.println(3);
-			System.out.print("\t");
 			List<Money> p = getSubAttributeList(c.getShareTable(), c.getShareTable().getGoodsAndServices().computeOn(c.getWholeAmount()));
-			System.out.println(4);
 
 			// devono essere nello stesso ordine in cui si aggiungono sotto!
 			// L'oscenità fatta codice
@@ -80,13 +69,8 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 					Messages.getString("shareTableContrPersonnel"), Messages.getString("shareTableOtherCosts") };
 
 			validateFields(l, instShareTablesMainAttributes, mainAttr);
-			System.out.println(5);
 			validateFields(p, instShareTablesSubAttributes, subAttr);
-			System.out.println(6);
-		} catch (Exception | Error e) {
-			System.out.println("Blbl " + e);
-			throw e;
-		}
+		
 	}
 
 	private void validateFields(List<Money> agrAttributes, List<List<Money>> instAttrs, String[] attrNames) {
@@ -116,8 +100,6 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		attributes.add(t.getPersonnel().computeOn(wholeAmount));
 		attributes.add(t.getGoodsAndServices().computeOn(wholeAmount));
 
-		System.out.println(attributes);
-
 		return attributes;
 	}
 
@@ -130,8 +112,6 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		attributes.add(t.getRentals().computeOn(wholeAmount));
 		attributes.add(t.getPersonnelOnContract().computeOn(wholeAmount));
 		attributes.add(t.getOtherCost().computeOn(wholeAmount));
-
-		System.out.println(attributes);
 
 		return attributes;
 	}

@@ -43,12 +43,10 @@ public class InstallmentDataPresentationBean implements Serializable {
 	}
 	
 	public void validateDeadlineDate(FacesContext context, UIComponent component, Object value) {
-		System.out.println("Validate deadline");
 
 		try {
 			Date deadline = (Date) value;
 			Date begin = installment.getContract().getBeginDate();
-			System.out.println("deadline: " + deadline + ", begin: " + begin);
 
 			if (deadline.before(begin)) {
 				// System.out.println("dentro if");

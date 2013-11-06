@@ -27,7 +27,8 @@
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-				<sections:agreementInstallmentsList installmentOutcome="agreementCreate" editingDisable="false" />
+				<sections:agreementInstallmentsList installmentOutcome="agreementCreate" editingDisable="false" dialogId="instDialog"
+					dialogWidgetVar="w_instDialog" panelId="contractInstTablePanel" />
 			</p:tab>
 
 			<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
@@ -53,6 +54,7 @@
 
 	<dialogs:chiefDialog name="w_chiefDialog" />
 	<dialogs:companyDialog name="w_companyDialog" />
+	<dialogs:instCreationDialog dialogWidgetVar="w_instDialog" dialogId="instDialog" observingComponent="contractInstTablePanel" />
 
 </h:body>
 </html>
