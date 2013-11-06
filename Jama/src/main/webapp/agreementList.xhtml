@@ -5,6 +5,8 @@
 <f:metadata>
 	<f:viewParam name="class" value="#{opContractListPCB.lazyModel.filterContractClass}"
 		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="closedString" value="#{opContractListPCB.lazyModel.filterClosedContract}"
+		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="chief.id" value="#{opContractListPCB.lazyModel.filterChiefId}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="company.id" value="#{opContractListPCB.lazyModel.filterCompanyId}"
 		valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
@@ -15,6 +17,7 @@
 	<f:viewParam name="sortorder" value="#{opContractListPCB.lazyModel.sortOrder}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="first" value="#{opContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 	<f:viewParam name="rows" value="#{opContractListPCB.lazyModel.pageRows}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="totalRows" value="#{opContractListPCB.lazyModel.totalRows}" valueChangeListener="#{opContractListPCB.lazyModel.filterOnReload}" />
 
 
 	<f:event listener="#{opContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
@@ -39,7 +42,7 @@
 	</script>
 </h:head>
 <h:body
-	onload="setOpListFilters('#{opContractListPCB.lazyModel.filterChiefId}', '#{opContractListPCB.lazyModel.filterCompanyId}', '#{opContractListPCB.lazyModel.filterContractClass}');">
+	onload="setOpListFilters('#{opContractListPCB.lazyModel.filterChiefId}', '#{opContractListPCB.lazyModel.filterCompanyId}', '#{opContractListPCB.lazyModel.filterClosedContract}', '#{opContractListPCB.lazyModel.filterContractClass}');">
 
 	<h:form prependId="false">
 		<input type="hidden" name="cid" value='#{opContractListPCB.conversation.id}' />
@@ -57,13 +60,14 @@
 
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
 			<p:ajax event="sort" oncomplete="setRowEvent();" />
-			<p:ajax event="page" oncomplete="setRowEvent();" />
+			<p:ajax event="page" oncomplete="setRowEvent(); " />
 
-			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}">
+			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
 				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
 			</p:column>
 
-			<p:column id="agrIsClosed">
+			<p:column id="agrIsClosed" styleClass="closedFilterColumn" filterBy="#{agr.closedString}"
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
 				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
 			</p:column>
 

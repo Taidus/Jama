@@ -4,7 +4,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import presentationLayer.lazyModel.ContractTableLazyDataModel;
+import presentationLayer.lazyModel.SkeletalContractTableLDM;
 import presentationLayer.lazyModel.OperatorContractScheduleLDM;
 
 @Named("opContractSchedulePCB")
@@ -20,7 +20,7 @@ public class OperatorContractSchedulePCB extends ContractTablePageController {
 
 
 	@Override
-	public ContractTableLazyDataModel getLazyModel() {
+	public SkeletalContractTableLDM getLazyModel() {
 		return lazyModel;
 	}
 

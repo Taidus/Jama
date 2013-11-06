@@ -22,19 +22,21 @@ function setContractTypeFilter(typeFilter) {
 	jQuery("th[class*=contractTypeColumn] select.ui-column-filter").val(typeFilter);
 }
 
-function setOpScheduleFilters(chiefFilter, companyFilter, typeFilter) {
+function setOpScheduleFilters(chiefFilter, companyFilter, closedFilter, typeFilter) {
 	setChiefFilter(chiefFilter);
-	setCompanyFilter(companyFilter);
-	setContractTypeFilter(typeFilter);
+	setCommonFilters(companyFilter, closedFilter, typeFilter);
 }
 
-function setOpListFilters(chiefFilter, companyFilter, typeFilter) {
+function setOpListFilters(chiefFilter, companyFilter, closedFilter, typeFilter) {
 	setChiefFilter(chiefFilter);
-	setCompanyFilter(companyFilter);
-	setContractTypeFilter(typeFilter);
+	setCommonFilters(companyFilter, closedFilter, typeFilter);
 }
 
 function setChiefListFilters(companyFilter, closedFilter, typeFilter) {
+	setCommonFilters(companyFilter, closedFilter, typeFilter);
+}
+
+function setCommonFilters(companyFilter, closedFilter, typeFilter) {
 	setCompanyFilter(companyFilter);
 	setClosedContractsFilter(closedFilter);
 	setContractTypeFilter(typeFilter);
@@ -51,3 +53,4 @@ function calendarReset(event, firstDate, lastDate, table) {
 	lastDate.setDate(null);
 	return calendarFilter(event, table);
 }
+
