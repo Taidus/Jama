@@ -30,7 +30,6 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 	protected Contract selectedValue;
 
 	protected boolean ignoreUiTableFilters;
-	protected boolean enablePrev, enableNext;
 
 
 	public ContractTableLazyDataModel() {
@@ -80,15 +79,11 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 		updateFields(sortField, sortOrder, filters);
 		displayedContracts = getData(filters);
 
-		this.enablePrev = (pageFirst / pageRows > 0);
-		this.enableNext = displayedContracts.size() > pageRows;
-
 		// rowCount
-//		this.setRowCount(displayedContracts.size());
+		// this.setRowCount(displayedContracts.size());
 		this.setRowCount(totalRows);
 		System.out.println("getRowCount = " + this.getRowCount());
 		System.out.println("First: " + first + "; pageFirst: " + pageFirst + "|| page size: " + pageSize + "; pageRows: " + pageRows);
-		System.out.println("Prev: " + enablePrev + "; next: " + enableNext);
 
 		// System.out.println("First: " + dataTable.getFirst() + "; page: " +
 		// dataTable.getPage() + "; page count: " + dataTable.getPageCount()
@@ -121,7 +116,7 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 		getPager().next();
 		result.addAll(getPager().getCurrentResults());
 
-		 this.totalRows = result.size() + pageFirst;
+		this.totalRows = result.size() + pageFirst;
 		// chiederlo alla query
 
 		return result;
@@ -198,16 +193,6 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 
 	public void setTotalRows(int totalRows) {
 		this.totalRows = totalRows;
-	}
-
-
-	public boolean isEnablePrev() {
-		return enablePrev;
-	}
-
-
-	public boolean isEnableNext() {
-		return enableNext;
 	}
 
 

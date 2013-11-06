@@ -33,6 +33,6 @@ public class OperatorContractScheduleLDM extends OperatorContractTableLDM {
 		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
 		System.out.println("Querying");
-		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null, getClassFromFilter());
+		searchService.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, null, getClassFromFilter(), filterClosedContract);
 	}
 }
