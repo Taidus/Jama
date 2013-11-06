@@ -79,24 +79,29 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 		agr2.alias("agr_alias");
 
 		
-		Join<? extends Contract,Installment> join = agr.join("installments",JoinType.INNER);
-		join.alias("join");
+	
+		Join<? extends Contract,Installment> join = null; 
+
 		
-		Join<? extends Contract,Installment> join2 = agr2.join("installments",JoinType.INNER);
-		join2.alias("join");
-		
-		
+		Join<? extends Contract,Installment> join2; 
+
+//		
+//		
 		List<Predicate> criteria = new ArrayList<Predicate>();
-
-
-		
+//
+//		
 		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
+			
+			join = agr.join("installments",JoinType.INNER);
+			join.alias("ContractJoinInstallment");
+			join2= agr2.join("installments",JoinType.INNER);
+			join2.alias("ContractJoinInstallment");
 
 			criteria.add(cb.equal(join.get("paidInvoice"), false));
-
+			
 		} 
-		
 
+		
 		if (lowerInstDeadlineDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerInstDate");
@@ -179,16 +184,16 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			query = em.createQuery(c);
 			countQuery = em.createQuery(countC);
 
-			if (lowerInstDeadlineDate != null) {
-				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
-				countQuery.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
-
-			}
-			if (upperInstDeadlineDate != null) {
-				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
-				countQuery.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
-
-			}
+//			if (lowerInstDeadlineDate != null) {
+//				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+//				countQuery.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+//
+//			}
+//			if (upperInstDeadlineDate != null) {
+//				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+//				countQuery.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+//
+//			}
 
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);
