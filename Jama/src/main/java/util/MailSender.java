@@ -36,51 +36,85 @@ public class MailSender implements Serializable {
 
 	private void _send(String recipientEmail, String subject, String text) {
 
+		// MimeMessage message = new MimeMessage(mailSession);
+		// try {
+		// message.setRecipient(RecipientType.TO, new
+		// InternetAddress(recipientEmail));
+		// message.setSubject(subject);
+		// message.setText(text);
+		// message.saveChanges();
+		//
+		// Transport.send(message);
+		//
+		// } catch (MessagingException e) {// TODO errore a video
+		// e.printStackTrace();
+		// }
+
+		String host = "smtp.gmail.com";
+		String username = "jama.mail.services";
+		String password = "pastrullo";
+
 		MimeMessage message = new MimeMessage(mailSession);
 		try {
+
 			message.setRecipient(RecipientType.TO, new InternetAddress(recipientEmail));
 			message.setSubject(subject);
 			message.setText(text);
 			message.saveChanges();
 
-			Transport.send(message);
+			Transport t = mailSession.getTransport("smtps");
+			try {
+				t.connect(host, username, password);
+				t.sendMessage(message, message.getAllRecipients());
+			} finally {
+				t.close();
+			}
 
 		} catch (MessagingException e) {// TODO errore a video
 			e.printStackTrace();
 		}
-
 	}
 
 
 	private void spam() {
 		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
 		// spam a Damaz?
-		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di capitano nella DeltaSpikeForce!");
+//		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di maggiore nella DeltaSpikeForce!");
+	}
+	
+	public void test(){
+		_send("tommaso.levato@stud.unifi.it", "Funziona!", "Yay!");
 	}
 
 
 	public void notifyCreation(Contract c) throws TemplateException, IOException {
 		System.out.println("mail di notifica creazione contratto simulata");
-//
-//		ContractTemplateFiller filler = new ContractTemplateFiller(c, "pippo@jama.jam");
-//		StringWriter out = new StringWriter();
-//		// variabile di tipo StringWriter perché un Writer qualunque non va
-//		// bene: serve che il metodo toString() restituisca esattamente la
-//		// stringa che rappresenta il contenuto della mail
-//
-//		Template temp = Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
-//		temp.process(filler, out);
-//		String mailContent = out.toString();
-//		
-//		spam();
-//
-//		_send("giulio.galvan@stud.unifi.it", "Jama: nuovo contratto", mailContent);
-//		_send("tommaso.levato@stud.unifi.it", "Jama: nuovo contratto", mailContent);
-//		_send("alessio.sarullo@stud.unifi.it", "Jama: nuovo contratto", mailContent);
-//
-//		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
-//
-//		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		//
+		// ContractTemplateFiller filler = new ContractTemplateFiller(c,
+		// "pippo@jama.jam");
+		// StringWriter out = new StringWriter();
+		// // variabile di tipo StringWriter perché un Writer qualunque non va
+		// // bene: serve che il metodo toString() restituisca esattamente la
+		// // stringa che rappresenta il contenuto della mail
+		//
+		// Template temp =
+		// Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
+		// temp.process(filler, out);
+		// String mailContent = out.toString();
+		//
+		// spam();
+		//
+		// _send("giulio.galvan@stud.unifi.it", "Jama: nuovo contratto",
+		// mailContent);
+		// _send("tommaso.levato@stud.unifi.it", "Jama: nuovo contratto",
+		// mailContent);
+		// _send("alessio.sarullo@stud.unifi.it", "Jama: nuovo contratto",
+		// mailContent);
+		//
+		// System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		//
+		// FacesContext.getCurrentInstance().addMessage(null, new
+		// FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
 
 	};
 
@@ -88,26 +122,32 @@ public class MailSender implements Serializable {
 	// TODO implementare
 	public void notifyClosure(Contract c) throws IOException, TemplateException {
 		System.out.println("mail di notifica chiusura contratto simulata");
-//
-//		ContractTemplateFiller filler = new ContractTemplateFiller(c, "pippo@jama.jam");
-//		StringWriter out = new StringWriter();
-//		// variabile di tipo StringWriter perché un Writer qualunque non va
-//		// bene: serve che il metodo toString() restituisca esattamente la
-//		// stringa che rappresenta il contenuto della mail
-//
-//		Template temp = Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
-//		temp.process(filler, out);
-//		String mailContent = out.toString();
-//
-//		spam();
-//
-//		_send("giulio.galvan@stud.unifi.it", "Jama: chiusura contratto", mailContent);
-//		_send("tommaso.levato@stud.unifi.it", "Jama: chiusura contratto", mailContent);
-//		_send("alessio.sarullo@stud.unifi.it", "Jama: chiusura contratto", mailContent);
-//
-//		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
-//
-//		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		//
+		// ContractTemplateFiller filler = new ContractTemplateFiller(c,
+		// "pippo@jama.jam");
+		// StringWriter out = new StringWriter();
+		// // variabile di tipo StringWriter perché un Writer qualunque non va
+		// // bene: serve che il metodo toString() restituisca esattamente la
+		// // stringa che rappresenta il contenuto della mail
+		//
+		// Template temp =
+		// Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
+		// temp.process(filler, out);
+		// String mailContent = out.toString();
+		//
+		// spam();
+		//
+		// _send("giulio.galvan@stud.unifi.it", "Jama: chiusura contratto",
+		// mailContent);
+		// _send("tommaso.levato@stud.unifi.it", "Jama: chiusura contratto",
+		// mailContent);
+		// _send("alessio.sarullo@stud.unifi.it", "Jama: chiusura contratto",
+		// mailContent);
+		//
+		// System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		//
+		// FacesContext.getCurrentInstance().addMessage(null, new
+		// FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
 
 	}
 
