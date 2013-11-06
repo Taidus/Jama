@@ -48,10 +48,10 @@ public class Initializer {
 		}
 		
 
-		String adminSerialNumber = "d612f";
+		String operatorSerialNumber = "d612o";
 
 		if (em.createNamedQuery("User.findBySerialNumber")
-				.setParameter("number", adminSerialNumber).getResultList()
+				.setParameter("number", operatorSerialNumber).getResultList()
 				.isEmpty()) {
 
 			User admin = new User();
@@ -61,58 +61,81 @@ public class Initializer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			admin.setSerialNumber(adminSerialNumber);
-			admin.setEmail("ciccio.capopasticcio@pasticcino.com");
+			admin.setSerialNumber(operatorSerialNumber);
+			admin.setEmail("ciccio@pasticcio.com");
 			admin.setName("CiccioCapo");
 			admin.setSurname("Pasticcio");
-			admin.setRole(Role.OPERATOR);
+			admin.setRole(Role.ADMIN);
 			
 			admin.addDepartment(d);
 			em.persist(admin);
 		}
 
-		String teacherSerialNumber = "d612m";
+		String vicSerial = "0001";
 
 		if (em.createNamedQuery("User.findBySerialNumber")
-				.setParameter("number", teacherSerialNumber).getResultList()
+				.setParameter("number", vicSerial).getResultList()
 				.isEmpty()) {
 
-			User teacher = new User();
+			User vicario = new User();
 			try {
-				teacher.setPassword("pastrullo");
+				vicario.setPassword("jama");
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			teacher.setSerialNumber(teacherSerialNumber);
-			teacher.setEmail("ciccio.pasticcio@pasticcino.com");
-			teacher.setName("Ciccio");
-			teacher.setSurname("Pasticcio");
-			teacher.setRole(Role.CHIEF_SCIENTIST);
-			teacher.addDepartment(d);
-			em.persist(teacher);
+			vicario.setSerialNumber(vicSerial);
+			vicario.setEmail("enrico.vicario@unifi.it");
+			vicario.setName("Enrico");
+			vicario.setSurname("Vicario");
+			vicario.setRole(Role.CHIEF_SCIENTIST);
+			vicario.addDepartment(d);
+			em.persist(vicario);
 		}
 		
-		String operatorSerialNumber = "d612o";
+		String arnSerial = "0002";
+		if (em.createNamedQuery("User.findBySerialNumber")
+				.setParameter("number", arnSerial).getResultList()
+				.isEmpty()) {
+
+			User arnone = new User();
+			try {
+				arnone.setPassword("jama");
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			arnone.setSerialNumber(arnSerial);
+			arnone.setEmail("andrea.arnone@unifi.it");
+			arnone.setName("Andrea");
+			arnone.setSurname("Arnone");
+			arnone.setRole(Role.CHIEF_SCIENTIST);
+			arnone.addDepartment(d);
+			em.persist(arnone);
+		}
+		
+		
+		String cecchiSerial = "0000";
 
 		
 		
 		if (em.createNamedQuery("User.findBySerialNumber")
-				.setParameter("number", operatorSerialNumber).getResultList()
+				.setParameter("number", cecchiSerial).getResultList()
 				.isEmpty()) {
 
 			User operator = new User();
 			try {
-				operator.setPassword("pastrullo");
+				operator.setPassword("jama");
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			operator.setSerialNumber(operatorSerialNumber);
-			operator.setEmail("ciccio.pasticcere@pasticcino.com");
-			operator.setName("Ciccio");
-			operator.setSurname("Pasticcere");
-			operator.setRole(Role.ADMIN);
+			operator.setSerialNumber(cecchiSerial);
+			operator.setEmail("patrizia.cecchi@unifi.it");
+			operator.setName("Patrizia");
+			operator.setSurname("Cecchi");
+			operator.setRole(Role.OPERATOR);
+			operator.addDepartment(d);;
 			em.persist(operator);
 		}
 

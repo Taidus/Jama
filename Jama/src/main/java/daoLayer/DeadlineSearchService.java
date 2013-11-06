@@ -82,7 +82,6 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 				false)));
 		
 
-		// criteria.add(cb.equal(inst.get("paidInvoice"), false));
 		if (lowerDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
