@@ -38,7 +38,7 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 	
 	}
 
-//	@AlterContractsAllowed
+	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass, Boolean closed ) {
@@ -58,7 +58,7 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
 		Root<? extends Contract> agr2 = countC.from(c.getResultType());
 		agr2.alias("agr_alias");
-		countC.select(cb.countDistinct(agr));
+		countC.select(cb.countDistinct(agr2));
 
 		c.select(agr)
 				.distinct(true);
@@ -73,10 +73,10 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		
 		
 		Join<? extends Contract,Installment> join = agr.join("installments",JoinType.INNER);
-		join.alias("join");
+		join.alias("contractJoinInstallment");
 		
 		Join<? extends Contract,Installment> join2 = agr2.join("installments",JoinType.INNER);
-		join2.alias("join");
+		join2.alias("contractJoinInstallment");
 		
 		criteria.add((cb.equal(join.get("paidInvoice"),
 				false)));
@@ -86,16 +86,14 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		if (lowerDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerDate");
-			criteria.add(cb.greaterThanOrEqualTo(agr.join("installments")
-					.<Date> get("date"), p));
+			criteria.add(cb.greaterThanOrEqualTo(join.<Date> get("date"), p));
 
 		}
 
 		if (upperDate != null) {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
-			criteria.add(cb.lessThanOrEqualTo(agr.join("installments")
-					.<Date> get("date"), p));
+			criteria.add(cb.lessThanOrEqualTo(join.<Date> get("date"), p));
 
 		}
 
@@ -116,10 +114,10 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 
 		if (order == SortOrder.ASCENDING) {
 
-			c.orderBy(cb.asc(agr.join("installments").<Date> get("date")));
+			c.orderBy(cb.asc(join.<Date> get("date")));
 		} else if (order == SortOrder.DESCENDING) {
 
-			c.orderBy(cb.desc(agr.join("installments").<Date> get("date")));
+			c.orderBy(cb.desc(join.<Date> get("date")));
 
 		}
 
