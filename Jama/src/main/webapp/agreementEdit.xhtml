@@ -28,11 +28,9 @@
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-				<sections:agreementInstallmentsList installmentOutcome="agreementEdit" editingDisable="false" dialogId="instDialog" dialogWidgetVar="w_instDialog"
-					panelId="contractInstTablePanel">
-				</sections:agreementInstallmentsList>
-
-
+				<sections:agreementInstallmentsList editingDisable="false" addDialogId="addInstDialog" addDialogWidgetVar="w_addInstDialog"
+					editDialogId="editInstDialog" editDialogWidgetVar="w_editInstDialog" viewDialogId="viewInstDialog" viewDialogWidgetVar="w_viewInstDialog"
+					panelId="contractInstTablePanel" />
 			</p:tab>
 
 			<p:tab id="tabRecap" title="#{msgs.recap_Tab}">
@@ -66,11 +64,13 @@
 
 
 
-	<dialogs:chiefDialog name="w_chiefDialog"></dialogs:chiefDialog>
-
-	<dialogs:companyDialog name="w_companyDialog">
-	</dialogs:companyDialog>
-
+	<dialogs:chiefDialog name="w_chiefDialog" />
+	<dialogs:companyDialog name="w_companyDialog" />
+	<dialogs:instDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
+		observingComponent="contractInstTablePanel" creating="true" />
+	<dialogs:instDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
+		observingComponent="contractInstTablePanel" editingDisable="false" />
+	<dialogs:instDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true" />
 
 </h:body>
 </html>

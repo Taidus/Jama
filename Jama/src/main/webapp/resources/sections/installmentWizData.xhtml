@@ -35,7 +35,6 @@
 
 			<p:row>
 				<p:column>
-
 					<h:outputText value="#{msgs.amount}:" />
 				</p:column>
 
@@ -43,7 +42,7 @@
 
 					<h:inputText id="taxableAmount" value="#{installmentManager.installment.wholeTaxableAmount}" label="#{msgs.amount}" required="true">
 						<f:validator binding="#{moneyValidator}" />
-						<f:ajax execute="@this" render="amount taxAmountError" />
+						<p:ajax process="@this" update="amount taxAmountError" />
 					</h:inputText>
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
@@ -85,7 +84,6 @@
 				<p:column>
 					<h:outputText id="amount" value="#{installmentManager.installment.wholeAmount}" readonly="true">
 						<f:attribute name="plain" value="false" />
-
 					</h:outputText>
 				</p:column>
 				<p:column>
