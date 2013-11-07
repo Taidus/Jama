@@ -24,7 +24,7 @@
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
-					<h:outputText id="date_o" value="#{installmentManager.installment.date} ">
+					<h:outputText id="date_o" value="#{installmentManager.installment.date}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -45,8 +45,8 @@
 						<p:ajax process="@this" update="amount taxAmountError" />
 					</h:inputText>
 				</p:column>
-				<p:column rendered="#{cc.attrs.editingDisable == true}">
 
+				<p:column rendered="#{cc.attrs.editingDisable == true}">
 					<h:outputText id="taxableAmount_o" value="#{installmentManager.installment.wholeTaxableAmount}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>

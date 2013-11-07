@@ -47,6 +47,7 @@ public class InstallmentManagerBean implements Serializable {
 
 
 	public void setSelectedInstallment(Installment selectedInstallment) {
+		System.out.println("weofiwoifwfwef setSelInst");
 		this.selectedInstallment = selectedInstallment;
 	}
 
@@ -62,11 +63,12 @@ public class InstallmentManagerBean implements Serializable {
 		// installment.copy(transferObjInstallment);
 
 		if (selectedInstallment == null) {
+			System.out.println("Saving new installment");
 			installment.copy(transferObjInstallment);
 			// agreement.getInstallments().add(installment);
 			contract.addInstallment(installment);
 		} else {
-
+			System.out.println("Saving installment with ID: " + selectedInstallment);
 			selectedInstallment.copy(transferObjInstallment);
 		}
 
@@ -104,14 +106,15 @@ public class InstallmentManagerBean implements Serializable {
 
 
 	// TODO riunire?
-	public void viewInstallment() {
-
+	public void viewInstallment(Installment inst) {
+		setSelectedInstallment(inst);
 		initInstallment();
 	}
 
 
-	public void editInstallment() {
-
+	public void editInstallment(Installment inst) {
+		System.out.println("Edit inst with ID: " + inst.getId());
+		setSelectedInstallment(inst);
 		initInstallment();
 	}
 

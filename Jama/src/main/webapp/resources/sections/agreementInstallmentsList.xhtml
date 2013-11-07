@@ -43,15 +43,13 @@
 			<p:column headerText="#{msgs.paidInvoice_Question}">
 				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment()}"
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment(installment)}"
 					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
-					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment()}"
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment(installment)}"
 					oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
 					<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
-					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
 				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{not cc.attrs.editingDisable}">

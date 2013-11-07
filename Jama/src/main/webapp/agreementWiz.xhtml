@@ -16,7 +16,7 @@
 	<h:form id="agreementWiz">
 		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
-		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}">
+		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}" onback="setHideShow();" >
 
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
 				<sections:agreementWizData editingDisable="false" creating="true" />
@@ -26,7 +26,7 @@
 				<sections:agreementWizShareTable editingDisable="false" />
 			</p:tab>
 
-			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
+			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}" >
 				<sections:agreementInstallmentsList editingDisable="false" addDialogId="addInstDialog" addDialogWidgetVar="w_addInstDialog"
 					editDialogId="editInstDialog" editDialogWidgetVar="w_editInstDialog" viewDialogId="viewInstDialog" viewDialogWidgetVar="w_viewInstDialog"
 					panelId="contractInstTablePanel" />
