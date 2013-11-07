@@ -51,7 +51,6 @@ public class ContractDataPresentationBean implements Serializable {
 			System.out.println("spentAmount: " + spentAmount + ", reserved Amount: " + reservedAmount);
 
 			if (spentAmount.isGreaterThan(reservedAmount)) {
-				// System.out.println("dentro if");
 				throw new ValidatorException(Messages.getErrorMessage("err_agreementSpent"));
 			}
 			if (spentAmount.isNegative()) {
@@ -70,7 +69,6 @@ public class ContractDataPresentationBean implements Serializable {
 			System.out.println("deadline: " + deadline + ", begin: " + begin);
 
 			if (deadline.before(begin)) {
-				// System.out.println("dentro if");
 				throw new ValidatorException(Messages.getErrorMessage("err_invalidDeadline"));
 			}
 		} catch (ClassCastException e) {

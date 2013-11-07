@@ -66,12 +66,11 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
 		Root<? extends Contract> agr = c.from(contractClass);
-		agr.alias("agr_alias");
+		agr.alias("agr_alias"); // servono gli alias per nn dover riscrivere i criteria per la countQuery
 		
 		
 		c.select(agr).distinct(true);
 		
-		//count query
 		
 		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
 		countC.select(cb.countDistinct(agr));
@@ -85,11 +84,9 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 		
 		Join<? extends Contract,Installment> join2; 
 
-//		
-//		
+	
 		List<Predicate> criteria = new ArrayList<Predicate>();
-//
-//		
+	
 		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
 			
 			join = agr.join("installments",JoinType.INNER);
@@ -184,16 +181,16 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			query = em.createQuery(c);
 			countQuery = em.createQuery(countC);
 
-//			if (lowerInstDeadlineDate != null) {
-//				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
-//				countQuery.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
-//
-//			}
-//			if (upperInstDeadlineDate != null) {
-//				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
-//				countQuery.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
-//
-//			}
+			if (lowerInstDeadlineDate != null) {
+				query.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+				countQuery.setParameter("lowerInstDate", lowerInstDeadlineDate, TemporalType.DATE);
+
+			}
+			if (upperInstDeadlineDate != null) {
+				query.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+				countQuery.setParameter("upperInstDate", upperInstDeadlineDate, TemporalType.DATE);
+
+			}
 
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);

@@ -35,7 +35,6 @@ public class ChiefContractListLDM extends SkeletalContractTableLDM {
 
 
 	public void setFilterContractMinDate(Date filterContractMinDate) {
-		System.out.println("TTTTTTTTTTTTTTTTTTTT filterContractMinDate" + filterContractMinDate);
 		this.filterContractMinDate = filterContractMinDate;
 	}
 
@@ -56,7 +55,6 @@ public class ChiefContractListLDM extends SkeletalContractTableLDM {
 
 
 	public void setFilterInstMinDate(Date filterInstMinDate) {
-		System.out.println("TTTTTTTTTTTTTTTTTTTT filterInstMinDate" + filterInstMinDate);
 		this.filterInstMinDate = filterInstMinDate;
 	}
 
@@ -73,10 +71,7 @@ public class ChiefContractListLDM extends SkeletalContractTableLDM {
 
 	@Override
 	protected void initPager(Map<String, String> filters) {
-		System.out.println("Contract: min date = " + filterContractMinDate + "; max date = " + filterContractMaxDate);
-		System.out.println("Installment: min date = " + filterInstMinDate + "; max date = " + filterInstMaxDate);
 
-		System.out.println("Querying");
 		contractSearch.initWithLoggedUserCode(filterContractMinDate, filterContractMaxDate, filterCompanyId, null, getClassFromFilter(),
 				filterClosedContract, filterInstMinDate, filterInstMaxDate);
 

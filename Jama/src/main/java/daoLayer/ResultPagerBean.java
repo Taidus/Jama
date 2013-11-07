@@ -50,7 +50,6 @@ public abstract class ResultPagerBean<T> {
 	}
 
 	public List<T> getCurrentResults() {
-		//fixup indagare
 		em.clear();
 		return query.setFirstResult(currentPage * pageSize)
 				.setMaxResults(pageSize).getResultList();

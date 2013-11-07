@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.resource.spi.IllegalStateException;
 
 import businessLayer.Department;
 import util.Encryptor;
@@ -116,7 +117,7 @@ public class User implements Serializable {
 		return result;
 	}
 
-	public boolean login(String password) {
+	public boolean login(String password) throws IllegalStateException {
 
 		try {
 
@@ -125,11 +126,8 @@ public class User implements Serializable {
 			return new String(encrypted).equals(new String(this.password));
 
 		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException("E' avvenuto un errore durante il controllo della password causato dal Cypher");
 		}
-
-		return false;
 
 	}
 

@@ -42,9 +42,7 @@ public abstract class ShareTablePresentationObj {
 	}
 
 	public void addShare() {
-		System.out.println("Adding share " + newShare);
 		getTransferObjShareTable().getSharePerPersonnel().put(newShare.chiefScientist, newShare.value);
-		System.out.println("Share added: \n\t" + getTransferObjShareTable().getSharePerPersonnel());
 		newShare = new PersonnelShare();
 	}
 
@@ -101,9 +99,7 @@ public abstract class ShareTablePresentationObj {
 
 		Percent personnel = getTransferObjShareTable().getPersonnel();
 		if (!personnel.equals(Percent.ZERO)) {
-			System.out.println("Valori: " + getTransferObjShareTable().getSharePerPersonnel().values());
 			Percent sum = Percent.sum(getTransferObjShareTable().getSharePerPersonnel().values());
-			System.out.println("Somma: " + sum);
 			if (!sum.equals(Percent.ONE)) {
 				throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 			}
@@ -137,7 +133,6 @@ public abstract class ShareTablePresentationObj {
 		}
 
 		public void setChiefScientist(ChiefScientist chiefScientist) {
-			System.out.println("Setting: " + chiefScientist);
 			this.chiefScientist = chiefScientist;
 		}
 
@@ -146,7 +141,6 @@ public abstract class ShareTablePresentationObj {
 		}
 
 		public void setValue(Percent value) {
-			System.out.println("Setting percent share: " + value);
 			this.value = value;
 		}
 

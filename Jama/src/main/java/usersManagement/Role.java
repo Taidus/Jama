@@ -11,7 +11,7 @@ public enum Role {
 	CHIEF_SCIENTIST(new Permission[] { Permission.VIEW_OWN_CONTRACTS,
 			Permission.VIEW_HOME }),
 			
-	ADMIN(new Permission[]{Permission.VIEW_HOME}),
+	ADMIN(new Permission[]{Permission.VIEW_HOME, Permission.ALTER_USER_PERMISSIONS, Permission.CREATE_USER, Permission.VIEW_USERS}),
 
 	GUEST(new Permission[] {});
 

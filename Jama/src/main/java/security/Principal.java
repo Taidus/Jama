@@ -21,7 +21,6 @@ public class Principal {
 		// TODO: di serialNumber che ci metto?
 		serialNumber = "Guest";
 		role = Role.GUEST;
-		// FIXME: rimettere GUEST quando sarà tutto montato
 		setPermissions(role.getPermissions());
 	}
 
@@ -87,8 +86,6 @@ public class Principal {
 
 	public boolean hasRole(String toCheck) {
 		Role r = Role.valueOf(toCheck);
-		System.out.println("Check Role String : " + r + " , answer ="
-				+ r.equals(r));
 		return role.equals(r);
 	}
 

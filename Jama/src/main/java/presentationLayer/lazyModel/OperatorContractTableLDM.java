@@ -23,7 +23,6 @@ public abstract class OperatorContractTableLDM extends SkeletalContractTableLDM 
 
 
 	public void setFilterChiefId(Integer filterChiefId) {
-		System.out.println("################################################### Setting filter chief id to " + filterChiefId);
 		this.filterChiefId = filterChiefId;
 	}
 
@@ -40,7 +39,6 @@ public abstract class OperatorContractTableLDM extends SkeletalContractTableLDM 
 
 
 	public void setFilterMinDate(Date filterMinDate) {
-		System.out.println("################################################### Setting min date to " + filterMaxDate);
 		this.filterMinDate = filterMinDate;
 	}
 
@@ -51,7 +49,6 @@ public abstract class OperatorContractTableLDM extends SkeletalContractTableLDM 
 
 
 	public void setFilterMaxDate(Date filterMaxDate) {
-		System.out.println("################################################### Setting max date to " + filterMaxDate);
 		this.filterMaxDate = filterMaxDate;
 	}
 
@@ -68,7 +65,6 @@ public abstract class OperatorContractTableLDM extends SkeletalContractTableLDM 
 
 			setFilterChiefId(newChiefId);
 		}
-		System.out.println("Chief ID: " + filterChiefId);
 	}
 
 

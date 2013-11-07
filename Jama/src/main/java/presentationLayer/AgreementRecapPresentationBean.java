@@ -82,7 +82,6 @@ public class AgreementRecapPresentationBean {
 
 			for (Installment i : orderedInstallments) {
 
-				System.out.println("INSTALLMENT ADD * !!! " + i);
 
 				Calendar date = new GregorianCalendar();
 				date.setTimeInMillis(i.getDate().getTime());

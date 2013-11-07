@@ -30,7 +30,6 @@ public abstract class SkeletalContractTableLDM extends ContractTableLazyDataMode
 
 
 	public void setFilterClosedContract(Boolean filterClosedContract) {
-		System.out.println("Vuoi convenzioni chiuse? " + filterClosedContract);
 		this.filterClosedContract = filterClosedContract;
 	}
 
@@ -65,7 +64,6 @@ public abstract class SkeletalContractTableLDM extends ContractTableLazyDataMode
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Illegal Contract class: " + filterContractClass);
-			// TODO rivedere la gestione dell'eccezione, se serve
 		}
 	}
 
@@ -91,9 +89,7 @@ public abstract class SkeletalContractTableLDM extends ContractTableLazyDataMode
 
 			setFilterContractClass(filters.get("class"));
 		}
-		// System.out.println("Company ID: " + filterCompanyId + "; closed: " +
-		// filterClosedContract);
-		System.out.println("Closed: " + filterClosedContract + "; type: " + filterContractClass + "; company ID: " + filterCompanyId);
+
 	}
 
 

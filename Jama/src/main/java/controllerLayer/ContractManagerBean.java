@@ -66,7 +66,6 @@ public class ContractManagerBean implements Serializable {
 	@Logged
 	private Principal principal;
 
-//	private boolean conversationninherited;
 	private String filtersParamList;
 	private String provenancePage;
 
@@ -80,7 +79,6 @@ public class ContractManagerBean implements Serializable {
 
 
 	public ContractManagerBean() {
-		// conversationninherited = false;
 		editingClosedContract = false;
 		creatingNewContract = false;
 	}
@@ -124,15 +122,6 @@ public class ContractManagerBean implements Serializable {
 
 
 	private void begin() {
-		// System.out.println("Conversation Inherited=" +
-		// conversationninherited);
-
-		// if (conversation.isTransient()) {
-		// conversation.begin();
-		//
-		// } else {
-		// conversationninherited = true;
-		// }
 
 		conversation.begin();
 	}
@@ -140,12 +129,7 @@ public class ContractManagerBean implements Serializable {
 
 	@Remove
 	private void close() {
-
-		// if (!conversationninherited) {
 		conversation.end();
-		// }
-		// agreementDao.close();
-
 		reset();
 	}
 
@@ -184,14 +168,12 @@ public class ContractManagerBean implements Serializable {
 
 	private void initContract() {
 		begin();
-		// contract = ContractDao.getById(selectedContractId);
 		contract = em.find(Contract.class, selectedContractId);
 
 	}
 
 
 	public String editContract() {
-		// begin();
 		initContract();
 		editingClosedContract = contract.isClosed();
 		return "/agreementEdit.xhtml?faces-redirect=true";
@@ -212,7 +194,6 @@ public class ContractManagerBean implements Serializable {
 
 
 	public String createAgreement() {
-		System.out.println("createAgreement() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		contract = new Agreement();
 		return createContract();
 
@@ -227,7 +208,6 @@ public class ContractManagerBean implements Serializable {
 
 
 	public String viewContract() {
-		// begin();
 		initContract();
 		return "/agreementView.xhtml?faces-redirect=true";
 	}
@@ -276,11 +256,6 @@ public class ContractManagerBean implements Serializable {
 		c.setCIA_projectNumber(10000);
 		c.setContactPerson("Random contact");
 		c.setInventoryNumber(20000);
-//		Department d = new Department();
-//		d.setCode("DSI/DINFO");
-//		d.setName("ex Dipartimento di Sistemi e Informatica");
-//		d.setRateDirectory("dsi");
-//		depDao.createDepartment(d);
 		c.setDepartment(depDao.getByCode(principal.getBelongingDepthsCodes().get(0)));
 		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
 		c.setProtocolNumber("30000");

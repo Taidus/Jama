@@ -33,7 +33,6 @@ public class OperatorContractListLDM extends OperatorContractTableLDM {
 
 
 	public void setSortOrder(SortOrder sortOrder) {
-		System.out.println("################################################### Setting sort order to " + sortOrder);
 		this.sortOrder = sortOrder;
 	}
 
@@ -46,9 +45,7 @@ public class OperatorContractListLDM extends OperatorContractTableLDM {
 
 	@Override
 	protected void initPager(Map<String, String> filters) {
-		System.out.println("Min date: " + filterMinDate + "; max date: " + filterMaxDate);
 
-		System.out.println("Querying");
 		contractSearch.init(filterMinDate, filterMaxDate, filterChiefId, filterCompanyId, sortOrder, getClassFromFilter(), filterClosedContract);
 
 		// contractSearch.init(filterMinDate, filterMaxDate, filterChiefId,

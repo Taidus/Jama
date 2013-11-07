@@ -21,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-
 import businessLayer.Department;
 import annotations.TransferObj;
 import daoLayer.UserDaoBean;
@@ -32,12 +31,7 @@ import util.Messages;
 @ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-// TODO estrarre una superclasse??
 public class UserEditorBean implements Serializable {
-
-	/**
-	 * 
-	 */
 
 	private static final long serialVersionUID = -4966124878956728047L;
 	@Inject
@@ -48,10 +42,9 @@ public class UserEditorBean implements Serializable {
 	private UserDaoBean userDao;
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
-	private EntityManager em;	
-	
+	private EntityManager em;
+
 	private String password;
-	
 
 	public UserEditorBean() {
 		super();
@@ -70,14 +63,12 @@ public class UserEditorBean implements Serializable {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public String save( ) throws GeneralSecurityException {
+	public String save() throws GeneralSecurityException {
 		currentUser.setPassword(password);
 		userDao.create(currentUser);
-		
-		
+
 		close();
-		
-		
+
 		return "home";
 	}
 
@@ -98,8 +89,6 @@ public class UserEditorBean implements Serializable {
 	public User getUser() {
 		return currentUser;
 	}
-	
-	
 
 	public Conversation getConversation() {
 		return conversation;
@@ -115,12 +104,10 @@ public class UserEditorBean implements Serializable {
 	public void setSelectedDept(Department selectedDept) {
 		currentUser.addDepartment(selectedDept);
 	}
-	
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
 
 	public void setPassword(String password) {
 		this.password = password;
@@ -128,13 +115,11 @@ public class UserEditorBean implements Serializable {
 
 	public void validatePassword(FacesContext context, UIComponent component,
 			Object value) {
-		
 
 		try {
 			String password1 = (String) value;
 			String password2 = (String) ((UIInput) component
 					.findComponent("name")).getValue();
-			
 
 			if (!password1.equals(password2)) {
 				throw new ValidatorException(

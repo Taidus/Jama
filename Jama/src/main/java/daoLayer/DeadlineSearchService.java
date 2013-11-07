@@ -52,7 +52,6 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
 		Root<? extends Contract> agr = c.from(contractClass);
 		agr.alias("agr_alias");
-		// Root<AgreementInstallment> inst = c.from(AgreementInstallment.class);
 		
 		//countQuery
 		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
@@ -62,11 +61,6 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 
 		c.select(agr)
 				.distinct(true);
-	
-		// c.select(agr)
-		// .distinct(true)
-		// .where(cb.equal(agr,
-		// inst.get("contract")));
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
 	

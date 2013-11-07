@@ -23,9 +23,7 @@ import businessLayer.Contract;
 @ConversationScoped
 public class AttachmentsPresentationBean implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Attachment selectedAttachment;
 
@@ -47,15 +45,12 @@ public class AttachmentsPresentationBean implements Serializable {
 
 	public void handleFileUpload(FileUploadEvent event) {
 		
-		System.out.println("HANDLE UPLOAD ==============");
 
 		FacesMessage msg = new FacesMessage("Succesful", event.getFile()
 				.getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		UploadedFile file = event.getFile();
-		System.out.println("upload di : ");
-		System.out.println(file.getFileName());
 
 		Attachment a = new Attachment();
 		a.setContent(file.getContents());

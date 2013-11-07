@@ -53,24 +53,9 @@
 			<to-view-id>/home.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-			<navigation-case>
+		<navigation-case>
 			<from-outcome>login</from-outcome>
 			<to-view-id>/login.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>installmentCreate</from-outcome>
-			<to-view-id>/installmentWiz.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>installmentEdit</from-outcome>
-			<to-view-id>/installmentEdit.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>installmentView</from-outcome>
-			<to-view-id>/installmentView.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
@@ -78,9 +63,18 @@
 			<to-view-id>/chiefContractList.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-			<navigation-case>
+		<navigation-case>
 			<from-outcome>userWiz</from-outcome>
 			<to-view-id>/userWiz.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+		</navigation-case>
+			<navigation-case>
+			<from-outcome>userList</from-outcome>
+			<to-view-id>/userList.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 

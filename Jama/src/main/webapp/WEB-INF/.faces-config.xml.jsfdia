@@ -21,17 +21,16 @@
     PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="login::#login.xhtml" NAME="output6"
     PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="installmentCreate::#installmentWiz.xhtml"
-    NAME="output7" PATH="/installmentWiz.xhtml"
-    TARGET="rules:#installmentWiz.xhtml" TITLE="installmentCreate" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="installmentEdit::#installmentEdit.xhtml"
-    NAME="output8" PATH="/installmentEdit.xhtml"
-    TARGET="rules:#installmentEdit.xhtml" TITLE="installmentEdit" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="chiefContractList::#chiefContractList.xhtml"
-    NAME="output9" PATH="/chiefContractList.xhtml"
+    NAME="output10" PATH="/chiefContractList.xhtml"
     TARGET="rules:#chiefContractList.xhtml" TITLE="chiefContractList" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="userWiz::#userWiz.xhtml" NAME="output10"
+   <PROCESS-ITEM-OUTPUT ID="userWiz::#userWiz.xhtml" NAME="output11"
     PATH="/userWiz.xhtml" TARGET="rules:#userWiz.xhtml" TITLE="userWiz" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="error::#error.xhtml" NAME="output12"
+    PATH="/error.xhtml" TARGET="rules:#error.xhtml" TITLE="error" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="userList::#userList.xhtml" NAME="output13"
+    PATH="/userList.xhtml" TARGET="rules:#userList.xhtml"
+    TITLE="userList" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#home.xhtml" PATH="/home.xhtml"
@@ -44,12 +43,6 @@
   PATH="/agreementView.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#agreementWiz.xhtml"
   PATH="/agreementWiz.xhtml" SHAPE="304,305,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#installmentWiz.xhtml"
-  PATH="/installmentWiz.xhtml" SHAPE="304,305,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#installmentEdit.xhtml"
-  PATH="/installmentEdit.xhtml" SHAPE="304,337,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#installmentView.xhtml"
-  PATH="/installmentView.xhtml" SHAPE="304,369,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#chiefContractList.xhtml"
   PATH="/chiefContractList.xhtml" SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#agreementSchedule.xhtml"
@@ -58,4 +51,8 @@
   SHAPE="304,401,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#userWiz.xhtml" PATH="/userWiz.xhtml"
   SHAPE="304,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error.xhtml" PATH="/error.xhtml"
+  SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#userList.xhtml" PATH="/userList.xhtml"
+  SHAPE="304,561,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

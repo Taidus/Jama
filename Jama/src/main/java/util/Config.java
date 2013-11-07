@@ -1,7 +1,11 @@
 package util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import org.joda.money.CurrencyUnit;
@@ -19,6 +23,8 @@ public class Config {
 	public static final String depRatesPath = fileDir + "/" + "aliquoteDipartimenti/";
 	private static final String mailTemplateDir = fileDir + "/" + "mailTemplates";
 	
+	private static final String logFile = fileDir + "/" + "log";
+	
 	public static final Configuration fmconf;
 	public static final String instDeadlineTemplateFileName = "template_scadenzaRata.ftl";
 	public static final String contractCreationTemplateFileName = "template_creazioneContratto.ftl";
@@ -32,6 +38,15 @@ public class Config {
 	public static final int daysBeforeDeadlineExpriration = 15;
 
 	static {
+		
+            try {
+				System.setErr(new PrintStream(new File(logFile)));
+				Calendar date = Calendar.getInstance();
+				System.err.println(new Date(date.getTimeInMillis())+"\n=========\n"+"Inizio attività di logging\n"+"==========");
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		
 		fmconf = new Configuration();
 
 		// Specify the data source where the template files come from. Here I

@@ -49,7 +49,6 @@ public class InstallmentDataPresentationBean implements Serializable {
 			Date begin = installment.getContract().getBeginDate();
 
 			if (deadline.before(begin)) {
-				// System.out.println("dentro if");
 				throw new ValidatorException(Messages.getErrorMessage("err_invalidDeadline"));
 			}
 		} catch (ClassCastException e) {

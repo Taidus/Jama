@@ -12,17 +12,6 @@ public class Encryptor {
 	
 	private static String key = "1234567890987654";
 	
-	public static void main(String[] args) {
-	    try {
-
-	      
-	      byte[] ciphertext = encrypt("1234567890123456");
-	      System.out.println("decrypted value:" + (decrypt(ciphertext)));
-
-	    } catch (GeneralSecurityException e) {
-	      e.printStackTrace();
-	    }
-	  }
 
 	  public static byte[] encrypt(String value)
 	      throws GeneralSecurityException {

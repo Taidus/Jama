@@ -24,9 +24,6 @@ public class ContractDaoBean {
 
 	public Contract create(Contract contract) {
 		
-//		for(Installment i : agreement.getInstallments()){
-//			i.setAgreement(agreement);
-//		}
 		em.persist(contract);
 		return contract;
 	}
