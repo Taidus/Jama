@@ -14,27 +14,6 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.newInstDate}:" />
-				</p:column>
-				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{installmentManager.installment.date}" navigator="true" validator="#{instDataPB.validateDeadlineDate}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</p:calendar>
-				</p:column>
-
-				<p:column rendered="#{cc.attrs.editingDisable == true}">
-					<h:outputText id="date_o" value="#{installmentManager.installment.date}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-
-				<p:message styleClass="errorMessage" for="date" />
-
-			</p:row>
-
-			<p:row>
-				<p:column>
 					<h:outputText value="#{msgs.amount}:" />
 				</p:column>
 
@@ -89,6 +68,27 @@
 				<p:column>
 					<p:message for="amount" />
 				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.newInstDate}:" />
+				</p:column>
+				<p:column rendered="#{cc.attrs.editingDisable == false}">
+					<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+						value="#{installmentManager.installment.date}" navigator="true" validator="#{instDataPB.validateDeadlineDate}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+				</p:column>
+
+				<p:column rendered="#{cc.attrs.editingDisable == true}">
+					<h:outputText id="date_o" value="#{installmentManager.installment.date}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:message styleClass="errorMessage" for="date" />
+
 			</p:row>
 
 

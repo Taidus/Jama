@@ -10,7 +10,6 @@
 	<composite:attribute name="wizWidgetVar" required="true" />
 
 	<composite:attribute name="editingDisable" default="true" />
-	<composite:attribute name="creating" default="false" />
 	<composite:attribute name="observingComponent" type="java.lang.String" />
 </composite:interface>
 
@@ -25,24 +24,7 @@
 
 			<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
-			<p:wizard widgetVar="#{cc.attrs.wizWidgetVar}" rendered="#{cc.attrs.creating}">
-
-				<p:tab id="tabDati" title="#{msgs.data_Tab}">
-					<sections:installmentWizData editingDisable="false" />
-				</p:tab>
-
-				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
-					<sections:installmentWizShareTable editingDisable="false" />
-				</p:tab>
-
-				<p:tab id="tabEnd" title="#{msgs.end__tab}">
-					<sections:installmentWizLastStep observingComponent="#{cc.attrs.observingComponent}" wizWidgetVar="#{cc.attrs.wizWidgetVar}"
-						dialogWidgetVar="#{cc.attrs.dialogWidgetVar}" />
-				</p:tab>
-
-			</p:wizard>
-
-			<p:tabView id="instEditTabView" widgetVar="#{cc.attrs.wizWidgetVar}" rendered="#{not cc.attrs.creating}">
+			<p:tabView id="instEditTabView" widgetVar="#{cc.attrs.wizWidgetVar}">
 
 				<p:tab id="tabDati" title="#{msgs.data_Tab}">
 					<sections:installmentWizData editingDisable="#{cc.attrs.editingDisable}" />
@@ -58,10 +40,9 @@
 			<p:commandButton value="#{msgs.cancel}" process="@this" actionListener="#{installmentManager.cancel()}" immediate="true"
 				oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();" />
 
-			<p:commandButton id="instSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{installmentManager.save}"
-				process="instEditTabView" update="instEditTabView :#{p:component(cc.attrs.observingComponent)}"
-				oncomplete="if(!args.validationFailed){ toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();}"
-				rendered="#{not(cc.attrs.editingDisable or cc.attrs.creating)}" />
+			<p:commandButton id="instSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{installmentManager.save()}"
+				process="@form" update="instEditTabView :#{p:component(cc.attrs.observingComponent)}" rendered="#{not cc.attrs.editingDisable}"
+				oncomplete="if(!args.validationFailed){ toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();}" />
 
 		</h:form>
 

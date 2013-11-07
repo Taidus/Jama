@@ -53,7 +53,7 @@ public class InstallmentManagerBean implements Serializable {
 
 
 	public void cancel() {
-
+		System.out.println("Cancelling");
 		close();
 	}
 

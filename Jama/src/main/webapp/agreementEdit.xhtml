@@ -66,11 +66,11 @@
 
 	<dialogs:chiefDialog name="w_chiefDialog" />
 	<dialogs:companyDialog name="w_companyDialog" />
-	<dialogs:instDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
-		observingComponent="contractInstTablePanel" creating="true" />
-	<dialogs:instDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
+	<dialogs:instCreateDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
+		observingComponent="contractInstTablePanel" />
+	<dialogs:instViewDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
 		observingComponent="contractInstTablePanel" editingDisable="false" />
-	<dialogs:instDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true" />
+	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true" />
 
 </h:body>
 </html>
