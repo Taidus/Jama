@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+<composite:interface>
+	<composite:attribute name="dialogWidgetVar" required="true" />
+	<composite:attribute name="dialogId" required="true" />
+	<composite:attribute name="wizWidgetVar" required="true"/>
+
+	<composite:attribute name="editingDisable" default="true" />
+	<composite:attribute name="creating" default="false" />
+	<composite:attribute name="observingComponent" type="java.lang.String" />
+</composite:interface>
+
+<composite:implementation>
+
+	<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" height="400px">
+
+		<h:form >
+
+			<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
+
+			<p:wizard widgetVar="#{cc.attrs.wizWidgetVar}" rendered="#{cc.attrs.creating}">
+
+				<p:tab id="tabDati" title="#{msgs.data_Tab}">
+					<sections:installmentWizData editingDisable="false" />
+				</p:tab>
+
+				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
+					<sections:installmentWizShareTable editingDisable="false" />
+				</p:tab>
+
+				<p:tab id="tabEnd" title="#{msgs.end__tab}">
+					<sections:installmentWizLastStep observingComponent="#{cc.attrs.observingComponent}" wizWidgetVar="#{cc.attrs.wizWidgetVar}"
+						dialogWidgetVar="#{cc.attrs.dialogWidgetVar}" />
+				</p:tab>
+
+			</p:wizard>
+
+			<p:tabView widgetVar="#{cc.attrs.wizWidgetVar}" rendered="#{not cc.attrs.creating}">
+
+				<p:tab id="tabDati" title="#{msgs.data_Tab}">
+					<sections:installmentWizData editingDisable="#{cc.attrs.editingDisable}" />
+				</p:tab>
+
+				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
+					<sections:installmentWizShareTable editingDisable="#{cc.attrs.editingDisable}" />
+				</p:tab>
+
+				<p:tab id="tabEnd" title="#{msgs.end__tab}" rendered="#{not cc.attrs.editingDisable}">
+					<sections:installmentWizLastStep observingComponent="#{cc.attrs.observingComponent}" wizWidgetVar="#{cc.attrs.wizWidgetVar}"
+						dialogWidgetVar="#{cc.attrs.dialogWidgetVar}" />
+				</p:tab>
+
+			</p:tabView>
+
+
+			<p:commandButton value="#{msgs.cancel}" process="@this" actionListener="#{installmentManager.cancel()}" immediate="true"
+				oncomplete="#{cc.attrs.wizWidgetVar}.loadStep(#{cc.attrs.wizWidgetVar}.cfg.steps[0], true); #{cc.attrs.dialogWidgetVar}.hide();" />
+
+		</h:form>
+
+	</p:dialog>
+
+</composite:implementation>
+</html>

@@ -3,11 +3,17 @@
 	xmlns:sections="http://java.sun.com/jsf/composite/sections" xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
 <composite:interface>
-	<composite:attribute name="editingDisable" />
-	<composite:attribute name="installmentOutcome" />
+	<composite:attribute name="editingDisable" default="true" />
 	<composite:attribute name="panelId" type="java.lang.String" required="true" />
-	<composite:attribute name="dialogWidgetVar" type="java.lang.String" required="true" />
-	<composite:attribute name="dialogId" type="java.lang.String" required="true" />
+
+	<composite:attribute name="addDialogWidgetVar" type="java.lang.String" />
+	<composite:attribute name="addDialogId" type="java.lang.String" />
+
+	<composite:attribute name="editDialogWidgetVar" type="java.lang.String" />
+	<composite:attribute name="editDialogId" type="java.lang.String" />
+
+	<composite:attribute name="viewDialogWidgetVar" type="java.lang.String" />
+	<composite:attribute name="viewDialogId" type="java.lang.String" />
 
 </composite:interface>
 
@@ -37,31 +43,28 @@
 			<p:column headerText="#{msgs.paidInvoice_Question}">
 				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentWizardPB.viewInstallment()}">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment()}"
+					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentWizardPB.editInstallment()}"
-					rendered="#{cc.attrs.editingDisable==false}">
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment()}"
+					oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
+					<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();"
-					rendered="#{cc.attrs.editingDisable==false}">
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{not cc.attrs.editingDisable}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
-				<ui:remove>
-					<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyDeadline(installment)}">
-					</p:commandButton>
-				</ui:remove>
 
 			</p:column>
-
-
 
 		</p:dataTable>
 
 
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="delete_confirm">
-			<p:commandButton value="#{msgs.yes}" action="#{installmentWizardPB.deleteInstallment()}" immediate="true" update="installmentTable"
+			<p:commandButton value="#{msgs.yes}" action="#{installmentManager.deleteInstallment()}" immediate="true" update="installmentTable"
 				oncomplete="delete_confirm.hide();" />
 			<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();" type="button" />
 		</p:confirmDialog>
@@ -72,10 +75,9 @@
 			</p:commandButton>
 		</ui:remove>
 
-		<p:commandButton styleClass="addInstBtn" process="@this" actionListener="#{installmentWizardPB.addInstallment()}" value="#{msgs.add_installment}"
-			oncomplete="#{cc.attrs.dialogWidgetVar}.show()"
-			update=":#{p:component(cc.attrs.dialogId)}" rendered="#{cc.attrs.editingDisable == false}">
-			<p:resetInput target=":#{p:component(cc.attrs.dialogId)}" />
+		<p:commandButton styleClass="addInstBtn" process="@this" actionListener="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}"
+			oncomplete="#{cc.attrs.addDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.addDialogId)}" rendered="#{cc.attrs.editingDisable == false}">
+			<p:resetInput target=":#{p:component(cc.attrs.addDialogId)}" />
 		</p:commandButton>
 
 
