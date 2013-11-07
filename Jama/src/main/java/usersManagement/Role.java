@@ -31,4 +31,8 @@ public enum Role {
 	public List<Permission> getPermissions() {
 		return permissions;
 	}
+	
+	public static Role[] getAvailableUserRoleValues(){
+		return (new Role[]{Role.CHIEF_SCIENTIST, Role.OPERATOR});
+	}
 }

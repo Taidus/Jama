@@ -92,7 +92,7 @@ public class Department {
 	}
 	
 	public String getCompleteName(){
-		return this.name + " " + this.code;
+		return this.code;
 	}
 
 }

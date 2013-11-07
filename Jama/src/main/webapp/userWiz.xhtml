@@ -8,13 +8,15 @@
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
 <h:head>
+	<h:outputStylesheet library="css" name="userEdit.css"></h:outputStylesheet>
+
 </h:head>
 <h:body>
 
-	<h:form id="usrForm">
-	
-			<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
-	
+	<h:form id="userEdit">
+
+		<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
+
 		<p:panel header="#{msgs.userWiz_header}">
 
 			<p:panelGrid id="usrDataPanelGrid">
@@ -73,43 +75,105 @@
 				</p:row>
 
 				<p:row>
-				
-					
+
+
 					<p:column>
 						<h:outputText value="#{msgs.password}" />
 					</p:column>
-					
+
 					<p:column>
-						<p:password id="password" required="true" match="confirmPassword" value="#{userEditor.password}">
-							<f:ajax event="blur" ></f:ajax>
+						<p:password id="password" required="true" match="confirmPassword"
+							value="#{userEditor.password}">
+							<f:ajax event="blur"></f:ajax>
 						</p:password>
-						
+
 					</p:column>
-					
-					
-					
+
+					<p:column>
+						<p:message id="confirmPasswordError" styleClass="errorMessage"
+							autoUpdate="true" for="password" />
+					</p:column>
+
 				</p:row>
 				<p:row>
 					<p:column>
 						<h:outputText value="#{msgs.confirmPassword}" />
 					</p:column>
 					<p:column>
-					<p:password id="confirmPassword" required="true">
-				
-					</p:password>
+						<p:password id="confirmPassword" required="true">
+
+						</p:password>
 					</p:column>
 
-					
+				</p:row>
+
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.role}:" />
+					</p:column>
+
+					<p:column>
+						<h:selectOneMenu id="type" value="#{userEditor.user.role}"
+							label="#{msgs.role}" required="true">
+							<f:selectItems value="#{utilPB.rolesItems}" />
+							<f:ajax event="blur" execute="@this" render="typeError" />
+
+						</h:selectOneMenu>
+
+					</p:column>
+
+
+					<p:column>
+						<p:message styleClass="errorMessage" id="typeError" for="type" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText id="serial" value="#{msgs.serialNumber}"
+							required="true" />
+					</p:column>
+
+					<p:column>
+						<h:inputText value="#{userEditor.user.serialNumber}">
+							<f:convertNumber />
+						</h:inputText>
+					</p:column>
+
+					<p:column>
+						<p:message styleClass="errorMessage" id="serialError" for="serial" />
+					</p:column>
 
 				</p:row>
-				
+
 				<p:row>
-				
-				<p:column>
-						<p:message id="confirmPasswordError" styleClass="errorMessage" autoUpdate="true"
-							for="confirmPassword" />
-				</p:column>
-				
+					<p:column>
+						<h:outputText value="#{msgs.email}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="email" required="true" label="email"
+							requiredMessage="Please enter your email address."
+							validatorMessage="#{msgs.err_invalidEmail}"
+							value="#{userEditor.user.email}">
+
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:ajax event="blur" execute="@this" render="emailError" />
+
+						</p:inputText>
+					</p:column>
+
+					<p:column>
+						<p:watermark for="email" value="Email Address *" />
+					</p:column>
+
+					<p:column>
+						<p:message styleClass="errorMessage" id="emailError" for="email" />
+					</p:column>
+
+
 				</p:row>
 
 
@@ -119,8 +183,27 @@
 
 		</p:panel>
 
-		<p:commandButton value="#{msgs.save}" action="#{userEditor.save()}"
-			ajax="false" />
+		<p:commandButton value="#{msgs.save}"
+			oncomplete="if (!args.validationFailed) w_confirm_save_user.show()" />
+			
+		<p:commandButton type="button" value="#{msgs.cancel}"
+			onclick="w_confirm_cancel_user.show();" />
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
+			severity="alert" widgetVar="w_confirm_cancel_user">
+			<p:commandButton value="#{msgs.yes}" action="#{userEditor.cancel()}"
+				immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm_cancel_user.hide();"
+				type="button" />
+		</p:confirmDialog>
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}"
+			severity="alert" widgetVar="w_confirm_save_user">
+			<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}"
+				immediate="true" oncomplete="w_confirm_save_user.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm_save_user.hide();"
+				type="button" />
+		</p:confirmDialog>
 
 	</h:form>
 </h:body>

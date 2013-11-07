@@ -74,7 +74,6 @@ public class UserEditorBean implements Serializable {
 		currentUser.setPassword(password);
 		userDao.create(currentUser);
 		
-		System.out.println("Password:"+password+","+password);
 		
 		close();
 		
@@ -82,14 +81,14 @@ public class UserEditorBean implements Serializable {
 		return "home";
 	}
 
-	public void cancel() {
+	public String cancel() {
 		close();
+		return "home";
 	}
 
 	public String createUser() {
 		begin();
 		currentUser = new User();
-		currentUser.setName("ciccio");
 		return "userWiz";
 	}
 
@@ -136,7 +135,6 @@ public class UserEditorBean implements Serializable {
 			String password2 = (String) ((UIInput) component
 					.findComponent("name")).getValue();
 			
-			System.out.println("Called with password: "+password1+", "+password2);
 
 			if (!password1.equals(password2)) {
 				throw new ValidatorException(

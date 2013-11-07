@@ -30,7 +30,6 @@ import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Contract;
 import businessLayer.ContractShareTable;
-import businessLayer.Department;
 import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
 import daoLayer.DepartmentDaoBean;
