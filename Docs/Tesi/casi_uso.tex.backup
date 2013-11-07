@@ -1,0 +1,52 @@
+Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema.
+
+\begin{itemize}
+ \item Operatore
+    \begin{enumerate}
+     \item Inserimento di una nuova Convenzione/Contributo\n
+     
+     Percorso base:
+	Viene visualizzata la schermata "Inserimento/Modifica di una nuova convenzione". Essa consiste di varie viste, ognuna corrispondente ad un passo della procedura. E' possibile passare da una
+	vista all'altra mediante i pulsanti "Avanti" e "Indietro". I passi sono:
+		1) Inserimento dei dati della convenzione
+			Viene presentata una schermata in cui sono elencati tutti i campi necessari per la definizione di una convenzione, 
+			che l'Amministratore deve compilare. Tali campi sono:
+				- Il titolo
+				- Il responsabile scientifico. Per riempire questo campo, bisogna scegliere il responsabile dal rispettivo menù a tendina. 
+					Se l'utente non è presente all'interno della lista, è possibile crearne uno nuovo cliccando su "Aggiungi utente".
+				- ...
+		2) Inserimento della tabella di ripartizione
+			Viene presentata una schermata in cui sono presenti le voci della tabella di ripartizione. L'Amministratore inserisce, per ogni voce, i valori percentuali 
+			in base ai quali dividere l'importo totale. Il sistema mostra i valori così calcolati. I dati
+			da inserire sono:
+				- ...
+			L'ultimo campo, "Beni e servizi", non è modificabile dall'utente: viene calcolato automaticamente per differenza.
+			Un procedimento del tutto analogo deve essere seguito per la suddivisione dell'importo relativo a "Beni e servizi": l'Amministratore inserisce i valori desiderati
+			ad eccezione dell'ultimo, calcolato per differenza.
+
+		3) Inserimento della documentazione relativa alla convenzione.
+			Viene presentata una schermata in cui appaiono i documenti allegati alla convenzione. L'Amministratore può aggiungere o eliminare un documento 
+			cliccando sugli appositi tasti. Premendo il tasto "Salva" la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente.
+
+Percorso alternativo:
+	Durante uno qualsiasi dei passi, l'Amministratore può cliccare il tasto "Annulla", che comporta, a seguito di una conferma, il ritorno alla schermata precedente
+	senza che la convenzione venga inserita o i cambiamenti effettuati salvati.
+
+	Se l'Amministratore clicca sul tasto "Salva" senza aver compilato dei campi obbligatori, o avendo inserito dei valori non consentiti, viene visualizzato un messaggio di errore 
+	e il documento non viene salvato. La schermata non viene cambiata, in modo che l'Amministratore possa procedere alla correzione.
+			
+
+     
+     
+     
+     
+     
+     
+     
+    \end{enumerate}
+
+ 
+ 
+ \item Docente
+ \item Amministratore
+\end{itemize}
