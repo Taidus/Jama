@@ -1,10 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:sections="http://java.sun.com/jsf/composite/sections"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections"
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
 <h:head>
@@ -17,7 +13,7 @@
 
 		<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
 
-		<p:panel header="#{msgs.userWiz_header}">
+		<p:panel id="oooo" header="#{msgs.userWiz_header}">
 
 			<p:panelGrid id="usrDataPanelGrid">
 
@@ -27,8 +23,7 @@
 					</p:column>
 
 					<p:column>
-						<h:inputText id="name" value="#{userEditor.user.name}"
-							label="#{msgs.name}" required="true">
+						<h:inputText id="name" value="#{userEditor.user.name}" label="#{msgs.name}" required="true">
 						</h:inputText>
 
 					</p:column>
@@ -44,8 +39,7 @@
 					</p:column>
 
 					<p:column>
-						<h:inputText id="surname" value="#{userEditor.user.surname}"
-							label="#{msgs.surname}" required="true">
+						<h:inputText id="surname" value="#{userEditor.user.surname}" label="#{msgs.surname}" required="true">
 						</h:inputText>
 					</p:column>
 
@@ -60,9 +54,8 @@
 					</p:column>
 
 					<p:column>
-						<p:selectOneMenu id="depthMenu" styleClass="depthMenu"
-							value="#{userEditor.selectedDept}" label="#{msgs.department}"
-							required="true" filter="true" filterMatchMode="contains">
+						<p:selectOneMenu id="depthMenu" styleClass="depthMenu" value="#{userEditor.selectedDept}" label="#{msgs.department}" required="true"
+							filter="true" filterMatchMode="contains">
 							<f:selectItems value="#{utilPB.depthItems}" />
 							<f:converter binding="#{departmentConverter}" />
 						</p:selectOneMenu>
@@ -82,16 +75,14 @@
 					</p:column>
 
 					<p:column>
-						<p:password id="password" required="true" match="confirmPassword"
-							value="#{userEditor.password}">
+						<p:password id="password" required="true" match="confirmPassword" value="#{userEditor.password}">
 							<f:ajax event="blur"></f:ajax>
 						</p:password>
 
 					</p:column>
 
 					<p:column>
-						<p:message id="confirmPasswordError" styleClass="errorMessage"
-							autoUpdate="true" for="password" />
+						<p:message id="confirmPasswordError" styleClass="errorMessage" autoUpdate="true" for="password" />
 					</p:column>
 
 				</p:row>
@@ -114,8 +105,7 @@
 					</p:column>
 
 					<p:column>
-						<h:selectOneMenu id="type" value="#{userEditor.user.role}"
-							label="#{msgs.role}" required="true">
+						<h:selectOneMenu id="type" value="#{userEditor.user.role}" label="#{msgs.role}" required="true">
 							<f:selectItems value="#{utilPB.rolesItems}" />
 							<f:ajax event="blur" execute="@this" render="typeError" />
 
@@ -131,8 +121,7 @@
 
 				<p:row>
 					<p:column>
-						<h:outputText id="serial" value="#{msgs.serialNumber}"
-							required="true" />
+						<h:outputText id="serial" value="#{msgs.serialNumber}" required="true" />
 					</p:column>
 
 					<p:column>
@@ -153,13 +142,10 @@
 					</p:column>
 
 					<p:column>
-						<p:inputText id="email" required="true" label="email"
-							requiredMessage="Please enter your email address."
-							validatorMessage="#{msgs.err_invalidEmail}"
-							value="#{userEditor.user.email}">
+						<p:inputText id="email" required="true" label="email" requiredMessage="Please enter your email address."
+							validatorMessage="#{msgs.err_invalidEmail}" value="#{userEditor.user.email}">
 
-							<f:validateRegex
-								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							<f:ajax event="blur" execute="@this" render="emailError" />
 
 						</p:inputText>
@@ -183,26 +169,19 @@
 
 		</p:panel>
 
-		<p:commandButton value="#{msgs.save}"
-			oncomplete="if (!args.validationFailed) w_confirm_save_user.show()" />
-			
-		<p:commandButton type="button" value="#{msgs.cancel}"
-			onclick="w_confirm_cancel_user.show();" />
+		<p:commandButton value="#{msgs.save}" process="@form" update="oooo"
+			oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}" />
 
-		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
-			severity="alert" widgetVar="w_confirm_cancel_user">
-			<p:commandButton value="#{msgs.yes}" action="#{userEditor.cancel()}"
-				immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
-			<p:commandButton value="#{msgs.no}" onclick="w_confirm_cancel_user.hide();"
-				type="button" />
+		<p:commandButton type="button" value="#{msgs.cancel}" onclick="w_confirm_cancel_user.show();" />
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirm_cancel_user">
+			<p:commandButton value="#{msgs.yes}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm_cancel_user.hide();" type="button" />
 		</p:confirmDialog>
 
-		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}"
-			severity="alert" widgetVar="w_confirm_save_user">
-			<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}"
-				immediate="true" oncomplete="w_confirm_save_user.hide()" />
-			<p:commandButton value="#{msgs.no}" onclick="w_confirm_save_user.hide();"
-				type="button" />
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}" severity="alert" widgetVar="w_confirm_save_user">
+			<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}" immediate="true" oncomplete="w_confirm_save_user.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm_save_user.hide();" type="button" />
 		</p:confirmDialog>
 
 	</h:form>
