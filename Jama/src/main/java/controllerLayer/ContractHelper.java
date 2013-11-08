@@ -7,6 +7,7 @@ public interface ContractHelper {
 	public boolean renderIvaComponents();
 	public boolean renderType();
 	public boolean renderPersonnelQuotes();
+	public String getName();
 
 
 }

@@ -271,4 +271,5 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
+
 }

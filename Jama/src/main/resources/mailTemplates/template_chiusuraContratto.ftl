@@ -1,5 +1,5 @@
 Gent.mo Professore,
-le comunichiamo che la convenzione dal titolo "${contract.title}" fra ${contract.department.name} (${contract.department.code}) e ${contract.company.name}  è stata chiusa, con un fatturato complessivo di ${contract.turnOver}
+le comunichiamo che ${theContract} dal titolo "${contract.title}" fra ${contract.department.name} (${contract.department.code}) e ${contract.company.name}  è stata chiusa, con un fatturato complessivo di ${contract.turnOver}
 
 Ringraziandola per l'attenzione, si inviano cordiali saluti.
 

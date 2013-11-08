@@ -21,6 +21,8 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 import usersManagement.User;
 import daoLayer.UserDaoBean;
+import businessLayer.Agreement;
+import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.Installment;
 import freemarker.template.Template;
@@ -190,10 +192,17 @@ public class MailSender implements Serializable {
 		private Installment installment;
 		private String mail1, mail2;
 		private Integer installmentNumber;
+		private String theContract;
 
 
 		public InstallmentTemplateFiller(Installment installment, String mail1, String mail2) {
 			super();
+			if(installment instanceof AgreementInstallment){
+				theContract = "alla convenzione";
+			}
+			else{
+				theContract="al Contributo";
+			}
 			this.contract = installment.getContract();
 			this.installment = installment;
 			this.mail1 = mail1;
@@ -231,6 +240,13 @@ public class MailSender implements Serializable {
 			return mail2;
 		}
 
+
+		public String getTheContract() {
+			return theContract;
+		}
+		
+		
+
 	}
 
 
@@ -238,10 +254,18 @@ public class MailSender implements Serializable {
 	public static class ContractTemplateFiller {
 		private Contract contract;
 		private String mail;
+		private String theContract;
+
 
 
 		public ContractTemplateFiller(Contract contract, String mail) {
 			super();
+			if(contract instanceof Agreement){
+				theContract="la convenzione";
+			}
+			else{
+				theContract="il contributo";
+			}
 			this.contract = contract;
 			this.mail = mail;
 		}
@@ -254,6 +278,10 @@ public class MailSender implements Serializable {
 
 		public String getMail() {
 			return mail;
+		}
+		
+		public String getTheContract() {
+			return theContract;
 		}
 
 	}

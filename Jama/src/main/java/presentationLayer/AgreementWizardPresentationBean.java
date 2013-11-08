@@ -75,4 +75,8 @@ public class AgreementWizardPresentationBean implements Serializable {
 	public boolean renderPersonnelQuotes(){
 		return helper.renderPersonnelQuotes();
 	}
+	
+	public String getContractTypeName(){
+		return helper.getName().toLowerCase();
+	}
 }

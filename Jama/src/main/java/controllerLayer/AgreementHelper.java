@@ -2,6 +2,7 @@ package controllerLayer;
 
 import javax.enterprise.context.RequestScoped;
 
+import util.Messages;
 import businessLayer.AgreementInstallment;
 import businessLayer.Installment;
 
@@ -29,6 +30,11 @@ public class AgreementHelper implements ContractHelper{
 	@Override
 	public boolean renderPersonnelQuotes() {
 		return true;
+	}
+
+	@Override
+	public String getName() {
+		return Messages.getString("agreement");
 	}
 
 }
