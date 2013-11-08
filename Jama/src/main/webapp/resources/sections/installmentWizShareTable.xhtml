@@ -299,7 +299,7 @@
 			<p:column>
 				<p:commandButton value="#{msgs.remove}"
 					action="#{instShareTablePB.removeShare(share)}" update="@form"
-					process="@this" rendered="#{!cc.attrs.editingDisable}" />
+					process="@this" rendered="#{cc.attrs.editingDisable == false}" />
 			</p:column>
 
 		</p:dataTable>

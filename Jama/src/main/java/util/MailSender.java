@@ -3,6 +3,8 @@ package util;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
@@ -56,6 +58,8 @@ public class MailSender implements Serializable {
 		// } catch (MessagingException e) {// TODO errore a video
 		// e.printStackTrace();
 		// }
+		
+		if(recipientEmail != null){
 
 		String host = "smtp.gmail.com";
 		String username = "jama.mail.services";
@@ -82,13 +86,17 @@ public class MailSender implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
 		}
+		}else{
+			Date date = new Date(Calendar.getInstance().getTimeInMillis());
+			System.err.println(date+": Error sending email, null adress");
+		}
 	}
 
 	private void spam() {
-		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
-		// spam a Damaz?
-		// _send("damaz91@live.it", "Promozione",
-		// "Sei Stato promosso al grado di maggiore nella DeltaSpikeForce!");
+//		 XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
+//		 spam a Damaz?
+		 _send("damaz91@live.it", "Promozione",
+		 "Sei Stato promosso al grado di maggiore nella DeltaSpikeForce!");
 	}
 
 	public void test() {
@@ -99,59 +107,59 @@ public class MailSender implements Serializable {
 			IOException {
 		System.out.println("mail di notifica creazione contratto simulata");
 
-		// ContractTemplateFiller filler = new ContractTemplateFiller(c,
-		// "pippo@jama.jam");
-		// StringWriter out = new StringWriter();
-		// // variabile di tipo StringWriter perché un Writer qualunque non va
-		// // bene: serve che il metodo toString() restituisca esattamente la
-		// // stringa che rappresenta il contenuto della mail
-		//
-		// Template temp =
-		// Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
-		// temp.process(filler, out);
-		// String mailContent = out.toString();
-		//
-		// User u= userDao.getBySerialNumber(c.getChief().getSerialNumber());
-		// String email = u.getEmail();
-		//
-		//
-		// _send(email, "Jama: nuovo contratto",
-		// mailContent);
-		//
-		// System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
-		//
-		// FacesContext.getCurrentInstance().addMessage(null, new
-		// FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		 ContractTemplateFiller filler = new ContractTemplateFiller(c,
+		 "pippo@jama.jam");
+		 StringWriter out = new StringWriter();
+		 // variabile di tipo StringWriter perché un Writer qualunque non va
+		 // bene: serve che il metodo toString() restituisca esattamente la
+		 // stringa che rappresenta il contenuto della mail
+		
+		 Template temp =
+		 Config.fmconf.getTemplate(Config.contractCreationTemplateFileName);
+		 temp.process(filler, out);
+		 String mailContent = out.toString();
+		
+		 User u= userDao.getBySerialNumber(c.getChief().getSerialNumber());
+		 String email = u.getEmail();
+		
+		
+		 _send(email, "Jama: nuovo contratto",
+		 mailContent);
+		
+		 System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		
+		 FacesContext.getCurrentInstance().addMessage(null, new
+		 FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
 
 	};
 
 	public void notifyClosure(Contract c) throws IOException, TemplateException {
 		System.out.println("mail di notifica chiusura contratto simulata");
 
-		// ContractTemplateFiller filler = new ContractTemplateFiller(c,
-		// "pippo@jama.jam");
-		// StringWriter out = new StringWriter();
-		// // variabile di tipo StringWriter perché un Writer qualunque non va
-		// // bene: serve che il metodo toString() restituisca esattamente la
-		// // stringa che rappresenta il contenuto della mail
-		//
-		// Template temp =
-		// Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
-		// temp.process(filler, out);
-		// String mailContent = out.toString();
-		//
-		//
-		// User u= userDao.getBySerialNumber(c.getChief().getSerialNumber());
-		// String email = u.getEmail();
-		//
-		// _send(email, "Jama: chiusura contratto",
-		// mailContent);
-		//
-		//
-		// System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
-		//
-		// FacesContext.getCurrentInstance().addMessage(null, new
-		// FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		 ContractTemplateFiller filler = new ContractTemplateFiller(c,
+		 "pippo@jama.jam");
+		 StringWriter out = new StringWriter();
+		 // variabile di tipo StringWriter perché un Writer qualunque non va
+		 // bene: serve che il metodo toString() restituisca esattamente la
+		 // stringa che rappresenta il contenuto della mail
+		
+		 Template temp =
+		 Config.fmconf.getTemplate(Config.contractClosureTemplateFileName);
+		 temp.process(filler, out);
+		 String mailContent = out.toString();
+		
+		
+		 User u= userDao.getBySerialNumber(c.getChief().getSerialNumber());
+		 String email = u.getEmail();
+		
+		 _send(email, "Jama: chiusura contratto",
+		 mailContent);
+		
+		
+		 System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
+		
+		 FacesContext.getCurrentInstance().addMessage(null, new
+		 FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
 
 	}
 
