@@ -7,7 +7,9 @@
 
 		<p:panel id="agrLastStepPanel" styleClass="semiEmptyPanel">
 
-			<h:outputText value="#{msgs.agrCongr}" />
+			<h:outputFormat value="#{msgs.agrCongr}" >
+				<f:param value="#{agreementWizardPB.contractTypeName}"></f:param>
+			</h:outputFormat>
 
 			<p:growl autoUpdate="true" />
 

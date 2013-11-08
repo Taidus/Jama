@@ -1,5 +1,6 @@
 package controllerLayer;
 
+import util.Messages;
 import businessLayer.FundingInstallment;
 import businessLayer.Installment;
 
@@ -24,6 +25,11 @@ public class FundingHelper implements ContractHelper {
 	@Override
 	public boolean renderPersonnelQuotes() {
 		return false;
+	}
+
+	@Override
+	public String getName() {
+		return Messages.getString("funding");
 	}
 	
 	
