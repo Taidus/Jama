@@ -54,8 +54,8 @@
 		</p:contextMenu>
 
 		<p:dataTable id="chiefContractList" styleClass="hideShow" binding="#{chiefContractListPCB.lazyModel.dataTable}" var="contract"
-			widgetVar="w_chContrList" lazy="true" value="#{chiefContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10"
-			rowsPerPageTemplate="5,10,15" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
+			widgetVar="w_chContrList" lazy="true" value="#{chiefContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20"
+			rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
 			selection="#{chiefContractListPCB.lazyModel.selectedValue}" selectionMode="single" rowKey="#{contract.id}">
 
 			<p:ajax event="filter" oncomplete="setHideShow();" />

@@ -55,7 +55,7 @@
 		</p:contextMenu>
 
 		<p:dataTable id="agrSchedule" binding="#{opContractSchedulePCB.lazyModel.dataTable}" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule"
-			lazy="true" value="#{opContractSchedulePCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+			lazy="true" value="#{opContractSchedulePCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20" rowsPerPageTemplate="10,20,50"
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractSchedulePCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}">
 

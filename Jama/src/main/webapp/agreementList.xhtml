@@ -54,7 +54,7 @@
 		</p:contextMenu>
 
 		<p:dataTable id="agreementTable" styleClass="hideShow" binding="#{opContractListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable"
-			lazy="true" value="#{opContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+			lazy="true" value="#{opContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20" rowsPerPageTemplate="10,20,50"
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractListPCB.lazyModel.selectedValue}"
 			selectionMode="single" rowKey="#{agr.id}" sortOrder="descending">
 
