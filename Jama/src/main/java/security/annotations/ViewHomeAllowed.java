@@ -1,4 +1,4 @@
-package security;
+package security.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -12,6 +12,6 @@ import org.apache.deltaspike.security.api.authorization.SecurityBindingType;
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Documented
 @SecurityBindingType
-public @interface ChiefScientistAllowed {
+public @interface ViewHomeAllowed {
 
 }

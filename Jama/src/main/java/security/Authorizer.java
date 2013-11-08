@@ -1,9 +1,19 @@
 package security;
 
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+
 import org.apache.deltaspike.security.api.authorization.Secures;
+
+import security.annotations.AlterContractsAllowed;
+import security.annotations.AlterUserPermissionAllowed;
+import security.annotations.CreateUserAllowed;
+import security.annotations.DeleteContractsAllowed;
+import security.annotations.ViewContractsAllowed;
+import security.annotations.ViewHomeAllowed;
+import security.annotations.ViewOwnContractsAllowed;
 import usersManagement.Permission;
 import annotations.Logged;
 
@@ -14,10 +24,12 @@ import annotations.Logged;
  * 
  * 
  */
-@SessionScoped
+// FIXME: provo Application Scoped; se non funziona rimettere SessionScoped
+@ApplicationScoped
 public class Authorizer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Inject
 	@Logged
 	private Principal loggedUser;
@@ -25,19 +37,47 @@ public class Authorizer implements Serializable {
 	@Secures
 	@AlterContractsAllowed
 	public boolean canAlterContracts() {
-		return (loggedUser.hasPermission(Permission.ALTER_CONTRACTS)) ? true
-				: false;
+		return canDo(Permission.ALTER_CONTRACTS);
 	}
 
 	@Secures
-	@ChiefScientistAllowed
-	// FIXME: per ora è finto
-	public boolean doChiefScientistCheck() {
-		return true;
+	@AlterUserPermissionAllowed
+	public boolean canAlterUserPermission() {
+		return canDo(Permission.ALTER_USER_PERMISSIONS);
 	}
 
+	@Secures
+	@CreateUserAllowed
+	public boolean canCreateUser() {
+		return canDo(Permission.CREATE_USER);
+	}
+
+	@Secures
+	@DeleteContractsAllowed
+	public boolean canDeleteContracts() {
+		return canDo(Permission.DELETE_CONTRACTS);
+	}
+
+	@Secures
+	@ViewContractsAllowed
+	public boolean canViewContracts() {
+		return canDo(Permission.VIEW_CONTRACTS);
+	}
+
+	@Secures
+	@ViewHomeAllowed
 	public boolean canViewHome() {
-		return (loggedUser.hasPermission(Permission.VIEW_HOME)) ? true : false;
+		return canDo(Permission.VIEW_HOME);
+	}
+
+	@Secures
+	@ViewOwnContractsAllowed
+	public boolean canViewOwnContracts() {
+		return canDo(Permission.VIEW_OWN_CONTRACTS);
+	}
+
+	private boolean canDo(Permission toCheck) {
+		return loggedUser.hasPermission(toCheck);
 	}
 
 }

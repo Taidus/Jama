@@ -19,8 +19,8 @@ import javax.persistence.criteria.Root;
 
 import org.primefaces.model.SortOrder;
 
-import security.AlterContractsAllowed;
 import security.Principal;
+import security.annotations.AlterContractsAllowed;
 import annotations.Logged;
 import businessLayer.Contract;
 import businessLayer.Installment;
