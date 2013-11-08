@@ -1,10 +1,8 @@
 package security.accessDecisionVoters;
 
 import java.util.Set;
-
 import org.apache.deltaspike.security.api.authorization.AccessDecisionVoterContext;
 import org.apache.deltaspike.security.api.authorization.SecurityViolation;
-
 import usersManagement.Permission;
 
 public class ViewOwnContractsAccessDecisionVoter extends

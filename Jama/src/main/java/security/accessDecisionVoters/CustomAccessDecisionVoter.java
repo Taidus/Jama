@@ -3,14 +3,11 @@ package security.accessDecisionVoters;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-
 import org.apache.deltaspike.security.api.authorization.AccessDecisionVoter;
 import org.apache.deltaspike.security.api.authorization.SecurityViolation;
-
 import security.Authorizer;
 import usersManagement.Permission;
 

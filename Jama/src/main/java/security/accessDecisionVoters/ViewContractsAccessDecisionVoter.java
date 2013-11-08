@@ -5,12 +5,13 @@ import org.apache.deltaspike.security.api.authorization.AccessDecisionVoterConte
 import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 import usersManagement.Permission;
 
-public class ViewHomeAccessDecisionVoter extends CustomAccessDecisionVoter {
+public class ViewContractsAccessDecisionVoter extends CustomAccessDecisionVoter {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Set<SecurityViolation> checkPermission(
 			AccessDecisionVoterContext accessDecisionVoterContext) {
-		return _checkPermission(Permission.VIEW_HOME);
+		return _checkPermission(Permission.VIEW_CONTRACTS);
 	}
+
 }
