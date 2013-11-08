@@ -2,6 +2,8 @@ package security;
 
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.security.api.authorization.Secured;
+
+import security.accessDecisionVoters.AlterUserPermissionAccessDecisionVoter;
 import security.accessDecisionVoters.ViewHomeAccessDecisionVoter;
 import security.accessDecisionVoters.AlterContractsAccessDecisionVoter;
 
@@ -32,6 +34,10 @@ class Home implements ViewConfig {
 
 @Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
 class AgreementSchedule implements ViewConfig {
+}
+
+@Secured(value = { AlterUserPermissionAccessDecisionVoter.class}, errorView = NotAuthorized.class)
+class userWiz implements ViewConfig {
 }
 
 class NotAuthorized implements ViewConfig {

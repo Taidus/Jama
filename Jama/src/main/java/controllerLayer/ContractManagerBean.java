@@ -22,6 +22,9 @@ import javax.persistence.PersistenceContextType;
 import org.joda.money.Money;
 
 import security.Principal;
+import security.annotations.AlterContractsAllowed;
+import security.annotations.ViewContractsAllowed;
+import security.annotations.ViewOwnContractsAllowed;
 import util.Config;
 import util.MailSender;
 import annotations.Current;
@@ -135,6 +138,7 @@ public class ContractManagerBean implements Serializable {
 
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	@AlterContractsAllowed
 	public void save() {
 		System.out.println("SAVE");
 
@@ -173,13 +177,14 @@ public class ContractManagerBean implements Serializable {
 	}
 
 
+	@AlterContractsAllowed
 	public String editContract() {
 		initContract();
 		editingClosedContract = contract.isClosed();
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
-
+	
 	private String createContract() {
 		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
@@ -192,21 +197,21 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
-
+	@AlterContractsAllowed
 	public String createAgreement() {
 		contract = new Agreement();
 		return createContract();
 
 	}
 
-
+	@AlterContractsAllowed
 	public String createFunding() {
 		contract = new Funding();
 		return createContract();
 
 	}
 
-
+	@ViewOwnContractsAllowed
 	public String viewContract() {
 		initContract();
 		return "/agreementView.xhtml?faces-redirect=true";
@@ -243,7 +248,8 @@ public class ContractManagerBean implements Serializable {
 		return contract;
 	}
 
-
+	
+	@AlterContractsAllowed
 	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
 	}

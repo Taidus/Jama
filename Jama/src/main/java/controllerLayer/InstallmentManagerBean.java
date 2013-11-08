@@ -10,6 +10,8 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import security.annotations.AlterContractsAllowed;
+import security.annotations.ViewContractsAllowed;
 import annotations.Current;
 import annotations.TransferObj;
 import businessLayer.AgreementInstallment;
@@ -57,7 +59,8 @@ public class InstallmentManagerBean implements Serializable {
 		close();
 	}
 
-
+	
+	@AlterContractsAllowed
 	public void save() {
 
 		// installment.copy(transferObjInstallment);
@@ -105,20 +108,20 @@ public class InstallmentManagerBean implements Serializable {
 	}
 
 
-	// TODO riunire?
+	@ViewContractsAllowed
 	public void viewInstallment(Installment inst) {
 		setSelectedInstallment(inst);
 		initInstallment();
 	}
 
-
+	@AlterContractsAllowed
 	public void editInstallment(Installment inst) {
 		System.out.println("Edit inst with ID: " + inst.getId());
 		setSelectedInstallment(inst);
 		initInstallment();
 	}
 
-
+	@AlterContractsAllowed
 	public void deleteInstallment() {
 
 		// agreement.getInstallments().remove(selectedInstallment);
@@ -137,7 +140,8 @@ public class InstallmentManagerBean implements Serializable {
 
 	}
 
-
+	
+	@AlterContractsAllowed
 	public String addInstallment() {
 		installment = helper.getNewInstallment();
 		transferObjInstallment = helper.getNewInstallment();
