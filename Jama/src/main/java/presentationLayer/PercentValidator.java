@@ -14,19 +14,24 @@ import util.Percent;
 @RequestScoped
 public class PercentValidator implements Validator {
 
-	public PercentValidator() {
-	}
+	public PercentValidator() {}
+
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		try{
+		boolean invalid = false;
+		try {
 			Percent p = (Percent) value;
-			if(p.lessThan(Percent.ZERO) || p.greaterThan(Percent.ONE)){
-				throw new ValidatorException(Messages.getErrorMessage("err_invalidValue"));
+			if (p.lessThan(Percent.ZERO) || p.greaterThan(Percent.ONE)) {
+				invalid = true;
 			}
-		}catch(ClassCastException e){
-			System.err.println(e);
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue"));
+		} catch (ClassCastException e) {
+			invalid = true;
+		}
+
+		if (invalid) {
+			String[] params = { (String) component.getAttributes().get("label") };
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
 

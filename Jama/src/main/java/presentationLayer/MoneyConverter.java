@@ -32,7 +32,8 @@ public class MoneyConverter implements Converter {
 			return Money.of(Config.currency, new BigDecimal(value).setScale(2, RoundingMode.HALF_EVEN));
 		}
 		catch(NumberFormatException e){
-			throw new ConverterException(Messages.getErrorMessage("err_invalidAmount"));
+			String[] params = {(String) component.getAttributes().get("label")};
+			throw new ConverterException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
 

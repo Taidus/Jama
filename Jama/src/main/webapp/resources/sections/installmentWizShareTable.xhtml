@@ -11,7 +11,7 @@
 
 	<p:panel header="#{msgs.shareTable_Header}">
 
-		<p:panelGrid id="instValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
+		<p:panelGrid id="instValuesGrid" columns="3" columnClasses="label, value, percents" styleClass="grid">
 
 			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
 			<h:inputText id="atheneumCapitalBalance" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
@@ -26,7 +26,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message id="atheneumCapitalBalanceError" for="atheneumCapitalBalance" />
 
 
 			<h:outputText value="#{msgs.shareTableCommonBalance}:" />
@@ -42,7 +41,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="atheneumCommonBalance" id="atheneumCommonBalanceError" />
 
 
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
@@ -57,7 +55,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="personnel" id="personnelError" />
 
 
 			<h:outputText value="#{msgs.shareTableStructures}:" />
@@ -72,7 +69,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="structures" id="structuresError" />
 
 
 			<h:outputText value="#{msgs.shareTableGoods}:" />
@@ -82,7 +78,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="goodsAndServices" id="goodsAndServicesError" />
 
 
 
@@ -98,7 +93,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="businessTrip" id="businessTripError" />
 
 
 			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
@@ -114,7 +108,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="consumerMaterials" id="consumerMaterialsError" />
 
 
 			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
@@ -130,7 +123,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="inventoryMaterials" id="inventoryMaterialsError" />
 
 
 			<h:outputText value="#{msgs.shareTableRentals}:" />
@@ -145,7 +137,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="rentals" id="rentalsError" />
 
 
 			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
@@ -161,7 +152,6 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="personnelOnContract" id="personnelOnContractError" />
 
 
 			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
@@ -171,24 +161,20 @@
 				<f:attribute name="plain" value="false" />
 			</h:outputText>
 
-			<p:message for="otherCost" id="otherCostError" />
 
 		</p:panelGrid>
 
 		<br />
 
 		<h:inputHidden value="needed" id="valuesCheck" validator="#{instShareTablePB.validateMainValues}" />
-		<p:message styleClass="errorMessage" for="valuesCheck" />
 
 		<br />
 
 		<h:inputHidden value="needed" id="goodsCheck" validator="#{instShareTablePB.validateGoodsAndServices}" />
-		<p:message styleClass="errorMessage" for="goodsCheck" />
 
 		<br />
 
 		<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" />
-		<p:message styleClass="errorMessage" for="otherInstCheck" />
 
 	</p:panel>
 
@@ -198,7 +184,6 @@
 
 
 		<h:inputHidden value="needed" id="percentsCheck" validator="#{instShareTablePB.validatePersonnelShares}" />
-		<p:message styleClass="errorMessage" for="percentsCheck" />
 
 
 		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"
@@ -262,7 +247,7 @@
 
 				<p:column width="10%">
 					<h:inputText id="personnalShareValueInput" value="#{instShareTablePB.newShare.value}" label="#{msgs.share}">
-						<f:ajax event="valueChange" execute="@this" disabled="#{cc.attrs.editingDisable}" render="percentPersonnelShare personnalShareValueInputError" />
+						<f:ajax event="valueChange" execute="@this" disabled="#{cc.attrs.editingDisable}" render="percentPersonnelShare" />
 						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 				</p:column>
@@ -279,17 +264,6 @@
 				</p:column>
 			</p:row>
 
-			<p:row>
-				<p:column colspan="4">
-					<p:message autoUpdate="true" for="personnalShareChiefMenu" />
-				</p:column>
-			</p:row>
-
-			<p:row>
-				<p:column colspan="4">
-					<p:message autoUpdate="true" for="personnalShareValueInput" id="personnalShareValueInputError" />
-				</p:column>
-			</p:row>
 		</p:panelGrid>
 
 	</p:panel>

@@ -50,10 +50,11 @@ public class InstallmentDataPresentationBean implements Serializable {
 			Date end = installment.getContract().getDeadlineDate();
 
 			if (deadline.before(begin) || deadline.after(end)) {
-				throw new ValidatorException(Messages.getErrorMessage("err_invalidDeadline"));
+				throw new ValidatorException(Messages.getErrorMessage("err_instInvalidDeadline"));
 			}
 		} catch (ClassCastException e) {
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue"));
+			String[] params = { (String) component.getAttributes().get("label")};
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
 	
