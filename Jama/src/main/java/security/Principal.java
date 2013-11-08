@@ -56,7 +56,7 @@ public class Principal {
 		this.email = u.getEmail();
 		this.serialNumber = u.getSerialNumber();
 		this.role = u.getRole();
-		this.belongingDepthsCodes = u.getBelongingDepthsCodes();
+		this.belongingDepthsCodes = u.getBelongingDeptsCodes();
 		setPermissions(role.getPermissions());
 		
 	}

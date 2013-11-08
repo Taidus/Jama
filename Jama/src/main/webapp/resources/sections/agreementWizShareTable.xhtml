@@ -190,7 +190,7 @@
 
 			<p:column>
 				<p:commandButton value="#{msgs.remove}" action="#{agrShareTablePB.removeShare(share)}" update="@form" process="@this"
-					rendered="#{!cc.attrs.editingDisable}" />
+					rendered="#{not cc.attrs.editingDisable}" />
 			</p:column>
 
 		</p:dataTable>
@@ -206,7 +206,7 @@
 
 				<p:column width="30%">
 					<p:selectOneMenu id="personnalShareChiefMenu" value="#{agrShareTablePB.newShare.chiefScientist}" label="#{msgs.chief}" filter="true"
-						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}" required="#{not empty param[save.clientId]}">
+						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}" required="#{not empty param[_chiefShareAddBtn.clientId]}">
 						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
 						<f:selectItems value="#{utilPB.getChiefsItemsNotIn(agrShareTablePB.addedChiefs)}" />
 						<f:converter binding="#{chiefConverter}" />
@@ -233,7 +233,7 @@
 
 				<p:column width="10%">
 					<p:commandButton value="#{msgs.add}" action="#{agrShareTablePB.addShare()}" update="personnalShareInput personnelShares"
-						process="personnalShareInput, @this" rendered="#{!cc.attrs.editingDisable}" binding="#{save}" />
+						process="personnalShareInput, @this" binding="#{_chiefShareAddBtn}" />
 				</p:column>
 			</p:row>
 

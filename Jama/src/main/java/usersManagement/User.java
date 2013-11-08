@@ -34,7 +34,7 @@ public class User implements Serializable {
 	
 	//molti o uno solo???????
 	@ManyToMany
-	private List<Department> belongingDepths;
+	private List<Department> belongingDepts;
 
 	private String serialNumber;
 	@Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class User implements Serializable {
 
 	public User() {
 		super();
-		belongingDepths = new ArrayList<>();
+		belongingDepts = new ArrayList<>();
 	}
 
 	public boolean hasRole(Role role) {
@@ -97,21 +97,21 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
-	public List<Department> getBelongingDepths() {
-		return belongingDepths;
+	public List<Department> getBelongingDepts() {
+		return belongingDepts;
 	}
 
-	public void setBelongingDepths(List<Department> belongingDepths) {
-		this.belongingDepths = belongingDepths;
+	public void setBelongingDepts(List<Department> belongingDepts) {
+		this.belongingDepts = belongingDepts;
 	}
 	
 	public void addDepartment(Department d){
-		belongingDepths.add(d);
+		belongingDepts.add(d);
 	}
 	
-	public List<String> getBelongingDepthsCodes(){
+	public List<String> getBelongingDeptsCodes(){
 		List<String> result = new ArrayList<>();
-		for(Department d : belongingDepths){
+		for(Department d : belongingDepts){
 			result.add(d.getCode());
 		}
 		return result;

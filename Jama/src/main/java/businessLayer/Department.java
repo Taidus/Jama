@@ -91,7 +91,8 @@ public class Department {
 		return true;
 	}
 	
-	public String getCompleteName(){
+	public String getDisplayName(){
+		//TODO mettere qualcosa di sensato (magari chiedere)
 		return this.code;
 	}
 

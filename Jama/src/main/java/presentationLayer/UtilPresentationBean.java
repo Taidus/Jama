@@ -85,7 +85,7 @@ public class UtilPresentationBean implements Serializable {
 		Department current = null;
 		for (int i = 0; i < depths.size(); i++) {
 			current = depths.get(i);
-			result[i] = new SelectItem(current, current.getCompleteName());
+			result[i] = new SelectItem(current, current.getDisplayName());
 		}
 		return result;
 	}
