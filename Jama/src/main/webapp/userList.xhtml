@@ -12,7 +12,7 @@
 		<p:panel>
 
 			<p:dataTable id="userTable" emptyMessage="#{msgs.noUserFound}" lazy="true" value="#{userTablePC.lazyModel}" var="user" paginator="true" rows="20"
-				rowsPerPageTemplate="1,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}">
+				rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}">
 
 				<p:column headerText="#{msgs.serialNumber}">
 					<h:outputText value="#{user.serialNumber}" />
