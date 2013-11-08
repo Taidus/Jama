@@ -75,8 +75,8 @@ public class Authorizer implements Serializable {
 	public boolean canViewOwnContracts() {
 		return canDo(Permission.VIEW_OWN_CONTRACTS);
 	}
-
-	private boolean canDo(Permission toCheck) {
+	
+	public boolean canDo(Permission toCheck) {
 		return loggedUser.hasPermission(toCheck);
 	}
 

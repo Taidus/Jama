@@ -11,6 +11,7 @@ import usersManagement.User;
 @Stateful
 @ConversationScoped
 public class UserSearchService extends ResultPagerBean<User> {
+	
 
 	public void init(){
 		
