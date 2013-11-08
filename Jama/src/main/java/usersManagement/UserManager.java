@@ -1,5 +1,6 @@
 package usersManagement;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import security.Principal;
@@ -51,7 +52,8 @@ public class UserManager implements Serializable {
 				return "home";
 			} else {
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Matricola o password errati", "Inserire i valori corretti");
+						"Matricola o password errati",
+						"Inserire i valori corretti");
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 				return "login";
 			}
@@ -73,4 +75,13 @@ public class UserManager implements Serializable {
 		this.insertedSerialNumber = insertedSerialNumber;
 	}
 
+	public void decideHomeOrLogin() {
+		if (loggedUser.hasPermission(Permission.VIEW_HOME)) {
+			try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/Jama/faces/home.xhtml");
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

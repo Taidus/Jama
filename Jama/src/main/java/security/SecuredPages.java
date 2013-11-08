@@ -8,23 +8,23 @@ import security.accessDecisionVoters.ViewHomeAccessDecisionVoter;
 import security.accessDecisionVoters.AlterContractsAccessDecisionVoter;
 
 
-@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
+@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = Login.class)
 class AgreementEdit implements ViewConfig {
 }
 
-@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
+@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = Login.class)
 class AgreementWiz implements ViewConfig {
 }
 
-@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
+@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = Login.class)
 class InstallmentEdit implements ViewConfig {
 }
 
-@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
+@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = Login.class)
 class AgreementList implements ViewConfig {
 }
 
-@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
+@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = Login.class)
 class InstallmentWiz implements ViewConfig {
 }
 
@@ -32,15 +32,12 @@ class InstallmentWiz implements ViewConfig {
 class Home implements ViewConfig {
 }
 
-@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = NotAuthorized.class)
+@Secured(value = { AlterContractsAccessDecisionVoter.class }, errorView = Login.class)
 class AgreementSchedule implements ViewConfig {
 }
 
-@Secured(value = { AlterUserPermissionAccessDecisionVoter.class}, errorView = NotAuthorized.class)
+@Secured(value = { AlterUserPermissionAccessDecisionVoter.class}, errorView = Login.class)
 class userWiz implements ViewConfig {
-}
-
-class NotAuthorized implements ViewConfig {
 }
 
 class Login implements ViewConfig {
