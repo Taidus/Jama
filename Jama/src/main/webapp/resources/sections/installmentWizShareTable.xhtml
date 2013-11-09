@@ -16,7 +16,7 @@
 			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
 			<h:inputText id="atheneumCapitalBalance" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="atheneumCapitalBalance_o" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}" />
@@ -31,7 +31,7 @@
 			<h:outputText value="#{msgs.shareTableCommonBalance}:" />
 			<h:inputText id="atheneumCommonBalance" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" label="#{msgs.shareTableCommonBalance}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="atheneumCommonBalance_o" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}" />
@@ -46,7 +46,7 @@
 			<h:outputText value="#{msgs.shareTablePersonnel}:" />
 			<h:inputText id="personnel" value="#{instShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="personnel_o" value="#{instShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}" />
@@ -60,7 +60,7 @@
 			<h:outputText value="#{msgs.shareTableStructures}:" />
 			<h:inputText id="structures" value="#{instShareTablePB.shareTable.structures}" label="#{msgs.shareTableStructures}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="structures_o" value="#{instShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}" />
@@ -84,7 +84,7 @@
 			<h:outputText value="#{msgs.shareTableTrip}:" />
 			<h:inputText id="businessTrip" value="#{instShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="businessTrip_o" value="#{instShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}" />
@@ -98,7 +98,7 @@
 			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
 			<h:inputText id="consumerMaterials" value="#{instShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="consumerMaterials_o" value="#{instShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}" />
@@ -113,7 +113,7 @@
 			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
 			<h:inputText id="inventoryMaterials" value="#{instShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="inventoryMaterials_o" value="#{instShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}" />
@@ -128,7 +128,7 @@
 			<h:outputText value="#{msgs.shareTableRentals}:" />
 			<h:inputText id="rentals" value="#{instShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
 				rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="rentals_o" value="#{instShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}" />
@@ -142,7 +142,7 @@
 			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
 			<h:inputText id="personnelOnContract" value="#{instShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
 				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:ajax event="valueChange" execute="@this" render="instValuesGrid personnelShares personnalShareInput" />
+				<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
 				<f:validator binding="#{percentValidator}" />
 			</h:inputText>
 			<h:outputText id="personnelOnContract_o" value="#{instShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}" />
@@ -237,7 +237,7 @@
 						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
 						<f:selectItems value="#{utilPB.getChiefsItemsNotIn(instShareTablePB.addedChiefs)}" />
 						<f:converter binding="#{chiefConverter}" />
-						<f:ajax event="valueChange" execute="@this" />
+						<p:ajax event="valueChange" process="@this" />
 					</p:selectOneMenu>
 				</p:column>
 
@@ -247,7 +247,7 @@
 
 				<p:column width="10%">
 					<h:inputText id="personnalShareValueInput" value="#{instShareTablePB.newShare.value}" label="#{msgs.share}">
-						<f:ajax event="valueChange" execute="@this" disabled="#{cc.attrs.editingDisable}" render="percentPersonnelShare" />
+						<p:ajax event="valueChange" process="@this" disabled="#{cc.attrs.editingDisable}" update="percentPersonnelShare" />
 						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 				</p:column>

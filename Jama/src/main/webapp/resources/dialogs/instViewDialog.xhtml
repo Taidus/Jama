@@ -52,7 +52,7 @@
 
 			<p:commandButton id="instSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{installmentManager.save()}"
 				process="@form" update="instEditTabView :#{p:component(cc.attrs.observingComponent)}" rendered="#{not cc.attrs.editingDisable}"
-				oncomplete="if(!args.validationFailed){ toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();}" />
+				oncomplete="if(!args.validationFailed){ #{cc.attrs.dialogWidgetVar}.hide(); }" />
 
 
 		</p:dialog>
