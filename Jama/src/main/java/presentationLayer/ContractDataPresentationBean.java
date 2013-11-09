@@ -29,21 +29,23 @@ public class ContractDataPresentationBean implements Serializable {
 
 
 	public void validateReservedAmount(FacesContext context, UIComponent component, Object value) {
+		String[] params = { (String) component.getAttributes().get("label") };
 		Money reservedAmount = (Money) value;
 		try {
 			if (reservedAmount.isGreaterThan(manager.getContract().getTurnOver())) {
 				throw new ValidatorException(Messages.getErrorMessage("err_agreementReserved"));
 			}
 			if (reservedAmount.isNegative()) {
-				throw new ValidatorException(Messages.getErrorMessage("err_negativeAmount"));
+				throw new ValidatorException(Messages.getErrorMessage("err_negativeValue", params));
 			}
 		} catch (ClassCastException e) {
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidAmount"));
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
 
 
 	public void validateSpentAmount(FacesContext context, UIComponent component, Object value) {
+		String[] params = { (String) component.getAttributes().get("label") };
 
 		try {
 			Money spentAmount = (Money) value;
@@ -54,14 +56,16 @@ public class ContractDataPresentationBean implements Serializable {
 				throw new ValidatorException(Messages.getErrorMessage("err_agreementSpent"));
 			}
 			if (spentAmount.isNegative()) {
-				throw new ValidatorException(Messages.getErrorMessage("err_negativeAmount"));
+				throw new ValidatorException(Messages.getErrorMessage("err_negativeValue", params));
 			}
 		} catch (ClassCastException e) {
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidAmount"));
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
-	
+
+
 	public void validateDeadlineDate(FacesContext context, UIComponent component, Object value) {
+		String[] params = { Messages.getString("deadlineDate")};
 
 		try {
 			Date deadline = (Date) value;
@@ -72,7 +76,7 @@ public class ContractDataPresentationBean implements Serializable {
 				throw new ValidatorException(Messages.getErrorMessage("err_invalidDeadline"));
 			}
 		} catch (ClassCastException e) {
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue"));
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
 

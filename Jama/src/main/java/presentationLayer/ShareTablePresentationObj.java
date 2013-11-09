@@ -83,19 +83,6 @@ public abstract class ShareTablePresentationObj {
 	}
 
 	public void validatePersonnelShares(FacesContext context, UIComponent component, Object value) {
-		// Map<ChiefScientist, Float> shares =
-		// getTransferObjShareTable().getSharePerPersonnel();
-		// float sum = 0F;
-		// for (float f : shares.values()) {
-		// sum += f;
-		// }
-		// if (!MathUtil.doubleEquals(getTransferObjShareTable().getPersonnel()
-		// * sum / 100, getTransferObjShareTable().getPersonnel())) {
-		// // NB: il controllo deve essere eseguito in questo modo. Controllare
-		// // che sum == 100 non funziona nel caso in cui personnel sia 0
-		// throw new
-		// ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
-		// }
 
 		Percent personnel = getTransferObjShareTable().getPersonnel();
 		if (!personnel.equals(Percent.ZERO)) {

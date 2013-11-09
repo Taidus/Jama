@@ -17,15 +17,17 @@ public class MoneyValidator implements Validator {
 
 	public MoneyValidator() {}
 
+
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		try{
+		String[] params = { (String) component.getAttributes().get("label") };
+		try {
 			Money amount = (Money) value;
-			if(amount.isNegative()){
-				throw new ValidatorException(Messages.getErrorMessage("err_negativeAmount"));
+			if (amount.isNegative()) {
+				throw new ValidatorException(Messages.getErrorMessage("err_negativeValue", params));
 			}
-		}catch(ClassCastException e){
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidAmount"));
+		} catch (ClassCastException e) {
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
 

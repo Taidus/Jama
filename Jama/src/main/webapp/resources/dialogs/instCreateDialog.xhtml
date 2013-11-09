@@ -15,10 +15,16 @@
 <composite:implementation>
 
 	<h:outputScript library="js" name="instDialogScripts.js" />
+	<h:outputScript library="js" name="onEnterPressInWiz.js" />
 
-	<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" minHeight="500" minWidth="800" draggable="false">
+	<h:form>
+		<p:remoteCommand name="closeInstDiag" actionListener="#{installmentManager.cancel()}" immediate="true" />
 
-		<h:form>
+		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" height="650" width="900">
+
+			<p:ajax event="close" onstart="closeInstDiag();" oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); setHideShow();" />
+
+			<p:growl autoUpdate="true" sticky="true" />
 
 			<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
@@ -39,12 +45,17 @@
 
 			</p:wizard>
 
-			<p:commandButton value="#{msgs.cancel}" process="@this" actionListener="#{installmentManager.cancel()}" immediate="true"
-				oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();" />
+			<ui:remove>
 
-		</h:form>
+				<p:commandButton value="#{msgs.cancel}" process="@this" actionListener="#{installmentManager.cancel()}" immediate="true"
+					oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();" />
+			</ui:remove>
 
-	</p:dialog>
+			<p:commandButton value="#{msgs.cancel}" process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" />
+
+
+		</p:dialog>
+	</h:form>
 
 </composite:implementation>
 </html>
