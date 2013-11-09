@@ -13,6 +13,8 @@
 </h:head>
 <h:body>
 
+	<p:growl autoUpdate="true" sticky="true" />
+
 	<h:form id="agreementWiz">
 		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
@@ -26,7 +28,7 @@
 				<sections:agreementWizShareTable editingDisable="false" />
 			</p:tab>
 
-			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}" >
+			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
 				<sections:agreementInstallmentsList editingDisable="false" addDialogId="addInstDialog" addDialogWidgetVar="w_addInstDialog"
 					editDialogId="editInstDialog" editDialogWidgetVar="w_editInstDialog" viewDialogId="viewInstDialog" viewDialogWidgetVar="w_viewInstDialog"
 					panelId="contractInstTablePanel" />
