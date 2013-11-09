@@ -68,7 +68,8 @@
 
 			<p:column id="agrIsClosed" styleClass="closedFilterColumn" filterBy="#{agr.closedString}"
 				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
-				<h:selectBooleanCheckbox id="closedAgr" value="#{agr.closed}" disabled="true" />
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{agr.closed}" />
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not agr.closed}" />
 			</p:column>
 
 			<p:column id="agrTableChiefColumn" styleClass="chiefFilterColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"

@@ -11,30 +11,22 @@
 				<f:param value="#{agreementWizardPB.contractTypeName}"></f:param>
 			</h:outputFormat>
 
-			<p:growl autoUpdate="true" />
-
 			<br />
 
-			<ui:remove>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-mail-closed" action="#{mailSender.notifyClosure(contractManager.contract)}"
-					value="Test mail" />
-			</ui:remove>
-		</p:panel>
-
-		<p:commandButton id="agrSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" action="#{agreementWizardPB.save()}" />
-
-		<p:blockUI block="agrSaveButton" trigger="agrSaveButton" />
-
-		<ui:remove>
 			<p:ajaxStatus>
 				<f:facet name="start">
-					<h:graphicImage value="loading.gif" />
+					<h:graphicImage height="200" width="200" styleClass="center-img" library="images" name="loading.gif" />
 				</f:facet>
 				<f:facet name="complete">
 					<h:outputText value="" />
 				</f:facet>
 			</p:ajaxStatus>
-		</ui:remove>
+
+		</p:panel>
+
+		<p:commandButton id="agrSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" action="#{agreementWizardPB.save()}" />
+
+		<p:blockUI block="agrSaveButton" trigger="agrSaveButton" />
 
 	</p:tab>
 

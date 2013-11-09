@@ -38,6 +38,11 @@
 	font-size: 30px;
 }
 
+img.center-img{
+	display: block;
+	margin: auto;
+}
+
 /*
 #agreementTable .button-right-column{
 	border-left: none;

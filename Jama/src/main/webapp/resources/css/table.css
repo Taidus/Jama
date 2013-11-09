@@ -25,3 +25,7 @@
 	position: absolute !important;
 	bottom: 10px !important;
 }
+
+img.lock-img{
+	margin: auto;
+}
