@@ -14,34 +14,34 @@
 
 	<p:dialog id="chiefDialog" header="#{msgs.newChiefTitle}"
 		widgetVar="#{cc.attrs.name}" modal="true">
+			
 		<h:form>
+			<p:growl autoUpdate="true" sticky="true" />
 
-			<h:panelGrid id="chiefPanel" columns="3"
+
+			<h:panelGrid id="chiefPanel" columns="2"
 				columnClasses="label, value, errorMessage" styleClass="grid">
 
 				<h:outputText value="#{msgs.name}:" />
 				<h:inputText id="chiefFirstName"
 					value="#{chiefDialogPCB.chief.name}" label="#{msgs.name}"
 					required="true" />
-				<p:message for="chiefFirstName" />
 
 				<h:outputText value="#{msgs.surname}:" />
 				<h:inputText id="chiefLastName"
 					value="#{chiefDialogPCB.chief.surname}" label="#{msgs.surname}"
 					required="true" />
-				<p:message for="chiefLastName" />
 
 				<h:outputText value="#{msgs.serialNumber}" />
 				<h:inputText id="chiefSerialNumber"
 					value="#{chiefDialogPCB.chief.serialNumber}"
 					label="#{msgs.serialNumber}" required="true" validator="#{agreementWizardPB.validateSerial}" />
-				<p:message for="chiefSerialNumber" />
 
 				<br />
 
 			</h:panelGrid>
 
-			<p:commandButton type="button" onclick="#{cc.attrs.name}.hide();"
+			<p:commandButton immediate="true" process="@this" oncomplete="#{cc.attrs.name}.hide();"
 				value="#{msgs.cancel}" />
 			<p:commandButton process="@form" value="#{msgs.save}"
 				actionListener="#{chiefDialogPCB.save()}"

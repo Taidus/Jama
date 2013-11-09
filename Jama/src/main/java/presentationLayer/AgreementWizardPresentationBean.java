@@ -92,10 +92,7 @@ public class AgreementWizardPresentationBean implements Serializable {
 	public void validateSerial(FacesContext context, UIComponent component, Object value) {
 		String serial = (String) value;
 		
-		System.out.println("Validation Serial Nulber "+serial);
-
 		if(chiefDao.getBySerial(serial)!= null){
-			System.out.println("throwing!!!");
 
 			throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
 
