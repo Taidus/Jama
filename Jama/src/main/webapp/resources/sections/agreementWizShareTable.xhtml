@@ -7,136 +7,218 @@
 
 <composite:implementation>
 
+	<h:outputStylesheet library="css" name="shareTable.css" />
+
 	<h:outputScript name="onEnterPressInWiz.js" library="js" />
 
 	<p:panel header="#{msgs.shareTable_Header}">
 
-		<h:panelGrid id="agrValuesGrid" columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
+		<p:panelGrid id="agrValuesGrid">
 
-			<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
-			<h:outputText id="atheneumCapitalBalance" value="#{agrShareTablePB.shareTable.atheneumCapitalBalance}" />
-			<h:outputText id="percentAtheneumCapitalBalance"
-				value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.atheneumCapitalBalance)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message id="atheneumCapitalBalanceError" for="atheneumCapitalBalance" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
+				</p:column>
 
+				<p:column>
+					<h:outputText id="atheneumCapitalBalance" value="#{agrShareTablePB.shareTable.atheneumCapitalBalance}" />
+				</p:column>
 
-			<h:outputText value="#{msgs.shareTableCommonBalance}:" />
-			<h:outputText id="atheneumCommonBalance" value="#{agrShareTablePB.shareTable.atheneumCommonBalance}" />
-			<h:outputText id="percentAtheneumCommonBalance"
-				value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.atheneumCommonBalance)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="atheneumCommonBalance" id="atheneumCommonBalanceError" />
+				<p:column>
+					<h:outputText id="percentAtheneumCapitalBalance"
+						value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.atheneumCapitalBalance)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
 
-
-			<h:outputText value="#{msgs.shareTablePersonnel}:" />
-			<h:inputText id="personnel" value="#{agrShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
-				rendered="#{not cc.attrs.editingDisable}">
-				<f:validator binding="#{percentValidator}" />
-				<p:ajax event="valueChange" process="@this" update="agrValuesGrid personnelShares personnalShareInput"
-					oncomplete="jQuery('.afterPersonnel').select();" />
-			</h:inputText>
-			<h:outputText id="personnel_o" value="#{agrShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}" />
-			<h:outputText id="percentPersonnel" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.personnel)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="personnel" id="personnelError" />
+				<p:column>
+					<p:message id="atheneumCapitalBalanceError" for="atheneumCapitalBalance" />
+				</p:column>
+			</p:row>
 
 
-			<h:outputText value="#{msgs.shareTableStructures}:" />
-			<h:outputText id="structures" value="#{agrShareTablePB.shareTable.structures}" />
-			<h:outputText id="percentStructures" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.structures)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="structures" id="structuresError" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableCommonBalance}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="atheneumCommonBalance" value="#{agrShareTablePB.shareTable.atheneumCommonBalance}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentAtheneumCommonBalance"
+						value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.atheneumCommonBalance)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:message for="atheneumCommonBalance" id="atheneumCommonBalanceError" />
+				</p:column>
+
+			</p:row>
 
 
-			<h:outputText value="#{msgs.shareTableGoods}:" />
-			<h:outputText id="goodsAndServices" value="#{agrShareTablePB.shareTable.goodsAndServices}" />
-			<h:outputText id="percentGoodsAndServices" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.goodsAndServices)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="goodsAndServices" id="goodsAndServicesError" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTablePersonnel}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="personnel" value="#{agrShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
+						rendered="#{not cc.attrs.editingDisable}">
+						<f:validator binding="#{percentValidator}" />
+						<p:ajax event="valueChange" process="@this" update="agrValuesGrid personnelShares personnalShareInput"
+							oncomplete="jQuery('.afterPersonnel').select();" />
+					</h:inputText>
+					<h:outputText id="personnel_o" value="#{agrShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentPersonnel" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.personnel)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:message for="personnel" id="personnelError" />
+				</p:column>
+
+			</p:row>
 
 
-			<h:outputText value="#{msgs.shareTableTrip}:" />
-			<h:inputText id="businessTrip" styleClass="afterPersonnel" value="#{agrShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}"
-				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:validator binding="#{percentValidator}" />
-				<p:ajax event="valueChange" process="@this" update="@this percentBusinessTrip otherCost percentOtherCost" partialSubmit="true" />
-			</h:inputText>
-			<h:outputText id="businessTrip_o" value="#{agrShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}" />
-			<h:outputText id="percentBusinessTrip" value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.businessTrip)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="businessTrip" id="businessTripError" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableStructures}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="structures" value="#{agrShareTablePB.shareTable.structures}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentStructures" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.structures)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:message for="structures" id="structuresError" />
+				</p:column>
 
 
-			<h:outputText value="#{msgs.shareTableConsMaterials}:" />
-			<h:inputText id="consumerMaterials" value="#{agrShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}" required="true"
-				rendered="#{not cc.attrs.editingDisable}">
-				<f:validator binding="#{percentValidator}" />
-				<p:ajax event="valueChange" process="@this" update="@this percentConsumerMaterials otherCost percentOtherCost" partialSubmit="true" />
-			</h:inputText>
-			<h:outputText id="consumerMaterials_o" value="#{agrShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}" />
-			<h:outputText id="percentConsumerMaterials"
-				value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.consumerMaterials)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="consumerMaterials" id="consumerMaterialsError" />
+			</p:row>
 
 
-			<h:outputText value="#{msgs.shareTableInvMaterials}:" />
-			<h:inputText id="inventoryMaterials" value="#{agrShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
-				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:validator binding="#{percentValidator}" />
-				<p:ajax event="valueChange" process="@this" update="@this percentInventoryMaterials otherCost percentOtherCost" partialSubmit="true" />
-			</h:inputText>
-			<h:outputText id="inventoryMaterials_o" value="#{agrShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}" />
-			<h:outputText id="percentInventoryMaterials"
-				value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.inventoryMaterials)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="inventoryMaterials" id="inventoryMaterialsError" />
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableGoods}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="goodsAndServices" value="#{agrShareTablePB.shareTable.goodsAndServices}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentGoodsAndServices" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.goodsAndServices)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:message for="goodsAndServices" id="goodsAndServicesError" />
+				</p:column>
+
+			</p:row>
 
 
-			<h:outputText value="#{msgs.shareTableRentals}:" />
-			<h:inputText id="rentals" value="#{agrShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
-				rendered="#{not cc.attrs.editingDisable}">
-				<f:validator binding="#{percentValidator}" />
-				<p:ajax event="valueChange" process="@this" update="@this percentRentals otherCost percentOtherCost" partialSubmit="true" />
-			</h:inputText>
-			<h:outputText id="rentals_o" value="#{agrShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}" />
-			<h:outputText id="percentRentals" value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.rentals)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="rentals" id="rentalsError" />
+			<p:row>
+				<p:column colspan="4">
+					<p:fieldset legend="#{msgs.shareTableGoodsValues}">
+						<p:panelGrid columns="4" columnClasses="label, value, percents, errorMessage" styleClass="grid">
+
+							<h:outputText value="#{msgs.shareTableTrip}:" />
+							<h:inputText id="businessTrip" styleClass="afterPersonnel" value="#{agrShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}"
+								required="true" rendered="#{not cc.attrs.editingDisable}">
+								<f:validator binding="#{percentValidator}" />
+								<p:ajax event="valueChange" process="@this" update="@this percentBusinessTrip otherCost percentOtherCost" partialSubmit="true" />
+							</h:inputText>
+							<h:outputText id="businessTrip_o" value="#{agrShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}" />
+							<h:outputText id="percentBusinessTrip" value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.businessTrip)}">
+								<f:attribute name="plain" value="false" />
+							</h:outputText>
+							<p:message for="businessTrip" id="businessTripError" />
 
 
-			<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
-			<h:inputText id="personnelOnContract" value="#{agrShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
-				required="true" rendered="#{not cc.attrs.editingDisable}">
-				<f:validator binding="#{percentValidator}" />
-				<p:ajax event="valueChange" process="@this" update="@this percentPersonnelOnContract otherCost percentOtherCost" partialSubmit="true" />
-			</h:inputText>
-			<h:outputText id="personnelOnContract_o" value="#{agrShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}" />
-			<h:outputText id="percentPersonnelOnContract"
-				value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.personnelOnContract)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="personnelOnContract" id="personnelOnContractError" />
+							<h:outputText value="#{msgs.shareTableConsMaterials}:" />
+							<h:inputText id="consumerMaterials" value="#{agrShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}"
+								required="true" rendered="#{not cc.attrs.editingDisable}">
+								<f:validator binding="#{percentValidator}" />
+								<p:ajax event="valueChange" process="@this" update="@this percentConsumerMaterials otherCost percentOtherCost" partialSubmit="true" />
+							</h:inputText>
+							<h:outputText id="consumerMaterials_o" value="#{agrShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}" />
+							<h:outputText id="percentConsumerMaterials"
+								value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.consumerMaterials)}">
+								<f:attribute name="plain" value="false" />
+							</h:outputText>
+							<p:message for="consumerMaterials" id="consumerMaterialsError" />
 
 
-			<h:outputText value="#{msgs.shareTableOtherCosts}:" />
-			<h:outputText id="otherCost" value="#{agrShareTablePB.shareTable.otherCost}" />
-			<h:outputText id="percentOtherCost" value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.otherCost)}">
-				<f:attribute name="plain" value="false" />
-			</h:outputText>
-			<p:message for="otherCost" id="otherCostError" />
+							<h:outputText value="#{msgs.shareTableInvMaterials}:" />
+							<h:inputText id="inventoryMaterials" value="#{agrShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
+								required="true" rendered="#{not cc.attrs.editingDisable}">
+								<f:validator binding="#{percentValidator}" />
+								<p:ajax event="valueChange" process="@this" update="@this percentInventoryMaterials otherCost percentOtherCost" partialSubmit="true" />
+							</h:inputText>
+							<h:outputText id="inventoryMaterials_o" value="#{agrShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}" />
+							<h:outputText id="percentInventoryMaterials"
+								value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.inventoryMaterials)}">
+								<f:attribute name="plain" value="false" />
+							</h:outputText>
+							<p:message for="inventoryMaterials" id="inventoryMaterialsError" />
 
-		</h:panelGrid>
+
+							<h:outputText value="#{msgs.shareTableRentals}:" />
+							<h:inputText id="rentals" value="#{agrShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
+								rendered="#{not cc.attrs.editingDisable}">
+								<f:validator binding="#{percentValidator}" />
+								<p:ajax event="valueChange" process="@this" update="@this percentRentals otherCost percentOtherCost" partialSubmit="true" />
+							</h:inputText>
+							<h:outputText id="rentals_o" value="#{agrShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}" />
+							<h:outputText id="percentRentals" value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.rentals)}">
+								<f:attribute name="plain" value="false" />
+							</h:outputText>
+							<p:message for="rentals" id="rentalsError" />
+
+
+							<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
+							<h:inputText id="personnelOnContract" value="#{agrShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
+								required="true" rendered="#{not cc.attrs.editingDisable}">
+								<f:validator binding="#{percentValidator}" />
+								<p:ajax event="valueChange" process="@this" update="@this percentPersonnelOnContract otherCost percentOtherCost" partialSubmit="true" />
+							</h:inputText>
+							<h:outputText id="personnelOnContract_o" value="#{agrShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}" />
+							<h:outputText id="percentPersonnelOnContract"
+								value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.personnelOnContract)}">
+								<f:attribute name="plain" value="false" />
+							</h:outputText>
+							<p:message for="personnelOnContract" id="personnelOnContractError" />
+
+
+							<h:outputText value="#{msgs.shareTableOtherCosts}:" />
+							<h:outputText id="otherCost" value="#{agrShareTablePB.shareTable.otherCost}" />
+							<h:outputText id="percentOtherCost" value="#{agrShareTablePB.computePercentOnGoodsAndServices(agrShareTablePB.shareTable.otherCost)}">
+								<f:attribute name="plain" value="false" />
+							</h:outputText>
+							<p:message for="otherCost" id="otherCostError" />
+
+						</p:panelGrid>
+					</p:fieldset>
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
 
 		<br />
 

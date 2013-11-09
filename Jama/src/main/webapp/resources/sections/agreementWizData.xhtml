@@ -39,7 +39,7 @@
 					<h:inputText id="protocolNumber" value="#{contractManager.contract.protocolNumber}" label="#{msgs.protocolNumber}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6" integerOnly="true" />
-						<f:ajax event="blur" execute="@this" render="protocolNumberError" />
+						<p:ajax event="blur" process="@this" update="protocolNumberError" />
 					</h:inputText>
 
 					<h:outputText id="protocolNumber_o" value="#{contractManager.contract.protocolNumber}" label="#{msgs.protocolNumber}"
@@ -74,7 +74,7 @@
 					<h:selectOneMenu id="type" value="#{contractManager.contract.type}" label="#{msgs.agrType}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
-						<f:ajax event="blur" execute="@this" render="typeError" />
+						<p:ajax event="blur" process="@this" update="typeError" />
 
 					</h:selectOneMenu>
 
@@ -172,7 +172,7 @@
 				<p:column>
 					<h:inputText id="projectNumber" value="#{contractManager.contract.CIA_projectNumber}" label="#{msgs.projectNumber}" required="true"
 						rendered="#{cc.attrs.editingDisable==false}">
-						<f:ajax event="blur" execute="@this" render="projectNumberError" />
+						<p:ajax event="blur" process="@this" update="projectNumberError" />
 					</h:inputText>
 
 					<h:outputText id="projectNumber_o" value="#{contractManager.contract.CIA_projectNumber}" label="#{msgs.projectNumber}"
@@ -195,7 +195,7 @@
 				<p:column>
 					<h:inputText id="inventoryNumber" value="#{contractManager.contract.inventoryNumber}" label="#{msgs.agrInventory}" required="true"
 						rendered="#{cc.attrs.editingDisable ==false}">
-						<f:ajax event="blur" execute="@this" render="inventoryNumberError" />
+						<p:ajax event="blur" process="@this" update="inventoryNumberError" />
 
 					</h:inputText>
 
@@ -220,7 +220,7 @@
 					<h:inputText id="taxableAmount" value="#{contractManager.contract.wholeTaxableAmount}" label="#{msgs.taxableAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<f:validator binding="#{moneyValidator}" />
-						<f:ajax render="amount taxAmountError @this" />
+						<p:ajax update="amount taxAmountError @this" />
 					</h:inputText>
 
 					<h:outputText id="taxableAmount_o" value="#{contractManager.contract.wholeTaxableAmount}" label="#{msgs.taxableAmount}"
@@ -244,7 +244,7 @@
 					<h:inputText id="iva" value="#{contractManager.contract.IVA_amount}" label="#{msgs.iva}" required="true"
 						rendered="#{(cc.attrs.editingDisable == false) and (agreementWizardPB.renderIvaComponents()==true) }">
 						<f:validator binding="#{percentValidator}" />
-						<f:ajax render="amount ivaError" />
+						<p:ajax update="amount ivaError" />
 					</h:inputText>
 
 					<h:outputText id="iva_o" value="#{contractManager.contract.IVA_amount}"
@@ -278,7 +278,7 @@
 				<p:column>
 					<h:inputText id="reservedAmount" value="#{contractManager.contract.reservedAmount}" label="#{msgs.reservedAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" validator="#{contractDataPB.validateReservedAmount}">
-						<f:ajax event="blur" execute="@this spentAmount" render="reservedAmountError spentAmountError" />
+						<p:ajax event="blur" process="@this spentAmount" update="reservedAmountError spentAmountError" />
 					</h:inputText>
 
 					<h:outputText id="reservedAmount_o" value="#{contractManager.contract.reservedAmount}" label="#{msgs.reservedAmount}"
@@ -301,7 +301,7 @@
 				<p:column>
 					<h:inputText id="spentAmount" value="#{contractManager.contract.spentAmount}" label="#{msgs.spentAmount}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}" validator="#{contractDataPB.validateSpentAmount}">
-						<f:ajax event="blur" execute="@this" render="spentAmountError" />
+						<p:ajax event="blur" process="@this" update="spentAmountError" />
 					</h:inputText>
 
 					<h:outputText id="spentAmount_o" value="#{contractManager.contract.spentAmount}" label="#{msgs.spentAmount}"

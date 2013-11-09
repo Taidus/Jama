@@ -217,14 +217,16 @@
 		<br />
 
 		<h:inputHidden value="needed" id="valuesCheck" validator="#{instShareTablePB.validateMainValues}" />
-
+		<p:message styleClass="errorMessage" for="valuesCheck" />
 		<br />
 
 		<h:inputHidden value="needed" id="goodsCheck" validator="#{instShareTablePB.validateGoodsAndServices}" />
+		<p:message styleClass="errorMessage" for="goodsCheck" />
 
 		<br />
 
 		<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" />
+		<p:message styleClass="errorMessage" for="otherInstCheck" />
 
 	</p:panel>
 
@@ -232,9 +234,10 @@
 
 	<p:panel rendered="#{agreementWizardPB.renderPersonnelQuotes()==true}">
 
-
 		<h:inputHidden value="needed" id="percentsCheck" validator="#{instShareTablePB.validatePersonnelShares}" />
-
+		<p:message styleClass="errorMessage" for="percentsCheck" />
+		
+		<br />
 
 		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"
 			emptyMessage="#{msgs.noShareFound}">

@@ -27,8 +27,6 @@
 
 			<p:ajax event="close" onstart="closeInstViewDiag();" oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); setHideShow();" />
 
-			<p:growl autoUpdate="true" sticky="true" />
-
 			<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
 			<p:tabView id="instEditTabView" widgetVar="#{cc.attrs.wizWidgetVar}">

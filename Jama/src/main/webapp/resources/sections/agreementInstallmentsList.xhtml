@@ -26,8 +26,6 @@
 	<h:outputStylesheet name="table.css" library="css" />
 	<h:outputStylesheet name="home.css" library="css" />
 
-	<p:growl autoUpdate="true" for="#{cc.attrs.panelId}" />
-
 	<p:panel id="#{cc.attrs.panelId}" styleClass="semiEmptyPanel relative">
 		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
 			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">

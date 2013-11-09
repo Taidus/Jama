@@ -1,9 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composite="http://java.sun.com/jsf/composite">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
 	<composite:attribute name="name" />
@@ -12,40 +8,31 @@
 
 <composite:implementation>
 
-	<p:dialog id="chiefDialog" header="#{msgs.newChiefTitle}"
-		widgetVar="#{cc.attrs.name}" modal="true">
-			
+
+	<p:dialog id="chiefDialog" header="#{msgs.newChiefTitle}" widgetVar="#{cc.attrs.name}" modal="true" onHide="refresh();">
+
 		<h:form>
-			<p:growl autoUpdate="true" sticky="true" />
 
+			<p:remoteCommand name="refresh" process="@this" immediate="true" />
 
-			<h:panelGrid id="chiefPanel" columns="2"
-				columnClasses="label, value, errorMessage" styleClass="grid">
+			<h:panelGrid id="chiefPanel" columns="2" columnClasses="label, value, errorMessage" styleClass="grid">
 
 				<h:outputText value="#{msgs.name}:" />
-				<h:inputText id="chiefFirstName"
-					value="#{chiefDialogPCB.chief.name}" label="#{msgs.name}"
-					required="true" />
+				<h:inputText id="chiefFirstName" value="#{chiefDialogPCB.chief.name}" label="#{msgs.name}" required="true" />
 
 				<h:outputText value="#{msgs.surname}:" />
-				<h:inputText id="chiefLastName"
-					value="#{chiefDialogPCB.chief.surname}" label="#{msgs.surname}"
-					required="true" />
+				<h:inputText id="chiefLastName" value="#{chiefDialogPCB.chief.surname}" label="#{msgs.surname}" required="true" />
 
 				<h:outputText value="#{msgs.serialNumber}" />
-				<h:inputText id="chiefSerialNumber"
-					value="#{chiefDialogPCB.chief.serialNumber}"
-					label="#{msgs.serialNumber}" required="true" validator="#{agreementWizardPB.validateSerial}" />
+				<h:inputText id="chiefSerialNumber" value="#{chiefDialogPCB.chief.serialNumber}" label="#{msgs.serialNumber}" required="true"
+					validator="#{agreementWizardPB.validateSerial}" />
 
 				<br />
 
 			</h:panelGrid>
 
-			<p:commandButton immediate="true" process="@this" oncomplete="#{cc.attrs.name}.hide();"
-				value="#{msgs.cancel}" />
-			<p:commandButton process="@form" value="#{msgs.save}"
-				actionListener="#{chiefDialogPCB.save()}"
-				update="@form :#{p:component('chiefMenu')}"
+			<p:commandButton immediate="true" process="@this" oncomplete="#{cc.attrs.name}.hide();" value="#{msgs.cancel}" />
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{chiefDialogPCB.save()}" update="@form :#{p:component('chiefMenu')}"
 				oncomplete="if (!args.validationFailed) { #{cc.attrs.name}.hide(); }" />
 
 		</h:form>
