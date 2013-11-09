@@ -7,7 +7,7 @@
 
 <composite:implementation>
 
-
+	<h:outputStylesheet library="css" name="shareTable.css" />
 
 	<p:panel id="lkj" header="#{msgs.shareTable_Header}">
 
@@ -123,7 +123,7 @@
 
 			<p:row>
 				<p:column colspan="3">
-					<p:panel header="#{msgs.shareTableGoods}" toggleable="true">
+					<p:fieldset legend="#{msgs.shareTableGoods}">
 						<h:panelGrid id="instGoodsValuesGrid" columns="3" columnClasses="label, value, percents" styleClass="grid">
 
 							<h:outputText value="#{msgs.shareTableTrip}:" />
@@ -207,7 +207,7 @@
 							</h:outputText>
 
 						</h:panelGrid>
-					</p:panel>
+					</p:fieldset>
 				</p:column>
 			</p:row>
 
