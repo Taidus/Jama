@@ -1,6 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections"
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
 
@@ -14,7 +18,8 @@
 
 	<h:form id="agreementWiz">
 
-		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
+		<input type="hidden" name="cid"
+			value='#{contractManager.conversation.id}' />
 
 		<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}">
 
@@ -29,7 +34,9 @@
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
-				<sections:agreementInstallmentsList editingDisable="true" viewDialogId="viewInstDialog" viewDialogWidgetVar="w_viewInstDialog"
+				<sections:agreementInstallmentsList editingDisable="true"
+					viewDialogId="viewInstDialog"
+					viewDialogWidgetVar="w_viewInstDialog"
 					panelId="contractInstTablePanel" />
 			</p:tab>
 
@@ -38,22 +45,33 @@
 			</p:tab>
 
 			<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-				<sections:agreementWizAttachments editingDisable="#{userManager.loggedUser.hasRole('CHIEF_SCIENTIST')==false }">
+				<sections:agreementWizAttachments
+					editingDisable="#{userManager.loggedUser.hasRole('CHIEF_SCIENTIST')==false }">
 				</sections:agreementWizAttachments>
 			</p:tab>
 
 		</p:tabView>
 
 
-		<p:commandButton value="#{msgs.previous}" action="#{agreementEditPB.cancel()}" ajax="false" />
+		<p:commandButton value="#{msgs.previous}"
+			action="#{agreementEditPB.cancel()}" ajax="false" />
+
+		<p:commandButton value="#{msgs.save}"
+			action="#{agreementEditPB.save()}" ajax="false"
+			rendered="#{userManager.loggedUser.hasRole('CHIEF_SCIENTIST')}" />
+
+
 
 		<ui:remove>
-			<p:commandButton action="#{contractManager.editContract()}" value="toEditMode" ajax="false"></p:commandButton>
+			<p:commandButton action="#{contractManager.editContract()}"
+				value="toEditMode" ajax="false"></p:commandButton>
 		</ui:remove>
 
 	</h:form>
 
-	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true" />
+	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog"
+		dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz"
+		editingDisable="true" />
 
 </h:body>
 </html>

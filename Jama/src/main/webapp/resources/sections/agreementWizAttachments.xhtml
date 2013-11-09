@@ -20,7 +20,7 @@
 		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}" var="file" emptyMessage="#{msgs.noAttachmentFound}"
 			styleClass="hideShow hide-column-names">
 			<p:column>
-				<p:commandLink id="downloadLink" ajax="false" value="#{file.fileName}, #{file.fileType}">
+				<p:commandLink id="downloadLink" ajax="false" value="#{file.fileName}">
 					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
 				</p:commandLink>
 			</p:column>

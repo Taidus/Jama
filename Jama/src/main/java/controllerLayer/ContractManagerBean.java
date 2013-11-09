@@ -138,7 +138,6 @@ public class ContractManagerBean implements Serializable {
 
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	@AlterContractsAllowed
 	public void save() {
 		System.out.println("SAVE");
 
