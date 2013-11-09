@@ -324,7 +324,7 @@
 
 				<p:column>
 					<p:calendar id="approvalDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{contractManager.contract.approvalDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true">
+						value="#{contractManager.contract.approvalDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true" locale="it">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 

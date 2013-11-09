@@ -237,6 +237,7 @@ public abstract class Installment implements Serializable {
 		this.note = copy.note;
 		this.contract = copy.getContract();
 		this.shareTable = new InstallmentShareTable();
+		this.wholeTaxableAmount = copy.wholeTaxableAmount;
 
 		this.shareTable.copy(copy.getShareTable());
 

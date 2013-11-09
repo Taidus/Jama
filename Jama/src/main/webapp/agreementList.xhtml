@@ -84,7 +84,7 @@
 			<p:column id="agrTableDateColumn" sortBy="#{agr.approvalDate}">
 
 				<f:facet name="header">
-					<h:outputText value="#{msgs.deadlineDate}" />
+					<h:outputText value="#{msgs.approvalDate}" />
 					<br />
 					<h:form id="calendarFilters">
 						<div style="display: block; width: 90%; margin: auto;">
@@ -103,7 +103,7 @@
 					</h:form>
 				</f:facet>
 
-				<h:outputText value="#{agr.deadlineDate}">
+				<h:outputText value="#{agr.approvalDate}">
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 

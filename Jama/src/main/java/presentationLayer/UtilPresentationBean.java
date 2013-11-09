@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,17 +36,18 @@ public class UtilPresentationBean implements Serializable {
 	private CompanyDaoBean companyDaoBean;
 	@EJB
 	private DepartmentDaoBean depthDao;
-	
+
 	private static final Map<Class<? extends Contract>, String> contractTypeName;
-	
-	static{
+
+	static {
 		contractTypeName = new HashMap<>();
 		contractTypeName.put(Contract.class, Messages.getString("contract"));
 		contractTypeName.put(Agreement.class, Messages.getString("agreement"));
 		contractTypeName.put(Funding.class, Messages.getString("funding"));
 	}
-	
-	public String getNameFromClass(Class<? extends Contract> c){
+
+
+	public String getNameFromClass(Class<? extends Contract> c) {
 		return contractTypeName.get(c);
 	}
 
@@ -56,21 +56,23 @@ public class UtilPresentationBean implements Serializable {
 		AgreementType[] types = AgreementType.values();
 		return getTypeItems(types);
 	}
-	
-	public SelectItem[] getRolesItems(){
+
+
+	public SelectItem[] getRolesItems() {
 		Role[] types = Role.getAvailableUserRoleValues();
 		return getTypeItems(types);
-		
+
 	}
-	
-	private SelectItem[] getTypeItems(Object[] types){
-		
+
+
+	private SelectItem[] getTypeItems(Object[] types) {
+
 		SelectItem[] result = new SelectItem[types.length];
 		for (int i = 0; i < types.length; i++) {
 			result[i] = new SelectItem(types[i], types[i].toString());
 		}
 		return result;
-		
+
 	}
 
 
@@ -78,8 +80,9 @@ public class UtilPresentationBean implements Serializable {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		return getChiefsFromList(chiefs);
 	}
-	
-	public SelectItem[] getDepthItems(){
+
+
+	public SelectItem[] getDepthItems() {
 		List<Department> depths = depthDao.getAll();
 		SelectItem[] result = new SelectItem[depths.size()];
 		Department current = null;
@@ -180,16 +183,37 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public Date findClosestDeadline(Contract contract, Date minDate) {
+		// TODO eliminare
+		// List<Installment> insts = contract.getInstallments();
+		// Date closestDeadline = null;
+		// boolean found = false;
+		// Iterator<Installment> it = insts.iterator();
+		// while (it.hasNext() && !found) {
+		// closestDeadline = it.next().getDate();
+		// if (null == minDate || !closestDeadline.before(minDate)) {
+		// found = true;
+		// }
+		// }
+		// return closestDeadline;
+
 		List<Installment> insts = contract.getInstallments();
-		Date closestDeadline = null;
-		boolean found = false;
-		Iterator<Installment> it = insts.iterator();
-		while (it.hasNext() && !found) {
-			closestDeadline = it.next().getDate();
-			if (null == minDate || !closestDeadline.before(minDate)) {
-				found = true;
+		Date current, closestDeadline = null;
+
+		for (Installment i : insts) {
+			if (!i.isPaidInvoice()) {
+				current = i.getDate();
+
+				if (null == current) {
+					System.err.println(new Date() + ": null installment date (installment #" + i.getId() + ")");
+				}
+				else if (null == minDate || !current.before(minDate)) {
+					if (null == closestDeadline || current.before(closestDeadline)) {
+						closestDeadline = current;
+					}
+				}
 			}
 		}
+
 		return closestDeadline;
 	}
 

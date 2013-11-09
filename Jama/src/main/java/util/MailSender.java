@@ -3,7 +3,6 @@ package util;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -20,11 +19,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
 import usersManagement.User;
-import daoLayer.UserDaoBean;
 import businessLayer.Agreement;
 import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.Installment;
+import daoLayer.UserDaoBean;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -45,7 +44,7 @@ public class MailSender implements Serializable {
 	private UserDaoBean userDao;
 
 
-	private void _send(String recipientEmail, String subject, String text) {
+	private void send(String recipientEmail, String subject, String text) {
 		// TODO addRecipient etc
 
 		// MimeMessage message = new MimeMessage(mailSession);
@@ -61,7 +60,7 @@ public class MailSender implements Serializable {
 		// } catch (MessagingException e) {// TODO errore a video
 		// e.printStackTrace();
 		// }
-
+		
 		if (recipientEmail != null) {
 
 			String host = "smtp.gmail.com";
@@ -89,21 +88,16 @@ public class MailSender implements Serializable {
 				context.addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
 			}
 		} else {
-			Date date = new Date(Calendar.getInstance().getTimeInMillis());
-			System.err.println(date + ": Error sending email, null adress");
+			Date date = new Date();
+			System.err.println(date + ": Error sending email, null address");
 		}
 	}
-
+	
 
 	private void spam() {
 		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
 		// spam a Damaz?
-		_send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di colonnello nella DeltaSpikeForce!");
-	}
-
-
-	public void test() {
-		_send("tommaso.levato@stud.unifi.it", "Funziona!", "Yay!");
+		send("damaz91@live.it", "Promozione", "Sei Stato promosso al grado di colonnello nella DeltaSpikeForce!");
 	}
 
 
@@ -121,13 +115,15 @@ public class MailSender implements Serializable {
 		String mailContent = out.toString();
 
 		User u = userDao.getBySerialNumber(c.getChief().getSerialNumber());
-		String email = u.getEmail();
+		String email = (u != null) ? u.getEmail() : null;
 
-		_send(email, "Jama: nuovo contratto", mailContent);
+		send(email, "Jama: nuovo contratto", mailContent);
 
 		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		
+		spam(); //TODO NON e dico NON eliminare
 
 	};
 
@@ -146,9 +142,9 @@ public class MailSender implements Serializable {
 		String mailContent = out.toString();
 
 		User u = userDao.getBySerialNumber(c.getChief().getSerialNumber());
-		String email = u.getEmail();
+		String email = (u != null) ? u.getEmail() : null;
 
-		_send(email, "Jama: chiusura contratto", mailContent);
+		send(email, "Jama: chiusura contratto", mailContent);
 
 		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
 

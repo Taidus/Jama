@@ -1,12 +1,15 @@
 package util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Calendar;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Properties;
 
 import org.joda.money.CurrencyUnit;
 
@@ -19,36 +22,67 @@ public class Config {
 
 	public static int defaultPageSize = 30;
 
-	private static final String fileDir = "../standalone/deployments/Jama.war/WEB-INF/classes";
-	public static final String depRatesPath = fileDir + "/" + "aliquoteDipartimenti/";
-	private static final String mailTemplateDir = fileDir + "/" + "mailTemplates";
+	private static final String resourcesPath = "../standalone/deployments/Jama.war/WEB-INF/classes/";
+	private static final String configPath = resourcesPath + "config/";
 	
-	private static final String logFile = fileDir + "/" + "log";
-	
+	public static final String depRatesPath = configPath  + "aliquoteDipartimenti/";
+	private static final String mailTemplateDir = configPath + "mailTemplates";
+	private static final String basicConfigFile = configPath + "basic.properties";
+
+	private static final String logFile = resourcesPath  + "log";
+
 	public static final Configuration fmconf;
 	public static final String instDeadlineTemplateFileName = "template_scadenzaRata.ftl";
 	public static final String contractCreationTemplateFileName = "template_creazioneContratto.ftl";
 	public static final String contractClosureTemplateFileName = "template_chiusuraContratto.ftl";
-	
+
 	public static final CurrencyUnit currency = CurrencyUnit.EUR;
 	public static final Locale locale = Locale.ITALY;
 
-	// TODO file di configurazione
-	public static final int dailyScheduledTaskExecutionHour = 3;
-	public static final int daysBeforeDeadlineExpriration = 15;
+	public static final int dailyScheduledTaskExecutionHour;
+	public static final int daysBeforeDeadlineExpriration;
+	public static final Percent defaultIva;
 
 	static {
-		
-            try {
-				System.setErr(new PrintStream(new File(logFile)));
-				Calendar date = Calendar.getInstance();
-				System.err.println(new Date(date.getTimeInMillis())+"\n=========\n"+"Inizio attività di logging\n"+"==========");
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-		
-		fmconf = new Configuration();
 
+		try {
+			System.setErr(new PrintStream(new File(logFile)));
+			System.err.println(new Date() + "\n=========\n" + "Inizio attività di logging\n" + "==========");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		fmconf = new Configuration();
+		setFreeMarkerConf();
+		
+		
+		Properties p = new Properties();
+		InputStream in = null;
+
+		try {
+			in = new FileInputStream(basicConfigFile);
+			p.load(in);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Could not find or open " + basicConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Could not read " + basicConfigFile);
+		}
+
+		defaultIva = Percent.normalizedValueOf(new BigDecimal(p.getProperty("iva", "0").trim()));
+		dailyScheduledTaskExecutionHour = Integer.parseInt(p.getProperty("ora_esecuzione", "3").trim());
+		daysBeforeDeadlineExpriration = Integer.parseInt(p.getProperty("giorni_preavviso", "15").trim());
+		
+		
+		try {
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void setFreeMarkerConf(){
 		// Specify the data source where the template files come from. Here I
 		// set a
 		// plain directory for it, but non-file-system are possible too:

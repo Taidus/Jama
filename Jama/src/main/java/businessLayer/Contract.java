@@ -50,7 +50,7 @@ public abstract class Contract implements Serializable {
 		attachments = new ArrayList<>();
 		spentAmount = Money.zero(Config.currency);
 		reservedAmount = Money.zero(Config.currency);
-		IVA_amount = Percent.ZERO;
+		IVA_amount = Config.defaultIva;
 		wholeTaxableAmount = Money.zero(Config.currency);
 		approvalDate = new Date();
 		deadlineDate = new Date();

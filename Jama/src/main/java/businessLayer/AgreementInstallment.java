@@ -35,7 +35,7 @@ public class AgreementInstallment extends Installment implements
 	
 
 	public AgreementInstallment() {
-		this.IVA_amount = Percent.ZERO;
+		this.IVA_amount = Config.defaultIva;
 	}
 
 	
@@ -67,7 +67,6 @@ public class AgreementInstallment extends Installment implements
 			AgreementInstallment agrCopy = (AgreementInstallment) copy;
 
 			this.ivaVoucherNumber = agrCopy.ivaVoucherNumber;
-			this.wholeTaxableAmount = agrCopy.wholeTaxableAmount;
 			this.IVA_amount = agrCopy.IVA_amount;
 
 
