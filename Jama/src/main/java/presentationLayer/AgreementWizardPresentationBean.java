@@ -3,14 +3,20 @@ package presentationLayer;
 import java.io.Serializable;
 
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
 
+import util.Messages;
 import annotations.Current;
 import controllerLayer.ContractHelper;
 import controllerLayer.ContractManagerBean;
+import daoLayer.ChiefScientistDaoBean;
 
 @Named("agreementWizardPB")
 @ConversationScoped
@@ -23,6 +29,8 @@ public class AgreementWizardPresentationBean implements Serializable {
 	@Inject
 	@Current
 	private ContractHelper helper;
+	@Inject
+	private ChiefScientistDaoBean chiefDao;
 
 
 	public AgreementWizardPresentationBean() {
@@ -78,5 +86,21 @@ public class AgreementWizardPresentationBean implements Serializable {
 	
 	public String getContractTypeName(){
 		return helper.getName().toLowerCase();
+	}
+	
+	
+	public void validateSerial(FacesContext context, UIComponent component, Object value) {
+		String serial = (String) value;
+		
+		System.out.println("Validation Serial Nulber "+serial);
+
+		if(chiefDao.getBySerial(serial)!= null){
+			System.out.println("throwing!!!");
+
+			throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
+
+		}
+		
+		
 	}
 }

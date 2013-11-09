@@ -38,6 +38,7 @@ public class ChiefDialogPageControllerBean{
 		chiefDao.createChiefScientist(chief);
 		contract.setChief(chief);
 	}
+
 	
 
 }

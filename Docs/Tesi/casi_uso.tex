@@ -1,63 +1,165 @@
 Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema.
-
-\begin{itemize}
- \item Operatore
-    \begin{enumerate}
-     \item Inserimento di una nuova Convenzione/Contributo\newline
+\paragraph{Operatore}
+\begin{enumerate}
+  \item Inserimento di una nuova Convenzione/Contributo\\
+  
+  Percorso base:
+  L'operatore una volta effettuato il login clicca su ``Crea una convenzione/contributo''; viene visualizzata una schermata suddivisa in varie schede,
+  ognuna corrispondente ad un passo della procedura. E' possibile passare da una vista all'altra mediante i pulsanti ``Avanti'' e ``Indietro''. I passi sono:
+  \begin{enumerate}
+    \item Inserimento dei dati della convenzione/contributo\\
+      
+      Viene presentata una schermata in cui sono elencati tutti i campi necessari per la definizione di una convenzione/contributo, 
+      che l'Operatore deve compilare. Tali campi sono:
+      \begin{itemize}
+	\item Il titolo
+	\item Il numero di protocollo
+	\item L'UAR
+	\item La tipologia
+	\item Il responsabile scientifico\\
+	  Per riempire questo campo, bisogna scegliere il responsabile dal rispettivo menù a tendina. 
+	  Se l'utente non è presente all'interno della lista, è possibile crearne uno nuovo cliccando su "Aggiungi".
+	\item Il referente
+	\item La dittà
+	\item Il nome del progetto CIA
+	\item Il Repertorio
+	\item Il totale imponibile
+	\item L'Iva
+	\item La data di approvazione
+	\item La data di inizio
+	\item La data di scadenza
+      \end{itemize}
+      
+    \item Inserimento della tabella di ripartizione\\
      
-     Percorso base:
-	L'operatore una volta effettuato il login clicca su ``Crea una Convenzione/Contributo''; viene visualizzata una schermata suddivisa in varie schede, ognuna corrispondente ad un passo della procedura. E' possibile passare da una
-	vista all'altra mediante i pulsanti "Avanti" e "Indietro". I passi sono:
-	\begin{enumerate}
-	 \item Inserimento dei dati della convenzione\newline
-	    Viene presentata una schermata in cui sono elencati tutti i campi necessari per la definizione di una convenzione/contributo, 
-	    che l'Operatore deve compilare. Tali campi sono:
-	    \begin{itemize}
-	     \item Il titolo
-	     \item Il responsabile scientifico\newline 
-		Per riempire questo campo, bisogna scegliere il responsabile dal rispettivo menù a tendina. 
-		Se l'utente non è presente all'interno della lista, è possibile crearne uno nuovo cliccando su "Aggiungi".
-	     \item ...
-	    \end{itemize}
-	    
-	 \item Inserimento della tabella di ripartizione\newline
-	    Viene presentata una schermata in cui sono presenti le voci della tabella di ripartizione. L'Amministratore inserisce, per ogni voce, i valori percentuali 
-			in base ai quali dividere l'importo totale. Il sistema mostra i valori così calcolati. I dati
-			da inserire sono:
-	    \begin{itemize}
-	     \item ...
-	     \item L'ultimo campo, "Beni e servizi", non è modificabile dall'utente: viene calcolato automaticamente per differenza.
-		Un procedimento del tutto analogo deve essere seguito per la suddivisione dell'importo relativo a "Beni e servizi": l'Amministratore inserisce i valori desiderati
-		ad eccezione dell'ultimo, calcolato per differenza.
-	    \end{itemize}
-	 \item Inserimento della documentazione relativa alla convenzione.
-		Viene presentata una schermata in cui appaiono i documenti allegati alla convenzione. L'Amministratore può aggiungere o eliminare un documento 
-		cliccando sugli appositi tasti. Premendo il tasto "Salva" la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente.
-	\end{enumerate}
+      Viene presentata una schermata in cui sono presenti le voci della tabella di ripartizione. L'Operatore può modificare alcuni valori percentuali 
+      in base ai quali dividere l'importo totale. Le voci non modificabili sono calcolate in relazione ai campi modificabili facendo riferimento alle norme di ateneo. Le voci modificabili sono:
+      \begin{itemize}
+	\item ``Personale'': stabilisce la quota destinata al personale; è l'unico campo principale che l'operatore può modificare e in base al quale vengono calcolati gli altri.
+	\item ``Missioni'', ``Materiale di consumo'', etc. sono sottocampi di ``Beni e Servizi'' e servono per meglio specificare come verrà ripartita la quota destinata a ``Beni e Servizi''.
+      \end{itemize}
+    \item Gestione delle rate\\
+      
+      Questo passo della procedura è facoltativo: viene data la possibilità all'operatore di inserire delle rate per la convenzione/contributo
+      che sta creando. Per i dettagli riquardo all'inserimento della rata si rimanda al corrispettivo caso d'uso. Una volta inserite una o più rate
+      queste vengono visualizzate in una tabella e l'Operatore
+      ha la possibilità di:
+      \begin{itemize}
+       \item  Modificare o visualizzare una rata; cliccando sui tasti ``Modifica'' o ``Visualizza'' che compaiono sulla destra, nella riga della tabella
+       corrispondente alla rata in questione, viene mostrata la schermata "Modifica/Visualizzazione di una rata"; questa è analoga a quella relativa all'inserimento
+       eccetto per il fatto che i campi	sono inizializzati al valore correntemente assegnato; nel caso della visualizzazione i campi non sono modificabili.
+			
+	\item Eliminare una rata cliccando sul tasto ``Elimina''. Viene chiesta conferma all'Operatore mediante una finestra di dialogo.
+
+      \end{itemize}
+
+      
+    \item Inserimento della documentazione relativa alla convenzione\\
+	  
+	  Viene presentata una schermata in cui appaiono i documenti allegati alla convenzione. L'Operatore può aggiungere o eliminare un documento 
+	  cliccando sugli appositi tasti. Premendo il tasto ``Salva'' la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente.
+  \end{enumerate}
 		 
-			
-				
-		
+  Percorso alternativo:
+  Durante uno qualsiasi dei passi, l'Operatore può cliccare il tasto ``Annulla'', che comporta, a seguito di una conferma, il ritorno alla schermata precedente
+  senza che la convenzione/contributo venga inserita o i cambiamenti effettuati salvati.
+  Se l'Operatore clicca sul tasto ``Salva'' senza aver compilato dei campi obbligatori, o avendo inserito dei valori non consentiti, viene visualizzato un messaggio di errore 
+  e il documento non viene salvato. La schermata non viene cambiata, in modo che l'Operatore possa procedere alla correzione.
+     
+  \item Visualizzazione delle convenzioni/contributi\\
 
-Percorso alternativo:
-	Durante uno qualsiasi dei passi, l'Amministratore può cliccare il tasto "Annulla", che comporta, a seguito di una conferma, il ritorno alla schermata precedente
-	senza che la convenzione venga inserita o i cambiamenti effettuati salvati.
+  Percorso base:
+  L'operatore clicca su ``Visualizza la lista delle convenzioni/contributi''; viene mostrata una lista delle convenzioni/contributi correntemente stipulate in 
+  riferimento al dipartimento di afferenza dell'Operatore, con opportuni filtri 
+  per agevolare la ricerca (tra cui un filtro per data di scadenza) e ordinabili secondo la data.
+  L'Operatore può selezionare una convenzione e compiere 3 azioni mediante gli appositi pulsanti, che appaiono sulla destra portando il mouse su 
+  una convenzione:
+  \begin{itemize}
+   \item visualizzarla;
+   \item modificarla (si rimanda al rispettivo caso d'uso);
+   \item eliminarla.
+  \end{itemize}		
 
-	Se l'Amministratore clicca sul tasto "Salva" senza aver compilato dei campi obbligatori, o avendo inserito dei valori non consentiti, viene visualizzato un messaggio di errore 
-	e il documento non viene salvato. La schermata non viene cambiata, in modo che l'Amministratore possa procedere alla correzione.
-			
+  Percorso alternativo:
+  Si può tornare alla Home con l'apposito tasto.
+ 
+  \item Modifica di una convenzione\\
+  
+  Percorso base:
+  L'Operatore a partire dalla schermata ``Lista delle Convezioni/Contributi'' clicca sul pulsante ``Modifica'' che appare sulla destra nella riga 
+  della tabella corrispondente alla convenzione/contributo desiderata. Viene visualizzata una schermata suddivisa in schede del tutto analoga a quella
+  descritta nel caso di creazione di una convenzione/contributo con la differenza che in questo caso è possibile spostarsi da una scheda all'altra
+  cliccando sulla scheda stessa. Inoltre è presente la scheda aggiuntiva ``Riepilogo'' che contiene alcune informazioni di riepilogo come il residuo
+  totale della convenzione/contributo o il totale fatturato.
+  L'Operatore effettua i cambiamenti desiderati e clicca sul pulsante ``Salva''.\\
 
-     
-     
-     
-     
-     
-     
-     
-    \end{enumerate}
+  Percorso alternativo:
+  L'Operatore può cliccare sul tasto "Annulla" in qualsiasi momento per tornare alla schermata "Visualizzazione delle convenzioni" senza salvare le modifiche effettuate.
+  Se l'Operatore clicca su "Salva" ma alcuni valori immessi non sono corretti, viene visualizzato un messaggio di errore e non si torna alla schermata "Visualizzazione delle
+  convenzioni". I cambiamenti effettuati non vengono (ovviamente) salvati.
+  
+\item Visualizzazione di una convenzione/contributo\\
+ 
+  Del tutto analogo a ``Modifica di una convenzione/contributo'' con la differenza che in questo caso non è possibile modificare i dati della
+  convenzione/contributo.
+  
+  
+\item Inserimento di una rata\\
+L'operatore può inerire una rata sia in fase di creazione della convenzione/contributo sia in fase di modifica; in entrambi i casi dopo aver raggiunto
+la scheda ``Rate'' l'Operatore clicca sul pulsante ``Aggiungi una rata''.  
+Viene visualizzata una finestra di dialogo suddivisa in varie schede,
+ognuna corrispondente ad un passo della procedura. E' possibile passare da una vista all'altra mediante i pulsanti "Avanti" e "Indietro". I passi sono:
+\begin{enumerate}
+  \item Inserimento dei dati della rata\\
+  
+  L'operatore inserisce i seguenti campi
+    \begin{itemize}
+    \item ...
+    \end{itemize}
+  \item Inserimento della tabella di ripartizione
+  Il procedimento è del tutto analogo  a quello descritto nel caso d'uso "Inserimento della tabella di ripartizione" per l'inserimento di 
+  una nuova convenzione/contributo. 
+\end{enumerate}
+
+Le modifiche vengono salvate cliccando sul pulsante "Salva". Si ritorna alla schermata precedente;
+
+
+\end{enumerate}
 
  
+\paragraph{Docente}
+
+\begin{enumerate}
  
- \item Docente
- \item Amministratore
-\end{itemize}
+ \item Visualizzazione della lista delle convenzioni/contributi\\
+ 
+ Il docente, dopo aver effettuato il login, può cliccare sul pulsante ``Visualizzazione della lista delle convenzioni/contributi''; la schermata
+ che viene visualizzata contiene una tabella che elenca le convenzioni/contributi del docente. E' possibile filtrare le convenzioni/contributi
+ secondo vari criteri(data, tipo, scadenze più vicine, ...).Inoltre è possibile visualizzare i dettagli di una convenzione/contributo cliccando sul
+ pulsante ``Visualizza'' che appare posizionando il puntatore su una riga della tabella.
+ 
+ \item Visualizzazione di una convenzione/contributo di cui il docente è responsabile scientifico\\
+ Il docente dalla schermata ``Lista delle convenzioni/contributi'' può cliccare sul pulsante ``Visualizza'' relativo ad una convenzione/contributo; compare una schermata suddivisa in schede analoga a quella della modifica/creazione
+ della convenzione. Il docente può navigare fra le schede cliccandoci sopra. Non è permessa nessuna modifica ai dati della convenzione/contributo tuttavia il docente può inserire degli allegati dalla scheda ``Allegati''.Cliccando su ``Salva''
+ gli allegati inseriti dal docente vengono memorizzati, al contrario cliccando su ``Indietro'' le modifiche vegono scartate .
+ 
+ 
+ 
+\end{enumerate}
+
+
+
+\paragraph{Amministratore}
+\begin{enumerate}
+ \item Inserimento di un nuovo utente
+ \item Visualizzazione della lista degli utenti
+\end{enumerate}
+
+\paragraph{Tempo}
+\begin{enumerate}
+ \item Notifica delle scadenze
+\end{enumerate}
+
+
+
+

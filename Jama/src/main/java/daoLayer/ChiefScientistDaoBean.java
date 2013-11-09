@@ -12,10 +12,9 @@ import businessLayer.ChiefScientist;
 
 @Stateful
 @ConversationScoped
-
 public class ChiefScientistDaoBean {
 
-	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	public ChiefScientistDaoBean() {
@@ -43,11 +42,26 @@ public class ChiefScientistDaoBean {
 		return em.find(ChiefScientist.class, id);
 
 	}
-	
-	public List<ChiefScientist> getAll(){
+
+	public List<ChiefScientist> getAll() {
+
+		return em.createNamedQuery("ChiefScientist.findAll",
+				ChiefScientist.class).getResultList();
+
+	}
+
+	public ChiefScientist getBySerial(String serial) {
+		List<ChiefScientist> list = em
+				.createNamedQuery("ChiefScientist.getBySerial",
+						ChiefScientist.class).setParameter("number", serial)
+				.getResultList();
 		
-		return em.createNamedQuery("ChiefScientist.findAll",ChiefScientist.class).getResultList();
-		
+		if(list.isEmpty()){
+			return null;
+		}
+		else{
+			return list.get(0);
+		}
 	}
 
 }
