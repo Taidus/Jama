@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+
+<ui:composition>
+
+
+	<p:toolbar>
+		<p:toolbarGroup align="left">
+			<h:outputText
+				value="#{msgs.user}: #{userManager.loggedUser.name} #{userManager.loggedUser.surname}" />
+
+
+		</p:toolbarGroup>
+
+		<p:toolbarGroup align="right">
+
+			<p:button value="#{msgs.home}" icon=".ui-icon-home" outcome="home"></p:button>
+
+			<p:commandButton action="#{userEditor.editLoggedUser()}"
+				value="#{msgs.profile}" />
+
+			<p:commandButton type="button" icon="ui-icon-arrowreturnthick-1-s"
+				value="#{msgs.logout}" onclick="w_confirm_logout.show();">
+
+			</p:commandButton>
+
+
+
+		</p:toolbarGroup>
+	</p:toolbar>
+
+
+</ui:composition>
+</html>

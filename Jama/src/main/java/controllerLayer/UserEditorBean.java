@@ -22,8 +22,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import businessLayer.Department;
+import annotations.Logged;
 import annotations.TransferObj;
 import daoLayer.UserDaoBean;
+import security.Principal;
 import usersManagement.User;
 import util.Messages;
 
@@ -45,6 +47,10 @@ public class UserEditorBean implements Serializable {
 	private EntityManager em;
 
 	private String password;
+	
+	@Inject
+	@Logged
+	private Principal loggedUser;
 
 	public UserEditorBean() {
 		super();
@@ -80,6 +86,13 @@ public class UserEditorBean implements Serializable {
 	public String createUser() {
 		begin();
 		currentUser = new User();
+		return "userWiz";
+	}
+	
+	public String editLoggedUser(){
+		
+		begin();
+		currentUser = userDao.getBySerialNumber(loggedUser.getSerialNumber());
 		return "userWiz";
 	}
 
