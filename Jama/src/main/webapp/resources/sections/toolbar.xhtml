@@ -11,7 +11,7 @@
 
 <ui:composition>
 
-
+	<h:form>
 	<p:toolbar>
 		<p:toolbarGroup align="left">
 			<h:outputText
@@ -36,6 +36,15 @@
 
 		</p:toolbarGroup>
 	</p:toolbar>
+	</h:form>
+	
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
+		severity="alert" widgetVar="w_confirm_logout">
+		<p:commandButton value="#{msgs.yes}" action="#{userManager.logout}"
+			oncomplete="w_confirm_logout.hide()" />
+		<p:commandButton value="#{msgs.no}" onclick="w_confirm_logout.hide();"
+			type="button" />
+	</p:confirmDialog>
 
 
 </ui:composition>

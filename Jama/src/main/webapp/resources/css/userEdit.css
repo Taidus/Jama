@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
-#userEdit tr, #userEdit td {
-	border: none;
+ tr,  td {
+	border: none !important;
 }
 
 .errorMessage{

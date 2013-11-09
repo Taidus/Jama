@@ -13,15 +13,9 @@
 
 	<ui:include src="/resources/sections/toolbar.xhtml" />
 
-	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}"
-		severity="alert" widgetVar="w_confirm_logout">
-		<p:commandButton value="#{msgs.yes}" action="#{userManager.logout}"
-			oncomplete="w_confirm_logout.hide()" />
-		<p:commandButton value="#{msgs.no}" onclick="w_confirm_logout.hide();"
-			type="button" />
-	</p:confirmDialog>
-
 	<h:form prependId="false">
+
+
 		<div class="center">
 
 			<p:panel header="#{msgs.available_actions}" styleClass="center"
