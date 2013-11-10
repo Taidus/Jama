@@ -140,29 +140,29 @@ public class Initializer {
 		}
 		
 		
-		String giulioSerial = "1112";
-
-		
-		
-		if (em.createNamedQuery("User.findBySerialNumber")
-				.setParameter("number", giulioSerial).getResultList()
-				.isEmpty()) {
-
-			User giulio = new User();
-			try {
-				giulio.setPassword("jama");
-			} catch (GeneralSecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			giulio.setSerialNumber(giulioSerial);
-			giulio.setEmail("giulio.galvan@gmail.com");
-			giulio.setName("Giulio");
-			giulio.setSurname("Galvan");
-			giulio.setRole(Role.CHIEF_SCIENTIST);
-			giulio.addDepartment(d);;
-			em.persist(giulio);
-		}
+//		String giulioSerial = "1112";
+//
+//		
+//		
+//		if (em.createNamedQuery("User.findBySerialNumber")
+//				.setParameter("number", giulioSerial).getResultList()
+//				.isEmpty()) {
+//
+//			User giulio = new User();
+//			try {
+//				giulio.setPassword("jama");
+//			} catch (GeneralSecurityException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			giulio.setSerialNumber(giulioSerial);
+//			giulio.setEmail("giulio.galvan@gmail.com");
+//			giulio.setName("Giulio");
+//			giulio.setSurname("Galvan");
+//			giulio.setRole(Role.CHIEF_SCIENTIST);
+//			giulio.addDepartment(d);;
+//			em.persist(giulio);
+//		}
 		
 
 	}
