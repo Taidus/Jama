@@ -336,7 +336,18 @@
 
 		<!-- Money <dependency> <groupId>org.joda</groupId> <artifactId>joda-money</artifactId> 
 			<version>0.9</version> </dependency> -->
+
+		<!-- c3p0 -->
+
+
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
 	</dependencies>
+
+
 
 
 
