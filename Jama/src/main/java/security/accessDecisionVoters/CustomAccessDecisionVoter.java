@@ -33,6 +33,6 @@ public abstract class CustomAccessDecisionVoter implements AccessDecisionVoter {
 	}
 
 	protected Set<SecurityViolation> _checkPermission(Permission toCheck) {
-		return (authorizer.canDo(toCheck)) ? noViolations : violationsHappened;
+		return (authorizer.canUserDo(toCheck)) ? noViolations : violationsHappened;
 	}
 }
