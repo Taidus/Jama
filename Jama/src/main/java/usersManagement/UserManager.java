@@ -78,8 +78,9 @@ public class UserManager implements Serializable {
 	public void decideHomeOrLogin() {
 		if (loggedUser.hasPermission(Permission.VIEW_HOME)) {
 			try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("/Jama/faces/home.xhtml");
-			} catch(IOException e) {
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("/Jama/faces/home.xhtml");
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
