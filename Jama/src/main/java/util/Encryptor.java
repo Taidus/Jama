@@ -21,6 +21,10 @@ public enum Encryptor {
 	public String getAlg() {
 		return alg;
 	}
+	
+	public String getAlgPrefix(){
+		return "{" + alg + "}";
+	}
 
 
 	public String encrypt(String pwdPlainText) throws NoSuchAlgorithmException {
@@ -30,12 +34,12 @@ public enum Encryptor {
 	}
 
 
-	public boolean areEquals(String plainPwd, String encrypted, boolean encryptedWithPrefix) throws NoSuchAlgorithmException {
+	public boolean areEquals(String plainPwd, String encrypted) throws NoSuchAlgorithmException {
 		String arg1, arg2;
 
 		arg1 = encrypt(plainPwd);
-		if (encryptedWithPrefix) {
-			arg2 = encrypted.replace("{" + alg + "}", "").trim();
+		if (encrypted.indexOf(getAlgPrefix()) == 0) {
+			arg2 = encrypted.replace(getAlgPrefix(), "").trim();
 		}
 		else {
 			arg2 = encrypted;
