@@ -162,14 +162,9 @@ public class TestBean implements Serializable {
 
 	public void doDelta() {
 		
-		try {
-			User u = ldap.getUser("D011211");
-			System.out.println(u);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//System.out.println(deadService.getResultNumber());
+		User u = ldap.getUser("D096048");
+		System.out.println(u);
+		System.out.println(ldap.getDeptFromDN("DB:uid=D096048,ou=docenti,ou=dinfo,ou=people,dc=dinfo,dc=unifi,dc=it"));
 
 	}
 

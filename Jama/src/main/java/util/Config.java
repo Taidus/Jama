@@ -63,12 +63,12 @@ public class Config {
 		
 
 
-		try {
-			System.setErr(new PrintStream(new File(logFile)));
-			System.err.println(new Date() + "\n=========\n" + "Inizio attività di logging\n" + "==========");
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			System.setErr(new PrintStream(new File(logFile)));
+//			System.err.println(new Date() + "\n=========\n" + "Inizio attività di logging\n" + "==========");
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		}
 
 		fmconf = new Configuration();
 		setFreeMarkerConf();

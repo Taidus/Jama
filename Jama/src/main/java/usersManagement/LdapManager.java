@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 import javax.enterprise.context.RequestScoped;
-import javax.jms.IllegalStateException;
 
 import util.Config;
 import businessLayer.Department;
@@ -72,9 +71,10 @@ public class LdapManager {
 		return result;
 		
 	}
+	
 
 	@SuppressWarnings("unchecked")
-	private User buildUser(LDAPAttributeSet attributeSet) {
+	private User buildUser(LDAPAttributeSet attributeSet,String dn) {
 		User result = new User();
 
 		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
@@ -88,24 +88,22 @@ public class LdapManager {
 			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
 			String value = getValue(allValues);
 			
-			result.setRole(Role.CHIEF_SCIENTIST);;
+			result.setRole(Role.CHIEF_SCIENTIST);
+			Department d = new Department();
+			d.setCode(getDeptFromDN(dn));
+			d.setName(getDeptFromDN(dn));
+			result.addDepartment(d);
 
 			
-			//TODO if else list
 			if(attributeName.trim().equals("givenName")){
 				result.setName(value);
 			}else if(attributeName.trim().equals("sn")){
 				result.setSurname(value);
-			}if(attributeName.trim().equals("mail")){
+			}else if(attributeName.trim().equals("mail")){
 				result.setEmail(value);;
-			}if(attributeName.trim().equals("sss")){
-				//FIXME
-				Department d = new Department();
-				d.setCode(value);
-				result.addDepartment(d);
-			}if(attributeName.trim().equals("uid")){
+			}else if(attributeName.trim().equals("uid")){
 				result.setSerialNumber(value);;
-			}if(attributeName.trim().equals("userPassword")){
+			}else if(attributeName.trim().equals("userPassword")){
 				//FIXME
 				try {
 					result.setPassword(value);
@@ -124,30 +122,34 @@ public class LdapManager {
 	public User getUser(String serialNumber) throws IllegalStateException {
 
 		User result = null;
+		System.out.println("getUser");
+		String filter= "uid="+serialNumber;
 
 		try {
 			connect();
-
-			String[] attrs = { "sn" };
+			System.out.println("connected");
+//			String[] attrs = { "uid" };
 			LDAPSearchResults searchResults = lc.search(Config.searchBase,
-					Config.searchScope, serialNumber, attrs, false);
-
-			int count = searchResults.getCount();
-
-			if (count != 1) {
-				throw new IllegalStateException("Found " + count
-						+ " matches for serial number: " + serialNumber);
-			}
+					Config.searchScope, filter, null, false);
+			
+			
+			int count=0;
 
 			while (searchResults.hasMore()) {
-
+				
+				count++;
 				LDAPEntry nextEntry = null;
 				nextEntry = searchResults.next();
-				System.out.println(nextEntry.getDN());
+				System.out.println("DB:"+nextEntry.getDN());
 				System.out.println("  Attributes: ");
 				LDAPAttributeSet attributeSet = nextEntry.getAttributeSet();
-				result = buildUser(attributeSet);
+				result = buildUser(attributeSet,nextEntry.getDN());
 
+			}
+			
+			if (count != 1) {
+				throw new java.lang.IllegalStateException("Found " + count
+						+ " matches for serial number: " + serialNumber);
 			}
 
 		} catch (UnsupportedEncodingException | LDAPException e) {
@@ -165,6 +167,14 @@ public class LdapManager {
 
 		return result;
 
+	}
+	
+	//orribile ma necessario se nn si riesce ad avere un campo nella persona!
+	public  String getDeptFromDN(String dn){
+		
+		String[] splitted = dn.split(",");
+		return splitted[2].split("=")[1];
+		
 	}
 
 }
