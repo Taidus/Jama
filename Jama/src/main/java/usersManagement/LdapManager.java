@@ -28,6 +28,7 @@ public class LdapManager {
 	private LDAPConnection lc;
 	private LDAPSocketFactory ssf;
 
+
 	private void connect() throws LDAPException, UnsupportedEncodingException {
 
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
@@ -35,14 +36,15 @@ public class LdapManager {
 		LDAPConnection.setSocketFactory(ssf);
 		lc = new LDAPConnection();
 		lc.connect(Config.ldapHost, Config.ldapPort);
-		lc.bind(Config.ldapVersion, Config.loginDN,
-				Config.password.getBytes("UTF8"));
+		lc.bind(Config.ldapVersion, Config.loginDN, Config.password.getBytes("UTF8"));
 
 	}
+
 
 	private void close() throws LDAPException {
 		lc.disconnect();
 	}
+
 
 	private String getValue(Enumeration<String> allValues) {
 
@@ -71,38 +73,36 @@ public class LdapManager {
 
 	}
 
+
 	@SuppressWarnings("unchecked")
 	private User buildUser(LDAPAttributeSet attributeSet, String dn) {
 		User result = new User();
 
-		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
-				.iterator();
+		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet.iterator();
 
 		while (allAttributes.hasNext()) {
 
 			LDAPAttribute attribute = allAttributes.next();
 			String attributeName = attribute.getName();
 
-			Enumeration<String> allValues = (Enumeration<String>) attribute
-					.getStringValues();
+			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
 			String value = getValue(allValues);
 
 			if (attributeName.trim().equals("givenName")) {
 				result.setName(value);
-			} else if (attributeName.trim().equals("sn")) {
+			}
+			else if (attributeName.trim().equals("sn")) {
 				result.setSurname(value);
-			} else if (attributeName.trim().equals("mail")) {
+			}
+			else if (attributeName.trim().equals("mail")) {
 				result.setEmail(value);
-			} else if (attributeName.trim().equals("uid")) {
+			}
+			else if (attributeName.trim().equals("uid")) {
 				result.setSerialNumber(value);
-			} else if (attributeName.trim().equals("userPassword")) {
-
+			}
+			else if (attributeName.trim().equals("userPassword")) {
 				result.setEncryptor(Encryptor.getFromPasswordWithPrefix(value));
-				try {
-					result.setPassword(value);
-				} catch (GeneralSecurityException e) {
-					e.printStackTrace();
-				}
+				result.setPassword(value);
 			}
 		}
 
@@ -116,6 +116,7 @@ public class LdapManager {
 
 	}
 
+
 	public User getUser(String serialNumber) throws IllegalStateException {
 
 		User result = null;
@@ -124,8 +125,7 @@ public class LdapManager {
 		try {
 			connect();
 			// String[] attrs = { "uid" };
-			LDAPSearchResults searchResults = lc.search(Config.searchBase,
-					Config.searchScope, filter, null, false);
+			LDAPSearchResults searchResults = lc.search(Config.searchBase, Config.searchScope, filter, null, false);
 
 			int count = 0;
 
@@ -142,8 +142,7 @@ public class LdapManager {
 			}
 
 			if (count != 1) {
-				throw new java.lang.IllegalStateException("Found " + count
-						+ " matches for serial number: " + serialNumber);
+				throw new java.lang.IllegalStateException("Found " + count + " matches for serial number: " + serialNumber);
 			}
 
 		} catch (UnsupportedEncodingException | LDAPException e) {
@@ -162,6 +161,7 @@ public class LdapManager {
 		return result;
 
 	}
+
 
 	// orribile ma necessario se nn si riesce ad avere un campo nella persona!
 	public String getDeptFromDN(String dn) {
