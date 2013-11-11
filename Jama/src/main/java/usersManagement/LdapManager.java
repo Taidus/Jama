@@ -9,6 +9,7 @@ import java.util.Iterator;
 import javax.enterprise.context.RequestScoped;
 
 import util.Config;
+import util.Encryptor;
 import businessLayer.Department;
 
 import com.novell.ldap.LDAPAttribute;
@@ -26,7 +27,6 @@ public class LdapManager {
 
 	private LDAPConnection lc;
 	private LDAPSocketFactory ssf;
-	
 
 	private void connect() throws LDAPException, UnsupportedEncodingException {
 
@@ -42,78 +42,75 @@ public class LdapManager {
 
 	private void close() throws LDAPException {
 		lc.disconnect();
-
 	}
-	
-	private String getValue(Enumeration<String> allValues){
-		
-		String result = null;
-		
-		if (allValues != null) {
-			
-			boolean found=false;
 
-			while (allValues.hasMoreElements() && found==false) {
+	private String getValue(Enumeration<String> allValues) {
+
+		String result = null;
+
+		if (allValues != null) {
+
+			boolean found = false;
+
+			while (allValues.hasMoreElements() && found == false) {
 
 				String value = (String) allValues.nextElement();
-				if(value!= null && !value.trim().equals("")){
-					found=true;
-				if (Base64.isLDIFSafe(value)) {
-					result= value;
-				}
+				if (value != null && !value.trim().equals("")) {
+					found = true;
+					if (Base64.isLDIFSafe(value)) {
+						result = value;
+					}
 
-				else {
-					result = Base64.encode(value.getBytes());
-				}
+					else {
+						result = Base64.encode(value.getBytes());
+					}
 				}
 			}
 		}
 		return result;
-		
+
 	}
-	
 
 	@SuppressWarnings("unchecked")
-	private User buildUser(LDAPAttributeSet attributeSet,String dn) {
+	private User buildUser(LDAPAttributeSet attributeSet, String dn) {
 		User result = new User();
 
 		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
 				.iterator();
-		
+
 		while (allAttributes.hasNext()) {
 
 			LDAPAttribute attribute = allAttributes.next();
 			String attributeName = attribute.getName();
 
-			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
+			Enumeration<String> allValues = (Enumeration<String>) attribute
+					.getStringValues();
 			String value = getValue(allValues);
-			
-			result.setRole(Role.CHIEF_SCIENTIST);
-			Department d = new Department();
-			d.setCode(getDeptFromDN(dn));
-			d.setName(getDeptFromDN(dn));
-			result.addDepartment(d);
 
-			
-			if(attributeName.trim().equals("givenName")){
+			if (attributeName.trim().equals("givenName")) {
 				result.setName(value);
-			}else if(attributeName.trim().equals("sn")){
+			} else if (attributeName.trim().equals("sn")) {
 				result.setSurname(value);
-			}else if(attributeName.trim().equals("mail")){
-				result.setEmail(value);;
-			}else if(attributeName.trim().equals("uid")){
-				result.setSerialNumber(value);;
-			}else if(attributeName.trim().equals("userPassword")){
-				//FIXME
+			} else if (attributeName.trim().equals("mail")) {
+				result.setEmail(value);
+			} else if (attributeName.trim().equals("uid")) {
+				result.setSerialNumber(value);
+			} else if (attributeName.trim().equals("userPassword")) {
+
+				result.setEncryptor(Encryptor.getFromPasswordWithPrefix(value));
 				try {
 					result.setPassword(value);
 				} catch (GeneralSecurityException e) {
 					e.printStackTrace();
-				};
+				}
 			}
-
-
 		}
+
+		result.setRole(Role.CHIEF_SCIENTIST);
+		Department d = new Department();
+		d.setCode(getDeptFromDN(dn));
+		d.setName(getDeptFromDN(dn));
+		result.addDepartment(d);
 
 		return result;
 
@@ -122,31 +119,28 @@ public class LdapManager {
 	public User getUser(String serialNumber) throws IllegalStateException {
 
 		User result = null;
-		System.out.println("getUser");
-		String filter= "uid="+serialNumber;
+		String filter = "uid=" + serialNumber;
 
 		try {
 			connect();
-			System.out.println("connected");
-//			String[] attrs = { "uid" };
+			// String[] attrs = { "uid" };
 			LDAPSearchResults searchResults = lc.search(Config.searchBase,
 					Config.searchScope, filter, null, false);
-			
-			
-			int count=0;
+
+			int count = 0;
 
 			while (searchResults.hasMore()) {
-				
+
 				count++;
 				LDAPEntry nextEntry = null;
 				nextEntry = searchResults.next();
-				System.out.println("DB:"+nextEntry.getDN());
+				System.out.println("DB:" + nextEntry.getDN());
 				System.out.println("  Attributes: ");
 				LDAPAttributeSet attributeSet = nextEntry.getAttributeSet();
-				result = buildUser(attributeSet,nextEntry.getDN());
+				result = buildUser(attributeSet, nextEntry.getDN());
 
 			}
-			
+
 			if (count != 1) {
 				throw new java.lang.IllegalStateException("Found " + count
 						+ " matches for serial number: " + serialNumber);
@@ -168,13 +162,13 @@ public class LdapManager {
 		return result;
 
 	}
-	
-	//orribile ma necessario se nn si riesce ad avere un campo nella persona!
-	public  String getDeptFromDN(String dn){
-		
+
+	// orribile ma necessario se nn si riesce ad avere un campo nella persona!
+	public String getDeptFromDN(String dn) {
+
 		String[] splitted = dn.split(",");
 		return splitted[2].split("=")[1];
-		
+
 	}
 
 }

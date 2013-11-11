@@ -164,7 +164,6 @@ public class TestBean implements Serializable {
 		
 		User u = ldap.getUser("D096048");
 		System.out.println(u);
-		System.out.println(ldap.getDeptFromDN("DB:uid=D096048,ou=docenti,ou=dinfo,ou=people,dc=dinfo,dc=unifi,dc=it"));
 
 	}
 
