@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import org.joda.money.CurrencyUnit;
 
+import com.novell.ldap.LDAPConnection;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateExceptionHandler;
@@ -42,8 +44,24 @@ public class Config {
 	public static final int dailyScheduledTaskExecutionHour;
 	public static final int daysBeforeDeadlineExpriration;
 	public static final Percent defaultIva;
+	
+	//LDAP settings
+	private static final String ldapConfigFile = configPath +"ldap.properties";
+	
+	public static final int ldapPort;
+	public static final int searchScope = LDAPConnection.SCOPE_SUB;
+	public static final int ldapVersion = LDAPConnection.LDAP_V3;
+	public static final String ldapHost;
+	public static final String loginDN;
+	public static final String password;
+	public static final String searchBase;
+
+	
+	
 
 	static {
+		
+
 
 		try {
 			System.setErr(new PrintStream(new File(logFile)));
@@ -54,7 +72,7 @@ public class Config {
 
 		fmconf = new Configuration();
 		setFreeMarkerConf();
-		
+
 		
 		Properties p = new Properties();
 		InputStream in = null;
@@ -80,6 +98,44 @@ public class Config {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		p = new Properties();
+		in = null;
+
+		try {
+			in = new FileInputStream(ldapConfigFile);
+			p.load(in);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Could not find or open " + ldapConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Could not read " + ldapConfigFile);
+		}
+
+		ldapPort = Integer.parseInt(p.getProperty("ldapPort").trim());
+		ldapHost = p.getProperty("ldapHost").trim();
+		loginDN = p.getProperty("loginDN").trim();
+		password = p.getProperty("password").trim();
+		searchBase = p.getProperty("searchBase").trim();
+
+		
+
+		
+		
+		try {
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	private static void setFreeMarkerConf(){
@@ -114,4 +170,6 @@ public class Config {
 		fmconf.setIncompatibleImprovements(new Version(2, 3, 20)); // FreeMarker
 																	// 2.3.20
 	}
+	
+
 }

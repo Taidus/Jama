@@ -11,7 +11,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.jms.IllegalStateException;
 
+import usersManagement.LdapManager;
+import usersManagement.User;
 import util.Encryptor;
 import util.MailSender;
 import businessLayer.Agreement;
@@ -47,6 +50,8 @@ public class TestBean implements Serializable {
 	private ContractSearchService searchService;
 	@EJB
 	private DeadlineSearchService deadService;
+	@Inject
+	private LdapManager ldap;
 
 	@Inject
 	private MailSender mailSender;
@@ -121,18 +126,18 @@ public class TestBean implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		int chiefId = 11;
-		int companyId = 12;
-		Date lower = new Date(Calendar.getInstance().getTimeInMillis());
-		Calendar c = new GregorianCalendar();
-		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
-		c.add(Calendar.DAY_OF_MONTH, 3);
-		Date upper = new Date(c.getTimeInMillis());
-		deadService.setPageSize(1);
-
-		System.out.println("Querying in dates: " + lower + ", " + upper);
-
-		deadService.init(null, null, null, null, null, Agreement.class, null);
+//		int chiefId = 11;
+//		int companyId = 12;
+//		Date lower = new Date(Calendar.getInstance().getTimeInMillis());
+//		Calendar c = new GregorianCalendar();
+//		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+//		c.add(Calendar.DAY_OF_MONTH, 3);
+//		Date upper = new Date(c.getTimeInMillis());
+//		deadService.setPageSize(1);
+//
+//		System.out.println("Querying in dates: " + lower + ", " + upper);
+//
+//		deadService.init(null, null, null, null, null, Agreement.class, null);
 	}
 
 
@@ -156,8 +161,15 @@ public class TestBean implements Serializable {
 
 
 	public void doDelta() {
-
-		System.out.println(deadService.getResultNumber());
+		
+		try {
+			User u = ldap.getUser("D011211");
+			System.out.println(u);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println(deadService.getResultNumber());
 
 	}
 
