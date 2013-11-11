@@ -47,4 +47,19 @@ public enum Encryptor {
 
 		return arg1.equals(arg2);
 	}
+	
+	public static Encryptor getFromPasswordWithPrefix(String pwd){
+		if(pwd.indexOf("{") == 0 && pwd.indexOf("}") > 0){
+			String alg = pwd.substring(1, pwd.indexOf("}"));
+			for(Encryptor e : values()){
+				if(alg.equalsIgnoreCase(e.alg)){
+					return e;
+				}
+			}
+			throw new IllegalArgumentException("There is no Encryptor constant for method " + alg);
+		}
+		
+		throw new IllegalArgumentException("Password " + pwd + " has no method prefix");
+		
+	}
 }
