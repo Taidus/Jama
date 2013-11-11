@@ -30,11 +30,6 @@ public enum Encryptor {
 	}
 
 
-	public boolean areEquals(String plainPwd, String encrypted) throws NoSuchAlgorithmException {
-		return areEquals(plainPwd, encrypted, false);
-	}
-
-
 	public boolean areEquals(String plainPwd, String encrypted, boolean encryptedWithPrefix) throws NoSuchAlgorithmException {
 		String arg1, arg2;
 
