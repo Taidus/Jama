@@ -59,7 +59,7 @@ public class UserDaoBean {
 				result = ldapm.getUser(serialNumber);
 			}
 			
-		} catch (NoResultException | javax.jms.IllegalStateException e) {
+		} catch (NoResultException e) {
 			result = null;
 		}
 

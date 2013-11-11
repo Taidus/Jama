@@ -46,7 +46,8 @@ public class User implements Serializable {
 
 	public User() {
 		super();
-		belongingDepts = new ArrayList<>();
+		this.encryptor = Encryptor.JAMA_DEFAULT;
+		this.belongingDepts = new ArrayList<>();
 	}
 
 
