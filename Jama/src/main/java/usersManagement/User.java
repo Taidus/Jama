@@ -10,6 +10,7 @@ import javax.resource.spi.IllegalStateException;
 
 import businessLayer.Department;
 import util.Encryptor;
+import util.d_Encryptor;
 
 /**
  * Entity implementation class for Entity: User
@@ -24,10 +25,15 @@ import util.Encryptor;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private byte[] password;
+	
+	private String password;
+	private Encryptor encryptor;
+	
+	
 	private String email;
 	private String name;
 	private String surname;
@@ -37,6 +43,7 @@ public class User implements Serializable {
 	private List<Department> belongingDepts;
 
 	private String serialNumber;
+	
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
@@ -78,7 +85,15 @@ public class User implements Serializable {
 	}
 
 	public void setPassword(String password) throws GeneralSecurityException {
-		this.password = Encryptor.encrypt(password);
+		this.password = password;
+	}
+
+	public Encryptor getEncryptor() {
+		return encryptor;
+	}
+
+	public void setEncryptor(Encryptor encryptor) {
+		this.encryptor = encryptor;
 	}
 
 	public String getName() {
@@ -121,7 +136,7 @@ public class User implements Serializable {
 
 		try {
 
-			byte[] encrypted = Encryptor.encrypt(password);
+			byte[] encrypted = d_Encryptor.encrypt(password);
 			// XXX nn so perchè equals su array di byte nn funziona!
 			return new String(encrypted).equals(new String(this.password));
 
