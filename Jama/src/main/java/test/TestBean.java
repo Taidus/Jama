@@ -172,7 +172,9 @@ public class TestBean implements Serializable {
 //	public static void main(String[] args) throws Exception {
 //		String pwdPlainText = "abcd1234";
 //		String pwdGeneratedByLdap = "{SHA}fOA1nxKFfyqQx95GX0CpXwHLXak=";
-//
+//		
+//		System.out.println(Encryptor.getFromPasswordWithPrefix(pwdGeneratedByLdap));
+
 //		System.out.println("Given:\n\t" + pwdGeneratedByLdap);
 //
 //		Encryptor e = Encryptor.SHA;
@@ -180,7 +182,7 @@ public class TestBean implements Serializable {
 //
 //		System.out.println("Encrypted with prefix:\n\t{" + e.getAlg() + "}" + encrypted);
 //		System.out.println("Encrypted without prefix:\n\t" + encrypted);
-//		System.out.println("Are equals? " + e.areEquals(pwdPlainText, pwdGeneratedByLdap, true));
+//		System.out.println("Are equals? " + e.areEquals(pwdPlainText, pwdGeneratedByLdap));
 //
 //	}
 
