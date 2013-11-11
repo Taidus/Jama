@@ -71,12 +71,11 @@
 				</p:column>
 
 				<p:column>
-					<h:selectOneMenu id="type" value="#{contractManager.contract.type}" label="#{msgs.agrType}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}">
+					<p:selectOneMenu id="type" value="#{contractManager.contract.type}" label="#{msgs.agrType}" required="true" filter="true"
+						filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
 						<p:ajax event="blur" process="@this" update="typeError" />
-
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
 					<h:outputText value="#{contractManager.contract.type}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
@@ -141,11 +140,11 @@
 				</p:column>
 
 				<p:column>
-					<h:selectOneMenu id="companyMenu" value="#{contractManager.contract.company}" label="#{msgs.company}" required="true"
-						rendered="#{cc.attrs.editingDisable==false}">
+					<p:selectOneMenu id="companyMenu" value="#{contractManager.contract.company}" label="#{msgs.company}" required="true" filter="true"
+						filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.companyItems}" />
 						<f:converter binding="#{companyConverter}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
 					<h:outputText value="#{contractManager.contract.company.name}" rendered="#{cc.attrs.editingDisable==true}">
 					</h:outputText>
