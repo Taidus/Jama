@@ -345,6 +345,16 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
 		</dependency>
+
+		<!-- ldap -->
+
+		<dependency>
+			<groupId>com.novell.ldap</groupId>
+			<artifactId>jldap</artifactId>
+			<version>2009-10-07</version>
+		</dependency>
+
+
 	</dependencies>
 
 
