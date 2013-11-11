@@ -1,10 +1,7 @@
 package usersManagement;
 
-import java.io.IOException;
 import java.io.Serializable;
-
 import security.Principal;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -14,7 +11,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.resource.spi.IllegalStateException;
-
 import daoLayer.UserDaoBean;
 import annotations.Logged;
 
@@ -73,15 +69,5 @@ public class UserManager implements Serializable {
 
 	public void setInsertedSerialNumber(String insertedSerialNumber) {
 		this.insertedSerialNumber = insertedSerialNumber;
-	}
-
-	public void decideHomeOrLogin() {
-		if (loggedUser.hasPermission(Permission.VIEW_HOME)) {
-			try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("/Jama/faces/home.xhtml");
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }
