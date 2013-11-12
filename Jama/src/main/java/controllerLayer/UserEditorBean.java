@@ -29,6 +29,7 @@ import daoLayer.UserDaoBean;
 import security.Principal;
 import security.annotations.CreateUserAllowed;
 import usersManagement.User;
+import util.Encryptor;
 import util.Messages;
 
 //TODO splittare in presentation e controller
@@ -55,14 +56,17 @@ public class UserEditorBean implements Serializable {
 	@Logged
 	private Principal loggedUser;
 
+
 	public UserEditorBean() {
 		super();
 	}
+
 
 	private void begin() {
 
 		conversation.begin();
 	}
+
 
 	@Remove
 	private void close() {
@@ -71,10 +75,11 @@ public class UserEditorBean implements Serializable {
 
 	}
 
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public String save() throws GeneralSecurityException {
-		if(password!=null){
-		currentUser.setPassword(password);
+		if (password != null) {
+			currentUser.setPassword(Encryptor.JAMA_DEFAULT.encrypt(password));
 		}
 		userDao.create(currentUser);
 
@@ -83,10 +88,12 @@ public class UserEditorBean implements Serializable {
 		return "home";
 	}
 
+
 	public String cancel() {
 		close();
 		return "home";
 	}
+
 
 	@CreateUserAllowed
 	public String createUser() {
@@ -95,13 +102,15 @@ public class UserEditorBean implements Serializable {
 		return "userWiz";
 	}
 
+
 	public String editLoggedUser() {
 
 		begin();
-		
+
 		currentUser = userDao.getBySerialNumber(loggedUser.getSerialNumber());
 		return "userProfile";
 	}
+
 
 	@Produces
 	@RequestScoped
@@ -110,63 +119,61 @@ public class UserEditorBean implements Serializable {
 		return currentUser;
 	}
 
+
 	public Conversation getConversation() {
 		return conversation;
 	}
 
+
 	public Department getSelectedDept() {
 		if (!currentUser.getBelongingDepts().isEmpty()) {
 			return currentUser.getBelongingDepts().get(0);
-		} else
+		}
+		else
 			return null;
 	}
+
 
 	public void setSelectedDept(Department selectedDept) {
 		currentUser.addDepartment(selectedDept);
 	}
 
+
 	public String getPassword() {
 		return password;
 	}
+
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public void validateOldPassword(FacesContext context,
-			UIComponent component, Object value) {
+
+	public void validateOldPassword(FacesContext context, UIComponent component, Object value) {
 
 		String password = (String) value;
 		try {
 			if (!currentUser.login(password)) {
-				throw new ValidatorException(
-						Messages.getErrorMessage("err_invalidPassword"));
+				throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
 			}
 		} catch (IllegalStateException e) {
-			throw new ValidatorException(
-					Messages.getErrorMessage("err_invalidPassword"));
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
 		}
 
 	}
 
-	public void validatePassword(FacesContext context, UIComponent component,
-			Object value) {
-		
+
+	public void validatePassword(FacesContext context, UIComponent component, Object value) {
 
 		try {
 			String password1 = (String) value;
-			String password2 = (String) ((UIInput) component
-					.findComponent("password")).getValue();
-			
-
+			String password2 = (String) ((UIInput) component.findComponent("password")).getValue();
 
 			if (!password1.equals(password2)) {
-				throw new ValidatorException(
-						Messages.getErrorMessage("err_passwordMismatch"));
+				throw new ValidatorException(Messages.getErrorMessage("err_passwordMismatch"));
 			}
 		} catch (ClassCastException e) {
-			throw new ValidatorException(
-					Messages.getErrorMessage("err_invalidPassword"));
+			throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
 		}
 	}
 
