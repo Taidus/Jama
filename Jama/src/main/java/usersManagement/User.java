@@ -153,7 +153,6 @@ public class User implements Serializable {
 	public boolean login(String plainPwd) throws IllegalStateException {
 
 		try {
-
 			return encryptor.areEquals(plainPwd, password);
 
 		} catch (GeneralSecurityException e) {

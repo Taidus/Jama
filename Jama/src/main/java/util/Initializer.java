@@ -1,6 +1,7 @@
 package util;
 
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -28,10 +29,11 @@ public class Initializer {
 
 
 	@PostConstruct
-	public void init() {
+	public void init() throws NoSuchAlgorithmException {
 
 		String depCode = "DSI/DINFO";
 		Department d;
+		Encryptor e = Encryptor.JAMA_DEFAULT;
 
 		List<Department> depList = em.createNamedQuery("Department.findByCode", Department.class).setParameter("code", depCode).getResultList();
 
@@ -53,7 +55,7 @@ public class Initializer {
 		if (em.createNamedQuery("User.findBySerialNumber").setParameter("number", adminSerialNumber).getResultList().isEmpty()) {
 
 			User admin = new User();
-			admin.setPassword("jama");
+			admin.setPassword(e.encrypt("jama"));
 			admin.setSerialNumber(adminSerialNumber);
 			admin.setEmail("ciccio@pasticcio.com");
 			admin.setName("Admin");
@@ -69,7 +71,7 @@ public class Initializer {
 		if (em.createNamedQuery("User.findBySerialNumber").setParameter("number", vicSerial).getResultList().isEmpty()) {
 
 			User vicario = new User();
-			vicario.setPassword("jama");
+			vicario.setPassword(e.encrypt("jama"));
 			vicario.setSerialNumber(vicSerial);
 			vicario.setEmail("enrico.vicario@unifi.it");
 			vicario.setName("Enrico");
@@ -83,7 +85,7 @@ public class Initializer {
 		if (em.createNamedQuery("User.findBySerialNumber").setParameter("number", arnSerial).getResultList().isEmpty()) {
 
 			User arnone = new User();
-			arnone.setPassword("jama");
+			arnone.setPassword(e.encrypt("jama"));
 			arnone.setSerialNumber(arnSerial);
 			arnone.setEmail("andrea.arnone@unifi.it");
 			arnone.setName("Andrea");
@@ -98,7 +100,7 @@ public class Initializer {
 		if (em.createNamedQuery("User.findBySerialNumber").setParameter("number", cecchiSerial).getResultList().isEmpty()) {
 
 			User operator = new User();
-			operator.setPassword("jama");
+			operator.setPassword(e.encrypt("jama"));
 			operator.setSerialNumber(cecchiSerial);
 			operator.setEmail("patrizia.cecchi@unifi.it");
 			operator.setName("Patrizia");
