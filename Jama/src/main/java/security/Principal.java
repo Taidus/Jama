@@ -13,6 +13,7 @@ public class Principal {
 	private String surname;
 	private String email;
 	private String serialNumber;
+	//TODO cambiare in Stringa
 	private Role role;
 	private List<String> permissions = new ArrayList<>();
 	private List<String> belongingDepthsCodes;

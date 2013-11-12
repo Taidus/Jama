@@ -1,0 +1,14 @@
+\subsubsection{Business}
+
+...discorsi generali...
+
+L'Entità principale del modello è \texttt{Contract}, è una classe astratta che viene implementata da \texttt{Agreement} e \texttt{Funding} che differiscono fra loro solo per i campi dedicati all'Iva. La classe \texttt{Contract} possiede
+tutti gli attributi comuni alle sue sottoclassi come \texttt{wholeTaxableAmount, approvalDate, deadlineDate}, etc.\texttt{Contract} ha inoltre 
+
+
+\begin{figure}[h]
+  \caption{Diagramma delle classi}
+  \label{model_business}
+  \centering
+    \includegraphics[width=1\textwidth]{images/modello_business.eps}
+\end{figure}

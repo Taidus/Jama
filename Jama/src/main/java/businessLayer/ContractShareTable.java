@@ -14,17 +14,17 @@ public class ContractShareTable extends AbstractShareTable implements Serializab
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }) 
-	private AgreementShareTableFiller filler;
+	private ContractShareTableFiller filler;
 
 	public ContractShareTable() {
 		initFields();
 	}
 
-	public AgreementShareTableFiller getFiller() {
+	public ContractShareTableFiller getFiller() {
 		return filler;
 	}
 
-	public void setFiller(AgreementShareTableFiller filler) {
+	public void setFiller(ContractShareTableFiller filler) {
 		this.filler = filler;
 		setPersonnel(Percent.ZERO);
 	}

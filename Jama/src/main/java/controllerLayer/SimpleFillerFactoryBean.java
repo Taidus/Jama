@@ -14,7 +14,7 @@ import javax.enterprise.inject.Alternative;
 
 import util.Config;
 import util.Percent;
-import businessLayer.SimpleAgreementShareTableFiller;
+import businessLayer.StandardContractShareTableFiller;
 
 @Alternative
 @SessionScoped
@@ -24,7 +24,7 @@ public class SimpleFillerFactoryBean extends FillerFactoryBean {
 	public SimpleFillerFactoryBean() {}
 
 	@Override
-	protected SimpleAgreementShareTableFiller createFiller(String depDirectory) {
+	protected StandardContractShareTableFiller createFiller(String depDirectory) {
 		String depPath = Config.depRatesPath + depDirectory.toLowerCase() + "/";
 
 		String propertiesFilePath = depPath + "parameters.properties";
@@ -72,7 +72,7 @@ public class SimpleFillerFactoryBean extends FillerFactoryBean {
 			e.printStackTrace();
 		}
 
-		return new SimpleAgreementShareTableFiller(atheneumCapitalBalanceRateTable, structuresRate, atheneumCommonBalanceRate);
+		return new StandardContractShareTableFiller(atheneumCapitalBalanceRateTable, structuresRate, atheneumCommonBalanceRate);
 	}
 
 }

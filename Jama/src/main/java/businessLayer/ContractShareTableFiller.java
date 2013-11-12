@@ -13,7 +13,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 
-public abstract class AgreementShareTableFiller {
+public abstract class ContractShareTableFiller {
 	public abstract void fill(ContractShareTable table);
 	
 	@Override

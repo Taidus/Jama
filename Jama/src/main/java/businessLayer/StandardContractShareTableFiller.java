@@ -15,7 +15,7 @@ import javax.persistence.Entity;
 import util.Percent;
 
 @Entity
-public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
+public class StandardContractShareTableFiller extends ContractShareTableFiller {
 
 	@ElementCollection
 	@AttributeOverrides({
@@ -30,11 +30,11 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_COMMON_BALANCE"))
 	private Percent atheneumCommonBalanceRate;
 
-	public SimpleAgreementShareTableFiller() {
+	public StandardContractShareTableFiller() {
 		super();
 	}
 
-	public SimpleAgreementShareTableFiller(Map<Percent, Percent> atheneumCapitalBalanceRateTable, Percent structuresRate,
+	public StandardContractShareTableFiller(Map<Percent, Percent> atheneumCapitalBalanceRateTable, Percent structuresRate,
 			Percent atheneumCommonBalanceRate) {
 		super();
 		this.atheneumCapitalBalanceRateTable = atheneumCapitalBalanceRateTable;
@@ -90,7 +90,7 @@ public class SimpleAgreementShareTableFiller extends AgreementShareTableFiller {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SimpleAgreementShareTableFiller other = (SimpleAgreementShareTableFiller) obj;
+		StandardContractShareTableFiller other = (StandardContractShareTableFiller) obj;
 		if (atheneumCapitalBalanceRateTable == null) {
 			if (other.atheneumCapitalBalanceRateTable != null)
 				return false;

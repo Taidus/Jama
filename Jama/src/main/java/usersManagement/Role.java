@@ -3,6 +3,7 @@ package usersManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO cambiare da ChiefScientist a Teacher attenzione alle pagine JSF!
 public enum Role {
 	// XXX i nomi da visualizzare sono hard-coded, perché il FacesContext non è
 	// stato ancora definito al momento della creazione delle enum constants e

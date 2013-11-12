@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import businessLayer.AgreementShareTableFiller;
+import businessLayer.ContractShareTableFiller;
 
 @Named
 @Stateful
@@ -22,12 +22,12 @@ public class FillerDaoBean {
 	public FillerDaoBean() {
 	}
 	
-	public List<AgreementShareTableFiller> getAll(){
-		return em.createNamedQuery("AgreementShareTableFiller.findAll",AgreementShareTableFiller.class).getResultList();
+	public List<ContractShareTableFiller> getAll(){
+		return em.createNamedQuery("AgreementShareTableFiller.findAll",ContractShareTableFiller.class).getResultList();
 	}
 	
 	
-public AgreementShareTableFiller create(AgreementShareTableFiller filler) {
+public ContractShareTableFiller create(ContractShareTableFiller filler) {
 		
 		em.persist(filler);
 		return filler;
@@ -35,16 +35,16 @@ public AgreementShareTableFiller create(AgreementShareTableFiller filler) {
 
 	public void delete(int id) {
 
-		AgreementShareTableFiller filler = em.find(AgreementShareTableFiller.class, id);
+		ContractShareTableFiller filler = em.find(ContractShareTableFiller.class, id);
 		if (filler != null) {
 
 			em.remove(filler);
 		}
 	}
 
-	public AgreementShareTableFiller getById(int id) {
+	public ContractShareTableFiller getById(int id) {
 
-		return em.find(AgreementShareTableFiller.class, id);
+		return em.find(ContractShareTableFiller.class, id);
 
 	}
 	
