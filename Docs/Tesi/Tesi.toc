@@ -6,8 +6,8 @@
 \contentsline {paragraph}{Docente}{7}
 \contentsline {paragraph}{Amministratore}{8}
 \contentsline {paragraph}{Tempo}{8}
-\contentsline {chapter}{\numberline {3}Tecnologie}{9}
-\contentsline {section}{\numberline {3.1}JPA}{9}
-\contentsline {section}{\numberline {3.2}CDI}{9}
-\contentsline {section}{\numberline {3.3}JSF}{9}
-\contentsline {chapter}{\numberline {4}Utilizzo}{10}
+\contentsline {chapter}{\numberline {3}Tecnologie}{10}
+\contentsline {section}{\numberline {3.1}JPA}{10}
+\contentsline {section}{\numberline {3.2}CDI}{10}
+\contentsline {section}{\numberline {3.3}JSF}{10}
+\contentsline {chapter}{\numberline {4}Utilizzo}{11}

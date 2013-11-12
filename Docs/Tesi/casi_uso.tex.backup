@@ -1,12 +1,14 @@
-Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema. Una rappresentazione grafica è disponibile in figura \ref{use_case_diag}
-\begin{figure}[h]
-  \caption{Diagramma dei casi d'uso}
-  \label{use_case_diag}
-  \centering
-    \includegraphics[width=1\textwidth]{images/casi_uso.png}
-\end{figure}
+Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema. 
 
 \paragraph{Operatore}
+\\Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in figura \ref{use_case_diag_operator}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Operatore}
+  \label{use_case_diag_operator}
+  \centering
+    \includegraphics[width=1\textwidth]{images/casi_uso_operatore.png}
+\end{figure}
+
 \begin{enumerate}
   \item Inserimento di una nuova Convenzione/Contributo\\
   
@@ -36,6 +38,8 @@ Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che int
 	\item La data di inizio
 	\item La data di scadenza
       \end{itemize}
+      
+      Nota : i campi riguardanti l'Iva non sono presenti nel caso del contributo.
       
     \item Inserimento della tabella di ripartizione\\
      
@@ -115,8 +119,22 @@ ognuna corrispondente ad un passo della procedura. E' possibile passare da una s
   
   L'operatore inserisce i seguenti campi
     \begin{itemize}
-    \item ...
+    \item Importo
+    \item Iva
+    \item Data
+    \item Numero Reversale
+    \item Data Reversale
+    \item Numero di Sospeso
+    \item Numero di fatturato
+    \item Data fatturata
+    \item E'stata pagata la fattura?
+    \item Deve essere allegata la fattura?
+    \item Note
     \end{itemize}
+    
+   Nota : i campi riguardanti l'Iva non sono presenti nel caso del contributo.
+
+   
   \item Inserimento della tabella di ripartizione
   Il procedimento è del tutto analogo  a quello descritto nel caso d'uso "Inserimento della tabella di ripartizione" per l'inserimento di 
   una nuova convenzione/contributo. 
@@ -153,6 +171,13 @@ l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
 
  
 \paragraph{Docente}
+I casi d'uso del Docente sono rappresentati in figura \ref{use_case_diag_teacher}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Operatore}
+  \label{use_case_diag_teacher}
+  \centering
+    \includegraphics[width=1\textwidth]{images/casi_uso_docente.png}
+\end{figure}
 
 \begin{enumerate}
  

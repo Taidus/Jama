@@ -1,12 +1,14 @@
-Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema. Una rappresentazione grafica è disponibile in figura \ref{use_case_diag}
-\begin{figure}[h]
-  \caption{Diagramma dei casi d'uso}
-  \label{use_case_diag}
-  \centering
-    \includegraphics[width=1\textwidth]{images/casi_uso.png}
-\end{figure}
+Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema. 
 
 \paragraph{Operatore}
+Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in figura \ref{use_case_diag_operator}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Operatore}
+  \label{use_case_diag_operator}
+  \centering
+    \includegraphics[width=1\textwidth]{images/casi_uso_operatore.png}
+\end{figure}
+
 \begin{enumerate}
   \item Inserimento di una nuova Convenzione/Contributo\\
   
@@ -44,16 +46,16 @@ Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che int
       Questa scheda contiene le voci della tabella di ripartizione. L'Operatore può modificare alcuni valori percentuali 
       in base ai quali dividere l'importo totale. Le voci non modificabili sono calcolate in relazione ai campi modificabili facendo riferimento alle norme di ateneo. Le voci modificabili sono:
       \begin{itemize}
-	\item ``Personale'': stabilisce la quota destinata al personale; è l'unico campo principale che l'operatore può modificare e in base al quale vengono calcolati gli altri.
-	\item ``Missioni'', ``Materiale di consumo'', etc. sono sottocampi di ``Beni e Servizi'' e servono per meglio specificare come verrà ripartita la quota destinata a ``Beni e Servizi''.
+	\item Personale: stabilisce la quota destinata al personale; è l'unico campo principale che l'operatore può modificare e in base al quale vengono calcolati gli altri.
+	\item Missioni, Materiale di consumo, etc. sono sottocampi di Beni e Servizi e servono per meglio specificare come verrà ripartita la quota destinata a ``Beni e Servizi''.
       \end{itemize}
     \item Gestione delle rate\\
       
       Questo passo della procedura è facoltativo: viene data la possibilità all'operatore di inserire delle rate per la convenzione/contributo
       che sta creando. Una volta inserite una o più rate
       queste vengono visualizzate in una tabella e l'Operatore
-      ha la possibilità di modificare,visualizzare,eliminare una rata cliccando sui tasti ``Modifica'',``Visualizza'' ed ``Elimina'' che compaiono sulla destra, nella riga della tabella
-       corrispondente alla rata in questione.Per i dettagli riquardo alle operazioni sulle rate si rimanda ai corrispettivi casi d'uso.
+      ha la possibilità di modificare, visualizzare, eliminare una rata cliccando sui tasti ``Modifica'',``Visualizza'' ed ``Elimina'' che compaiono sulla destra, nella riga della tabella
+       corrispondente alla rata in questione. Per i dettagli riquardo alle operazioni sulle rate si rimanda ai corrispettivi casi d'uso.
 
       
     \item Inserimento della documentazione relativa alla convenzione\\
@@ -89,7 +91,7 @@ Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che int
   
   Percorso base:
   l'Operatore a partire dalla schermata ``Visualizza Contratti'' clicca sul pulsante ``Modifica'' che appare sulla destra nella riga 
-  della tabella corrispondente alla convenzione/contributo desiderata. Viene visualizzata una schermata suddivisa in schede del tutto analoga a quella
+  della tabella corrispondente alla convenzione/contributo desiderata. Viene visualizzata una schermata suddivisa analoga a quella
   descritta nel caso della ``Creazione di una convenzione/contributo'' con la differenza che in questo caso è possibile spostarsi da una scheda all'altra
   cliccando sulla scheda stessa. Inoltre è presente la scheda aggiuntiva ``Riepilogo'' che contiene alcune informazioni di riepilogo come il residuo
   totale della convenzione/contributo o il totale fatturato.
@@ -104,6 +106,7 @@ Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che int
  
   Del tutto analogo a ``Modifica di una convenzione/contributo'' con la differenza che in questo caso non è possibile modificare i dati della
   convenzione/contributo.
+  
   
   
 \item Inserimento di una rata\\
@@ -133,7 +136,8 @@ ognuna corrispondente ad un passo della procedura. E' possibile passare da una s
    Nota : i campi riguardanti l'Iva non sono presenti nel caso del contributo.
 
    
-  \item Inserimento della tabella di ripartizione
+  \item Inserimento della tabella di ripartizione\\
+  
   Il procedimento è del tutto analogo  a quello descritto nel caso d'uso "Inserimento della tabella di ripartizione" per l'inserimento di 
   una nuova convenzione/contributo. 
 \end{enumerate}
@@ -147,7 +151,7 @@ l'Operatore clicca sul pulsante ``Annulla'', viene chiusa la finestra di dialogo
 
 Percorso base:
 l'Operatore accede alla schermata ``Visualizza contratti'' cliccando sul pulsante apposito nella pagina iniziale, quindi seleziona la convenzione/contributo alla quale la rata appartiene e clicca sul pulsante ``Modifica'' che compare
-all'interno della riga selezionata. Viene così visualizzata la schermata ``Modifica di una convenzione/contributo'', l'Operatore raggiunge la scheda ``rate'' e clicca sul pulsante ``Modifica'' che compare selezionando la riga della tabella
+all'interno della riga selezionata. Viene così visualizzata la schermata ``Modifica di una convenzione/contributo''; l'Operatore raggiunge la scheda ``rate'' e clicca sul pulsante ``Modifica'' che compare selezionando la riga della tabella
 corrispondente alla rata desiderata. Viene visualizzata una finestra di dialogo composta di varie schede analoghe a quelle descritte nel caso dell'inserimento. E' possibile passare da una scheda all'altra cliccando su di esse.
 Dopo avere effettuato le modifiche richieste l'Operatore clicca sul pulsante ``Salva'', la convenzione/contributo viene aggiornata e viene visualizzata la schermata precedente.
 
@@ -156,10 +160,11 @@ l'Operatore clicca sul pulsante ``Annulla'', le modifiche vengono scartate e si 
 
 \item Visualizzazione di una rata
 
-Una volta raggiunta la scheda ``rate'' relativa alla convenzione/contributo di interesse l'Operatore, dopo aver selezionato la rata di interesse, clicca sul pulsante ``Visualizza''. Viene presentata una finestra di dialogo analoga a quella descritta nel caso della modifica 
+Una volta raggiunta la scheda ``rate'' relativa alla convenzione/contributo di interesse l'Operatore, dopo aver selezionato la rata desiderata, clicca sul pulsante ``Visualizza''. Viene presentata una finestra di dialogo analoga a quella descritta nel caso della modifica 
 con la differenza che i campi non sono modificabili. E' possibile tornare alla schermata precedente cliccando sul pulsante ``Indietro''.
 
-\item Eliminazione di una rata
+\item Eliminazione di una rata\\
+
 Una volta raggiunta la scheda ``rate'' relativa alla convenzione/contributo di interesse l'Operatore, dopo aver selezionato la rata di interesse, clicca sul pulsante ``Elimina'; appare una finestra di dialogo che chiede di confermare
 l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
 
@@ -169,10 +174,17 @@ l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
 
  
 \paragraph{Docente}
+I casi d'uso del Docente sono rappresentati in figura \ref{use_case_diag_teacher}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso del Docente}
+  \label{use_case_diag_teacher}
+  \centering
+    \includegraphics[width=1\textwidth]{images/casi_uso_docente.png}
+\end{figure}
 
 \begin{enumerate}
  
- \item Visualizzazione della lista delle convenzioni/contributi\\
+ \item Visualizzazione dell'elenco delle convenzioni/contributi\\
  
  Il docente, dopo aver effettuato il login, può cliccare sul pulsante ``Visualizzazione della lista delle convenzioni/contributi''; la schermata
  che viene visualizzata contiene una tabella che elenca le convenzioni/contributi del docente. E' possibile filtrare le convenzioni/contributi
@@ -180,9 +192,10 @@ l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
  pulsante ``Visualizza'' che appare posizionando il puntatore su una riga della tabella.
  
  \item Visualizzazione di una convenzione/contributo di cui il docente è responsabile scientifico\\
+ 
  Il docente dalla schermata ``Lista delle convenzioni/contributi'' può cliccare sul pulsante ``Visualizza'' relativo ad una convenzione/contributo; compare una schermata suddivisa in schede analoga a quella della modifica/creazione
- della convenzione. Il docente può navigare fra le schede cliccandoci sopra. Non è permessa nessuna modifica ai dati della convenzione/contributo tuttavia il docente può inserire degli allegati dalla scheda ``Allegati''.Cliccando su ``Salva''
- gli allegati inseriti dal docente vengono memorizzati, al contrario cliccando su ``Indietro'' le modifiche vegono scartate .
+ della convenzione. Il docente può navigare fra le schede cliccandoci sopra. Non è permessa nessuna modifica ai dati della convenzione/contributo tuttavia il docente può inserire degli allegati dalla scheda ``Allegati''. Cliccando su ``Salva''
+ gli allegati inseriti dal docente vengono memorizzati, al contrario cliccando su ``Indietro'' le modifiche vegono scartate.
  
  
  
@@ -197,18 +210,28 @@ l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
 \end{enumerate}
 
 \paragraph{Tempo}
+I casi d'uso del Tempo sono rappresentati in figura \ref{use_case_diag_teacher}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso del Tempo}
+  \label{use_case_diag_time}
+  \centering
+    \includegraphics[width=0.8\textwidth]{images/casi_uso_tempo.png}
+\end{figure}
 \begin{enumerate}
  \item Notifica delle scadenze\\
+ 
     Ad intervalli periodici stabiliti, i docenti che hanno convenzioni/contributi attive con rate in scadenza ravvicinata, vengono avvertiti tramite posta elettronica.
   
  
  \item Notifica della creazione di una nuova convenzione/contributo\\
+ 
     Al momento del completamento della creazione di una nuova convenzione/contributo viene inviata una email all'indirizzo di posta elettronico del responsabile scientifico indicato per la convenzione/contributo. Tale email contiene
     le informazioni principali che caratterizzano la convenzione/contributo.
   
   
  \item Notifica della chiusura di una convenzione/contributo\\
-    Al momento della chiusura di una convenzione/contributo (ovvero quando il fatturato è pari all'importo totale) viene inviata una email all'indirizzo di posta elettronico del responsabile scientifico che notica la chiusura della
+ 
+    Al momento della chiusura di una convenzione/contributo (ovvero quando il fatturato è pari all'importo totale) viene inviata una email all'indirizzo di posta elettronico del responsabile scientifico che notifica la chiusura della
     convenzione/contributo riportando alcuni dati di questa.
 \end{enumerate}
 
