@@ -101,6 +101,9 @@ public class Manager implements Serializable {
 }
 \end{lstlisting}
 
+Ricapitolando il bean così strutturato ha un tempo di vita pari alla durata della conversazione, il persistence context associato all'entity manager lo stesso, quindi nessuna entità sarà mai detached, inoltre viene effettuata una
+transazione solo chiamando il metodo \texttt{save()}: in questo modo è possibile annullare le modifche semplicemnte chiamando il metodo \texttt{cancel()}.
+
 
 
 
