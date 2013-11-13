@@ -105,7 +105,7 @@ public class LdapManager {
 			}
 		}
 
-		result.setRole(Role.CHIEF_SCIENTIST);
+		result.setRole(Role.PROFESSOR);
 		Department d = new Department();
 		d.setCode(getDeptFromDN(dn));
 		d.setName(getDeptFromDN(dn));

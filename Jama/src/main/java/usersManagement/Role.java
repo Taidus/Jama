@@ -13,8 +13,8 @@ public enum Role {
 			Permission.DELETE_CONTRACTS, Permission.VIEW_CONTRACTS,
 			Permission.VIEW_HOME, Permission.VIEW_OWN_CONTRACTS }, "Operatore"),
 
-	CHIEF_SCIENTIST(new Permission[] { Permission.VIEW_OWN_CONTRACTS,
-			Permission.VIEW_HOME }, "Responsabile scientifico"),
+	PROFESSOR(new Permission[] { Permission.VIEW_OWN_CONTRACTS,
+			Permission.VIEW_HOME }, "Docente"),
 
 	ADMIN(new Permission[] { Permission.VIEW_HOME,
 			Permission.ALTER_USER_PERMISSIONS, Permission.CREATE_USER,
@@ -47,6 +47,6 @@ public enum Role {
 	}
 
 	public static Role[] getAvailableUserRoleValues() {
-		return (new Role[] { Role.CHIEF_SCIENTIST, Role.OPERATOR });
+		return (new Role[] { Role.PROFESSOR, Role.OPERATOR });
 	}
 }

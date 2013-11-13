@@ -76,7 +76,7 @@ public class Initializer {
 			vicario.setEmail("enrico.vicario@unifi.it");
 			vicario.setName("Enrico");
 			vicario.setSurname("Vicario");
-			vicario.setRole(Role.CHIEF_SCIENTIST);
+			vicario.setRole(Role.PROFESSOR);
 			vicario.addDepartment(d);
 			em.persist(vicario);
 		}
@@ -90,7 +90,7 @@ public class Initializer {
 			arnone.setEmail("andrea.arnone@unifi.it");
 			arnone.setName("Andrea");
 			arnone.setSurname("Arnone");
-			arnone.setRole(Role.CHIEF_SCIENTIST);
+			arnone.setRole(Role.PROFESSOR);
 			arnone.addDepartment(d);
 			em.persist(arnone);
 		}
