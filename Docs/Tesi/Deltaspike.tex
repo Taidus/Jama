@@ -1,7 +1,8 @@
+\subsection{Introduzione}
 \textsl{Deltaspike} è un \textit{framework} che estende le funzionalità di \textsl{CDI}. Il suo utilizzo in Jama è la gestione della sicurezza: associare ad ogni utente un insieme di permessi che determinano le azioni che può effettuare.
 La caratteristica fondamentale di Deltaspike è l'essere un \textit{framework annotation-based}: funziona tramite le \textsl{Annotation} di Java - che d'ora in poi verranno chiamate semplicemente annotazioni - il che lo rende facile da utilizzare e poco invasivo.
 
-\subsection{Caratteristiche Generali}
+\subsection{Caratteristiche}
 Il cuore della sicurezza in Deltaspike è la classe \textsl{Authorizer}: è un \textit{bean} di CDI - tipicamente \textsl{Application Scoped} - definito dallo sviluppatore che definisce i metodi che verranno invocati durante il controllo sui permessi di un utente. Questi metodi devono essere annotati con l'annotazione \textsl{@Secures} definita da Deltaspike, che indica che essi sono i metodi da invocare per il controllo sui permessi. Non basta: devono essere annotati anche con un'altra annotazione, una \textsl{custom annotation} - cioè definita dallo sviluppatore - che associa il metodo in questione ai metodi su cui effettuare il controllo dei permessi. Quest'ultima deve essere a sua volta annotata con l'annotazione \textsl{@SecurityBindingType} di Deltaspike.\newline
 Nonostante già il controllo sui metodi possa essere sufficiente per gestire l'intera sicurezza di un'applicazione, una funzionalità interessante e molto utile di Deltaspike è la possibilità di effettuare un controllo a livello di pagina: ad esempio, far sì che solo un Amministratore possa visitare la pagina di creazione di un utente, o che solo un Operatore Amministrativo possa visitare la pagina di creazione di una convenzione. Inoltre, qualora il controllo non vada a buon fine, si può specificare una pagina di errore diversa per ogni pagina, ed un messaggio di errore che verrà visualizzato a video dopo il redirect.\newline
 Per concludere quest'introduzione e visione d'insieme delle funzionalità di Deltaspike con gli autori hanno avuto a che fare, si ritiene comunque importante far notare che, nonostante sia un framework già usabile e utile, non sia ancora completamente maturo: la documentazione è scarsa - per non dire di peggio - e alcune funzionalità utili sono mancanti o non funzionanti - ad esempio, il redirect ad una pagina di errore anche per la sicurezza sui metodi.\newline
@@ -9,7 +10,8 @@ Si discute adesso in dettaglio come utilizzare Deltaspike.
 
 
 
-\subsection{Rendere sicuro un metodo}
+\subsection{Funzionamento}
+\paragraph{Rendere sicuro un metodo}
 Per spiegare come si rende sicuro un metodo, si prenderà come esempio un problema affrontato nello sviluppo di Jama: far sì che solo un Operatore Amministrativo possa eliminare una convenzione. L'eliminazione di una convenzione, in Jama, consiste in sostanza nell'invocazione di un metodo di uno dei \textit{bean} dell'applicazione, quindi il problema si risolve impedendo l'invocazione di tale metodo da parte di utenti che non siano un Operatore Amministrativo.\newline
 Il primo passo è il definire un'annotazione, chiamata per esempio \textsl{@DeleteContractsAllowed}:
 
@@ -52,7 +54,7 @@ public class Authorizer {
 
 Il metodo appena definito verrà invocato da Deltaspike in maniera automatica tutte le volte che si invocherà \textsl{deleteContract()}. Nel caso \textsl{canDeleteContracts()} restituisca \textsl{true}, l'eliminazione può proseguire, altrimenti viene generata un'eccezione.
 
-\subsection{Rendere sicura una pagina} 
+\paragraph{Rendere sicura una pagina} 
 La sicurezza su base pagina si implementa definendo interfacce e classi che rappresentano rispettivamente cartelle e pagine. Ad esempio, per rendere sicura la pagina \textsl{home.xhtml} che si trova dentro la cartella \textsl{pages}, si definisce un interaccia \textsl{Pages} con all'interno una classe \textsl{Home}; le classi così definite devono implementare l'interfaccia \textsl{ViewConfig} di Deltaspike. Il \textit{path} è relativo alla cartella \textsl{webapp} dell'applicazione, quindi la classe Home contenuta nell'interaccia Pages fa riferimento alla pagina \textsl{webapp/pages/home.xhtml}. I nomi sono \textit{case insensitive}: la classe Home fa riferimento alle pagine home.xhtml e Home.xhtml; stesso discorso vale per le interfacce.\newline
 Il metodo più facile per rendere sicuro un insieme di più pagine è creare un file Java e di definire all'interno di quest'ultimo tutta la gerarchia di interfacce e di classi - ricordando di omettere il \textit{modifier} \textsl{public} per ognuna delle interfacce/classi, altrimenti si otterrebbe un errore di compilazione.\newline
 Ognuna delle classi definite deve essere annotata con l'annotazione \textsl{@Secured}, completata con l'attributo \textsl{value} che specifica una classe definita dallo sviluppatore che implementa l'interfaccia \textsl{AccessDecisionVoter} di Deltaspike; questa classe deve essere un \textit{bean} di CDI, tipicamente \textsl{Application Scoped} .
