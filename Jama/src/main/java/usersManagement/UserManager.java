@@ -1,7 +1,10 @@
 package usersManagement;
 
 import java.io.Serializable;
+
 import security.Principal;
+import util.Messages;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -11,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.resource.spi.IllegalStateException;
+
 import daoLayer.UserDaoBean;
 import annotations.Logged;
 
@@ -47,10 +51,10 @@ public class UserManager implements Serializable {
 				System.out.println("User Login: loggedUser= " + u);
 				return "home";
 			} else {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Matricola o password errati",
-						"Inserire i valori corretti");
+				FacesMessage msg = Messages.getMessage("info_badLogin");
+				msg.setSeverity(FacesMessage.SEVERITY_INFO);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
+				
 				return "login";
 			}
 		} catch (IllegalStateException e) {
