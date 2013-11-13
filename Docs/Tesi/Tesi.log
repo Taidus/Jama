@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.28)  13 NOV 2013 17:28
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.28)  13 NOV 2013 17:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -888,11 +888,7 @@ Overfull \hbox (1.05487pt too wide) in paragraph at lines 21--23
 se Ja-va che esten-de la clas-se di Pri-me-Fa-ces [][][][][][],
  []
 
-[29]) (./lista_business.tex
-Overfull \hbox (71.62033pt too wide) in paragraph at lines 7--8
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
- []
-
+[29]) (./lista_business.tex [30]
 Package epstopdf Info: Source file: <./images/pager.eps>
 (epstopdf)                    date: 2013-11-13 12:41:04
 (epstopdf)                    size: 55449 bytes
@@ -901,16 +897,17 @@ Package epstopdf Info: Source file: <./images/pager.eps>
 (epstopdf)                    size: 14752 bytes
 (epstopdf)             Command: <repstopdf --outfile=./images/pager-eps-convert
 ed-to.pdf ./images/pager.eps>
-(epstopdf)             \includegraphics on input line 20.
+(epstopdf)             \includegraphics on input line 24.
 Package epstopdf Info: Output file is already uptodate.
-<./images/pager-eps-converted-to.pdf, id=439, 501.875pt x 220.825pt>
+
+<./images/pager-eps-converted-to.pdf, id=456, 501.875pt x 220.825pt>
 File: ./images/pager-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./images/pager-eps-converted-to.pdf>
 Package pdftex.def Info: ./images/pager-eps-converted-to.pdf used on input line
- 20.
+ 24.
 (pdftex.def)             Requested size: 241.49895pt x 106.26097pt.
- [30] [31 <./images/pager-eps-converted-to.pdf>])
+ [31 <./images/pager-eps-converted-to.pdf>])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 79.
  [32]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 79.
@@ -922,8 +919,8 @@ Package rerunfilecheck Info: File `Tesi.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 79.
  ) 
 Here is how much of TeX's memory you used:
- 7809 strings out of 495048
- 111901 string characters out of 3181554
+ 7811 strings out of 495048
+ 111930 string characters out of 3181554
  248205 words of memory out of 3000000
  10638 multiletter control sequences out of 15000+200000
  10799 words of font info for 38 fonts, out of 3000000 for 9000
@@ -941,10 +938,10 @@ ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
 t9.pfb>
-Output written on Tesi.pdf (34 pages, 613769 bytes).
+Output written on Tesi.pdf (34 pages, 614216 bytes).
 PDF statistics:
- 592 PDF objects out of 1000 (max. 8388607)
- 528 compressed objects within 6 object streams
- 234 named destinations out of 1000 (max. 500000)
+ 595 PDF objects out of 1000 (max. 8388607)
+ 531 compressed objects within 6 object streams
+ 236 named destinations out of 1000 (max. 500000)
  267 words of extra memory for PDF output out of 10000 (max. 10000000)
 

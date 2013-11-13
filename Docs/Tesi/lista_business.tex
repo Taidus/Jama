@@ -1,10 +1,14 @@
-\paragraph{Pager e Criteria API}
-
-La classe che si occupa del recupero delle informazioni dal database è \texttt{ContractSearchService}. Lo scopo di questa classe è effettuare un ricerca paginata sul database secondo vari criteri di ricerca quali 
+\subsubsection{Pager e Criteria API}
+Le classi che si occupano del recupero delle informazioni dal database sono \texttt{ContractSearchService} e \texttt{DeadLineSerachService} la prima è usata per costruire lo scadenzario mentre la seconda è usata per la lista
+delle convenzioni/contributi. Queste classi si differenziano solo per il tipo di query che eseguono ma sono simili per struttura, per cui di qui in avanti ci si riferirà solo a \texttt{ContractSearchService}. 
+Lo scopo di queste classi è effettuare un ricerca paginata sul database secondo vari criteri di ricerca quali 
 responsabile scientifico, data, dittà etc. Il codice che si occupa della paginazione è stato incapsulato nella classe \texttt{ResultPager}. \texttt{ResultPager} viene costruito
 col metodo
 
-\lstinline{ResultPagerBean(int currentPage, int pageSize, TypedQuery<T> query, TypedQuery<Long> countQuery)}
+\begin{lstlisting}
+ResultPagerBean(int currentPage, int pageSize, TypedQuery<T> query, TypedQuery<Long> countQuery)
+\end{lstlisting}
+
 
 Come si può vedere è possibile impostare il numero di risultati per ogni pagina, la pagina corrente e naturalmente la query che si vuole eseguire. Per ottenere una pagina di risultati è sufficiente chiamare \lstinline{getCurrentResults()}
 mentre è possibile spostarsi da una pagina all'altra tramite \lstinline{next()} e \lstinline{previous()}

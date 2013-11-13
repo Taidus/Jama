@@ -55,4 +55,4 @@
 \contentsline {subsubsection}{Controllore di pagina}{28}{section*.28}
 \contentsline {subsubsection}{\textit {Lazy model}}{29}{section*.29}
 \contentsline {paragraph}{\textit {Lazy model} delle liste di contratti}{29}{section*.30}
-\contentsline {paragraph}{Pager e Criteria API}{30}{section*.31}
+\contentsline {subsubsection}{Pager e Criteria API}{30}{section*.31}
