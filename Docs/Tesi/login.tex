@@ -1,0 +1,12 @@
+
+
+La schermata di login si presenta in maniera molto semplice: è costituita da un messaggio di benvenuto e da un form in cui inserire le proprie credenziali per poter accedere. I dati inviati dal form vengono processati dal bean \lstinline{UserManager}, che si occupa di eseguire l'autenticazione.\\
+Quando l'utente invia il form viene chiamato il metodo \lstinline{login} dello \lstinline{UserManager}, listato qui di seguito:
+
+\begin{lstlisting}
+INSERIRE LISTATO
+\end{lstlisting}
+
+Per prima cosa, il sistema recupera l'utente associato alla matricola inserita tramite il DAO \lstinline{UserDaoBean}. Esso esegue un'interrogazione al database locale; se non trova nessuna corrispondenza, il compito di cercare la matricola viene delegato  allo \lstinline{LdapManager}, il quale effettua una ricerca nel sistema di autenticazione di Ateneo utilizzando il protocollo LDAP per la comunicazione. Se anche in questo caso non viene trovato un riscontro, l'utente viene avvertito con un messaggio di errore.\\
+Se invece viene trovato un utente, tutte le informazioni ad esso relative vengono salvate in un oggetto \lstinline{User} che viene restituito allo \lstinline{UserManager}. A questo punto viene verificata la validità della password. Questo compito è delegato alla classe \lstinline{User} stessa, la quale contiene al suo interno un attributo di tipo \lstinline{Encryptor} che specifica l'algoritmo di criptazione utilizzato per la propria password. La password inserita viene quindi criptata e confrontata con quella memorizzata. Chiaramente, si procede solo se risultano uguali.\\
+A questo punto lo \lstinline{UserManager} crea un nuovo \lstinline{Principal} con i dati dell'utente e viene mostrata la home dell'applicazione: il login è stato effettuato con successo!
