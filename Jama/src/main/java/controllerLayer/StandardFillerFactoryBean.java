@@ -18,10 +18,10 @@ import businessLayer.StandardContractShareTableFiller;
 
 @Alternative
 @SessionScoped
-public class SimpleFillerFactoryBean extends FillerFactoryBean {
+public class StandardFillerFactoryBean extends FillerFactoryBean {
 	private static final long serialVersionUID = 1L;
 
-	public SimpleFillerFactoryBean() {}
+	public StandardFillerFactoryBean() {}
 
 	@Override
 	protected StandardContractShareTableFiller createFiller(String depDirectory) {
