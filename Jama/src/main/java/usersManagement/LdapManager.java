@@ -1,7 +1,6 @@
 package usersManagement;
 
 import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
 import java.security.Security;
 import java.util.Enumeration;
 import java.util.Iterator;

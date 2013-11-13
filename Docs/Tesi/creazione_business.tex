@@ -1,0 +1,10 @@
+\subsection{Edit Session e ExtendedPersistence Context}
+Si descrive la struttura di un bean, da qui in avanti \texttt{Manager}, che possa essere usato dallo strato di presentazione per la creazione (o modifica) di una entità di business.
+
+\paragraph{Caratteristiche del Manager}
+\texttt{Manager} avrà un riferimento all'entità di business che stiamo creando che possa essere riempita in base ai campi riempiti dall'utente a video.
+Come si è detto la creazione di una entità di business in generale è realizzata attraverso più passi di una procedura, e quindi non può essere confinata in una sola request. Questo suggerisce che \texttt{Manager} debba essere 
+\textsl{reques scoped}. Si sottolinea che non sarebbe possibile usare un bean di tipo \textsl{session scoped} perchè questo comporterebbe la condivisione del bean fra due tab del browser: l'utente che crede di creare due entità in parallelo
+sta invece modificando la stessa!
+
+Un'altra problematica che si deve affrontare è prevedere che si possa annullare la creazione in qualsiasi momento della procedura. 
