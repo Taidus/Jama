@@ -5,9 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -22,17 +28,25 @@ import org.primefaces.model.SortOrder;
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
 import security.annotations.ViewOwnContractsAllowed;
+import util.Config;
 import annotations.Logged;
 import businessLayer.Contract;
 import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
-public class ContractSearchService extends ResultPagerBean<Contract> {
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+public class ContractSearchService extends Pager<Contract> {
+	
+	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
+	private EntityManager em;
 
 	@Inject
 	@Logged
 	private Principal principal;
+	
+	private Pager<Contract> pager;
+
 
 	@ViewOwnContractsAllowed
 	public void initWithLoggedUserCode(Date lowerDeadLineDate,
@@ -63,11 +77,14 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			Class<? extends Contract> contractClass,
 			String principalSerialNumber, Boolean closed,
 			Date lowerInstDeadlineDate, Date upperInstDeadlineDate) {
-		currentPage = 0;
 
 		if (contractClass == null) {
 			contractClass = Contract.class;
 		}
+		
+		TypedQuery<Contract> query;
+		TypedQuery<Long> countQuery;
+
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
@@ -242,7 +259,43 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			countQuery = em.createQuery(countC);
 
 		}
+		
+		pager= new ResultPager<>(0, Config.defaultPageSize, query, countQuery);
 
 	}
+
+	public void next() {
+		pager.next();
+	}
+
+	public void previous() {
+		pager.previous();
+	}
+
+	public int getCurrentPage() {
+		return pager.getCurrentPage();
+	}
+
+	public void setCurrentPage(int currentPage) {
+		pager.setCurrentPage(currentPage);
+	}
+
+	public List<Contract> getCurrentResults() {
+		return pager.getCurrentResults();
+	}
+
+	public int getPageSize() {
+		return pager.getPageSize();
+	}
+
+	public void setPageSize(int pageSize) {
+		pager.setPageSize(pageSize);
+	}
+
+	public Long getResultNumber() {
+		return pager.getResultNumber();
+	}
+
+	
 
 }

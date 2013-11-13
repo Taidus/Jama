@@ -14,7 +14,8 @@ import javax.inject.Inject;
 import presentationLayer.UtilPresentationBean;
 import businessLayer.Contract;
 import daoLayer.DeadlineSearchService;
-import daoLayer.ResultPagerBean;
+import daoLayer.Pager;
+import daoLayer.ResultPager;
 
 @Dependent
 public class OperatorContractScheduleLDM extends OperatorContractTableLDM {
@@ -33,7 +34,7 @@ public class OperatorContractScheduleLDM extends OperatorContractTableLDM {
 
 
 	@Override
-	protected ResultPagerBean<Contract> getPager() {
+	protected Pager<Contract> getPager() {
 		return searchService;
 	}
 

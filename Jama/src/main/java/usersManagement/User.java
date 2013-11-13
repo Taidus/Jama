@@ -28,6 +28,7 @@ public class User implements Serializable {
 	private int id;
 
 	private String password;
+	
 	private Encryptor encryptor;
 
 	private String email;

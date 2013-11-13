@@ -8,7 +8,8 @@ import javax.enterprise.context.Dependent;
 
 import businessLayer.Contract;
 import daoLayer.ContractSearchService;
-import daoLayer.ResultPagerBean;
+import daoLayer.Pager;
+import daoLayer.ResultPager;
 
 @Dependent
 public class ChiefContractListLDM extends SkeletalContractTableLDM {
@@ -100,7 +101,7 @@ public class ChiefContractListLDM extends SkeletalContractTableLDM {
 
 
 	@Override
-	protected ResultPagerBean<Contract> getPager() {
+	protected Pager<Contract> getPager() {
 		return contractSearch;
 	}
 

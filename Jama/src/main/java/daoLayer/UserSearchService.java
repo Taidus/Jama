@@ -10,7 +10,7 @@ import usersManagement.User;
 
 @Stateful
 @ConversationScoped
-public class UserSearchService extends ResultPagerBean<User> {
+public class UserSearchService extends ResultPager<User> {
 	
 
 	public void init(){

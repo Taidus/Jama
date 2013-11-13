@@ -5,9 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -21,13 +27,20 @@ import org.primefaces.model.SortOrder;
 
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
+import util.Config;
 import annotations.Logged;
 import businessLayer.Contract;
 import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
-public class DeadlineSearchService extends ResultPagerBean<Contract> {
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+public class DeadlineSearchService extends Pager<Contract> {
+	
+	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
+	private EntityManager em;
+	
+	private Pager<Contract> pager;
 	
 	@Inject
 	@Logged
@@ -42,11 +55,13 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass, Boolean closed ) {
-		currentPage = 0;
 
 		if (contractClass == null) {
 			contractClass = Contract.class;
 		}
+		
+		TypedQuery<Contract> query;
+		TypedQuery<Long> countQuery;
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
@@ -177,6 +192,42 @@ public class DeadlineSearchService extends ResultPagerBean<Contract> {
 
 		}
 
+		pager= new ResultPager<>(0, Config.defaultPageSize, query, countQuery);
+
 	}
+
+	public void next() {
+		pager.next();
+	}
+
+	public void previous() {
+		pager.previous();
+	}
+
+	public int getCurrentPage() {
+		return pager.getCurrentPage();
+	}
+
+	public void setCurrentPage(int currentPage) {
+		pager.setCurrentPage(currentPage);
+	}
+
+	public List<Contract> getCurrentResults() {
+		return pager.getCurrentResults();
+	}
+
+	public int getPageSize() {
+		return pager.getPageSize();
+	}
+
+	public void setPageSize(int pageSize) {
+		pager.setPageSize(pageSize);
+	}
+
+	public Long getResultNumber() {
+		return pager.getResultNumber();
+	}
+	
+	
 
 }

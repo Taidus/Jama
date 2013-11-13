@@ -10,7 +10,8 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import businessLayer.Contract;
-import daoLayer.ResultPagerBean;
+import daoLayer.Pager;
+import daoLayer.ResultPager;
 
 public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract> {
 	// NB: i filtri di PF lavorano con chiavi di tipo stringa. Queste stesse
@@ -261,7 +262,7 @@ public abstract class ContractTableLazyDataModel extends LazyDataModel<Contract>
 	}
 
 
-	protected abstract ResultPagerBean<Contract> getPager();
+	protected abstract Pager<Contract> getPager();
 
 
 

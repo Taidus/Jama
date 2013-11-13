@@ -9,7 +9,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
 
 
-@NamedQuery(name = "AgreementShareTableFiller.findAll", query = "SELECT f FROM AgreementShareTableFiller f ") 
+@NamedQuery(name = "ContractShareTableFiller.findAll", query = "SELECT f FROM ContractShareTableFiller f ") 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 
