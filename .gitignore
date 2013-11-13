@@ -6,3 +6,11 @@
 *.ear
 *.classpath
 MANIFEST.MF
+
+#Tex Files
+*.log
+*.aux
+*.out
+*.toc
+*.backup
+*.pdf
