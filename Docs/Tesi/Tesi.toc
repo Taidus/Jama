@@ -50,4 +50,9 @@
 \contentsline {chapter}{\numberline {5}Dietro le quinte}{28}{chapter.5}
 \contentsline {section}{\numberline {5.1}Login}{28}{section.5.1}
 \contentsline {section}{\numberline {5.2}Lista convenzioni}{28}{section.5.2}
-\contentsline {paragraph}{Pager e Criteria API}{28}{section*.27}
+\contentsline {subsection}{\numberline {5.2.1}Livello presentazione}{28}{subsection.5.2.1}
+\contentsline {subsubsection}{Pagina web}{28}{section*.27}
+\contentsline {subsubsection}{Controllore di pagina}{28}{section*.28}
+\contentsline {subsubsection}{\textit {Lazy model}}{29}{section*.29}
+\contentsline {paragraph}{\textit {Lazy model} delle liste di contratti}{29}{section*.30}
+\contentsline {paragraph}{Pager e Criteria API}{30}{section*.31}

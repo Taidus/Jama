@@ -12,14 +12,14 @@ All'interno dell'applicazione, ricoprono un ruolo centrale le schermate di visua
 Di seguito, segue una spiegazione di ognuno di questi componenti.
 
 \subsubsection{Pagina web}
-Una schermata di visualizzazione delle convenzioni/contributi Ë costituita essenzialmente da una tabella, che viene creata mediante il tag \lstinline{p:dataTable} di PrimeFaces. PoichÈ dovr‡ gestire grandi quantit‡ di dati, Ë stata utilizzata la paginazione unita al \textit{lazy loading}: quando viene caricata una pagina, vengono mantenuti in memoria soltanto i contratti che vengono effettivamente visualizzati. CiÚ Ë reso possibile (o, perlomeno, molto pi˘ semplice) grazie ai due attributi della \texttt{dataTable} di PrimeFaces \texttt{paginator} e - soprattutto - \texttt{lazy}; sono entrambi attributi booleani che specificano se utilizzare la relativa tecnica.
+Una schermata di visualizzazione delle convenzioni/contributi √® costituita essenzialmente da una tabella, che viene creata mediante il tag \lstinline{pdata:Table} di PrimeFaces. Poich√© dovr√† gestire grandi quantit√† di dati, √® stata utilizzata la paginazione unita al \textit{lazy loading}: quando viene caricata una pagina, vengono mantenuti in memoria soltanto i contratti che vengono effettivamente visualizzati. Ci√≤ √® reso possibile (o, perlomeno, molto pi√π semplice) grazie ai due attributi della \texttt{dataTable} di PrimeFaces \texttt{paginator} e - soprattutto - \texttt{lazy}; sono entrambi attributi booleani che specificano se utilizzare la relativa tecnica.
 
 \subsubsection{Controllore di pagina}
-Associata ad ogni vista, vi Ë un bean detto \textsl{controllore di pagina}. Esso si occupa di gestire la conversazione necessaria al corretto funzionamento della pagina e di fare da intermediario tra la vista ed il modello, eseguendo le operazioni necessarie per eseguire la navigazione verso le varie schermate dell'applicazione raggiungibili. Il controllore di pagina ha due attributi importanti: il \textit{lazy model}, a cui si puÚ far riferimento dalla pagina (ovviamente), e un \lstinline{ContractManager} che invece si occupa della logica di business, gestendo i contratti (e che non Ë direttamente accessibile dalla pagina).
+Associata ad ogni vista, vi √® un bean detto \textsl{controllore di pagina}. Esso si occupa di gestire la conversazione necessaria al corretto funzionamento della pagina e di fare da intermediario tra la vista ed il modello, eseguendo le operazioni necessarie per eseguire la navigazione verso le varie schermate dell'applicazione raggiungibili. Il controllore di pagina ha due attributi importanti: il \textit{lazy model}, a cui si pu√≤ far riferimento dalla pagina (ovviamente), e un \lstinline{ContractManager} che invece si occupa della logica di business, gestendo i contratti (e che non √® direttamente accessibile dalla pagina).
 
 \subsubsection{\textit{Lazy model}}
-Per creare una tabella \textit{lazy-loaded}, Ë necessario implementare un \textit{lazy model}, che fornir‡ la lista di oggetti che verranno infine visualizzati. Il \textit{lazy model} deve inoltre gestire gli eventuali filtri ed ordinamenti richiesti.\\
-Un \textit{lazy model} Ë una classe Java che estende la classe di PrimeFaces \lstinline{LazyModel<T>}, dove \texttt{T} Ë il tipo di dati da visualizzare (in questo caso, quindi, bisogner‡ estendere \lstinline{LazyModel<Contract>}). Il metodo principale di questa classe Ë \lstinline{load}, che ha il compito di caricare i dati dal modello e passarli alla tabella. La sua signature Ë:
+Per creare una tabella \textit{lazy-loaded}, √® necessario implementare un \textit{lazy model}, che fornir√† la lista di oggetti che verranno infine visualizzati. Il \textit{lazy model} deve inoltre gestire gli eventuali filtri ed ordinamenti richiesti.\\
+Un \textit{lazy model} √® una classe Java che estende la classe di PrimeFaces \lstinline{LazyModel<T>}, dove \texttt{T} √® il tipo di dati da visualizzare (in questo caso, quindi, bisogner√† estendere \lstinline{LazyModel<Contract>}). Il metodo principale di questa classe √® \lstinline{load}, che ha il compito di caricare i dati dal modello e passarli alla tabella. La sua signature √®:
 
 \begin{lstlisting}
 public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters)
@@ -28,18 +28,18 @@ public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrd
 Questo metodo viene chiamato ogni volta che bisogna aggiornare la tabella. I parametri formali rappresentano:
 
 \begin{enumerate}
-\item \texttt{first} e \texttt{pageSize}: la prima riga da visualizzare (partendo da 0) e la dimensione di una pagina, rispettivamente. Queste due informazioni possono essere combinate per sapere quale pagina Ë visualizzata correntemente: Ë infatti il quoziente della divisione intera di \texttt{first} per \texttt{pageSize}.
-\item \texttt{sortField, sortOrder}: sono informazioni sull'ordinamento della tabella. Il primo indica in base a quale campo ordinare, il secondo Ë un'enumerazione che indica se l'ordinamento deve essere ascendente o discendente.
-\item \texttt{filters}: Ë una mappa di coppie in cui la chiave Ë il campo su cui filtrare e il valore Ë, appunto, il valore del campo.
+\item \texttt{first} e \texttt{pageSize}: la prima riga da visualizzare (partendo da 0) e la dimensione di una pagina, rispettivamente. Queste due informazioni possono essere combinate per sapere quale pagina √® visualizzata correntemente: √® infatti il quoziente della divisione intera di \texttt{first} per \texttt{pageSize}.
+\item \texttt{sortField, sortOrder}: sono informazioni sull'ordinamento della tabella. Il primo indica in base a quale campo ordinare, il secondo √® un'enumerazione che indica se l'ordinamento deve essere ascendente o discendente.
+\item \texttt{filters}: √® una mappa di coppie in cui la chiave √® il campo su cui filtrare e il valore √®, appunto, il valore del campo.
 \end{enumerate}
 
-AffinchÈ la paginazione sia effettivamente \textit{lazy}, perÚ, Ë necessario che la query effettuata per ottenere le informazioni sia \textquoteleft mirata\textquoteright{}. Per maggiori dettagli su come questo avvenga, si rimanda a INSERIRE RIFERIMENTO A PAGER HIBERNATE.
+Affinch√© la paginazione sia effettivamente \textit{lazy}, per√≤, √® necessario che la query effettuata per ottenere le informazioni sia \textquoteleft mirata\textquoteright{}. Per maggiori dettagli su come questo avvenga, si rimanda a INSERIRE RIFERIMENTO A PAGER HIBERNATE.
 
 Se la tabella prevede anche che una riga possa essere selezionata, un \textit{lazy model} deve anche esporre i metodi \lstinline{getRowData} e \lstinline{getRowKey}, che consentono, rispettivamente, di estrarre il dato relativo ad una riga e la riga relativa ad un dato. Entrambi utilizzano una chiave fornita dal programmatore per distinguere le righe della tabella (come ad esempio un identificativo) che deve essere esplicitata nell'attributo \texttt{rowKey} della \lstinline{p:dataTable}.
 
 \paragraph{\textit{Lazy model} delle liste di contratti}
-Molte liste di contratti, da quelle visualizzate dall'Operatore a quella a cui ha accesso il Docente, condividono varie operazioni in comune e sono state perciÚ create classi astratte per il riuso del codice.\\
-La classe di base Ë \lstinline{ContractTableLazyDataModel}, che Ë un \textit{lazy model} e implementa tutte le operazioni precedentemente descritte, consentendo perciÚ il normale funzionamento dell'interfaccia. Tuttavia, tramite una lista di contratti Ë possibile svolgere alcune operazioni che comportano la navigazione ad un'altra pagina web (un esempio Ë la visualizzazione della convenzione). Quando l'utente ritorna alla lista, la pagina viene creata \textit{ex-novo} e la tabella non mantiene perciÚ i cambiamenti effettuati dall'utente, come ad esempio il filtraggio dei risultati in base alla data. \\
+Molte liste di contratti, da quelle visualizzate dall'Operatore a quella a cui ha accesso il Docente, condividono varie operazioni in comune e sono state perci√≤ create classi astratte per il riuso del codice.\\
+La classe di base √® \lstinline{ContractTableLazyDataModel}, che √® un \textit{lazy model} e implementa tutte le operazioni precedentemente descritte, consentendo perci√≤ il normale funzionamento dell'interfaccia. Tuttavia, tramite una lista di contratti √® possibile svolgere alcune operazioni che comportano la navigazione ad un'altra pagina web (un esempio √® la visualizzazione della convenzione). Quando l'utente ritorna alla lista, la pagina viene creata \textit{ex-novo} e la tabella non mantiene perci√≤ i cambiamenti effettuati dall'utente, come ad esempio il filtraggio dei risultati in base alla data. \\
 La classe \lstinline{ContractTableLazyDataModel} risolve questi problemi, esponendo dei metodi per impostare o estrarre lo stato della tabella. L'intero procedimento avviene in questo modo:
 
 \begin{enumerate}
@@ -47,22 +47,10 @@ La classe \lstinline{ContractTableLazyDataModel} risolve questi problemi, espone
 \item viene chiamato il rispettivo metodo del controllore di pagina, che estrae lo stato della tabella come una stringa di coppie chiave/valore e lo passa al bean del livello sottostante che si occupa della gestione dei contratti (il \lstinline{ContractManager})
 \item la conversazione attuale viene chiusa
 \item il \lstinline{ContractManager} inizia una nuova conversazione
-\item la nuova pagina viene visualizzata; a questo punto il controllore di pagina precedente Ë \textit{out of scope}
+\item la nuova pagina viene visualizzata; a questo punto il controllore di pagina precedente √® \textit{out of scope}
 \item l'utente esegue alcune operazioni nella nuova pagina e poi clicca sul pulsante per tornare alla lista, causando la chiusura della conversazione
 \item all'URL prodotto per tornare alla tabella vengono accodati i parametri passati precedentemente al \lstinline{ContractManager} come stringa
 \item prima che la pagina sia caricata, il bean controllore di pagina viene inizializzato dal container: la conversazione comincia e il \textit{lazy model} viene creato
 \item il \textit{lazy model} viene inizializzato con i parametri contenuti nell'URL
-\item la pagina viene caricata e la tabella ritorna cosÏ allo stato in cui si trovava prima della visualizzazione/modifica.
+\item la pagina viene caricata e la tabella ritorna cos√¨ allo stato in cui si trovava prima della visualizzazione/modifica.
 \end{enumerate}
-
-
-
-
-
-
-
-
-
-
-
-
