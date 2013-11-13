@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.28)  13 NOV 2013 10:43
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.28)  13 NOV 2013 10:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -529,9 +529,9 @@ e ignored
 l.44 \end{abstract}
                     [1] (./Tesi.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 6.
+(Font)              <7> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 6.
+(Font)              <5> on input line 4.
 )
 \tf@toc=\write4
 \openout4 = `Tesi.toc'.
@@ -573,7 +573,7 @@ s-converted-to.pdf images/modello_business.eps>
 (epstopdf)             \includegraphics on input line 27.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/modello_business-eps-converted-to.pdf, id=131, 973.6375pt x 823.075pt>
+<images/modello_business-eps-converted-to.pdf, id=136, 973.6375pt x 823.075pt>
 File: images/modello_business-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/modello_business-eps-converted-to.pdf>
@@ -596,7 +596,7 @@ o.pdf user_model.eps>
 (epstopdf)             \includegraphics on input line 5.
 Package epstopdf Info: Output file is already uptodate.
 
-<user_model-eps-converted-to.pdf, id=132, 491.8375pt x 531.9875pt>
+<user_model-eps-converted-to.pdf, id=137, 491.8375pt x 531.9875pt>
 File: user_model-eps-converted-to.pdf Graphic file (type pdf)
 
 <use user_model-eps-converted-to.pdf>
@@ -606,15 +606,16 @@ Package pdftex.def Info: user_model-eps-converted-to.pdf used on input line 5.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[3
+
+]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 14.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 14.
- [3
 
-]
 Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
  []
@@ -648,23 +649,19 @@ eps-converted-to.pdf images/casi_uso_operatore.eps>
 (epstopdf)             \includegraphics on input line 9.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/casi_uso_operatore-eps-converted-to.pdf, id=152, 877.2775pt x 761.84625
+<images/casi_uso_operatore-eps-converted-to.pdf, id=157, 877.2775pt x 761.84625
 pt>
 File: images/casi_uso_operatore-eps-converted-to.pdf Graphic file (type pdf)
  <use images/casi_uso_operatore-eps-converted-to.pdf>
 Package pdftex.def Info: images/casi_uso_operatore-eps-converted-to.pdf used on
  input line 9.
 (pdftex.def)             Requested size: 345.0pt x 299.60655pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
+ [5 <./user_model-eps-converted-to.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 13--14
 
  []
 
-[5 <./user_model-eps-converted-to.pdf>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 19--20
 
  []
@@ -736,7 +733,7 @@ s-converted-to.pdf images/casi_uso_docente.eps>
 (epstopdf)             \includegraphics on input line 182.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/casi_uso_docente-eps-converted-to.pdf, id=194, 559.08875pt x 239.89626p
+<images/casi_uso_docente-eps-converted-to.pdf, id=199, 559.08875pt x 239.89626p
 t>
 File: images/casi_uso_docente-eps-converted-to.pdf Graphic file (type pdf)
  <use images/casi_uso_docente-eps-converted-to.pdf>
@@ -748,12 +745,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
-
+[10 <./images/casi_uso_docente-eps-converted-to.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 194--195
 
  []
 
-[10 <./images/casi_uso_docente-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <images/casi_uso_tempo.eps>
 (epstopdf)                    date: 2013-11-12 19:18:34
 (epstopdf)                    size: 94415 bytes
@@ -766,7 +762,7 @@ converted-to.pdf images/casi_uso_tempo.eps>
 (epstopdf)             \includegraphics on input line 218.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/casi_uso_tempo-eps-converted-to.pdf, id=208, 378.41376pt x 270.00874pt>
+<images/casi_uso_tempo-eps-converted-to.pdf, id=212, 378.41376pt x 270.00874pt>
 File: images/casi_uso_tempo-eps-converted-to.pdf Graphic file (type pdf)
 <use images/casi_uso_tempo-eps-converted-to.pdf>
 Package pdftex.def Info: images/casi_uso_tempo-eps-converted-to.pdf used on inp
@@ -782,12 +778,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 226--227
 
  []
 
-
+[11 <./images/casi_uso_tempo-eps-converted-to.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 232--233
 
  []
 
-) [11 <./images/casi_uso_tempo-eps-converted-to.pdf>] [12]
+) [12]
 Capitolo 3.
 (./jpa.tex [13
 
@@ -816,7 +812,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--28
 
  []
 
-<JSF_architecture.png, id=270, 349.90726pt x 163.812pt>
+<JSF_architecture.png, id=276, 349.90726pt x 163.812pt>
 File: JSF_architecture.png Graphic file (type png)
 
 <use JSF_architecture.png>
@@ -833,7 +829,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 57--59
  []
 
 [20 <./JSF_architecture.png>]
-<JSF_client-server_communication.png, id=285, 260.172pt x 124.0635pt>
+<JSF_client-server_communication.png, id=290, 260.172pt x 124.0635pt>
 File: JSF_client-server_communication.png Graphic file (type png)
 
 <use JSF_client-server_communication.png>
@@ -845,7 +841,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 68--69
 
  []
 
-<JSF_ajax.png, id=287, 412.54124pt x 227.04825pt>
+<JSF_ajax.png, id=292, 412.54124pt x 227.04825pt>
 File: JSF_ajax.png Graphic file (type png)
  <use JSF_ajax.png>
 Package pdftex.def Info: JSF_ajax.png used on input line 72.
@@ -856,7 +852,7 @@ Overfull \hbox (67.54024pt too wide) in paragraph at lines 72--73
  []
 
 [21 <./JSF_client-server_communication.png>]
-<JSF_life_cycle.png, id=298, 261.97874pt x 142.131pt>
+<JSF_life_cycle.png, id=303, 261.97874pt x 142.131pt>
 File: JSF_life_cycle.png Graphic file (type png)
  <use JSF_life_cycle.png>
 Package pdftex.def Info: JSF_life_cycle.png used on input line 92.
@@ -871,29 +867,29 @@ File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OML/cmr/m/sl' in size <10> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 59.
  [25])
-Underfull \hbox (badness 10000) in paragraph at lines 97--64
+Underfull \hbox (badness 10000) in paragraph at lines 97--65
 
  []
 
 [26]
 Capitolo 4.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 69.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 70.
 [27
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 69.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 70.
  (./Tesi.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 69.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 69.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 70.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 70.
 Package rerunfilecheck Info: File `Tesi.out' has not changed.
-(rerunfilecheck)             Checksum: EF84053A48F5AF7705E8E8B748FB5500;1284.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 69.
+(rerunfilecheck)             Checksum: 8EEFD62CE4E3C0624A65191D6C5B1EFA;1338.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 70.
  ) 
 Here is how much of TeX's memory you used:
- 7661 strings out of 495048
- 109734 string characters out of 3181554
+ 7663 strings out of 495048
+ 109758 string characters out of 3181554
  247190 words of memory out of 3000000
- 10572 multiletter control sequences out of 15000+200000
+ 10573 multiletter control sequences out of 15000+200000
  10799 words of font info for 38 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  30i,7n,40p,1404b,1160s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -909,10 +905,10 @@ ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
 t9.pfb>
-Output written on Tesi.pdf (29 pages, 583637 bytes).
+Output written on Tesi.pdf (29 pages, 583836 bytes).
 PDF statistics:
- 464 PDF objects out of 1000 (max. 8388607)
- 407 compressed objects within 5 object streams
- 166 named destinations out of 1000 (max. 500000)
- 214 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 469 PDF objects out of 1000 (max. 8388607)
+ 412 compressed objects within 5 object streams
+ 167 named destinations out of 1000 (max. 500000)
+ 222 words of extra memory for PDF output out of 10000 (max. 10000000)
 
