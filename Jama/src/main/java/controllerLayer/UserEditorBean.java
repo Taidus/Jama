@@ -28,6 +28,7 @@ import annotations.TransferObj;
 import daoLayer.UserDaoBean;
 import security.Principal;
 import security.annotations.CreateUserAllowed;
+import usersManagement.LdapManager;
 import usersManagement.User;
 import util.Encryptor;
 import util.Messages;
@@ -38,23 +39,26 @@ import util.Messages;
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserEditorBean implements Serializable {
-
 	private static final long serialVersionUID = -4966124878956728047L;
+	
 	@Inject
 	private Conversation conversation;
-
-	private User currentUser;
+	
 	@Inject
 	private UserDaoBean userDao;
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
-	private String password;
-
 	@Inject
 	@Logged
 	private Principal loggedUser;
+	
+	@Inject
+	private LdapManager ldapManager;
+	
+	private User currentUser;
+	private String password;
 
 
 	public UserEditorBean() {
@@ -100,6 +104,11 @@ public class UserEditorBean implements Serializable {
 		begin();
 		currentUser = new User();
 		return "userWiz";
+	}
+	
+	@CreateUserAllowed
+	public void importUser() {
+		currentUser = ldapManager.getUser(currentUser.getSerialNumber());
 	}
 
 

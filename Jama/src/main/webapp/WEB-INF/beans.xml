@@ -17,6 +17,6 @@
   <class>org.apache.deltaspike.security.impl.extension.SecurityInterceptor</class>
  </interceptors>
  <alternatives>
-  <class>controllerLayer.SimpleFillerFactoryBean</class>
+  <class>controllerLayer.StandardFillerFactoryBean</class>
  </alternatives>
 </beans>
