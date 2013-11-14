@@ -7,7 +7,7 @@ Quando l'utente invia il form viene chiamato il metodo \lstinline{login} dello \
 public String login(String password) {
 		User u = userDao.getBySerialNumber(insertedSerialNumber);
 		try {
-			if (u != null && u.login(password)) {
+			if (!(u == null || !u.login(password))) {
 				loggedUser = new Principal(u);
 				System.out.println("User Login: loggedUser= " + u);
 				return "home";
