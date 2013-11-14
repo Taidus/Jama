@@ -60,7 +60,7 @@ public class MailSender implements Serializable {
 		// } catch (MessagingException e) {// TODO errore a video
 		// e.printStackTrace();
 		// }
-		
+
 		if (recipientEmail != null) {
 
 			String host = "smtp.gmail.com";
@@ -87,12 +87,13 @@ public class MailSender implements Serializable {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
 			}
-		} else {
+		}
+		else {
 			Date date = new Date();
 			System.err.println(date + ": Error sending email, null address");
 		}
 	}
-	
+
 
 	private void spam() {
 		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
@@ -122,8 +123,8 @@ public class MailSender implements Serializable {
 		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
-		
-		spam(); //TODO NON e dico NON eliminare
+
+		spam(); // TODO NON e dico NON eliminare
 
 	};
 
@@ -149,6 +150,8 @@ public class MailSender implements Serializable {
 		System.out.println(" °°°°°°°°° Mail inviata! °°°°°°°°°°°°°");
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mail inviata", null));
+		// TODO probabilmente si può eliminare, perché tanto non viene
+		// visualizzato. Se si tiene, il messaggio deve essere preso da bundle
 
 	}
 
@@ -193,11 +196,11 @@ public class MailSender implements Serializable {
 
 		public InstallmentTemplateFiller(Installment installment, String mail1, String mail2) {
 			super();
-			if(installment instanceof AgreementInstallment){
+			if (installment instanceof AgreementInstallment) {
 				theContract = "alla convenzione";
 			}
-			else{
-				theContract="al Contributo";
+			else {
+				theContract = "al Contributo";
 			}
 			this.contract = installment.getContract();
 			this.installment = installment;
@@ -240,8 +243,6 @@ public class MailSender implements Serializable {
 		public String getTheContract() {
 			return theContract;
 		}
-		
-		
 
 	}
 
@@ -253,14 +254,13 @@ public class MailSender implements Serializable {
 		private String theContract;
 
 
-
 		public ContractTemplateFiller(Contract contract, String mail) {
 			super();
-			if(contract instanceof Agreement){
-				theContract="la convenzione";
+			if (contract instanceof Agreement) {
+				theContract = "la convenzione";
 			}
-			else{
-				theContract="il contributo";
+			else {
+				theContract = "il contributo";
 			}
 			this.contract = contract;
 			this.mail = mail;
@@ -275,7 +275,8 @@ public class MailSender implements Serializable {
 		public String getMail() {
 			return mail;
 		}
-		
+
+
 		public String getTheContract() {
 			return theContract;
 		}
