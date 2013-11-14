@@ -12,7 +12,7 @@ Questo paragrafo descrive il processo di proposizione e di approvazione di una c
 \item
 Il Responsabile Scientifico, insieme al RAS, valuta i costi e stila la Tabella di Ripartizione dei compensi.
 \item Il RAS prepara un documento da discutere nel prossimo Consiglio di Dipartimento, che deciderà se approvare o meno la convenzione.
-\item In caso di approvazione da parte del consiglio, l'UAS procede all'inserimento della stessa in CIA e in Jama.\newpage
+\item In caso di approvazione da parte del consiglio, l'UAS procede all'inserimento della stessa in CIA e in Jama.
 \end{enumerate}
 \paragraph{Livello Gestionale}
 Il Livello Gestionale descrive alcuni requisiti dell'applicazione.\newline
@@ -54,4 +54,26 @@ Ognuno dei \textit{framework} sopra menzionati verrà discusso in dettaglio  nel
 Come è facilmente intuibile, questo capitolo mostrerà come si usa l'applicazione, descrivendo come utilizzare ognuna delle funzionalità dell'applicazione. In realtà, l'interfaccia di Jama non è complicata, ma è sempre bene far vedere in maniera esatta come si usa. Verranno inclusi \textit{screenshot} e spiegazioni dettagliate di ogni aspetto dell'applicazione: dalla creazione di una convenzione, alla sua modifica, alla visualizzazione, a tutte le altre funzionalità.
 \section{Dietro le Quinte}
 Questo capitolo descrive come il sistema reagisce internamente all'input dell'utente. E' pensato per chi avrà a che fare con l'ampliamento delle funzionalità dell'applicazione, per avere un'idea iniziale di come affrontare il problema. Si occuperà di aspetti non trattati altrove, ad esempio come funziona il Login e come si ottengono le convenzioni da visualizzare.
+Nei prossimi paragrafi si dà una breve descrizione delle idee principali dietro ad ognuno di questi argomenti.
+\paragraph{Login}
 Senza entrare nei dettagli, è opportuno far notare subito che qualora le credenziali inserite nella fase di Login non vengano riconosciute consultando il database interno del'applicazione, si provvederà a contattare un database di facoltà, \textsl{SIAF}, attraverso il protocollo \textsl{LDAP} - LDAPS in realtà, cioè LDAP Secure - gestito in Jama dalla libreria OpenLDAP, che verrà descritta in un paragrafo successivo.
+\paragraph{Lista convenzioni}
+Ogni lista di convenzioni ricopre un ruolo centrale in Jama, e quindi è opportuno descriverle in maniera approfondita. Non qui, non è il posto adatto, ma intanto si prenda coscienza del fatto che alla base di ogni lista delle convenzioni ci sono i seguenti elementi:
+\begin{itemize}
+\item un file \texttt{.xhtml}
+\item un bean \textsl{controllore di pagina}
+\item un \textit{lazy model}
+\item un Data Access Object (DAO)\newline
+\end{itemize}
+Il concetto è: il file .xhtml definisce il layout, in cui finiscono i dati recuperati dal controllore di pagina attraverso il DAO\footnote{Il componente che dialoga con il database}, rappresentati tramite un lazy model. La questione sarà più chiara in seguito, ma questa è l'idea.
+\paragraph{Creazione e Modifica di un Entità}
+I componenti da definire durante l'inclusione di una nuova entità nel modello sono i seguenti:
+\begin{itemize}
+\item una pagina \texttt{.xhtml}
+\item (opzionale) un bean di presentazione
+\item un controllore
+\item un DAO\newline
+\end{itemize}
+Il concetto è simile al paragrafo precedente: il controllore recupera i dati attraverso il DAO, il bean di presentazione li 'formatta' nella maniera adatta per visualizzarli nella pagina.
+\paragraph{Strategie per il calcolo delle aliquote}
+Durante l'inserimento di una convenzione, non tutti i campi della ripartizione sono 'liberi': alcuni, la maggior parte in realtà, sono calcolati in funzione di altri dati. Per gestire in maniera efficace la questione, e per permettere la possibilità di cambiare aliquote con facilità, si usa il pattern \textsl{Strategy}. L'idea di base è incapsulare l'algoritmo del calcolo delle aliquote dentro un oggetto, definito in termini di un'interfaccia ben definita. Così, qualora si debba cambiare l'algoritmo, basta implementare l'interfaccia in un nuovo oggetto. 
