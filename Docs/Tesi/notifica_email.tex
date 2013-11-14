@@ -1,0 +1,71 @@
+Nell'applicazione ricopre un ruolo cruciale la notifica ai Docenti di ciò che riguarda contratti da lui stipulati, che avviene tramite e-mail.\\
+Qui di seguito viene illustrata la struttura del codice che viene usato per questo procedimento e un esempio di template:
+
+\begin{lstlisting}
+public void notifyEvent(Contract c) {
+	
+	TemplateFiller filler = new TemplateFiller(c, "email@address.com");
+	StringWriter out = new StringWriter();
+
+	Template template = Config.fmconf.getTemplate(Config.templateFileName);
+	temp.process(filler, out);
+	String mailContent = out.toString();
+
+	User u = userDao.getBySerialNumber(c.getChief().getSerialNumber());
+	String email = u.getEmail();
+
+	send(email, "Title", mailContent);
+}
+
+private void send(String recipientEmail, String subject, String text) {
+
+	String host = "smtp.gmail.com";
+	String username = "jama.mail.services";
+	String password = "password";
+
+	MimeMessage message = new MimeMessage(mailSession);
+	try {
+
+		message.setRecipient(RecipientType.TO, new InternetAddress(recipientEmail));
+		message.setSubject(subject);
+		message.setText(text);
+		message.saveChanges();
+
+		Transport t = mailSession.getTransport("smtps");
+		try {
+			t.connect(host, username, password);
+			t.sendMessage(message, message.getAllRecipients());
+		} finally {
+			t.close();
+		}
+
+	} catch (MessagingException e) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
+	}
+}
+
+public class TemplateFiller {
+	private Contract contract;
+	private String mail;
+
+
+	public TemplateFiller(Contract contract, String mail) {
+		super();
+		this.contract = contract;
+		this.mail = mail;
+	}
+
+
+	public Contract getContract() {
+		return contract;
+	}
+
+
+	public String getMail() {
+		return mail;
+	}
+
+}
+\end{lstlisting}
+

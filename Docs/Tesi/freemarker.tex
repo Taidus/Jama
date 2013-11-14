@@ -186,8 +186,3 @@ public class Test {
 }
 \end{lstlisting}
 
-\subsubsection{FreeMarker in Jama}
-Nell'applicazione, FreeMarker è adoperato per ricavare il testo da inviare tramite le e-mail di notifica a partire da un template.\\
-La configurazione di FreeMarker viene definita una sola volta all'avvio dell'applicazione, ed è accessibile tramite la classe \lstinline{util.Config} (che contiene la configurazione di Jama). La classe \lstinline{Config} espone inoltre anche gli attributi che contengono i nomi dei file di template.
-La classe che invece utilizza FreeMarker è quella che si occupa dell'invio di e-mail, cioè il \lstinline{MailSender}, che si trova nel package \lstinline{Util}. Qui di seguito è riportato un estratto del codice che si occupa dell'invio della mail di notifica della creazione di un contratto:
-
