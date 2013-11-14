@@ -1,0 +1,57 @@
+L'applicazione Jama si occupa della gestione delle Convenzioni. Una convenzione è un contratto tra un Responsabile Scientifico - tipicamente un docente - ed una azienda per fare ricerca scientifica su un argomento concordato. In particolare, Jama serve a tenere traccia dello stato di tutte le convenzioni presenti e passate all'interno del \textsl{Dipartimento di Ingegneria dell'Informazione}, con una possibile futura estensione ad altri dipartimenti dell'Ateneo.\newline
+Questo capitolo, come si può intuire, è un'introduzione al resto del documento, che descrive brevemente il contenuto dei prossimi capitoli.\newline
+Per prima cosa si descrive il "dietro le quinte" del problema, ovvero il processo di definizione di una convenzione: i primi contatti tra un docente ed un'azienda, l'approvazione da parte del Consiglio, e tutto ciò che ne consegue; verranno inoltre descritti brevemente i requisiti dell'applicazione, prima di passare alla vera descrizione del lavoro degli autori: com'è fatta l'applicazione, come si usa, e anche qualche nozione sugli strumenti usati per arrivare al risultato finale.
+
+\section{Processo di definizione di una Convenzione}
+La descrizione del processo è tratta da un documento ufficiale dell'\textsl{Università degli Studi di Firenze}\footnote{\url{http://www.polobiotec.unifi.it/upload/sub/att_commerciale/att_commerciale.pdf}}. Quella che segue è una descrizione più informale.
+
+\paragraph{Livello Politico Gestionale}
+Questo paragrafo descrive il processo di proposizione e di approvazione di una convenzione.\newline
+\begin{enumerate}
+\item Il Responsabile Scientifico prende contatto con un'azienda per accordarsi sui termini dell'eventuale convenzione che li legherà.
+\item
+Il Responsabile Scientifico, insieme al RAS, valuta i costi e stila la Tabella di Ripartizione dei compensi.
+\item Il RAS prepara un documento da discutere nel prossimo Consiglio di Dipartimento, che deciderà se approvare o meno la convenzione.
+\item In caso di approvazione da parte del consiglio, l'UAS procede all'inserimento della stessa in CIA e in Jama.\newpage
+\end{enumerate}
+\paragraph{Livello Gestionale}
+Il Livello Gestionale descrive alcuni requisiti dell'applicazione.\newline
+\begin{enumerate}
+\item Una settimana prima della scadenza di ogni rata della convenzione, Jama provvede ad inviare una mail al Responsabile Scientifico, che dovrà indicare se procedere o meno all'emissione della nota di debito - inviando una mail alla struttura amministrativa adatta.
+\item In caso il Responsabile Scientifico dia il suo benestare, l'amministrazione emette la nota di debito e la registra su Jama. In caso contrario, l'UAS prevede a modificare la scadenza della rata su Jama.
+\item All'emissione della fattura di una rata, l'Amministrazione provvede a registrarla in Jama.\newline
+\end{enumerate}
+
+\section{Requisiti}
+
+Il precedente paragrafo introduce alcuni dei requisiti principali dell'applicazione: come già detto, Jama si occupa della gestione delle convenzioni. Quello che non è stato ancora detto è che si occupa anche dei \textsl{Contributi}: un contributo è molto simile ad una convenzione, le uniche differenze sono che non è ammessa una ripartizione ad un personale, non c'è fattura ma solo ricevuta, non c'è IVA, la tassazione di Ateneo ha aliquote diverse.\newline
+Dopo questa doverosa precisazione, si elencano i requisiti di Jama:
+
+\begin{itemize}
+\item inserire una convenzione/contributo
+\item visualizzare l'elenco delle convenzioni/contributi
+\item visualizzazione dello scadenziario
+\item gestione delle rate di una convenzione/contributo (inserimento, modifica, eliminazione, visualizzazione)
+\item modifica di una convenzione/contributo
+\item eliminazione di una convenzione/contributo
+\item visualizzazione di una convenzione/contributo\newline
+\end{itemize}
+Il prossimo capitolo formalizzerà meglio i requisiti precedenti, attraverso la descrizione dei \textsl{Casi d'Uso} dell'applicazione, ovvero delle funzionalità implementate e del modo in cui un utente possa utilizzarle.
+
+\section{Analisi}
+In questo capitolo verrà descritto il lavoro iniziale da fare quando si sviluppa un'applicazione: un \textsl{Modello di Dominio} e una descrizione dei \textsl{Casi d'Uso}.
+\paragraph{Modello di Dominio}
+Il Modello di Dominio è una descrizione delle relazioni tra le \textsl{classi} dell'applicazione: senza addentrarsi nei dettagli della \textsl{Programmazione ad Oggetti}, il concetto è che una classe rappresenta un oggetto del mondo reale; così una \textsl{Convenzione} diventa un \textsl{Agreement} nella nostra applicazione, come un \textsl{Responsabile Scientifico} diventa uno \textsl{ChiefScientist}.\newline 
+I termini del Modello di Dominio sono in inglese, come si usa fare nell'Ingegneria del Software, perciò di solito si stila un \textsl{Dizionario} che associa termini del dominio a termini del modello: ad esempio, nel dizionario si scriverà qualcosa tipo ''Convenzione = Agreement'', così da non perdersi nelle eventuali ambiguità provocate dall'uso di due lingue diverse.\newline
+Quest'ultimo aspetto è una delle caratteristiche più utili di un modello di dominio: specifica un insieme di termini non ambigui che si riferiscono al dominio. In questo modo tutte le volte che ci si riferirà ad un Responsabile Scientifico si scriverà "Responsabile Scientifico", e non "Docente" per esempio, così che non ci sia modo di confondersi. Sembra un problema di poco conto, ma è fondamentale mettersi d'accordo su come ci si riferisce ad uno stesso concetto, per evitare che il caos prenda il controllo e regni sovrano.
+\paragraph{Casi d'Uso}
+Il diagramma dei Casi d'Uso descrive l'insieme delle funzionalità dell'applicazione, mettendo in evidenza come usarle e chi le usa. In questo modo, per esempio, si specifica che è un Operatore che si occupa dell'\textsl{Inserimento di una Convenzione/Contributo}, e non un Responsabile Scientifico.\newline
+Il diagramma dei Casi d'Uso è una specifica di alto livello di ciò che l'applicazione deve fare, ed è per questo che è fondamentale per lo sviluppo iniziale di un'applicazione: gli sviluppatori e gli \textsl{Stakeholders} - chi ha interesse nello sviluppo dell'applicazione - si possono mettere d'accordo su cosa l'applicazione deve fare, e come lo deve fare, cioè come l'utente deve interagire con il sistema; spesso quest'ultimo punto viene specificato in termini di \textsl{Mockups}, ovvero di disegni che prototipizzino quella che diventerà l'interfaccia utente.
+\section{Tecnologie}
+L'applicazione è stata sviluppata in \textsl{Java}, con l'aiuto di alcuni \textit{framework} che gestiscono vari aspetti dell'architettura. In particolare, \textsl{JPA} - \textsl{Java Persistence API} all'anagrafe - si occupa, insieme ad \textsl{Hibernate}, della persistenza - un problema ricorrente nello sviluppo di applicazioni \textit{Enterprise}  che verrà discusso meglio nel paragrafo dedicato; \textsl{Java Server Faces}, o \textsl{JSF}, si occupa del cosiddetto \textsl{Presentation Layer} dell'applicazione, ovvero dell'interfaccia utente; \textsl{CDI}, ovvero \textsl{Context and Dependency Injection}, è un grande aiuto nello sviluppo generale dell'applicazione, permettendo di gestire in maniera semplice ed efficace le relazioni tra i vari componenti dell'applicazione; infine \textsl{Deltaspike} si occupa della gestione dei ruoli e dei permessi degli utenti dell'applicazione.\newline
+Ognuno dei \textit{framework} sopra menzionati verrà discusso in dettaglio  nel Capitolo ~\ref{chapter:Tecnologie}, che descriverà meglio il loro ruolo, i vantaggi ottenuti dal loro uso e il modo con cui usarli.
+\section{Utilizzo}
+Come è facilmente intuibile, questo capitolo mostrerà come si usa l'applicazione, descrivendo come utilizzare ognuna delle funzionalità dell'applicazione. In realtà, l'interfaccia di Jama non è complicata, ma è sempre bene far vedere in maniera esatta come si usa. Verranno inclusi \textit{screenshot} e spiegazioni dettagliate di ogni aspetto dell'applicazione: dalla creazione di una convenzione, alla sua modifica, alla visualizzazione, a tutte le altre funzionalità.
+\section{Dietro le Quinte}
+Questo capitolo descrive come il sistema reagisce internamente all'input dell'utente. E' pensato per chi avrà a che fare con l'ampliamento delle funzionalità dell'applicazione, per avere un'idea iniziale di come affrontare il problema. Si occuperà di aspetti non trattati altrove, ad esempio come funziona il Login e come si ottengono le convenzioni da visualizzare.
+Senza entrare nei dettagli, è opportuno far notare subito che qualora le credenziali inserite nella fase di Login non vengano riconosciute consultando il database interno del'applicazione, si provvederà a contattare un database di facoltà, \textsl{SIAF}, attraverso il protocollo \textsl{LDAP} - LDAPS in realtà, cioè LDAP Secure - gestito in Jama dalla libreria OpenLDAP, che verrà descritta in un paragrafo successivo.
