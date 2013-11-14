@@ -2,13 +2,13 @@
 Si descrive la struttura di un bean, da qui in avanti \texttt{Manager}, che possa essere usato dallo strato di presentazione per la creazione e modifica di una entità di business.
 
 \paragraph{Caratteristiche del Manager}
-\texttt{Manager} avrà un riferimento all'entità di business che stiamo creando che possa essere riempita in base ai campi riempiti dall'utente a video.
+\texttt{Manager} avrà un riferimento all'entità di business che stiamo creando o modificando che possa essere riempita in base ai campi riempiti dall'utente a video.
 Come si è detto la creazione/modifica di una entità di business in generale è realizzata attraverso più passi di una procedura, e quindi non può essere confinata in una sola request. Questo suggerisce che \texttt{Manager} debba essere 
 \textsl{reques scoped}. Si sottolinea che non sarebbe possibile usare un bean di tipo \textsl{session scoped} perchè questo comporterebbe la condivisione del bean fra due tab del browser: l'utente che crede di creare due entità in parallelo
 sta invece modificando la stessa!
 
 Direttamente collegato alla questione dello scope c'è il problema del detachment: se il Persistence Context che viene usato ha il proprio ciclo di vita legato alla transazione, necessariamente dopo il recupero dal database l'entità diventerà
-detached. Come si è spiegato in \ref{jpa} lo stato di un entità detached non verrà scritto sul database in nessuna transazione. Sebbene sia possibile riportare un' entità da detached a managed tramite
+detached. Questo problema si pone in realtà solo nel caso della modifica, per la creazione infatti possiamo pensare di persistere l'entità solo al termine della procedura. Come si è spiegato in \ref{jpa} lo stato di un entità detached non verrà scritto sul database in nessuna transazione. Sebbene sia possibile riportare un' entità da detached a managed tramite
 l'operazione di \texttt{merge()}, in generale è preferibile non farlo perchè la gestione dei riferimenti dell'entità è problematica. Per ovviare a questo problema possiamo optare per un Entity Manager di tipo extended. Questo ci garantisce
 che durante tutto il ciclo di vita del bean \texttt{Manger}, ovvero per tutta la conversation, avremmo un solo Persistence Context, e di conseguenza l'entità che stiamo modificando non sarà mai detached.
 
@@ -102,7 +102,9 @@ public class Manager implements Serializable {
 \end{lstlisting}
 
 Ricapitolando il bean così strutturato ha un tempo di vita pari alla durata della conversazione, il persistence context associato all'entity manager lo stesso, quindi nessuna entità sarà mai detached, inoltre viene effettuata una
-transazione solo chiamando il metodo \texttt{save()}: in questo modo è possibile annullare le modifche semplicemnte chiamando il metodo \texttt{cancel()}.
+transazione solo chiamando il metodo \texttt{save()}: in questo modo è possibile annullare le modifche semplicemnte chiamando il metodo \texttt{cancel()}. Chiamare \texttt{cancel()} o \texttt{save()} causa
+anche l'invocazione di \texttt{close()} che segna la fine del ciclo di vita del bean essendo annotato con \texttt{@Remove}e la chiusura della conversazione.
+Nel caso di \texttt{cancel()} quindi l'entità modificata diviene detached e il suo stato non verrà scritto sul database in nessuna successiva transazione.
 
 
 
