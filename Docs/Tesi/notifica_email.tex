@@ -69,3 +69,17 @@ public class TemplateFiller {
 }
 \end{lstlisting}
 
+\begin{lstlisting}
+Gent.mo Professore,
+le comunichiamo che la convenzione dal titolo "${contract.title}" fra ${contract.department.name} e ${contract.company.name} e'  stata chiusa, con un fatturato complessivo di ${contract.turnOver}.
+
+Ringraziandola per l'attenzione, si inviano cordiali saluti.
+
+Questo messaggio  e' stato inviato p.c. anche al Segretario Amministrativo all'indirizzo ${mail}.
+\end{lstlisting}
+
+Come è possibile notare, viene usata la libreria FreeMarker per produrre il contenuto della mail. Si è già spiegato il suo funzionamento nel paragrafo \ref{freemarker}; qui si può vedere l'applicazione all'operazione di notifica.\\
+La configurazione di FreeMarker viene definita una sola volta all'avvio, ed è accessibile tramite la classe \lstinline{util.Config} (che contiene la configurazione di Jama). La classe \lstinline{Config} espone inoltre anche gli attributi che contengono i nomi dei file di template.\\
+Definita la configurazione è quindi possibile passare al caricamento del template e al suo utilizzo. Tale operazione viene eseguita nel metodo \lstinline{notifyEvent} tramite la chiamata al metodo \lstinline{getTemplate}. Quest'ultimo viene poi riempito utilizzando il bean \lstinline{TemplateFiller} e subito dopo viene prodotto l'output. \\
+A questo punto viene chiamato il metodo \lstinline{send}, che è quello che si occupa dell'invio vero e proprio della posta elettronica. Per fare ciò, vengono semplicemente adoperate le API Java del package \lstinline{javax.mail}, usando gli opportuni parametri dipendenti dall'applicazione (come ad esempio l'host o il protocollo).\\
+L'intero processo viene eseguito dalla classe \lstinline{MailSender}, che si trova nel package \lstinline{Util}.
