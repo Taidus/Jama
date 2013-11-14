@@ -18,6 +18,30 @@
 
 			<p:row>
 				<p:column>
+					<h:outputText value="#{msgs.serialNumber}" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="serial" value="#{userEditor.user.serialNumber}" label="#{msgs.serialNumber}" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}">
+					</h:inputText>
+
+					<h:outputText value="#{userEditor.user.serialNumber}" rendered="#{cc.attrs.mode == 'profile'}" />
+				</p:column>
+
+
+				<p:column>
+					<p:commandButton value="#{msgs.import}" process="@this serial" update="usrDataPanelGrid" actionListener="#{userEditor.importUser()}"
+						rendered="#{cc.attrs.mode == 'wizard'}" />
+				</p:column>
+
+				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:message styleClass="errorMessage" id="serialError" for="serial" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
 					<h:outputText value="#{msgs.name}:" />
 				</p:column>
 
@@ -74,9 +98,8 @@
 				</p:column>
 			</p:row>
 
+
 			<p:row rendered="#{cc.attrs.mode == 'wizard'}">
-
-
 				<p:column>
 					<h:outputText value="#{msgs.password}" />
 				</p:column>
@@ -91,8 +114,9 @@
 				<p:column>
 					<p:message id="confirmPasswordError" styleClass="errorMessage" autoUpdate="true" for="password" />
 				</p:column>
-
 			</p:row>
+
+
 			<p:row rendered="#{cc.attrs.mode == 'wizard'}">
 				<p:column>
 					<h:outputText value="#{msgs.confirmPassword}" />
@@ -105,7 +129,6 @@
 				<p:column>
 					<p:message id="requiredConfirmPasswordError" styleClass="errorMessage" autoUpdate="true" for="confirmPassword" />
 				</p:column>
-
 			</p:row>
 
 
@@ -128,26 +151,6 @@
 				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
 					<p:message styleClass="errorMessage" id="typeError" for="type" />
 				</p:column>
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.serialNumber}" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="serial" value="#{userEditor.user.serialNumber}" label="#{msgs.serialNumber}" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}">
-						<f:convertNumber />
-					</h:inputText>
-
-					<h:outputText value="#{userEditor.user.serialNumber}" rendered="#{cc.attrs.mode == 'profile'}" />
-				</p:column>
-
-				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message styleClass="errorMessage" id="serialError" for="serial" />
-				</p:column>
-
 			</p:row>
 
 			<p:row>
@@ -179,25 +182,13 @@
 
 		</p:panelGrid>
 
-		<p:commandButton value="#{msgs.changePassword_button}" type="button" onclick="w_change_passwd.show()" rendered="#{cc.attrs.mode == 'profile'}">
-
-		</p:commandButton>
-
+		<p:commandButton value="#{msgs.changePassword_button}" type="button" onclick="w_change_passwd.show()" rendered="#{cc.attrs.mode == 'profile'}" />
 
 
 
 
 		<p:commandButton value="#{msgs.save}" process="@form" update="usrDataPanelGrid"
 			oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}" />
-
-		<ui:remove>
-			<p:commandButton type="button" value="#{msgs.cancel}" onclick="w_confirm_cancel_user.show();" />
-
-			<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirm_cancel_user">
-				<p:commandButton value="#{msgs.yes}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
-				<p:commandButton value="#{msgs.no}" onclick="w_confirm_cancel_user.hide();" type="button" />
-			</p:confirmDialog>
-		</ui:remove>
 
 		<p:commandButton value="#{msgs.cancel}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
 
@@ -208,8 +199,7 @@
 
 	</h:form>
 
-	<dialogs:changePasswdDialog>
-	</dialogs:changePasswdDialog>
+	<dialogs:changePasswdDialog />
 
 
 </composite:implementation>
