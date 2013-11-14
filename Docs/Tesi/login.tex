@@ -4,7 +4,24 @@ La schermata di login si presenta in maniera molto semplice: è costituita da un
 Quando l'utente invia il form viene chiamato il metodo \lstinline{login} dello \lstinline{UserManager}, listato qui di seguito:
 
 \begin{lstlisting}
-INSERIRE LISTATO
+public String login(String password) {
+		User u = userDao.getBySerialNumber(insertedSerialNumber);
+		try {
+			if (u != null && u.login(password)) {
+				loggedUser = new Principal(u);
+				System.out.println("User Login: loggedUser= " + u);
+				return "home";
+			} else {
+				FacesMessage msg = Messages.getMessage("info_badLogin");
+				msg.setSeverity(FacesMessage.SEVERITY_INFO);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				
+				return "login";
+			}
+		} catch (IllegalStateException e) {
+			return "error";
+		}
+	}
 \end{lstlisting}
 
 Per prima cosa, il sistema recupera l'utente associato alla matricola inserita tramite il DAO \lstinline{UserDaoBean}. Esso esegue un'interrogazione al database locale; se non trova nessuna corrispondenza, il compito di cercare la matricola viene delegato  allo \lstinline{LdapManager}, il quale effettua una ricerca nel sistema di autenticazione di Ateneo utilizzando il protocollo LDAP per la comunicazione. Se anche in questo caso non viene trovato un riscontro, l'utente viene avvertito con un messaggio di errore.\\
