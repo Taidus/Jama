@@ -1,12 +1,11 @@
-\subsection{JLDAP}
 \textsl{LDAP} è un protocollo per l'accesso a cartelle. Definisce un meccanismo in cui i client mandano richieste e ricevono risposte da server LDAP.
 \textsl{JLDAP} è una libreria sviluppata da \textsl{Novell} che permette l'accesso al servizio di gestione di cartelle LDAP.
 
-LDAP viene utilizzato dall'applicativo per recuperare, tramite un server LDAP di SIAF, informazioni riguardo agli utenti al momento del login. In particolare consente ai docenti di ateneo di loggarsi con le proprie credenziali uniche di ateneo 
+LDAP viene utilizzato dall'applicativo per recuperare, tramite un server LDAP di SIAF, informazioni riguardo agli utenti. In particolare consente ai docenti di ateneo di loggarsi con le proprie credenziali uniche di ateneo 
 senza che ci sia bisogno di inserirli a mano in qualche database interno.
 
 \paragraph{Funzionamento}
-L'operazione centrale è la ricerca dell'utente tramite matricola nel server LDAP. Il metodo che consente di effettuare questa operazione è:
+L'operazione centrale è la ricerca di oggetti tramite filtri di ricerca su vari attributi nel server LDAP. Il metodo che consente di effettuare questa operazione è:
 
 \begin{lstlisting}
  LDAPSearchResults search(String base, int scope, String filter, String[] attrs, boolean typesOnly) 
@@ -15,12 +14,12 @@ L'operazione centrale è la ricerca dell'utente tramite matricola nel server LDA
 I parametri più interessanti di questo metodo sono:
 \begin{itemize}
  \item \textsl{base}\\
-  Serve per specificare il punto di partenza della query, ovvero la cartella a partire dalla quale effettuare la ricerca. Per l'applicativo tale parametro è impostato a ``ou=people,dc=dinfo,dc=unifi,dc=it'';
+  Serve per specificare il punto di partenza della query, ovvero la cartella a partire dalla quale effettuare la ricerca. 
   \item \textsl{filter}\\
-  Serve per specificare i criteri di ricerca: si specificano i valori di alcuni attributi dell'entità cercata. Nel caso della ricerca per matricola occore impostare ``uid=<matricola>''.
+  Serve per specificare i criteri di ricerca: si specificano i valori di alcuni attributi dell'entità cercata.
 \end{itemize}
 
-Il risultato di questa operazione è una entità rappresentata così:
+Il risultato di questa operazione è una entità che, per esempio, può essere rappresentata così:
 
 \begin{lstlisting}
 dn: uid=D064678,ou=docenti,ou=personale,ou=people,dc=unifi,dc=it
@@ -36,12 +35,3 @@ sn: COGNOME
 userPassword:: {md5}e33ENX1ZdUkzaXNIMSthVEVFejErZUVoM1VRPT1
 \end{lstlisting}
 
-Una volta ottenuta l'entità è possibile effettuare il login come spiegato in INSERIRE RIFERIMENTO A LOGIN.
-
-
-
-
-
-
-\subsection{FreeMarker}
-TODO

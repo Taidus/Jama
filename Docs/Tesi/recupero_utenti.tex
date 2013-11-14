@@ -1,0 +1,33 @@
+La classe che si occupa del recupero degli utenti è \texttt{UserDaoBean}: è possibile recuperare gli utenti sia dal database interno sia sfruttando il servizio LDAP in modo del tutto trasparente.
+Il database ha priorità rispetto ad LDAP in modo che sia possibile sovrascrivere alcune informazioni sugli utenti semplicemente inserendoli nel database. Per quanto riguarda il recupero dal database è sufficiente una query per matricola 
+mentre per ottenere i dati dal server LDAP è necessario effettuare qualche operazione in più, perciò il codice che compie questa operazione è stato incapsulato in una classe chiamata \texttt{LdapManager}.
+
+Tale classe effettua la connesione al server LDAP tramite il protoccolo sicuro \textsl{ldaps} e successivamente sfrutta il metodo \texttt{search(...)} come visto in INSERIRE RIFERIMENTO per ottenere i dati sull'utente in base alla sua matricola.
+Tale ricerca è effettuata impostando il parametro \textsl{base} a ``ou=people, dc=dinfo, dc=unifi, dc=it''e \textsl{filter} a ``uid= <matricola> ''. Il parametro base viene letto dal file di configurazione 
+\path{standalone/deployments/Jama.war/WEB-INF/classes/config/ldap.properties}, quindi è possibile cambiarlo in qualsiasi momento se lo schema esposto dal server LDAP dovesse cambiare.
+A partire dai dati contenuti nel \texttt{LDAPSearchResults} restituito da \texttt{search(...)} è possibile istanziare la classe \texttt{User} che rappresenta un utente.
+
+Il metodo di \texttt{UserDaoBean} che restituisce un utente in base alla matricola è riportato qui sotto.
+
+\begin{lstlisting}
+public User getBySerialNumber(String serialNumber) {
+	User result = null;
+	
+	try {
+		result = em.createNamedQuery("User.findBySerialNumber", User.class).setParameter("number", serialNumber).getSingleResult();
+		
+		if (null == result) {
+			result = ldapm.getUser(serialNumber);
+		}
+		
+	} catch (NoResultException e) {
+		result = null;
+	}
+
+	return result;
+
+}
+\end{lstlisting}
+
+
+
