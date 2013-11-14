@@ -1,0 +1,193 @@
+
+\textsl{FreeMarker} è un package Java che consente di produrre output testuale basandosi su un template. È stato progettato specificatamente per la generazione automatica di pagine HTML, anche se può creare vari tipi di pagine. La caratteristica principale è che consente di separare la logica che costruisce la pagina con il template in base alla quale viene prodotta; in questo modo, il template è modificabile senza l'intervento di un programmatore (anche se, senza modificare il codice, chiaramente non è possibile utilizzare informazioni non ricavabili dagli oggetti a cui si ha già accesso).\\
+Nei paragrafi che seguono verrà descritto il package FreeMarker e spiegato come è stato usato all'interno dell'applicazione. Per maggiori informazioni su questo tool, si rimanda alla pagina web relativa al progetto INSERIRE RIFERIMENTO A PAGINA WEB, dalla quale sono stati presi - fra l'altro - gli esempi sul funzionamento e utilizzo del software.
+
+
+\subsubsection{Funzionamento}
+Per il funzionamento di FreeMarker sono necessari due elementi:
+\begin{itemize}
+\item un file di template
+\item i parametri con cui \textquotedblleft riempire\textquotedblright{} il template, che costituiscono il \textit{data model}.
+\end{itemize}
+
+\paragraph{\textit{Data model}}
+Come parametri possono essere usate varie classi Java:
+
+\begin{itemize}
+\item \lstinline{String} per le stringhe
+\item \lstinline{Number} per i numeri
+\item \lstinline{Boolean} per i booleani
+\item \lstinline{List} o gli array Java per sequenze di valori
+\item \lstinline{Map} o bean per coppie chiave-valore (dette \textsl{hash}, come si vedrà fra poco)
+\end{itemize}
+
+Passati questi parametri, FreeMarker costruisce il \textit{data model}, che è essenzialmente un albero così formato:
+
+\begin{itemize}
+\item la radice è un nodo speciale chiamato, appunto, \textit{root}
+\item i nodi intermedi, chiamati anche \textsl{variabili}, possono essere:
+\begin{itemize}
+\item \textit{hashes} se i loro figli sono identficati tramite nomi
+\item \textit{sequences} se i figli sono identificati tramite un indice sequenziale che inizia da 0 (i.e., sono l'equivalente di un array)
+\end{itemize}
+In entrambi i casi, i loro figli vengono detti \textit{subvariables}
+\item le foglie sono dette \textit{scalars}.
+\end{itemize}
+
+Ad esempio:
+
+\begin{lstlisting}
+(root)
+  |
+  +- animals
+  |   |
+  |   +- mouse
+  |   |   |   
+  |   |   +- size = "small"
+  |   |   |   
+  |   |   +- price = 50
+  |   |
+  |   +- elephant
+  |   |   |   
+  |   |   +- size = "large"
+  |   |   |   
+  |   |   +- price = 5000
+  |   |
+  |   +- python
+  |       |   
+  |       +- size = "medium"
+  |       |   
+  |       +- price = 4999
+  |
+  +- test = "It is a test"
+  |
+  +- whatnot
+        |
+        +- fruits
+            |
+            +- (1st) = "orange"
+            |
+            +- (2nd) = "banana"
+\end{lstlisting}
+
+In questo \textit{data model}:
+
+\begin{itemize}
+\item \lstinline{animals}, \lstinline{mouse}, \lstinline{elephant}, \lstinline{python} e \lstinline{whatnot} sono \textit{hashes}
+\item \lstinline{fruits} è una \textit{sequence}
+\item tutti gli altri nodi eccetto \textit{root} sono foglie
+\item \lstinline{mouse} ha come \textit{subvariables} \lstinline{size} e \lstinline{price} (così come anche \lstinline{elephant}, ad esempio).
+\end{itemize}
+
+
+\paragraph{Template} 
+Un file di template è un semplice file di testo (di qualunque tipo) in cui sono presenti delle variabili. Per inserire una variabile, la sintassi è:
+
+\begin{lstlisting}
+${nome}
+\end{lstlisting}
+
+Un esempio di file di template è il seguente:
+
+\begin{lstlisting}
+<html>
+<head>
+  <title>Welcome!</title>
+</head>
+<body>
+  <h1>Welcome ${user}!</h1>
+  <p>Our latest product:
+  <a href="${latestProduct.url}">${latestProduct.name}</a>!
+</body>
+</html>
+\end{lstlisting}
+
+\paragraph{Output}
+Una volta che si ha un file di template e un \textit{data model} opportuno, è semplice immaginare come produrre l'output: si cercano all'interno del modello nodi con lo stesso nome delle variabili inserite nel programma e si esegue una \textsl{interpolazione}, sostituendo il valore della variabile nel template con quello della variabile nel modello. Se nel template si fa riferimento ad una proprietà di una variabile, si cerca quella proprietà fra le \textit{subvariables} della variabile nel modello. Ad esempio, considerando il template precedente ed un \textit{data model} così composto:
+
+\begin{lstlisting}
+(root)
+  |
+  +- user = "Big Joe"
+  |
+  +- latestProduct
+      |
+      +- url = "products/greenmouse.html"
+      |
+      +- name = "green mouse"  
+\end{lstlisting}
+
+l'output sarà il file:
+
+\begin{lstlisting}
+<html>
+<head>
+  <title>Welcome!</title>
+</head>
+<body>
+  <h1>Welcome Big Joe!</h1>
+  <p>Our latest product:
+  <a href="products/greenmouse.html">green mouse</a>!
+</body>
+</html>
+\end{lstlisting}
+
+\subsubsection{Utilizzo}
+Per utilizzare FreeMarker bisogna innanzitutto creare una configurazione tramite la classe \lstinline{Configuration}, specificando, tra le altre cose, la directory in cui si trovano i template e la codifica da adoperare.\\
+In seguito, bisogna definire il modello. Come già detto, per fare ciò è possibile usare diverse classi Java, a seconda del tipo di variabile da inserire.\\
+Infine, si crea un oggetto di tipo \lstinline{Template}, lo si inizializza con il template desiderato e si produce l'output tramite la chiamata al metodo \lstinline{process} dell'oggetto \lstinline{Template}, la cui signature è:
+
+\begin{lstlisting}
+public void process(java.lang.Object dataModel, java.io.Writer out) throws TemplateException, java.io.IOException
+\end{lstlisting}
+
+dove \lstinline{dataModel} è ovviamente il modello e \lstinline{out} è il \lstinline{Writer} sul quale produrre il risultato.\\
+Di seguito è riportato un semplice esempio di un'applicazione che esegue il processo appena descritto:
+
+\begin{lstlisting}
+import freemarker.template.*;
+import java.util.*;
+import java.io.*;
+
+public class Test {
+
+    public static void main(String[] args) throws Exception {
+        
+        /* ----------------------------------------------------------------------- */    
+        /* You should do this ONLY ONCE in the whole application life-cycle:       */    
+    
+        /* Create and adjust the configuration */
+        Configuration cfg = new Configuration();
+
+        cfg.setDirectoryForTemplateLoading(new File("/where/you/store/templates"));
+        cfg.setObjectWrapper(new DefaultObjectWrapper());
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
+        cfg.setIncompatibleImprovements(new Version(2, 3, 20));
+
+        /* ----------------------------------------------------------------------- */    
+        /* You usually do these for many times in the application life-cycle:      */    
+
+        /* Create a data-model */
+        Map root = new HashMap();
+        root.put("user", "Big Joe");
+        Map latest = new HashMap();
+        root.put("latestProduct", latest);
+        latest.put("url", "products/greenmouse.html");
+        latest.put("name", "green mouse");
+
+        /* Get the template */
+        Template temp = cfg.getTemplate("test.ftl");
+
+        /* Merge data-model with template */
+        Writer out = new OutputStreamWriter(System.out);
+        temp.process(root, out);
+    }
+}
+\end{lstlisting}
+
+\subsubsection{FreeMarker in Jama}
+Nell'applicazione, FreeMarker è adoperato per ricavare il testo da inviare tramite le e-mail di notifica a partire da un template.\\
+La configurazione di FreeMarker viene definita una sola volta all'avvio dell'applicazione, ed è accessibile tramite la classe \lstinline{util.Config} (che contiene la configurazione di Jama). La classe \lstinline{Config} espone inoltre anche gli attributi che contengono i nomi dei file di template.
+La classe che invece utilizza FreeMarker è quella che si occupa dell'invio di e-mail, cioè il \lstinline{MailSender}, che si trova nel package \lstinline{Util}. Qui di seguito è riportato un estratto del codice che si occupa dell'invio della mail di notifica della creazione di un contratto:
+
