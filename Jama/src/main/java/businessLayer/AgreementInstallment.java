@@ -31,11 +31,18 @@ public class AgreementInstallment extends Installment implements
 
 	@Min(0)
 	private int ivaVoucherNumber;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn
+	protected InstallmentShareTable shareTable;
 
 	
 
 	public AgreementInstallment() {
 		this.IVA_amount = Config.defaultIva;
+		//TODO
+		this.shareTable = new InstallmentShareTable();
+
 	}
 
 	
@@ -65,6 +72,9 @@ public class AgreementInstallment extends Installment implements
 			super._copy(copy);
 
 			AgreementInstallment agrCopy = (AgreementInstallment) copy;
+			
+			this.shareTable = new InstallmentShareTable();
+			this.shareTable.copy(agrCopy.getShareTable());
 
 			this.ivaVoucherNumber = agrCopy.ivaVoucherNumber;
 			this.IVA_amount = agrCopy.IVA_amount;
@@ -89,5 +99,18 @@ public class AgreementInstallment extends Installment implements
 				+ reportRequired + ", note=" + note + ", agreement id="
 				+ contract.getId() + ", shareTable=" + shareTable + "]";
 	}
+	
+	public void initShareTableFromContract(Contract c) {
+		this.shareTable.copy(c.getShareTable());
+	}
+	
+	public InstallmentShareTable getShareTable() {
+		return shareTable;
+	}
+
+	public void setShareTable(InstallmentShareTable shareTable) {
+		this.shareTable = shareTable;
+	}
+
 
 }

@@ -37,7 +37,6 @@ public abstract class Installment implements Serializable {
 	protected static final long serialVersionUID = 1L;
 
 	public Installment() {
-		this.shareTable = new InstallmentShareTable();
 		this.wholeTaxableAmount = Money.zero(Config.currency);
 		this.date = new Date();
 		this.invoiceDate = new Date();
@@ -82,9 +81,7 @@ public abstract class Installment implements Serializable {
 
 	protected boolean deadlineNotified;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn
-	protected InstallmentShareTable shareTable;
+	
 
 	public Contract getContract() {
 		return contract;
@@ -170,13 +167,6 @@ public abstract class Installment implements Serializable {
 		return id;
 	}
 
-	public InstallmentShareTable getShareTable() {
-		return shareTable;
-	}
-
-	public void setShareTable(InstallmentShareTable shareTable) {
-		this.shareTable = shareTable;
-	}
 
 	public Money getWholeAmount() {
 		return wholeTaxableAmount
@@ -218,15 +208,10 @@ public abstract class Installment implements Serializable {
 		this.reportRequired = copy.reportRequired;
 		this.note = copy.note;
 		this.contract = copy.getContract();
-		this.shareTable = new InstallmentShareTable();
 		this.wholeTaxableAmount = copy.wholeTaxableAmount;
 
-		this.shareTable.copy(copy.getShareTable());
 
 	}
 
-	public void initShareTableFromContract(Contract c) {
-		this.shareTable.copy(c.getShareTable());
-	}
-
+	
 }
