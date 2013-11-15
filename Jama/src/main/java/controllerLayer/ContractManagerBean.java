@@ -1,6 +1,5 @@
 package controllerLayer;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,7 +22,6 @@ import org.joda.money.Money;
 
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
-import security.annotations.ViewContractsAllowed;
 import security.annotations.ViewOwnContractsAllowed;
 import util.Config;
 import util.MailSender;
@@ -36,14 +34,12 @@ import businessLayer.ContractShareTable;
 import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
 import daoLayer.DepartmentDaoBean;
-import freemarker.template.TemplateException;
 
 @Named("contractManager")
 @ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ContractManagerBean implements Serializable {
-
 
 	/**
 	 * 
@@ -64,7 +60,7 @@ public class ContractManagerBean implements Serializable {
 
 	@Inject
 	private MailSender mailSender;
-	
+
 	@Inject
 	@Logged
 	private Principal principal;
@@ -141,19 +137,14 @@ public class ContractManagerBean implements Serializable {
 	public void save() {
 		System.out.println("SAVE");
 
-		try {
-			if (creatingNewContract) {
-				mailSender.notifyCreation(contract);
-			}
-
-			if (!editingClosedContract && contract.isClosed()) {
-				mailSender.notifyClosure(contract);
-			}
-		} catch (IOException | TemplateException e) {
-			e.printStackTrace();
-			//TODO gestire l'eccezione, se necessario
+		if (creatingNewContract) {
+			mailSender.notifyCreation(contract);
 		}
-		
+
+		if (!editingClosedContract && contract.isClosed()) {
+			mailSender.notifyClosure(contract);
+		}
+
 		ContractDao.create(contract);
 		close();
 	}
@@ -183,7 +174,7 @@ public class ContractManagerBean implements Serializable {
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
-	
+
 	private String createContract() {
 		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
@@ -196,6 +187,7 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
+
 	@AlterContractsAllowed
 	public String createAgreement() {
 		contract = new Agreement();
@@ -203,12 +195,14 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
+
 	@AlterContractsAllowed
 	public String createFunding() {
 		contract = new Funding();
 		return createContract();
 
 	}
+
 
 	@ViewOwnContractsAllowed
 	public String viewContract() {
@@ -236,7 +230,8 @@ public class ContractManagerBean implements Serializable {
 
 		else if (contract instanceof Funding) {
 			return funHelper;
-		} else {
+		}
+		else {
 			return null;
 		}
 
@@ -247,7 +242,7 @@ public class ContractManagerBean implements Serializable {
 		return contract;
 	}
 
-	
+
 	@AlterContractsAllowed
 	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
@@ -269,6 +264,5 @@ public class ContractManagerBean implements Serializable {
 		c.setDeadlineDate(new Date());
 
 	}
-
 
 }

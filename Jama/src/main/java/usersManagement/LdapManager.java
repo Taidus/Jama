@@ -103,6 +103,7 @@ public class LdapManager {
 				result.setSerialNumber(value);
 			}
 			else if (attributeName.equalsIgnoreCase("userPassword")) {
+				//TODO controllare che funzioni
 				result.setEncryptor(Encryptor.getFromPasswordWithPrefix(value));
 				result.setPassword(value);
 			}
