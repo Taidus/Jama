@@ -30,6 +30,7 @@ public class LdapManager {
 
 	private void connect() throws LDAPException, UnsupportedEncodingException {
 
+		//TODO SOPPRIMERE LA WARNING
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		ssf = new LDAPJSSESecureSocketFactory();
 		LDAPConnection.setSocketFactory(ssf);
@@ -76,39 +77,44 @@ public class LdapManager {
 	@SuppressWarnings("unchecked")
 	private User buildUser(LDAPAttributeSet attributeSet, String dn) {
 		User result = new User();
+		Department d = new Department();
 
 		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet.iterator();
 
 		while (allAttributes.hasNext()) {
 
 			LDAPAttribute attribute = allAttributes.next();
-			String attributeName = attribute.getName();
+			String attributeName = attribute.getName().trim();
 
 			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
-			String value = getValue(allValues);
+			String value = getValue(allValues).trim();
 
-			if (attributeName.trim().equals("givenName")) {
+			//TODO mettere i nomi dei parametri in un file di configurazione
+			if (attributeName.equalsIgnoreCase("givenName")) {
 				result.setName(value);
 			}
-			else if (attributeName.trim().equals("sn")) {
+			else if (attributeName.equalsIgnoreCase("sn")) {
 				result.setSurname(value);
 			}
-			else if (attributeName.trim().equals("mail")) {
+			else if (attributeName.equalsIgnoreCase("mail")) {
 				result.setEmail(value);
 			}
-			else if (attributeName.trim().equals("uid")) {
+			else if (attributeName.equalsIgnoreCase("uid")) {
 				result.setSerialNumber(value);
 			}
-			else if (attributeName.trim().equals("userPassword")) {
+			else if (attributeName.equalsIgnoreCase("userPassword")) {
 				result.setEncryptor(Encryptor.getFromPasswordWithPrefix(value));
 				result.setPassword(value);
+			}
+			else if (attributeName.equalsIgnoreCase("departmentNumber")){
+				d.setCode(value);
+			}
+			else if (attributeName.equalsIgnoreCase("ou")){
+				d.setName(value);
 			}
 		}
 
 		result.setRole(Role.PROFESSOR);
-		Department d = new Department();
-		d.setCode(getDeptFromDN(dn));
-		d.setName(getDeptFromDN(dn));
 		result.addDepartment(d);
 
 		return result;
@@ -158,15 +164,6 @@ public class LdapManager {
 		}
 
 		return result;
-
-	}
-
-
-	// orribile ma necessario se nn si riesce ad avere un campo nella persona!
-	public String getDeptFromDN(String dn) {
-
-		String[] splitted = dn.split(",");
-		return splitted[2].split("=")[1];
 
 	}
 
