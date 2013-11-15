@@ -204,9 +204,46 @@ I casi d'uso del Docente sono rappresentati in figura \ref{use_case_diag_teacher
 
 
 \paragraph{Amministratore}
+Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura \ref{use_case_diag_admin}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Amministratore}
+  \label{use_case_diag_admin}
+  \centering
+    \includegraphics[width=0.8\textwidth]{casi_uso_amministratore.eps}
+\end{figure}
+
+
 \begin{enumerate}
- \item Inserimento di un nuovo utente
+ \item Inserimento di un nuovo utente\\
+ 
+ 
+ Percorso base:
+ l'Amministratore, dopo aver effettutao il login, può cliccare sul pulsante ``Crea nuovo utente''; viene visualizzata una schermata che permette
+ di inserire i dati dell'utente:
+ \begin{itemize}
+  \item Nome
+  \item Cognome
+  \item Matricola
+  \item Email
+  \item	Password\\
+    In realtà i campi che l'Amministratore deve riempire sono due: un campo pasword ed un campo di verifica che devono corrispondere col precedente.
+  \item Ruolo\\
+    L'Amministratore può scegliere il ruolo dal rispettivo menù a tendina, i ruoli disponibili sono Operatore, Amministratore, Docente.
+ \end{itemize}
+ 
+ Una volta completato l'inserimento l'Amministratore clicca sul pulsante ``Salva'', il nuovo utente viene registrato nel sistema. 
+
+ Percorso alternativo 1:
+ l'Amministratore inserisce solo il campo matricola e quindi clicca il pulsante ``Importa Utente da LDAP''. I rimanenti campi, se la matricola è valida,
+ vengono automaticamente importati dal servizio LDAP offerto da SIAF. L'Amministratore conclude la procedura cliccando sul pulsante ``Salva''
+ 
+ Percorso alternativo 2:
+ l'Amministratore in qualunque momento della procedura clicca sul pulsante ``Annulla''; viene presentata a video la schermata precedente,
+ nessun utente viene aggiunto al sistema.
+ 
  \item Visualizzazione della lista degli utenti
+  L'Amministratore, una volta effettuato il login, clicca sul pulsante ``Visualizza utenti''; viene presentata una schermata contenente una lista  degli
+  utenti inseriti nel sistema. L'Amministratore clicca sul pulsante ``Indietro'' per tornare alla Home.
 \end{enumerate}
 
 \paragraph{Tempo}
