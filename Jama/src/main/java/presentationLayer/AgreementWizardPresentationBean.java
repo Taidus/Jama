@@ -12,9 +12,9 @@ import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
 
+import businessLayer.ContractHelper;
 import util.Messages;
 import annotations.Current;
-import controllerLayer.ContractHelper;
 import controllerLayer.ContractManagerBean;
 import daoLayer.ChiefScientistDaoBean;
 

@@ -30,6 +30,7 @@ import annotations.Logged;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Contract;
+import businessLayer.ContractHelper;
 import businessLayer.ContractShareTable;
 import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
@@ -222,18 +223,20 @@ public class ContractManagerBean implements Serializable {
 	@Produces
 	@RequestScoped
 	@Current
-	public ContractHelper getInstallmentManager(AgreementHelper agrHelper, FundingHelper funHelper) {
+	public ContractHelper getInstallmentManager() {
 
-		if (contract instanceof Agreement) {
-			return agrHelper;
-		}
-
-		else if (contract instanceof Funding) {
-			return funHelper;
-		}
-		else {
-			return null;
-		}
+//		if (contract instanceof Agreement) {
+//			return agrHelper;
+//		}
+//
+//		else if (contract instanceof Funding) {
+//			return funHelper;
+//		}
+//		else {
+//			return null;
+//		}
+		
+		return contract.getHelper();
 
 	}
 

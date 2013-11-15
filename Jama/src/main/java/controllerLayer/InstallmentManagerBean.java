@@ -16,6 +16,7 @@ import annotations.Current;
 import annotations.TransferObj;
 import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
+import businessLayer.ContractHelper;
 import businessLayer.Installment;
 
 @Named("installmentManager")

@@ -1,6 +1,5 @@
-package controllerLayer;
+package businessLayer;
 
-import businessLayer.Installment;
 
 public interface ContractHelper {
 	public Installment getNewInstallment();
