@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import util.Messages;
 import util.Percent;
 
 @Entity
@@ -47,6 +48,48 @@ public class Agreement extends Contract implements Serializable {
 
 	public void setIVA_amount(Percent iVA_amount) {
 		IVA_amount = iVA_amount;
+	}
+	
+	
+	
+	private static class Helper implements ContractHelper{
+		
+		@Override
+		public Installment getNewInstallment() {
+			return new AgreementInstallment();
+		}
+
+		@Override
+		public boolean renderIvaComponents() {
+			return true;
+		}
+
+		@Override
+		public boolean renderType() {
+			return true;
+		}
+
+		@Override
+		public boolean renderPersonnelQuotes() {
+			return true;
+		}
+
+		@Override
+		public String getName() {
+			return Messages.getString("agreement");
+		}
+
+		@Override
+		public boolean renderShareTable() {
+			return true;
+		}
+	}
+
+
+
+	@Override
+	public ContractHelper getHelper() {
+		return new Helper();
 	}
 
 	

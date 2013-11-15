@@ -352,6 +352,10 @@ public abstract class Contract implements Serializable {
 		this.shortTitle = shortTitle;
 	}
 	
+	public abstract ContractHelper getHelper();
+	
+
+	
 	
 	
 	

@@ -4,6 +4,7 @@ import javax.enterprise.context.RequestScoped;
 
 import util.Messages;
 import businessLayer.AgreementInstallment;
+import businessLayer.ContractHelper;
 import businessLayer.Installment;
 
 @RequestScoped
