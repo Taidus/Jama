@@ -7,11 +7,11 @@
 
 <h:body>
 	<h:form>
-		<input type="hidden" name="cid" value='#{userTablePC.conversation.id}' />
+		<input type="hidden" name="cid" value='#{userTablePCB.conversation.id}' />
 
 		<p:panel>
 
-			<p:dataTable id="userTable" emptyMessage="#{msgs.noUserFound}" lazy="true" value="#{userTablePC.lazyModel}" var="user" paginator="true" rows="20"
+			<p:dataTable id="userTable" emptyMessage="#{msgs.noUserFound}" lazy="true" value="#{userTablePCB.lazyModel}" var="user" paginator="true" rows="20"
 				rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}">
 
 				<p:column headerText="#{msgs.serialNumber}">
@@ -42,7 +42,7 @@
 
 		</p:panel>
 
-		<p:commandButton action="#{userTablePC.backToHome()}" value="#{msgs.home}" immediate="true" />
+		<p:commandButton action="#{userTablePCB.backToHome()}" value="#{msgs.home}" immediate="true" />
 	</h:form>
 
 </h:body>

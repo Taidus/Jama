@@ -10,9 +10,9 @@ import javax.inject.Named;
 
 import presentationLayer.lazyModel.UserTableLazyDataModel;
 
-@Named("userTablePC")
+@Named("userTablePCB")
 @ConversationScoped
-public class UserTablePageController implements Serializable {
+public class UserTablePageControllerBean implements Serializable {
 	private static final long serialVersionUID = -3375427782132586156L;
 
 	@Inject
