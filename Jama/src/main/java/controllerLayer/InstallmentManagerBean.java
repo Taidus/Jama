@@ -14,10 +14,13 @@ import security.annotations.AlterContractsAllowed;
 import security.annotations.ViewContractsAllowed;
 import annotations.Current;
 import annotations.TransferObj;
+import businessLayer.Agreement;
 import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.ContractHelper;
+import businessLayer.ContractShareTable;
 import businessLayer.Installment;
+import businessLayer.InstallmentShareTable;
 
 @Named("installmentManager")
 @ConversationScoped
@@ -37,9 +40,10 @@ public class InstallmentManagerBean implements Serializable {
 	protected Installment selectedInstallment;
 	protected Installment transferObjInstallment;
 	protected Installment installment;
-	
+
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		addInstallment();
 	}
 
@@ -60,7 +64,7 @@ public class InstallmentManagerBean implements Serializable {
 		close();
 	}
 
-	
+
 	@AlterContractsAllowed
 	public void save() {
 
@@ -71,7 +75,8 @@ public class InstallmentManagerBean implements Serializable {
 			installment.copy(transferObjInstallment);
 			// agreement.getInstallments().add(installment);
 			contract.addInstallment(installment);
-		} else {
+		}
+		else {
 			System.out.println("Saving installment with ID: " + selectedInstallment);
 			selectedInstallment.copy(transferObjInstallment);
 		}
@@ -95,6 +100,18 @@ public class InstallmentManagerBean implements Serializable {
 	}
 
 
+	@Produces
+	@TransferObj
+	@RequestScoped
+	public InstallmentShareTable getTransferObjShareTable() {
+		try {
+			return ((AgreementInstallment) transferObjInstallment).getShareTable();
+		} catch (ClassCastException e) {}
+
+		return null;
+	}
+
+
 	public Installment getInstallment() {
 		return transferObjInstallment;
 	}
@@ -115,12 +132,14 @@ public class InstallmentManagerBean implements Serializable {
 		initInstallment();
 	}
 
+
 	@AlterContractsAllowed
 	public void editInstallment(Installment inst) {
 		System.out.println("Edit inst with ID: " + inst.getId());
 		setSelectedInstallment(inst);
 		initInstallment();
 	}
+
 
 	@AlterContractsAllowed
 	public void deleteInstallment() {
@@ -141,14 +160,17 @@ public class InstallmentManagerBean implements Serializable {
 
 	}
 
-	
+
 	@AlterContractsAllowed
 	public String addInstallment() {
 		installment = helper.getNewInstallment();
 		transferObjInstallment = helper.getNewInstallment();
 		transferObjInstallment.setContract(contract);
-		transferObjInstallment.initShareTableFromContract(contract);
-		
+
+		try {
+			((AgreementInstallment) transferObjInstallment).initShareTableFromContract(contract);
+		} catch (ClassCastException e) {}
+
 		// insertRandomValues(transferObjInstallment); //TODO eliminare
 		return "/installmentWiz.xhtml";
 	}

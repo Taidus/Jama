@@ -18,14 +18,14 @@
 	<h:form id="agreementWiz">
 		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
 
-		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}" onback="setHideShow();" >
+		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}" onback="setHideShow();">
 
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
 				<sections:agreementWizData editingDisable="false" creating="true" />
 			</p:tab>
 
-			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{agreementWizardPB.renderShareTable()}" >
-				<sections:agreementWizShareTable editingDisable="false" />
+			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{agreementWizardPB.renderShareTable() == true}">
+				<sections:agreementWizShareTable editingDisable="false" rendered="#{agreementWizardPB.renderShareTable() == true}" />
 			</p:tab>
 
 			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
@@ -58,10 +58,11 @@
 	<dialogs:chiefDialog name="w_chiefDialog" />
 	<dialogs:companyDialog name="w_companyDialog" />
 	<dialogs:instCreateDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
-		observingComponent="contractInstTablePanel" />
+		observingComponent="contractInstTablePanel" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
 	<dialogs:instViewDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
-		observingComponent="contractInstTablePanel" editingDisable="false" />
-	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true" />
+		observingComponent="contractInstTablePanel" editingDisable="false" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
+	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true"
+		renderShareTable="#{agreementWizardPB.renderShareTable()}" />
 
 
 </h:body>

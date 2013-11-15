@@ -11,6 +11,8 @@
 
 	<composite:attribute name="editingDisable" default="true" />
 	<composite:attribute name="observingComponent" type="java.lang.String" />
+	
+	<composite:attribute name="renderShareTable" default="true" />
 </composite:interface>
 
 <composite:implementation>
@@ -35,8 +37,8 @@
 					<sections:installmentWizData editingDisable="#{cc.attrs.editingDisable}" />
 				</p:tab>
 
-				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
-					<sections:installmentWizShareTable editingDisable="#{cc.attrs.editingDisable}" />
+				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{cc.attrs.renderShareTable}">
+					<sections:installmentWizShareTable editingDisable="#{cc.attrs.editingDisable}"  rendered="#{cc.attrs.renderShareTable}"/>
 				</p:tab>
 
 			</p:tabView>

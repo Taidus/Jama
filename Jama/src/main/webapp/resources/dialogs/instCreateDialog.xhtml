@@ -10,6 +10,8 @@
 	<composite:attribute name="wizWidgetVar" required="true" />
 
 	<composite:attribute name="observingComponent" type="java.lang.String" />
+
+	<composite:attribute name="renderShareTable" default="true" />
 </composite:interface>
 
 <composite:implementation>
@@ -32,8 +34,8 @@
 					<sections:installmentWizData editingDisable="false" />
 				</p:tab>
 
-				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
-					<sections:installmentWizShareTable editingDisable="false" />
+				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{cc.attrs.renderShareTable}">
+					<sections:installmentWizShareTable editingDisable="false"  rendered="#{cc.attrs.renderShareTable}"/>
 				</p:tab>
 
 				<p:tab id="tabEnd" title="#{msgs.end__tab}">
@@ -42,12 +44,6 @@
 				</p:tab>
 
 			</p:wizard>
-
-			<ui:remove>
-
-				<p:commandButton value="#{msgs.cancel}" process="@this" actionListener="#{installmentManager.cancel()}" immediate="true"
-					oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); #{cc.attrs.dialogWidgetVar}.hide(); setHideShow();" />
-			</ui:remove>
 
 			<p:commandButton value="#{msgs.cancel}" process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" />
 

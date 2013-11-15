@@ -17,8 +17,10 @@ import util.Config;
 import util.Messages;
 import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
+import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
 import businessLayer.Installment;
+import businessLayer.InstallmentShareTable;
 
 @Named("instShareTablePB")
 @ConversationScoped
@@ -29,32 +31,46 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	@TransferObj
 	private Installment installment;
 
+	@Inject
+	@TransferObj
+	private InstallmentShareTable shareTable;
+
+
 	public InstallmentShareTablePresentationBean() {
 		super();
 	}
 
+
 	@Override
 	protected AbstractShareTable getTransferObjShareTable() {
-		return installment.getShareTable();
+		return shareTable;
 	}
+
 
 	@Override
 	protected Money getTransfetObjWholeAmount() {
 		return installment.getWholeAmount();
 	}
 
+
 	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
-			Contract c = installment.getContract();
-			List<Installment> installments = c.getInstallments();
-			installments.add(installment);
-			List<List<Money>> instShareTablesMainAttributes = new ArrayList<>();
-			List<List<Money>> instShareTablesSubAttributes = new ArrayList<>();
+		Contract c = installment.getContract();
+		List<Installment> installments = c.getInstallments();
+		List<List<Money>> instShareTablesMainAttributes = new ArrayList<>();
+		List<List<Money>> instShareTablesSubAttributes = new ArrayList<>();
 
-
+		try {
+			//Oddio, ora si aggiunge anche il try-catch
+			
+			instShareTablesMainAttributes.add(getMainAttributeList(shareTable, installment.getWholeAmount()));
+			instShareTablesSubAttributes.add(getSubAttributeList(shareTable,
+					shareTable.getGoodsAndServices().computeOn(installment.getWholeAmount())));
+			
 			for (Installment i : installments) {
-				instShareTablesMainAttributes.add(getMainAttributeList(i.getShareTable(), i.getWholeAmount()));
-				instShareTablesSubAttributes.add(getSubAttributeList(i.getShareTable(),
-						i.getShareTable().getGoodsAndServices().computeOn(i.getWholeAmount())));
+				AgreementInstallment inst = (AgreementInstallment) i;
+				instShareTablesMainAttributes.add(getMainAttributeList(inst.getShareTable(), inst.getWholeAmount()));
+				instShareTablesSubAttributes.add(getSubAttributeList(inst.getShareTable(),
+						inst.getShareTable().getGoodsAndServices().computeOn(inst.getWholeAmount())));
 			}
 
 			List<Money> l = getMainAttributeList(c.getShareTable(), c.getWholeAmount());
@@ -70,8 +86,13 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 
 			validateFields(l, instShareTablesMainAttributes, mainAttr);
 			validateFields(p, instShareTablesSubAttributes, subAttr);
-		
+		} catch (ClassCastException e) {
+			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§ Class cast exception...");
+			//TODO aggiungere anche stampa nel system.err, se serve 
+		}
+
 	}
+
 
 	private void validateFields(List<Money> agrAttributes, List<List<Money>> instAttrs, String[] attrNames) {
 		// XXX questo metodo e tutti quelli ad esso correlati sono osceni. Se si
@@ -80,7 +101,7 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		for (int i = 0; i < agrAttributes.size(); i++) {
 			Money sum = Money.zero(Config.currency);
 			for (List<Money> l : instAttrs) {
-				sum.plus(l.get(i));
+				sum = sum.plus(l.get(i));
 			}
 			if (sum.isGreaterThan((agrAttributes.get(i)))) {
 				System.err.println("Errore sull'attributo '" + attrNames[i] + "': convenzione=" + agrAttributes.get(i) + ", rate=" + sum);
@@ -90,6 +111,7 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 		}
 
 	}
+
 
 	private List<Money> getMainAttributeList(AbstractShareTable t, Money wholeAmount) {
 		List<Money> attributes = new ArrayList<>();
@@ -102,6 +124,7 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 
 		return attributes;
 	}
+
 
 	private List<Money> getSubAttributeList(AbstractShareTable t, Money wholeAmount) {
 		List<Money> attributes = new ArrayList<>();

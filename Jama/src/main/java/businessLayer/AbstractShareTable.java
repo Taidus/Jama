@@ -77,7 +77,7 @@ public abstract class AbstractShareTable {
 		super();
 	}
 
-	protected final void initFields() {
+	protected void initFields() {
 		this.atheneumCapitalBalance = new Percent();
 		this.atheneumCommonBalance = new Percent();
 		this.structures = new Percent();

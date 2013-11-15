@@ -67,7 +67,7 @@ public class Funding extends Contract implements Serializable {
 
 		@Override
 		public boolean renderShareTable() {
-			return true;
+			return false;
 		}
 	}
 	

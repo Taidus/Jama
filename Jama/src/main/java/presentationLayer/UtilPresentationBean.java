@@ -196,7 +196,7 @@ public class UtilPresentationBean implements Serializable {
 		// }
 		// return closestDeadline;
 
-		List<Installment> insts = contract.getInstallments();
+		List<? extends Installment> insts = contract.getInstallments();
 		Date current, closestDeadline = null;
 
 		for (Installment i : insts) {

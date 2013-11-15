@@ -35,7 +35,7 @@ public class InstallmentDataPresentationBean implements Serializable {
 		List<Installment> installments = c.getInstallments();
 		Money sum = installment.getWholeAmount();
 		for (Installment i : installments) {
-			sum.plus(i.getWholeAmount());
+			sum = sum.plus(i.getWholeAmount());
 		}
 		if (sum.isGreaterThan(c.getWholeAmount())) {
 			throw new ValidatorException(Messages.getErrorMessage("err_installmentAmount"));
