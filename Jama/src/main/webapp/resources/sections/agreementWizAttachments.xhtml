@@ -47,7 +47,7 @@
 
 
 		<p:fileUpload id="fileUpload" label="#{msgs.add_attachments}" auto="true" fileUploadListener="#{attachmentsPB.handleFileUpload}" multiple="true"
-			showButtons="false" dragDropSupport="true" update="messages attchsList" sizeLimit="10000000" cancelLabel="#{msgs.remove}" uploadLabel="#{msgs.load}"
+			showButtons="false" dragDropSupport="true" update="messages attchsList" cancelLabel="#{msgs.remove}" uploadLabel="#{msgs.load}"
 			invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}" rendered="#{cc.attrs.editingDisable == false}"
 			oncomplete="setHideShow();" />
 

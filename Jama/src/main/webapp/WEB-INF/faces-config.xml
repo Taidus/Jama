@@ -82,6 +82,11 @@
 			<to-view-id>/userProfile.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>companyList</from-outcome>
+			<to-view-id>/companyList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 
 	</navigation-rule>
 
