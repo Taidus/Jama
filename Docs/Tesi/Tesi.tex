@@ -7,6 +7,7 @@
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{epstopdf}
+\usepackage{comment}
 \graphicspath{ {./images/} }
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -69,16 +70,16 @@ for administration of technology transfer activities
 
 
 \begin{document}
+\date{}
 \maketitle
 
-\begin{abstract}
-\end{abstract}
 
 \tableofcontents
 
 \chapter{Introduzione}
 \input{Introduzione}
 \chapter{Analisi}
+\label{analisi}
 \section{Modello}
 \input{modello_business}
 \input{modello_utenti}
@@ -88,7 +89,7 @@ for administration of technology transfer activities
 L'applicativo sviluppato si basa sulla piattaforma \textsl{Java EE}, in particolare sfrutta i moduli \textsl{JPA} per la persistenza e \textsl{CDI} per la gestione del ciclo di vita dei bean e per l'iniezione di dipendenza. L'interfaccia grafica
 invece è stata scritta usando il framework \textsl{JSF} mentre per quanto riguarda la sicurezza si è utilizzato \textsl{DeltaSpike}. Come application server è invece stato scelto \textsl{JBoss AS 7}. Di seguito una descrizione di ciascuno
 di questi framework e, infine, di altre librerie usate per particolari contesti.
-\label{chapter:Tecnologie}
+\label{tecnologie}
 \section{JPA}
 \label{jpa}
 \input{jpa}
@@ -104,6 +105,7 @@ di questi framework e, infine, di altre librerie usate per particolari contesti.
 \section{Altre librerie}
 \label{libs}
 \subsection{JLDAP}
+\label{jldap}
 \input{jldap}
 \subsection{FreeMarker}
 \label{freemarker}
