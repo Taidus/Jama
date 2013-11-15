@@ -31,6 +31,11 @@ public class FundingHelper implements ContractHelper {
 	public String getName() {
 		return Messages.getString("funding");
 	}
+
+	@Override
+	public boolean renderShareTable() {
+		return true;
+	}
 	
 	
 

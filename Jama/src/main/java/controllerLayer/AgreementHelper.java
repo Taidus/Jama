@@ -37,4 +37,9 @@ public class AgreementHelper implements ContractHelper{
 		return Messages.getString("agreement");
 	}
 
+	@Override
+	public boolean renderShareTable() {
+		return true;
+	}
+
 }

@@ -80,6 +80,10 @@ public class AgreementWizardPresentationBean implements Serializable {
 		return helper.renderType();
 	}
 	
+	public boolean renderShareTable(){
+		return helper.renderShareTable();
+	}
+	
 	public boolean renderPersonnelQuotes(){
 		return helper.renderPersonnelQuotes();
 	}
