@@ -58,6 +58,7 @@ public class ContractDeadLineTimer extends TimerTask {
 				
 				try {
 					mailSender.notifyDeadline(i);
+					i.setDeadlineNotified(true);
 				} catch (IOException | TemplateException e) {
 					e.printStackTrace();
 				}

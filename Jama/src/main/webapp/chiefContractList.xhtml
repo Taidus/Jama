@@ -70,6 +70,10 @@
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{contract.closed}" />
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not contract.closed}" />
 			</p:column>
+			
+			<p:column id="title" headerText="#{msgs.agrTitle}">
+				<h:outputText value="#{agr.shortTitle}" />
+			</p:column>
 
 			<p:column styleClass="companyFilterColumn" filterBy="#{contract.company.id}" headerText="#{msgs.company}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterCompanyItems}">

@@ -64,6 +64,8 @@ public abstract class Contract implements Serializable {
 	@Size(max = 1000)
 	protected String title;
 	
+	protected String shortTitle;
+	
 
 	protected String protocolNumber;
 
@@ -341,6 +343,16 @@ public abstract class Contract implements Serializable {
 		// serve ad Hibernate
 		this.closed = closed;
 	}
+
+	public String getShortTitle() {
+		return shortTitle;
+	}
+
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
+	}
+	
+	
 	
 	
 	

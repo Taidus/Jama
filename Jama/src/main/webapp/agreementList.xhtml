@@ -71,6 +71,10 @@
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{agr.closed}" />
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not agr.closed}" />
 			</p:column>
+			
+			<p:column id="title" headerText="#{msgs.agrTitle}">
+				<h:outputText value="#{agr.shortTitle}" />
+			</p:column>
 
 			<p:column id="agrTableChiefColumn" styleClass="chiefFilterColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
 				filterOptions="#{utilPB.filterChiefItems}">

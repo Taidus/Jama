@@ -6,6 +6,7 @@ import security.Principal;
 import util.Messages;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
@@ -27,6 +28,9 @@ public class UserManager implements Serializable {
 	@Inject
 	private UserDaoBean userDao;
 	private String insertedSerialNumber;
+	
+	@Inject
+	private Conversation conversation;
 
 	public UserManager() {
 	}
@@ -64,6 +68,9 @@ public class UserManager implements Serializable {
 
 	public String logout() {
 		loggedUser = new Principal();
+		if(!conversation.isTransient()){
+			conversation.end();
+		}
 		return "login";
 	}
 
