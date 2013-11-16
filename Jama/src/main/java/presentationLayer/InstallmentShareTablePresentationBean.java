@@ -54,23 +54,37 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 
 
 	public void validateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
+		_validateWithOtherInstallments(true);
+	}
+
+
+	public void editingValidateWithOtherInstallments(FacesContext context, UIComponent component, Object value) {
+		_validateWithOtherInstallments(false);
+	}
+
+
+	private void _validateWithOtherInstallments(boolean addCurrent) {
 		Contract c = installment.getContract();
 		List<Installment> installments = c.getInstallments();
 		List<List<Money>> instShareTablesMainAttributes = new ArrayList<>();
 		List<List<Money>> instShareTablesSubAttributes = new ArrayList<>();
 
 		try {
-			//Oddio, ora si aggiunge anche il try-catch
-			
-			instShareTablesMainAttributes.add(getMainAttributeList(shareTable, installment.getWholeAmount()));
-			instShareTablesSubAttributes.add(getSubAttributeList(shareTable,
-					shareTable.getGoodsAndServices().computeOn(installment.getWholeAmount())));
-			
+			// Oddio, ora si aggiunge anche il try-catch
+
+			if (addCurrent) {
+				instShareTablesMainAttributes.add(getMainAttributeList(shareTable, installment.getWholeAmount()));
+				instShareTablesSubAttributes.add(getSubAttributeList(shareTable,
+						shareTable.getGoodsAndServices().computeOn(installment.getWholeAmount())));
+			}
+
 			for (Installment i : installments) {
-				AgreementInstallment inst = (AgreementInstallment) i;
-				instShareTablesMainAttributes.add(getMainAttributeList(inst.getShareTable(), inst.getWholeAmount()));
-				instShareTablesSubAttributes.add(getSubAttributeList(inst.getShareTable(),
-						inst.getShareTable().getGoodsAndServices().computeOn(inst.getWholeAmount())));
+				if (!i.equals(installment)) {
+					AgreementInstallment inst = (AgreementInstallment) i;
+					instShareTablesMainAttributes.add(getMainAttributeList(inst.getShareTable(), inst.getWholeAmount()));
+					instShareTablesSubAttributes.add(getSubAttributeList(inst.getShareTable(),
+							inst.getShareTable().getGoodsAndServices().computeOn(inst.getWholeAmount())));
+				}
 			}
 
 			List<Money> l = getMainAttributeList(c.getShareTable(), c.getWholeAmount());
@@ -88,7 +102,7 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 			validateFields(p, instShareTablesSubAttributes, subAttr);
 		} catch (ClassCastException e) {
 			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§ Class cast exception...");
-			//TODO aggiungere anche stampa nel system.err, se serve 
+			// TODO aggiungere anche stampa nel system.err, se serve
 		}
 
 	}

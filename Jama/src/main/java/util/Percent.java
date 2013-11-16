@@ -13,6 +13,7 @@ import org.joda.money.Money;
 public class Percent implements Comparable<Percent> {
 	public static final Percent ONE = new Percent(BigDecimal.ONE);
 	public static final Percent ZERO = new Percent(BigDecimal.ZERO);
+	public static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN; 
 
 	public static final Percent valueOf(double arg) {
 		return new Percent(BigDecimal.valueOf(arg));
@@ -60,7 +61,7 @@ public class Percent implements Comparable<Percent> {
 //		if (value.abs().compareTo(BigDecimal.ONE) > 0) {
 //			throw new IllegalArgumentException("Illegal percent value (its absolute value is greater than 1)");
 //		}
-		this.value = value.setScale(2, RoundingMode.HALF_EVEN);
+		this.value = value.setScale(4, RoundingMode.HALF_EVEN);
 	}
 
 	public BigDecimal getValue() {

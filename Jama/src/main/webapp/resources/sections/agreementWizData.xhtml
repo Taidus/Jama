@@ -98,7 +98,7 @@
 						<p:ajax event="blur" process="@this" update="typeError" />
 					</p:selectOneMenu>
 
-					<h:outputText value="#{contractManager.contract.type}" rendered="#{cc.attrs.editingDisable == true}" />
+					<h:outputText value="#{contractManager.contract.type.description}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 

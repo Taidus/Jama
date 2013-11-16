@@ -11,6 +11,8 @@
 
 <h:body onload="setHideShow();">
 
+	<p:growl autoUpdate="true" sticky="true" />
+
 	<h:form id="agreementEdit">
 
 		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
@@ -23,7 +25,7 @@
 			</p:tab>
 
 
-			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}">
+			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{agreementWizardPB.renderShareTable()}">
 				<sections:agreementWizShareTable editingDisable="false" />
 			</p:tab>
 
@@ -67,10 +69,11 @@
 	<dialogs:chiefDialog name="w_chiefDialog" />
 	<dialogs:companyDialog name="w_companyDialog" />
 	<dialogs:instCreateDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
-		observingComponent="contractInstTablePanel" />
+		observingComponent="contractInstTablePanel" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
 	<dialogs:instViewDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
-		observingComponent="contractInstTablePanel" editingDisable="false" />
-	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true" />
+		observingComponent="contractInstTablePanel" editingDisable="false" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
+	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true"
+		renderShareTable="#{agreementWizardPB.renderShareTable()}" />
 
 </h:body>
 </html>

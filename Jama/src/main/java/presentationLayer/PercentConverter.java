@@ -31,7 +31,7 @@ public class PercentConverter implements Converter {
 		BigDecimal d = null;
 		boolean invalid = false;
 		try {
-			d = new BigDecimal(value).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN);
+			d = new BigDecimal(value).divide(BigDecimal.valueOf(100));
 		} catch (NumberFormatException e) {
 			invalid = true;
 		}
@@ -51,7 +51,7 @@ public class PercentConverter implements Converter {
 		if (null == value) {
 			return "";
 		}
-		return ((Percent) value).getValue().multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+		return ((Percent) value).getValue().multiply(BigDecimal.valueOf(100)).setScale(2, Percent.DEFAULT_ROUNDING).toPlainString();
 	}
 
 }

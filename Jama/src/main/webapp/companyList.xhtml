@@ -1,9 +1,117 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
-	<ui:composition template="">
-	</ui:composition>
+<h:head>
+	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="table.css" library="css" />
+
+	<h:outputScript name="hideShow.js" library="js" />
+
+
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			setHideShow();
+		});
+	</script>
+
+</h:head>
+<h:body>
+
+	<h:form prependId="false">
+		<input type="hidden" name="cid" value='#{opContractListPCB.conversation.id}' />
+
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="companyTable">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="" />
+			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="w_confirm.show();" />
+		</p:contextMenu>
+
+		<p:dataTable id="companyTable" styleClass="hideShow" var="company" widgetVar="w_companyTable"
+			lazy="true" value="#{opContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20" rowsPerPageTemplate="10,20,50"
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractListPCB.lazyModel.selectedValue}"
+			selectionMode="single" rowKey="#{company.id}" sortOrder="descending">
+
+			<p:ajax event="filter" oncomplete="setRowEvent();" />
+			<p:ajax event="sort" oncomplete="setRowEvent();" />
+			<p:ajax event="page" oncomplete="setRowEvent(); " />
+
+			<p:column styleClass="contractTypeColumn" filterBy="#{company.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
+				<h:outputText value="#{utilPB.getNameFromClass(company.class)}" />
+			</p:column>
+
+			<p:column id="agrIsClosed" styleClass="closedFilterColumn" filterBy="#{company.closedString}"
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{company.closed}" />
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not company.closed}" />
+			</p:column>
+			
+			<p:column id="title" headerText="#{msgs.agrTitle}">
+				<h:outputText value="#{company.shortTitle}" />
+			</p:column>
+
+			<p:column id="agrTableChiefColumn" styleClass="chiefFilterColumn" filterBy="#{company.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterChiefItems}">
+				<h:outputText value="#{company.chief.completeName}" />
+			</p:column>
+
+			<p:column id="agrTableCompanyColumn" styleClass="companyFilterColumn" filterBy="#{company.company.id}" headerText="#{msgs.company}"
+				filterMatchMode="exact" filterOptions="#{utilPB.filterCompanyItems}">
+				<h:outputText value="#{company.company.name}" />
+			</p:column>
+
+			<p:column id="agrTableDateColumn" sortBy="#{company.approvalDate}">
+
+				<f:facet name="header">
+					<h:outputText value="#{msgs.approvalDate}" />
+					<br />
+					<h:form id="calendarFilters">
+						<div style="display: block; width: 90%; margin: auto;">
+							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"
+								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+							</p:calendar>
+							-
+							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractListPCB.lazyModel.filterMaxDate}"
+								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+							</p:calendar>
+						</div>
+						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+							onclick="return calendarFilter(arguments[0], w_companyTable);" />
+						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+							onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_companyTable);" />
+					</h:form>
+				</f:facet>
+
+				<h:outputText value="#{company.approvalDate}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{opContractListPCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{company}" target="#{opContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{opContractListPCB.editAgreement()}">
+					<f:setPropertyActionListener value="#{company}" target="#{opContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
+					<f:setPropertyActionListener value="#{company}" target="#{opContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
+			<p:commandButton value="#{msgs.yes}" action="#{opContractListPCB.deleteAgreement()}" immediate="true" update="companyTable"
+				oncomplete="w_confirm.hide(); setRowEvent();" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
+		</p:confirmDialog>
+
+		<p:commandButton action="#{opContractListPCB.backToHome()}" value="#{msgs.home}" immediate="true" />
+
+	</h:form>
+
+
+</h:body>
 </html>

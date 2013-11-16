@@ -1,6 +1,8 @@
 package test;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -126,18 +128,19 @@ public class TestBean implements Serializable {
 	@PostConstruct
 	public void init() {
 
-//		int chiefId = 11;
-//		int companyId = 12;
-//		Date lower = new Date(Calendar.getInstance().getTimeInMillis());
-//		Calendar c = new GregorianCalendar();
-//		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
-//		c.add(Calendar.DAY_OF_MONTH, 3);
-//		Date upper = new Date(c.getTimeInMillis());
-//		deadService.setPageSize(1);
-//
-//		System.out.println("Querying in dates: " + lower + ", " + upper);
-//
-//		deadService.init(null, null, null, null, null, Agreement.class, null);
+		// int chiefId = 11;
+		// int companyId = 12;
+		// Date lower = new Date(Calendar.getInstance().getTimeInMillis());
+		// Calendar c = new GregorianCalendar();
+		// c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+		// c.add(Calendar.DAY_OF_MONTH, 3);
+		// Date upper = new Date(c.getTimeInMillis());
+		// deadService.setPageSize(1);
+		//
+		// System.out.println("Querying in dates: " + lower + ", " + upper);
+		//
+		// deadService.init(null, null, null, null, null, Agreement.class,
+		// null);
 	}
 
 
@@ -161,28 +164,30 @@ public class TestBean implements Serializable {
 
 
 	public void doDelta() {
-		
+
 		User u = ldap.getUser("D096048");
 		System.out.println(u);
 
 	}
 
 
-//	public static void main(String[] args) throws Exception {
-//		String pwdPlainText = "abcd1234";
-//		String pwdGeneratedByLdap = "{SHA}fOA1nxKFfyqQx95GX0CpXwHLXak=";
-//		
-//		System.out.println(Encryptor.getFromPasswordWithPrefix(pwdGeneratedByLdap));
+	// public static void main(String[] args) throws Exception {
+	// String pwdPlainText = "abcd1234";
+	// String pwdGeneratedByLdap = "{SHA}fOA1nxKFfyqQx95GX0CpXwHLXak=";
+	//
+	// System.out.println(Encryptor.getFromPasswordWithPrefix(pwdGeneratedByLdap));
 
-//		System.out.println("Given:\n\t" + pwdGeneratedByLdap);
-//
-//		Encryptor e = Encryptor.SHA;
-//		String encrypted = e.encrypt(pwdPlainText);
-//
-//		System.out.println("Encrypted with prefix:\n\t{" + e.getAlg() + "}" + encrypted);
-//		System.out.println("Encrypted without prefix:\n\t" + encrypted);
-//		System.out.println("Are equals? " + e.areEquals(pwdPlainText, pwdGeneratedByLdap));
-//
-//	}
+	// System.out.println("Given:\n\t" + pwdGeneratedByLdap);
+	//
+	// Encryptor e = Encryptor.SHA;
+	// String encrypted = e.encrypt(pwdPlainText);
+	//
+	// System.out.println("Encrypted with prefix:\n\t{" + e.getAlg() + "}" +
+	// encrypted);
+	// System.out.println("Encrypted without prefix:\n\t" + encrypted);
+	// System.out.println("Are equals? " + e.areEquals(pwdPlainText,
+	// pwdGeneratedByLdap));
+	//
+	// }
 
 }

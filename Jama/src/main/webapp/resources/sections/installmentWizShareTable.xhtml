@@ -3,6 +3,7 @@
 
 <composite:interface>
 	<composite:attribute name="editingDisable" default="false" />
+	<composite:attribute name="creating" default="false" />
 </composite:interface>
 
 <composite:implementation>
@@ -21,7 +22,7 @@
 				<p:column>
 					<h:inputText id="atheneumCapitalBalance" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
 						required="true" rendered="#{not cc.attrs.editingDisable}">
-						<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+						<p:ajax event="valueChange" process="@this" update="percentAtheneumCapitalBalance goodsAndServices percentGoodsAndServices instGoodsValuesGrid" />
 						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 					<h:outputText id="atheneumCapitalBalance_o" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}" />
@@ -44,7 +45,7 @@
 				<p:column>
 					<h:inputText id="atheneumCommonBalance" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" label="#{msgs.shareTableCommonBalance}"
 						required="true" rendered="#{not cc.attrs.editingDisable}">
-						<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+						<p:ajax event="valueChange" process="@this" update="percentAtheneumCommonBalance goodsAndServices percentGoodsAndServices instGoodsValuesGrid" />
 						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 					<h:outputText id="atheneumCommonBalance_o" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}" />
@@ -67,7 +68,8 @@
 				<p:column>
 					<h:inputText id="personnel" value="#{instShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
 						rendered="#{not cc.attrs.editingDisable}">
-						<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+						<p:ajax event="valueChange" process="@this"
+							update="percentPersonnel goodsAndServices percentGoodsAndServices personnelShares personnalShareInput instGoodsValuesGrid" />
 						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 					<h:outputText id="personnel_o" value="#{instShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}" />
@@ -89,7 +91,7 @@
 				<p:column>
 					<h:inputText id="structures" value="#{instShareTablePB.shareTable.structures}" label="#{msgs.shareTableStructures}" required="true"
 						rendered="#{not cc.attrs.editingDisable}">
-						<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+						<p:ajax event="valueChange" process="@this" update="percentStructures goodsAndServices percentGoodsAndServices instGoodsValuesGrid" />
 						<f:validator binding="#{percentValidator}" />
 					</h:inputText>
 					<h:outputText id="structures_o" value="#{instShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}" />
@@ -225,8 +227,12 @@
 
 		<br />
 
-		<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" />
+		<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" rendered="#{cc.attrs.creating}" />
 		<p:message styleClass="errorMessage" for="otherInstCheck" />
+
+		<h:inputHidden value="needed" id="e_otherInstCheck" validator="#{instShareTablePB.editingValidateWithOtherInstallments}"
+			rendered="#{not cc.attrs.creating and not cc.attrs.editingDisable}" />
+		<p:message styleClass="errorMessage" for="e_otherInstCheck" />
 
 	</p:panel>
 
@@ -236,7 +242,7 @@
 
 		<h:inputHidden value="needed" id="percentsCheck" validator="#{instShareTablePB.validatePersonnelShares}" />
 		<p:message styleClass="errorMessage" for="percentsCheck" />
-		
+
 		<br />
 
 		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"

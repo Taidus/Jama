@@ -257,6 +257,7 @@ public class ContractManagerBean implements Serializable {
 	private void insertRandomValues(Contract c) {
 
 		c.setTitle("Random title");
+		c.setShortTitle("Random short title");
 		c.setCIA_projectNumber(10000);
 		c.setContactPerson("Random contact");
 		c.setInventoryNumber(20000);
