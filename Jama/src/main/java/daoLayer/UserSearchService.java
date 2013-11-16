@@ -1,5 +1,6 @@
 package daoLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateful;
@@ -12,6 +13,8 @@ import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import businessLayer.Contract;
@@ -29,7 +32,9 @@ public class UserSearchService extends Pager<User> {
 	private Pager<User> pager;
 	
 
-	public void init(){
+	public void init(String surnameLike){
+		
+		surnameLike = surnameLike.trim().toLowerCase();
 		
 		TypedQuery<User> query;
 		TypedQuery<Long> countQuery;
@@ -37,16 +42,41 @@ public class UserSearchService extends Pager<User> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> c = cb.createQuery(User.class);
 		Root<User> usr = c.from(User.class);
+		usr.alias("user");
 		c.select(usr);
 		
 		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
 		Root<User> usrC = countC.from(User.class);
 		countC.select(cb.countDistinct(usrC));
+		usrC.alias("user");
 		
 		
 		query=em.createQuery(c);
 		countQuery=em.createQuery(countC);
 	
+		List<Predicate> criteria = new ArrayList<Predicate>();
+
+		if (surnameLike != null) {
+
+			ParameterExpression<String> p = cb.parameter(String.class, "like");
+			criteria.add(cb.like(cb.lower(cb.trim((usr.<String> get("surname")))), p));
+		}
+		
+		c.orderBy(cb.asc(usr.get("serialNumber")));
+
+		
+		
+		if(criteria.size() != 0){
+			c.where(cb.and(criteria.toArray(new Predicate[0])));
+			countC.where(cb.and(criteria.toArray(new Predicate[0])));
+		}
+		
+		if (surnameLike != null) {
+
+			query.setParameter("like", surnameLike+"%");
+			countQuery.setParameter("like", surnameLike+"%");
+		}
+		
 	
 	pager= new ResultPager<>(0, Config.defaultPageSize, query, countQuery);
 	}

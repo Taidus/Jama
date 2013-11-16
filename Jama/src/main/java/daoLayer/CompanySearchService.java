@@ -32,7 +32,9 @@ public class CompanySearchService extends Pager<Company> {
 	private Pager<Company> pager;
 
 	
-	public void init(String like) {
+	public void init(String nameLike) {
+		
+		nameLike = nameLike.trim().toLowerCase();
 
 		TypedQuery<Company> query;
 		TypedQuery<Long> countQuery;
@@ -53,11 +55,12 @@ public class CompanySearchService extends Pager<Company> {
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
 
-		if (like != null) {
+		if (nameLike != null) {
 
 			ParameterExpression<String> p = cb.parameter(String.class, "like");
-			criteria.add(cb.like(comp.<String> get("name"), p));
+			criteria.add(cb.like(cb.lower(cb.trim((comp.<String> get("name")))), p));
 		}
+		
 		
 		
 		if(criteria.size() != 0){
@@ -65,10 +68,10 @@ public class CompanySearchService extends Pager<Company> {
 			countC.where(cb.and(criteria.toArray(new Predicate[0])));
 		}
 		
-		if (like != null) {
+		if (nameLike != null) {
 
-			query.setParameter("like", like+"%");
-			countQuery.setParameter("like", like+"%");
+			query.setParameter("like", nameLike+"%");
+			countQuery.setParameter("like", nameLike+"%");
 		}
 
 		pager = new ResultPager<>(0, Config.defaultPageSize, query, countQuery);

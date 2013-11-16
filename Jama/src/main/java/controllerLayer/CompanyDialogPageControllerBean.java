@@ -27,9 +27,9 @@ import daoLayer.CompanyDaoBean;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class CompanyDialogPageControllerBean {
 
-	@Inject
-	@TransferObj
-	private Contract contract;
+//	@Inject
+//	@TransferObj
+//	private Contract contract;
 	@EJB
 	private CompanyDaoBean companyDao;
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
