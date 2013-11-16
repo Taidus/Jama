@@ -31,11 +31,11 @@
 			<p:wizard widgetVar="#{cc.attrs.wizWidgetVar}">
 
 				<p:tab id="tabDati" title="#{msgs.data_Tab}">
-					<sections:installmentWizData editingDisable="false" />
+					<sections:installmentWizData editingDisable="false" creating="true"/>
 				</p:tab>
 
 				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{cc.attrs.renderShareTable}">
-					<sections:installmentWizShareTable editingDisable="false"  rendered="#{cc.attrs.renderShareTable}"/>
+					<sections:installmentWizShareTable editingDisable="false"  rendered="#{cc.attrs.renderShareTable}" creating="true"/>
 				</p:tab>
 
 				<p:tab id="tabEnd" title="#{msgs.end__tab}">

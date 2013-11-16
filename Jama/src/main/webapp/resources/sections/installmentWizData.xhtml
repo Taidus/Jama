@@ -3,7 +3,7 @@
 
 <composite:interface>
 	<composite:attribute name="editingDisable" default="false" />
-
+	<composite:attribute name="creating" default="false" />
 </composite:interface>
 
 <composite:implementation>
@@ -137,8 +137,8 @@
 					<h:outputText id="pendingNumber_o" value="#{installmentManager.installment.pendingNumber}" />
 				</p:column>
 			</p:row>
-			
-			
+
+
 			<p:row>
 				<p:column>
 					<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
@@ -206,7 +206,9 @@
 
 			<p:row>
 				<p:column colspan="3">
-					<h:inputHidden value="needed" id="amountCheck" validator="#{instDataPB.validateAmount}"  />
+					<h:inputHidden value="needed" id="amountCheck" validator="#{instDataPB.validateAmount}" rendered="#{cc.attrs.creating}" />
+					<h:inputHidden value="needed" id="e_amountCheck" validator="#{instDataPB.editingValidateAmount}"
+						rendered="#{not cc.attrs.creating and not cc.attrs.editingDisable}" />
 				</p:column>
 			</p:row>
 
