@@ -1,4 +1,44 @@
-Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema. 
+Di seguito se elencano i casi d'uso per ciascun tipo di utente che interagisce col sistema. 
+
+\paragraph{Utente generico}
+Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a tutti gli altri tipi di utenti. Tali casi d'uso sono riportati in figura \ref{use_case_diag_generic}
+
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Utente generico}
+  \label{use_case_diag_generic}
+  \centering
+    \includegraphics[width=0.7\textwidth]{images/casi_uso_utente_generico.eps}
+\end{figure}
+
+\begin{enumerate}
+
+ \item Login\\
+    Percorso base:
+    l'Utente Generico, raggiunto l'indirizzo web dell'applicativo, inserisce il proprio numero di matricola e password quindi clicca sul pulsante ``Login''. Viene visualizzata la schermata ``Home''.\\
+    Percorso alternativo:
+    l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''. Viene visualizzato un messaggio di errore nel quale si invita l'utente a riprovare.
+    
+ \item Visualizza profilo
+    Dopo aver effettuato il login , l'Utente Generico può cliccare sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
+ \item Modifica profilo
+  Percorso base:
+  dopo aver effettuato il login , l'Utente Generico clicca sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
+  L'Utente può cambiare:
+  \begin{itemize}
+   \item email
+   \item password\\
+    Per cambiare la password è necessario inserire la vecchia password e la nuova password due volte per prevenire errori.
+  \end{itemize}
+
+  Una volta effettuate le modifiche desiderate l'Utente clicca su ``Salva''. Le modifiche vegono salvate e viene visualizzata la schermata precedente.\\
+  
+  Percorso alternativo:
+  l'Utente inserisce una email non valida, oppure commette un errore riepiempo i campi : vecchia password, nuova password, password di verifica. L'Utente è avvertito dell'errore con un messagio ed è invitato a riprovare.
+  
+
+\end{enumerate}
+
+
 
 \paragraph{Operatore}
 Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in figura \ref{use_case_diag_operator}
