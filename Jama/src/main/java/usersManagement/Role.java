@@ -9,9 +9,10 @@ public enum Role {
 	// stato ancora definito al momento della creazione delle enum constants e
 	// quindi non si possono prendere dal message bundle
 
-	OPERATOR(new Permission[] { Permission.ALTER_CONTRACTS,
-			Permission.DELETE_CONTRACTS, Permission.VIEW_CONTRACTS,
-			Permission.VIEW_HOME, Permission.VIEW_OWN_CONTRACTS }, "Operatore"),
+	OPERATOR(new Permission[] { Permission.ALTER_COMPANIES,
+			Permission.ALTER_CONTRACTS, Permission.DELETE_CONTRACTS,
+			Permission.VIEW_CONTRACTS, Permission.VIEW_HOME,
+			Permission.VIEW_OWN_CONTRACTS }, "Operatore"),
 
 	PROFESSOR(new Permission[] { Permission.VIEW_OWN_CONTRACTS,
 			Permission.VIEW_HOME }, "Docente"),
