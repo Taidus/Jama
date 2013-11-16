@@ -21,13 +21,13 @@ public class CompanyConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
-		return companyDao.getById(Integer.parseInt(value));
+		return companyDao.getBySocialNumber(value);
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
-		return String.valueOf(((Company) value).getId());
+		return ((Company) value).getSocialNumber();
 	}
 
 }

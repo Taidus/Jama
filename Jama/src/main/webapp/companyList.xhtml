@@ -18,14 +18,15 @@
 </h:head>
 <h:body>
 
-	<h:form prependId="false">
+	<p:growl autoUpdate="true" sticky="true" />
+
+	<h:form >
 		<input type="hidden" name="cid" value='#{companyTablePCB.conversation.id}' />
 
 		<ui:remove>
 			<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="companyTable">
 				<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="" />
 				<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="" />
-				<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="w_confirm.show();" />
 			</p:contextMenu>
 		</ui:remove>
 
@@ -49,15 +50,13 @@
 				<h:outputText value="#{company.name}" />
 
 				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{companyTablePCB.viewCompany()}"
-					oncomplete="w_viewDialog.show();">
+					update=":#{p:component('viewDialog')}" oncomplete="w_viewDialog.show();">
 					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
 				</p:commandButton>
 				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{companyTablePCB.editCompany()}"
-					oncomplete="w_editDialog.show();">
+					update=":#{p:component('editDialog')}" oncomplete="w_editDialog.show();">
 					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
-				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
+					<p:resetInput target=":#{p:component('editDialog')}" />
 				</p:commandButton>
 
 			</p:column>
@@ -66,18 +65,20 @@
 
 		<br />
 
-		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="w_confirm">
-			<p:commandButton value="#{msgs.yes}" action="#{companyTablePCB.deleteCompany()}" immediate="true" update="companyTable"
-				oncomplete="w_confirm.hide(); setHideShow();" />
-			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
-		</p:confirmDialog>
-
 		<p:commandButton action="#{companyTablePCB.backToHome()}" value="#{msgs.home}" immediate="true" />
+
+		<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{companyTablePCB.addCompany()}" oncomplete="w_addDialog.show()"
+			update=":#{p:component('addDialog')}">
+			<p:resetInput target=":#{p:component('addDialog')}" />
+		</p:commandButton>
+
 
 	</h:form>
 
-	<dialogs:companyDialog dialogWidgetVar="w_editDialog" dialogId="editDialog" editingDisable="false" />
+	<dialogs:companyDialog dialogWidgetVar="w_addDialog" dialogId="addDialog" editingDisable="false" observingComponentId="companyTable" />
+	<dialogs:companyDialog dialogWidgetVar="w_editDialog" dialogId="editDialog" editingDisable="false" observingComponentId="companyTable"/>
 	<dialogs:companyDialog dialogWidgetVar="w_viewDialog" dialogId="viewDialog" editingDisable="true" />
+
 
 </h:body>
 </html>

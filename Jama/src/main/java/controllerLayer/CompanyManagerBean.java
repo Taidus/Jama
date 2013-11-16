@@ -5,39 +5,32 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import util.Messages;
-import annotations.TransferObj;
 import businessLayer.Company;
-import businessLayer.Contract;
 import daoLayer.CompanyDaoBean;
 
-@Named("companyDialogPCB")
+@Named("companyManager")
 @ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class CompanyDialogPageControllerBean {
+public class CompanyManagerBean {
 
 //	@Inject
 //	@TransferObj
 //	private Contract contract;
 	@EJB
 	private CompanyDaoBean companyDao;
+	
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	private Company company;
 
-	public CompanyDialogPageControllerBean() {
+	public CompanyManagerBean() {
 		this.company = new Company();
 	}
 
@@ -66,21 +59,10 @@ public class CompanyDialogPageControllerBean {
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void save() {
+		System.out.println("......... Save called");
 		companyDao.create(company);
 		//contract.setCompany(company);
 	}
-	
-	//TODO spostare???
-	public void validateSocialNumber(FacesContext context, UIComponent component, Object value) {
-		String socialNumber = (String) value;
-		
-		if(companyDao.getBySocialNumber(socialNumber)!= null){
 
-			throw new ValidatorException(Messages.getErrorMessage("err_duplicateSocialNumber"));
-
-		}
-		
-		
-	}
 
 }

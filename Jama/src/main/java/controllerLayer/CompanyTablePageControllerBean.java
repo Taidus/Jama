@@ -16,7 +16,7 @@ public class CompanyTablePageControllerBean implements Serializable {
 	private static final long serialVersionUID = -4414242077228626672L;
 	
 	@Inject
-	private CompanyDialogPageControllerBean manager;
+	private CompanyManagerBean manager;
 
 	@Inject
 	private CompanyTableLazyDataModel lazyModel;
@@ -49,15 +49,18 @@ public class CompanyTablePageControllerBean implements Serializable {
 	}
 	
 	public void viewCompany(){
-		
+		editCompany();
 	}
 	
 	public void editCompany(){
 		manager.editCompany(lazyModel.getSelectedValue().getId());
 	}
 	
-	public void deleteCompany(){
-		manager.deleteCompany(lazyModel.getSelectedValue().getId());
+	public void addCompany(){
+		manager.addCompany();
 	}
+	
+	
+
 
 }

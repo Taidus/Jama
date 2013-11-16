@@ -4,6 +4,9 @@
 <composite:interface>
 	<composite:attribute name="editingDisable" default="false" />
 	<composite:attribute name="creating" default="false" />
+
+	<composite:attribute name="companyMenuId" default="companyMenu" />
+	<composite:attribute name="companyMenuWidgetVar" default="w_companyMenu" />
 </composite:interface>
 
 <composite:implementation>
@@ -161,8 +164,8 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="companyMenu" value="#{contractManager.contract.company}" label="#{msgs.company}" required="true" filter="true"
-						filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
+					<p:selectOneMenu id="companyMenu" widgetVar="#{cc.attrs.companyMenuWidgetVar}" value="#{contractManager.contract.company}"
+						label="#{msgs.company}" required="true" filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.companyItems}" />
 						<f:converter binding="#{companyConverter}" />
 					</p:selectOneMenu>
@@ -172,7 +175,7 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{companyDialogPCB.addCompany()}" oncomplete="w_companyDialog.show()"
+					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{companyManager.addCompany()}" oncomplete="w_companyDialog.show()"
 						update=":#{p:component('companyPanel')}" rendered="#{cc.attrs.editingDisable == false}">
 						<p:resetInput target=":#{p:component('companyPanel')}" />
 					</p:commandButton>

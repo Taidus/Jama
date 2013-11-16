@@ -6,15 +6,21 @@
 	<composite:attribute name="dialogId" default="companyDialog" />
 
 	<composite:attribute name="editingDisable" default="true" />
-	<composite:attribute name="observingComponent" type="java.lang.String" />
+	<composite:attribute name="observingComponentId" type="java.lang.String" />
+	<composite:attribute name="observingComponentWidgetVar" type="java.lang.String" />
 </composite:interface>
 
 <composite:implementation>
 
+	<h:outputScript name="hideShow.js" library="js" />
+	<h:outputScript name="companyScripts.js" library="js" />
+
 	<p:dialog id="#{cc.attrs.dialogId}" header="#{msgs.newCompanyTitle}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" onHide="refresh();">
+
 		<h:form>
 
 			<p:remoteCommand name="refresh" process="@this" immediate="true" />
+			<p:remoteCommand name="retrieveSocialNumber" process="@none" immediate="true" actionListener="#{companyManager.company.socialNumber}" />
 
 			<p:panelGrid id="companyPanel" styleClass="grid">
 
@@ -23,9 +29,9 @@
 						<h:outputText value="#{msgs.companyName}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="companyName" value="#{companyDialogPCB.company.name}" label="#{msgs.companyName}" required="true"
+						<h:inputText id="companyName" value="#{companyManager.company.name}" label="#{msgs.companyName}" required="true"
 							rendered="#{not cc.attrs.editingDisable}" />
-						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyDialogPCB.company.name}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.name}" />
 					</p:column>
 				</p:row>
 
@@ -34,9 +40,9 @@
 						<h:outputText value="#{msgs.businessName}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="businessName" value="#{companyDialogPCB.company.businessName}" label="#{msgs.businessName}" required="true"
+						<h:inputText id="businessName" value="#{companyManager.company.businessName}" label="#{msgs.businessName}" required="true"
 							rendered="#{not cc.attrs.editingDisable}" />
-						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyDialogPCB.company.businessName}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.businessName}" />
 
 					</p:column>
 				</p:row>
@@ -46,9 +52,9 @@
 						<h:outputText value="#{msgs.legalResidence}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="legalResidence" value="#{companyDialogPCB.company.legalResidence}" label="#{msgs.legalResidence}" required="true"
+						<h:inputText id="legalResidence" value="#{companyManager.company.legalResidence}" label="#{msgs.legalResidence}" required="true"
 							rendered="#{not cc.attrs.editingDisable}" />
-						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyDialogPCB.company.legalResidence}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.legalResidence}" />
 
 					</p:column>
 				</p:row>
@@ -58,9 +64,9 @@
 						<h:outputText value="#{msgs.socialNumber}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="socialNumber" value="#{companyDialogPCB.company.socialNumber}" label="#{msgs.socialNumber}" required="true"
-							validator="#{companyDialogPCB.validateSocialNumber}" rendered="#{not cc.attrs.editingDisable}" />
-						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyDialogPCB.company.socialNumber}" />
+						<h:inputText id="socialNumber" value="#{companyManager.company.socialNumber}" label="#{msgs.socialNumber}" required="true"
+							validator="#{companyDialogPB.validateSocialNumber}" rendered="#{not cc.attrs.editingDisable}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.socialNumber}" />
 
 					</p:column>
 				</p:row>
@@ -70,11 +76,11 @@
 						<h:outputText value="#{msgs.VatNumber}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="VatNumber" value="#{companyDialogPCB.company.vatNumber}" label="#{msgs.VatNumber}" required="true"
+						<h:inputText id="VatNumber" value="#{companyManager.company.vatNumber}" label="#{msgs.VatNumber}" required="true"
 							rendered="#{not cc.attrs.editingDisable}">
-							<f:convertNumber />
+							<f:convertNumber integerOnly="true" groupingUsed="false" />
 						</h:inputText>
-						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyDialogPCB.company.vatNumber}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.vatNumber}" />
 
 					</p:column>
 				</p:row>
@@ -84,11 +90,13 @@
 
 			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
 
-			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyDialogPCB.save()}" update="@form"
-				oncomplete="if (!args.validationFailed) #{cc.attrs.dialogWidgetVar}.hide()" rendered="#{not cc.attrs.editingDisable}" />
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyManager.save()}"
+				update="@form :#{p:component(cc.attrs.observingComponentId)}"
+				oncomplete="if (!args.validationFailed){ setHideShow(); #{cc.attrs.dialogWidgetVar}.hide(); setMenuValue(#{cc.attrs.observingComponentWidgetVar}, '#{cc.attrs.dialogId}', 'socialNumber' ); }"
+				rendered="#{not cc.attrs.editingDisable}" />
 
 			<ui:remove>
-				<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyDialogPCB.save()}" update="@form :#{p:component('companyMenu')}"
+				<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyManager.save()}" update="@form :#{p:component('companyMenu')}"
 					oncomplete="if (!args.validationFailed) #{cc.attrs.dialogWidgetVar}.hide()" />
 			</ui:remove>
 
