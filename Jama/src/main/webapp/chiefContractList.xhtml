@@ -70,7 +70,7 @@
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{contract.closed}" />
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not contract.closed}" />
 			</p:column>
-			
+
 			<p:column id="title" headerText="#{msgs.agrTitle}">
 				<h:outputText value="#{agr.shortTitle}" />
 			</p:column>
@@ -99,24 +99,22 @@
 				<f:facet name="header">
 					<h:outputText value="#{msgs.deadlineDate}" />
 					<br />
-					<h:form>
-						<div style="display: block; margin: auto;">
-							<h:outputText value="#{msgs.from}: " />
-							<p:calendar styleClass="calendarFilter" widgetVar="w_firstContractDate" showOn="both" showOtherMonths="true"
-								value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
-							</p:calendar>
-						</div>
-						<div style="display: block; margin: auto;">
-							<h:outputText value="#{msgs.to}: " />
-							<p:calendar styleClass="calendarFilter" widgetVar="w_lastContractDate" showOn="both" showOtherMonths="true"
-								value="#{chiefContractListPCB.lazyModel.filterContractMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
-							</p:calendar>
-						</div>
-						<p:commandButton id="calendarContrFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
-							onclick="return calendarFilter(arguments[0], w_chContrList);" />
-						<p:commandButton id="calendarContrResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
-							onclick="return calendarReset(arguments[0], w_firstContractDate, w_lastContractDate, w_chContrList);" />
-					</h:form>
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.from}: " />
+						<p:calendar styleClass="calendarFilter" widgetVar="w_firstContractDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.to}: " />
+						<p:calendar styleClass="calendarFilter" widgetVar="w_lastContractDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterContractMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+					<p:commandButton id="calendarContrFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						onclick="return calendarFilter(arguments[0], w_chContrList);" />
+					<p:commandButton id="calendarContrResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						onclick="return calendarReset(arguments[0], w_firstContractDate, w_lastContractDate, w_chContrList);" />
 				</f:facet>
 
 				<h:outputText value="#{contract.deadlineDate}">
