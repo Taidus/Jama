@@ -246,7 +246,7 @@
 		<br />
 
 		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"
-			emptyMessage="#{msgs.noShareFound}">
+			emptyMessage="#{msgs.noShareFound}" editable="true" editMode="cell">
 
 			<f:facet name="header">
 				<h:outputText value="#{msgs.shareTablePersonnel}" />
@@ -265,7 +265,17 @@
 			</p:column>
 
 			<p:column>
-				<h:outputText value="#{share.value}" />
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{share.value}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText id="personnelTableShareValueInput" value="#{share.value}" label="#{msgs.table_share}">
+							<f:validator binding="#{percentValidator}" />
+							<p:ajax event="valueChange" process="@this" update="personnelShares" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 
 			<p:column>
@@ -278,7 +288,6 @@
 				<p:commandButton value="#{msgs.remove}" action="#{instShareTablePB.removeShare(share)}" update="@form" process="@this"
 					rendered="#{cc.attrs.editingDisable == false}" />
 			</p:column>
-
 		</p:dataTable>
 
 		<br />

@@ -242,11 +242,13 @@
 
 		<br />
 
-		<p:dataTable id="personnelShares" value="#{agrShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}" emptyMessage="#{msgs.noShareFound}">
+		<p:dataTable id="personnelShares" value="#{agrShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}" emptyMessage="#{msgs.noShareFound}"
+			editable="true" editMode="cell" >
 
 			<f:facet name="header">
 				<h:outputText value="#{msgs.shareTablePersonnel}" />
 			</f:facet>
+
 
 			<p:columnGroup type="header">
 				<p:row>
@@ -261,7 +263,17 @@
 			</p:column>
 
 			<p:column>
-				<h:outputText value="#{share.value}" />
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{share.value}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText id="personnelTableShareValueInput" value="#{share.value}" label="#{msgs.table_share}">
+							<f:validator binding="#{percentValidator}" />
+							<p:ajax event="valueChange" process="@this" update="personnelShares" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 
 			<p:column>

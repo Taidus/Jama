@@ -18,7 +18,7 @@ import businessLayer.ChiefScientist;
 
 public abstract class ShareTablePresentationObj {
 
-	private PersonnelShare selectedShare;
+//	private PersonnelShare selectedShare;
 	private PersonnelShare newShare;
 
 	protected ShareTablePresentationObj() {
@@ -33,6 +33,7 @@ public abstract class ShareTablePresentationObj {
 	protected abstract Money getTransfetObjWholeAmount();
 
 	public List<PersonnelShare> getShares() {
+		System.out.println("Building");
 		List<PersonnelShare> result = new ArrayList<>();
 		Map<ChiefScientist, Percent> shares = getTransferObjShareTable().getSharePerPersonnel();
 		for (ChiefScientist chief : shares.keySet()) {
@@ -49,14 +50,20 @@ public abstract class ShareTablePresentationObj {
 	public void removeShare(PersonnelShare share) {
 		getTransferObjShareTable().getSharePerPersonnel().remove(share.chiefScientist);
 	}
+	
+//	public void editValue(PersonnelShare badshare){
+//		PersonnelShare share = selectedShare;
+//		System.out.println("Edit value sees: " + share.getValue());
+//		getTransferObjShareTable().getSharePerPersonnel().put(share.chiefScientist, share.getValue());
+//	}
 
-	public PersonnelShare getSelectedShare() {
-		return selectedShare;
-	}
-
-	public void setSelectedShare(PersonnelShare selectedValue) {
-		this.selectedShare = selectedValue;
-	}
+//	public PersonnelShare getSelectedShare() {
+//		return selectedShare;
+//	}
+//
+//	public void setSelectedShare(PersonnelShare selectedValue) {
+//		this.selectedShare = selectedValue;
+//	}
 
 	public PersonnelShare getNewShare() {
 		return newShare;
@@ -124,11 +131,17 @@ public abstract class ShareTablePresentationObj {
 		}
 
 		public Percent getValue() {
+			System.out.println("Personnel share getter called: " + value);
 			return value;
 		}
 
 		public void setValue(Percent value) {
+			System.out.println("Personnel share setter called: " + value);
 			this.value = value;
+			Map<ChiefScientist, Percent> map = getTransferObjShareTable().getSharePerPersonnel();
+			if(map.containsKey(this.chiefScientist)){
+				map.put(this.chiefScientist, this.value);
+			}
 		}
 
 		public Money getFlatAmount() {
