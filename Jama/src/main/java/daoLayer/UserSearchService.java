@@ -17,7 +17,6 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import businessLayer.Contract;
 import usersManagement.User;
 import util.Config;
 

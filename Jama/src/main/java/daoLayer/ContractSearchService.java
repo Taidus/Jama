@@ -58,17 +58,17 @@ public class ContractSearchService extends Pager<Contract> {
 
 		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order,
 				contractClass, code, closed, lowerInstDeadlineDate,
-				upperInstDeadlineDate);
+				upperInstDeadlineDate,null,null);
 
 	}
 
 	@AlterContractsAllowed
-	public void init(Date lowerDeadLineDate, Date upperDeadLineDate,
+	public void init(Date lowerApprovalDate, Date upperApprovalDate,
 			Integer chiefId, Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass, Boolean closed) {
 
-		_init(lowerDeadLineDate, upperDeadLineDate, chiefId, companyId, order,
-				contractClass, null, closed, null, null);
+		_init(null, null, chiefId, companyId, order,
+				contractClass, null, closed, null, null,lowerApprovalDate,upperApprovalDate);
 
 	}
 
@@ -76,7 +76,7 @@ public class ContractSearchService extends Pager<Contract> {
 			Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass,
 			String principalSerialNumber, Boolean closed,
-			Date lowerInstDeadlineDate, Date upperInstDeadlineDate) {
+			Date lowerInstDeadlineDate, Date upperInstDeadlineDate, Date lowerApprovalDate, Date upperApprovalDate) {
 
 		if (contractClass == null) {
 			contractClass = Contract.class;
@@ -142,6 +142,21 @@ public class ContractSearchService extends Pager<Contract> {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
 			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("deadlineDate"), p));
+
+		}
+		
+		if (lowerApprovalDate != null) {
+
+			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerApprovalDate");
+			criteria.add(cb.greaterThanOrEqualTo(
+					agr.<Date> get("approvalDate"), p));
+
+		}
+
+		if (upperApprovalDate != null) {
+
+			ParameterExpression<Date> p = cb.parameter(Date.class, "upperApprovalDate");
+			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("approvalDate"), p));
 
 		}
 
@@ -227,6 +242,19 @@ public class ContractSearchService extends Pager<Contract> {
 			if (upperDate != null) {
 				query.setParameter("upperDate", upperDate, TemporalType.DATE);
 				countQuery.setParameter("upperDate", upperDate,
+						TemporalType.DATE);
+
+			}
+			
+			if (lowerApprovalDate != null) {
+				query.setParameter("lowerApprovalDate", lowerApprovalDate, TemporalType.DATE);
+				countQuery.setParameter("lowerApprovalDate", lowerApprovalDate,
+						TemporalType.DATE);
+
+			}
+			if (upperApprovalDate != null) {
+				query.setParameter("upperApprovalDate", upperApprovalDate, TemporalType.DATE);
+				countQuery.setParameter("upperApprovalDate", upperApprovalDate,
 						TemporalType.DATE);
 
 			}
