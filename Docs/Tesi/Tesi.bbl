@@ -1,0 +1,43 @@
+\begin{thebibliography}{1}
+
+\bibitem{freemarker}
+Freemarker.
+
+\bibitem{jldap}
+Jldap.
+
+\bibitem{effective}
+Joshua Bloch.
+\newblock {\em Effective Java}.
+\newblock Addison-Wesley.
+
+\bibitem{inversion}
+Martin Fowler.
+\newblock Inversion of control containers and the dependency injection pattern.
+
+\bibitem{pa}
+Martin Fowler.
+\newblock {\em Patterns of Enterprise Application Architecture}.
+\newblock Addison-Wesley.
+
+\bibitem{gof}
+Gamma, Helm, Johnson, and Vlissides.
+\newblock {\em Design Patterns}.
+\newblock Addison-Wesley.
+
+\bibitem{jsf}
+David Geary and Cay HorstMann.
+\newblock {\em Core JavaServer Faces}.
+\newblock Prentice Hall.
+
+\bibitem{jpa}
+Mike Keith and Merrick Schincariol.
+\newblock {\em Pro JPA 2}.
+\newblock Apress.
+
+\bibitem{weld}
+Gaving King, Peter Muir, Jozef Hartinger, Dan Allen, and David Allen.
+\newblock {\em CDI: Contexts and Dependency Injection for the Java EE
+  platform}.
+
+\end{thebibliography}

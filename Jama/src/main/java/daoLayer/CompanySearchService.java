@@ -67,6 +67,10 @@ public class CompanySearchService extends Pager<Company> {
 			countC.where(cb.and(criteria.toArray(new Predicate[0])));
 		}
 		
+		query = em.createQuery(c);
+		countQuery = em.createQuery(countC);
+		
+		
 		if (nameLike != null) {
 
 			query.setParameter("like", nameLike+"%");

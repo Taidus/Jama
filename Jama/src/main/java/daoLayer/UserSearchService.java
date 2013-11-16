@@ -50,8 +50,7 @@ public class UserSearchService extends Pager<User> {
 		usrC.alias("user");
 		
 		
-		query=em.createQuery(c);
-		countQuery=em.createQuery(countC);
+	
 	
 		List<Predicate> criteria = new ArrayList<Predicate>();
 
@@ -70,6 +69,10 @@ public class UserSearchService extends Pager<User> {
 			c.where(cb.and(criteria.toArray(new Predicate[0])));
 			countC.where(cb.and(criteria.toArray(new Predicate[0])));
 		}
+		
+		
+		query=em.createQuery(c);
+		countQuery=em.createQuery(countC);
 		
 		if (surnameLike != null) {
 
