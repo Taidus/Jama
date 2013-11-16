@@ -1,4 +1,26 @@
-Di seguito elenchiamo i principali casi d'uso per ciascun tipo di utente che interagisce col sistema. 
+Di seguito se elencano i casi d'uso per ciascun tipo di utente che interagisce col sistema. 
+
+\paragraph{Utente generico}
+Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a tutti gli altri tipi di utenti. Tali casi d'uso sono riportati in figura \ref{use_case_diag_generic}
+
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Utente generico}
+  \label{use_case_diag_generic}
+  \centering
+    \includegraphics[width=1\textwidth]{images/casi_uso_utente_generico.eps}
+\end{figure}
+
+\begin{itemize}
+ \item Login\\
+    Percorso base:
+    l'Utente Generico, raggiunto l'indirizzo web dell'applicativo, inserisce il proprio numero di matricola e password quindi clicca sul pulsante ``Login''. Viene visualizzata la schermata ``Home''.\\
+    Percorso alternativo:
+    l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''
+    
+ \item Visualizza profilo
+ \item Modifica profilo
+\end{itemize}
+
 
 \paragraph{Operatore}
 Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in figura \ref{use_case_diag_operator}
@@ -204,13 +226,21 @@ I casi d'uso del Docente sono rappresentati in figura \ref{use_case_diag_teacher
 
 
 \paragraph{Amministratore}
-Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura \ref{casi_uso_amministratore.eps}
+Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura \ref{use_case_diag_admin}
+\begin{figure}[h]
+  \caption{Diagramma dei casi d'uso dell'Amministratore}
+  \label{use_case_diag_admin}
+  \centering
+    \includegraphics[width=0.8\textwidth]{casi_uso_amministratore.eps}
+\end{figure}
+
+
 \begin{enumerate}
  \item Inserimento di un nuovo utente\\
  
  
  Percorso base:
- L'Amministratore, dopo aver effettutao il login, può cliccare sul pulsante ``Crea nuovo utente''; viene visualizzata una schermata che permette
+ l'Amministratore, dopo aver effettutao il login, può cliccare sul pulsante ``Crea nuovo utente''; viene visualizzata una schermata che permette
  di inserire i dati dell'utente:
  \begin{itemize}
   \item Nome
@@ -219,18 +249,18 @@ Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura
   \item Email
   \item	Password\\
     In realtà i campi che l'Amministratore deve riempire sono due: un campo pasword ed un campo di verifica che devono corrispondere col precedente.
-  \item Ruolo
+  \item Ruolo\\
     L'Amministratore può scegliere il ruolo dal rispettivo menù a tendina, i ruoli disponibili sono Operatore, Amministratore, Docente.
  \end{itemize}
  
  Una volta completato l'inserimento l'Amministratore clicca sul pulsante ``Salva'', il nuovo utente viene registrato nel sistema. 
 
  Percorso alternativo 1:
- L'Amministratore inserisce solo il campo matricola e quindi clicca il pulsante ``Importa Utente da LDAP''. I rimanenti campi, se la matricola è valida,
+ l'Amministratore inserisce solo il campo matricola e quindi clicca il pulsante ``Importa Utente da LDAP''. I rimanenti campi, se la matricola è valida,
  vengono automaticamente importati dal servizio LDAP offerto da SIAF. L'Amministratore conclude la procedura cliccando sul pulsante ``Salva''
  
  Percorso alternativo 2:
- L'Amministratore in qualunque momento della procedura clicca sul pulsante ``Annulla''; viene presentata a video la schermata precedente,
+ l'Amministratore in qualunque momento della procedura clicca sul pulsante ``Annulla''; viene presentata a video la schermata precedente,
  nessun utente viene aggiunto al sistema.
  
  \item Visualizzazione della lista degli utenti

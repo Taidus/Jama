@@ -12,9 +12,8 @@ import businessLayer.Company;
 
 @Stateful
 @ConversationScoped
-
 public class CompanyDaoBean {
-	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	public CompanyDaoBean() {
@@ -40,11 +39,23 @@ public class CompanyDaoBean {
 		return em.find(Company.class, id);
 
 	}
-	
-	public List<Company> getAll(){
-		
-		return em.createNamedQuery("Company.findAll",Company.class).getResultList();
-		
+
+	public List<Company> getAll() {
+
+		return em.createNamedQuery("Company.findAll", Company.class)
+				.getResultList();
+
+	}
+
+	public Company getBySocialNumber(String number) {
+		List<Company> companies =  em.createNamedQuery("Company.findBySocialNumber", Company.class)
+				.setParameter("number", number).getResultList();
+		if(companies.size() !=0){
+			return companies.get(0);
+		}
+		else{
+			return null;
+		}
 	}
 
 }

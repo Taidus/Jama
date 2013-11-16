@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt]{report}
+\documentclass[italian,laurea,twoside,10pt]{UFtesi}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{graphicx}
@@ -61,26 +61,36 @@
 % Title Page
 \title{Analisi e sviluppo di una web application \\
 basata sui framework JPA, JSF, CDI, \\
-per l'amministrazione di attività di trasferimento tecnologico\\\vspace{5cm}
+per l'amministrazione di attività di trasferimento tecnologico\\\vspace{1.5cm}
 Analysis and development of a web application \\
 based on the JPA, JSF, and CDI frameworks \\
 for administration of technology transfer activities
 }
 \author{Tommaso Levato, Alessio Sarullo, Giulio Galvan}
+\titolocorso{Ingegneria Informatica}
+\degreeyear{2012/2013}
+\date{}
+\chair{Prof. Enrico Vicario}
+\othermembers{Ing. Jocapo Torrini\\}
+\numberofmembers{4}
 
 
 \begin{document}
-\date{}
 \maketitle
+\frontmatter
+
 
 
 \tableofcontents
-
+\mainmatter
 \chapter{Introduzione}
 \input{Introduzione}
 \chapter{Analisi}
 \label{analisi}
 \section{Modello}
+Si suddivide il modello di dominio in due componenti ortogonali: il modello di business e il modello degli utenti. Il primo è relativo agli aspetti di business logic specifici del particolare contesto applicativo , 
+ovvero modella convenzioni, contributi, rate e le relazioni fra essi; il secondo invece è concettualmente indipendente dal contesto applicativo e concerne la gestione degli utenti.
+
 \input{modello_business}
 \input{modello_utenti}
 \section{Casi d'uso}

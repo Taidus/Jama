@@ -172,7 +172,7 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{companyDialogPCB.clear()}" oncomplete="w_companyDialog.show()"
+					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{companyDialogPCB.addCompany()}" oncomplete="w_companyDialog.show()"
 						update=":#{p:component('companyPanel')}" rendered="#{cc.attrs.editingDisable == false}">
 						<p:resetInput target=":#{p:component('companyPanel')}" />
 					</p:commandButton>

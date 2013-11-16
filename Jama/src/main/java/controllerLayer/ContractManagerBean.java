@@ -247,6 +247,7 @@ public class ContractManagerBean implements Serializable {
 
 
 	@AlterContractsAllowed
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
 	}

@@ -34,6 +34,9 @@
    <PROCESS-ITEM-OUTPUT ID="userProfile::#userProfile.xhtml"
     NAME="output7" PATH="/userProfile.xhtml"
     TARGET="rules:#userProfile.xhtml" TITLE="userProfile" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="companyList::#companyList.xhtml"
+    NAME="output8" PATH="/companyList.xhtml"
+    TARGET="rules:#companyList.xhtml" TITLE="companyList" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#home.xhtml" PATH="/home.xhtml"
@@ -60,4 +63,6 @@
   SHAPE="304,561,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#userProfile.xhtml" PATH="/userProfile.xhtml"
   SHAPE="304,497,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#companyList.xhtml" PATH="/companyList.xhtml"
+  SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
