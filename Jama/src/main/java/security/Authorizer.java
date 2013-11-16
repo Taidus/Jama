@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.apache.deltaspike.security.api.authorization.Secures;
 
+import security.annotations.AlterCompaniesAllowed;
 import security.annotations.AlterContractsAllowed;
 import security.annotations.AlterUserPermissionAllowed;
 import security.annotations.CreateUserAllowed;
@@ -34,6 +35,12 @@ public class Authorizer implements Serializable {
 	@Logged
 	private Principal loggedUser;
 
+	@Secures
+	@AlterCompaniesAllowed
+	public boolean canUserAlterCompanies() {
+		return canUserDo(Permission.ALTER_COMPANIES);
+	}
+	
 	@Secures
 	@AlterContractsAllowed
 	public boolean canUserAlterContracts() {
