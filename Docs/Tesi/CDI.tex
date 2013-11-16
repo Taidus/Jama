@@ -6,7 +6,7 @@ In seguito, verranno descritti in modo sufficientemente approfondito le caratter
 
 \subsection{Caratteristiche}
 
-Come dice il nome stesso, i principali servizi offerti da CDI sono due:
+I principali servizi offerti da CDI sono due:
 
 \begin{itemize}
 \item \textbf{Contesto}: CDI è in grado di conferire agli oggetti Java un ciclo di vita legato ad un particolare contesto.
@@ -24,7 +24,7 @@ Inoltre CDI:
 \subsection{Bean}
 
 \subsubsection{Definizione}
-Come risulta ormai chiaro, alla base di CDI vi sono oggetti particolari chiamati \textsl{bean}.\\
+Alla base di CDI vi sono oggetti particolari chiamati \textsl{bean}.\\
 Un bean, nella sua accezione più ampia, è un \textquotedblleft componente software riusabile che può essere gestito dal container\textquotedblright{} (adattamento libero della definizione fornita dalla specifica \textsl{JavaBeans}, consultabile all'indirizzo INSERIRE QUI RIFERIMENTO BIBLIOGRAFICO AL LINK PAG. 33 DI CoreJSF).\\
 I bean di CDI rispettano questa specifica, ma hanno un'importante proprietà aggiuntiva: lo \textit{scope}, che li lega ad uno specifico contesto, il quale ne determina il ciclo di vita e la visibilità ai client.
 CDI mette a disposizione quattro \textit{scope}:
@@ -45,13 +45,13 @@ Un bean CDI non è solo definito dal suo \textit{scope}: di seguito sono elencat
 \end{itemize}
 
 \subsubsection{Iniezione di un bean}
-Il meccanismo che sta alla base di CDI è l'\textsl{iniezione di dipendenza}, che costituisce a una forma di \textquotedblleft inversione di controllo\textquotedblright (in inglese, \textit{inversion of control}): non è più il programmatore a controllare gli oggetti da istanziare, bensì il framework (come approfondimento si consiglia la lettura di INSERIRE RIFERIMENTO ARTICOLO MARTIN FOWLER IoC).\\
-Per eseguire l'iniezione di dipendenza in CDI, dichiarando un attributo di una classe e delegando al framework la responsabilità di inizializzarlo, bisogna innanzitutto inserire le classi che definiscono i bean in un archivio(\texttt{jar}, \texttt{war} etc) che contiene il file \texttt{META-INF/beans.xml}. A questo punto, è sufficiente annotare l'attributo con \lstinline{@Inject}: il \textit{container} all'interno del quale viene eseguita l'applicazione cercherà - nel contesto appropriato - un bean dello stesso tipo dell'attributo dichiarato e provvederà all'inizializzazione.\\
+Il meccanismo che sta alla base di CDI è l'\textsl{iniezione di dipendenza}, che costituisce a una forma di \textquotedblleft inversione di controllo\textquotedblright (in inglese, \textit{inversion of control}): non è più il programmatore a controllare gli oggetti da istanziare, bensì il framework \footnote{come approfondimento si consiglia la lettura di INSERIRE RIFERIMENTO ARTICOLO MARTIN FOWLER IoC}.\\
+Per eseguire l'iniezione di dipendenza in CDI, dichiarando un attributo di una classe e delegando al framework la responsabilità di inizializzarlo, bisogna innanzitutto inserire le classi che definiscono i bean in un archivio (\texttt{jar}, \texttt{war} etc) che contiene il file \texttt{META-INF/beans.xml}. A questo punto, è sufficiente annotare l'attributo con \lstinline{@Inject}: il \textit{container} all'interno del quale viene eseguita l'applicazione cercherà - nel contesto appropriato - un bean dello stesso tipo dell'attributo dichiarato e provvederà all'inizializzazione.\\
 
-\paragraph{\textit{Qualifier} e \textit{alternatives}} Nel caso in cui il tipo dell'attributo non sia concreto potrebbero esistere diversi bean che lo implementano e che possono essere iniettati. Per ovviare a questo problema, CDI consente al programmatore di specificare quale bean utilizzare mediante annotazioni personalizzate chiamate \textit{qualifier}. Definire un \textit{qualifier} è molto semplice: è un'annotazione annotata a sua volta con \lstinline{@Qualifier}. Annotando un bean di implementazione di un'interfaccia con un \textit{qualifier} consente quindi di decidere, durante lo sviluppo dell'applicazione, quale classe concreta adoperare.\\
+\paragraph{\textit{Qualifier} e \textit{alternatives}} Nel caso in cui il tipo dell'attributo non sia concreto, potrebbero esistere diversi bean che lo implementano e che possono essere iniettati. Per ovviare a questo problema, CDI consente al programmatore di specificare quale bean utilizzare mediante annotazioni personalizzate chiamate \textit{qualifier}. Un \textit{qualifier} è un'annotazione annotata a sua volta con \lstinline{@Qualifier}. Annotando un bean di implementazione di un'interfaccia con un \textit{qualifier} consente quindi di decidere, durante lo sviluppo dell'applicazione, quale classe concreta adoperare.\\
 Le \textsl{alternative} (\textit{alternatives}) consentono invece di effettuare questa scelta durante il \textit{deploy} dell'applicazione. Per dichiarare un bean come una \textquoteleft alternativa\textquoteright{} di un'interfaccia è sufficiente annotarlo con \lstinline{@Alternative}. È poi possibile scegliere quale alternativa utilizzare modificando il file di configurazione \texttt{META-INF/beans.xml}.
 
-\paragraph{Metodi \textit{producer}} Un metodo \textit{producer} è un metodo che genera un oggetto che può essere iniettato. Per definire un metodo \textit{producer} è sufficiente annotarlo con \lstinline{@Producer}. L'oggetto così prodotto è a tutti gli effetti un bean CDI, ed è pertanto possibile caratterizzarlo con le annotazioni menzionate in precedenza, come ad esempio \lstinline{@Named} o i \textit{qualifier}.\\
+\paragraph{Metodi \textit{producer}} Un metodo \textit{producer} è un metodo che genera un oggetto che può essere iniettato. Per definire un metodo \textit{producer} lo si deve annotare con \lstinline{@Producer}. L'oggetto così prodotto è a tutti gli effetti un bean CDI, ed è pertanto possibile caratterizzarlo con le annotazioni menzionate in precedenza, come ad esempio \lstinline{@Named} o i \textit{qualifier}.\\
 I metodo \textit{producer} hanno due importanti caratteristiche:
 \begin{enumerate}
 \item rendono possibile stabilire a runtime l'implementazione di un \textit{bean type}, a differenza dei \textit{qualifier} o delle alternative
@@ -61,7 +61,7 @@ I metodo \textit{producer} hanno due importanti caratteristiche:
 
 \subsubsection{Tipi di bean}
 
-Come già detto, la definizione generale di bean è piuttosto ampia e per questo molte specifiche ne adottano una propria. CDI non supporta soltanto i bean che rispecchiano le caratteristiche precedentemente elencate, ma anche quelli definiti da altre specifiche. I principali sono due: i \textit{managed bean} e i \textit{session bean}.
+La definizione generale di bean è piuttosto ampia e per questo molte specifiche ne adottano una propria. CDI non supporta soltanto i bean che rispecchiano le caratteristiche precedentemente elencate, ma anche quelli definiti da altre specifiche. I principali sono due: i \textit{managed bean} e i \textit{session bean}.
 
 \paragraph{\textit{Managed bean}} Una classe Java non nidificata è un \textit{managed bean} se è definito tale dalla specifica di una delle tecnologie di Java EE (ad esempio, dalla specifica di JSF risulta che una classe è un \textit{managed bean} se è annotata con l'annotazione \lstinline{@ManagedBean}) oppure se rispecchia le seguenti condizioni:
 \begin{itemize}

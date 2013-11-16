@@ -1,5 +1,5 @@
 
-\textsl{FreeMarker} è un package Java che consente di produrre output testuale basandosi su un template. È stato progettato specificatamente per la generazione automatica di pagine HTML, anche se può creare vari tipi di pagine. La caratteristica principale è che consente di separare la logica che costruisce la pagina con il template in base alla quale viene prodotta; in questo modo, il template è modificabile senza l'intervento di un programmatore (anche se, senza modificare il codice, chiaramente non è possibile utilizzare informazioni non ricavabili dagli oggetti a cui si ha già accesso).\\
+\textsl{FreeMarker} è un package Java che consente di produrre output testuale basandosi su un template. È stato progettato specificatamente per la generazione automatica di pagine HTML, anche se può creare vari tipi di pagine. La caratteristica principale è che consente di separare la logica che costruisce la pagina con il template in base alla quale viene prodotta; in questo modo, il template è modificabile senza l'intervento di un programmatore (anche se, senza modificare il codice, non è possibile utilizzare informazioni non ricavabili dagli oggetti a cui si ha già accesso).\\
 Nei paragrafi che seguono verrà descritto il package FreeMarker e spiegato come è stato usato all'interno dell'applicazione. Per maggiori informazioni su questo tool, si rimanda alla pagina web relativa al progetto INSERIRE RIFERIMENTO A PAGINA WEB, dalla quale sono stati presi - fra l'altro - gli esempi sul funzionamento e utilizzo del software.
 
 
@@ -87,7 +87,7 @@ Un file di template è un semplice file di testo (di qualunque tipo) in cui sono
 ${nome}
 \end{lstlisting}
 
-Un esempio di file di template è il seguente:
+Un esempio di file di template (nello specifico, si tratta di un file HTML) è il seguente:
 
 \begin{lstlisting}
 <html>
@@ -103,7 +103,7 @@ Un esempio di file di template è il seguente:
 \end{lstlisting}
 
 \paragraph{Output}
-Una volta che si ha un file di template e un \textit{data model} opportuno, è semplice immaginare come produrre l'output: si cercano all'interno del modello nodi con lo stesso nome delle variabili inserite nel programma e si esegue una \textsl{interpolazione}, sostituendo il valore della variabile nel template con quello della variabile nel modello. Se nel template si fa riferimento ad una proprietà di una variabile, si cerca quella proprietà fra le \textit{subvariables} della variabile nel modello. Ad esempio, considerando il template precedente ed un \textit{data model} così composto:
+Una volta che si ha un file di template e un \textit{data model} opportuno, si cercano all'interno del modello nodi con lo stesso nome delle variabili inserite nel programma e si sostituisce il valore della variabile nel template con quello della variabile nel modello (questa sostituzione viene detta \textsl{interpolazione}). Se nel template si fa riferimento ad una proprietà di una variabile, si cerca quella proprietà fra le \textit{subvariables} della variabile nel modello. Ad esempio, considerando il template precedente ed un \textit{data model} così composto:
 
 \begin{lstlisting}
 (root)
@@ -134,7 +134,7 @@ l'output sarà il file:
 
 \subsubsection{Utilizzo}
 Per utilizzare FreeMarker bisogna innanzitutto creare una configurazione tramite la classe \lstinline{Configuration}, specificando, tra le altre cose, la directory in cui si trovano i template e la codifica da adoperare.\\
-In seguito, bisogna definire il modello. Come già detto, per fare ciò è possibile usare diverse classi Java, a seconda del tipo di variabile da inserire.\\
+In seguito, bisogna definire il modello. Per fare ciò è possibile usare diverse classi Java, a seconda del tipo di variabile da inserire; tipicamente, si utilizzano mappe o bean.\\
 Infine, si crea un oggetto di tipo \lstinline{Template}, lo si inizializza con il template desiderato e si produce l'output tramite la chiamata al metodo \lstinline{process} dell'oggetto \lstinline{Template}, la cui signature è:
 
 \begin{lstlisting}
@@ -142,7 +142,7 @@ public void process(java.lang.Object dataModel, java.io.Writer out) throws Templ
 \end{lstlisting}
 
 dove \lstinline{dataModel} è ovviamente il modello e \lstinline{out} è il \lstinline{Writer} sul quale produrre il risultato.\\
-Di seguito è riportato un semplice esempio di un'applicazione che esegue il processo appena descritto:
+Di seguito è riportato un esempio di un'applicazione che esegue il processo appena descritto:
 
 \begin{lstlisting}
 import freemarker.template.*;
