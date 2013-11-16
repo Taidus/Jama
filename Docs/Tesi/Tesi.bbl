@@ -1,10 +1,12 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{freemarker}
 Freemarker.
+\newblock \url{http://freemarker.org/}.
 
 \bibitem{jldap}
 Jldap.
+\newblock \url{http://www.openldap.org/jldap/}.
 
 \bibitem{effective}
 Joshua Bloch.
@@ -14,6 +16,7 @@ Joshua Bloch.
 \bibitem{inversion}
 Martin Fowler.
 \newblock Inversion of control containers and the dependency injection pattern.
+\newblock \url{http://martinfowler.com/articles/injection.html}.
 
 \bibitem{pa}
 Martin Fowler.
@@ -35,9 +38,14 @@ Mike Keith and Merrick Schincariol.
 \newblock {\em Pro JPA 2}.
 \newblock Apress.
 
-\bibitem{weld}
+\bibitem{useDriven}
 Gaving King, Peter Muir, Jozef Hartinger, Dan Allen, and David Allen.
-\newblock {\em CDI: Contexts and Dependency Injection for the Java EE
-  platform}.
+\newblock Cdi: Contexts and dependency injection for the java ee platform.
+\newblock \url{http://docs.jboss.org/weld/reference/1.0.0/en-US/html/}.
+
+\bibitem{weld}
+Doug Rosenberg and Matt Stephens.
+\newblock {\em Use Case Driven Object Modeling with UML}.
+\newblock Apress.
 
 \end{thebibliography}
