@@ -3,8 +3,8 @@
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>480</x>
-      <y>780</y>
+      <x>520</x>
+      <y>1090</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -16,8 +16,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.Actor</type>
     <coordinates>
-      <x>50</x>
-      <y>190</y>
+      <x>90</x>
+      <y>500</y>
       <w>100</w>
       <h>120</h>
     </coordinates>
@@ -27,8 +27,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>250</x>
-      <y>140</y>
+      <x>290</x>
+      <y>450</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -40,8 +40,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>480</x>
-      <y>550</y>
+      <x>520</x>
+      <y>860</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -53,8 +53,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>490</x>
-      <y>650</y>
+      <x>530</x>
+      <y>960</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
@@ -66,8 +66,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>820</x>
-      <y>80</y>
+      <x>860</x>
+      <y>390</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -77,8 +77,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>820</x>
-      <y>160</y>
+      <x>860</x>
+      <y>470</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -88,8 +88,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>820</x>
-      <y>250</y>
+      <x>860</x>
+      <y>560</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -99,8 +99,8 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>820</x>
-      <y>340</y>
+      <x>860</x>
+      <y>650</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -110,12 +110,12 @@ convenzione/contributo
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>600</x>
-      <y>120</y>
+      <x>640</x>
+      <y>430</y>
       <w>120</w>
       <h>80</h>
     </coordinates>
-    <panel_attributes>Gestione delle 
+    <panel_attributes>Gestione
 Rate
 </panel_attributes>
     <additional_attributes/>
@@ -123,8 +123,8 @@ Rate
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>240</x>
-      <y>270</y>
+      <x>280</x>
+      <y>580</y>
       <w>210</w>
       <h>70</h>
     </coordinates>
@@ -136,8 +136,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>450</x>
-      <y>120</y>
+      <x>490</x>
+      <y>430</y>
       <w>154</w>
       <h>70</h>
     </coordinates>
@@ -148,8 +148,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>380</x>
-      <y>330</y>
+      <x>420</x>
+      <y>640</y>
       <w>154</w>
       <h>230</h>
     </coordinates>
@@ -160,8 +160,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>310</x>
-      <y>330</y>
+      <x>350</x>
+      <y>640</y>
       <w>190</w>
       <h>460</h>
     </coordinates>
@@ -172,8 +172,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>350</x>
-      <y>330</y>
+      <x>390</x>
+      <y>640</y>
       <w>154</w>
       <h>340</h>
     </coordinates>
@@ -184,20 +184,20 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>690</x>
-      <y>120</y>
-      <w>160</w>
+      <x>730</x>
+      <y>430</y>
+      <w>150</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes>
-    <additional_attributes>50;40;120;50</additional_attributes>
+    <additional_attributes>40;40;120;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>690</x>
-      <y>160</y>
+      <x>730</x>
+      <y>470</y>
       <w>150</w>
       <h>110</h>
     </coordinates>
@@ -208,8 +208,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>660</x>
-      <y>180</y>
+      <x>700</x>
+      <y>490</y>
       <w>170</w>
       <h>170</h>
     </coordinates>
@@ -220,8 +220,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>690</x>
-      <y>80</y>
+      <x>730</x>
+      <y>390</y>
       <w>150</w>
       <h>70</h>
     </coordinates>
@@ -232,8 +232,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>540</x>
-      <y>210</y>
+      <x>580</x>
+      <y>520</y>
       <w>154</w>
       <h>340</h>
     </coordinates>
@@ -244,8 +244,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>130</x>
-      <y>150</y>
+      <x>170</x>
+      <y>460</y>
       <w>120</w>
       <h>80</h>
     </coordinates>
@@ -255,8 +255,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>120</x>
-      <y>230</y>
+      <x>160</x>
+      <y>540</y>
       <w>120</w>
       <h>70</h>
     </coordinates>
@@ -266,8 +266,8 @@ convenzioni/contributi
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>130</x>
-      <y>560</y>
+      <x>170</x>
+      <y>870</y>
       <w>200</w>
       <h>80</h>
     </coordinates>
@@ -279,8 +279,8 @@ Scadenzario
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>90</x>
-      <y>290</y>
+      <x>130</x>
+      <y>600</y>
       <w>140</w>
       <h>270</h>
     </coordinates>
@@ -290,13 +290,121 @@ Scadenzario
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>250</x>
-      <y>620</y>
+      <x>290</x>
+      <y>930</y>
       <w>220</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;include&gt;&gt;</panel_attributes>
     <additional_attributes>200;180;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.UseCase</type>
+    <coordinates>
+      <x>310</x>
+      <y>230</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Elenco
+Ditte
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>130</x>
+      <y>270</y>
+      <w>190</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>30;200;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.UseCase</type>
+    <coordinates>
+      <x>650</x>
+      <y>160</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Modifica
+Ditta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.UseCase</type>
+    <coordinates>
+      <x>650</x>
+      <y>260</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Inserimento 
+Ditta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>470</x>
+      <y>160</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>30;70;150;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>470</x>
+      <y>230</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>30;40;160;60</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>410</x>
+      <y>300</y>
+      <w>270</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;include&gt;&gt;</panel_attributes>
+    <additional_attributes>250;30;30;140</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.UseCase</type>
+    <coordinates>
+      <x>640</x>
+      <y>70</y>
+      <w>130</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Visualizzazione
+Ditta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>430</x>
+      <y>100</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>30;100;170;30</additional_attributes>
   </element>
 </diagram>

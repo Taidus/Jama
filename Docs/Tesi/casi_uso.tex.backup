@@ -7,19 +7,37 @@ Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a
   \caption{Diagramma dei casi d'uso dell'Utente generico}
   \label{use_case_diag_generic}
   \centering
-    \includegraphics[width=1\textwidth]{images/casi_uso_utente_generico.eps}
+    \includegraphics[width=0.7\textwidth]{images/casi_uso_utente_generico.eps}
 \end{figure}
 
-\begin{itemize}
+\begin{enumerate}
+
  \item Login\\
     Percorso base:
     l'Utente Generico, raggiunto l'indirizzo web dell'applicativo, inserisce il proprio numero di matricola e password quindi clicca sul pulsante ``Login''. Viene visualizzata la schermata ``Home''.\\
     Percorso alternativo:
-    l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''
+    l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''. Viene visualizzato un messaggio di errore nel quale si invita l'utente a riprovare.
     
  \item Visualizza profilo
+    Dopo aver effettuato il login , l'Utente Generico può cliccare sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
  \item Modifica profilo
-\end{itemize}
+  Percorso base:
+  dopo aver effettuato il login , l'Utente Generico clicca sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
+  L'Utente può cambiare:
+  \begin{itemize}
+   \item email
+   \item password\\
+    Per cambiare la password è necessario inserire la vecchia password e la nuova password due volte per prevenire errori.
+  \end{itemize}
+
+  Una volta effettuate le modifiche desiderate l'Utente clicca su ``Salva''. Le modifiche vegono salvate e viene visualizzata la schermata precedente.\\
+  
+  Percorso alternativo:
+  l'Utente inserisce una email non valida, oppure commette un errore riepiempo i campi : vecchia password, nuova password, password di verifica. L'Utente è avvertito dell'errore con un messagio ed è invitato a riprovare.
+  
+
+\end{enumerate}
+
 
 
 \paragraph{Operatore}
@@ -51,7 +69,8 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
 	  Per selezionare un responsabile scientifico è possibile usare l'apposito menù a tendina o, in alternativa, qualora la persona cercata non sia nell'elenco, aggiungerla cliccando sul pulsante ``Aggiungi''.
 	\item Il referente
 	\item La dittà\\
-	  Per selezionare una dittà si può usare l'apposito menù a tendina o, se la dittà cercata non fosse presente nell'elenco, aggiungerne una nuova cliccando sul pulsante ``Aggiungi''.
+	  Per selezionare una dittà si può usare l'apposito menù a tendina o, se la dittà cercata non fosse presente nell'elenco, aggiungerne una nuova cliccando sul pulsante ``Aggiungi''.Per ulteriori dettagli si rimanda al
+	  rispettivo caso d'uso.
 	\item Il nome del progetto CIA
 	\item Il Repertorio
 	\item Il totale imponibile
@@ -190,7 +209,42 @@ con la differenza che i campi non sono modificabili. E' possibile tornare alla s
 Una volta raggiunta la scheda ``rate'' relativa alla convenzione/contributo di interesse l'Operatore, dopo aver selezionato la rata di interesse, clicca sul pulsante ``Elimina'; appare una finestra di dialogo che chiede di confermare
 l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
 
+\item Inserimento di una Ditta\\
+Percorso base:
+L'Operatore clicca su ``Visualizza elenco Ditte'' dalla pagina iniziale, viene visualizzata una schermata contenente un elenco delle ditte inserite. L'Operatore clicca sul pulsante ``Aggiungi'' in basso a sinistra. Viene visualizzata
+una finestra di dialogo contente i seguenti campi obbligatori:
+\begin{itemize}
+ \item Denominazione
+ \item Ragione sociale
+ \item Sede Legale
+ \item Codice fiscale
+ \item Partita IVA
+\end{itemize}
+L'Operatore dopo aver riempito i campi clicca su ``Salva'', la nuova dittà viene salvata e si ritorna alla schermata precedente.
 
+Percorso alternativo:
+L'Operatore clicca su ``Salva'' senza aver riempito tutti i campi obbligatori, viene visualizzato un messaggio di errore che invita l'utente inserire tali campi.
+
+Percorso alternativo 2:
+L'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà già inserita. Viene visualizzato un opportuno messagio di errore.
+
+Percorso alternativo 3:
+Si può inserire una dittà anche in fase di creazione di una convenzione/contributo cliccando sul pulsante ``Aggiungi'' accanto al campo ``ditta'' nella scheda ``Dati generali''.
+
+\item Modifica di una Ditta\\
+
+Percorso base:
+L'Operatore clicca su ``Visualizza elenco Ditte'' dalla pagina iniziale, viene visualizzata una schermata contenente un elenco delle ditte inserite. L'Operatore dopo aver posizionato il cursore sulla riga dell'elenco
+corrispondente alla ditta di interesse clicca sul pulsante ``Modifica''che appare a destra sulla riga selezionata. Viene visualizzata
+una finestra di dialogo analoga a quella dell'inserimento.
+
+L'Operatore dopo aver modificato i campi desiderati clicca su ``Salva'', la  dittà viene salvata e si ritorna alla schermata precedente.
+
+Percorso alternativo:
+L'Operatore clicca su ``Salva'' senza aver riempito tutti i campi obbligatori, viene visualizzato un messaggio di errore che invita l'utente inserire tali campi.
+
+Percorso alternativo 2:
+L'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà già inserita. Viene visualizzato un opportuno messagio di errore.
 
 \end{enumerate}
 
