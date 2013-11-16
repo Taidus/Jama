@@ -97,6 +97,7 @@ public class CompanySearchService extends Pager<Company> {
 	}
 
 	public List<Company> getCurrentResults() {
+		em.clear();
 		return pager.getCurrentResults();
 	}
 

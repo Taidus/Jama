@@ -106,6 +106,7 @@ public class UserSearchService extends Pager<User> {
 
 
 	public List<User> getCurrentResults() {
+		em.clear();
 		return pager.getCurrentResults();
 	}
 
