@@ -33,7 +33,7 @@ public class CompanySearchService extends Pager<Company> {
 	
 	public void init(String nameLike) {
 		
-		nameLike = nameLike.trim().toLowerCase();
+//		nameLike = nameLike.trim().toLowerCase();
 
 		TypedQuery<Company> query;
 		TypedQuery<Long> countQuery;

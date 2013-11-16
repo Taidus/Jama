@@ -30,6 +30,12 @@ public class UserTableLazyDataModel extends LazyDataModel<User> {
 	
 	@Override
 	public List<User> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+		
+		String filter = filters.get("surname");
+		System.out.println("User filter: " + filter);
+		
+		//TODO passare
+		
 		searchService.setCurrentPage(first / pageSize);
 		searchService.setPageSize(pageSize);
 		

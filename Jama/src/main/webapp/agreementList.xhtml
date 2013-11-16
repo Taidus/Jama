@@ -71,7 +71,7 @@
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{agr.closed}" />
 				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not agr.closed}" />
 			</p:column>
-			
+
 			<p:column id="title" headerText="#{msgs.agrTitle}">
 				<h:outputText value="#{agr.shortTitle}" />
 			</p:column>
@@ -91,21 +91,19 @@
 				<f:facet name="header">
 					<h:outputText value="#{msgs.approvalDate}" />
 					<br />
-					<h:form id="calendarFilters">
-						<div style="display: block; width: 90%; margin: auto;">
-							<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"
-								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
-							</p:calendar>
-							-
-							<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractListPCB.lazyModel.filterMaxDate}"
-								pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
-							</p:calendar>
-						</div>
-						<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
-							onclick="return calendarFilter(arguments[0], w_agrTable);" />
-						<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
-							onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_agrTable);" />
-					</h:form>
+					<div style="display: block; width: 90%; margin: auto;">
+						<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"
+							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+						</p:calendar>
+						-
+						<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractListPCB.lazyModel.filterMaxDate}"
+							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+						</p:calendar>
+					</div>
+					<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						onclick="return calendarFilter(arguments[0], w_agrTable);" />
+					<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_agrTable);" />
 				</f:facet>
 
 				<h:outputText value="#{agr.approvalDate}">
