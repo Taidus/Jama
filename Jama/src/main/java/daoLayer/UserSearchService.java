@@ -33,7 +33,7 @@ public class UserSearchService extends Pager<User> {
 
 	public void init(String surnameLike){
 		
-		surnameLike = surnameLike.trim().toLowerCase();
+		
 		
 		TypedQuery<User> query;
 		TypedQuery<Long> countQuery;
@@ -56,7 +56,8 @@ public class UserSearchService extends Pager<User> {
 		List<Predicate> criteria = new ArrayList<Predicate>();
 
 		if (surnameLike != null) {
-
+			
+			surnameLike = surnameLike.trim().toLowerCase();
 			ParameterExpression<String> p = cb.parameter(String.class, "like");
 			criteria.add(cb.like(cb.lower(cb.trim((usr.<String> get("surname")))), p));
 		}
