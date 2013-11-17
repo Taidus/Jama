@@ -2,7 +2,7 @@
 
 La specifica \textsl{Contexts and Dependecy Injection} (o, più semplicemente, \textsl{CDI}) è stata introdotta nella versione 6 di Java EE per unificare il livello applicazione (che fa uso degli \textsl{Enterprise Java Bean}, o \textsl{EJB}) e il livello web (con particolare riferimento alla tecnologia JSF, che fa uso dei \textsl{Managed bean}).\\
 Esistono attualmente varie versioni di CDI. Nello sviluppo dell'applicazione è stata usata \textsl{JBoss Weld}, che è quella di riferimento ed è inoltre inclusa di default in \textsl{JBoss AS}.\\
-In seguito, verranno descritti in modo sufficientemente approfondito le caratteristiche principali di CDI. Per una trattazione più dettagliata e completa, si rimanda alla specifica INSERIRE RIFERIMENTO A SPECIFICA e alla documentazione dell'implementazione di riferimento INSERIRE RIFERIMENTO A WELD.
+In seguito, verranno descritti in modo sufficientemente approfondito le caratteristiche principali di CDI. Per una trattazione più dettagliata e completa, si rimanda alla specifica \cite{cdi} e alla documentazione dell'implementazione di riferimento \cite{weld}.
 
 \subsection{Caratteristiche}
 
@@ -25,7 +25,7 @@ Inoltre CDI:
 
 \subsubsection{Definizione}
 Alla base di CDI vi sono oggetti particolari chiamati \textsl{bean}.\\
-Un bean, nella sua accezione più ampia, è un \textquotedblleft componente software riusabile che può essere gestito dal container\textquotedblright{} (adattamento libero della definizione fornita dalla specifica \textsl{JavaBeans}, consultabile all'indirizzo INSERIRE QUI RIFERIMENTO BIBLIOGRAFICO AL LINK PAG. 33 DI CoreJSF).\\
+Un bean, nella sua accezione più ampia, è un \textquotedblleft componente software riusabile che può essere gestito dal container\textquotedblright{} (adattamento libero della definizione fornita dalla specifica \textsl{JavaBeans}, consultabile all'indirizzo \cite{javaBeans}).\\
 I bean di CDI rispettano questa specifica, ma hanno un'importante proprietà aggiuntiva: lo \textit{scope}, che li lega ad uno specifico contesto, il quale ne determina il ciclo di vita e la visibilità ai client.
 CDI mette a disposizione quattro \textit{scope}:
 \begin{itemize}
@@ -45,7 +45,7 @@ Un bean CDI non è solo definito dal suo \textit{scope}: di seguito sono elencat
 \end{itemize}
 
 \subsubsection{Iniezione di un bean}
-Il meccanismo che sta alla base di CDI è l'\textsl{iniezione di dipendenza}, che costituisce a una forma di \textquotedblleft inversione di controllo\textquotedblright (in inglese, \textit{inversion of control}): non è più il programmatore a controllare gli oggetti da istanziare, bensì il framework \footnote{come approfondimento si consiglia la lettura di INSERIRE RIFERIMENTO ARTICOLO MARTIN FOWLER IoC}.\\
+Il meccanismo che sta alla base di CDI è l'\textsl{iniezione di dipendenza}, che costituisce a una forma di \textquotedblleft inversione di controllo\textquotedblright (in inglese, \textit{inversion of control}): non è più il programmatore a controllare gli oggetti da istanziare, bensì il framework \footnote{come approfondimento si consiglia la lettura di \cite{inversion}}.\\
 Per eseguire l'iniezione di dipendenza in CDI, dichiarando un attributo di una classe e delegando al framework la responsabilità di inizializzarlo, bisogna innanzitutto inserire le classi che definiscono i bean in un archivio (\texttt{jar}, \texttt{war} etc) che contiene il file \texttt{META-INF/beans.xml}. A questo punto, è sufficiente annotare l'attributo con \lstinline{@Inject}: il \textit{container} all'interno del quale viene eseguita l'applicazione cercherà - nel contesto appropriato - un bean dello stesso tipo dell'attributo dichiarato e provvederà all'inizializzazione.\\
 
 \paragraph{\textit{Qualifier} e \textit{alternatives}} Nel caso in cui il tipo dell'attributo non sia concreto, potrebbero esistere diversi bean che lo implementano e che possono essere iniettati. Per ovviare a questo problema, CDI consente al programmatore di specificare quale bean utilizzare mediante annotazioni personalizzate chiamate \textit{qualifier}. Un \textit{qualifier} è un'annotazione annotata a sua volta con \lstinline{@Qualifier}. Annotando un bean di implementazione di un'interfaccia con un \textit{qualifier} consente quindi di decidere, durante lo sviluppo dell'applicazione, quale classe concreta adoperare.\\
@@ -72,7 +72,7 @@ La definizione generale di bean è piuttosto ampia e per questo molte specifiche
 \item Ha un costruttore che non riceve parametri o che è annotato con \lstinline{@Inject}
 \end{itemize}
 
-La semantica e il ciclo di vita di un \textit{managed bean} sono descritti nella rispettiva specifica, consultabile INSERIRE RIFERIMENTO.
+La semantica e il ciclo di vita di un \textit{managed bean} sono descritti nella rispettiva specifica (vedi \cite{managedBean}).
 
 \paragraph{\textit{Session bean}} Un \textit{session bean} è un particolare tipo di EJB che incapsula logica di business, nascondendo così ai client dettagli implementativi del servizio offerto; in altre parole, i client si limitano ad invocare i metodi del \textit{session bean}, ignorando cosa accade all'interno del server.\\
 Un \textit{session bean} può essere di tre tipi:

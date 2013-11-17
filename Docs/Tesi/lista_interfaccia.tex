@@ -33,7 +33,7 @@ Questo metodo viene chiamato ogni volta che bisogna aggiornare la tabella. I par
 \item \texttt{filters}: è una mappa di coppie in cui la chiave è il campo su cui filtrare e il valore è, appunto, il valore del campo.
 \end{enumerate}
 
-Affinché la paginazione sia effettivamente \textit{lazy}, però, è necessario che la query effettuata per ottenere le informazioni sia \textquoteleft mirata\textquoteright{}. Per maggiori dettagli su come questo avvenga, si rimanda a INSERIRE RIFERIMENTO A PAGER HIBERNATE.
+Affinché la paginazione sia effettivamente \textit{lazy}, però, è necessario che la query effettuata per ottenere le informazioni sia \textquoteleft mirata\textquoteright{}. Per maggiori dettagli su come questo avvenga, si rimanda alla sezione \ref{list_business}.
 
 Se la tabella prevede anche che una riga possa essere selezionata, un \textit{lazy model} deve anche esporre i metodi \lstinline{getRowData} e \lstinline{getRowKey}, che consentono, rispettivamente, di estrarre il dato relativo ad una riga e la riga relativa ad un dato. Entrambi utilizzano una chiave fornita dal programmatore per distinguere le righe della tabella (come ad esempio un identificativo) che deve essere esplicitata nell'attributo \texttt{rowKey} della \lstinline{p:dataTable}.
 

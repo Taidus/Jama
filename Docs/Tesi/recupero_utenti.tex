@@ -3,7 +3,7 @@ Il database ha priorità rispetto ad LDAP in modo che sia possibile sovrascriver
 mentre per ottenere i dati dal server LDAP è necessario effettuare qualche operazione in più, perciò il codice che compie questa operazione è stato incapsulato in una classe chiamata \texttt{LdapManager}.
 
 Tale classe effettua la connessione al server LDAP tramite il protocollo sicuro \textsl{ldaps} e successivamente sfrutta il metodo \texttt{search(...)} come visto in INSERIRE RIFERIMENTO per ottenere i dati sull'utente in base alla sua matricola.
-Tale ricerca è effettuata impostando il parametro \textsl{base} a ``ou=people, dc=dinfo, dc=unifi, dc=it''e \textsl{filter} a ``uid= <matricola> ''. Il parametro base viene letto dal file di configurazione 
+Tale ricerca è effettuata impostando il parametro \textsl{base} a ``ou=people, dc=dinfo, dc=unifi, dc=it''e \textsl{filter} a ``uid= \textless matricola\textgreater{}". Il parametro base viene letto dal file di configurazione 
 \path{standalone/deployments/Jama.war/WEB-INF/classes/config/ldap.properties}, quindi è possibile cambiarlo in qualsiasi momento se lo schema esposto dal server LDAP dovesse cambiare.
 A partire dai dati contenuti nel \texttt{LDAPSearchResults} restituito da \texttt{search(...)} è possibile istanziare la classe \texttt{User} che rappresenta un utente.
 
