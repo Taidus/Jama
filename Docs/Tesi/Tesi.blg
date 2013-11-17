@@ -5,51 +5,57 @@ The style file: plain.bst
 Database file #1: biblio.bib
 Warning--to sort, need author or key in freemarker
 Warning--to sort, need author or key in jldap
+Warning--to sort, need author or key in joda
+Warning--to sort, need author or key in hibernate
+Warning--to sort, need author or key in prime
+Warning--to sort, need author or key in cdi
+Warning--to sort, need author or key in javBeans
+Warning--to sort, need author or key in managedBean
 Warning--empty year in effective
 Warning--empty year in pa
 Warning--empty year in gof
 Warning--empty year in jsf
 Warning--empty year in jpa
 Warning--empty year in weld
-You've used 10 entries,
+You've used 16 entries,
             2118 wiz_defined-function locations,
-            532 strings with 4791 characters,
-and the built_in function-call counts, 2379 in all, are:
-= -- 201
-> -- 113
+            552 strings with 5222 characters,
+and the built_in function-call counts, 3333 in all, are:
+= -- 291
+> -- 119
 < -- 0
-+ -- 46
++ -- 52
 - -- 36
-* -- 124
-:= -- 395
-add.period$ -- 28
-call.type$ -- 10
-change.case$ -- 42
+* -- 154
+:= -- 497
+add.period$ -- 40
+call.type$ -- 16
+change.case$ -- 60
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 100
-empty$ -- 223
+cite$ -- 30
+duplicate$ -- 142
+empty$ -- 361
 format.name$ -- 36
-if$ -- 501
+if$ -- 741
 int.to.chr$ -- 0
-int.to.str$ -- 10
+int.to.str$ -- 16
 missing$ -- 12
-newline$ -- 51
+newline$ -- 75
 num.names$ -- 16
-pop$ -- 102
+pop$ -- 150
 preamble$ -- 1
-purify$ -- 38
+purify$ -- 50
 quote$ -- 0
-skip$ -- 64
+skip$ -- 112
 stack$ -- 0
-substring$ -- 50
-swap$ -- 10
+substring$ -- 80
+swap$ -- 16
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 28
-warning$ -- 8
+type$ -- 52
+warning$ -- 14
 while$ -- 16
-width$ -- 12
-write$ -- 88
-(There were 8 warnings)
+width$ -- 18
+write$ -- 130
+(There were 14 warnings)
