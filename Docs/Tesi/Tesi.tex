@@ -87,21 +87,20 @@ for administration of technology transfer activities
 \mainmatter
 \chapter{Introduzione}
 \input{Introduzione}
+
 \chapter{Analisi}
 \label{analisi}
+\input{introduzione_analisi}
 \section{Modello}
-Si suddivide il modello di dominio in due componenti ortogonali: il modello di business e il modello degli utenti. Il primo è relativo agli aspetti di business logic specifici del particolare contesto applicativo , 
-ovvero modella convenzioni, contributi, rate e le relazioni fra essi; il secondo invece è concettualmente indipendente dal contesto applicativo e concerne la gestione degli utenti.
-
 \input{modello_business}
 \input{modello_utenti}
 \section{Casi d'uso}
 \input{casi_uso}
+
+
 \chapter{Tecnologie}
-L'applicativo sviluppato si basa sulla piattaforma \textsl{Java EE}, in particolare sfrutta i moduli \textsl{JPA} per la persistenza e \textsl{CDI} per la gestione del ciclo di vita dei bean e per l'iniezione di dipendenza. L'interfaccia grafica
-invece è stata scritta usando il framework \textsl{JSF} mentre per quanto riguarda la sicurezza si è utilizzato \textsl{DeltaSpike}. Come application server è invece stato scelto \textsl{JBoss AS 7}. Di seguito una descrizione di ciascuno
-di questi framework e, infine, di altre librerie usate per particolari contesti.
 \label{tecnologie}
+\input{introduzione_tecnologie}
 \section{JPA}
 \label{jpa}
 \input{jpa}
@@ -122,11 +121,11 @@ di questi framework e, infine, di altre librerie usate per particolari contesti.
 \subsection{FreeMarker}
 \label{freemarker}
 \input{freemarker}
-\chapter{Test funzionale e collaudo}
-\input{collaudo}
-\label{howto}
+
+
 \chapter{Dietro le quinte}
 \label{code}
+\input{introduzione_dietro_le_quinte}
 \section{Login}
 \label{login}
 \input{login}
@@ -147,7 +146,10 @@ di questi framework e, infine, di altre librerie usate per particolari contesti.
 \section{Valuta}
 \input{money}
 
-			
+
+\chapter{Test funzionale e collaudo}
+\label{howto}
+\input{collaudo}
 
 \nocite{*}		 % Mostra in bibliografia anche gli oggetti non citati 
 \bibliography{biblio}{}
