@@ -1,6 +1,7 @@
 Di seguito se elencano i casi d'uso per ciascun tipo di utente che interagisce col sistema. 
+\begin{enumerate}
 
-\paragraph{Utente generico}
+\item \textbf{Utente generico}\\
 Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a tutti gli altri tipi di utenti. Tali casi d'uso sono riportati in figura \ref{use_case_diag_generic}
 
 \begin{figure}[h]
@@ -12,15 +13,15 @@ Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a
 
 \begin{enumerate}
 
- \item Login\\
+ \item Login\\ \label{UC_login}
     Percorso base:
     l'Utente Generico, raggiunto l'indirizzo web dell'applicativo, inserisce il proprio numero di matricola e password quindi clicca sul pulsante ``Login''. Viene visualizzata la schermata ``Home''.\\
     Percorso alternativo:
     l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''. Viene visualizzato un messaggio di errore nel quale si invita l'utente a riprovare.
     
- \item Visualizza profilo
+ \item Visualizza profilo\\ \label{UC_view_profile}
     Dopo aver effettuato il login , l'Utente Generico può cliccare sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
- \item Modifica profilo
+ \item Modifica profilo\\ \label{UC_edit_profile}
   Percorso base:
   dopo aver effettuato il login , l'Utente Generico clicca sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
   L'Utente può cambiare:
@@ -40,7 +41,7 @@ Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a
 
 
 
-\paragraph{Operatore}
+\item \textbf{Operatore}\\
 Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in figura \ref{use_case_diag_operator}
 \begin{figure}[h]
   \caption{Diagramma dei casi d'uso dell'Operatore}
@@ -50,7 +51,7 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
 \end{figure}
 
 \begin{enumerate}
-  \item Inserimento di una nuova Convenzione/Contributo\\
+  \item Inserimento di una nuova Convenzione/Contributo\\ \label{UC_new_contract}
   
   Percorso base:
   l'operatore, una volta effettuato il login, clicca su ``Crea una convenzione/contributo''; viene visualizzata una schermata suddivisa in varie schede,
@@ -111,7 +112,7 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
   Se l'Operatore clicca sul tasto ``Salva'' senza aver compilato dei campi obbligatori, o avendo inserito dei valori non consentiti, viene visualizzato un messaggio di errore 
   e il documento non viene salvato. La schermata non viene cambiata, in modo che l'Operatore possa procedere alla correzione.
      
-  \item Visualizzazione delle convenzioni/contributi\\
+  \item Visualizzazione delle convenzioni/contributi\\ \label{UC_view_contract_list}
 
   Percorso base:
   l'operatore clicca su ``Visualizza contratti''; viene mostrata una lista delle convenzioni/contributi correntemente stipulate in 
@@ -128,7 +129,7 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
   Percorso alternativo:
   Si può tornare alla pagina iniziale con l'apposito tasto.
  
-  \item Modifica di una convenzione\\
+  \item Modifica di una convenzione/contributo\\ \label{UC_edit_contract}
   
   Percorso base:
   l'Operatore a partire dalla schermata ``Visualizza Contratti'' clicca sul pulsante ``Modifica'' che appare sulla destra nella riga 
@@ -143,14 +144,24 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
   Se l'Operatore clicca su "Salva" ma alcuni valori immessi non sono corretti, viene visualizzato un messaggio di errore e non si torna alla schermata "Visualizzazione delle
   convenzioni". I cambiamenti effettuati non vengono (ovviamente) salvati.
   
-\item Visualizzazione di una convenzione/contributo\\
+  \item Visualizzazione di una convenzione/contributo\\ \label{UC_view_contract}
  
   Del tutto analogo a ``Modifica di una convenzione/contributo'' con la differenza che in questo caso non è possibile modificare i dati della
   convenzione/contributo.
   
+  \item Eliminazione di una convenzione/contributo\\ \label{UC_delete_contract}
+  
+  Percorso base:
+  l'Operatore a partire dalla schermata ``Visualizza Contratti'' clicca sul pulsante ``Elimina'' che appare sulla destra nella riga 
+  della tabella corrispondente alla convenzione/contributo desiderata. Appare una finestra di dialogo che chiede di confermare l'operazione. L'Operatore clicca sul pulsante ``Sì'', la convenzione/contributo viene eliminato e si
+  ritorna alla schermata precedente.
+  
+  Percorso alternativo:
+  l'Operatore, dopo aver cliccato su ``Elimina'', essendosi accorto di aver commesso un errore, clicca sul pulsante ``No''. La convenzione/contributo non viene eliminata e si ritorna alla schermata precedente.
   
   
-\item Inserimento di una rata\\
+  
+\item Inserimento di una rata\\ \label{UC_new_installment}
 Percorso base:
 l'operatore può inserire una rata sia in fase di creazione della convenzione/contributo sia in fase di modifica; in entrambi i casi dopo aver raggiunto
 la scheda ``Rate'' l'Operatore clicca sul pulsante ``Aggiungi una rata''.  
@@ -188,7 +199,7 @@ Le modifiche vengono salvate cliccando sul pulsante "Salva". Si ritorna alla sch
 Percorso alternativo:
 l'Operatore clicca sul pulsante ``Annulla'', viene chiusa la finestra di dialogo senza che la rata sia stata inserita.
 
-\item Modifica di una rata\\
+\item Modifica di una rata\\ \label{UC_edit_installment}
 
 Percorso base:
 l'Operatore accede alla schermata ``Visualizza contratti'' cliccando sul pulsante apposito nella pagina iniziale, quindi seleziona la convenzione/contributo alla quale la rata appartiene e clicca sul pulsante ``Modifica'' che compare
@@ -199,19 +210,19 @@ Dopo avere effettuato le modifiche richieste l'Operatore clicca sul pulsante ``S
 Percorso alternativo:
 l'Operatore clicca sul pulsante ``Annulla'', le modifiche vengono scartate e si torna alla schermata precedente.
 
-\item Visualizzazione di una rata
+\item Visualizzazione di una rata \label{UC_view_installment}
 
 Una volta raggiunta la scheda ``rate'' relativa alla convenzione/contributo di interesse l'Operatore, dopo aver selezionato la rata desiderata, clicca sul pulsante ``Visualizza''. Viene presentata una finestra di dialogo analoga a quella descritta nel caso della modifica 
 con la differenza che i campi non sono modificabili. E' possibile tornare alla schermata precedente cliccando sul pulsante ``Indietro''.
 
-\item Eliminazione di una rata\\
+\item Eliminazione di una rata\\ \label{UC_delete_installment}
 
 Una volta raggiunta la scheda ``rate'' relativa alla convenzione/contributo di interesse l'Operatore, dopo aver selezionato la rata di interesse, clicca sul pulsante ``Elimina'; appare una finestra di dialogo che chiede di confermare
 l'eliminazione, l'Operatore clicca ''Sì'', la rata viene eliminata.
 
-\item Inserimento di una Ditta\\
+\item Inserimento di una Ditta\\ \label{UC_new_company}
 Percorso base:
-L'Operatore clicca su ``Visualizza elenco Ditte'' dalla pagina iniziale, viene visualizzata una schermata contenente un elenco delle ditte inserite. L'Operatore clicca sul pulsante ``Aggiungi'' in basso a sinistra. Viene visualizzata
+l'Operatore clicca su ``Visualizza elenco Ditte'' dalla pagina iniziale, viene visualizzata una schermata contenente un elenco delle ditte inserite. L'Operatore clicca sul pulsante ``Aggiungi'' in basso a sinistra. Viene visualizzata
 una finestra di dialogo contente i seguenti campi obbligatori:
 \begin{itemize}
  \item Denominazione
@@ -220,36 +231,40 @@ una finestra di dialogo contente i seguenti campi obbligatori:
  \item Codice fiscale
  \item Partita IVA
 \end{itemize}
-L'Operatore dopo aver riempito i campi clicca su ``Salva'', la nuova dittà viene salvata e si ritorna alla schermata precedente.
+l'Operatore dopo aver riempito i campi clicca su ``Salva'', la nuova dittà viene salvata e si ritorna alla schermata precedente.
 
 Percorso alternativo:
-L'Operatore clicca su ``Salva'' senza aver riempito tutti i campi obbligatori, viene visualizzato un messaggio di errore che invita l'utente inserire tali campi.
+l'Operatore clicca su ``Salva'' senza aver riempito tutti i campi obbligatori, viene visualizzato un messaggio di errore che invita l'utente inserire tali campi.
 
 Percorso alternativo 2:
-L'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà già inserita. Viene visualizzato un opportuno messagio di errore.
+l'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà già inserita. Viene visualizzato un opportuno messagio di errore.
 
 Percorso alternativo 3:
-Si può inserire una dittà anche in fase di creazione di una convenzione/contributo cliccando sul pulsante ``Aggiungi'' accanto al campo ``ditta'' nella scheda ``Dati generali''.
+si può inserire una dittà anche in fase di creazione di una convenzione/contributo cliccando sul pulsante ``Aggiungi'' accanto al campo ``ditta'' nella scheda ``Dati generali''.
 
-\item Modifica di una Ditta\\
+\item Modifica di una Ditta\\ \label{UC_edit_company}
 
 Percorso base:
-L'Operatore clicca su ``Visualizza elenco Ditte'' dalla pagina iniziale, viene visualizzata una schermata contenente un elenco delle ditte inserite. L'Operatore dopo aver posizionato il cursore sulla riga dell'elenco
+l'Operatore clicca su ``Visualizza elenco Ditte'' dalla pagina iniziale, viene visualizzata una schermata contenente un elenco delle ditte inserite. L'Operatore dopo aver posizionato il cursore sulla riga dell'elenco
 corrispondente alla ditta di interesse clicca sul pulsante ``Modifica''che appare a destra sulla riga selezionata. Viene visualizzata
 una finestra di dialogo analoga a quella dell'inserimento.
 
-L'Operatore dopo aver modificato i campi desiderati clicca su ``Salva'', la  dittà viene salvata e si ritorna alla schermata precedente.
+l'Operatore dopo aver modificato i campi desiderati clicca su ``Salva'', la  dittà viene salvata e si ritorna alla schermata precedente.
 
 Percorso alternativo:
-L'Operatore clicca su ``Salva'' senza aver riempito tutti i campi obbligatori, viene visualizzato un messaggio di errore che invita l'utente inserire tali campi.
+l'Operatore clicca su ``Salva'' senza aver riempito tutti i campi obbligatori, viene visualizzato un messaggio di errore che invita l'utente inserire tali campi.
 
 Percorso alternativo 2:
-L'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà già inserita. Viene visualizzato un opportuno messagio di errore.
+l'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà già inserita. Viene visualizzato un opportuno messagio di errore.
+
+\item Visualizzazione di una Ditta\\ \label{UC_view_company}
+  Percorso base:
+  l'Operatore raggiunge l'elenco delle ditte quindi clicca sul pulsante ``Visualizza ditta'' che compare sulla destra selezionando la riga dell'elenco corrispondente alla ditta desiderata.
 
 \end{enumerate}
 
  
-\paragraph{Docente}
+\item \textbf{Docente}\\
 I casi d'uso del Docente sono rappresentati in figura \ref{use_case_diag_teacher}
 \begin{figure}[h]
   \caption{Diagramma dei casi d'uso del Docente}
@@ -260,26 +275,40 @@ I casi d'uso del Docente sono rappresentati in figura \ref{use_case_diag_teacher
 
 \begin{enumerate}
  
- \item Visualizzazione dell'elenco delle convenzioni/contributi\\
+ \item Visualizzazione dell'elenco delle convenzioni/contributi di cui il docente è responsabile scientifico\\ \label{UC_view_own_contract_list}
  
  Il docente, dopo aver effettuato il login, può cliccare sul pulsante ``Visualizzazione della lista delle convenzioni/contributi''; la schermata
  che viene visualizzata contiene una tabella che elenca le convenzioni/contributi del docente. E' possibile filtrare le convenzioni/contributi
  secondo vari criteri(data, tipo, scadenze più vicine, ...).Inoltre è possibile visualizzare i dettagli di una convenzione/contributo cliccando sul
  pulsante ``Visualizza'' che appare posizionando il puntatore su una riga della tabella.
  
- \item Visualizzazione di una convenzione/contributo di cui il docente è responsabile scientifico\\
+ \item Visualizzazione di una convenzione/contributo di cui il docente è responsabile scientifico\\ \label{UC_view_own_contract}
  
  Il docente dalla schermata ``Lista delle convenzioni/contributi'' può cliccare sul pulsante ``Visualizza'' relativo ad una convenzione/contributo; compare una schermata suddivisa in schede analoga a quella della modifica/creazione
- della convenzione. Il docente può navigare fra le schede cliccandoci sopra. Non è permessa nessuna modifica ai dati della convenzione/contributo tuttavia il docente può inserire degli allegati dalla scheda ``Allegati''. Cliccando su ``Salva''
+ della convenzione. Il docente può navigare fra le schede cliccandoci sopra. Non è permessa nessuna modifica ai dati della convenzione/contributo tuttavia il docente può gestire degli allegati dalla scheda ``Allegati'', per i dettagli
+ si rimanda a \ref{UC_manage_attachments}. Cliccando su ``Salva''
  gli allegati inseriti dal docente vengono memorizzati, al contrario cliccando su ``Indietro'' le modifiche vegono scartate.
  
+ \item Gestione allegati\\ \label{UC_manage_attachments}
+  
+ Percorso base:
+ il Docente raggiunge la scheda ``Allegati'' di una convenzione/contributo quindi:
+  \begin{itemize}
+   \item clicca su ``Aggiungi'', viene presentata una finestra di dialogo che consente di selezionare un file da inserire come allegato.
+   \item clicca sul pulsante ``Download'' che compare sulla destra selezionando una riga della tabella degli allegati. Il file corrispondente a tale riga viene scaricato sul computer dell'utente.
+   \item clicca sul pulsante ``Rimuovi'' che compare sulla destra selezionando una riga della tabella degli allegati. Il file corrispondente viene rimosso dagli allegati della convenzione/contributo
+  \end{itemize}
+ il docente clicca quindi su ``Salva'', le modifiche vengono apportate e si ritorna alla schermata precedente.
  
+ Percorso alternativo:
+ il Docente, dopo aver effettuato alcune modifiche clicca su ``Indietro'', le modifiche non vengono salvate e si ritona alla schermata precedente.
+
  
 \end{enumerate}
 
 
 
-\paragraph{Amministratore}
+\item \textbf{Amministratore}\\
 Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura \ref{use_case_diag_admin}
 \begin{figure}[h]
   \caption{Diagramma dei casi d'uso dell'Amministratore}
@@ -290,7 +319,7 @@ Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura
 
 
 \begin{enumerate}
- \item Inserimento di un nuovo utente\\
+ \item Inserimento di un nuovo utente\\ \label{UC_new_user}
  
  
  Percorso base:
@@ -317,12 +346,12 @@ Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura
  l'Amministratore in qualunque momento della procedura clicca sul pulsante ``Annulla''; viene presentata a video la schermata precedente,
  nessun utente viene aggiunto al sistema.
  
- \item Visualizzazione della lista degli utenti
+ \item Visualizzazione della lista degli utenti \label{UC_view_user_list}
   L'Amministratore, una volta effettuato il login, clicca sul pulsante ``Visualizza utenti''; viene presentata una schermata contenente una lista  degli
   utenti inseriti nel sistema. L'Amministratore clicca sul pulsante ``Indietro'' per tornare alla Home.
 \end{enumerate}
 
-\paragraph{Tempo}
+\item \textbf{Tempo}\\
 I casi d'uso del Tempo sono rappresentati in figura \ref{use_case_diag_teacher}
 \begin{figure}[h]
   \caption{Diagramma dei casi d'uso del Tempo}
@@ -331,23 +360,23 @@ I casi d'uso del Tempo sono rappresentati in figura \ref{use_case_diag_teacher}
 \includegraphics[width = 0.5\textwidth]{images/casi_uso_tempo.eps}
 \end{figure}
 \begin{enumerate}
- \item Notifica delle scadenze\\
+ \item Notifica delle scadenze\\ \label{UC_notify_deadlines}
  
     Ad intervalli periodici stabiliti, i docenti che hanno convenzioni/contributi attive con rate in scadenza ravvicinata, vengono avvertiti tramite posta elettronica.
   
  
- \item Notifica della creazione di una nuova convenzione/contributo\\
+ \item Notifica della creazione di una nuova convenzione/contributo\\ \label{UC_notify_new_contract}
  
     Al momento del completamento della creazione di una nuova convenzione/contributo viene inviata una email all'indirizzo di posta elettronico del responsabile scientifico indicato per la convenzione/contributo. Tale email contiene
     le informazioni principali che caratterizzano la convenzione/contributo.
   
   
- \item Notifica della chiusura di una convenzione/contributo\\
+ \item Notifica della chiusura di una convenzione/contributo\\ \label{UC_notify_closed_contract}
  
     Al momento della chiusura di una convenzione/contributo (ovvero quando il fatturato è pari all'importo totale) viene inviata una email all'indirizzo di posta elettronico del responsabile scientifico che notifica la chiusura della
     convenzione/contributo riportando alcuni dati di questa.
 \end{enumerate}
 
 
-
+\end{enumerate}
 

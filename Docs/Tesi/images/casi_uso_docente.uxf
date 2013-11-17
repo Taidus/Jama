@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="12.1">
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
   <zoom_level>10</zoom_level>
   <element>
     <type>com.umlet.element.Actor</type>
@@ -27,13 +26,13 @@ convenzioni/contributi</panel_attributes>
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>400</x>
-      <y>360</y>
+      <x>610</x>
+      <y>210</y>
       <w>210</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Visualizzazione
-convenzione/contributo</panel_attributes>
+    <panel_attributes>Inserimento
+allegati</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -58,5 +57,41 @@ convenzione/contributo</panel_attributes>
     <panel_attributes>lt=&lt;.
 &lt;&lt;include&gt;&gt;</panel_attributes>
     <additional_attributes>120;120;40;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.UseCase</type>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Use case 1
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.UseCase</type>
+    <coordinates>
+      <x>420</x>
+      <y>380</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Visualizzazione
+convenzione/contributo</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>550</x>
+      <y>260</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;include&gt;&gt;</panel_attributes>
+    <additional_attributes>140;30;30;100</additional_attributes>
   </element>
 </diagram>

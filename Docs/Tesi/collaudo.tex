@@ -1,0 +1,78 @@
+Ogni caso d'uso può dar luogo ad una varietà di comportamenti in base alla sequenza di percorsi base ed alternativi che viene eseguita.
+Per ogni caso d'uso è possibile definire un insieme di casi di test che esercitino tutti i possibili comportamenti. La dizione  ``tutti i comportamenti'' è di per sè vaga, e deve essere chiarita specificando il tipo di 
+copertura (tutt gli gli archi, tutti i percorsi, etc.) che si intende usare. Comunque scelto il tipo di copertura i casi di test derivati possono essere un numero molto elevato. Per ridurre l'ordine di grandezza di questo numero
+si possono definire degli scenari di alto livello che aggreghino più casi di test insieme. In seguito utilizziamo questa tecnica per effettuare un collaudo dell'applicativo.
+
+\section{Scenari di alto livello}
+Si elencano gli scenari che sono stati usato per il collaudo.
+
+\begin{enumerate}
+ \item L'Operatore inserisce una convenzione con una nuova dittà specificando una particolare ripartizione fra il personale definendo anche la prima rata. \label{MS1}
+ \item L'Operatore modifica una rata di un contributo \label{MS2}
+ \item L'Operatore modifica i dati di una ditta \label{MS3}
+ \item L'Operatore inserisce un contributo con allegati \label{MS4}
+ \item Il Docente inserisce la documentazione relativa ad una convenzione \label{MS5}
+ \item L'Amministratore aggiunge un utente \label{MS6}
+\end{enumerate}
+
+In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario.\\
+
+
+\begin{table}[h]
+\label{macro_scenari}
+\caption{Casi di test esercitati per scenario}
+\centering
+  \begin{tabular}{| c | c |} 
+    \hline
+    Numero di scenario & Casi di test esercitati \\
+    \hline
+    \ref{MS1} & \ref{UC_new_contract} base, \ref{UC_new_company} alt3, \ref{UC_new_installment}\\
+    \hline
+    \ref{MS2} & \ref{UC_view_contract_list} base, \ref{UC_edit_contract} base, \ref{UC_edit_installment} \\
+    \hline
+    \ref{MS3} & \ref{UC_view_company_list} base, \ref{UC_edit_company} base \\
+    \hline
+    \ref{MS4} & \ref{UC_new_contract}\\
+    \hline
+    \ref{MS5} & \ref{UC_view_own_contract_list} base, \ref{UC_manage_attachments} base\\
+    \hline
+    \ref{MS6} & \ref{UC_new_user}\\
+    \hline
+  \end{tabular} 
+
+\end{table} 
+
+\section{Collaudo}
+
+\begin{itemize}
+ \item Scenario \ref{MS1}\\\\
+ {
+ \footnotesize
+  \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+    \hline
+    Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
+    \hline
+    1 & L'Operatore clicca sul pulsante ``Crea Convenzione'' & Viene visualizzata una schermata contenente il primo passo della procedura di creazione nel quale si possono inserire i dati generali della convenzione& Uguale 
+      al risultato atteso& Sì\\
+    \hline
+    2 & L'Operatore clicca sul pulsante ``Aggiungi'' di fianco al campo dittà` & Viene visualizzata una finestra di dialogo contenente i dati della dittà da inserire & Uguale al risultato atteso & Sì\\
+    \hline
+    3 & L'Operatore inserisce i dati e clicca su ``Salva'' & Si ritorna al primo passo della procedura, la dittà appena creata è selezionata automaticamente nel menù a tendina & uguale al risultato atteso & Sì\\
+    \hline
+    4 & L'Operatore clicca next e passa al secondo passo della procedura, quindi inserisce una quota per il personale, infine aggiunge uno o più docenti tramite l'apposito pulsante ``Aggiungi'' in basso, in modo che la somma sia 100 & La schermata
+      riflette le scelte dell'operatore aggiornando i valori percentuali dei vari campi. & Uguale al risultato ottenuto& Sì\\
+    \hline
+    5 & L'operatore clicca su ``Avanti'',quindi sul pulsante ``Aggiungi''nel passo successivo della procedura & Si apre una finestra di dialogo contenente la procedura di creazione di una rata & Uguale a quello atteso & Sì\\
+    \hline
+    6  & L'Operatore inserisce i campi per la rata e completa la procedura cliccando su ``Salva'' & La finestra di dialogo si chiude e nella schermata sottostatnte compare la rata appena inserita & Uguale a quello atteso & Sì\\
+    \hline
+    7 & L'Operatore clicca su ``Avanti'' due volte (saltando il passo relativo agli allegati) quindi clicca su``Salva'' & Si torna alla pagina iniziale & Uguale a quello atteso & Sì \\
+    \hline
+    8 & L'Operatore clicca su ``Visualizza elenco contratti'' & Si apre un elenco di contratti fra cui è possibile ritrovare la convenzione appena inserita & Uguale a quello atteso & Sì\\
+    \hline
+\end{longtable}
+}
+
+Qui gli screenshots!!!Bellini e nn malsani!
+
+\end{itemize}
