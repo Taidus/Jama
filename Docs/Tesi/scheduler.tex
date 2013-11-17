@@ -32,7 +32,7 @@ Una volta definita l'operazione occorre schedulare la sua esecuzione impostando 
  
 \end{lstlisting}
 
-L'ultimo problema che è necessario affrontare è come poter eseguire il codice sopra riportato all'avvio dell'application server. La soluzione che si propone è utilizzare un bean che venga creato allo startup del server, utilizzando l'annotazione
+L'ultimo problema che è necessario affrontare è come poter eseguire il codice sopra riportato all'avvio dell'\textit{application server}. La soluzione che si propone è utilizzare un bean che venga creato allo startup del server, utilizzando l'annotazione
  \texttt{@Startup}, e che contenga tale
 codice in un metodo annotato con \texttt{@PostConstruct}. Un metodo così annotato verrà eseguito dopo il costruttore del bean ma prima di ogni altro metodo. Il risultato è quindi un bean così fatto:
 

@@ -2,7 +2,7 @@
 Le classi che si occupano del recupero delle informazioni dal database sono \texttt{ContractSearchService} e \texttt{DeadLineSerachService} la prima è usata per costruire lo scadenzario mentre la seconda è usata per la lista
 delle convenzioni/contributi. Queste classi si differenziano solo per il tipo di query che eseguono ma sono simili per struttura, per cui di qui in avanti ci si riferirà solo a \texttt{ContractSearchService}. 
 Lo scopo di queste classi è effettuare un ricerca paginata sul database secondo vari criteri di ricerca quali 
-responsabile scientifico, data, dittà etc. Il codice che si occupa della paginazione è stato incapsulato nella classe \texttt{ResultPager}. \texttt{ResultPager} viene costruito
+responsabile scientifico, data, ditta etc. Il codice che si occupa della paginazione è stato incapsulato nella classe \texttt{ResultPager}. \texttt{ResultPager} viene costruito
 col metodo
 
 \begin{lstlisting}
@@ -24,7 +24,7 @@ illustrato in figura \ref{pager}
     \includegraphics[width=0.7\textwidth]{pager.eps}
 \end{figure}
 
-La query è invece costruita utilizzando le Criteria API di JPA, un modo alternativo per costruire query che usa una API java invece di un linguaggio
+La query è invece costruita utilizzando le Criteria API di JPA, un modo alternativo per costruire query che usa una API Java invece di un linguaggio
 come JPQL. Questo tipo di costruzione è specialmente indicata per query dinamiche, ovvero quando non si conoscono i criteri di ricerca fino al runtime.
 Il caso che si sta analizzando è proprio quello di una query dinamica: l'utente tramite l'interfaccia messa a disposizione filtra le convenzioni/contributi
 in base a vari tipi di criteri.
@@ -76,7 +76,7 @@ if (companyId != null) {
 Come si può vedere dall'estratto, per prima cosa si crea una query Root, questa gioca il ruolo di una variabile identificativa in una clausola FROM 
 in JPQL e indica a quale tipo di schema si è interessati; quindi con l'operazione \lstinline{select(agr)} si indica quale è il
 risultato della query. La clausola WHERE è invece ottenuta componendo una serie di predicati, per esempio con l'espressione
-\lstinline{cb.equal(agr.get("company").get("id"), p)} si richiede che l'id della dittà sia uguale ad un certo valore.
+\lstinline{cb.equal(agr.get("company").get("id"), p)} si richiede che l'id della ditta sia uguale ad un certo valore.
 
 
 
