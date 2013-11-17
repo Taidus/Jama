@@ -261,6 +261,10 @@ l'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà 
   Percorso base:
   l'Operatore raggiunge l'elenco delle ditte quindi clicca sul pulsante ``Visualizza ditta'' che compare sulla destra selezionando la riga dell'elenco corrispondente alla ditta desiderata.
 
+\item Visualizzazione dell'elenco delle ditte \label{UC_view_company_list}
+  Percorso base:
+  l'Operatore dalla pagina iniziale clicca sul pulsante ``Visualizza elenco ditte''. Viene presentata una schermata contente un elenco di ditte filtrabili per nome attraverso l'apposito filtro di ricerca.
+
 \end{enumerate}
 
  
