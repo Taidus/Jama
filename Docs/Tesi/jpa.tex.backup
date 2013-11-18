@@ -1,50 +1,53 @@
-\section{Introduzione}
+\subsection{Introduzione}
 Le applicazioni di tipo Enterprise necessitano di raccogliere e persistere grandi quantità di informazioni, la soluzione che più si è affermata per risolvere questo problema è il database relazionale. Nell'ambiente Enterprise
-, in particolare per la piattaforma Java, si è sentita l'esigenza di una soluzioni che permettessero l'integrazione della piattaforma Java con database di tipo relazionale. 
+, in particolare per la piattaforma Java, si è sentita l'esigenza di soluzioni che permettessero l'integrazione della piattaforma Java con database di tipo relazionale, in modo naturale. 
 
-\section{Mapping fra modello Relazione e a Oggetti}
-In un modello a Oggetti,come il modello di dominio di un applicativo Java, le entità che popolano il modello sono Classi. Le relazioni fra le classi del modello sono espresse tramite riferimenti, gli attributi di una classe.
+\subsection{Mapping fra modello Relazione e a Oggetti}
+In un modello a oggetti,come il modello di dominio di un applicativo Java, le entità che popolano il modello sono Classi. Le relazioni fra le classi del modello sono espresse tramite riferimenti, gli attributi di una classe.
 Nel modello relazionale invece le entità sono chiamate Relazioni e sono collegate fra loro mediante il concetto di chiave. Effettuare un mapping fra i due modelli significa quindi avere un modo per trasferire i concetti da un modello
 all'altro in modo da ridurre le distanze fra i due modelli. In particolare una soluzione per il mapping dovrebbe avere le seguenti caratteristiche:
 
 \begin{itemize}
  \item le applicazioni dovrebbero essere scritte e pensate secondo il modello di dominio e senza avere legami col modello relazione del database; dovrebbe essere possibile recuperare informazioni dal database senza dover scrivere espressioni
  che coinvolgano tabelle o chiavi primarie tipiche di un database.
- \item la soluzione dovrebbe essere non intrusiva: sebbene sia impensabile di realizzare una soluzione che renda la persistenza completamente trasparente, si può richiedere che la persistenza non ``invada'' il modello di domionio.
+ \item la soluzione dovrebbe essere non intrusiva: sebbene sia impensabile di realizzare una soluzione che renda la persistenza completamente trasparente, si può richiedere che la persistenza non ``invada'' il modello di dominio.
   In concreto le classi del dominio non devono essere obbligate ad implementare interfacce o estendere classi per poter essere rese persistenti.
   \item dovrebbe essere possibile integrarsi con database preesistenti
 \end{itemize}
 
 
-\section{JPA}
+\subsection{JPA}
 Nel tempo sono state sviluppate e proposte varie soluzioni, a partire da ODBC passando per JDBC e EJB fino ad arrivare a \textsl{JPA}.
 JPA (Java Persistence API) è una specifica per il mapping fra modello a oggetti e modello relazionale per applicazioni Java che risolvendo i problemi degli standard precedenti raggiunge
 gli obiettivi sopra formulati. Esistono vari prodotti che implementano JPA fra cui \textsl{Hibernate} che è stato scelto come
 implementazione di riferimento.
 
-\subsection{Funzionamento}
-\paragraph{Entity Manager e Peristence Context}
+\subsubsection{Funzionamento}
+\paragraph{Entity}
 Un' unità che possegga una stato e che possa essere persistita viene detta Entità. Le classi Java possono essere facilmente trasformate in entità semplicemente annotando la classe e alcuni dei suoi attributi, o alternativamente
 fornendo dei descrittori xml. L'unico
-requisito sulla classe è che deve possedere un costruttore senza parametri: questo serve affinchè Hibernate (o qualsiasi altro provider) possa ricreare l'oggetto una volta interrogato il database. Come si può notare, non possiamo
-rendere persistibile una classe in modo del tutto trasparente ma di sicuro si può affermare che questo avvenga in modo non intrusivo. Allo stesso modo, sempre usando delle annotazioni o dei file di descrizione xml è possibile mappare 
-le relazioni che sussistono fra le entità del modello.
+requisito che la classe deve rispettare è che deve possedere un costruttore senza parametri: questo serve affinché Hibernate (o qualsiasi altro provider) possa ricreare l'oggetto una volta interrogato il database. Come si può notare, 
+non è possibile rendere persistibile una classe in modo del tutto trasparente, ma di sicuro si può affermare che questo avvenga in modo non intrusivo. Allo stesso modo, sempre usando delle annotazioni o dei file di descrizione xml, 
+è possibile mappare le relazioni che sussistono fra le entità del modello.
 
-Le Entità sono gestite da un Entity Manager. Un entity Manager è in grado di persistere un entità nonchè di eliminarla o recuperarla dal database. Ogni Entity Manager è associato ad un Persistence Context. Un Persistence Context è un insieme di
-istanze di entità. Una entità si dice ``managed'' se è contenuta in un persistence context. Se un Persistence Context, tramite un Entity Manager, partecipa ad una transazione lo stato delle entità ``managed'' contenuto in memoria
-centrale viene salvato sul database. Le entità non ``managed'' sono chiamate ``detached'' e i loro stato in memoria non viene sincronizzato col database in nessuna transazione. Come è possibile ottenere un Entity Manager? Ci sono vari tipi
-di Entity Manager ognuno dei quali legato a diverse esigenze applicative. Si è scelto di includere nella presente trattazione solo una sottocategoria, le Entity Manager di tipo ``Container-Managed'' perchè sono quelle che sono state usate
-nella realizzazione dell'applicativo nonchè le tipologie preferite per lambiente Java EE. Una Entity Manager di questo tipo è ottenuta dal container mediante iniezione di dipendenza.
-Le Entity Manager di tipo ``Container Based'' sono di ude tipi:
+\paragraph{Entity Manager e Persistence Context}
+Le Entità sono gestite da un Entity Manager. Un entity Manager è in grado di persistere un entità nonché di eliminarla o recuperarla dal database. Ogni Entity Manager è associato ad un Persistence Context. Un Persistence Context è un insieme di
+istanze di entità. Una entità si dice ``managed'' se è contenuta in un Persistence Context. Se un Persistence Context, tramite un Entity Manager, partecipa ad una transazione lo stato delle entità ``managed'' contenuto in memoria
+centrale viene salvato sul database. Le entità non ``managed'' sono chiamate ``detached'' e il loro stato in memoria non viene sincronizzato col database in nessuna transazione. Come è possibile ottenere un Entity Manager? Ci sono vari tipi
+di Entity Manager ognuno dei quali legato a diverse esigenze applicative. Si è scelto di includere nella presente trattazione solo una sotto-categoria: le Entity Manager di tipo ``Container-Managed''.Questa scelta è dovuta al fatto che
+le Entity Manager ``Container-Managed'' sono quelle che sono state usate nella realizzazione dell'applicativo nonché le tipologie preferite per l'ambiente Java EE. Un' Entity Manager di questo tipo è ottenuta dal container mediante iniezione
+di dipendenza. Le Entity Manager di tipo ``Container-Managed'' sono di due tipi:
 
 \begin{itemize}
  \item Transaction Scoped\\
  Una Entity Manager di questo tipo è \textsl{stateless}, ovvero lavora con un Persistence Context che viene costruito ogni volta che comincia una transazione (JTA) e termina il proprio ciclo di vita al termine della transazione
  \item Extended\\
-  Una Entity Manager di tipo Extended è usata in coppia con un bean di tipo \textsl{statefull}. In questo l'Entity Manager lavora con un singolo Persistence Context il cui ciclo di vita è legato a quello del bean che potenzialmente sopravvive
+  Una Entity Manager di tipo Extended è usata in coppia con un bean(vedi \ref{cdi}) di tipo \textsl{stateful}. In questo caso l'Entity Manager lavora con un singolo Persistence Context il cui ciclo di vita è legato a quello del bean che potenzialmente sopravvive
   a più di una transazione.
- 
 \end{itemize}
+
+L'uso del corretto tipo di Entity Manager dipende dal contesto: per esempio sarà conveniente usare un'Entity Manager di tipo transaction-scoped nel caso delle eliminazioni di un entità dal database mentre è forse più conveniente usare un'Entity
+Manager di tipo extended per recuperare dal database un oggetto il cui stato viene modificato più volte e salvato solo alla fine della sessione corrente.
 
 
 \paragraph{Query}
@@ -52,8 +55,8 @@ Il linguaggio in cui sono espresse le query è chiamato JPQL. Questo linguaggio 
 
 \begin{itemize}
  \item Il linguaggio è indipendente dal database sottostante. Questo significa che l'applicazione non è dipendente dal particolare database usato ma al contrario è possibile con facilità migrare da una soluzione all'altra senza dover cambiare
-  il codice
-  \item JPQL sebbene sia un linguaggio dichiarativo che rassomiglia molto da vicono SQL non usa tabelle e colonne per esprimere i propri criteri di ricerca ma usa le entità del modello di dominio e i loro attributi.
+  il codice.
+  \item Sebbene JPQL sia un linguaggio dichiarativo che rassomiglia molto da vicino SQL non usa tabelle e colonne per esprimere i propri criteri di ricerca ma usa le entità del modello di dominio e i loro attributi.
 \end{itemize}
 
 
