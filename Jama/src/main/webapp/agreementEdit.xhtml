@@ -67,7 +67,9 @@
 
 
 	<dialogs:chiefDialog name="w_chiefDialog" />
-	<dialogs:companyDialog name="w_companyDialog" />
+	<dialogs:companyDialog dialogWidgetVar="w_companyDialog" editingDisable="false" observingComponentId="companyMenu"
+		observingComponentWidgetVar="w_companyMenu" dialogId="companyDialog" />
+		
 	<dialogs:instCreateDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
 		observingComponent="contractInstTablePanel" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
 	<dialogs:instViewDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"

@@ -92,7 +92,9 @@ public abstract class ShareTablePresentationObj {
 	public void validatePersonnelShares(FacesContext context, UIComponent component, Object value) {
 
 		Percent personnel = getTransferObjShareTable().getPersonnel();
+		System.out.println(personnel + " scale: " + personnel.getValue().scale() + "; zero scale: " + Percent.ZERO.getValue().scale());
 		if (!personnel.equals(Percent.ZERO)) {
+			System.out.println("Entered");
 			Percent sum = Percent.sum(getTransferObjShareTable().getSharePerPersonnel().values());
 			if (!sum.equals(Percent.ONE)) {
 				throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));

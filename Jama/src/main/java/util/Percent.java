@@ -128,7 +128,7 @@ public class Percent implements Comparable<Percent> {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value)){
+		} else if (value.compareTo(other.value) != 0){
 			return false;
 		}
 		return true;
