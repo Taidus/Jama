@@ -19,8 +19,8 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 
 
 \begin{table}[h]
-\label{macro_scenari}
 \caption{Casi di test esercitati per scenario}
+\label{macro_scenari}
 \centering
   \begin{tabular}{| c | c |} 
     \hline
@@ -44,11 +44,10 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 
 \section{Collaudo}
 
-\begin{itemize}
- \item Scenario \ref{MS1}\\\\
  {
  \footnotesize
   \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+  \caption{Scenario \ref{MS1}} \\
     \hline
     Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
     \hline
@@ -73,10 +72,41 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 \end{longtable}
 }
 
- \item Scenario \ref{MS2}\\\\
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.28}{\includegraphics{Tab_Dati.png}}
+	\caption{Dati convenzione - Scenario 1 Passo 1}
+	\label{tabDati}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.5}{\includegraphics{Aggiungi_Ditta_Dialog.png}}
+	\caption{Inserimento Ditta - Scenario 1 Passo 2}
+	\label{aggiungiDitta}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.28}{\includegraphics{Tab_Rip.png}}
+	\caption{Tabella Ripartizione - Scenario 1 Passo 4}
+	\label{tabRip}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.28}{\includegraphics{Tab_Rip_Rata.png}}
+	\caption{Tabella Ripartizione Rata - Scenario 1 Passo 6}
+	\label{tabRipRata}
+\end{figure}
+
+
+\vspace{3cm}
+
  {
  \footnotesize
   \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+    \caption{Scenario \ref{MS2}} \\
     \hline
     Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
     \hline
@@ -98,10 +128,28 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 }
 
 
- \item Scenario \ref{MS3}\\\\
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.25}{\includegraphics{Lista_Convenzioni.png}}
+	\caption{Lista Contratti - Scenario 2 Passo 2}
+	\label{Lista delle convenzioni/contributi}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.25}{\includegraphics{Lista_Rate_Modifica.png}}
+	\caption{Lista rate - Scenario 2 Passo 3}
+	\label{ListaRate}
+\end{figure}
+
+
+
+
+
  {
  \footnotesize
   \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+   \caption{Scenario \ref{MS3}}\\
     \hline
     Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
     \hline
@@ -118,10 +166,25 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 \end{longtable}
 }
 
- \item Scenario \ref{MS4}\\\\
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.25}{\includegraphics{Lista_ditte_modifica.png}}
+	\caption{Lista ditte - Scenario 3 Passo 2}
+	\label{ListaDitte}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.3}{\includegraphics{Dialog_Ditta_Modifica.png}}
+	\caption{Modifica Ditta - Scenario 3 Passo 3}
+	\label{modificaDitta}
+\end{figure}
+
+
  {
  \footnotesize
   \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+     \caption{Scenario \ref{MS4}}\\
     \hline
     Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
     \hline
@@ -142,11 +205,33 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 
 }
 
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.28}{\includegraphics{Tab_Dati_Contributo.png}}
+	\caption{Dati Contributo - Scenario 4 Passo 1}
+	\label{tabDatiContributo}
+\end{figure}
 
- \item Scenario \ref{MS5}\\\\
+\begin{figure}[h!]
+	\centering
+	\scalebox{0.25}{\includegraphics{Allegati.png}}
+	\caption{Lista Allegati - Scenario 4 Passo 2}
+	\label{allegati}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\scalebox{0.25}{\includegraphics{Fine_Contributo.png}}
+	\caption{Salvataggio contributo - Scenario 4 Passo 5}
+	\label{fineContributo}
+\end{figure}
+
+
+
  {
  \footnotesize
   \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+     \caption{Scenario \ref{MS5}}\\
     \hline
     Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
     \hline
@@ -167,11 +252,25 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 
 }
 
+\begin{figure}
+	\centering
+	\scalebox{0.28}{\includegraphics{Tab_Dati_visualizzazione.png}}
+	\caption{Visualizzazione convenzione - Scenario 5 Passo 1}
+	\label{tabDatiVisualizzazione}
+\end{figure}
 
- \item Scenario \ref{MS6}\\\\
+\begin{figure}
+	\centering
+	\scalebox{0.25}{\includegraphics{Allegato_Inserito.png}}
+	\caption{Inserimento Allegato - Scenario 5 Passo 5}
+	\label{allegatiDopoInserimento}
+\end{figure}
+
+
  {
  \footnotesize
   \begin{longtable}{|c|p{3cm}|p{3cm}|p{3cm}|c|}
+    \caption{Scenario \ref{MS6}}\\
     \hline
     Passo & Descrizione sequenza operazioni & Risultato atteso & Risultato ottenuto & Ok\\
     \hline
@@ -185,109 +284,21 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
 \end{longtable}
 
 }
-\end{itemize}
 
-\begin{figure}
-	\centering
-	\scalebox{0.5}{\includegraphics{Aggiungi_Ditta_Dialog.png}}
-	\caption{Inserimento Ditta - Scenario 1 Passo 2}
-	\label{aggiungiDitta}
-\end{figure}
 
-\begin{figure}
-	\centering
-	\scalebox{0.25}{\includegraphics{Allegati.png}}
-	\caption{Lista Allegati - Scenario 4 Passo 2}
-	\label{allegati}
-\end{figure}
 
-\begin{figure}
-	\centering
-	\scalebox{0.25}{\includegraphics{Allegato_Inserito.png}}
-	\caption{Inserimento Allegato - Scenario 5 Passo 5}
-	\label{allegatiDopoInserimento}
-\end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
 	\scalebox{0.25}{\includegraphics{Creazione_Utente.png}}
 	\caption{Inserimento utente - Scenario 6 Passo 2}
 	\label{creazioneUtente}
 \end{figure}
 
-\begin{figure}
-	\centering
-	\scalebox{0.3}{\includegraphics{Dialog_Ditta_Modifica.png}}
-	\caption{Modifica Ditta - Scenario 3 Passo 3}
-	\label{modificaDitta}
-\end{figure}
 
-\begin{figure}
-	\centering
-	\scalebox{0.25}{\includegraphics{Fine_Contributo.png}}
-	\caption{Salvataggio contributo - Scenario 4 Passo 5}
-	\label{fineContributo}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.25}{\includegraphics{Lista_Convenzioni.png}}
-	\caption{Lista Contratti - Scenario 2 Passo 2}
-	\label{Lista delle convenzioni/contributi}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.25}{\includegraphics{Lista_ditte_modifica.png}}
-	\caption{Lista ditte - Scenario 3 Passo 2}
-	\label{ListaDitte}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.25}{\includegraphics{Lista_Rate_Modifica.png}}
-	\caption{Lista rate - Scenario 2 Passo 3}
-	\label{ListaRate}
-\end{figure}
-
-\begin{figure}
+\begin{figure}[h!]
 	\centering
 	\scalebox{0.25}{\includegraphics{Lista_utenti.png}}
 	\caption{Lista utenti - Scenario 6 Passo 3}
 	\label{ListaUtenti}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.28}{\includegraphics{Tab_Dati.png}}
-	\caption{Dati convenzione - Scenario 1 Passo 1}
-	\label{tabDati}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.28}{\includegraphics{Tab_Dati_Contributo.png}}
-	\caption{Dati Contributo - Scenario 4 Passo 1}
-	\label{tabDatiContributo}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.28}{\includegraphics{Tab_Dati_visualizzazione.png}}
-	\caption{Visualizzazione convenzione - Scenario 5 Passo 1}
-	\label{tabDatiVisualizzazione}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.28}{\includegraphics{Tab_Rip.png}}
-	\caption{Tabella Ripartizione - Scenario 1 Passo 4}
-	\label{tabRip}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\scalebox{0.28}{\includegraphics{Tab_Rip_Rata.png}}
-	\caption{Tabella Ripartizione Rata - Scenario 1 Passo 6}
-	\label{tabRipRata}
 \end{figure}
