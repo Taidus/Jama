@@ -1,6 +1,6 @@
 Ogni caso d'uso può dar luogo ad una varietà di comportamenti in base alla sequenza di percorsi base ed alternativi che viene eseguita.
 Per ogni caso d'uso è possibile definire un insieme di casi di test che esercitino tutti i possibili comportamenti. La dizione  ``tutti i comportamenti'' è di per sè vaga, e deve essere chiarita specificando il tipo di 
-copertura (tutt gli gli archi, tutti i percorsi, etc.) che si intende usare. Comunque scelto il tipo di copertura i casi di test derivati possono essere un numero molto elevato. Per ridurre l'ordine di grandezza di questo numero
+copertura (tutti gli gli archi, tutti i percorsi, etc.) che si intende usare. Comunque scelto il tipo di copertura i casi di test derivanti possono essere un numero molto elevato. Per ridurre l'ordine di grandezza di questo numero
 si possono definire degli scenari di alto livello che aggreghino più casi di test insieme. In seguito si utilizza questa tecnica per effettuare un collaudo dell'applicativo.
 
 \section{Scenari di alto livello}
@@ -15,7 +15,7 @@ Si elencano gli scenari che sono stati usato per il collaudo.
  \item L'Amministratore aggiunge un utente \label{MS6}
 \end{enumerate}
 
-In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un caso di test è definito con il numero del caso d'uso corrispondente e un flusso di esecuzione (combinazione del percorso base e uno o più percorsi alternativi) \\
+In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un caso di test è definito con il numero del caso d'uso corrispondente e un flusso di esecuzione (una combinazione del percorso base e di uno o più percorsi alternativi) \\
 
 
 \begin{table}[h]
@@ -83,10 +83,10 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
     1 & L'Operatore clicca sul pulsante ``Visualizza lista contratti'' & Viene visualizzata una schermata contenente l'elenco dei contratti & Uguale 
       al risultato atteso& Sì\\
     \hline
-    2 & L'Operatore seleziona la convenzione di cui si vuole modificare la rata, quindi clicca sul pulsante ``Modifica'' che appare a destra sulla riga selezionata& Viene visualizzata una schermata divida in scheda che mostra i dettagli
+    2 & L'Operatore seleziona la convenzione di cui si vuole modificare la rata, quindi clicca sul pulsante ``Modifica'' che appare a destra sulla riga selezionata& Viene visualizzata una schermata divisa in schede che mostra i dettagli
     della convenzione& Uguale al risultato atteso & Sì\\
     \hline
-    3 & L'Operatore raggiunge la scheda ``Rate'' quindi dopo avere selezionato la rata desiderata dall'elenco clicca sul pulsante ``Modifica'' che appare sulla destra& Appare una finestra di dialogo che mostra i dettagli della rata & Uguale al risultato atteso & Sì\\
+    3 & L'Operatore raggiunge la scheda ``Rate'' quindi dopo avere selezionato la rata desiderata dall'elenco clicca sul pulsante ``Modifica'' che appare sulla sinistra& Appare una finestra di dialogo che mostra i dettagli della rata & Uguale al risultato atteso & Sì\\
     \hline
     4 & L'Operatore effettua le modifiche desiderate e clicca su ``Salva'' & La finestra di dialogo si chiude e riappare la schermata sottostante & Uguale al risultato atteso& Sì\\
     \hline
@@ -108,7 +108,7 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
     1 & L'Operatore clicca sul pulsante ``Visualizza lista ditte'' & Viene visualizzata una schermata contenente l'elenco delle ditte & Uguale 
       al risultato atteso& Sì\\
     \hline
-    2 & L'Operatore seleziona la ditta da modificare, quindi clicca sul pulsnate ``Modifica'' che appare a destra sulla riga selezionata& Viene visualizzata una finestra di dialogo che mostra i dettagli
+    2 & L'Operatore seleziona la ditta da modificare, quindi clicca sul pulsnate ``Modifica'' che appare a sinistra sulla riga selezionata& Viene visualizzata una finestra di dialogo che mostra i dettagli
     della ditta& Uguale al risultato atteso & Sì\\
     \hline
     3 & L'Operatore effettua le modifiche desiderate e clicca su ``Salva''& La finestra di dialogo si chiude e riappare l'elenco delle ditte & Uguale al risultato atteso & Sì\\
@@ -153,7 +153,7 @@ In tabella \ref{macro_scenari} i casi di test esercitati per ogni scenario. Un c
     1 & Il Docente clicca sul pulsante ``Visualizza lista contratti'' & Viene visualizzata una schermata contenente la lista dei contratti di cui il docente è responsabile scientifico& Uguale 
       al risultato atteso& Sì\\
     \hline
-    2 &Il Docente seleziona la convenzione a cui è interessato, quindi clicca sul pulsante ``Visualizza'' che compare sulla destra& Viene visualizzata una schermata suddivisa in scheda contenente i dati della convenzione & Uguale al risultato atteso & Sì \\
+    2 &Il Docente seleziona la convenzione a cui è interessato, quindi clicca sul pulsante ``Visualizza'' che compare sulla sinistra& Viene visualizzata una schermata suddivisa in schede contenente i dati della convenzione & Uguale al risultato atteso & Sì \\
     \hline
      3 & Il Docente raggiunge la scheda ``Allegati'' quindi clicca ``Aggiungi'''& Compare una finestra di dialogo che permettere si sciegliere un file da allegare & Uguale al risultato atteso & Sì \\
     \hline

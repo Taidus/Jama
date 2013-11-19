@@ -1,4 +1,4 @@
-Si è annoverato insieme agli agenti che interagiscono con il sistema anche il Tempo. In questa sezione vediamo come si è realizzato questo tipo di agente, e come si sono implementate le azioni che esso compie.
+Si è annoverato insieme agli agenti che interagiscono con il sistema anche il Tempo. In questa sezione si illustra come è stato realizzato questo tipo di agente, e come si sono implementate le azioni che esso compie.
 In particolare si analizzano quelle azioni che possono essere classificate come task periodici e che non possono essere effettuate come conseguenza di un azione di un utente come l'Operatore, il Docente o l'Amministratore.
 Un buon candidato è la notifica delle scadenze più vicine: ogni giorno ad un' ora fissata è necessario cercare le scadenze da notificare e spedire una email al docente di riferimento.
 
@@ -33,8 +33,7 @@ Una volta definita l'operazione occorre schedulare la sua esecuzione impostando 
 \end{lstlisting}
 
 L'ultimo problema che è necessario affrontare è come poter eseguire il codice sopra riportato all'avvio dell'\textit{application server}. La soluzione che si propone è utilizzare un bean che venga creato allo startup del server, utilizzando l'annotazione
- \texttt{@Startup}, e che contenga tale
-codice in un metodo annotato con \texttt{@PostConstruct}. Un metodo così annotato verrà eseguito dopo il costruttore del bean ma prima di ogni altro metodo. Il risultato è quindi un bean così fatto:
+ \texttt{@Startup}, e che contenga il codice sopra riportato in un metodo annotato con \texttt{@PostConstruct}. Un metodo così annotato verrà eseguito dopo il costruttore del bean ma prima di ogni altro metodo. Il risultato è quindi un bean così fatto:
 
 \begin{lstlisting}
 @ApplicationScoped

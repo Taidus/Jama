@@ -16,13 +16,13 @@ all'altro in modo da ridurre le distanze fra i due modelli. In particolare una s
 \end{itemize}
 
 
-\subsection{JPA}
+\subsection{Struttura e caratteristiche di JPA}
 Nel tempo sono state sviluppate e proposte varie soluzioni, a partire da ODBC passando per JDBC e EJB fino ad arrivare a \textsl{JPA}.
-JPA (Java Persistence API) è una specifica per il mapping fra modello a oggetti e modello relazionale per applicazioni Java che risolvendo i problemi degli standard precedenti raggiunge
+JPA (Java Persistence API) è una specifica per il mapping fra modello a oggetti e modello relazionale per applicazioni Java che, risolvendo i problemi degli standard precedenti, raggiunge
 gli obiettivi sopra formulati. Esistono vari prodotti che implementano JPA fra cui \textsl{Hibernate} che è stato scelto come
-implementazione di riferimento.
+implementazione per l'applicativo.\\
+Di seguito si illustrano alcuni concetti e caratteristiche chiave della specifica, per ulteriori dettagli vedere \cite{jpa}.
 
-\subsubsection{Funzionamento}
 \paragraph{Entity}
 Un' unità che possegga una stato e che possa essere persistita viene detta Entità. Le classi Java possono essere facilmente trasformate in entità semplicemente annotando la classe e alcuni dei suoi attributi, o alternativamente
 fornendo dei descrittori xml. L'unico

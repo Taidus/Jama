@@ -25,17 +25,23 @@ Il Livello Gestionale descrive alcuni requisiti dell'applicazione.\newline
 \end{enumerate}
 
 \section{Requisiti}
-Oltre alla gestione delle Convenzioni, Jama si occupa anche dei \textsl{Contributi}: un contributo si differenzia da una convenzione per il fatto che non è ammessa una ripartizione ad un personale, non c'è fattura ma solo ricevuta, non c'è IVA e la tassazione di Ateneo ha aliquote diverse.\newline
-Si elencano di seguito i requisiti di Jama:
+L'obiettivo principale dell'applicativo è la gestione delle convenzioni, tuttavia deve anche occuparsi di \textsl{Contributi}: un contributo si differenzia da una convenzione per il fatto che non è ammessa ripartizione al personale, non c'è fattura ma solo ricevuta, non c'è IVA e la tassazione di Ateneo ha aliquote diverse.\newline
+L'applicazione deve inoltre prevedere la possibilità di definire utenti, ciascuno con un ruolo assegnato, in modo che ogni utente abbia accesso ad un sottoinsieme specifico di azioni. Entrando un po' più in dettaglio l'applicativo deve
+consentire di:
 
 \begin{itemize}
-\item inserire una convenzione/contributo
-\item visualizzare l'elenco delle convenzioni/contributi
-\item visualizzazione dello scadenzario
-\item gestione delle rate di una convenzione/contributo (inserimento, modifica, eliminazione, visualizzazione)
-\item modifica di una convenzione/contributo
-\item eliminazione di una convenzione/contributo
-\item visualizzazione di una convenzione/contributo\newline
+\item inserire convenzioni e contributi
+\item allegare dei documenti ad una convenzione o ad un contributo
+\item eliminare una convenzione o un contributo
+\item visualizzare o modificare i dati di una convenzione o di un contributo
+\item visualizzare l' elenco delle convenzioni e contributi inseriti
+\item consultare uno scadenzario delle rate
+\item gestire, ovvero, inserire, modificare o visualizzare le rate di una convenzione o di un contributo
+
+\item gestire diversi tipi di utente, tra cui l'Operatore (che ha il compito di inserire e aggiornare le convenzioni del dipartimento a cui afferisce) e il Docente (che può visualizzare le convenzioni di cui è il responsabile)
+
+\item notificare agli utenti del servizio, in modo automatico, tramite e-mail, particolari eventi del ciclo di vita della convenzione (ad esempio la creazione o lo scadere di una rata)
+\item integrarsi con il Sistema Informatico dell'Ateneo Fiorentino (SIAF) per ottenere dati sul personale e sui dipartimenti dell'Ateneo
 \end{itemize}
 
 Ognuno dei requisiti viene discusso in dettaglio nel seguito del documento.

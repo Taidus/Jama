@@ -1,4 +1,4 @@
-Di seguito se elencano i casi d'uso per ciascun tipo di utente che interagisce col sistema. 
+Di seguito si elencano i casi d'uso per ciascun tipo di utente che interagisce col sistema. 
 \begin{enumerate}
 
 \item \textbf{Utente generico}\\
@@ -15,28 +15,19 @@ Si racchiudono nella figura dell' Utente generico i casi d'uso che sono comuni a
 
  \item Login\\ \label{UC_login}
     Percorso base:
-    l'Utente Generico, raggiunto l'indirizzo web dell'applicativo, inserisce il proprio numero di matricola e password quindi clicca sul pulsante ``Login''. Viene visualizzata la schermata ``Home''.\\
+    l'Utente Generico, dopo aver raggiunto l'indirizzo web dell'applicativo, inserisce il proprio numero di matricola e password, quindi clicca sul pulsante ``Login''. Viene visualizzata la pagina iniziale.\\
     Percorso alternativo:
-    l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''. Viene visualizzato un messaggio di errore nel quale si invita l'utente a riprovare.
+    l' Utente Generico inserisce i propri dati personali ma commette un errore, quindi clicca su ``Login''. Viene visualizzato un messaggio nel quale si avvisa l'utente dell'errore commesso.
     
- \item Visualizza profilo\\ \label{UC_view_profile}
-    Dopo aver effettuato il login , l'Utente Generico può cliccare sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
- \item Modifica profilo\\ \label{UC_edit_profile}
+ \item Visualizzazione del profilo\\ \label{UC_view_profile}
+    Dopo aver effettuato il login , l'Utente Generico clicca sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
+ \item Modifica dell'indirizzo e-mail\\ \label{UC_edit_email}
   Percorso base:
   dopo aver effettuato il login , l'Utente Generico clicca sul pulsante ``Profilo'' nella toolbar in alto; si presenta una schermata contente i dati personali dell'Utente.
-  L'Utente può cambiare:
-  \begin{itemize}
-   \item email
-   \item password\\
-    Per cambiare la password è necessario inserire la vecchia password e la nuova password due volte per prevenire errori.
-  \end{itemize}
-
-  Una volta effettuate le modifiche desiderate l'Utente clicca su ``Salva''. Le modifiche vegono salvate e viene visualizzata la schermata precedente.\\
+  L'Utente cambia il proprio indirizzo e-mail. Una volta effettuate le modifiche desiderate l'Utente clicca su ``Salva''. Le modifiche vegono salvate e viene visualizzata la schermata precedente.\\
   
   Percorso alternativo:
-  l'Utente inserisce una email non valida, oppure commette un errore riepiempo i campi : vecchia password, nuova password, password di verifica. L'Utente è avvertito dell'errore con un messagio ed è invitato a riprovare.
-  
-
+  l'Utente inserisce una e-mail non valida. L'Utente è avvertito dell'errore con un messagio ed è invitato a riprovare.
 \end{enumerate}
 
 
@@ -54,7 +45,7 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
   \item Inserimento di una nuova Convenzione/Contributo\\ \label{UC_new_contract}
   
   Percorso base:
-  l'operatore, una volta effettuato il login, clicca su ``Crea una convenzione/contributo''; viene visualizzata una schermata suddivisa in varie schede,
+  l'Operatore, una volta effettuato il login, clicca su ``Crea una convenzione/contributo''; viene visualizzata una schermata suddivisa in varie schede,
   ognuna corrispondente ad un passo della procedura. E' possibile passare da una vista all'altra mediante i pulsanti ``Avanti'' e ``Indietro''. I passi sono:
   \begin{enumerate}
     \item Inserimento dei dati della convenzione/contributo\\
@@ -63,6 +54,7 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
       che l'Operatore deve compilare. Tali campi sono:
       \begin{itemize}
 	\item Il titolo
+	\item Il titolo riassuntivo
 	\item Il numero di protocollo
 	\item L'UAR
 	\item La tipologia
@@ -70,8 +62,7 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
 	  Per selezionare un responsabile scientifico è possibile usare l'apposito menù a tendina o, in alternativa, qualora la persona cercata non sia nell'elenco, aggiungerla cliccando sul pulsante ``Aggiungi''.
 	\item Il referente
 	\item La dittà\\
-	  Per selezionare una dittà si può usare l'apposito menù a tendina o, se la dittà cercata non fosse presente nell'elenco, aggiungerne una nuova cliccando sul pulsante ``Aggiungi''.Per ulteriori dettagli si rimanda al
-	  rispettivo caso d'uso.
+	  Per selezionare una dittà si può usare l'apposito menù a tendina o, se la dittà cercata non fosse presente nell'elenco, aggiungerne una nuova cliccando sul pulsante ``Aggiungi''.Per ulteriori dettagli si rimanda \ref{UC_new_company}.
 	\item Il nome del progetto CIA
 	\item Il Repertorio
 	\item Il totale imponibile
@@ -91,12 +82,14 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
 	\item Personale: stabilisce la quota destinata al personale; è l'unico campo principale che l'operatore può modificare e in base al quale vengono calcolati gli altri.
 	\item Missioni, Materiale di consumo, etc. sono sottocampi di Beni e Servizi e servono per meglio specificare come verrà ripartita la quota destinata a ``Beni e Servizi''.
       \end{itemize}
+      
+      Nota : questa scheda è assente nel caso del contributo, non essendo prevista una ripartizione.
     \item Gestione delle rate\\
       
       Questo passo della procedura è facoltativo: viene data la possibilità all'operatore di inserire delle rate per la convenzione/contributo
       che sta creando. Una volta inserite una o più rate
       queste vengono visualizzate in una tabella e l'Operatore
-      ha la possibilità di modificare, visualizzare, eliminare una rata cliccando sui tasti ``Modifica'',``Visualizza'' ed ``Elimina'' che compaiono sulla destra, nella riga della tabella
+      ha la possibilità di modificare, visualizzare o eliminare una rata cliccando sui tasti ``Modifica'',``Visualizza'' ed ``Elimina'' che compaiono sulla sinistra, nella riga della tabella
        corrispondente alla rata in questione. Per i dettagli riquardo alle operazioni sulle rate si rimanda ai corrispettivi casi d'uso.
 
       
@@ -106,43 +99,41 @@ Una rappresentazione grafica dei casi d'uso dell'Operatore è disponibile in fig
 	  cliccando sugli appositi tasti. Premendo il tasto ``Salva'' la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente.
   \end{enumerate}
 		 
-  Percorso alternativo:
-  Durante uno qualsiasi dei passi, l'Operatore può cliccare il tasto ``Annulla'', che comporta, a seguito di una conferma, il ritorno alla schermata precedente
+  Percorso alternativo 1:
+  Durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla'', che comporta, a seguito di una conferma, il ritorno alla schermata precedente
   senza che la convenzione/contributo venga inserita o i cambiamenti effettuati salvati.
-  Se l'Operatore clicca sul tasto ``Salva'' senza aver compilato dei campi obbligatori, o avendo inserito dei valori non consentiti, viene visualizzato un messaggio di errore 
-  e il documento non viene salvato. La schermata non viene cambiata, in modo che l'Operatore possa procedere alla correzione.
+  
+  Percorso alternativo 2:
+  l'Operatore clicca sul tasto ``Salva'' senza aver compilato alcuni dei campi obbligatori, o avendo inserito dei valori non consentiti; viene visualizzato un messaggio di errore 
+  e il documento non viene salvato. La schermata non viene cambiata, dando la possibilità all'Operatore di procedere alla correzione.
      
   \item Visualizzazione delle convenzioni/contributi\\ \label{UC_view_contract_list}
 
   Percorso base:
-  l'operatore clicca su ``Visualizza contratti''; viene mostrata una lista delle convenzioni/contributi correntemente stipulate in 
+  l'Operatore clicca su ``Visualizza contratti''; viene mostrata una lista delle convenzioni/contributi correntemente stipulate in 
   riferimento al dipartimento di afferenza dell'Operatore, con opportuni filtri 
-  per agevolare la ricerca (tra cui un filtro per data di scadenza) e ordinabili secondo la data.
-  L'Operatore può selezionare una convenzione e compiere 3 azioni, per cui si rimanda ai corrispettivi casi d'uso, mediante gli appositi pulsanti, che appaiono sulla destra portando il cursore su 
-  una convenzione:
-  \begin{itemize}
-   \item visualizzarla
-   \item modificarla
-   \item eliminarla
-  \end{itemize}		
+  per agevolare la ricerca (tra cui un filtro per data di scadenza) e ordinabili per data.
+  L'Operatore può selezionare una convenzione e, mediante gli appositi pulsanti che appaiono sulla sinistra, modificare, visualizzare o eliminare una convenzione. Per i dettagli si rimanda casi d'uso relativi a tali operazioni.\\	
 
   Percorso alternativo:
-  Si può tornare alla pagina iniziale con l'apposito tasto.
+  L'Operatore clicca sul tasto ``Home'', si torna alla pagina iniziale.
  
   \item Modifica di una convenzione/contributo\\ \label{UC_edit_contract}
   
   Percorso base:
-  l'Operatore a partire dalla schermata ``Visualizza Contratti'' clicca sul pulsante ``Modifica'' che appare sulla destra nella riga 
-  della tabella corrispondente alla convenzione/contributo desiderata. Viene visualizzata una schermata suddivisa analoga a quella
-  descritta nel caso della ``Creazione di una convenzione/contributo'' con la differenza che in questo caso è possibile spostarsi da una scheda all'altra
+  l'Operatore a partire dalla schermata ``Visualizzazione convenzioni/contributi'' clicca sul pulsante ``Modifica'' che appare sulla sinistra nella riga 
+  della tabella corrispondente alla convenzione/contributo desiderata. Viene visualizzata una schermata suddivisa in schede analoga a quella
+  descritta nel caso della ``Creazione di una convenzione/contributo'', con la differenza che in questo caso è possibile spostarsi da una scheda all'altra
   cliccando sulla scheda stessa. Inoltre è presente la scheda aggiuntiva ``Riepilogo'' che contiene alcune informazioni di riepilogo come il residuo
   totale della convenzione/contributo o il totale fatturato.
-  L'Operatore effettua i cambiamenti desiderati quindi clicca sul pulsante ``Salva''.\\
+  L'Operatore effettua i cambiamenti desiderati quindi clicca sul pulsante ``Salva''; i dati vengono salvati e si ritorna all'elenco delle convenzioni/contributi\\
 
-  Percorso alternativo:
-  l'Operatore può cliccare sul tasto "Annulla" in qualsiasi momento per tornare alla schermata "Visualizzazione delle convenzioni" senza salvare le modifiche effettuate.
-  Se l'Operatore clicca su "Salva" ma alcuni valori immessi non sono corretti, viene visualizzato un messaggio di errore e non si torna alla schermata "Visualizzazione delle
-  convenzioni". I cambiamenti effettuati non vengono (ovviamente) salvati.
+  Percorso alternativo 1:
+  l'Operatore clicca sul tasto "Annulla" da qualsiasi scheda;  si torna alla schermata "Visualizzazione delle convenzioni/contributi" senza salvare le modifiche effettuate.\\
+  
+  Percorso alternativo 2:
+  l'Operatore clicca su "Salva" ma alcuni valori immessi non sono corretti, viene visualizzato un messaggio di errore e non si torna alla schermata "Visualizzazione delle
+  convenzioni/contributi" dando la possibilità all'Operatore di correggere gli errori commessi prima di salvare nuovamente.
   
   \item Visualizzazione di una convenzione/contributo\\ \label{UC_view_contract}
  
@@ -261,9 +252,14 @@ l'Operatore clicca su ``Salva'' avendo inserito un codice fiscale di una dittà 
   Percorso base:
   l'Operatore raggiunge l'elenco delle ditte quindi clicca sul pulsante ``Visualizza ditta'' che compare sulla destra selezionando la riga dell'elenco corrispondente alla ditta desiderata.
 
-\item Visualizzazione dell'elenco delle ditte \label{UC_view_company_list}
+\item Visualizzazione dell'elenco delle ditte\\ \label{UC_view_company_list}
   Percorso base:
   l'Operatore dalla pagina iniziale clicca sul pulsante ``Visualizza elenco ditte''. Viene presentata una schermata contente un elenco di ditte filtrabili per nome attraverso l'apposito filtro di ricerca.
+  
+\item Visualizzazione dello Scadenzario\\ \label{UC_view_deadlines}
+  Percorso base:
+  l'Operatore dalla pagina iniziale clicca sul pulsante ``Visualizza scadenzario'', Viene presentata una schermata contente un elenco di contratti che hanno delle rate con scadenze attive. E' possibile filtrare i risultati in base a vari
+  criteri di ricerca. Selezionando una convenzione/contributo e cliccando sul pulsante ``Visualizza'' che compare sulla destra è possibile visualizzare una convenzione/contributo, per i dettagli su questa operazione si rimanda a \ref{UC_view_contract}
 
 \end{enumerate}
 
@@ -318,7 +314,7 @@ Una rappresentazione dei casi d'uso dell'Amministratore è disponibile in figura
   \caption{Diagramma dei casi d'uso dell'Amministratore}
   \label{use_case_diag_admin}
   \centering
-    \includegraphics[width=0.8\textwidth]{casi_uso_amministratore.eps}
+    \includegraphics[width=0.6\textwidth]{casi_uso_amministratore.eps}
 \end{figure}
 
 

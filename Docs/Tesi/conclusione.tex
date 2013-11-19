@@ -1,22 +1,14 @@
-Il lavoro svolto consiste nell'analisi, la progettazione e lo sviluppo di un sistema di gestione dei dati; nello specifico, l'applicazione viene usata nella gestione delle convenzioni di ricerca.\\
-Durante la fase di analisi è stato studiato il problema ed è stata stilata una lista dei requisiti che il sistema deve rispettare. Questi includono:
-
-\begin{itemize}
-\item gestione di diversi tipi di utente, tra cui l'Operatore (che ha il compito di inserire e aggiornare le convenzioni del dipartimento a cui afferisce) e il Docente (che può visualizzare le convenzioni di cui è il responsabile)
-\item gestione di diversi tipi di accordo (convenzione, contributo)
-\item inserimento dei parametri che caratterizzano una convenzione (ad esempio il docente, l'importo o la ripartizione)
-\item gestione delle rate
-\item possibilità di caricamento degli allegati
-\item notifiche automatiche via e-mail durante momenti specifici del ciclo di vita della convenzione (ad esempio, alla creazione o prima dello scadere di una rata)
-\item integrazione con il Sistema Informatico dell'Ateneo Fiorentino (SIAF) per ottenere dati sul personale e sui dipartimenti dell'Ateneo
-\end{itemize}
-
-Dai requisiti sono stati quindi estratti i casi d'uso per determinare uno schema del comportamento dell'applicazione.\\\\
-
-
-Si è poi passati alla fase di progettazione. Il primissimo passo è stata la decisione delle tecnologie da utilizzare. La scelta è ricaduta su \textsl{Java Platform Enterprise Edition} (o, più brevemente, \textsl{Java EE}), una piattaforma standard nello sviluppo di applicazioni \textit{enterprise} (cioè di applicazioni che devono essere usate da imprese o organizzazioni di vario tipo, e non da singoli individui). Java EE include infatti molti componenti che risultano estremamente utili per risolvere problemi tipici di software di questo tipo, ad esempio \textsl{JPA} (\textsl{Java Persistence API}) per la persistenza dei dati, \textsl{CDI} (\textsl{Context and Dependecy Injection}) per collegare la logica applicativa con il livello web tramite una gestione automatica degli oggetti in relazione al contesto in cui vengono utilizzati, e \textsl{JSF} (\textsl{Java Server Faces}) per lo sviluppo del livello di presentazione di una applicazione web. Questi framework sono poi stati affiancati da \textsl{Apache Deltaspike}, che si occupa del problema della gestione della sicurezza, impedendo che alcune funzionalità dell'applicazione non possano essere eseguite se l'utente non possiede sufficienti permessi.\\
-Successivamente è stato definito il modello dell'applicazione. In realtà, i modelli definiti sono due: quello di business, che rappresenta le entità che riguardano la logica dell'applicazione, e quello relativo agli utenti, che delinea gli oggetti che rappresentano gli utenti dell'applicazione. Questi due modelli sono tra loro \textquoteleft ortogonali\textquoteright{}, nel senso che - in linea di massima - è possibile modificare l'uno senza intaccare l'altro (anche se, a dire la verità, c'è un leggero accoppiamento fra i due, dovuto al fatto che alcuni utenti dell'applicazione - i docenti - sono anche entità del modello di business).\\
+Il lavoro svolto consiste nell'analisi, nella progettazione e nello sviluppo di un' applicazione web per la gestione di dati e di processi che agiscono su questi; nello specifico, l'applicazione deve consentire la gestione delle convenzioni di ricerca e dei contributi.\\
+Durante la fase di analisi è stato studiato il problema ed è stata stilata una lista di requisiti che il sistema deve rispettare.
+A partire da tali requisiti, sono stati quindi definiti dei casi d'uso che descrivono completamente il comportamento dell'applicazione.\\\\
+Si è poi passati alla fase di progettazione. Il primo passo è stata la decisione delle tecnologie da utilizzare. La scelta è ricaduta su \textsl{Java Platform Enterprise Edition} (o, più brevemente, \textsl{Java EE}),
+una piattaforma standard nello sviluppo di applicazioni \textit{enterprise} (cioè di applicazioni che devono essere usate da imprese o organizzazioni di varia natura, e non da singoli individui).
+Java EE include infatti molti componenti che risultano estremamente utili per risolvere problemi tipici di software di questo tipo, ad esempio \textsl{JPA} (\textsl{Java Persistence API}) per la persistenza dei dati,
+\textsl{CDI} (\textsl{Context and Dependecy Injection}) per collegare la logica applicativa con il livello web tramite una gestione automatica degli oggetti in relazione al contesto in cui vengono utilizzati, e \textsl{JSF} 
+(\textsl{Java Server Faces}) per lo sviluppo del livello di presentazione. Questi framework sono poi stati affiancati da \textsl{Apache 
+Deltaspike}, che si occupa della gestione della sicurezza, impedendo che alcune funzionalità dell'applicazione  possano essere eseguite se l'utente non possiede i permessi necessari.\\
+Successivamente è stato definito il modello dell'applicazione. In realtà, i modelli definiti sono due: quello di business, che rappresenta le entità che riguardano la logica dell'applicazione, e quello relativo agli utenti,
+che che modella utenti e ruoli dell'applicazione. Questi due modelli sono tra loro \textquoteleft ortogonali\textquoteright{}, nel senso che - in linea di massima - è possibile modificare l'uno senza essere costretti a modificare anche l'altro (anche se, a dire la verità, c'è un leggero accoppiamento fra i due, dovuto al fatto che alcuni utenti dell'applicazione - i docenti - sono anche entità del modello di business).\\
 \\
-
-È seguita la fase di sviluppo, in cui si è utilizzato tutto il materiale precedentemente prodotto per creare l'applicazione. In ultimo, sono stati eseguiti i test ritenuti necessari per la verifica delle funzionalità, al termine dei quali si è passati alla fase di distrubuzione (\textit{deploy}) del software.\\
+È seguita la fase di sviluppo, in cui si è utilizzato tutto il materiale precedentemente prodotto per scrivere l'applicazione. Infine, è stato effettuato un collaudo per la verifica delle funzionalità, al termine dei quali si è passati alla fase di distribuzione (\textit{deploy}) del software.\\
 \\

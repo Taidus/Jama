@@ -61,18 +61,6 @@ allegati</panel_attributes>
   <element>
     <type>com.umlet.element.UseCase</type>
     <coordinates>
-      <x>20</x>
-      <y>20</y>
-      <w>120</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>Use case 1
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.UseCase</type>
-    <coordinates>
       <x>420</x>
       <y>380</y>
       <w>210</w>
