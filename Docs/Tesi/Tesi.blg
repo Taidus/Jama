@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Tesi.aux
 The style file: plain.bst
@@ -19,7 +19,7 @@ Warning--empty year in jpa
 Warning--empty year in weld
 You've used 16 entries,
             2118 wiz_defined-function locations,
-            552 strings with 5224 characters,
+            552 strings with 5241 characters,
 and the built_in function-call counts, 3333 in all, are:
 = -- 291
 > -- 119

@@ -1,7 +1,7 @@
 \begin{thebibliography}{10}
 
 \bibitem{freemarker}
-Freemarker.
+Free{M}arker.
 \newblock \url{http://freemarker.org/}.
 
 \bibitem{hibernate}
@@ -9,7 +9,7 @@ Hibernate.
 \newblock \url{http://www.hibernate.org/}.
 
 \bibitem{jldap}
-Jldap.
+{JLDAP}.
 \newblock \url{http://www.openldap.org/jldap/}.
 
 \bibitem{joda}
@@ -17,20 +17,20 @@ Joda money.
 \newblock \url{http://www.joda.org/joda-money/}.
 
 \bibitem{prime}
-Prime faces.
+Prime {F}aces.
 \newblock \url{http://primefaces.org/}.
 
 \bibitem{cdi}
-Specifica di cdi.
+Specifica di {CDI}.
 \newblock \url{http://www.cdi-spec.org/download/}.
 
 \bibitem{javaBeans}
-Specifica di java beans.
+Specifica di {J}ava {B}eans.
 \newblock
   \url{http://www.oracle.com/technetwork/java/javase/documentation/spec-136004.html}.
 
 \bibitem{managedBean}
-Specifica di managed bean.
+Specifica di {M}anaged {B}eans.
 \newblock \url{http://jcp.org/aboutJava/communityprocess/final/jsr316/}.
 
 \bibitem{effective}
