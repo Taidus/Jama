@@ -90,11 +90,16 @@
 
 				<f:facet name="header">
 					<h:outputText value="#{msgs.nextDeadline}" />
-					<div style="display: block; width: 90%; margin: auto;">
+
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.from}: " />
 						<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractSchedulePCB.lazyModel.filterMinDate}"
 							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 						</p:calendar>
-						-
+					</div>
+
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.to}: " />
 						<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractSchedulePCB.lazyModel.filterMaxDate}"
 							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 						</p:calendar>

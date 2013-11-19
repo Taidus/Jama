@@ -136,7 +136,7 @@ public class Percent implements Comparable<Percent> {
 
 	@Override
 	public String toString() {
-		return value.multiply(BigDecimal.valueOf(100L)) + "%";
+		return value.multiply(BigDecimal.valueOf(100L)).setScale(2).toPlainString();
 	}
 
 }

@@ -245,6 +245,7 @@
 						<f:validator binding="#{moneyValidator}" />
 						<p:ajax update="amount taxAmountError @this" />
 					</h:inputText>
+					<h:outputText value=" #{msgs.currencySym}" rendered="#{not cc.attrs.editingDisable}" />
 
 					<h:outputText id="taxableAmount_o" value="#{contractManager.contract.wholeTaxableAmount}" label="#{msgs.taxableAmount}"
 						rendered="#{cc.attrs.editingDisable == true}">
@@ -272,6 +273,7 @@
 
 					<h:outputText id="iva_o" value="#{contractManager.contract.IVA_amount}"
 						rendered="#{cc.attrs.editingDisable == true and agreementWizardPB.renderIvaComponents()==true }" />
+					<h:outputText value=" %" />
 				</p:column>
 
 				<p:column colspan="2">

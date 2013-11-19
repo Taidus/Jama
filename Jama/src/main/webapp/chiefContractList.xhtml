@@ -128,18 +128,21 @@
 				<f:facet name="header">
 					<h:outputText value="#{msgs.nextDeadline}" />
 					<br />
+					
 					<div style="display: block; margin: auto;">
 						<h:outputText value="#{msgs.from}: " />
 						<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"
 							value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 						</p:calendar>
 					</div>
+					
 					<div style="display: block; margin: auto;">
 						<h:outputText value="#{msgs.to}: " />
 						<p:calendar styleClass="calendarFilter" widgetVar="w_lastInstDate" showOn="both" showOtherMonths="true"
 							value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
 						</p:calendar>
 					</div>
+					
 					<p:commandButton id="calendarInstFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
 						onclick="return calendarFilter(arguments[0], w_chContrList);" />
 					<p:commandButton id="calendarInstResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"

@@ -91,15 +91,21 @@
 				<f:facet name="header">
 					<h:outputText value="#{msgs.approvalDate}" />
 					<br />
-					<div style="display: block; width: 90%; margin: auto;">
+					
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.from}: " />
 						<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"
 							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 						</p:calendar>
-						-
+					</div>
+					
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.to}: " />
 						<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractListPCB.lazyModel.filterMaxDate}"
 							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 						</p:calendar>
 					</div>
+					
 					<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
 						onclick="return calendarFilter(arguments[0], w_agrTable);" />
 					<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
