@@ -1,4 +1,4 @@
-\subsubsection{Business}
+\subsection{Modello di business}
 
 In figura \ref{model_business} è mostrato il modello di business. \\
 
@@ -7,14 +7,13 @@ L'Entità principale del modello è \texttt{Contract}, è una classe astratta ch
 tutti gli attributi comuni alle sue sottoclassi come \texttt{wholeTaxableAmount, approvalDate, deadlineDate}, etc.
 
 
-\texttt{Contract} ha inoltre un insieme di \texttt{Installment}, un insieme di \texttt{Attachments}, un \texttt{ChiefScientist}
-,un \texttt{Company} e infine una \texttt{ContractShareTable}.
+\texttt{Contract} ha inoltre un insieme di \texttt{Installment}, un insieme di \texttt{Attachments}, un \texttt{ChiefScientist}, un \texttt{Company} e infine una \texttt{ContractShareTable}.
 
 \texttt{ChiefScientist} rappresenta il Responsabile Scientifico, ogni convenzione/contributo ha un proprio responsabile.
 \texttt{Company} rappresenta una ditta, la convenzione/contributo ha un riferimento alla ditta con cui ha stipulato l'accordo.
-\texttt{Attachemnt} è la classe che rappresenta un allegato, la convenzione/contributo possiede un insieme di allegati.
+\texttt{Attachment} è la classe che rappresenta un allegato, la convenzione/contributo possiede un insieme di allegati.
 \texttt{ContractShareTable} invece rappresenta la tabella di ripartizione di una convenzione: i suoi campi indicano come viene ripartito l'importo totale della convenzione fra il personale, l'Ateneo, etc.
-Si noti che \texttt{Funding} non possiede una tabella di ripartizione poichè non è specificata nessuna ripartizione.
+Si noti che \texttt{Funding} non possiede una tabella di ripartizione poiché non è specificata nessuna ripartizione.
 La tabella di ripartizione ha inoltre un riferimento alla classe \texttt{StandardContractShareTabelFiller} implementazione concreta di \texttt{ContractShareTableFiller} che rappresenta una strategia per il riempimento della tabella in base
 a normative definite.\texttt{Installment} è la classe che rappresenta le rate, una convenzione/contributo ha un insieme di rate; \texttt{Installment} ha due implementazioni concrete: \texttt{AgreementInstallment} e \texttt{FundingInstallment} rispettivamente
 per convenzioni e contributi. \texttt{Installment} ha inoltre un riferimento a \texttt{InstallmentShareTable}. \texttt{InstallmentShareTable} e \texttt{ContractShareTable} estendono la stessa classe base \texttt{AbstractShareTable}.

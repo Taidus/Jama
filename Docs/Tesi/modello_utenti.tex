@@ -1,4 +1,4 @@
-\subsubsection{Modello degli utenti}
+\subsection{Modello degli utenti}
 
 \begin{figure}[h]
 	\centering
@@ -17,7 +17,7 @@ La classe centrale di tale modello è \texttt{User}, che rappresenta un generico
 \item \texttt{GUEST}. Rappresenta l'utente non ancora loggato. Non possiede alcun permesso.
 \end{itemize}
 
-Le operazioni che un utente può svolgere sono regolate tramite un sistema di permessi, i quali sono rappresentati dalla enum \texttt{Permission}: ad ogni \texttt{Role} è associata una lista di \texttt{Permission}. Per maggiori dettagli riguardo la sicurezza, si rimanda al capitolo \ref{deltaspike}.\\
+Le operazioni che un utente può svolgere sono regolate tramite un sistema di permessi, i quali sono rappresentati dalla enum \texttt{Permission}: ad ogni \texttt{Role} è associata una lista di \texttt{Permission}. Per maggiori dettagli riguardo la sicurezza, si rimanda al capitolo \ref{delta}.\\
 
 Un utente ha quindi un attributo che ne identifica il ruolo. Vi sono poi degli attributi che lo caratterizzano (come ad esempio l'indirizzo e-mail) ed infine un attributo di tipo \texttt{Encryptor}. \\
 La classe \texttt{Encryptor} racchiude metodi per gestire le diverse codifiche delle password, in modo da poter utilizzare stringhe codificate in maniera differente e rendere indipendente la codifica utilizzata dall'applicazione 

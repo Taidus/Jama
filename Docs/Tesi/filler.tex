@@ -18,7 +18,7 @@ Nel pattern Strategy, l'algoritmo è incapsulato in una classe separata rispetto
 \paragraph{}
 La classe che rappresenta genericamente l'algoritmo è chiamata \lstinline{ContractShareTableFiller}; per brevità, si farà di seguito riferimento ad essa con il termine \textsl{filler}. \\
 Attualmente, è prevista un'unica implementazione del filler, chiamata \lstinline{StandardContractShareTableFiller} (o \textsl{filler standard}). Questa implementazione prevede tutti gli altri attributi della tabella di ripartizione vengano calcolati sulla base della quota relativa al personale. In figura \ref{filler_strategy} è mostrato il pattern Strategy applicato al caso concreto.\\
-Le percentuali sulla base delle quali eseguire il calcolo sono definibili attraverso gli opportuni file di configurazione, che si trovano all'interno della sotto-cartella \path{aliquoteDipartimenti} della cartella di configurazione (path relativo alla directory di jBoss: \path{standalone/deployments/Jama.war/WEB-INF/classes/config}). \\
+Le percentuali sulla base delle quali eseguire il calcolo sono definibili attraverso gli opportuni file di configurazione, che si trovano all'interno della sotto-cartella \path{aliquoteDipartimenti} della cartella di configurazione (path relativo alla directory di JBoss: \path{standalone/deployments/Jama.war/WEB-INF/classes/config}). \\
 
 \begin{figure}[h]
 \centering

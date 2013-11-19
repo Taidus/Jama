@@ -1,7 +1,7 @@
-Lo scopo di Jama è la gestione delle convenzioni e dei contributi stipulati dai resonsabili scientifici. È quindi essenziale rappresentare un importo come oggetto Java. \\
+Lo scopo di Jama è la gestione delle convenzioni e dei contributi stipulati dai responsabili scientifici. È quindi essenziale rappresentare un importo come oggetto Java. \\
 In prima istanza, si potrebbe pensare di utilizzare tipi primitivi in virgola mobile come \texttt{float} o \texttt{double}. Questa scelta però presenta due grandi difetti:
 \begin{enumerate}
-\item \underline{artmetica inesatta}. L'aritmetica dei numeri in virgola mobile non è esatta. Ad esempio, a causa della rappresentazione binaria dei numeri in virgola mobile all'interno di un calcolatore, non è possibile rappresentare una potenza negativa del 10 (e.g., 0.1 o 0.01) in maniera esatta.
+\item \underline{aritmetica inesatta}. L'aritmetica dei numeri in virgola mobile non è esatta. Ad esempio, a causa della rappresentazione binaria dei numeri in virgola mobile all'interno di un calcolatore, non è possibile rappresentare una potenza negativa del 10 (e.g., 0.1 o 0.01) in maniera esatta.
 \item \underline{assenza di unità di misura}. Una somma di denaro è costituito da un valore numerico ed una valuta. Rappresentare il solo ammontare può andare bene in sistemi in cui si utilizza sempre la stessa valuta, ma rende poi praticamente impossibile cambiare questo comportamento in fase di mantenimento dell'applicazione.
 \end{enumerate}
 
