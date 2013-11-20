@@ -81,8 +81,6 @@ public class AgreementWizardPresentationBean implements Serializable {
 	}
 	
 	public boolean renderShareTable(){
-		//TODO rimuovere stampa
-		System.out.println("-------------------------- " + helper.renderShareTable());
 		return helper.renderShareTable();
 	}
 	

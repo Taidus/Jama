@@ -52,7 +52,9 @@
 			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="#{opContractListPCB.editAgreement()}" />
 			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="w_confirm.show();" />
 		</p:contextMenu>
-
+		
+		<p:remoteCommand name="j_editAgreement" action="#{opContractListPCB.editAgreement()}" />
+		
 		<p:dataTable id="agreementTable" styleClass="hideShow" binding="#{opContractListPCB.lazyModel.dataTable}" var="agr" widgetVar="w_agrTable"
 			lazy="true" value="#{opContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20" rowsPerPageTemplate="10,20,50"
 			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractListPCB.lazyModel.selectedValue}"
@@ -61,6 +63,7 @@
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
 			<p:ajax event="sort" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent(); " />
+			<p:ajax event="rowDblselect" oncomplete="j_editAgreement();" />  
 
 
 			<p:column styleClass="contractTypeColumn button-left-column" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}"
@@ -69,7 +72,7 @@
 			</p:column>
 
 
-			<p:column styleClass="button-right-column button-column">
+			<p:column styleClass="button-right-column button-complete-column">
 				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{opContractListPCB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>

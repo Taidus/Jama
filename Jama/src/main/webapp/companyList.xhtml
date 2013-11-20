@@ -18,17 +18,21 @@
 </h:head>
 <h:body>
 
-	<p:growl autoUpdate="true" sticky="true" />
+	<p:growl autoUpdate="true" sticky="true" showSummary="false" showDetail="true" />
 
-	<h:form >
+	<h:form>
 		<input type="hidden" name="cid" value='#{companyTablePCB.conversation.id}' />
 
-		<ui:remove>
-			<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="companyTable">
-				<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="" />
-				<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="" />
-			</p:contextMenu>
-		</ui:remove>
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="companyTable">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{companyTablePCB.viewCompany()}"
+				update=":#{p:component('viewDialog')}" oncomplete="w_viewDialog.show();" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="#{companyTablePCB.editCompany()}"
+				update=":#{p:component('editDialog')}" oncomplete="w_editDialog.show();">
+				<p:resetInput target=":#{p:component('editDialog')}" />
+			</p:menuitem>
+		</p:contextMenu>
+
+		<p:remoteCommand name="j_editCompany" action="#{companyTablePCB.editCompany()}" />
 
 		<p:dataTable id="companyTable" styleClass="hideShow" var="company" widgetVar="w_companyTable" lazy="true" value="#{companyTablePCB.lazyModel}"
 			emptyMessage="#{msgs.noCompanyFound}" paginator="true" rows="20" rowsPerPageTemplate="10,20,50"
@@ -38,8 +42,21 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow(); " />
 
-			<p:column headerText="#{msgs.VatNumber}">
+			<p:column headerText="#{msgs.VatNumber}" styleClass="button-left-column">
 				<h:outputText value="#{company.vatNumber}" />
+			</p:column>
+
+			<p:column styleClass="button-complete-column button-right-column">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{companyTablePCB.viewCompany()}"
+					update=":#{p:component('viewDialog')}" oncomplete="w_viewDialog.show();">
+					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{companyTablePCB.editCompany()}"
+					update=":#{p:component('editDialog')}" oncomplete="w_editDialog.show();">
+					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
+					<p:resetInput target=":#{p:component('editDialog')}" />
+				</p:commandButton>
 			</p:column>
 
 			<p:column headerText="#{msgs.socialNumber}">
@@ -48,17 +65,6 @@
 
 			<p:column headerText="#{msgs.companyName}" filterBy="#{company.name}" filterMatchMode="startsWith">
 				<h:outputText value="#{company.name}" />
-
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{companyTablePCB.viewCompany()}"
-					update=":#{p:component('viewDialog')}" oncomplete="w_viewDialog.show();">
-					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
-				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{companyTablePCB.editCompany()}"
-					update=":#{p:component('editDialog')}" oncomplete="w_editDialog.show();">
-					<f:setPropertyActionListener value="#{company}" target="#{companyTablePCB.lazyModel.selectedValue}" />
-					<p:resetInput target=":#{p:component('editDialog')}" />
-				</p:commandButton>
-
 			</p:column>
 
 		</p:dataTable>
@@ -76,7 +82,7 @@
 	</h:form>
 
 	<dialogs:companyDialog dialogWidgetVar="w_addDialog" dialogId="addDialog" editingDisable="false" observingComponentId="companyTable" />
-	<dialogs:companyDialog dialogWidgetVar="w_editDialog" dialogId="editDialog" editingDisable="false" observingComponentId="companyTable"/>
+	<dialogs:companyDialog dialogWidgetVar="w_editDialog" dialogId="editDialog" editingDisable="false" observingComponentId="companyTable" />
 	<dialogs:companyDialog dialogWidgetVar="w_viewDialog" dialogId="viewDialog" editingDisable="true" />
 
 

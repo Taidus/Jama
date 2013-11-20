@@ -61,13 +61,15 @@
 			<p:ajax event="filter" oncomplete="setHideShow();" />
 			<p:ajax event="page" oncomplete="setHideShow();" />
 
-			<p:column styleClass="contractTypeColumn" filterBy="#{contract.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
-				
+			<p:column styleClass="contractTypeColumn button-left-column" filterBy="#{contract.class}" filterOptions="#{utilPB.contractFilter}"
+				headerText="#{msgs.contrType}">
+				<h:outputText value="#{utilPB.getNameFromClass(contract.class)}" />
+			</p:column>
+
+			<p:column styleClass="button-view-column button-right-column">
 				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{chiefContractListPCB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{contract}" target="#{chiefContractListPCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-
-				<h:outputText value="#{utilPB.getNameFromClass(contract.class)}" />
 			</p:column>
 
 			<p:column styleClass="closedFilterColumn" filterBy="#{contract.closedString}"

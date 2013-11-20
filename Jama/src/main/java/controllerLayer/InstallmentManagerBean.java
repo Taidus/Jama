@@ -54,7 +54,8 @@ public class InstallmentManagerBean implements Serializable {
 
 
 	public void setSelectedInstallment(Installment selectedInstallment) {
-		System.out.println("weofiwoifwfwef setSelInst");
+		System.out.print("Installment manager: ");
+		System.out.println("setting selected installment: " + selectedInstallment);
 		this.selectedInstallment = selectedInstallment;
 	}
 
@@ -127,16 +128,14 @@ public class InstallmentManagerBean implements Serializable {
 
 
 	@ViewContractsAllowed
-	public void viewInstallment(Installment inst) {
-		setSelectedInstallment(inst);
+	public void viewInstallment() {
 		initInstallment();
 	}
 
 
 	@AlterContractsAllowed
-	public void editInstallment(Installment inst) {
-		System.out.println("Edit inst with ID: " + inst.getId());
-		setSelectedInstallment(inst);
+	public void editInstallment() {
+		System.out.println("Edit inst " + selectedInstallment);
 		initInstallment();
 	}
 

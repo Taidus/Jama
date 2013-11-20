@@ -33,6 +33,7 @@ public class CompanyTableLazyDataModel extends LazyDataModel<Company> implements
 
 
 	public void setSelectedValue(Company selectedValue) {
+		System.out.println("Setting selected company: " + selectedValue);
 		this.selectedValue = selectedValue;
 	}
 
