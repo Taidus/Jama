@@ -27,23 +27,17 @@
 	<h:outputStylesheet name="home.css" library="css" />
 
 	<p:panel id="#{cc.attrs.panelId}" styleClass="semiEmptyPanel relative">
+
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="installmentTable">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment(installment)}" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment(installment)}" />
+			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="delete_confirm.show();" />
+		</p:contextMenu>
+
 		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
 			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
 
 			<p:column headerText="#{msgs.date}">
-				<h:outputText value="#{installment.date}">
-					<f:convertDateTime locale="it" dateStyle="full" />
-				</h:outputText>
-			</p:column>
-
-			<p:column headerText="#{msgs.amount}">
-				<h:outputText value="#{installment.wholeAmount}">
-					<f:attribute name="plain" value="false" />
-				</h:outputText>
-			</p:column>
-
-			<p:column headerText="#{msgs.paidInvoice_Question}">
-				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 
 				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment(installment)}"
 					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
@@ -58,6 +52,20 @@
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
+
+				<h:outputText value="#{installment.date}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.amount}">
+				<h:outputText value="#{installment.wholeAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.paidInvoice_Question}">
+				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
 			</p:column>
 
 		</p:dataTable>
@@ -69,11 +77,6 @@
 			<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();" type="button" />
 		</p:confirmDialog>
 
-		<ui:remove>
-			<p:commandButton styleClass="addInstBtn" action="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}" ajax="false"
-				immediate="true" rendered="#{cc.attrs.editingDisable == false}">
-			</p:commandButton>
-		</ui:remove>
 
 		<p:commandButton styleClass="addInstBtn" process="@this" actionListener="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}"
 			oncomplete="#{cc.attrs.addDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.addDialogId)}" rendered="#{cc.attrs.editingDisable == false}">

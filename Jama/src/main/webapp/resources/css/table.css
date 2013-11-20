@@ -14,8 +14,21 @@
 	height: 20px !important;
 	width: 30px !important;
 	display: none;
-	float: right !important;
+	/* float: right !important; */
 }
+
+.button-column{
+	width: 100px !important;
+}
+
+th[class*=button-left-column], td[class*=button-left-column]{
+	border-right: none !important;
+} 
+
+th[class*=button-right-column], td[class*=button-right-column]{
+	border-left: none !important;
+} 
+
 
 .hide-column-names table thead tr {
     display: none !important;

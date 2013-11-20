@@ -62,7 +62,20 @@
 			<p:ajax event="sort" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent(); " />
 
-			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
+			<p:column styleClass="button-left-column button-column">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{opContractListPCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{opContractListPCB.editAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column styleClass="contractTypeColumn button-right-column" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}"
+				headerText="#{msgs.contrType}">
 				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
 			</p:column>
 
@@ -91,21 +104,21 @@
 				<f:facet name="header">
 					<h:outputText value="#{msgs.approvalDate}" />
 					<br />
-					
+
 					<div style="display: block; margin: auto;">
 						<h:outputText value="#{msgs.from}: " />
 						<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractListPCB.lazyModel.filterMinDate}"
 							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 						</p:calendar>
 					</div>
-					
+
 					<div style="display: block; margin: auto;">
 						<h:outputText value="#{msgs.to}: " />
 						<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractListPCB.lazyModel.filterMaxDate}"
 							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
 						</p:calendar>
 					</div>
-					
+
 					<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
 						onclick="return calendarFilter(arguments[0], w_agrTable);" />
 					<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
@@ -116,15 +129,6 @@
 					<f:convertDateTime locale="it" dateStyle="full" />
 				</h:outputText>
 
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{opContractListPCB.viewAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
-				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{opContractListPCB.editAgreement()}">
-					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
-				</p:commandButton>
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="w_confirm.show();">
-					<f:setPropertyActionListener value="#{agr}" target="#{opContractListPCB.lazyModel.selectedValue}" />
-				</p:commandButton>
 
 			</p:column>
 
