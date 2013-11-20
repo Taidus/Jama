@@ -108,7 +108,7 @@ public class UserEditorBean implements Serializable {
 	
 	@CreateUserAllowed
 	public void importUser() {
-		currentUser = ldapManager.getUser(currentUser.getSerialNumber());
+		currentUser = ldapManager.getUserBySerial(currentUser.getSerialNumber());
 	}
 
 

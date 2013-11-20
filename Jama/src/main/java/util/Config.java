@@ -55,6 +55,8 @@ public class Config {
 	public static final String loginDN;
 	public static final String password;
 	public static final String searchBase;
+	public static final String deptsBusinessCategory;
+	public static final int hoursBeforeLdapCacheUpdate;
 
 	
 	
@@ -119,6 +121,8 @@ public class Config {
 		loginDN = p.getProperty("loginDN").trim();
 		password = p.getProperty("password").trim();
 		searchBase = p.getProperty("searchBase").trim();
+		deptsBusinessCategory = p.getProperty("deptsBusinessCategory");
+		hoursBeforeLdapCacheUpdate = Integer.parseInt(p.getProperty("hoursBeforeCacheUpdate"));
 
 		
 

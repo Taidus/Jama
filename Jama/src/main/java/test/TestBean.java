@@ -18,6 +18,7 @@ import javax.jms.IllegalStateException;
 import usersManagement.LdapManager;
 import usersManagement.User;
 import util.Encryptor;
+import util.LdapCachedManager;
 import util.MailSender;
 import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
@@ -53,7 +54,7 @@ public class TestBean implements Serializable {
 	@EJB
 	private DeadlineSearchService deadService;
 	@Inject
-	private LdapManager ldap;
+	private LdapCachedManager ldap;
 
 	@Inject
 	private MailSender mailSender;
@@ -164,9 +165,19 @@ public class TestBean implements Serializable {
 
 
 	public void doDelta() {
-
-		User u = ldap.getUser("D096048");
-		System.out.println(u);
+			
+//		User u = ldap.getUserBySerial("D096048");
+//		System.out.println(u);
+		
+		List<Department> list = ldap.getAllDepts();
+		for(Department d: list){
+			System.out.println(d);
+		}
+		
+//		List<User> list = ldap.getUsersByDept("058506");
+//		for(User u : list){
+//			System.out.println(u);
+//		}
 
 	}
 

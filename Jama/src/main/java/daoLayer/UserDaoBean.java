@@ -56,7 +56,7 @@ public class UserDaoBean {
 			result = em.createNamedQuery("User.findBySerialNumber", User.class).setParameter("number", serialNumber).getSingleResult();
 			
 			if (null == result) {
-				result = ldapm.getUser(serialNumber);
+				result = ldapm.getUserBySerial(serialNumber);
 			}
 			
 		} catch (NoResultException e) {

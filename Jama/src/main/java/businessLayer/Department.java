@@ -57,6 +57,7 @@ public class Department {
 		return "Department [id=" + id + ", code=" + code + ", name=" + name + "]";
 	}
 
+	//TODO solo code????
 	@Override
 	public int hashCode() {
 		final int prime = 31;
