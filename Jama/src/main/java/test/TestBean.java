@@ -3,6 +3,7 @@ package test;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,6 +15,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.IllegalStateException;
+
+import com.novell.ldap.util.Base64;
 
 import usersManagement.LdapManager;
 import usersManagement.User;
@@ -165,14 +168,52 @@ public class TestBean implements Serializable {
 
 
 	public void doDelta() {
-			
-//		User u = ldap.getUserBySerial("D096048");
-//		System.out.println(u);
 		
-		List<Department> list = ldap.getAllDepts();
-		for(Department d: list){
-			System.out.println(d);
+		try {
+			System.out.println(Encryptor.MD5.encrypt("UfoRobot-123"));
+			System.out.println(Base64.encode("C2F50EB1EDBC7B17F2F840062E3A657E"));
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+			
+		User u = ldap.getUserBySerial("D000000");
+		System.out.println(u);
+		int count =1;
+		try {
+			if(
+			u.login("jama")){
+				System.out.println("TRUE"+count);
+			}
+			count++;
+			
+			if(u.login("Jama")){
+				System.out.println("TRUE"+count);
+			}
+			count++;
+			
+			if(u.login("UfoRobot-123")){
+				System.out.println("TRUE"+count);
+
+			}
+			count++;
+			if(u.login("SviluppoJMA-01")){
+				System.out.println("TRUE"+count);
+
+			}
+			
+		} catch (javax.resource.spi.IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("END TEST");
+		
+		
+//		List<Department> list = ldap.getAllDepts();
+//		for(Department d: list){
+//			System.out.println(d);
+//		}
 		
 //		List<User> list = ldap.getUsersByDept("058506");
 //		for(User u : list){
