@@ -12,6 +12,7 @@ import javax.enterprise.context.RequestScoped;
 import util.Config;
 import util.Encryptor;
 import util.LdapQueryInterface;
+import businessLayer.ChiefScientist;
 import businessLayer.Department;
 
 import com.novell.ldap.LDAPAttribute;
@@ -115,6 +116,43 @@ public class LdapManager implements LdapQueryInterface{
 
 		result.setRole(Role.PROFESSOR);
 		result.addDepartment(d);
+
+		return result;
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	private ChiefScientist buildChiefScientist(LDAPAttributeSet attributeSet) {
+		ChiefScientist result = new ChiefScientist();
+		Department d = new Department();
+
+		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
+				.iterator();
+
+		while (allAttributes.hasNext()) {
+
+			LDAPAttribute attribute = allAttributes.next();
+			String attributeName = attribute.getName().trim();
+
+			Enumeration<String> allValues = (Enumeration<String>) attribute
+					.getStringValues();
+			String value = getValue(allValues).trim();
+
+			// TODO mettere i nomi dei parametri in un file di configurazione
+			if (attributeName.equalsIgnoreCase("givenName")) {
+				result.setName(value);
+			} else if (attributeName.equalsIgnoreCase("sn")) {
+				result.setSurname(value);
+			} else if (attributeName.equalsIgnoreCase("uid")) {
+				result.setSerialNumber(value);
+			} else if (attributeName.equalsIgnoreCase("departmentNumber")) {
+				d.setCode(value);
+			} else if (attributeName.equalsIgnoreCase("ou")) {
+				d.setName(value);
+			}
+		}
+
+		//result.addDepartment(d);
 
 		return result;
 
@@ -225,6 +263,44 @@ public class LdapManager implements LdapQueryInterface{
 		return result;
 
 	}
+	
+	private List<ChiefScientist> getChiefScientis(String filter){
+		
+		List<ChiefScientist> result = new ArrayList<>();
+
+		try {
+			connect();
+			LDAPSearchResults searchResults = lc.search(Config.searchBase,
+					Config.searchScope, filter, null, false);
+
+			while (searchResults.hasMore()) {
+
+				LDAPEntry nextEntry = null;
+				nextEntry = searchResults.next();
+				LDAPAttributeSet attributeSet = nextEntry.getAttributeSet();
+				ChiefScientist c = buildChiefScientist(attributeSet);
+				if (c != null) {
+					result.add(c);
+				}
+
+			}
+
+		} catch (UnsupportedEncodingException | LDAPException e) {
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				close();
+			} catch (LDAPException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+		
+	}
 
 	public User getUserBySerial(String serialNumber)
 			throws IllegalStateException {
@@ -257,6 +333,32 @@ public class LdapManager implements LdapQueryInterface{
 
 		return getUsers(null);
 
+	}
+	
+	public List<ChiefScientist> getAllChiefScientists(){
+		return getChiefScientis(null);
+	}
+	
+	public List<ChiefScientist> getChiefScientistsByDepth(String deptCode){
+		String filter = "departmentNumber=" + deptCode;
+
+		return getChiefScientis(filter);
+	}
+	
+	public ChiefScientist getChiefScientistBySerial(int serialNumber){
+		ChiefScientist result = null;
+		String filter = "uid=" + serialNumber;
+
+		List<ChiefScientist> list = getChiefScientis(filter);
+		if (list.size() > 1) {
+			throw new java.lang.IllegalStateException("Found " + list.size()
+					+ " matches for serial number: " + serialNumber);
+
+		} else if (list.size() != 0) {
+			result = list.get(0);
+		}
+
+		return result;
 	}
 
 }
