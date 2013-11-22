@@ -20,18 +20,16 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
-import javax.resource.spi.IllegalStateException;
 
-import businessLayer.Department;
-import annotations.Logged;
-import annotations.TransferObj;
-import daoLayer.UserDaoBean;
 import security.Principal;
 import security.annotations.CreateUserAllowed;
 import usersManagement.LdapManager;
 import usersManagement.User;
-import util.Encryptor;
 import util.Messages;
+import annotations.Logged;
+import annotations.TransferObj;
+import businessLayer.Department;
+import daoLayer.UserDaoBean;
 
 //TODO splittare in presentation e controller
 @Named("userEditor")
@@ -40,10 +38,10 @@ import util.Messages;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserEditorBean implements Serializable {
 	private static final long serialVersionUID = -4966124878956728047L;
-	
+
 	@Inject
 	private Conversation conversation;
-	
+
 	@Inject
 	private UserDaoBean userDao;
 
@@ -53,10 +51,10 @@ public class UserEditorBean implements Serializable {
 	@Inject
 	@Logged
 	private Principal loggedUser;
-	
+
 	@Inject
 	private LdapManager ldapManager;
-	
+
 	private User currentUser;
 	private String password;
 
@@ -82,9 +80,6 @@ public class UserEditorBean implements Serializable {
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public String save() throws GeneralSecurityException {
-		if (password != null) {
-			currentUser.setPassword(Encryptor.JAMA_DEFAULT.encrypt(password));
-		}
 		userDao.create(currentUser);
 
 		close();
@@ -105,7 +100,8 @@ public class UserEditorBean implements Serializable {
 		currentUser = new User();
 		return "userWiz";
 	}
-	
+
+
 	@CreateUserAllowed
 	public void importUser() {
 		currentUser = ldapManager.getUserBySerial(currentUser.getSerialNumber());
@@ -161,11 +157,7 @@ public class UserEditorBean implements Serializable {
 	public void validateOldPassword(FacesContext context, UIComponent component, Object value) {
 
 		String password = (String) value;
-		try {
-			if (!currentUser.login(password)) {
-				throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
-			}
-		} catch (IllegalStateException e) {
+		if (!currentUser.login(password)) {
 			throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
 		}
 

@@ -29,33 +29,41 @@
 	<p:panel id="#{cc.attrs.panelId}" styleClass="semiEmptyPanel relative">
 
 		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="installmentTable">
-			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment(installment)}" />
-			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment(installment)}" />
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment()}"
+				oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment()}"
+				oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
+				<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
+			</p:menuitem>
 			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="delete_confirm.show();" />
 		</p:contextMenu>
 
-		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.id}" var="installment"
-			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}">
+		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.indexInContract}" var="installment"
+			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}" selection="#{installmentManager.selectedInstallment}">
 
-			<p:column headerText="#{msgs.date}">
+			<p:ajax event="filter" oncomplete="setHideShow();" />
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment(installment)}"
+			<p:column headerText="#{msgs.date}" styleClass="button-left-column">
+				<h:outputText value="#{installment.date}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+			</p:column>
+
+			<p:column styleClass="button-complete-column button-right-column">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentManager.viewInstallment()}"
 					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment(installment)}"
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}"
 					oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
 					<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
 				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{not cc.attrs.editingDisable}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
-
-
-				<h:outputText value="#{installment.date}">
-					<f:convertDateTime locale="it" dateStyle="full" />
-				</h:outputText>
 			</p:column>
 
 			<p:column headerText="#{msgs.amount}">

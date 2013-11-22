@@ -18,7 +18,7 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.serialNumber}" />
+					<h:outputText value="#{msgs.serialNumber}: " />
 				</p:column>
 
 				<p:column>
@@ -42,37 +42,21 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.name}:" />
+					<h:outputText value="#{msgs.name}: " />
 				</p:column>
 
 				<p:column>
-					<h:inputText id="name" value="#{userEditor.user.name}" label="#{msgs.name}" required="true" rendered="#{cc.attrs.mode == 'wizard'}">
-					</h:inputText>
-					<h:outputText id="name_output" value="#{userEditor.user.name}" label="#{msgs.name}" required="true" rendered="#{cc.attrs.mode == 'profile'}">
-					</h:outputText>
-
-				</p:column>
-
-				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message for="name" />
+					<h:outputText id="name_output" value="#{userEditor.user.name}" />
 				</p:column>
 			</p:row>
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.surname}:" />
+					<h:outputText value="#{msgs.surname}: " />
 				</p:column>
 
 				<p:column>
-					<h:inputText id="surname" value="#{userEditor.user.surname}" label="#{msgs.surname}" required="true" rendered="#{cc.attrs.mode == 'wizard'}">
-					</h:inputText>
-					<h:outputText id="surname_output" value="#{userEditor.user.surname}" label="#{msgs.surname}" required="true"
-						rendered="#{cc.attrs.mode == 'profile'}">
-					</h:outputText>
-				</p:column>
-
-				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message for="surname" />
+					<h:outputText id="surname_output" value="#{userEditor.user.surname}" />
 				</p:column>
 			</p:row>
 
@@ -82,59 +66,14 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="depthMenu" styleClass="depthMenu" value="#{userEditor.selectedDept}" label="#{msgs.department}" required="true"
-						filter="true" filterMatchMode="contains" rendered="#{cc.attrs.mode == 'wizard'}">
-						<f:selectItems value="#{utilPB.depthItems}" />
-						<f:converter binding="#{departmentConverter}" />
-					</p:selectOneMenu>
+					<h:outputText value="#{userEditor.selectedDept.code}" />
 
-					<h:outputText value="#{userEditor.selectedDept.code}" rendered="#{cc.attrs.mode == 'profile'}">
-					</h:outputText>
-
-				</p:column>
-
-				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message styleClass="errorMessage" for="depthMenu" />
 				</p:column>
 			</p:row>
-
-
-			<p:row rendered="#{cc.attrs.mode == 'wizard'}">
-				<p:column>
-					<h:outputText value="#{msgs.password}" />
-				</p:column>
-
-				<p:column>
-					<p:password id="password" required="true" match="confirmPassword" label="#{msgs.password_confirm}" value="#{userEditor.password}">
-						<f:ajax event="blur"></f:ajax>
-					</p:password>
-
-				</p:column>
-
-				<p:column>
-					<p:message id="confirmPasswordError" styleClass="errorMessage" autoUpdate="true" for="password" />
-				</p:column>
-			</p:row>
-
-
-			<p:row rendered="#{cc.attrs.mode == 'wizard'}">
-				<p:column>
-					<h:outputText value="#{msgs.confirmPassword}" />
-				</p:column>
-				<p:column>
-					<p:password id="confirmPassword" required="true" label="#{msgs.password_confirm}" validator="#{userEditor.validatePassword}">
-
-					</p:password>
-				</p:column>
-				<p:column>
-					<p:message id="requiredConfirmPasswordError" styleClass="errorMessage" autoUpdate="true" for="confirmPassword" />
-				</p:column>
-			</p:row>
-
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.role}:" />
+					<h:outputText value="#{msgs.role}: " />
 				</p:column>
 
 				<p:column>
@@ -155,7 +94,7 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.email}" />
+					<h:outputText value="#{msgs.email}: " />
 				</p:column>
 
 				<p:column>
@@ -182,11 +121,6 @@
 
 		</p:panelGrid>
 
-		<p:commandButton value="#{msgs.changePassword_button}" type="button" onclick="w_change_passwd.show()" rendered="#{cc.attrs.mode == 'profile'}" />
-
-
-
-
 		<p:commandButton value="#{msgs.save}" process="@form" update="usrDataPanelGrid"
 			oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}" />
 
@@ -198,9 +132,6 @@
 		</p:confirmDialog>
 
 	</h:form>
-
-	<dialogs:changePasswdDialog />
-
 
 </composite:implementation>
 </html>

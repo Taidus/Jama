@@ -128,13 +128,6 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{chiefDialogPCB.clear()}" oncomplete="w_chiefDialog.show()"
-						update=":#{p:component('chiefPanel')}" rendered="#{cc.attrs.editingDisable == false}">
-						<p:resetInput target=":#{p:component('chiefPanel')}" />
-					</p:commandButton>
-				</p:column>
-
-				<p:column>
 					<p:message styleClass="errorMessage" for="chiefMenu" />
 				</p:column>
 			</p:row>

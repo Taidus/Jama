@@ -10,7 +10,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 
 import util.Config;
-import util.Encryptor;
+
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
 
@@ -30,6 +30,7 @@ public class LdapManager implements LdapQueryInterface {
 	private LDAPConnection lc;
 	private LDAPSocketFactory ssf;
 
+
 	@SuppressWarnings("restriction")
 	private void connect() throws LDAPException, UnsupportedEncodingException {
 
@@ -40,16 +41,17 @@ public class LdapManager implements LdapQueryInterface {
 		LDAPConnection.setSocketFactory(ssf);
 		lc = new LDAPConnection();
 		lc.connect(Config.ldapHost, Config.ldapPort);
-		lc.bind(Config.ldapVersion, Config.loginDN,
-				Config.password.getBytes("UTF8"));
+		lc.bind(Config.ldapVersion, Config.loginDN, Config.password.getBytes("UTF8"));
 
 	}
+
 
 	private void close() throws LDAPException {
 		if (lc != null && lc.isConnected()) {
 			lc.disconnect();
 		}
 	}
+
 
 	private String getValue(Enumeration<String> allValues) {
 
@@ -78,39 +80,39 @@ public class LdapManager implements LdapQueryInterface {
 
 	}
 
+
 	@SuppressWarnings("unchecked")
 	private User buildUser(LDAPAttributeSet attributeSet) {
 		User result = new User();
 		Department d = new Department();
 
-		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
-				.iterator();
+		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet.iterator();
 
 		while (allAttributes.hasNext()) {
 
 			LDAPAttribute attribute = allAttributes.next();
 			String attributeName = attribute.getName().trim();
 
-			Enumeration<String> allValues = (Enumeration<String>) attribute
-					.getStringValues();
+			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
 			String value = getValue(allValues).trim();
 
 			// TODO mettere i nomi dei parametri in un file di configurazione
 			if (attributeName.equalsIgnoreCase("givenName")) {
 				result.setName(value);
-			} else if (attributeName.equalsIgnoreCase("sn")) {
+			}
+			else if (attributeName.equalsIgnoreCase("sn")) {
 				result.setSurname(value);
-			} else if (attributeName.equalsIgnoreCase("mail")) {
+			}
+			else if (attributeName.equalsIgnoreCase("mail")) {
 				result.setEmail(value);
-			} else if (attributeName.equalsIgnoreCase("uid")) {
+			}
+			else if (attributeName.equalsIgnoreCase("uid")) {
 				result.setSerialNumber(value);
-			} else if (attributeName.equalsIgnoreCase("userPassword")) {
-				// TODO controllare che funzioni
-				result.setEncryptor(Encryptor.getFromPasswordWithPrefix(value));
-				result.setPassword(value);
-			} else if (attributeName.equalsIgnoreCase("departmentNumber")) {
+			}
+			else if (attributeName.equalsIgnoreCase("departmentNumber")) {
 				d.setCode(value);
-			} else if (attributeName.equalsIgnoreCase("ou")) {
+			}
+			else if (attributeName.equalsIgnoreCase("ou")) {
 				d.setName(value);
 			}
 		}
@@ -127,28 +129,30 @@ public class LdapManager implements LdapQueryInterface {
 		ChiefScientist result = new ChiefScientist();
 		Department d = new Department();
 
-		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
-				.iterator();
+		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet.iterator();
 
 		while (allAttributes.hasNext()) {
 
 			LDAPAttribute attribute = allAttributes.next();
 			String attributeName = attribute.getName().trim();
 
-			Enumeration<String> allValues = (Enumeration<String>) attribute
-					.getStringValues();
+			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
 			String value = getValue(allValues).trim();
 
 			// TODO mettere i nomi dei parametri in un file di configurazione
 			if (attributeName.equalsIgnoreCase("givenName")) {
 				result.setName(value);
-			} else if (attributeName.equalsIgnoreCase("sn")) {
+			}
+			else if (attributeName.equalsIgnoreCase("sn")) {
 				result.setSurname(value);
-			} else if (attributeName.equalsIgnoreCase("uid")) {
+			}
+			else if (attributeName.equalsIgnoreCase("uid")) {
 				result.setSerialNumber(value);
-			} else if (attributeName.equalsIgnoreCase("departmentNumber")) {
+			}
+			else if (attributeName.equalsIgnoreCase("departmentNumber")) {
 				d.setCode(value);
-			} else if (attributeName.equalsIgnoreCase("ou")) {
+			}
+			else if (attributeName.equalsIgnoreCase("ou")) {
 				d.setName(value);
 			}
 		}
@@ -159,26 +163,26 @@ public class LdapManager implements LdapQueryInterface {
 
 	}
 
+
 	@SuppressWarnings("unchecked")
 	private Department buildDept(LDAPAttributeSet attributeSet) {
 		Department d = new Department();
 
-		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet
-				.iterator();
+		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet.iterator();
 
 		while (allAttributes.hasNext()) {
 
 			LDAPAttribute attribute = allAttributes.next();
 			String attributeName = attribute.getName().trim();
 
-			Enumeration<String> allValues = (Enumeration<String>) attribute
-					.getStringValues();
+			Enumeration<String> allValues = (Enumeration<String>) attribute.getStringValues();
 			String value = getValue(allValues).trim();
 
 			// TODO mettere i nomi dei parametri in un file di configurazione
 			if (attributeName.equalsIgnoreCase("uniqueIdentifier")) {
 				d.setCode(value);
-			} else if (attributeName.equalsIgnoreCase("description")) {
+			}
+			else if (attributeName.equalsIgnoreCase("description")) {
 				d.setName(value);
 			}
 			// TODO set actual directory
@@ -189,6 +193,7 @@ public class LdapManager implements LdapQueryInterface {
 		return d;
 	}
 
+
 	public List<Department> getAllDepts() {
 
 		List<Department> result = new ArrayList<>();
@@ -196,8 +201,7 @@ public class LdapManager implements LdapQueryInterface {
 
 		try {
 			connect();
-			LDAPSearchResults searchResults = lc.search(Config.searchBase,
-					Config.searchScope, filter, null, false);
+			LDAPSearchResults searchResults = lc.search(Config.searchBase, Config.searchScope, filter, null, false);
 
 			while (searchResults.hasMore()) {
 
@@ -228,13 +232,13 @@ public class LdapManager implements LdapQueryInterface {
 
 	}
 
+
 	private List<User> getUsers(String filter) {
 		List<User> result = new ArrayList<>();
 
 		try {
 			connect();
-			LDAPSearchResults searchResults = lc.search(Config.searchBase,
-					Config.searchScope, filter, null, false);
+			LDAPSearchResults searchResults = lc.search(Config.searchBase, Config.searchScope, filter, null, false);
 
 			while (searchResults.hasMore()) {
 
@@ -271,8 +275,7 @@ public class LdapManager implements LdapQueryInterface {
 
 		try {
 			connect();
-			LDAPSearchResults searchResults = lc.search(Config.searchBase,
-					Config.searchScope, filter, null, false);
+			LDAPSearchResults searchResults = lc.search(Config.searchBase, Config.searchScope, filter, null, false);
 
 			while (searchResults.hasMore()) {
 
@@ -303,24 +306,25 @@ public class LdapManager implements LdapQueryInterface {
 
 	}
 
-	public User getUserBySerial(String serialNumber)
-			throws IllegalStateException {
+
+	public User getUserBySerial(String serialNumber) throws IllegalStateException {
 
 		User result = null;
 		String filter = "uid=" + serialNumber;
 
 		List<User> list = getUsers(filter);
 		if (list.size() > 1) {
-			throw new java.lang.IllegalStateException("Found " + list.size()
-					+ " matches for serial number: " + serialNumber);
+			throw new java.lang.IllegalStateException("Found " + list.size() + " matches for serial number: " + serialNumber);
 
-		} else if (list.size() != 0) {
+		}
+		else if (list.size() != 0) {
 			result = list.get(0);
 		}
 
 		return result;
 
 	}
+
 
 	public List<User> getUsersByDept(String deptCode) {
 
@@ -336,9 +340,11 @@ public class LdapManager implements LdapQueryInterface {
 
 	}
 
+
 	public List<ChiefScientist> getAllChiefScientists() {
 		return getChiefScientis(null);
 	}
+
 
 	public List<ChiefScientist> getChiefScientistsByDepth(String deptCode) {
 		String filter = "departmentNumber=" + deptCode;
@@ -352,10 +358,10 @@ public class LdapManager implements LdapQueryInterface {
 
 		List<ChiefScientist> list = getChiefScientis(filter);
 		if (list.size() > 1) {
-			throw new java.lang.IllegalStateException("Found " + list.size()
-					+ " matches for serial number: " + serialNumber);
+			throw new java.lang.IllegalStateException("Found " + list.size() + " matches for serial number: " + serialNumber);
 
-		} else if (list.size() != 0) {
+		}
+		else if (list.size() != 0) {
 			result = list.get(0);
 		}
 

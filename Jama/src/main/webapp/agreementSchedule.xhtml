@@ -62,13 +62,16 @@
 			<p:ajax event="filter" oncomplete="setRowEvent();" />
 			<p:ajax event="page" oncomplete="setRowEvent();" />
 
-			<p:column styleClass="contractTypeColumn" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}" headerText="#{msgs.contrType}">
-			
+			<p:column styleClass="contractTypeColumn button-left-column" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}"
+				headerText="#{msgs.contrType}">
+				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
+			</p:column>
+
+
+			<p:column styleClass="button-view-column button-right-column">
 				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{opContractSchedulePCB.viewAgreement()}">
 					<f:setPropertyActionListener value="#{agr}" target="#{opContractSchedulePCB.lazyModel.selectedValue}" />
 				</p:commandButton>
-			
-				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
 			</p:column>
 
 			<p:column id="agrIsClosed" styleClass="closedFilterColumn" filterBy="#{agr.closedString}"

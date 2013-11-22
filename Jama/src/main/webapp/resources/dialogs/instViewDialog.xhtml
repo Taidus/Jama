@@ -24,8 +24,8 @@
 
 		<p:remoteCommand name="closeInstViewDiag" actionListener="#{installmentManager.cancel()}" immediate="true" />
 
-		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" height="650" width="900"
-			onShow="toFirstTab(#{cc.attrs.wizWidgetVar});">
+		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true"
+			onShow="toFirstTab(#{cc.attrs.wizWidgetVar}); setSize('#{cc.attrs.dialogId}');">
 
 			<p:ajax event="close" onstart="closeInstViewDiag();" oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); setHideShow();" />
 

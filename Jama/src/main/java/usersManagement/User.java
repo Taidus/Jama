@@ -1,16 +1,22 @@
 package usersManagement;
 
 import java.io.Serializable;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.resource.spi.IllegalStateException;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import businessLayer.Department;
-import util.Encryptor;
-import util.d_Encryptor;
 
 /**
  * Entity implementation class for Entity: User
@@ -26,10 +32,6 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
-	private String password;
-	
-	private Encryptor encryptor;
 
 	private String email;
 	private String name;
@@ -47,7 +49,6 @@ public class User implements Serializable {
 
 	public User() {
 		super();
-		this.encryptor = Encryptor.JAMA_DEFAULT;
 		this.belongingDepts = new ArrayList<>();
 	}
 
@@ -89,21 +90,6 @@ public class User implements Serializable {
 
 	public int getId() {
 		return id;
-	}
-
-
-	public void setPassword(String password){
-		this.password = password;
-	}
-
-
-	public Encryptor getEncryptor() {
-		return encryptor;
-	}
-
-
-	public void setEncryptor(Encryptor encryptor) {
-		this.encryptor = encryptor;
 	}
 
 
@@ -151,22 +137,15 @@ public class User implements Serializable {
 	}
 
 
-	public boolean login(String plainPwd) throws IllegalStateException {
-
-		try {
-			return encryptor.areEquals(plainPwd, password);
-
-		} catch (GeneralSecurityException e) {
-			throw new IllegalStateException(e);
-		}
-
+	public boolean login(String plainPwd) {
+		//TODO
+		return false;
 	}
 
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", password=" + password + ", encryptor="
-				+ encryptor + ", email=" + email + ", name=" + name
+		return "User [id=" + id + ", email=" + email + ", name=" + name
 				+ ", surname=" + surname + ", belongingDepts=" + belongingDepts
 				+ ", serialNumber=" + serialNumber + ", role=" + role + "]";
 	}

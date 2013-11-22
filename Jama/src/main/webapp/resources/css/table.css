@@ -17,8 +17,12 @@
 	/* float: right !important; */
 }
 
-.button-column{
+.button-complete-column{
 	width: 100px !important;
+}
+
+.button-view-column{
+	width: 40px !important;
 }
 
 th[class*=button-left-column], td[class*=button-left-column]{

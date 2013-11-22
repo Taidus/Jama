@@ -53,6 +53,7 @@ public class CompanyTablePageControllerBean implements Serializable {
 	}
 	
 	public void editCompany(){
+		System.out.println("Edit company");
 		manager.editCompany(lazyModel.getSelectedValue().getId());
 	}
 	
