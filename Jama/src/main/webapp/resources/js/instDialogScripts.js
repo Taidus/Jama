@@ -9,8 +9,10 @@ function toFirstTab(tabViewer) {
 }
 
 function setSize(dialogId){
-	var height = $(window).height()*9/10;
-	var width = $(window).width()*9/10;
+	var wScaling = 9/10;
+	var hScaling = 9/10;
+	var height = $(window).height()*hScaling;
+	var width = $(window).width()*wScaling;
 	var jId = $("div[id*=" + dialogId + "]");
-	jId.height(height).width(width).css("overflow", "auto").offset({ 'top': height/20, 'left': width/20});
+	jId.height(height).width(width).css("overflow", "auto").offset({ 'top': height*(1 - hScaling)/2, 'left': width*(1- wScaling)/2 });
 }
