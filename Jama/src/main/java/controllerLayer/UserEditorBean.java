@@ -11,10 +11,6 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -25,7 +21,6 @@ import security.Principal;
 import security.annotations.CreateUserAllowed;
 import usersManagement.LdapManager;
 import usersManagement.User;
-import util.Messages;
 import annotations.Logged;
 import annotations.TransferObj;
 import businessLayer.Department;
@@ -56,8 +51,6 @@ public class UserEditorBean implements Serializable {
 	private LdapManager ldapManager;
 
 	private User currentUser;
-	private String password;
-
 
 	public UserEditorBean() {
 		super();
@@ -141,41 +134,6 @@ public class UserEditorBean implements Serializable {
 
 	public void setSelectedDept(Department selectedDept) {
 		currentUser.addDepartment(selectedDept);
-	}
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public void validateOldPassword(FacesContext context, UIComponent component, Object value) {
-
-		String password = (String) value;
-		if (!currentUser.login(password)) {
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
-		}
-
-	}
-
-
-	public void validatePassword(FacesContext context, UIComponent component, Object value) {
-
-		try {
-			String password1 = (String) value;
-			String password2 = (String) ((UIInput) component.findComponent("password")).getValue();
-
-			if (!password1.equals(password2)) {
-				throw new ValidatorException(Messages.getErrorMessage("err_passwordMismatch"));
-			}
-		} catch (ClassCastException e) {
-			throw new ValidatorException(Messages.getErrorMessage("err_invalidPassword"));
-		}
 	}
 
 }

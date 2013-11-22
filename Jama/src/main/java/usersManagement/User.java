@@ -137,12 +137,6 @@ public class User implements Serializable {
 	}
 
 
-	public boolean login(String plainPwd) {
-		//TODO
-		return false;
-	}
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name

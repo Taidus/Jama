@@ -22,10 +22,13 @@ import daoLayer.UserDaoBean;
 public class UserManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Principal loggedUser;
+	private Principal loggedUser;private String insertedSerialNumber;
+	
 	@Inject
 	private UserDaoBean userDao;
-	private String insertedSerialNumber;
+	
+	@Inject
+	private LdapManager ldapManager;
 	
 	@Inject
 	private Conversation conversation;
@@ -48,7 +51,7 @@ public class UserManager implements Serializable {
 	public String login(String password) {
 		User u = userDao.getBySerialNumber(insertedSerialNumber);
 		try {
-			if (u != null && u.login(password)) {
+			if (u != null && ldapManager.authenticate(password, u.getSerialNumber())) {
 				loggedUser = new Principal(u);
 				System.out.println("User Login: loggedUser= " + u);
 				return "home";

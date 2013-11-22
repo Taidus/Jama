@@ -405,7 +405,7 @@ public class LdapManager implements LdapQueryInterface {
 	}
 
 	@SuppressWarnings("restriction")
-	public boolean login(String password, String serialNumber) {
+	public boolean authenticate(String password, String serialNumber) {
 
 		boolean successful = false;
 
