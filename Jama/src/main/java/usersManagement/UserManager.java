@@ -2,9 +2,6 @@ package usersManagement;
 
 import java.io.Serializable;
 
-import security.Principal;
-import util.Messages;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
@@ -14,10 +11,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.resource.spi.IllegalStateException;
 
-import daoLayer.UserDaoBean;
+import security.Principal;
+import util.Messages;
 import annotations.Logged;
+import daoLayer.UserDaoBean;
 
 @Named("userManager")
 @SessionScoped
@@ -61,7 +59,8 @@ public class UserManager implements Serializable {
 				
 				return "login";
 			}
-		} catch (IllegalStateException e) {
+		} catch (Exception e) {
+			//TODO temporaneo catch Exception. Restringere.
 			return "error";
 		}
 	}
