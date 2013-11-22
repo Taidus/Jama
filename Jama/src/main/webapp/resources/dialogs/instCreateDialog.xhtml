@@ -22,7 +22,7 @@
 	<h:form>
 		<p:remoteCommand name="closeInstDiag" actionListener="#{installmentManager.cancel()}" immediate="true" />
 
-		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" height="650" width="900">
+		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" onShow="setSize('#{cc.attrs.dialogId}');">
 
 			<p:ajax event="close" onstart="closeInstDiag();" oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); setHideShow();" />
 

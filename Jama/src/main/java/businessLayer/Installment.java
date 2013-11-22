@@ -192,6 +192,12 @@ public abstract class Installment implements Serializable {
 	public void setDeadlineNotified(boolean deadlineNotified) {
 		this.deadlineNotified = deadlineNotified;
 	}
+	
+	public int getIndexInContract(){
+		int x = contract.getInstallments().indexOf(this);
+		System.out.println("Position in contract: " + x);
+		return x;
+	}
 
 	public abstract void copy(Installment copy);
 
