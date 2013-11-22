@@ -1,4 +1,4 @@
-package util;
+package usersManagement;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,8 +14,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import businessLayer.Department;
-import usersManagement.LdapManager;
-import usersManagement.User;
+import util.Config;
 
 @ApplicationScoped
 @Singleton

@@ -1,8 +1,7 @@
-package util;
+package usersManagement;
 
 import java.util.List;
 
-import usersManagement.User;
 import businessLayer.Department;
 
 public interface LdapQueryInterface {

@@ -11,7 +11,6 @@ import javax.enterprise.context.RequestScoped;
 
 import util.Config;
 import util.Encryptor;
-import util.LdapQueryInterface;
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
 
@@ -26,15 +25,15 @@ import com.novell.ldap.LDAPSocketFactory;
 import com.novell.ldap.util.Base64;
 
 @RequestScoped
-public class LdapManager implements LdapQueryInterface{
+public class LdapManager implements LdapQueryInterface {
 
 	private LDAPConnection lc;
 	private LDAPSocketFactory ssf;
 
 	@SuppressWarnings("restriction")
 	private void connect() throws LDAPException, UnsupportedEncodingException {
-		
-//		System.out.println("====LDAP CALLED====");
+
+		// System.out.println("====LDAP CALLED====");
 
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		ssf = new LDAPJSSESecureSocketFactory();
@@ -47,7 +46,9 @@ public class LdapManager implements LdapQueryInterface{
 	}
 
 	private void close() throws LDAPException {
-		lc.disconnect();
+		if (lc != null && lc.isConnected()) {
+			lc.disconnect();
+		}
 	}
 
 	private String getValue(Enumeration<String> allValues) {
@@ -120,7 +121,7 @@ public class LdapManager implements LdapQueryInterface{
 		return result;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private ChiefScientist buildChiefScientist(LDAPAttributeSet attributeSet) {
 		ChiefScientist result = new ChiefScientist();
@@ -152,7 +153,7 @@ public class LdapManager implements LdapQueryInterface{
 			}
 		}
 
-		//result.addDepartment(d);
+		// result.addDepartment(d);
 
 		return result;
 
@@ -263,9 +264,9 @@ public class LdapManager implements LdapQueryInterface{
 		return result;
 
 	}
-	
-	private List<ChiefScientist> getChiefScientis(String filter){
-		
+
+	private List<ChiefScientist> getChiefScientis(String filter) {
+
 		List<ChiefScientist> result = new ArrayList<>();
 
 		try {
@@ -299,7 +300,7 @@ public class LdapManager implements LdapQueryInterface{
 		}
 
 		return result;
-		
+
 	}
 
 	public User getUserBySerial(String serialNumber)
@@ -328,24 +329,24 @@ public class LdapManager implements LdapQueryInterface{
 		return getUsers(filter);
 
 	}
-	
+
 	public List<User> getAllUsers() {
 
 		return getUsers(null);
 
 	}
-	
-	public List<ChiefScientist> getAllChiefScientists(){
+
+	public List<ChiefScientist> getAllChiefScientists() {
 		return getChiefScientis(null);
 	}
-	
-	public List<ChiefScientist> getChiefScientistsByDepth(String deptCode){
+
+	public List<ChiefScientist> getChiefScientistsByDepth(String deptCode) {
 		String filter = "departmentNumber=" + deptCode;
 
 		return getChiefScientis(filter);
 	}
-	
-	public ChiefScientist getChiefScientistBySerial(int serialNumber){
+
+	public ChiefScientist getChiefScientistBySerial(int serialNumber) {
 		ChiefScientist result = null;
 		String filter = "uid=" + serialNumber;
 
@@ -361,4 +362,70 @@ public class LdapManager implements LdapQueryInterface{
 		return result;
 	}
 
+	private String getDnFromUserSerial(String serialNumber) {
+		String dn = null;
+		String filter = "uid=" + serialNumber;
+		LDAPSearchResults searchResults;
+		try {
+			connect();
+			searchResults = lc.search(Config.searchBase, Config.searchScope,
+					filter, null, false);
+
+			int count = 0;
+			while (searchResults.hasMore()) {
+
+				LDAPEntry nextEntry = null;
+				nextEntry = searchResults.next();
+				dn = nextEntry.getDN();
+				count++;
+			}
+
+			close();
+			if (count != 1) {
+				throw new IllegalStateException("Found " + count
+						+ "mathes for user with uid=" + serialNumber);
+			}
+		}
+
+		catch (LDAPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dn;
+	}
+
+	@SuppressWarnings("restriction")
+	public boolean login(String password, String serialNumber) {
+
+		boolean successful = false;
+
+		try {
+			close();
+			String objectDN = getDnFromUserSerial(serialNumber);
+			Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+			ssf = new LDAPJSSESecureSocketFactory();
+			LDAPConnection.setSocketFactory(ssf);
+			lc = new LDAPConnection();
+			lc.connect(Config.ldapHost, Config.ldapPort);
+
+			lc.bind(Config.ldapVersion, objectDN, password.getBytes("UTF8"));
+			if (lc.isBound()) {
+				successful = true;
+			} 
+			close();
+		} catch (LDAPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return successful;
+
+	}
 }

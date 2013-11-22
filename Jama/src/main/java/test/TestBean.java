@@ -18,10 +18,10 @@ import javax.jms.IllegalStateException;
 
 import com.novell.ldap.util.Base64;
 
+import usersManagement.LdapCachedManager;
 import usersManagement.LdapManager;
 import usersManagement.User;
 import util.Encryptor;
-import util.LdapCachedManager;
 import util.MailSender;
 import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
@@ -57,7 +57,7 @@ public class TestBean implements Serializable {
 	@EJB
 	private DeadlineSearchService deadService;
 	@Inject
-	private LdapCachedManager ldap;
+	private LdapManager ldap;
 
 	@Inject
 	private MailSender mailSender;
@@ -169,77 +169,13 @@ public class TestBean implements Serializable {
 
 	public void doDelta() {
 		
-		try {
-			System.out.println(Encryptor.MD5.encrypt("UfoRobot-123"));
-			System.out.println(Base64.encode("C2F50EB1EDBC7B17F2F840062E3A657E"));
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-			
-		User u = ldap.getUserBySerial("D000000");
-		System.out.println(u);
-		int count =1;
-		try {
-			if(
-			u.login("jama")){
-				System.out.println("TRUE"+count);
-			}
-			count++;
-			
-			if(u.login("Jama")){
-				System.out.println("TRUE"+count);
-			}
-			count++;
-			
-			if(u.login("UfoRobot-123")){
-				System.out.println("TRUE"+count);
+		
+		 System.out.println( ldap.login("UfoRobot-123","D000000") ? "The password is correct.":
 
-			}
-			count++;
-			if(u.login("SviluppoJMA-01")){
-				System.out.println("TRUE"+count);
-
-			}
-			
-		} catch (javax.resource.spi.IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("END TEST");
+                 "The password is incorrect.\n");
 		
 		
-//		List<Department> list = ldap.getAllDepts();
-//		for(Department d: list){
-//			System.out.println(d);
-//		}
 		
-//		List<User> list = ldap.getUsersByDept("058506");
-//		for(User u : list){
-//			System.out.println(u);
-//		}
-
 	}
-
-
-	// public static void main(String[] args) throws Exception {
-	// String pwdPlainText = "abcd1234";
-	// String pwdGeneratedByLdap = "{SHA}fOA1nxKFfyqQx95GX0CpXwHLXak=";
-	//
-	// System.out.println(Encryptor.getFromPasswordWithPrefix(pwdGeneratedByLdap));
-
-	// System.out.println("Given:\n\t" + pwdGeneratedByLdap);
-	//
-	// Encryptor e = Encryptor.SHA;
-	// String encrypted = e.encrypt(pwdPlainText);
-	//
-	// System.out.println("Encrypted with prefix:\n\t{" + e.getAlg() + "}" +
-	// encrypted);
-	// System.out.println("Encrypted without prefix:\n\t" + encrypted);
-	// System.out.println("Are equals? " + e.areEquals(pwdPlainText,
-	// pwdGeneratedByLdap));
-	//
-	// }
 
 }

@@ -56,6 +56,10 @@ public enum Encryptor {
 					return e;
 				}
 			}
+			//REMOVEME
+			if(alg.equalsIgnoreCase("ssha")){
+				return Encryptor.SHA;
+			}
 			throw new IllegalArgumentException("There is no Encryptor constant for method " + alg);
 		}
 		
