@@ -4,15 +4,20 @@ import java.util.List;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import usersManagement.LdapManager;
 import businessLayer.ChiefScientist;
 
 @Stateful
 @ConversationScoped
 public class ChiefScientistDaoBean {
+	
+	@Inject
+	private LdapManager ldap;
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
@@ -45,23 +50,28 @@ public class ChiefScientistDaoBean {
 
 	public List<ChiefScientist> getAll() {
 
-		return em.createNamedQuery("ChiefScientist.findAll",
-				ChiefScientist.class).getResultList();
+//		return em.createNamedQuery("ChiefScientist.findAll",
+//				ChiefScientist.class).getResultList();
+		
+		return ldap.getAllChiefScientists();
+		
 
 	}
 
 	public ChiefScientist getBySerial(String serial) {
-		List<ChiefScientist> list = em
-				.createNamedQuery("ChiefScientist.getBySerial",
-						ChiefScientist.class).setParameter("number", serial)
-				.getResultList();
+//		List<ChiefScientist> list = em
+//				.createNamedQuery("ChiefScientist.getBySerial",
+//						ChiefScientist.class).setParameter("number", serial)
+//				.getResultList();
+//		
+//		if(list.isEmpty()){
+//			return null;
+//		}
+//		else{
+//			return list.get(0);
+//		}
 		
-		if(list.isEmpty()){
-			return null;
-		}
-		else{
-			return list.get(0);
-		}
+		return ldap.getChiefScientistBySerial(serial);
 	}
 
 }

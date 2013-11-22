@@ -34,8 +34,6 @@ public class LdapManager implements LdapQueryInterface {
 	@SuppressWarnings("restriction")
 	private void connect() throws LDAPException, UnsupportedEncodingException {
 
-		// System.out.println("====LDAP CALLED====");
-
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		ssf = new LDAPJSSESecureSocketFactory();
 		LDAPConnection.setSocketFactory(ssf);
@@ -352,7 +350,7 @@ public class LdapManager implements LdapQueryInterface {
 		return getChiefScientis(filter);
 	}
 
-	public ChiefScientist getChiefScientistBySerial(int serialNumber) {
+	public ChiefScientist getChiefScientistBySerial(String serialNumber) {
 		ChiefScientist result = null;
 		String filter = "uid=" + serialNumber;
 
@@ -394,10 +392,8 @@ public class LdapManager implements LdapQueryInterface {
 		}
 
 		catch (LDAPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -424,10 +420,8 @@ public class LdapManager implements LdapQueryInterface {
 			} 
 			close();
 		} catch (LDAPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
