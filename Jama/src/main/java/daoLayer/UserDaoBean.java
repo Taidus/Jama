@@ -42,11 +42,12 @@ public class UserDaoBean {
 	}
 
 
-	public User getById(int id) {
-
-		return em.find(User.class, id);
-
-	}
+	//TODO eliminare
+//	public User getById(int id) {
+//
+//		return em.find(User.class, id);
+//
+//	}
 
 
 	public User getBySerialNumber(String serialNumber) {
