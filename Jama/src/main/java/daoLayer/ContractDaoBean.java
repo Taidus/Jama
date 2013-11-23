@@ -24,6 +24,7 @@ public class ContractDaoBean {
 
 	public Contract create(Contract contract) {
 		
+		
 		em.persist(contract);
 		return contract;
 	}

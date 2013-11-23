@@ -74,11 +74,8 @@ public class ChiefScientist {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((serialNumber == null) ? 0 : serialNumber.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
 
@@ -91,25 +88,15 @@ public class ChiefScientist {
 		if (getClass() != obj.getClass())
 			return false;
 		ChiefScientist other = (ChiefScientist) obj;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		if (serialNumber == null) {
 			if (other.serialNumber != null)
 				return false;
 		} else if (!serialNumber.equals(other.serialNumber))
 			return false;
-		if (surname == null) {
-			if (other.surname != null)
-				return false;
-		} else if (!surname.equals(other.surname))
-			return false;
 		return true;
 	}
+
+	
 
 	
 	

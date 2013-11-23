@@ -1,6 +1,9 @@
 package daoLayer;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
@@ -50,28 +53,32 @@ public class ChiefScientistDaoBean {
 
 	public List<ChiefScientist> getAll() {
 
-//		return em.createNamedQuery("ChiefScientist.findAll",
-//				ChiefScientist.class).getResultList();
+		List<ChiefScientist> databaseList = em.createNamedQuery("ChiefScientist.findAll",
+				ChiefScientist.class).getResultList();
+		List<ChiefScientist> ldapList = ldap.getAllChiefScientists();
 		
-		return ldap.getAllChiefScientists();
+		Set<ChiefScientist> chiefSet = new HashSet<>(databaseList);
+		chiefSet.addAll(ldapList);
 		
+		return new ArrayList<>(chiefSet);
+				
 
 	}
 
 	public ChiefScientist getBySerial(String serial) {
-//		List<ChiefScientist> list = em
-//				.createNamedQuery("ChiefScientist.getBySerial",
-//						ChiefScientist.class).setParameter("number", serial)
-//				.getResultList();
-//		
-//		if(list.isEmpty()){
-//			return null;
-//		}
-//		else{
-//			return list.get(0);
-//		}
+		List<ChiefScientist> list = em
+				.createNamedQuery("ChiefScientist.getBySerial",
+						ChiefScientist.class).setParameter("number", serial)
+				.getResultList();
 		
-		return ldap.getChiefScientistBySerial(serial);
+		if(list.isEmpty()){
+			return ldap.getChiefScientistBySerial(serial);
+		}
+		else{
+			return list.get(0);
+		}
+		
+		
 	}
 
 }
