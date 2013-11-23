@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -30,9 +28,7 @@ public class Config {
 	public static final String depRatesPath = configPath  + "aliquoteDipartimenti/";
 	private static final String mailTemplateDir = configPath + "mailTemplates";
 	private static final String basicConfigFile = configPath + "basic.properties";
-
-	private static final String logFile = resourcesPath  + "log";
-
+	
 	public static final Configuration fmconf;
 	public static final String instDeadlineTemplateFileName = "template_scadenzaRata.ftl";
 	public static final String contractCreationTemplateFileName = "template_creazioneContratto.ftl";

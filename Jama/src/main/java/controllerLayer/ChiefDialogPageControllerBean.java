@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import usersManagement.LdapManager;
+import util.Messages;
 import annotations.TransferObj;
 import businessLayer.ChiefScientist;
 import businessLayer.Contract;
@@ -53,7 +56,13 @@ public class ChiefDialogPageControllerBean implements Serializable {
 
 
 	public void importUser() {
-		chief = ldapManager.getChiefScientistBySerial(chief.getSerialNumber());
+		ChiefScientist temp = ldapManager.getChiefScientistBySerial(chief.getSerialNumber());
+		if(null == temp){
+			FacesContext.getCurrentInstance().addMessage(null, Messages.getErrorMessage("err_badImport"));
+		}
+		else{
+			chief = temp;
+		}
 	}
 
 }

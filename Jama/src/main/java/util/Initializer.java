@@ -64,7 +64,7 @@ public class Initializer {
 		Department d = new Department();
 		d.setCode("897645");
 		d.setName("Cacca");
-		d.setRateDirectory(Config.depRatesPath + "dsi");
+		d.setRateDirectory("dsi");
 		u.addDepartment(d);
 
 		try {

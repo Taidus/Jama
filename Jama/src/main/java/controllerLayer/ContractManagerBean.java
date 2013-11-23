@@ -163,6 +163,7 @@ public class ContractManagerBean implements Serializable {
 
 	private void initContract() {
 		begin();
+		System.out.println("Contract manager -> init contract: tutto bene fino a qui ");
 		contract = em.find(Contract.class, selectedContractId);
 
 	}

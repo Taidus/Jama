@@ -190,7 +190,7 @@ public class LdapManager implements LdapQueryInterface {
 				d.setName(value);
 			}
 			// TODO set actual directory
-			d.setRateDirectory(Config.depRatesPath + "dsi");
+			d.setRateDirectory("dsi");
 
 		}
 
