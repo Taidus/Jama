@@ -5,6 +5,11 @@
 	<composite:attribute name="editingDisable" default="false" />
 	<composite:attribute name="creating" default="false" />
 
+	<composite:attribute name="chiefMenuId" default="chiefMenu" />
+	<composite:attribute name="chiefMenuWidgetVar" default="w_chiefMenu" />
+	<composite:attribute name="chiefDialogId" required="true" />
+	<composite:attribute name="chiefDialogWidgetVar" required="true" />
+
 	<composite:attribute name="companyMenuId" default="companyMenu" />
 	<composite:attribute name="companyMenuWidgetVar" default="w_companyMenu" />
 </composite:interface>
@@ -117,18 +122,25 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="chiefMenu" styleClass="chiefMenu" value="#{contractManager.contract.chief}" label="#{msgs.chief}" required="true"
-						filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
+					<p:selectOneMenu id="#{cc.attrs.chiefMenuId}" widgetVar="#{cc.attrs.chiefMenuWidgetVar}" value="#{contractManager.contract.chief}"
+						label="#{msgs.chief}" required="true" filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
 						<f:selectItems value="#{utilPB.chiefItems}" />
 						<f:converter binding="#{chiefConverter}" />
 					</p:selectOneMenu>
 
-					<h:outputText value="#{contractManager.contract.chief.completeName}" rendered="#{cc.attrs.editingDisable == true}">
-					</h:outputText>
+					<h:outputText value="#{contractManager.contract.chief.completeName}" rendered="#{cc.attrs.editingDisable == true}" />
 				</p:column>
 
 				<p:column>
-					<p:message styleClass="errorMessage" for="chiefMenu" />
+					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{chiefDialogPCB.clear()}"
+						oncomplete="#{cc.attrs.chiefDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.chiefDialogId)}"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<p:resetInput target=":#{p:component(cc.attrs.chiefDialogId)}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column>
+					<p:message styleClass="errorMessage" for="#{cc.attrs.chiefMenuId}" />
 				</p:column>
 			</p:row>
 
