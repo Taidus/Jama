@@ -1,9 +1,6 @@
 package daoLayer;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
@@ -14,14 +11,12 @@ import javax.persistence.PersistenceContextType;
 
 import usersManagement.LdapManager;
 import businessLayer.ChiefScientist;
+import businessLayer.Department;
 
 @Stateful
 @ConversationScoped
 public class ChiefScientistDaoBean {
 	
-	@Inject
-	private LdapManager ldap;
-
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
@@ -29,7 +24,7 @@ public class ChiefScientistDaoBean {
 	}
 
 	public ChiefScientist createChiefScientist(ChiefScientist chief) {
-
+		
 		em.persist(chief);
 		return chief;
 
@@ -53,15 +48,10 @@ public class ChiefScientistDaoBean {
 
 	public List<ChiefScientist> getAll() {
 
-		List<ChiefScientist> databaseList = em.createNamedQuery("ChiefScientist.findAll",
+		return em.createNamedQuery("ChiefScientist.findAll",
 				ChiefScientist.class).getResultList();
-		List<ChiefScientist> ldapList = ldap.getAllChiefScientists();
 		
-		Set<ChiefScientist> chiefSet = new HashSet<>(databaseList);
-		chiefSet.addAll(ldapList);
 		
-		return new ArrayList<>(chiefSet);
-				
 
 	}
 
@@ -72,12 +62,11 @@ public class ChiefScientistDaoBean {
 				.getResultList();
 		
 		if(list.isEmpty()){
-			return ldap.getChiefScientistBySerial(serial);
+			return null;
 		}
 		else{
 			return list.get(0);
 		}
-		
 		
 	}
 

@@ -7,10 +7,10 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 
 import util.Config;
-
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
 
@@ -20,11 +20,12 @@ import com.novell.ldap.LDAPConnection;
 import com.novell.ldap.LDAPEntry;
 import com.novell.ldap.LDAPException;
 import com.novell.ldap.LDAPJSSESecureSocketFactory;
+import com.novell.ldap.LDAPSearchConstraints;
 import com.novell.ldap.LDAPSearchResults;
 import com.novell.ldap.LDAPSocketFactory;
 import com.novell.ldap.util.Base64;
 
-@RequestScoped
+@ApplicationScoped
 public class LdapManager implements LdapQueryInterface {
 
 	private LDAPConnection lc;
@@ -37,9 +38,14 @@ public class LdapManager implements LdapQueryInterface {
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		ssf = new LDAPJSSESecureSocketFactory();
 		LDAPConnection.setSocketFactory(ssf);
+		LDAPSearchConstraints constraints = new LDAPSearchConstraints();
+		constraints.setMaxResults(10000);
 		lc = new LDAPConnection();
+		lc.setConstraints(constraints);
 		lc.connect(Config.ldapHost, Config.ldapPort);
 		lc.bind(Config.ldapVersion, Config.loginDN, Config.password.getBytes("UTF8"));
+		
+		
 
 	}
 
@@ -191,11 +197,13 @@ public class LdapManager implements LdapQueryInterface {
 		return d;
 	}
 
-
-	public List<Department> getAllDepts() {
+public List<Department> getAllDepts(){
+	return getDepts("businessCategory" + "=" + Config.deptsBusinessCategory);
+}
+	
+	private List<Department> getDepts(String filter) {
 
 		List<Department> result = new ArrayList<>();
-		String filter = "businessCategory" + "=" + Config.deptsBusinessCategory;
 
 		try {
 			connect();
@@ -228,6 +236,18 @@ public class LdapManager implements LdapQueryInterface {
 
 		return result;
 
+	}
+	
+	public Department getDeptDeptByCode(String serial){
+		
+		List<Department> list = getDepts("&(businessCategory" + "=" + Config.deptsBusinessCategory+") (uniqueIdentifier="+serial+")");
+		if(list.size()!=1){
+			throw new IllegalStateException("TODO non vine un solo risult");
+		}
+		else{
+			return list.get(0);
+		}
+		
 	}
 
 
@@ -267,7 +287,7 @@ public class LdapManager implements LdapQueryInterface {
 
 	}
 
-	private List<ChiefScientist> getChiefScientis(String filter) {
+	private List<ChiefScientist> getChiefScientists(String filter) {
 
 		List<ChiefScientist> result = new ArrayList<>();
 
@@ -341,21 +361,21 @@ public class LdapManager implements LdapQueryInterface {
 
 
 	public List<ChiefScientist> getAllChiefScientists() {
-		return getChiefScientis(null);
+		return getChiefScientists(null);
 	}
 
 
 	public List<ChiefScientist> getChiefScientistsByDepth(String deptCode) {
 		String filter = "departmentNumber=" + deptCode;
 
-		return getChiefScientis(filter);
+		return getChiefScientists(filter);
 	}
 
 	public ChiefScientist getChiefScientistBySerial(String serialNumber) {
 		ChiefScientist result = null;
 		String filter = "uid=" + serialNumber;
 
-		List<ChiefScientist> list = getChiefScientis(filter);
+		List<ChiefScientist> list = getChiefScientists(filter);
 		if (list.size() > 1) {
 			throw new java.lang.IllegalStateException("Found " + list.size() + " matches for serial number: " + serialNumber);
 

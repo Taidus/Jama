@@ -1,35 +1,93 @@
 package util;
 
-import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import time.DepartmentImporter;
+import usersManagement.LdapManager;
 import usersManagement.Role;
 import usersManagement.User;
 import businessLayer.Department;
 
+
 @ApplicationScoped
-@Singleton
 @Startup
+@Singleton
 public class Initializer {
 
-	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.TRANSACTION)
 	private EntityManager em;
+	
+	@Inject
+	private LdapManager ldap;
+	
+//	@EJB
+//	private DepartmentImporter deptsImp;
 
 
 	public Initializer() {}
 
 
 	@PostConstruct
-	public void init() throws NoSuchAlgorithmException {
+	public void init(){
+		System.out.println("Inittializerrrr");
+		
+		
+		List<Department> depts = ldap.getAllDepts();
+		for (Department d : depts) {
+			try {
+				em.createNamedQuery("Department.findByCode", Department.class)
+						.setParameter("code", d.getCode()).getSingleResult();
+			} catch (NoResultException e) {
+
+				em.persist(d);
+			}
+		}
+		
+		
+		//TODO eliminare
+		User u;
+		
+		String serial ="D000000";
+		u = ldap.getUserBySerial(serial);
+		u.setRole(Role.OPERATOR);
+		
+		Department d = new Department();
+		d.setCode("897645");
+		d.setName("Cacca");
+		d.setRateDirectory(Config.depRatesPath + "dsi");
+		u.addDepartment(d);
+		em.persist(d);
+		
+		System.out.println(u);
+	
+	
+		
+		
+		if (em.createNamedQuery("User.findBySerialNumber").setParameter("number", serial).getResultList().isEmpty()) {
+			
+			em.persist(u);
+
+		}
+	}
+	
+	
+	
+	@Deprecated
+	public void oldInit() throws NoSuchAlgorithmException {
 
 		String depCode = "DSI/DINFO";
 		Department d;
@@ -106,29 +164,7 @@ public class Initializer {
 			em.persist(operator);
 		}
 
-		// String giulioSerial = "1112";
-		//
-		//
-		//
-		// if (em.createNamedQuery("User.findBySerialNumber")
-		// .setParameter("number", giulioSerial).getResultList()
-		// .isEmpty()) {
-		//
-		// User giulio = new User();
-		// try {
-		// giulio.setPassword("jama");
-		// } catch (GeneralSecurityException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// giulio.setSerialNumber(giulioSerial);
-		// giulio.setEmail("giulio.galvan@gmail.com");
-		// giulio.setName("Giulio");
-		// giulio.setSurname("Galvan");
-		// giulio.setRole(Role.CHIEF_SCIENTIST);
-		// giulio.addDepartment(d);;
-		// em.persist(giulio);
-		// }
+		
 
 	}
 
