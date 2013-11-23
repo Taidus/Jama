@@ -21,7 +21,8 @@
 		<p:wizard step="#{agreementWizardPB.currentTabId}" flowListener="#{agreementWizardPB.handleFlow}" onback="setHideShow();">
 
 			<p:tab id="tabDati" title="#{msgs.data_Tab}">
-				<sections:agreementWizData editingDisable="false" creating="true" companyMenuId="companyMenu" companyMenuWidgetVar="w_companyMenu" />
+				<sections:agreementWizData editingDisable="false" creating="true" chiefDialogId="chiefDialog" chiefDialogWidgetVar="w_chiefDialog"
+					chiefMenuId="chiefMenu" chiefMenuWidgetVar="w_chiefMenu" companyMenuId="companyMenu" companyMenuWidgetVar="w_companyMenu" />
 			</p:tab>
 
 			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{agreementWizardPB.renderShareTable() == true}">
@@ -55,9 +56,11 @@
 
 	</h:form>
 
+	<dialogs:chiefImportDialog dialogId="chiefDialog" dialogWidgetVar="w_chiefDialog" observingComponentId="chiefMenu"
+		observingComponentWidgetVar="w_chiefMenu" />
 	<dialogs:companyDialog dialogWidgetVar="w_companyDialog" editingDisable="false" observingComponentId="companyMenu"
 		observingComponentWidgetVar="w_companyMenu" dialogId="companyDialog" />
-		
+
 	<dialogs:instCreateDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
 		observingComponent="contractInstTablePanel" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
 	<dialogs:instViewDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
