@@ -122,7 +122,12 @@ public class User implements Serializable {
 
 
 	public void addDepartment(Department d) {
-		belongingDepts.set(0, d);
+		if (belongingDepts.isEmpty()) {
+			belongingDepts.add(d);
+		}
+		else {
+			belongingDepts.set(0, d);
+		}
 	}
 
 
