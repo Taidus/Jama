@@ -170,6 +170,12 @@ public class TestBean implements Serializable {
 	public void doDelta() {
 		
 		
+		ldap.getAllUsers();
+		
+		for(ChiefScientist c : ldap.getAllChiefScientists()){
+			System.out.println(c);
+		
+		}
 		 System.out.println( ldap.authenticate("UfoRobot-123","D000000") ? "The password is correct.":
 
                  "The password is incorrect.\n");

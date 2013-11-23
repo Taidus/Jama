@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import usersManagement.LdapManager;
+import businessLayer.Department;
 import usersManagement.User;
 
 @Stateful
@@ -17,9 +17,8 @@ import usersManagement.User;
 public class UserDaoBean {
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
-
-	@Inject
-	private LdapManager ldapm;
+	@Inject 
+	private DepartmentDaoBean deptDao;
 
 
 	public UserDaoBean() {}
@@ -27,6 +26,12 @@ public class UserDaoBean {
 
 	public User create(User user) {
 
+		Department d = deptDao.getByCode(user.getDepartment().getCode());
+		if(d != null){
+			user.addDepartment(d);
+		}else{
+			em.persist(user.getDepartment());
+		}
 		em.persist(user);
 		return user;
 	}
@@ -41,13 +46,11 @@ public class UserDaoBean {
 		}
 	}
 
-
-	// TODO eliminare
-	// public User getById(int id) {
-	//
-	// return em.find(User.class, id);
-	//
-	// }
+	 public User getById(int id) {
+	
+	 return em.find(User.class, id);
+	
+	 }
 
 	public User getBySerialNumber(String serialNumber) {
 		User result = null;
@@ -56,11 +59,7 @@ public class UserDaoBean {
 			result = em.createNamedQuery("User.findBySerialNumber", User.class).setParameter("number", serialNumber).getSingleResult();
 
 		} catch (NoResultException e) {
-			try {
-				result = ldapm.getUserBySerial(serialNumber);
-			} catch (IllegalStateException ex) {
-				result = null;
-			}
+			return null;
 		}
 
 		return result;
