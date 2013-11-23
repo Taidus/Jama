@@ -124,11 +124,13 @@ public class UserEditorBean implements Serializable {
 
 
 	public Department getSelectedDept() {
-		if (!currentUser.getBelongingDepts().isEmpty()) {
-			return currentUser.getBelongingDepts().get(0);
-		}
-		else
-			return null;
+//		if (!currentUser.getBelongingDepts().isEmpty()) {
+//			return currentUser.getBelongingDepts().get(0);
+//		}
+//		else
+//			return null;
+		
+		return currentUser.getDepartment();
 	}
 
 

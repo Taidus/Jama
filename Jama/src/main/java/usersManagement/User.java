@@ -37,7 +37,10 @@ public class User implements Serializable {
 	private String name;
 	private String surname;
 
-	// molti o uno solo???????
+	// c'era indecisione sul numero di dipartimenti che può essere associato ad
+	// un utente (se uno o più d'uno). Attualmente ogni utente è associato ad un
+	// solo dipartimento, ma abbiamo mantenuto la lista per rendere un'eventuale
+	// modifica più semplice in futuro
 	@ManyToMany
 	private List<Department> belongingDepts;
 
@@ -113,18 +116,13 @@ public class User implements Serializable {
 	}
 
 
-	public List<Department> getBelongingDepts() {
-		return belongingDepts;
-	}
-
-
-	public void setBelongingDepts(List<Department> belongingDepts) {
-		this.belongingDepts = belongingDepts;
+	public Department getDepartment() {
+		return belongingDepts.get(0);
 	}
 
 
 	public void addDepartment(Department d) {
-		belongingDepts.add(d);
+		belongingDepts.set(0, d);
 	}
 
 
@@ -139,11 +137,8 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", name=" + name
-				+ ", surname=" + surname + ", belongingDepts=" + belongingDepts
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", belongingDepts=" + belongingDepts
 				+ ", serialNumber=" + serialNumber + ", role=" + role + "]";
 	}
-
-
 
 }

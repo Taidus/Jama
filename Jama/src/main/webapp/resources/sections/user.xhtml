@@ -42,21 +42,36 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.name}: " />
+					<h:outputText value="#{msgs.name}:" />
 				</p:column>
 
 				<p:column>
-					<h:outputText id="name_output" value="#{userEditor.user.name}" />
+					<h:inputText id="name" value="#{userEditor.user.name}" label="#{msgs.name}" disabled="true" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}" />
+
+					<h:outputText id="name_output" value="#{userEditor.user.name}" rendered="#{cc.attrs.mode == 'profile'}" />
+
+				</p:column>
+
+				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:message for="name" />
 				</p:column>
 			</p:row>
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.surname}: " />
+					<h:outputText value="#{msgs.surname}:" />
 				</p:column>
 
 				<p:column>
-					<h:outputText id="surname_output" value="#{userEditor.user.surname}" />
+					<h:inputText id="surname" value="#{userEditor.user.surname}" label="#{msgs.surname}" disabled="true" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}" />
+
+					<h:outputText id="surname_output" value="#{userEditor.user.surname}" rendered="#{cc.attrs.mode == 'profile'}" />
+				</p:column>
+
+				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:message for="surname" />
 				</p:column>
 			</p:row>
 
@@ -66,8 +81,14 @@
 				</p:column>
 
 				<p:column>
-					<h:outputText value="#{userEditor.selectedDept.code}" />
+					<h:inputText id="dept" value="#{userEditor.user.department}" label="#{msgs.department}" disabled="true" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}" />
 
+					<h:outputText value="#{userEditor.selectedDept.code}" rendered="#{cc.attrs.mode == 'profile'}" />
+				</p:column>
+				
+				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:message styleClass="errorMessage" for="dept" />
 				</p:column>
 			</p:row>
 
@@ -80,10 +101,9 @@
 					<h:selectOneMenu id="type" value="#{userEditor.user.role}" label="#{msgs.role}" required="true" rendered="#{cc.attrs.mode == 'wizard'}">
 						<f:selectItems value="#{utilPB.rolesItems}" />
 						<f:ajax event="blur" execute="@this" render="typeError" />
-
 					</h:selectOneMenu>
+					
 					<h:outputText value="#{userEditor.user.role.displayString}" rendered="#{cc.attrs.mode == 'profile'}" />
-
 				</p:column>
 
 
