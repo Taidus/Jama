@@ -51,6 +51,7 @@ public class UserManager implements Serializable {
 	public String login(String password) {
 		User u = userDao.getBySerialNumber(insertedSerialNumber);
 		try {
+			System.out.println("User: " + u);
 			if (u != null && ldapManager.authenticate(password, u.getSerialNumber())) {
 				loggedUser = new Principal(u);
 				System.out.println("User Login: loggedUser= " + u);

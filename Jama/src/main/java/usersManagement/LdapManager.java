@@ -313,6 +313,7 @@ public class LdapManager implements LdapQueryInterface {
 		List<User> list = getUsers(filter);
 		if (list.size() > 1) {
 			throw new java.lang.IllegalStateException("Found " + list.size() + " matches for serial number: " + serialNumber);
+			//TODO illegalState non va bene
 
 		}
 		else if (list.size() != 0) {

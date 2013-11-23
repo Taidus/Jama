@@ -42,26 +42,25 @@ public class UserDaoBean {
 	}
 
 
-	//TODO eliminare
-//	public User getById(int id) {
-//
-//		return em.find(User.class, id);
-//
-//	}
-
+	// TODO eliminare
+	// public User getById(int id) {
+	//
+	// return em.find(User.class, id);
+	//
+	// }
 
 	public User getBySerialNumber(String serialNumber) {
 		User result = null;
-		
+
 		try {
 			result = em.createNamedQuery("User.findBySerialNumber", User.class).setParameter("number", serialNumber).getSingleResult();
-			
-			if (null == result) {
-				result = ldapm.getUserBySerial(serialNumber);
-			}
-			
+
 		} catch (NoResultException e) {
-			result = null;
+			try {
+				result = ldapm.getUserBySerial(serialNumber);
+			} catch (IllegalStateException ex) {
+				result = null;
+			}
 		}
 
 		return result;
