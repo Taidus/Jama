@@ -29,9 +29,6 @@ public class Department {
 	}
 
 	public void setRateDirectory(String rateDirectory) {
-		if(rateDirectory.startsWith("..")){
-			throw new IllegalArgumentException();
-		}
 		this.rateDirectory = rateDirectory;
 	}
 
