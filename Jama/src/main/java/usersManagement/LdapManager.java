@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 
 import util.Config;
 import businessLayer.ChiefScientist;
@@ -441,7 +440,7 @@ public List<Department> getAllDepts(){
 			} 
 			close();
 		} catch (LDAPException e) {
-			e.printStackTrace();
+			System.out.println("Invalid Credentials");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

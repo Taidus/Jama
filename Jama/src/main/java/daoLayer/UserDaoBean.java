@@ -3,13 +3,19 @@ package daoLayer;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import annotations.Created;
+import businessLayer.ChiefScientist;
 import businessLayer.Department;
+import usersManagement.LdapManager;
+import usersManagement.Role;
 import usersManagement.User;
 
 @Stateful
@@ -19,12 +25,20 @@ public class UserDaoBean {
 	private EntityManager em;
 	@Inject 
 	private DepartmentDaoBean deptDao;
-
+	
+	@Inject
+	private LdapManager ldap;
+	
+	@Inject
+	@Created
+	private Event<User> profCreationEvent;
 
 	public UserDaoBean() {}
 
 
 	public User create(User user) {
+		
+		if(getBySerialNumber(user.getSerialNumber())==null){
 
 		Department d = deptDao.getByCode(user.getDepartment().getCode());
 		if(d != null){
@@ -33,6 +47,10 @@ public class UserDaoBean {
 			em.persist(user.getDepartment());
 		}
 		em.persist(user);
+			if(user.hasRole(Role.PROFESSOR)){
+				profCreationEvent.fire(user);
+			}
+		}
 		return user;
 	}
 
@@ -64,6 +82,15 @@ public class UserDaoBean {
 
 		return result;
 
+	}
+	
+	
+	public void onChiefCreation(@Observes @Created ChiefScientist c){
+		if(getBySerialNumber(c.getSerialNumber())== null){
+			User u =ldap.getUserBySerial(c.getSerialNumber());
+			u.setRole(Role.PROFESSOR);
+			create(u);
+		}
 	}
 
 

@@ -41,7 +41,7 @@ public class Initializer {
 
 	@PostConstruct
 	public void init() {
-		System.out.println("Inittializerrrr");
+		System.out.println("Inizializing...");
 
 		List<Department> depts = ldap.getAllDepts();
 		for (Department d : depts) {
@@ -63,7 +63,7 @@ public class Initializer {
 
 		Department d = new Department();
 		d.setCode("897645");
-		d.setName("Cacca");
+		d.setName("Dinfo");
 		d.setRateDirectory("dsi");
 		u.addDepartment(d);
 
