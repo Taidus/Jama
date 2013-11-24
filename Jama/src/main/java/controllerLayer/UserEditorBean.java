@@ -47,7 +47,6 @@ public class UserEditorBean implements Serializable {
 	private Principal loggedUser;
 
 	private User currentUser;
-	private User tempLdapUser;
 
 	public UserEditorBean() {
 		super();
@@ -67,12 +66,6 @@ public class UserEditorBean implements Serializable {
 		return "userWiz";
 	}
 
-	@CreateUserAllowed
-	public void importUser() {
-		// currentUser =
-		// ldapManager.getUserBySerial(currentUser.getSerialNumber());
-		currentUser = tempLdapUser;
-	}
 
 	public String editLoggedUser() {
 		currentUser = userDao.getBySerialNumber(loggedUser.getSerialNumber());
@@ -107,14 +100,6 @@ public class UserEditorBean implements Serializable {
 
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
-	}
-
-	public User getTempLdapUser() {
-		return tempLdapUser;
-	}
-
-	public void setTempLdapUser(User tempLdapUser) {
-		this.tempLdapUser = tempLdapUser;
 	}
 	
 	public User getBySerial(String serial){
