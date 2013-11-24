@@ -47,7 +47,7 @@
 					</p:column>
 
 					<p:column>
-						<h:inputText id="name" value="#{chiefDialogPB.chief.name}" label="#{msgs.name}" disabled="true" required="true" />
+						<h:outputText value="#{chiefDialogPB.chief.name}" />
 					</p:column>
 				</p:row>
 
@@ -57,17 +57,17 @@
 					</p:column>
 
 					<p:column>
-						<h:inputText id="surname" value="#{chiefDialogPB.chief.surname}" label="#{msgs.surname}" disabled="true" required="true" />
+						<h:outputText value="#{chiefDialogPB.chief.surname}"/>
 					</p:column>
 				</p:row>
 
 			</p:panelGrid>
 
-			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
-
 			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{chiefDialogPB.save()}"
 				update="@form :#{p:component(cc.attrs.observingComponentId)}"
 				oncomplete="if (!args.validationFailed){ setHideShow(); #{cc.attrs.dialogWidgetVar}.hide(); setMenuValue(#{cc.attrs.observingComponentWidgetVar}, '#{cc.attrs.dialogId}', 'socialNumber' ); }" />
+
+			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
 
 		</h:form>
 
