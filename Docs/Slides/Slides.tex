@@ -1,0 +1,105 @@
+\documentclass[xcolor=dvipsnames,10pt]{beamer}
+
+\mode<presentation>
+
+\usepackage{beamerthemesplit}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+
+\usecolortheme[named=MidnightBlue]{structure}
+
+%Warsaw Dresden Singapore Copenhagen Madrid AnnArbor
+\usetheme{Warsaw}
+\setbeamercovered{transparent}
+\setbeamercolor{lowercolor}{fg=white , bg=MidnightBlue}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{items}[default]
+\setbeamertemplate{navigation symbols}{}
+
+\def\hilite<#1>{%
+\temporal<#1>{\color{lightgray}}{\color{black}}%
+{\color{black}}}
+
+\usetitlepagetemplate{
+  \begin{center}
+    %\pgfuseimage{salom}
+    %\vskip0.5ex
+    \textsc{Università degli Studi di Firenze}
+    \vskip1ex
+    \scriptsize{\textsc{Dipartimento di Sistemi e Informatica} }\\
+    \scriptsize{\textsc{Tesi di Laurea Specialistica in Ingegneria Informatica } }
+    \vskip4ex
+    \begin{beamerboxesrounded}[lower=lowercolor, shadow=true]{}
+     \begin{center}
+    \normalsize{Progettazione e sviluppo di un motore di Fault Tree Analysis \\per il monitoraggio adattivo di sistemi concorrenti Markoviani}
+     \end{center}
+    \end{beamerboxesrounded}
+
+    \vskip4ex
+    \begin{footnotesize}
+\begin{columns}[t]
+\begin{column}{0.4\textwidth}
+\begin{flushright}
+%\vskip -2em
+      \begin{minipage}[t]{15ex}
+	\raggedright
+	\emph{Candidato}\\
+	Fulvio Patara
+      \end{minipage}
+\end{flushright}
+\end{column}
+\begin{column}{0.2\textwidth}
+\vskip -1em
+	\begin{figure}
+   \includegraphics[width=1.5cm]{images/stemma.pdf}
+\end{figure}
+\end{column}
+\begin{column}{0.4\textwidth}
+	\emph{Relatori}\\
+	Prof. Enrico Vicario\\
+ \vskip 0.5em
+	\emph{Correlatori}\\
+	Ing. Jacopo Torrini\\
+\end{column}
+\end{columns}
+      \vskip 4ex
+      \rule{15em}{0.4pt}
+      \vskip 0.2ex
+      Anno Accademico 2012/2013
+\vskip 0.3em
+\begin{itemize}
+\item \structure{Obiettivo}: \\Sperimentazione di politiche di adattamento del tasso di campionamento\\ di una rete di sensori distribuita per la riduzione del consumo energetico mediante analisi predittiva di affidabilità di un sistema critico
+\end{itemize}
+    \end{footnotesize}
+  \end{center}
+}
+
+\title[Monitoraggio adattivo di sistemi concorrenti Markoviani]{Progettazione e sviluppo di un motore di Fault Tree Analysis per il monitoraggio adattivo di sistemi concorrenti Markoviani}
+\author{Tommaso Levato, Alessio Sarullo, Giulio Galvan}
+
+\date{\today}
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+%\section[Outline]{}
+%\frame{\tableofcontents}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{}
+%\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\frame{\titlepage}
+
+\end{document} 

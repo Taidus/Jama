@@ -55,7 +55,7 @@ public class UserDaoBean {
 		}
 		else{
 			foundUser.copy(user);
-			em.persist(user);
+			em.persist(foundUser);
 			return foundUser;
 		}
 		
