@@ -117,6 +117,9 @@ public class User implements Serializable {
 
 
 	public Department getDepartment() {
+		if(belongingDepts.isEmpty()){
+			return null;
+		}
 		return belongingDepts.get(0);
 	}
 

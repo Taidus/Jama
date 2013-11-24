@@ -59,7 +59,7 @@ public class Initializer {
 
 		String serial = "D000000";
 		u = ldap.getUserBySerial(serial);
-		u.setRole(Role.OPERATOR);
+		u.setRole(Role.ADMIN);
 
 		Department d = new Department();
 		d.setCode("897645");
