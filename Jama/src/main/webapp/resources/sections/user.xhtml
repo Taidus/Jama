@@ -48,15 +48,7 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="name" value="#{userEditor.user.name}" label="#{msgs.name}" disabled="true" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}" />
-
-					<h:outputText id="name_output" value="#{userEditor.user.name}" rendered="#{cc.attrs.mode == 'profile'}" />
-
-				</p:column>
-
-				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message for="name" />
+					<h:outputText id="name_output" value="#{userEditor.user.name}" />
 				</p:column>
 			</p:row>
 
@@ -66,14 +58,7 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="surname" value="#{userEditor.user.surname}" label="#{msgs.surname}" disabled="true" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}" />
-
-					<h:outputText id="surname_output" value="#{userEditor.user.surname}" rendered="#{cc.attrs.mode == 'profile'}" />
-				</p:column>
-
-				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message for="surname" />
+					<h:outputText id="surname_output" value="#{userEditor.user.surname}" />
 				</p:column>
 			</p:row>
 
@@ -83,14 +68,7 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="dept" value="#{userEditor.user.department.displayName}" label="#{msgs.department}" disabled="true" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}" />
-
-					<h:outputText value="#{userEditor.selectedDept.displayName}" rendered="#{cc.attrs.mode == 'profile'}" />
-				</p:column>
-
-				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message styleClass="errorMessage" for="dept" />
+					<h:outputText value="#{userEditor.selectedDept.displayName}" />
 				</p:column>
 			</p:row>
 
@@ -143,10 +121,11 @@
 
 		</p:panelGrid>
 
-		<p:commandButton value="#{msgs.cancel}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
 
 		<p:commandButton value="#{msgs.save}" process="@form" update="usrDataPanelGrid"
 			oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}" />
+
+		<p:commandButton value="#{msgs.cancel}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
 
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}" severity="alert" widgetVar="w_confirm_save_user">
 			<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}" immediate="true" oncomplete="w_confirm_save_user.hide()" />
