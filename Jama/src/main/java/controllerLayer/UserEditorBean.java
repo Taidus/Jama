@@ -11,6 +11,9 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -21,6 +24,7 @@ import security.Principal;
 import security.annotations.CreateUserAllowed;
 import usersManagement.LdapManager;
 import usersManagement.User;
+import util.Messages;
 import annotations.Logged;
 import annotations.TransferObj;
 import businessLayer.Department;
@@ -51,6 +55,7 @@ public class UserEditorBean implements Serializable {
 	private LdapManager ldapManager;
 
 	private User currentUser;
+	private User tempLdapUser;
 
 	public UserEditorBean() {
 		super();
@@ -97,7 +102,8 @@ public class UserEditorBean implements Serializable {
 
 	@CreateUserAllowed
 	public void importUser() {
-		currentUser = ldapManager.getUserBySerial(currentUser.getSerialNumber());
+//		currentUser = ldapManager.getUserBySerial(currentUser.getSerialNumber());
+		currentUser = tempLdapUser;
 	}
 
 
@@ -136,6 +142,23 @@ public class UserEditorBean implements Serializable {
 
 	public void setSelectedDept(Department selectedDept) {
 		currentUser.addDepartment(selectedDept);
+	}
+	
+	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
+		if (value != null) {
+			String serial = value.toString();
+			
+			if (null != userDao.getBySerialNumber(serial)) {
+				System.out.println("User editor: matricola duplicata");
+				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
+			}
+
+			tempLdapUser = ldapManager.getUserBySerial(serial);
+			if (null == tempLdapUser) {
+				System.out.println("User editor: matricola non trovata in ldap");
+				throw new ValidatorException(Messages.getErrorMessage("err_badImport"));
+			}
+		}
 	}
 
 }

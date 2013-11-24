@@ -23,19 +23,21 @@
 
 				<p:column>
 					<h:inputText id="serial" value="#{userEditor.user.serialNumber}" label="#{msgs.serialNumber}" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}">
+						rendered="#{cc.attrs.mode == 'wizard'}" validator="#{userEditor.validateSerialNumber}">
+						<p:ajax event="valueChange" process="@this" update="usrDataPanelGrid" listener="#{userEditor.importUser()}" />
 					</h:inputText>
 
 					<h:outputText value="#{userEditor.user.serialNumber}" rendered="#{cc.attrs.mode == 'profile'}" />
 				</p:column>
 
+				<ui:remove>
+					<p:column>
+						<p:commandButton value="#{msgs.import}" process="@this serial" update="usrDataPanelGrid" actionListener="#{userEditor.importUser()}"
+							rendered="#{cc.attrs.mode == 'wizard'}" />
+					</p:column>
+				</ui:remove>
 
-				<p:column>
-					<p:commandButton value="#{msgs.import}" process="@this serial" update="usrDataPanelGrid" actionListener="#{userEditor.importUser()}"
-						rendered="#{cc.attrs.mode == 'wizard'}" />
-				</p:column>
-
-				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
+				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
 					<p:message styleClass="errorMessage" id="serialError" for="serial" />
 				</p:column>
 			</p:row>
@@ -82,11 +84,15 @@
 
 				<p:column>
 					<h:inputText id="dept" value="#{userEditor.user.department}" label="#{msgs.department}" disabled="true" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}" />
+						rendered="#{cc.attrs.mode == 'wizard'}">
+						<f:converter binding="#{departmentConverter}" />
+					</h:inputText>
 
-					<h:outputText value="#{userEditor.selectedDept.code}" rendered="#{cc.attrs.mode == 'profile'}" />
+					<h:outputText value="#{userEditor.selectedDept}" rendered="#{cc.attrs.mode == 'profile'}">
+						<f:converter binding="#{departmentConverter}" />
+					</h:outputText>
 				</p:column>
-				
+
 				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
 					<p:message styleClass="errorMessage" for="dept" />
 				</p:column>
@@ -102,7 +108,7 @@
 						<f:selectItems value="#{utilPB.rolesItems}" />
 						<f:ajax event="blur" execute="@this" render="typeError" />
 					</h:selectOneMenu>
-					
+
 					<h:outputText value="#{userEditor.user.role.displayString}" rendered="#{cc.attrs.mode == 'profile'}" />
 				</p:column>
 
@@ -141,10 +147,10 @@
 
 		</p:panelGrid>
 
-		<p:commandButton value="#{msgs.save}" process="@form" update="usrDataPanelGrid"
-			oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}" />
-
 		<p:commandButton value="#{msgs.cancel}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
+
+		<p:commandButton value="#{msgs.save}" process="@form" update="usrDataPanelGrid"
+			oncomplete="if (args && !args.validationFailed) {w_confirm_save_user.show();}" />
 
 		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}" severity="alert" widgetVar="w_confirm_save_user">
 			<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}" immediate="true" oncomplete="w_confirm_save_user.hide()" />
