@@ -94,7 +94,7 @@ public class Department {
 	
 	public String getDisplayName(){
 		//TODO mettere qualcosa di sensato (magari chiedere)
-		return this.code;
+		return this.name;
 	}
 
 }
