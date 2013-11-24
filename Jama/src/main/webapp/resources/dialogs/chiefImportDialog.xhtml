@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="dialogWidgetVar" required="true" />
+	<composite:attribute name="dialogId" default="chiefDialog" />
+
+	<composite:attribute name="observingComponentId" type="java.lang.String" />
+	<composite:attribute name="observingComponentWidgetVar" type="java.lang.String" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputScript name="hideShow.js" library="js" />
+
+	<p:dialog id="#{cc.attrs.dialogId}" header="#{msgs.newChiefTitle}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" onHide="refresh();">
+
+		<h:form>
+
+			<p:remoteCommand name="refresh" process="@this" immediate="true" />
+
+			<p:panelGrid id="chiefPanel" styleClass="grid">
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.serialNumber}: " />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="serial" value="#{chiefDialogPCB.chief.serialNumber}" label="#{msgs.serialNumber}" required="true" />
+					</p:column>
+
+					<p:column>
+						<p:commandButton value="#{msgs.import}" process="@this serial" update="chiefPanel" actionListener="#{chiefDialogPCB.importUser()}" />
+					</p:column>
+
+					<p:column>
+						<p:message styleClass="errorMessage" id="serialError" for="serial" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.name}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="name" value="#{chiefDialogPCB.chief.name}" label="#{msgs.name}" disabled="true" required="true" />
+					</p:column>
+
+					<p:column colspan="2">
+						<p:message for="name" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.surname}:" />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="surname" value="#{chiefDialogPCB.chief.surname}" label="#{msgs.surname}" disabled="true" required="true" />
+					</p:column>
+
+					<p:column colspan="2">
+						<p:message for="surname" />
+					</p:column>
+				</p:row>
+
+			</p:panelGrid>
+
+			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
+
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{chiefDialogPCB.save()}"
+				update="@form :#{p:component(cc.attrs.observingComponentId)}"
+				oncomplete="if (!args.validationFailed){ setHideShow(); #{cc.attrs.dialogWidgetVar}.hide(); setMenuValue(#{cc.attrs.observingComponentWidgetVar}, '#{cc.attrs.dialogId}', 'socialNumber' ); }" />
+
+		</h:form>
+
+	</p:dialog>
+
+</composite:implementation>
+</html>
