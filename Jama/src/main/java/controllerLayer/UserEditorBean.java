@@ -31,7 +31,6 @@ import businessLayer.Department;
 import daoLayer.UserDaoBean;
 
 //TODO splittare in presentation e controller
-@ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserEditorBean implements Serializable {
@@ -77,7 +76,7 @@ public class UserEditorBean implements Serializable {
 
 	public String editLoggedUser() {
 		currentUser = userDao.getBySerialNumber(loggedUser.getSerialNumber());
-		System.out.println("Current User: "+currentUser);
+		System.out.println("Current User 1: "+currentUser);
 		return "userProfile";
 	}
 
@@ -94,7 +93,7 @@ public class UserEditorBean implements Serializable {
 		// }
 		// else
 		// return null;
-
+		System.out.println("Current User 2: "+currentUser);
 		return currentUser.getDepartment();
 	}
 

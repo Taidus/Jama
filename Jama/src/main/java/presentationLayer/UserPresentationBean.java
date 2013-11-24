@@ -3,6 +3,8 @@ package presentationLayer;
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
@@ -16,7 +18,6 @@ import usersManagement.User;
 import util.Messages;
 import businessLayer.Department;
 import controllerLayer.UserEditorBean;
-import daoLayer.UserDaoBean;
 
 @Named("userEditor")
 @ConversationScoped
@@ -26,7 +27,7 @@ public class UserPresentationBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 7518079536711094530L;
 
-	@Inject
+	@EJB
 	private UserEditorBean userEditor;
 
 	@Inject
@@ -41,11 +42,18 @@ public class UserPresentationBean implements Serializable {
 	public Conversation getConversation() {
 		return conversation;
 	}
+	
+	@PostConstruct
+	public void init(){
+		begin();
+	}
 
 	private void begin() {
 
 		conversation.begin();
+		System.out.println("begin");
 	}
+	
 
 	private void close() {
 
@@ -71,12 +79,11 @@ public class UserPresentationBean implements Serializable {
 	}
 
 	public String createUser() {
-		begin();
 		return userEditor.createUser();
 	}
 
 	public void importUser() {
-//		begin();
+
 		userEditor.importUser();
 	}
 
