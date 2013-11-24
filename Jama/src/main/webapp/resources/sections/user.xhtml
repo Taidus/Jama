@@ -83,14 +83,10 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="dept" value="#{userEditor.user.department}" label="#{msgs.department}" disabled="true" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}">
-						<f:converter binding="#{departmentConverter}" />
-					</h:inputText>
+					<h:inputText id="dept" value="#{userEditor.user.department.displayName}" label="#{msgs.department}" disabled="true" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}" />
 
-					<h:outputText value="#{userEditor.selectedDept}" rendered="#{cc.attrs.mode == 'profile'}">
-						<f:converter binding="#{departmentConverter}" />
-					</h:outputText>
+					<h:outputText value="#{userEditor.selectedDept.displayName}" rendered="#{cc.attrs.mode == 'profile'}" />
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.mode == 'wizard'}">

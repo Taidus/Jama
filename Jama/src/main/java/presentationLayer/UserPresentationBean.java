@@ -11,6 +11,7 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import security.annotations.CreateUserAllowed;
 import usersManagement.LdapManager;
 import usersManagement.User;
 import util.Messages;
@@ -35,23 +36,29 @@ public class UserPresentationBean implements Serializable {
 	@Inject
 	private LdapManager ldapManager;
 
-	public UserPresentationBean() {
-	}
+	private User tempLdapUser;
+
+
+	public UserPresentationBean() {}
+
 
 	public Conversation getConversation() {
 		return conversation;
 	}
+
 
 	private void begin() {
 
 		conversation.begin();
 	}
 
+
 	private void close() {
 
 		conversation.end();
 
 	}
+
 
 	public String save() {
 		try {
@@ -64,30 +71,37 @@ public class UserPresentationBean implements Serializable {
 		return "home";
 	}
 
+
 	public String cancel() {
 		userEditor.cancel();
 		close();
 		return "home";
 	}
 
+
 	public String createUser() {
 		begin();
 		return userEditor.createUser();
 	}
 
+
+	@CreateUserAllowed
 	public void importUser() {
-//		begin();
-		userEditor.importUser();
+		// begin();
+		userEditor.setCurrentUser(tempLdapUser);
 	}
+
 
 	public String editLoggedUser() {
 
 		return userEditor.editLoggedUser();
 	}
 
+
 	public User getUser() {
 		return userEditor.getCurrentUser();
 	}
+
 
 	public Department getSelectedDept() {
 		// if (!currentUser.getBelongingDepts().isEmpty()) {
@@ -99,29 +113,26 @@ public class UserPresentationBean implements Serializable {
 		return userEditor.getSelectedDept();
 	}
 
+
 	public void setSelectedDept(Department selectedDept) {
 		userEditor.setSelectedDept(selectedDept);
 	}
 
-	public void validateSerialNumber(FacesContext context,
-			UIComponent component, Object value) {
+
+	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			String serial = value.toString();
 
 			if (null != userEditor.getBySerial(serial)) {
 				System.out.println("User editor: matricola duplicata");
-				throw new ValidatorException(
-						Messages.getErrorMessage("err_duplicateSerial"));
+				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
 			}
 
-			userEditor.setTempLdapUser(ldapManager.getUserBySerial(serial));
-			if (null == userEditor.getTempLdapUser()) {
-				System.out
-						.println("User editor: matricola non trovata in ldap");
-				throw new ValidatorException(
-						Messages.getErrorMessage("err_badImport"));
+			tempLdapUser = ldapManager.getUserBySerial(serial);
+			if (null == tempLdapUser) {
+				System.out.println("User editor: matricola non trovata in ldap");
+				throw new ValidatorException(Messages.getErrorMessage("err_badImport"));
 			}
 		}
 	}
-
 }
