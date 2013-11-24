@@ -1,6 +1,7 @@
 /target
 *.classpath
 */MANIFEST.MF
+.prefs
 
 #Tex Files
 *.log
