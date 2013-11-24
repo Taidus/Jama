@@ -132,7 +132,7 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="#{msgs.add}" process="@this" actionListener="#{chiefDialogPCB.clear()}"
+					<p:commandButton value="#{msgs.import}" process="@this" actionListener="#{chiefDialogPB.clear()}"
 						oncomplete="#{cc.attrs.chiefDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.chiefDialogId)}"
 						rendered="#{cc.attrs.editingDisable == false}">
 						<p:resetInput target=":#{p:component(cc.attrs.chiefDialogId)}" />
