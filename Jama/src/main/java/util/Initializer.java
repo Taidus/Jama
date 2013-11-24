@@ -64,7 +64,7 @@ public class Initializer {
 		Department d = new Department();
 		d.setCode("897645");
 		d.setName("Dinfo");
-		d.setRateDirectory("dsi");
+		d.setRateDirectory(Config.depRatesDefaultDir);
 		u.addDepartment(d);
 
 		try {

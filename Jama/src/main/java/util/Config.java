@@ -26,6 +26,7 @@ public class Config {
 	private static final String configPath = resourcesPath + "config/";
 	
 	public static final String depRatesPath = configPath  + "aliquoteDipartimenti/";
+	public static final String depRatesDefaultDir = "default";
 	private static final String mailTemplateDir = configPath + "mailTemplates";
 	private static final String basicConfigFile = configPath + "basic.properties";
 	
