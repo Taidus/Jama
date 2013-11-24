@@ -31,15 +31,11 @@ import businessLayer.Department;
 import daoLayer.UserDaoBean;
 
 //TODO splittare in presentation e controller
-@Named("userEditor")
 @ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserEditorBean implements Serializable {
 	private static final long serialVersionUID = -4966124878956728047L;
-
-	@Inject
-	private Conversation conversation;
 
 	@Inject
 	private UserDaoBean userDao;
@@ -51,9 +47,6 @@ public class UserEditorBean implements Serializable {
 	@Logged
 	private Principal loggedUser;
 
-	@Inject
-	private LdapManager ldapManager;
-
 	private User currentUser;
 	private User tempLdapUser;
 
@@ -61,60 +54,32 @@ public class UserEditorBean implements Serializable {
 		super();
 	}
 
-
-	private void begin() {
-
-		conversation.begin();
-	}
-
-
-	@Remove
-	private void close() {
-
-		conversation.end();
-
-	}
-
-
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public String save() throws GeneralSecurityException {
+	public void save() throws GeneralSecurityException {
 		userDao.create(currentUser);
-
-		close();
-
-		return "home";
 	}
 
-
-	public String cancel() {
-		close();
-		return "home";
+	public void cancel() {
 	}
-
 
 	@CreateUserAllowed
 	public String createUser() {
-		begin();
 		currentUser = new User();
 		return "userWiz";
 	}
 
-
 	@CreateUserAllowed
 	public void importUser() {
-//		currentUser = ldapManager.getUserBySerial(currentUser.getSerialNumber());
+		// currentUser =
+		// ldapManager.getUserBySerial(currentUser.getSerialNumber());
 		currentUser = tempLdapUser;
 	}
 
-
 	public String editLoggedUser() {
-
-		begin();
-
 		currentUser = userDao.getBySerialNumber(loggedUser.getSerialNumber());
+		System.out.println("Current User: "+currentUser);
 		return "userProfile";
 	}
-
 
 	@Produces
 	@RequestScoped
@@ -123,42 +88,38 @@ public class UserEditorBean implements Serializable {
 		return currentUser;
 	}
 
-
-	public Conversation getConversation() {
-		return conversation;
-	}
-
-
 	public Department getSelectedDept() {
-//		if (!currentUser.getBelongingDepts().isEmpty()) {
-//			return currentUser.getBelongingDepts().get(0);
-//		}
-//		else
-//			return null;
-		
+		// if (!currentUser.getBelongingDepts().isEmpty()) {
+		// return currentUser.getBelongingDepts().get(0);
+		// }
+		// else
+		// return null;
+
 		return currentUser.getDepartment();
 	}
-
 
 	public void setSelectedDept(Department selectedDept) {
 		currentUser.addDepartment(selectedDept);
 	}
-	
-	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			String serial = value.toString();
-			
-			if (null != userDao.getBySerialNumber(serial)) {
-				System.out.println("User editor: matricola duplicata");
-				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
-			}
 
-			tempLdapUser = ldapManager.getUserBySerial(serial);
-			if (null == tempLdapUser) {
-				System.out.println("User editor: matricola non trovata in ldap");
-				throw new ValidatorException(Messages.getErrorMessage("err_badImport"));
-			}
-		}
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public User getTempLdapUser() {
+		return tempLdapUser;
+	}
+
+	public void setTempLdapUser(User tempLdapUser) {
+		this.tempLdapUser = tempLdapUser;
+	}
+	
+	public User getBySerial(String serial){
+		return userDao.getBySerialNumber(serial);
 	}
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import annotations.Created;
+import annotations.Updated;
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
 import usersManagement.LdapManager;
@@ -30,7 +30,7 @@ public class UserDaoBean {
 	private LdapManager ldap;
 	
 	@Inject
-	@Created
+	@Updated
 	private Event<User> profCreationEvent;
 
 	public UserDaoBean() {}
@@ -38,7 +38,8 @@ public class UserDaoBean {
 
 	public User create(User user) {
 		
-		if(getBySerialNumber(user.getSerialNumber())==null){
+		User foundUser = getBySerialNumber(user.getSerialNumber());
+		if(foundUser ==null){
 
 		Department d = deptDao.getByCode(user.getDepartment().getCode());
 		if(d != null){
@@ -50,8 +51,14 @@ public class UserDaoBean {
 			if(user.hasRole(Role.PROFESSOR)){
 				profCreationEvent.fire(user);
 			}
+			return user;
 		}
-		return user;
+		else{
+			foundUser.copy(user);
+			em.persist(user);
+			return foundUser;
+		}
+		
 	}
 
 
@@ -85,7 +92,7 @@ public class UserDaoBean {
 	}
 	
 	
-	public void onChiefCreation(@Observes @Created ChiefScientist c){
+	public void onChiefCreation(@Observes @Updated ChiefScientist c){
 		if(getBySerialNumber(c.getSerialNumber())== null){
 			User u =ldap.getUserBySerial(c.getSerialNumber());
 			u.setRole(Role.PROFESSOR);

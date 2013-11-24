@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContextType;
 
 import usersManagement.LdapManager;
 import usersManagement.User;
-import annotations.Created;
+import annotations.Updated;
 import businessLayer.ChiefScientist;
 
 @Stateful
@@ -24,7 +24,7 @@ public class ChiefScientistDaoBean {
 	private EntityManager em;
 
 	@Inject
-	@Created
+	@Updated
 	private Event<ChiefScientist> chiefCreationEvent;
 
 	@Inject
@@ -32,6 +32,7 @@ public class ChiefScientistDaoBean {
 
 	public ChiefScientistDaoBean() {
 	}
+	
 
 	public ChiefScientist createChiefScientist(ChiefScientist chief) {
 
@@ -79,7 +80,7 @@ public class ChiefScientistDaoBean {
 
 	}
 
-	public void onProfessorCreation(@Observes @Created User u) {
+	public void onProfessorCreation(@Observes @Updated User u) {
 		if (getBySerial(u.getSerialNumber()) == null) {
 			ChiefScientist c = ldap.getChiefScientistBySerial(u
 					.getSerialNumber());

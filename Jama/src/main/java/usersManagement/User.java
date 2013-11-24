@@ -132,6 +132,8 @@ public class User implements Serializable {
 			belongingDepts.set(0, d);
 		}
 	}
+	
+	
 
 
 	public List<String> getBelongingDeptsCodes() {
@@ -148,5 +150,16 @@ public class User implements Serializable {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", belongingDepts=" + belongingDepts
 				+ ", serialNumber=" + serialNumber + ", role=" + role + "]";
 	}
+	
+	public void copy(User copy){
+		this.email = copy.getEmail();
+		this.name = copy.getName();
+		this.surname = copy.getSurname();
+		this.belongingDepts = new ArrayList<>();
+		this.addDepartment(copy.getDepartment());
+		this.serialNumber = copy.getSerialNumber();
+		this.role = copy.getRole();
+	}	
+	
 
 }
