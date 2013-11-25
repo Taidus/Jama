@@ -32,7 +32,7 @@ public class Company {
 	private String businessName;
 	private String legalResidence;
 	private String socialNumber;
-	private int VatNumber;
+	private String VatNumber;
 
 	public String getName() {
 		return name;
@@ -70,11 +70,11 @@ public class Company {
 		this.socialNumber = socialNumber;
 	}
 
-	public int getVatNumber() {
+	public String getVatNumber() {
 		return VatNumber;
 	}
 
-	public void setVatNumber(int vatNumber) {
+	public void setVatNumber(String vatNumber) {
 		VatNumber = vatNumber;
 	}
 
@@ -89,7 +89,8 @@ public class Company {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + VatNumber;
+		result = prime * result
+				+ ((VatNumber == null) ? 0 : VatNumber.hashCode());
 		result = prime * result
 				+ ((socialNumber == null) ? 0 : socialNumber.hashCode());
 		return result;
@@ -104,7 +105,10 @@ public class Company {
 		if (getClass() != obj.getClass())
 			return false;
 		Company other = (Company) obj;
-		if (VatNumber != other.VatNumber)
+		if (VatNumber == null) {
+			if (other.VatNumber != null)
+				return false;
+		} else if (!VatNumber.equals(other.VatNumber))
 			return false;
 		if (socialNumber == null) {
 			if (other.socialNumber != null)
