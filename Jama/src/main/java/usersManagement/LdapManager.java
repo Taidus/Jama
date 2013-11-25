@@ -121,6 +121,7 @@ public class LdapManager implements LdapQueryInterface {
 		}
 
 		result.setRole(Role.PROFESSOR);
+		d.setRateDirectory(Config.depRatesDefaultDir);
 		result.addDepartment(d);
 
 		return result;
@@ -190,6 +191,7 @@ public class LdapManager implements LdapQueryInterface {
 			}
 			// TODO set actual directory
 			d.setRateDirectory(Config.depRatesDefaultDir);
+
 
 		}
 

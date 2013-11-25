@@ -67,6 +67,7 @@ public class Initializer {
 		u.setRole(Role.ADMIN);
 		createUser(u);
 		System.out.println(u);
+		System.out.println(u.getDepartment().getRateDirectory());
 
 	
 
@@ -75,6 +76,8 @@ public class Initializer {
 		u.setRole(Role.OPERATOR);
 		createUser(u);
 		System.out.println(u);
+		System.out.println(u.getDepartment().getRateDirectory());
+
 		
 
 		serial = "Z000002";
@@ -82,6 +85,8 @@ public class Initializer {
 		u.setRole(Role.PROFESSOR);
 		createUser(u);
 		System.out.println(u);
+		System.out.println(u.getDepartment().getRateDirectory());
+
 
 	}
 
