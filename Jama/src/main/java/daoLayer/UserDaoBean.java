@@ -35,8 +35,13 @@ public class UserDaoBean {
 
 	public UserDaoBean() {}
 
-
+	
+	
 	public User create(User user) {
+		/*	crea e aggiorna un utente(eventualmente creando anche il dipartimento se non è gia presente), lancia un evento che segnale la creazione 
+			dell'utente che può essere catturato per creare il chiefScientist corrispondente
+		 */
+		 
 		
 		User foundUser = getBySerialNumber(user.getSerialNumber());
 		if(foundUser ==null){
@@ -47,18 +52,19 @@ public class UserDaoBean {
 		}else{
 			em.persist(user.getDepartment());
 		}
-		em.persist(user);
-			if(user.hasRole(Role.PROFESSOR)){
-				profCreationEvent.fire(user);
-			}
-			return user;
 		}
 		else{
 			foundUser.copy(user);
-			em.persist(foundUser);
-			return foundUser;
+			user = foundUser;
 		}
 		
+		em.persist(user);
+		
+		if(user.hasRole(Role.PROFESSOR)){
+			profCreationEvent.fire(user);
+		}
+		return user;
+			
 	}
 
 
