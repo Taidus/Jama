@@ -10,7 +10,7 @@
 		<input type="hidden" name="cid" value='#{userTablePCB.conversation.id}' />
 
 		<p:dataTable id="userTable" emptyMessage="#{msgs.noUserFound}" lazy="true" value="#{userTablePCB.lazyModel}" var="user" paginator="true" rows="20"
-			rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" editable="true" editMode="cell" 
+			rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" editable="true" editMode="cell"
 			selection="#{userTablePCB.lazyModel.selectedUser}" selectionMode="single" rowKey="#{user.id}">
 
 			<p:ajax event="cellEdit" listener="#{userTablePCB.changeRole}" update=":tableForm:userTable" />
@@ -34,9 +34,10 @@
 					</f:facet>
 
 					<f:facet name="input">
-						<p:selectOneMenu id="roleInput" value="#{user.role}" label="#{msgs.role}">
+						<p:selectOneMenu id="roleInput" value="#{user.role}" label="#{msgs.role}" style="width: 96%">
+							<f:converter binding="#{roleMenuConverter}" />
 							<f:selectItems value="#{utilPB.rolesItems}" />
-							<p:ajax event="valueChange" process="@this" />
+							<p:ajax event="blur" process="@this" />
 						</p:selectOneMenu>
 					</f:facet>
 				</p:cellEditor>

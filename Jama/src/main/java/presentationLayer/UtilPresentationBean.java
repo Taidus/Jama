@@ -63,7 +63,7 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public SelectItem[] getRolesItems() {
-		Role[] types = Role.getAvailableUserRoleValues();
+		Role[] types = Role.getUserRoles();
 		SelectItem[] result = new SelectItem[types.length];
 		for (int i = 0; i < types.length; i++) {
 			result[i] = new SelectItem(types[i], types[i].getDisplayString());
