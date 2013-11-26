@@ -30,12 +30,23 @@
 		</p:dataTable>
 
 	</p:panel>
-	
+
 	<br />
 
 	<p:panel header="#{msgs.totalRecap_Header}">
 
 		<p:panelGrid>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalTaxableAgreementAmount}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.contract.wholeTaxableAmount}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
 
 			<p:row>
 				<p:column>

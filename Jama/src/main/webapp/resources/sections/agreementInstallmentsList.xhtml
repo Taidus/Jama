@@ -65,8 +65,14 @@
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 			</p:column>
+			
+			<p:column headerText="#{msgs.taxableAmount}">
+				<h:outputText value="#{installment.wholeTaxableAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
 
-			<p:column headerText="#{msgs.amount}">
+			<p:column headerText="#{msgs.wholeAmount}">
 				<h:outputText value="#{installment.wholeAmount}">
 					<f:attribute name="plain" value="false" />
 				</h:outputText>
