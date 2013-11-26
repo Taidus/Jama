@@ -50,18 +50,18 @@
 			</p:column>
 
 			<p:column styleClass="button-complete-column button-right-column">
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" process="@this" action="#{installmentManager.viewInstallment()}"
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentManager.viewInstallment()}"
 					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
-				<p:commandButton styleClass="list-row-button" process="@this" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}"
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}"
 					oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
 					<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" process="@this" rendered="#{not cc.attrs.editingDisable}">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{not cc.attrs.editingDisable}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 			</p:column>
@@ -92,7 +92,7 @@
 		</p:commandButton>
 
 
-		<h:inputHidden value="needed" validator="#{installmentListPB.validateInstallments}" />
+		<br />
 	</p:panel>
 
 </composite:implementation>

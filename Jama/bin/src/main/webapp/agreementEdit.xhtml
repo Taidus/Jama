@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections"
+	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
+
+<h:head>
+	<h:outputStylesheet name="agreementWiz.css" library="css" />
+
+	<h:outputScript name="hideShow.js" library="js" />
+</h:head>
+
+<h:body onload="setHideShow();">
+
+	<p:growl autoUpdate="true" sticky="true" showDetail="true" showSummary="false" />
+
+	<h:form id="agreementEdit">
+
+		<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
+
+		<p:tabView activeIndex="#{agreementEditPB.currentTabIndex}">
+			<p:ajax event="tabChange" listener="#{agreementEditPB.handleFlow}"></p:ajax>
+
+			<p:tab id="tabDati" title="#{msgs.data_Tab}">
+				<sections:agreementWizData editingDisable="false" chiefDialogId="chiefDialog" chiefDialogWidgetVar="w_chiefDialog" chiefMenuId="chiefMenu"
+					chiefMenuWidgetVar="w_chiefMenu" companyMenuId="companyMenu" companyMenuWidgetVar="w_companyMenu" />
+			</p:tab>
+
+
+			<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{agreementWizardPB.renderShareTable()}">
+				<sections:agreementWizShareTable editingDisable="false" />
+			</p:tab>
+
+			<p:tab id="tabInstallments" title="#{msgs.installmentsList_Tab}">
+				<sections:agreementInstallmentsList editingDisable="false" addDialogId="addInstDialog" addDialogWidgetVar="w_addInstDialog"
+					editDialogId="editInstDialog" editDialogWidgetVar="w_editInstDialog" viewDialogId="viewInstDialog" viewDialogWidgetVar="w_viewInstDialog"
+					panelId="contractInstTablePanel" />
+			</p:tab>
+
+			<p:tab id="tabRecap" title="#{msgs.recap_Tab}">
+
+				<ui:include src="/resources/sections/agreementRecap.xhtml" />
+
+
+			</p:tab>
+
+			<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
+				<sections:agreementWizAttachments editingDisable="false">
+				</sections:agreementWizAttachments>
+			</p:tab>
+
+		</p:tabView>
+
+
+		<p:commandButton type="button" value="#{msgs.cancel}" onclick="w_confirm.show();" />
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirm">
+			<p:commandButton value="#{msgs.yes}" action="#{agreementEditPB.cancel()}" immediate="true" oncomplete="w_confirm.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm.hide();" type="button" />
+		</p:confirmDialog>
+
+		<p:commandButton value="#{msgs.save}" action="#{agreementEditPB.save()}" ajax="false" />
+
+
+
+	</h:form>
+
+
+	<dialogs:chiefImportDialog dialogId="chiefDialog" dialogWidgetVar="w_chiefDialog" observingComponentId="chiefMenu"
+		observingComponentWidgetVar="w_chiefMenu" />
+
+	<dialogs:companyDialog dialogWidgetVar="w_companyDialog" editingDisable="false" observingComponentId="companyMenu"
+		observingComponentWidgetVar="w_companyMenu" dialogId="companyDialog" />
+
+	<dialogs:instCreateDialog dialogWidgetVar="w_addInstDialog" dialogId="addInstDialog" wizWidgetVar="w_addInstWiz"
+		observingComponent="contractInstTablePanel" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
+	<dialogs:instViewDialog dialogWidgetVar="w_editInstDialog" dialogId="editInstDialog" wizWidgetVar="w_editInstWiz"
+		observingComponent="contractInstTablePanel" editingDisable="false" renderShareTable="#{agreementWizardPB.renderShareTable()}" />
+	<dialogs:instViewDialog dialogWidgetVar="w_viewInstDialog" dialogId="viewInstDialog" wizWidgetVar="w_viewInstWiz" editingDisable="true"
+		renderShareTable="#{agreementWizardPB.renderShareTable()}" />
+
+</h:body>
+</html>

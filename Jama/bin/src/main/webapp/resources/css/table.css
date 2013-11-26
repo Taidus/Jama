@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+/*
+#agreementTable .list-row-button, #installmentTable .list-row-button, #agrSchedule .list-row-button, #chiefContractList .list-row-button{
+	height: 20px;
+	width: 30px;
+	display: none;
+	float: right;
+}
+*/
+
+
+.list-row-button{
+	height: 20px !important;
+	width: 30px !important;
+	display: none;
+	/* float: right !important; */
+}
+
+.button-complete-column{
+	width: 100px !important;
+}
+
+.button-view-column{
+	width: 40px !important;
+}
+
+th[class*=button-left-column], td[class*=button-left-column]{
+	border-right: none !important;
+} 
+
+th[class*=button-right-column], td[class*=button-right-column]{
+	border-left: none !important;
+} 
+
+
+.hide-column-names table thead tr {
+    display: none !important;
+}
+
+.addInstBtn{
+	position: absolute !important;
+	bottom: 10px !important;
+}
+
+img.lock-img{
+	margin: auto;
+}

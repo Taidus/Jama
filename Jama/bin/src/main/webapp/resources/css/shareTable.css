@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+.ui-fieldset .ui-fieldset-legend{
+	border: none;
+	background-color: white;
+	padding: 0.4em 0.5em;
+}

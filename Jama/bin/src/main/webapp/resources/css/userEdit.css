@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+ tr,  td {
+	border: none !important;
+}
+
+.errorMessage{
+       color: #FF0000;
+}
