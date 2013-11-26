@@ -89,12 +89,12 @@
 
 	\begin{itemize}
 	\item non deve influire pesantemente sullo sviluppo dell'applicazione
-	\item in particolare:
+	\item in particolare, deve garantire:
 	
 		\begin{itemize}
-		\item le classi del modello a oggetti non devono essere obbligate ad estendere particolari classi per poter essere persistite
-		\item deve essere possibile recuperare informazioni senza dover scrivere espressioni che coinvolgano costrutti tipici di un database
-		\item deve essere possibile integrarsi con database preesistenti
+		\item trasparenza rispetto al modello di dominio
+		\item recupero di informazioni indipendente dal database
+		\item compatibilità con database preesistenti
 		\end{itemize}
 	
 	\end{itemize}
@@ -237,34 +237,21 @@
 
 \begin{figure}
 	\centering
-	\includegraphics{JSF_architecture.png}
+	\includegraphics[width=0.5\textwidth]{JSF_architecture.png}
 \end{figure}
 
 \end{frame}
 
 
 \begin{frame}{Comunicazione client-server}
-
-\begin{enumerate}
-\item \textsl{Encoding}
-\item invio pagina al client
-\item il client naviga ed invia dati al server
-\item \textsl{decoding}
-\item il server processa la richiesta
-\end{enumerate}
-
 \begin{figure}
 	\centering
-	\includegraphics{JSF_client-server_communication.png}
+	\includegraphics[width=1\textwidth]{custom_JSF_lifecycle.eps}
 \end{figure}
 
 \end{frame}
 
-\begin{frame}{Ciclo di vita}
 
-
-
-\end{frame}
 
 
 
