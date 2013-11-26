@@ -1,9 +1,10 @@
 \section{Introduzione}
 \subsection{Contesto Applicativo}
 \begin{frame}{Convenzione}
-Una Convenzione è un accordo fra l'Università, rappresentata da un docente, ed una azienda per la realizzazione di un prodotto.
+... un accordo fra l'Università, rappresentata da un docente, ed una azienda per la realizzazione di un prodotto.
+\vskip3ex
 
-Una convenzione attraversa le seguenti fasi :\\
+le fasi :\\
 \vskip3ex
   \begin{enumerate}
     \item Il docente si accorda con un'azienda riguardo ad un progetto.
@@ -16,9 +17,9 @@ Una convenzione attraversa le seguenti fasi :\\
 \end{frame}
 
 \begin{frame}{Gestione di una Convenzione}
- L'applicazione deve monitorare la convenzione dal suo inserimento fino a quando risulti esaurita. 
+ L'applicazione deve \textbf{monitorare} la convenzione dal suo inserimento fino a quando risulti esaurita. 
  \vskip3ex
- In questo intervallo di tempo l'applicazione deve consentire di compiere delle operazioni sulla convenzione
+ In questo intervallo di tempo l'applicazione deve consentire di \textbf{compiere delle operazioni} sulla convenzione
 \end{frame}
 
 \subsection{Requisiti}
@@ -66,6 +67,54 @@ Una convenzione attraversa le seguenti fasi :\\
     \includegraphics[height=0.8\textheight, width=0.7\textwidth]{images/casi_uso_operatore.eps}
     \end{figure}
   \end{frame}
+  
+  \begin{frame}{Un Esempio}
+   
+   \vskip-2ex
+      \begin{beamerboxesrounded}[lower=lowercolor, shadow=true]{}
+     \begin{center}
+	\normalsize{Inserimento di una nuova convenzione\\}
+     \end{center}
+    \end{beamerboxesrounded}
+  
+  \vskip2ex
+  \textbf{Percorso base}:
+  l'Operatore, una volta effettuato il login, clicca su ``Crea una convenzione"; viene visualizzata una schermata suddivisa in varie schede,
+  ognuna corrispondente ad un passo della procedura. I passi sono:
+  \begin{enumerate}
+    \item Inserimento dei dati della convenzione\\
+      \begin{itemize}
+	\item Il titolo
+	\item Il numero di protocollo
+	\item ...
+      \end{itemize}
+            
+    \item Inserimento della tabella di ripartizione\\
+      
+    \item Inserimento della documentazione relativa alla convenzione\\
+    \vskip2ex
+    
+    L'Operatore clicca su ``Salva," la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente.
+    
+  \end{enumerate}
+  \end{frame}
+  
+  \begin{frame}{Un Esempio}
+  
+		 
+  \textbf{Percorso alternativo 1}:
+  durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla", che comporta, a seguito di una conferma, il ritorno alla schermata precedente
+  senza che la convenzione/contributo venga inserita o i cambiamenti effettuati salvati.
+  
+  \vskip3ex
+  
+  \textbf{Percorso alternativo 2}:
+  l'Operatore clicca sul tasto ``Salva" senza aver compilato alcuni dei campi obbligatori, o avendo inserito dei valori non consentiti; viene visualizzato un messaggio di errore 
+  e il documento non viene salvato. La schermata non viene cambiata, dando la possibilità all'Operatore di procedere alla correzione.
+   
+   
+  \end{frame}
+
   
   \begin{frame}{Casi d'uso del Docente}
     \begin{figure}[h]
