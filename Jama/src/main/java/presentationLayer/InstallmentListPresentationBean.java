@@ -42,8 +42,8 @@ public class InstallmentListPresentationBean implements Serializable {
 			sum = sum.plus(i.getWholeTaxableAmount());
 		}
 		
-		if (!sum.equals(contract.getWholeTaxableAmount())) {
-			System.out.println("Validazione Completata con fallimento");
+		if (sum.compareTo(contract.getWholeTaxableAmount()) != 0) {
+			System.out.println("Validazione Completata con fallimento: sum = " + sum + ", contract = " + contract.getWholeTaxableAmount());
 			throw new ValidatorException(Messages.getErrorMessage("err_instInvalidInstallmentSum"));
 		}
 		else{
