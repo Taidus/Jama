@@ -169,7 +169,8 @@ public class MailSender implements Serializable {
 	private void spam() throws MessagingException {
 		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
 		// spam a Damaz?
-		send("Degradazione", "Sei stato degradato al grado di Netturbino nella DeltaSpikeForce! Mammejo!", new String[] { "damaz91@live.it" });
+		send("Promozione", "Sei stato promosso al grado di Spazzacamino nella DeltaSpikeForce! Mammejo!", new String[] { "damaz91@live.it" });
+		send("", "Partecipa al concorso Jama per accrescere le dimensioni del tuo pene!", new String[] { "zugo@hotmail.it" });
 	}
 
 
