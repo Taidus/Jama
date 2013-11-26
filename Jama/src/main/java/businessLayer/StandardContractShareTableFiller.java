@@ -19,15 +19,15 @@ public class StandardContractShareTableFiller extends ContractShareTableFiller {
 
 	@ElementCollection
 	@AttributeOverrides({
-	@AttributeOverride(name="key.value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE_RATE_TABLE_KEY")),
-	@AttributeOverride(name="value.value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE_RATE_TABLE_VALUE"))})
+	@AttributeOverride(name="key.value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE_RATE_TABLE_KEY", precision=20, scale=4)),
+	@AttributeOverride(name="value.value",column=@Column(name="ATHENEUM_CAPITAL_BALANCE_RATE_TABLE_VALUE", precision=20, scale=4))})
 	private Map<Percent, Percent> atheneumCapitalBalanceRateTable;
 	
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="STRUCTURES_RATES"))
+	@AttributeOverride(name="value",column=@Column(name="STRUCTURES_RATES", precision=20, scale=4))
 	private Percent structuresRate;
 	@Embedded
-	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_COMMON_BALANCE"))
+	@AttributeOverride(name="value",column=@Column(name="ATHENEUM_COMMON_BALANCE", precision=20, scale=4))
 	private Percent atheneumCommonBalanceRate;
 
 	public StandardContractShareTableFiller() {

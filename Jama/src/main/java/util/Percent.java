@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.joda.money.Money;
@@ -49,6 +50,7 @@ public class Percent implements Comparable<Percent> {
 		return new Percent(arg1.value.subtract(arg2.value));
 	}
 
+	@Column(precision=20, scale=4)
 	private BigDecimal value;
 
 	public Percent() {

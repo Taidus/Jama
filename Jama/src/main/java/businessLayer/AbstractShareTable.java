@@ -25,52 +25,52 @@ public abstract class AbstractShareTable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "ATHENEUM_CAPITAL_BALANCE"))
+	@AttributeOverride(name = "value", column = @Column(name = "ATHENEUM_CAPITAL_BALANCE", precision=20, scale=4))
 	protected Percent atheneumCapitalBalance;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "ATHENEUM_COMMON_BALANCE"))
+	@AttributeOverride(name = "value", column = @Column(name = "ATHENEUM_COMMON_BALANCE", precision=20, scale=4))
 	protected Percent atheneumCommonBalance;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "STRUCTURES"))
+	@AttributeOverride(name = "value", column = @Column(name = "STRUCTURES", precision=20, scale=4))
 	protected Percent structures;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "PERSONNEL"))
+	@AttributeOverride(name = "value", column = @Column(name = "PERSONNEL", precision=20, scale=4))
 	protected Percent personnel;
 
 	@ElementCollection
 	protected Map<ChiefScientist, Percent> sharePerPersonnel;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "GOODS_AND_SERVICES"))
+	@AttributeOverride(name = "value", column = @Column(name = "GOODS_AND_SERVICES", precision=20, scale=4))
 	protected Percent goodsAndServices;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "BUSINESS_TRIP"))
+	@AttributeOverride(name = "value", column = @Column(name = "BUSINESS_TRIP", precision=20, scale=4))
 	protected Percent businessTrip;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "CONSUMER_MATERIALS"))
+	@AttributeOverride(name = "value", column = @Column(name = "CONSUMER_MATERIALS", precision=20, scale=4))
 	protected Percent consumerMaterials;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "INVENTORY_MATERIALS"))
+	@AttributeOverride(name = "value", column = @Column(name = "INVENTORY_MATERIALS", precision=20, scale=4))
 	protected Percent inventoryMaterials;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "RENTALS"))
+	@AttributeOverride(name = "value", column = @Column(name = "RENTALS", precision=20, scale=4))
 	protected Percent rentals;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "PERSONNEL_ON_CONTRACT"))
+	@AttributeOverride(name = "value", column = @Column(name = "PERSONNEL_ON_CONTRACT", precision=20, scale=4))
 	protected Percent personnelOnContract;
 
 	@Embedded
-	@AttributeOverride(name = "value", column = @Column(name = "OTHER_COST"))
+	@AttributeOverride(name = "value", column = @Column(name = "OTHER_COST", precision=20, scale=4))
 	protected Percent otherCost;
 
 	protected AbstractShareTable() {

@@ -87,20 +87,20 @@ public abstract class Contract implements Serializable {
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "money", column = @Column(name = "SPENT_AMOUNT")),
-			@AttributeOverride(name = "money.currency.code", column = @Column(name = "SPENT_AMOUNT_CODE")),
-			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "SPENT_AMOUNT_DECIMAL_PLACES")),
-			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "SPENT_AMOUNT_NUMERIC_CODE")),
-			@AttributeOverride(name = "money.amount", column = @Column(name = "SPENT_AMOUNT_AMOUNT")) })
+			@AttributeOverride(name = "money", column = @Column(name = "SPENT_AMOUNT", precision=20, scale=4)),
+			@AttributeOverride(name = "money.currency.code", column = @Column(name = "SPENT_AMOUNT_CODE", precision=20, scale=4)),
+			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "SPENT_AMOUNT_DECIMAL_PLACES", precision=20, scale=4)),
+			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "SPENT_AMOUNT_NUMERIC_CODE", precision=20, scale=4)),
+			@AttributeOverride(name = "money.amount", column = @Column(name = "SPENT_AMOUNT_AMOUNT", precision=20, scale=4)) })
 	protected Money spentAmount;
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "money", column = @Column(name = "RESERVED_AMOUNT")),
-			@AttributeOverride(name = "money.currency.code", column = @Column(name = "RESERVED_AMOUNT_CODE")),
-			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "RESERVED_AMOUNT_DECIMAL_PLACES")),
-			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "RESERVED_AMOUNT_NUMERIC_CODE")),
-			@AttributeOverride(name = "money.amount", column = @Column(name = "RESERVED_AMOUNT_AMOUNT")) })
+			@AttributeOverride(name = "money", column = @Column(name = "RESERVED_AMOUNT", precision=20, scale=4)),
+			@AttributeOverride(name = "money.currency.code", column = @Column(name = "RESERVED_AMOUNT_CODE", precision=20, scale=4)),
+			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "RESERVED_AMOUNT_DECIMAL_PLACES", precision=20, scale=4)),
+			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "RESERVED_AMOUNT_NUMERIC_CODE", precision=20, scale=4)),
+			@AttributeOverride(name = "money.amount", column = @Column(name = "RESERVED_AMOUNT_AMOUNT", precision=20, scale=4)) })
 	protected Money reservedAmount;
 	
 	
@@ -109,11 +109,11 @@ public abstract class Contract implements Serializable {
 	
 	@Embedded
 	@AttributeOverrides({
-	@AttributeOverride(name="money", column=@Column(name="WHOLE_TAXABLE_AMOUNT")),
-	@AttributeOverride(name="money.currency.code", column=@Column(name="WHOLE_TAXABLE_AMOUNT_CODE")),
-	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES")),
-	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE")),
-	@AttributeOverride(name="money.amount", column=@Column(name="WHOLE_TAXABLE_AMOUNT_AMOUNT"))})
+	@AttributeOverride(name="money", column=@Column(name="WHOLE_TAXABLE_AMOUNT", precision=20, scale=4)),
+	@AttributeOverride(name="money.currency.code", column=@Column(name="WHOLE_TAXABLE_AMOUNT_CODE", precision=20, scale=4)),
+	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES", precision=20, scale=4)),
+	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE", precision=20, scale=4)),
+	@AttributeOverride(name="money.amount", column=@Column(name="WHOLE_TAXABLE_AMOUNT_AMOUNT", precision=20, scale=4))})
 	protected Money wholeTaxableAmount;
 
 	@Temporal(TemporalType.DATE)
