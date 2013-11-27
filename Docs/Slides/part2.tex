@@ -10,6 +10,8 @@
 	\item fornisce l'infrastruttura per consentire l'esecuzione di una web application
 	\end{itemize}
 
+\vspace{1em}
+
 \item Java EE (Java Platform, Enterprise Edition) 6
 	\begin{itemize}
 	\item piattaforma software per lo sviluppo di applicazioni enterprise
@@ -32,8 +34,12 @@
 \begin{itemize}
 \item Sono componenti software riusabili che possono essere gestiti dal container
 
+\vspace{1em}
+
 \item Vari tipi:
 	\begin{itemize}
+	
+	\vspace{0.8em}
 	
 	\item \textsl{Enterprise JavaBeans} (EJB): bean utilizzati per la logica di business o la persistenza
 		\begin{itemize}
@@ -41,7 +47,9 @@
 		\item message-driven bean
 		\item entity bean
 		\end{itemize}
-		
+	
+	\vspace{0.8em}
+	
 	\item  \textsl{Managed beans}: bean utilizzati a livello di presentazione
 	\end{itemize}
 
@@ -57,17 +65,26 @@
 \item Si occupa della persistenza dei dati
 \end{itemize}
 
+\vspace{0.4em}
+
 \begin{itemize}
 \item Problema:
 
 	\begin{itemize}
+	
+	\vspace{0.4em}
+
 	\item Nelle applicazioni enterprise è necessario ricorrere ad un database
+	
+	\vspace{0.7em}
 	
 	\item Il modello più utilizzato all'interno dei database è il \textsl{modello relazionale}
 		\begin{itemize}
 		\item le entità sono le \textsl{relazioni}
 		\item sono collegate tra di loro mediante \textsl{chiavi}
 		\end{itemize}
+		
+	\vspace{0.7em}
 	
 	\item Il modello utilizzato all'interno delle applicazioni Java è il \textsl{modello a oggetti}
 		\begin{itemize}
@@ -88,12 +105,24 @@
 \item Occorre un sistema per la conversione tra i due modelli
 
 	\begin{itemize}
+	
+	\vspace{0.7em}
+	
 	\item non deve influire pesantemente sullo sviluppo dell'applicazione
+	
+	\vspace{0.7em}
+	
 	\item in particolare, deve garantire:
 	
 		\begin{itemize}
 		\item trasparenza rispetto al modello di dominio
+		
+		\vspace{0.5em}
+		
 		\item recupero di informazioni indipendente dal database
+		
+		\vspace{0.5em}
+		
 		\item compatibilità con database preesistenti
 		\end{itemize}
 	
@@ -117,6 +146,8 @@
 		\end{itemize}
 	\end{itemize}
 
+\vspace{1em}
+
 \item Entity Manager
 	\begin{itemize}
 	\item gestisce le entità
@@ -138,10 +169,18 @@
 \begin{itemize}
 \item Si usa il \textsl{Java Persistence Query Language} (JPQL)
 
+\vspace{1em}
+
 \item Sintassi simile a SQL, ma:
 
 	\begin{itemize}
+	
+	\vspace{0.5em}
+	
 	\item è indipendente dal database
+	
+	\vspace{0.8em}
+	
 	\item utilizza le entità del modello di dominio e relativi attributi
 	\end{itemize}
 
@@ -158,55 +197,76 @@
 \begin{itemize}
 \item Problema: incompatibilità tra
 	\begin{itemize}
+	
+	\vspace{0.5em}
+	
 	\item il livello di business, che usa EJB;
+	
+	\vspace{0.8em}
+	
 	\item il livello di presentazione, che usa Managed bean.
 	\end{itemize}
 	
+\vspace{1em}	
+
 \item CDI:
 	\begin{itemize}
-	\item consente l'utilizzo di EJB nel livello di presentazione
-	\item fornisce una specifica per la definizione di Managed bean
-	\end{itemize}
-\end{itemize}
-
-\end{frame}
-
-
-
-\begin{frame}{Panoramica}
-
-\begin{itemize}
-\item Servizi offerti:
-	\begin{itemize}
-	\item Contesto
-	\item Iniezione di dipendenza
-	\end{itemize}
-
-\item Caratteristiche principali:
-	\begin{itemize}
-	\item integrazione Expression Language (EL)
-	\item disaccoppiamento
-	\item controllo sui tipi
-	\end{itemize}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Bean CDI}
-
-\begin{itemize}
-\item \textsl{Scope}
-	\begin{itemize}
-	\item lega il bean ad un particolare contesto
-	\item determina il tempo di vita (\textsl{lifetime})
-	\item limita la visibilità al client
-	\end{itemize}
 	
+	\vspace{0.5em}
+	
+	\item consente l'utilizzo di EJB nel livello di presentazione
+	
+	\vspace{0.8em}
+	
+	\item fornisce una specifica per la definizione di Managed bean
+		\begin{itemize}
+		
+		\vspace{0.5em}
+		
+		\item integrazione Expression Language (EL)
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Contesto}
+
+\begin{itemize}
+\item Lo \textsl{scope} di un bean determina:
+
+	\begin{itemize}
+	
+	\vspace{0.5em}
+	
+	\item il tempo di vita (\textsl{lifetime})
+	
+	\vspace{0.8em}
+	
+	\item la visibilità
+	\end{itemize}
+
+\vspace{1em}
+
 \item 4 possibili \textsl{scope}:
 	\begin{itemize}
+	
+	\vspace{0.5em}
+	
 	\item Request
+	
+	\vspace{0.8em}
+	
 	\item Conversation
+	
+	\vspace{0.8em}
+	
 	\item Session
+	
+	\vspace{0.8em}
+	
 	\item Application
 	\end{itemize}
 
@@ -216,13 +276,51 @@
 
 
 
+\begin{frame}{Iniezione di dipendenza}
+
+\begin{itemize}
+\item Forte controllo sui tipi
+
+\vspace{1em}
+
+\item Scelta della dipendenza:
+
+	\begin{itemize}
+	
+	\vspace{0.5em}
+	
+	\item in fase di sviluppo
+	
+	\vspace{0.8em}
+	
+	\item in fase di deploy
+	
+	\vspace{0.8em}
+	
+	\item a runtime
+	
+	\end{itemize}
+
+
+
+\end{itemize}
+
+\end{frame}
+
+
 \subsection{JSF}
 
 \begin{frame}{JavaServer Faces}
 
 \begin{itemize}
 \item Framework per lo sviluppo di interfaccia grafica
+
+\vspace{0.8em}
+
 \item \textsl{Component-based}
+
+\vspace{0.8em}
+
 \item Consente estensione delle funzionalità tramite librerie di terze parti
 \end{itemize}
 
