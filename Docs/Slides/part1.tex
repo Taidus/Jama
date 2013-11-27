@@ -91,12 +91,12 @@ le fasi :\\
     \item Inserimento dei dati della convenzione\\
       \begin{itemize}
 	\item Il titolo
-	\item Il numero di protocollo
+	\item L'importo totale
 	\item ...
       \end{itemize}
             
     \item Inserimento della tabella di ripartizione\\
-      
+    \item Inserimento delle rate  
     \item Inserimento della documentazione relativa alla convenzione\\
     \vskip2ex
     
@@ -107,22 +107,28 @@ le fasi :\\
   
   \begin{frame}{Esempio di caso d'uso}
   
-		 
+
   \textbf{Percorso alternativo 1}:
-  durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla", che comporta, a seguito di una conferma, il ritorno alla schermata precedente
-  senza che la convenzione venga inserita o i cambiamenti effettuati salvati.
+  l'Operatore clicca sul tasto ``Salva'' o ``Successivo'' senza aver compilato alcuni dei campi obbligatori, o avendo inserito dei valori non consentiti; viene visualizzato un messaggio di errore 
+  e il documento non viene salvato. La schermata non viene cambiata, dando la possibilità all'Operatore di procedere alla correzione.
+
   
   \vskip3ex
   
   \textbf{Percorso alternativo 2}:
-  l'Operatore clicca sul tasto ``Salva" senza aver compilato alcuni dei campi obbligatori, o avendo inserito dei valori non consentiti; viene visualizzato un messaggio di errore 
-  e il documento non viene salvato. La schermata non viene cambiata, dando la possibilità all'Operatore di procedere alla correzione.
+  durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla'', che comporta, a seguito di una conferma, il ritorno alla schermata precedente
+  senza che la convenzione venga inserita o i cambiamenti effettuati salvati.
+  
+
    
    
   \end{frame}
   
   \begin{frame}{}
-    disegnino spastico!
+     \begin{figure}[h]
+      \centering
+      \includegraphics[scale=0.25]{images/flows.png}
+    \end{figure}
    
   \end{frame}
 
