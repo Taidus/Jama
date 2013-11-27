@@ -5,12 +5,12 @@
 \begin{frame}{Tecnologie utilizzate}
 
 \begin{itemize}
-\item JBoss AS 7.1
+\item JBoss AS (Application Server) 7.1
 	\begin{itemize}
 	\item fornisce l'infrastruttura per consentire l'esecuzione di una web application
 	\end{itemize}
 
-\item Java EE 6
+\item Java EE (Java Platform, Enterprise Edition) 6
 	\begin{itemize}
 	\item piattaforma software per lo sviluppo di applicazioni enterprise
 	\item comprende varie tecnologie, fra cui:
@@ -184,7 +184,7 @@
 
 \item Caratteristiche principali:
 	\begin{itemize}
-	\item integrazione Expression Language
+	\item integrazione Expression Language (EL)
 	\item disaccoppiamento
 	\item controllo sui tipi
 	\end{itemize}
@@ -198,11 +198,11 @@
 \item \textsl{Scope}
 	\begin{itemize}
 	\item lega il bean ad un particolare contesto
-	\item determina il ciclo di vita
+	\item determina il tempo di vita (\textsl{lifetime})
 	\item limita la visibilità al client
 	\end{itemize}
 	
-\item 4 possibili scope:
+\item 4 possibili \textsl{scope}:
 	\begin{itemize}
 	\item Request
 	\item Conversation
@@ -252,25 +252,14 @@
 \end{frame}
 
 
+\subsection{Architettura}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\begin{frame}{Architettura tecnologie}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{tech_architecture.eps}
+\end{figure}
+\end{frame}
 
 
 
