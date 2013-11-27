@@ -1,11 +1,12 @@
 \section{Introduzione}
 \subsection{Contesto Applicativo}
 \begin{frame}{Convenzione}
-... un accordo fra l'Università, rappresentata da un docente, ed una azienda per la realizzazione di un prodotto.
-\vskip3ex
+\vskip2ex
+... un accordo fra l'Università, rappresentata da un docente, ed una azienda, per la realizzazione di un prodotto.
+\vskip2ex
 
 le fasi :\\
-\vskip3ex
+\vskip2ex
   \begin{enumerate}
     \item Il docente si accorda con un'azienda riguardo ad un progetto.
     \item Il docente, insieme al RAS, valuta i costi e stila la Tabella di Ripartizione dei compensi.
@@ -17,18 +18,22 @@ le fasi :\\
 \end{frame}
 
 \begin{frame}{Gestione di una Convenzione}
+ \vskip-3ex
  L'applicazione deve \textbf{monitorare} la convenzione dal suo inserimento fino a quando risulti esaurita. 
- \vskip3ex
- In questo intervallo di tempo l'applicazione deve consentire di \textbf{compiere delle operazioni} sulla convenzione
+ \vskip5ex
+ In questo intervallo di tempo l'applicazione deve consentire di \textbf{compiere delle operazioni} sulla convenzione.
 \end{frame}
 
 \subsection{Requisiti}
 \begin{frame}{Requisiti principali}
+  \vskip-3ex
   L'applicazione deve consentire di:\\
+  \vskip3ex
   \begin{itemize}
    \item inserire convenzioni
    \item inserire rate per una convenzione
    \item visualizzare le convenzioni inserite
+   \item aggiornare i dati di una convenzione
    \item notificare le scadenze
   \end{itemize}
 
@@ -36,19 +41,20 @@ le fasi :\\
 
 \section{Analisi}
   \begin{frame}{Agenti}
-    
+    \vskip-3ex
     \begin{itemize}
      \item L'Operatore:\\
+     \vskip3ex
       \begin{itemize}
        \item inserisce, modifica convenzioni
        \item inserisce le rate
       \end{itemize}
-
+     \vskip3ex
      \item Il Docente:\\
       \begin{itemize}
        \item visualizza lo stato delle proprie convenzioni
       \end{itemize}
-
+     \vskip3ex
      \item Il Tempo:\\
       \begin{itemize}
        \item notifica le scadenze
@@ -64,11 +70,11 @@ le fasi :\\
     \begin{figure}[h]
     \label{use_case_diag_operator}
     \centering
-    \includegraphics[height=0.8\textheight, width=0.7\textwidth]{images/casi_uso_operatore.eps}
+    \includegraphics[height=0.8\textheight, width=0.7\textwidth]{images/casi_uso_operatore_semplified.eps}
     \end{figure}
   \end{frame}
   
-  \begin{frame}{Un Esempio}
+  \begin{frame}{Esempio di caso d'uso}
    
    \vskip-2ex
       \begin{beamerboxesrounded}[lower=lowercolor, shadow=true]{}
@@ -99,12 +105,12 @@ le fasi :\\
   \end{enumerate}
   \end{frame}
   
-  \begin{frame}{Un Esempio}
+  \begin{frame}{Esempio di caso d'uso}
   
 		 
   \textbf{Percorso alternativo 1}:
   durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla", che comporta, a seguito di una conferma, il ritorno alla schermata precedente
-  senza che la convenzione/contributo venga inserita o i cambiamenti effettuati salvati.
+  senza che la convenzione venga inserita o i cambiamenti effettuati salvati.
   
   \vskip3ex
   
@@ -114,6 +120,12 @@ le fasi :\\
    
    
   \end{frame}
+  
+  \begin{frame}{}
+    disegnino spastico!
+   
+  \end{frame}
+
 
   
   \begin{frame}{Casi d'uso del Docente}
@@ -135,6 +147,31 @@ le fasi :\\
 
   
   \subsection{Modello di Business}
+  \begin{frame}{Gli oggetti del modello}
+     \begin{itemize}
+      \item Convenzione
+      \item Rata
+      \item Responsabile Scientifico
+      \item Ditta
+      \item ...
+     \end{itemize}
+
+   
+  \end{frame}
+  
+  \begin{frame}{Diagramma delle classi}
+  
+    \begin{figure}[h]
+      \label{business_model}
+      \centering
+      \includegraphics[width=0.8\textwidth]{images/modello_business_simplified.eps}
+    \end{figure}
+   
+  \end{frame}
+
+
+  
+  
 
 
 

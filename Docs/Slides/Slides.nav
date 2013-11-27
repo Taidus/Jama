@@ -28,8 +28,15 @@
 \headcommand {\beamer@framepages {9}{9}}
 \headcommand {\slideentry {2}{1}{5}{10/10}{Casi d'Uso}{0}}
 \headcommand {\beamer@framepages {10}{10}}
-\headcommand {\beamer@partpages {1}{10}}
-\headcommand {\beamer@subsectionpages {11}{10}}
-\headcommand {\beamer@sectionpages {5}{10}}
-\headcommand {\beamer@documentpages {10}}
-\headcommand {\def \inserttotalframenumber {10}}
+\headcommand {\slideentry {2}{1}{6}{11/11}{Casi d'Uso}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{12}{Modello di Business}}\headcommand {\beamer@subsectionpages {6}{11}}
+\headcommand {\slideentry {2}{2}{1}{12/12}{Modello di Business}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {2}{2}{2}{13/13}{Modello di Business}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\beamer@partpages {1}{13}}
+\headcommand {\beamer@subsectionpages {12}{13}}
+\headcommand {\beamer@sectionpages {5}{13}}
+\headcommand {\beamer@documentpages {13}}
+\headcommand {\def \inserttotalframenumber {13}}
