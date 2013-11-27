@@ -117,6 +117,7 @@ public abstract class AbstractShareTable {
 	}
 
 	public void setAtheneumCapitalBalance(Percent atheneumCapitalBalance) {
+		System.out.println("Abstract ST: setting capital balance = " + atheneumCapitalBalance);
 		this.atheneumCapitalBalance = atheneumCapitalBalance;
 		updateGoodsAndServices();
 	}

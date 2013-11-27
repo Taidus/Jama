@@ -53,16 +53,18 @@ public class MoneyConverter implements Converter {
 		} catch (NullPointerException e) {
 			plain = true;
 		}
+		
+		Money m = Money.of(Config.currency, ((Money) value).getAmount().setScale(2));
 
 		if (null == plain || true == plain) {
 			// return ((Money) value).getAmount().toPlainString();
 			String s = new MoneyFormatterBuilder().appendAmount(MoneyAmountStyle.ASCII_DECIMAL_COMMA_GROUP3_DOT).toFormatter(Config.locale)
-					.print(((Money) value));
+					.print(m);
 			return s;
 		}
 		else {
 			String s = new MoneyFormatterBuilder().appendAmount(MoneyAmountStyle.ASCII_DECIMAL_COMMA_GROUP3_DOT).appendCurrencySymbolLocalized()
-					.toFormatter(Config.locale).print(((Money) value));
+					.toFormatter(Config.locale).print(m);
 			return s;
 		}
 	}
