@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="dialogWidgetVar" required="true" />
+	<composite:attribute name="dialogId" default="chiefDialog" />
+
+	<composite:attribute name="observingComponentId" type="java.lang.String" />
+	<composite:attribute name="observingComponentWidgetVar" type="java.lang.String" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputScript name="hideShow.js" library="js" />
+
+	<p:dialog id="#{cc.attrs.dialogId}" header="#{msgs.newChiefTitle}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" onHide="refresh();">
+
+		<h:form>
+
+			<p:remoteCommand name="refresh" process="@this" immediate="true" />
+
+			<p:panelGrid id="chiefPanel" styleClass="grid">
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.serialNumber}: " />
+					</p:column>
+
+					<p:column>
+						<h:inputText id="serial" value="#{chiefDialogPB.chief.serialNumber}" label="#{msgs.serialNumber}" required="true"
+							validator="#{chiefDialogPB.validateSerialNumber}">
+							<p:ajax event="valueChange" process="@this" update="chiefPanel" listener="#{chiefDialogPB.importUser()}" />
+						</h:inputText>
+					</p:column>
+
+					<ui:remove>
+						<p:column>
+							<p:commandButton value="#{msgs.import}" process="@this serial" update="chiefPanel" actionListener="#{chiefDialogPB.importUser()}" />
+						</p:column>
+					</ui:remove>
+
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.name}:" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="#{chiefDialogPB.chief.name}" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.surname}:" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="#{chiefDialogPB.chief.surname}"/>
+					</p:column>
+				</p:row>
+
+			</p:panelGrid>
+
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{chiefDialogPB.save()}"
+				update="@form :#{p:component(cc.attrs.observingComponentId)}"
+				oncomplete="if (!args.validationFailed){ setHideShow(); #{cc.attrs.dialogWidgetVar}.hide(); setMenuValue(#{cc.attrs.observingComponentWidgetVar}, '#{cc.attrs.dialogId}', 'socialNumber' ); }" />
+
+			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
+
+		</h:form>
+
+	</p:dialog>
+
+</composite:implementation>
+</html>

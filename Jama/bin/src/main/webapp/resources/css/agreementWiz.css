@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+#agreementWiz tr, #agreementWiz td, #agreementEdit tr, #agreementEdit td {
+	border: none;
+}
+
+.errorMessage{
+       color: #FF0000;
+}

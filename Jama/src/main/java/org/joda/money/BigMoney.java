@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
@@ -67,6 +68,7 @@ public  class BigMoney implements BigMoneyProvider, Comparable<BigMoneyProvider>
     /**
      * The amount, not null.
      */
+    @Column(precision=10, scale=4)
     private  BigDecimal amount;
 
     //-----------------------------------------------------------------------

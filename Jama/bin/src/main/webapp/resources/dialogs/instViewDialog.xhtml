@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+<composite:interface>
+	<composite:attribute name="dialogWidgetVar" required="true" />
+	<composite:attribute name="dialogId" required="true" />
+	<composite:attribute name="wizWidgetVar" required="true" />
+
+	<composite:attribute name="editingDisable" default="true" />
+	<composite:attribute name="observingComponent" type="java.lang.String" />
+	
+	<composite:attribute name="renderShareTable" default="true" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputScript library="js" name="instDialogScripts.js" />
+	<h:outputScript library="js" name="onEnterPressInWiz.js" />
+
+	<h:form>
+
+		<p:remoteCommand name="closeInstViewDiag" actionListener="#{installmentManager.cancel()}" immediate="true" />
+
+		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true"
+			onShow="toFirstTab(#{cc.attrs.wizWidgetVar}); setSize('#{cc.attrs.dialogId}');">
+
+			<p:ajax event="close" onstart="closeInstViewDiag();" oncomplete="toFirstTab(#{cc.attrs.wizWidgetVar}); setHideShow();" />
+
+			<input type="hidden" name="cid" value='#{contractManager.conversation.id}' />
+
+			<p:tabView id="instEditTabView" widgetVar="#{cc.attrs.wizWidgetVar}">
+
+				<p:tab id="tabDati" title="#{msgs.data_Tab}">
+					<sections:installmentWizData editingDisable="#{cc.attrs.editingDisable}" />
+				</p:tab>
+
+				<p:tab id="tabRip" title="#{msgs.shareTable_Tab}" rendered="#{cc.attrs.renderShareTable}">
+					<sections:installmentWizShareTable editingDisable="#{cc.attrs.editingDisable}"  rendered="#{cc.attrs.renderShareTable}"/>
+				</p:tab>
+
+			</p:tabView>
+
+			<p:commandButton value="#{msgs.cancel}" process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" />
+
+			<p:commandButton id="instSaveButton" styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{installmentManager.save()}"
+				process="@form" update="instEditTabView :#{p:component(cc.attrs.observingComponent)}" rendered="#{not cc.attrs.editingDisable}"
+				oncomplete="if(!args.validationFailed){ #{cc.attrs.dialogWidgetVar}.hide(); }" />
+
+
+		</p:dialog>
+	</h:form>
+
+</composite:implementation>
+</html>

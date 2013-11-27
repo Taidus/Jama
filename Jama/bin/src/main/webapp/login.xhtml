@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+<h:head>
+
+	<h:outputStylesheet library="css" name="login.css"></h:outputStylesheet>
+</h:head>
+
+<body>
+	<h:form prependId="false">
+		<p:panel styleClass="centered">
+
+			<h1>
+				<h:outputText value="#{msgs.login_welcome}" />
+			</h1>
+
+			<h:panelGrid columns="2" styleClass="centered">
+				<h:outputText value="#{msgs.serialNumber}: " />
+				<p:inputText id="serialNumber"
+					value="#{userManager.insertedSerialNumber}" required="true"
+					label="#{msgs.serialNumber}" />
+				<h:outputText value="#{msgs.password}: " />
+				<p:password id="password" binding="#{password}" required="true" />
+			</h:panelGrid>
+
+			<p:commandButton value="#{msgs.login}"
+				action="#{userManager.login(password.value)}" />
+			<br />
+			<br />
+		</p:panel>
+
+		<p:messages autoUpdate="true" closable="true" showDetail="false" />
+	</h:form>
+</body>
+</html>

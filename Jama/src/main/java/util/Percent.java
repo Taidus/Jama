@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.joda.money.Money;
@@ -49,6 +50,7 @@ public class Percent implements Comparable<Percent> {
 		return new Percent(arg1.value.subtract(arg2.value));
 	}
 
+	@Column(precision=20, scale=4)
 	private BigDecimal value;
 
 	public Percent() {
@@ -61,7 +63,9 @@ public class Percent implements Comparable<Percent> {
 //		if (value.abs().compareTo(BigDecimal.ONE) > 0) {
 //			throw new IllegalArgumentException("Illegal percent value (its absolute value is greater than 1)");
 //		}
+		System.out.print(">>Percent constructor. Before = " + value);
 		this.value = value.setScale(4, RoundingMode.HALF_EVEN);
+		System.out.println("; after = " + this.value);
 	}
 
 	public BigDecimal getValue() {

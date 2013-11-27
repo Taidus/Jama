@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections" xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" default="true" />
+	<composite:attribute name="panelId" type="java.lang.String" required="true" />
+
+	<composite:attribute name="addDialogWidgetVar" type="java.lang.String" />
+	<composite:attribute name="addDialogId" type="java.lang.String" />
+
+	<composite:attribute name="editDialogWidgetVar" type="java.lang.String" />
+	<composite:attribute name="editDialogId" type="java.lang.String" />
+
+	<composite:attribute name="viewDialogWidgetVar" type="java.lang.String" />
+	<composite:attribute name="viewDialogId" type="java.lang.String" />
+
+</composite:interface>
+
+<composite:implementation xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+	<script>
+    	jQuery(document).ready(function() {setHideShow();});
+	</script>
+
+	<h:outputStylesheet name="table.css" library="css" />
+	<h:outputStylesheet name="home.css" library="css" />
+
+	<p:panel id="#{cc.attrs.panelId}" styleClass="semiEmptyPanel relative">
+
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="installmentTable">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment()}"
+				oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment()}"
+				oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
+				<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
+			</p:menuitem>
+			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="delete_confirm.show();" />
+		</p:contextMenu>
+
+		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.indexInContract}" var="installment"
+			value="#{contractManager.contract.installments}" emptyMessage="#{msgs.noInstallmentFound}" selection="#{installmentManager.selectedInstallment}">
+
+			<p:ajax event="filter" oncomplete="setHideShow();" />
+
+			<p:column headerText="#{msgs.date}" styleClass="button-left-column">
+				<h:outputText value="#{installment.date}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+			</p:column>
+
+			<p:column styleClass="button-complete-column button-right-column">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentManager.viewInstallment()}"
+					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}"
+					oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
+					<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{not cc.attrs.editingDisable}">
+					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column headerText="#{msgs.amount}">
+				<h:outputText value="#{installment.wholeAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.paidInvoice_Question}">
+				<h:selectBooleanCheckbox value="#{installment.paidInvoice}" disabled="true" />
+			</p:column>
+
+		</p:dataTable>
+
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.remove}" severity="alert" widgetVar="delete_confirm">
+			<p:commandButton value="#{msgs.yes}" action="#{installmentManager.deleteInstallment()}" immediate="true" update="installmentTable"
+				oncomplete="delete_confirm.hide(); setHideShow();" />
+			<p:commandButton value="#{msgs.no}" onclick="delete_confirm.hide();" type="button" />
+		</p:confirmDialog>
+
+
+		<p:commandButton styleClass="addInstBtn" process="@this" actionListener="#{installmentManager.addInstallment()}" value="#{msgs.add_installment}"
+			oncomplete="#{cc.attrs.addDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.addDialogId)}" rendered="#{cc.attrs.editingDisable == false}">
+			<p:resetInput target=":#{p:component(cc.attrs.addDialogId)}" />
+		</p:commandButton>
+
+
+		<br />
+	</p:panel>
+
+</composite:implementation>
+</html>

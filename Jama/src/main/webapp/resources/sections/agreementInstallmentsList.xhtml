@@ -29,13 +29,13 @@
 	<p:panel id="#{cc.attrs.panelId}" styleClass="semiEmptyPanel relative">
 
 		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="installmentTable">
-			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment()}"
+			<p:menuitem process=":#{p:component('installmentTable')}" value="#{msgs.view}" icon="ui-icon-search" actionListener="#{installmentManager.viewInstallment()}"
 				oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}" />
-			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment()}"
+			<p:menuitem process=":#{p:component('installmentTable')}" value="#{msgs.edit}" icon="ui-icon-wrench" actionListener="#{installmentManager.editInstallment()}"
 				oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
 				<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
 			</p:menuitem>
-			<p:menuitem process="@form" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="delete_confirm.show();" />
+			<p:menuitem process=":#{p:component('installmentTable')}" value="#{msgs.remove}" icon="ui-icon-trash" oncomplete="delete_confirm.show();" />
 		</p:contextMenu>
 
 		<p:dataTable id="installmentTable" styleClass="hideShow" selectionMode="single" rowKey="#{installment.indexInContract}" var="installment"
@@ -50,23 +50,29 @@
 			</p:column>
 
 			<p:column styleClass="button-complete-column button-right-column">
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{installmentManager.viewInstallment()}"
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" process="@this" action="#{installmentManager.viewInstallment()}"
 					oncomplete="#{cc.attrs.viewDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.viewDialogId)}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}"
+				<p:commandButton styleClass="list-row-button" process="@this" icon="ui-icon-wrench" action="#{installmentManager.editInstallment()}"
 					oncomplete="#{cc.attrs.editDialogWidgetVar}.show()" update=":#{p:component(cc.attrs.editDialogId)}" rendered="#{not cc.attrs.editingDisable}">
 					<p:resetInput target=":#{p:component(cc.attrs.editDialogId)}" />
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 
-				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" rendered="#{not cc.attrs.editingDisable}">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-trash" oncomplete="delete_confirm.show();" process="@this" rendered="#{not cc.attrs.editingDisable}">
 					<f:setPropertyActionListener value="#{installment}" target="#{installmentManager.selectedInstallment}" />
 				</p:commandButton>
 			</p:column>
+			
+			<p:column headerText="#{msgs.taxableAmount}">
+				<h:outputText value="#{installment.wholeTaxableAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
 
-			<p:column headerText="#{msgs.amount}">
+			<p:column headerText="#{msgs.wholeAmount}">
 				<h:outputText value="#{installment.wholeAmount}">
 					<f:attribute name="plain" value="false" />
 				</h:outputText>
@@ -92,7 +98,7 @@
 		</p:commandButton>
 
 
-		<br />
+		<h:inputHidden value="needed" validator="#{installmentListPB.validateInstallments}" />
 	</p:panel>
 
 </composite:implementation>

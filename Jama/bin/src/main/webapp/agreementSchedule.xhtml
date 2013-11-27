@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:viewParam name="class" value="#{opContractSchedulePCB.lazyModel.filterContractClass}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="closedString" value="#{opContractSchedulePCB.lazyModel.filterClosedContract}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="chief.id" value="#{opContractSchedulePCB.lazyModel.filterChiefId}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{opContractSchedulePCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmindate" value="#{opContractSchedulePCB.lazyModel.filterMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fmaxdate" value="#{opContractSchedulePCB.lazyModel.filterMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{opContractSchedulePCB.lazyModel.pageFirst}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{opContractSchedulePCB.lazyModel.pageRows}" valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="totalRows" value="#{opContractSchedulePCB.lazyModel.totalRows}"
+		valueChangeListener="#{opContractSchedulePCB.lazyModel.filterOnReload}" />
+
+
+	<f:event listener="#{opContractSchedulePCB.lazyModel.loadTableFilters}" type="preRenderView" />
+</f:metadata>
+
+<h:head>
+	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="table.css" library="css" />
+
+	<h:outputScript name="filters.js" library="js" />
+	<h:outputScript name="hideShow.js" library="js" />
+
+
+	<script type="text/javascript">
+		function setRowEvent(){
+			setHideShow();
+		}
+
+		jQuery(document).ready(function() {
+			setRowEvent();
+		});
+	</script>
+</h:head>
+
+<h:body
+	onload="setOpScheduleFilters('#{opContractSchedulePCB.lazyModel.filterChiefId}', '#{opContractSchedulePCB.lazyModel.filterCompanyId}', '#{opContractSchedulePCB.lazyModel.filterClosedContract}', '#{opContractSchedulePCB.lazyModel.filterContractClass}');">
+
+	<h:form prependId="false">
+		<input type="hidden" name="cid" value='#{opContractSchedulePCB.conversation.id}' />
+
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="agrSchedule">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{opContractSchedulePCB.viewAgreement()}" />
+		</p:contextMenu>
+
+		<p:dataTable id="agrSchedule" binding="#{opContractSchedulePCB.lazyModel.dataTable}" styleClass="hideShow" var="agr" widgetVar="w_agrSchedule"
+			lazy="true" value="#{opContractSchedulePCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20" rowsPerPageTemplate="10,20,50"
+			paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}" selection="#{opContractSchedulePCB.lazyModel.selectedValue}"
+			selectionMode="single" rowKey="#{agr.id}">
+
+			<p:ajax event="filter" oncomplete="setRowEvent();" />
+			<p:ajax event="page" oncomplete="setRowEvent();" />
+
+			<p:column styleClass="contractTypeColumn button-left-column" filterBy="#{agr.class}" filterOptions="#{utilPB.contractFilter}"
+				headerText="#{msgs.contrType}">
+				<h:outputText value="#{utilPB.getNameFromClass(agr.class)}" />
+			</p:column>
+
+
+			<p:column styleClass="button-view-column button-right-column">
+				<p:commandButton styleClass="list-row-button" icon="ui-icon-search" action="#{opContractSchedulePCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{agr}" target="#{opContractSchedulePCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column id="agrIsClosed" styleClass="closedFilterColumn" filterBy="#{agr.closedString}"
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{agr.closed}" />
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not agr.closed}" />
+			</p:column>
+
+			<p:column id="title" headerText="#{msgs.agrTitle}">
+				<h:outputText value="#{agr.shortTitle}" />
+			</p:column>
+
+			<p:column id="agrScheduleChiefColumn" filterBy="#{agr.chief.id}" headerText="#{msgs.chief}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterChiefItems}">
+				<h:outputText value="#{agr.chief.completeName}" />
+			</p:column>
+
+			<p:column id="agrScheduleCompanyColumn" filterBy="#{agr.company.id}" headerText="#{msgs.company}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterCompanyItems}">
+				<h:outputText value="#{agr.company.name}" />
+			</p:column>
+
+			<p:column id="agrScheduleDateColumn">
+
+				<f:facet name="header">
+					<h:outputText value="#{msgs.nextDeadline}" />
+
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.from}: " />
+						<p:calendar id="firstDate" styleClass="calendarFilter" widgetVar="w_firstDate" value="#{opContractSchedulePCB.lazyModel.filterMinDate}"
+							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+						</p:calendar>
+					</div>
+
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.to}: " />
+						<p:calendar id="lastDate" styleClass="calendarFilter" widgetVar="w_lastDate" value="#{opContractSchedulePCB.lazyModel.filterMaxDate}"
+							pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true">
+						</p:calendar>
+					</div>
+
+					<p:commandButton id="calendarFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						onclick="return calendarFilter(arguments[0], w_agrSchedule);" />
+					<p:commandButton id="calendarResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						onclick="return calendarReset(arguments[0], w_firstDate, w_lastDate, w_agrSchedule);" />
+				</f:facet>
+
+				<h:outputText value="#{utilPB.findClosestDeadline(agr, opContractSchedulePCB.lazyModel.filterMinDate)}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+
+
+			</p:column>
+
+		</p:dataTable>
+
+		<p:commandButton action="#{opContractSchedulePCB.backToHome()}" value="Home" immediate="true" />
+
+	</h:form>
+
+
+</h:body>
+</html>

@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+
+.ui-panelgrid tr,.ui-panelgrid td {
+	border: none !important;
+}
+
+.center {
+	text-align: center !important;
+	margin: auto !important;
+	margin-bottom:30px !important;
+}
+
+#actionPanel {
+	margin-top: 40px !important;
+	width: 50%;
+}
+
+.buttons {
+	width: 150px;
+	margin-top: 30px;
+	border: 1px outset !important;
+	height: 90px;
+}
+
+.semiEmptyPanel {
+	min-height: 400px !important;
+}
+
+.relative {
+	position: relative !important;
+}
+
+.saveButton {
+	float: right !important;
+}
+
+.text {
+	font-size: 30px;
+}
+
+img.center-img{
+	display: block;
+	margin: auto;
+}
+
+/*
+#agreementTable .button-right-column{
+	border-left: none;
+}
+
+#agreementTable .button-left-column{
+	border-right: none;
+}
+
+#agreementTable .button-column{
+	width: 80px;
+}
+*/

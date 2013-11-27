@@ -1,0 +1,65 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" default="false" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputStylesheet library="css" name="table.css" />
+	<h:outputScript library="js" name="hideShow.js" />
+
+
+	<p:panel header="#{msgs.attachments_header}" styleClass="semiEmptyPanel">
+
+		<p:growl id="messages" showDetail="true" />
+
+
+		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}" var="file" emptyMessage="#{msgs.noAttachmentFound}"
+			styleClass="hideShow hide-column-names">
+			<p:column>
+				<p:commandLink id="downloadLink" ajax="false" value="#{file.fileName}">
+					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
+				</p:commandLink>
+			</p:column>
+
+			<p:column>
+				<p:commandButton id="downloadButton" styleClass="list-row-button" ajax="false" icon="ui-icon-arrowthick-1-s">
+					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
+				</p:commandButton>
+
+				<p:tooltip for="downloadButton" value="Download" showEffect="fade" hideEffect="fade" />
+
+
+				<p:commandButton id="removeButton" styleClass="list-row-button" ajax="true" oncomplete="w_confirmA.show();" icon="ui-icon-trash">
+					<f:setPropertyActionListener target="#{attachmentsPB.selectedAttachment}" value="#{file}">
+					</f:setPropertyActionListener>
+				</p:commandButton>
+
+				<p:tooltip for="removeButton" value="#{msgs.remove}" showEffect="fade" hideEffect="fade" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+
+
+		<p:fileUpload id="fileUpload" label="#{msgs.add_attachments}" auto="true" fileUploadListener="#{attachmentsPB.handleFileUpload}" multiple="true"
+			showButtons="false" dragDropSupport="true" update="messages attchsList" cancelLabel="#{msgs.remove}" uploadLabel="#{msgs.load}"
+			invalidSizeMessage="#{msgs.invalidFileSize}" invalidFileMessage="#{msgs.invalidFile}" rendered="#{cc.attrs.editingDisable == false}"
+			oncomplete="setHideShow();" />
+
+	</p:panel>
+
+	<p:confirmDialog message="#{msgs.sure}" header="#{msgs.cancel}" severity="alert" widgetVar="w_confirmA">
+		<p:commandButton value="#{msgs.yes}" action="#{attachmentsPB.removeFile()}" immediate="true" oncomplete="setHideShow(); w_confirmA.hide();"
+			update="attchsList" />
+		<p:commandButton value="#{msgs.no}" onclick="w_confirmA.hide();" type="button" />
+	</p:confirmDialog>
+
+
+</composite:implementation>
+</html>
+

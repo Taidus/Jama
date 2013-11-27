@@ -1,0 +1,406 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" default="false" />
+	<composite:attribute name="creating" default="false" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputStylesheet library="css" name="shareTable.css" />
+
+	<p:panel header="#{msgs.shareTable_Header}">
+
+		<p:panelGrid id="instValuesGrid">
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableCapitalBalance}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="atheneumCapitalBalance" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" label="#{msgs.shareTableCapitalBalance}"
+						required="true" rendered="#{not cc.attrs.editingDisable}">
+						<p:ajax event="valueChange" process="@this" update="percentAtheneumCapitalBalance goodsAndServices percentGoodsAndServices instGoodsValuesGrid" />
+						<f:validator binding="#{percentValidator}" />
+					</h:inputText>
+					<h:outputText id="atheneumCapitalBalance_o" value="#{instShareTablePB.shareTable.atheneumCapitalBalance}" rendered="#{cc.attrs.editingDisable}" />
+					<h:outputText value=" %" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentAtheneumCapitalBalance"
+						value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.atheneumCapitalBalance)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableCommonBalance}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="atheneumCommonBalance" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" label="#{msgs.shareTableCommonBalance}"
+						required="true" rendered="#{not cc.attrs.editingDisable}">
+						<p:ajax event="valueChange" process="@this" update="percentAtheneumCommonBalance goodsAndServices percentGoodsAndServices instGoodsValuesGrid" />
+						<f:validator binding="#{percentValidator}" />
+					</h:inputText>
+					<h:outputText id="atheneumCommonBalance_o" value="#{instShareTablePB.shareTable.atheneumCommonBalance}" rendered="#{cc.attrs.editingDisable}" />
+					<h:outputText value=" %" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentAtheneumCommonBalance"
+						value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.atheneumCommonBalance)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTablePersonnel}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="personnel" value="#{instShareTablePB.shareTable.personnel}" label="#{msgs.shareTablePersonnel}" required="true"
+						rendered="#{not cc.attrs.editingDisable}">
+						<p:ajax event="valueChange" process="@this"
+							update="percentPersonnel goodsAndServices percentGoodsAndServices personnelShares personnalShareInput instGoodsValuesGrid" />
+						<f:validator binding="#{percentValidator}" />
+					</h:inputText>
+					<h:outputText id="personnel_o" value="#{instShareTablePB.shareTable.personnel}" rendered="#{cc.attrs.editingDisable}" />
+					<h:outputText value=" %" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentPersonnel" value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.personnel)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableStructures}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="structures" value="#{instShareTablePB.shareTable.structures}" label="#{msgs.shareTableStructures}" required="true"
+						rendered="#{not cc.attrs.editingDisable}">
+						<p:ajax event="valueChange" process="@this" update="percentStructures goodsAndServices percentGoodsAndServices instGoodsValuesGrid" />
+						<f:validator binding="#{percentValidator}" />
+					</h:inputText>
+					<h:outputText id="structures_o" value="#{instShareTablePB.shareTable.structures}" rendered="#{cc.attrs.editingDisable}" />
+					<h:outputText value=" %" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentStructures" value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.structures)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.shareTableGoods}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="goodsAndServices" value="#{instShareTablePB.shareTable.goodsAndServices}" />
+					<h:outputText value=" %" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="percentGoodsAndServices" value="#{instShareTablePB.computePercentOnWholeAmount(instShareTablePB.shareTable.goodsAndServices)}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+
+			<p:row>
+				<p:column colspan="3">
+					<p:fieldset legend="#{msgs.shareTableGoodsValues}">
+						<p:panelGrid id="instGoodsValuesGrid" styleClass="grid">
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{msgs.shareTableTrip}:" />
+								</p:column>
+
+								<p:column>
+									<h:inputText id="businessTrip" value="#{instShareTablePB.shareTable.businessTrip}" label="#{msgs.shareTableTrip}" required="true"
+										rendered="#{not cc.attrs.editingDisable}">
+										<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+										<f:validator binding="#{percentValidator}" />
+									</h:inputText>
+									<h:outputText id="businessTrip_o" value="#{instShareTablePB.shareTable.businessTrip}" rendered="#{cc.attrs.editingDisable}" />
+									<h:outputText value=" %" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="percentBusinessTrip" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.businessTrip)}">
+										<f:attribute name="plain" value="false" />
+									</h:outputText>
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{msgs.shareTableConsMaterials}:" />
+								</p:column>
+
+								<p:column>
+									<h:inputText id="consumerMaterials" value="#{instShareTablePB.shareTable.consumerMaterials}" label="#{msgs.shareTableConsMaterials}"
+										required="true" rendered="#{not cc.attrs.editingDisable}">
+										<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+										<f:validator binding="#{percentValidator}" />
+									</h:inputText>
+									<h:outputText id="consumerMaterials_o" value="#{instShareTablePB.shareTable.consumerMaterials}" rendered="#{cc.attrs.editingDisable}" />
+									<h:outputText value=" %" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="percentConsumerMaterials"
+										value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.consumerMaterials)}">
+										<f:attribute name="plain" value="false" />
+									</h:outputText>
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{msgs.shareTableInvMaterials}:" />
+								</p:column>
+
+								<p:column>
+									<h:inputText id="inventoryMaterials" value="#{instShareTablePB.shareTable.inventoryMaterials}" label="#{msgs.shareTableInvMaterials}"
+										required="true" rendered="#{not cc.attrs.editingDisable}">
+										<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+										<f:validator binding="#{percentValidator}" />
+									</h:inputText>
+									<h:outputText id="inventoryMaterials_o" value="#{instShareTablePB.shareTable.inventoryMaterials}" rendered="#{cc.attrs.editingDisable}" />
+									<h:outputText value=" %" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="percentInventoryMaterials"
+										value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.inventoryMaterials)}">
+										<f:attribute name="plain" value="false" />
+									</h:outputText>
+								</p:column>
+
+							</p:row>
+
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{msgs.shareTableRentals}:" />
+								</p:column>
+
+								<p:column>
+									<h:inputText id="rentals" value="#{instShareTablePB.shareTable.rentals}" label="#{msgs.shareTableRentals}" required="true"
+										rendered="#{not cc.attrs.editingDisable}">
+										<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+										<f:validator binding="#{percentValidator}" />
+									</h:inputText>
+									<h:outputText id="rentals_o" value="#{instShareTablePB.shareTable.rentals}" rendered="#{cc.attrs.editingDisable}" />
+
+									<h:outputText value=" %" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="percentRentals" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.rentals)}">
+										<f:attribute name="plain" value="false" />
+									</h:outputText>
+								</p:column>
+							</p:row>
+
+
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{msgs.shareTableContrPersonnel}:" />
+								</p:column>
+
+								<p:column>
+									<h:inputText id="personnelOnContract" value="#{instShareTablePB.shareTable.personnelOnContract}" label="#{msgs.shareTableContrPersonnel}"
+										required="true" rendered="#{not cc.attrs.editingDisable}">
+										<p:ajax event="valueChange" process="@this" update="instValuesGrid personnelShares personnalShareInput" />
+										<f:validator binding="#{percentValidator}" />
+									</h:inputText>
+									<h:outputText id="personnelOnContract_o" value="#{instShareTablePB.shareTable.personnelOnContract}" rendered="#{cc.attrs.editingDisable}" />
+									<h:outputText value=" %" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="percentPersonnelOnContract"
+										value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.personnelOnContract)}">
+										<f:attribute name="plain" value="false" />
+									</h:outputText>
+								</p:column>
+							</p:row>
+
+
+
+							<p:row>
+								<p:column>
+									<h:outputText value="#{msgs.shareTableOtherCosts}:" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="otherCost" value="#{instShareTablePB.shareTable.otherCost}" />
+									<h:outputText value=" %" />
+								</p:column>
+
+								<p:column>
+									<h:outputText id="percentOtherCost" value="#{instShareTablePB.computePercentOnGoodsAndServices(instShareTablePB.shareTable.otherCost)}">
+										<f:attribute name="plain" value="false" />
+									</h:outputText>
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+					</p:fieldset>
+				</p:column>
+			</p:row>
+
+
+		</p:panelGrid>
+
+		<br />
+
+		<h:inputHidden value="needed" id="valuesCheck" validator="#{instShareTablePB.validateMainValues}" />
+		<p:message styleClass="errorMessage" for="valuesCheck" />
+		<br />
+
+		<h:inputHidden value="needed" id="goodsCheck" validator="#{instShareTablePB.validateGoodsAndServices}" />
+		<p:message styleClass="errorMessage" for="goodsCheck" />
+
+		<br />
+
+		<h:inputHidden value="needed" id="otherInstCheck" validator="#{instShareTablePB.validateWithOtherInstallments}" rendered="#{cc.attrs.creating}" />
+		<p:message styleClass="errorMessage" for="otherInstCheck" />
+
+		<h:inputHidden value="needed" id="e_otherInstCheck" validator="#{instShareTablePB.editingValidateWithOtherInstallments}"
+			rendered="#{not cc.attrs.creating and not cc.attrs.editingDisable}" />
+		<p:message styleClass="errorMessage" for="e_otherInstCheck" />
+
+	</p:panel>
+
+	<br />
+
+	<p:panel rendered="#{agreementWizardPB.renderPersonnelQuotes()==true}">
+
+		<h:inputHidden value="needed" id="percentsCheck" validator="#{instShareTablePB.validatePersonnelShares}" />
+		<p:message styleClass="errorMessage" for="percentsCheck" />
+
+		<br />
+
+		<p:dataTable id="personnelShares" value="#{instShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"
+			emptyMessage="#{msgs.noShareFound}" editable="true" editMode="cell">
+
+			<f:facet name="header">
+				<h:outputText value="#{msgs.shareTablePersonnel}" />
+			</f:facet>
+
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column headerText="#{msgs.shareTableInvolvedPersonnel}" />
+					<p:column colspan="2" headerText="#{msgs.share}" />
+					<p:column />
+				</p:row>
+			</p:columnGroup>
+
+			<p:column>
+				<h:outputText value="#{share.chiefScientist.completeName}" />
+			</p:column>
+
+			<p:column>
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{share.value} %" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText id="personnelTableShareValueInput" value="#{share.value}" label="#{msgs.table_share}">
+							<f:validator binding="#{percentValidator}" />
+							<p:ajax event="valueChange" process="@this" update="personnelShares" />
+						</h:inputText>
+						<h:outputText value=" %" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column>
+				<h:outputText value="#{share.flatAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+				<p:commandButton value="#{msgs.remove}" action="#{instShareTablePB.removeShare(share)}" update="@form" process="@this"
+					rendered="#{cc.attrs.editingDisable == false}" />
+			</p:column>
+		</p:dataTable>
+
+		<br />
+
+		<p:panelGrid id="personnalShareInput" style="width: 100%" rendered="#{cc.attrs.editingDisable == false}">
+
+			<p:row>
+				<p:column width="20%">
+					<h:outputText value="#{msgs.shareTableInvolvedPersonnel}" />
+				</p:column>
+
+				<p:column width="30%">
+					<p:selectOneMenu id="personnalShareChiefMenu" value="#{instShareTablePB.newShare.chiefScientist}" label="#{msgs.chief}" filter="true"
+						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}" required="#{not empty param[_instChiefShareAddBtn.clientId]}">
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
+						<f:selectItems value="#{utilPB.getChiefsItemsNotIn(instShareTablePB.addedChiefs)}" />
+						<f:converter binding="#{chiefConverter}" />
+						<p:ajax event="valueChange" process="@this" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column width="20%">
+					<h:outputText value="#{msgs.share}" />
+				</p:column>
+
+				<p:column width="10%">
+					<h:inputText id="personnalShareValueInput" value="#{instShareTablePB.newShare.value}" label="#{msgs.share}">
+						<p:ajax event="valueChange" process="@this" disabled="#{cc.attrs.editingDisable}" update="percentPersonnelShare" />
+						<f:validator binding="#{percentValidator}" />
+					</h:inputText>
+					<h:outputText value=" %" />
+				</p:column>
+
+				<p:column width="10%">
+					<h:outputText id="percentPersonnelShare" value="#{instShareTablePB.newShare.flatAmount}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+
+				<p:column width="10%">
+					<p:commandButton value="#{msgs.add}" action="#{instShareTablePB.addShare()}" update="personnalShareInput personnelShares"
+						process="personnalShareInput, @this" binding="#{_instChiefShareAddBtn}" />
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+
+	</p:panel>
+
+</composite:implementation>
+
+</html>

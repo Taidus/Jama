@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:viewParam name="class" value="#{chiefContractListPCB.lazyModel.filterContractClass}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="closedString" value="#{chiefContractListPCB.lazyModel.filterClosedContract}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="company.id" value="#{chiefContractListPCB.lazyModel.filterCompanyId}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fcontrmindate" value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="fcontrmaxdate" value="#{chiefContractListPCB.lazyModel.filterContractMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="finstmindate" value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="finstmaxdate" value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" converter="#{dateFromLong}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="first" value="#{chiefContractListPCB.lazyModel.pageFirst}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="rows" value="#{chiefContractListPCB.lazyModel.pageRows}" valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+	<f:viewParam name="totalRows" value="#{chiefContractListPCB.lazyModel.totalRows}"
+		valueChangeListener="#{chiefContractListPCB.lazyModel.filterOnReload}" />
+
+
+
+	<f:event listener="#{chiefContractListPCB.lazyModel.loadTableFilters}" type="preRenderView" />
+</f:metadata>
+
+<h:head>
+	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="table.css" library="css" />
+
+	<h:outputScript name="filters.js" library="js" />
+	<h:outputScript name="hideShow.js" library="js" />
+
+
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			setHideShow();
+		});
+	</script>
+
+</h:head>
+
+<h:body
+	onload="setChiefListFilters('#{chiefContractListPCB.lazyModel.filterCompanyId}', '#{chiefContractListPCB.lazyModel.filterClosedContract}', '#{chiefContractListPCB.lazyModel.filterContractClass}');">
+
+	<h:form prependId="false">
+		<input type="hidden" name="cid" value='#{chiefContractListPCB.conversation.id}' />
+
+		<p:contextMenu styleClass="contextMenu" widgetVar="w_tableContextMenu" for="chiefContractList">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{chiefContractListPCB.viewAgreement()}" />
+		</p:contextMenu>
+
+		<p:dataTable id="chiefContractList" styleClass="hideShow" binding="#{chiefContractListPCB.lazyModel.dataTable}" var="contract"
+			widgetVar="w_chContrList" lazy="true" value="#{chiefContractListPCB.lazyModel}" emptyMessage="#{msgs.noAgrFound}" paginator="true" rows="20"
+			rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
+			selection="#{chiefContractListPCB.lazyModel.selectedValue}" selectionMode="single" rowKey="#{contract.id}">
+
+			<p:ajax event="filter" oncomplete="setHideShow();" />
+			<p:ajax event="page" oncomplete="setHideShow();" />
+
+			<p:column styleClass="contractTypeColumn button-left-column" filterBy="#{contract.class}" filterOptions="#{utilPB.contractFilter}"
+				headerText="#{msgs.contrType}">
+				<h:outputText value="#{utilPB.getNameFromClass(contract.class)}" />
+			</p:column>
+
+			<p:column styleClass="button-view-column button-right-column">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{chiefContractListPCB.viewAgreement()}">
+					<f:setPropertyActionListener value="#{contract}" target="#{chiefContractListPCB.lazyModel.selectedValue}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column styleClass="closedFilterColumn" filterBy="#{contract.closedString}"
+				filterOptions="#{utilPB.getBooleanFilter(msgs.closedMP, msgs.openMP)}" headerText="#{msgs.openClosed}">
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="locked.png" rendered="#{contract.closed}" />
+				<p:graphicImage styleClass="center-img" library="images" height="25" width="25" name="unlocked.png" rendered="#{not contract.closed}" />
+			</p:column>
+
+			<p:column id="title" headerText="#{msgs.agrTitle}">
+				<h:outputText value="#{agr.shortTitle}" />
+			</p:column>
+
+			<p:column styleClass="companyFilterColumn" filterBy="#{contract.company.id}" headerText="#{msgs.company}" filterMatchMode="exact"
+				filterOptions="#{utilPB.filterCompanyItems}">
+				<h:outputText value="#{contract.company.name}" />
+			</p:column>
+
+			<p:column headerText="#{msgs.turnOver}">
+				<h:outputText value="#{contract.turnOver}">
+					<f:converter binding="#{moneyConverter}" />
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.remainder}">
+				<h:outputText value="#{contract.remainder}">
+					<f:converter binding="#{moneyConverter}" />
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+
+				<f:facet name="header">
+					<h:outputText value="#{msgs.deadlineDate}" />
+					<br />
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.from}: " />
+						<p:calendar styleClass="calendarFilter" widgetVar="w_firstContractDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterContractMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.to}: " />
+						<p:calendar styleClass="calendarFilter" widgetVar="w_lastContractDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterContractMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+					<p:commandButton id="calendarContrFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						onclick="return calendarFilter(arguments[0], w_chContrList);" />
+					<p:commandButton id="calendarContrResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						onclick="return calendarReset(arguments[0], w_firstContractDate, w_lastContractDate, w_chContrList);" />
+				</f:facet>
+
+				<h:outputText value="#{contract.deadlineDate}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+
+			</p:column>
+
+			<p:column>
+
+				<f:facet name="header">
+					<h:outputText value="#{msgs.nextDeadline}" />
+					<br />
+
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.from}: " />
+						<p:calendar styleClass="calendarFilter" widgetVar="w_firstInstDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterInstMinDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+
+					<div style="display: block; margin: auto;">
+						<h:outputText value="#{msgs.to}: " />
+						<p:calendar styleClass="calendarFilter" widgetVar="w_lastInstDate" showOn="both" showOtherMonths="true"
+							value="#{chiefContractListPCB.lazyModel.filterInstMaxDate}" pattern="dd/MM/yyyy" readonlyInput="true">
+						</p:calendar>
+					</div>
+
+					<p:commandButton id="calendarInstFilterBtn" styleClass="filter-buttons" value="#{msgs.filter}"
+						onclick="return calendarFilter(arguments[0], w_chContrList);" />
+					<p:commandButton id="calendarInstResetBtn" styleClass="filter-buttons" value="#{msgs.reset}"
+						onclick="return calendarReset(arguments[0], w_firstInstDate, w_lastInstDate, w_chContrList);" />
+				</f:facet>
+
+				<h:outputText value="#{utilPB.findClosestDeadline(contract, chiefContractListPCB.lazyModel.filterInstMinDate)}">
+					<f:convertDateTime locale="it" dateStyle="full" />
+				</h:outputText>
+
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+
+		<p:commandButton action="#{chiefContractListPCB.backToHome()}" value="Home" immediate="true" />
+
+
+	</h:form>
+
+</h:body>
+</html>

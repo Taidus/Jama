@@ -259,9 +259,9 @@ public class ContractManagerBean implements Serializable {
 
 		c.setTitle("Random title");
 		c.setShortTitle("Random short title");
-		c.setCIA_projectNumber(10000);
+		c.setCIA_projectNumber("a10");
 		c.setContactPerson("Random contact");
-		c.setInventoryNumber(20000);
+		c.setInventoryNumber("00/00z");
 		c.setDepartment(depDao.getByCode(principal.getBelongingDepthsCodes().get(0)));
 		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
 		c.setProtocolNumber("30000");

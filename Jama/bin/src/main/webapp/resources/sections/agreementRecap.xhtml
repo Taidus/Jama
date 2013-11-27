@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+	<p:panel header="#{msgs.annualRecap_Header}" styleClass="semiEmptyPanel">
+
+		<p:dataTable id="annualRecapTable" var="recapItem" value="#{agreementRecapPB.annualRecap}" emptyMessage="#{msgs.noInstallmentFound}">
+
+			<p:column headerText="#{msgs.year}">
+				<h:outputText value="#{recapItem.year}" />
+			</p:column>
+
+			<p:column headerText="#{msgs.debtNoteAmount}">
+				<h:outputText value="#{recapItem.wholeAmount}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.turnOver}">
+				<h:outputText value="#{recapItem.paid}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="#{msgs.remainder}">
+				<h:outputText value="#{recapItem.remainder}">
+					<f:attribute name="plain" value="false" />
+				</h:outputText>
+			</p:column>
+
+		</p:dataTable>
+
+	</p:panel>
+	
+	<br />
+
+	<p:panel header="#{msgs.totalRecap_Header}">
+
+		<p:panelGrid>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalAgreementAmount}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.contract.wholeAmount}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalTurnOver}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalTurnOver}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalExpiringRemainder}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainder}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.totalNonExpiringRemainder}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agreementRecapPB.totalRecap.totalRemainderRespectToAgreement}">
+						<f:attribute name="plain" value="false" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+	</p:panel>
+
+
+</ui:composition>
