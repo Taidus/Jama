@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="12.1">
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
   <zoom_level>10</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
@@ -21,7 +20,7 @@
       <w>130</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>User
+    <panel_attributes>Utente
 --</panel_attributes>
     <additional_attributes/>
   </element>
@@ -33,7 +32,7 @@
       <w>130</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Permission
+    <panel_attributes>Permesso
 --</panel_attributes>
     <additional_attributes/>
   </element>
@@ -45,7 +44,7 @@
       <w>130</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Role
+    <panel_attributes>Ruolo
 --</panel_attributes>
     <additional_attributes/>
   </element>
@@ -79,7 +78,7 @@
       <w>130</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Department
+    <panel_attributes>Dipartimento
 
 --</panel_attributes>
     <additional_attributes/>
