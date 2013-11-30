@@ -54,7 +54,7 @@
 
 \vspace{1em}
 
-\item Vari tipi:
+\item Varie specifiche:
 	\begin{itemize}
 	
 	\vspace{0.8em}
@@ -85,120 +85,163 @@
 \end{frame}
 
 
+
+
+
+\begin{frame}[fragile]{Iniezione di dipendenza-1}
+
+
+\begin{lstlisting}[basicstyle={\tiny\ttfamily}]
+public class MovieLister{
+    private MovieFinder finder;
+    
+    public MovieLister() {
+        finder = new MovieFinderImpl();
+    }
+    
+    ...
+}
+\end{lstlisting}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{fowler_no_DI.eps}
+\end{figure}
+
+
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Iniezione di dipendenza-2}
+
+
+\begin{lstlisting}[basicstyle={\tiny\ttfamily}]
+public class MovieLister{
+    @Inject private MovieFinder finder;
+    
+    public MovieLister() {
+    }
+    
+    ...
+}
+\end{lstlisting}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{fowler_DI.eps}
+\end{figure}
+
+
+\end{frame}
+
+
+
+
 \subsection{JPA}
 \begin{frame}{Java Persistence API}
 
 \begin{itemize}
-\item Si occupa della persistenza dei dati
+\item Applicazione \textsl{3-tier}:
 \end{itemize}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.2\textwidth]{3tier.eps}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{\textsl{Object-relational impedance mismatch}}
+
+
+\begin{itemize}
 
 \vspace{0.4em}
 
-\begin{itemize}
-\item Problema:
+\item Database: \textsl{modello relazionale}
 
-	\begin{itemize}
-	
-	\vspace{0.4em}
+\vspace{0.7em}
 
-	\item Nelle applicazioni enterprise è necessario ricorrere ad un database
-	
-	\vspace{0.7em}
-	
-	\item Database: \textsl{modello relazionale}
-		\begin{itemize}
-		
-		\vspace{0.4em}
-		
-		\item entità: \textsl{relazioni}
-		
-		\vspace{0.2em}
-		
-		\item collegate tra di loro mediante \textsl{chiavi}
-		\end{itemize}
-		
-	\vspace{0.7em}
-	
-	\item Applicazione Java: \textsl{modello a oggetti}
-		\begin{itemize}
-		
-		\vspace{0.4em}
-		
-		\item entità: \textsl{classi}
-		
-		\vspace{0.2em}
-		
-		\item collegate tra di loro mediante \textsl{riferimenti}
-		\end{itemize}
-	
-	\end{itemize}
+\item Applicazione Java: \textsl{modello a oggetti}
 
 \end{itemize}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{3tier_entity.eps}
+\end{figure}
 
 \end{frame}
 
 
-\begin{frame}{Integrazione fra i modelli}
 
-\begin{itemize}
-\item Occorre un sistema per la conversione tra i due modelli
 
-	\begin{itemize}
-	
-	\vspace{0.7em}
-	
-	\item non deve influire pesantemente sullo sviluppo dell'applicazione
-	
-	\vspace{0.7em}
-	
-	\item in particolare, deve garantire:
-	
-		\begin{itemize}
-		\item trasparenza rispetto al modello di dominio
-		
-		\vspace{0.5em}
-		
-		\item recupero di informazioni indipendente dal database
-		
-		\vspace{0.5em}
-		
-		\item compatibilità con database preesistenti
-		\end{itemize}
-	
-	\end{itemize}
+\begin{frame}{\textsl{Object-relational mapping}}
 
-\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{3tier_orm.eps}
+\end{figure}
 
 \end{frame}
 
 
-\begin{frame}{Costrutti fondamentali}
+
+\begin{frame}[fragile]{Entità}
+
 
 \begin{itemize}
-\item Entità
+\item È un'unità che possiede uno stato e può essere persistita
+\item una classe Java è un'entità se:
 	\begin{itemize}
-	\item è un'unità che possiede uno stato e può essere persistita
-	\item una classe Java è un'entità se:
-		\begin{itemize}
-		\item è annotata \texttt{@Entity}
-		\item ha un costruttore senza parametri
-		\end{itemize}
+	\item è annotata \texttt{@Entity}
+	\item ha un costruttore senza parametri non privato
+	\item non è \texttt{final} e non possiede metodi o attributi \texttt{final}
+	\item non possiede attributi pubblici
 	\end{itemize}
+\end{itemize}
 
-\vspace{1em}
 
-\item Entity Manager
+\begin{lstlisting}[xleftmargin=0.3\textwidth,  basicstyle={\tiny\ttfamily}]
+@Entity
+public class Persona {
+    private String nome, cognome;
+    
+    public Persona() {
+        ...
+    }
+    ...
+}
+\end{lstlisting}
+
+
+
+\end{frame}
+
+
+
+\begin{frame}{Entity Manager}
+
+
+\begin{itemize}
+\item Gestisce le entità
+\item è associato ad un \textsl{Persistence Context}
 	\begin{itemize}
-	\item gestisce le entità
-	\item è associato ad un \textsl{Persistence Context}
-		\begin{itemize}
-		\item è l'insieme delle entità gestite da un Entity Manager in un dato momento
-		\item se un entità fa parte di un Persistence Context viene detta \textsl{managed}
-		\item altrimenti viene detta \textsl{detached}
-		\end{itemize}
+	\item è l'insieme delle entità gestite da un Entity Manager in un dato momento
+	\item se un entità fa parte di un Persistence Context viene detta \textsl{managed}
+	\item altrimenti viene detta \textsl{detached}
 	\end{itemize}
+\end{itemize}
 
-\end{itemize}	
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{JPA_concepts.png}
+\end{figure}
 
 
 \end{frame}
@@ -223,6 +266,10 @@
 	\item utilizza le entità del modello di dominio e relativi attributi
 	\end{itemize}
 
+\item Esempio:
+	\begin{itemize}
+	\item \texttt{SELECT p FROM Persona p}
+	\end{itemize}
 
 \end{itemize}
 
@@ -262,7 +309,7 @@
 		
 		\vspace{0.5em}
 		
-		\item integrazione Expression Language (EL)
+		\item integrazione con Expression Language (EL)
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
@@ -328,28 +375,122 @@
 	
 	\vspace{0.5em}
 	
-	\item in fase di sviluppo
+	\item in fase di sviluppo, tramite \texttt{@Qualifier}
 	
 	\vspace{0.8em}
 	
-	\item in fase di deploy
+	\item in fase di deploy, tramite \texttt{@Alternative}
 	
 	\vspace{0.8em}
 	
-	\item a runtime
+	\item a runtime, tramite \texttt{@Producer}
 	
 	\end{itemize}
-
-
 
 \end{itemize}
 
 \end{frame}
 
 
+
+\begin{frame}[fragile]{\textsl{Qualifier}}
+
+
+\begin{itemize}
+\item Creazione qualifier:
+	\begin{lstlisting}
+		@Qualifier
+		@Target({TYPE, METHOD, PARAMETER, FIELD})
+		@Retention(RUNTIME)
+		public @interface CreditCard {}
+	\end{lstlisting}
+\end{itemize}
+
+
+
+\begin{itemize}
+\item Annotazione implementazione:
+	\begin{lstlisting}
+		@CreditCard
+		public class CreditCardPaymentProcessor implements PaymentProcessor { ... }
+	\end{lstlisting}
+
+\item Iniezione di dipendenza:
+	\begin{lstlisting}
+		public class BookShop {
+		    @Inject @CreditCard 
+		    private PaymentProcessor paymentProcessor;
+		    ...
+		}
+	\end{lstlisting}
+
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}[fragile]{\textsl{Alternative}}
+
+\begin{itemize}
+\item Annotazione alternativa:
+	\begin{lstlisting}
+	@Alternative
+	public class CreditCardPaymentProcessor implements PaymentProcessor { ... }
+	\end{lstlisting}
+
+
+\item Configurazione \texttt{bean.xml}:
+	\begin{lstlisting}
+	<alternatives>
+	<class>org.mycompany.CreditCardPaymentProcessor</class>
+	</alternatives>
+	\end{lstlisting}
+
+\item Iniezione di dipendenza:
+	\begin{lstlisting}
+		public class BookShop {
+		    @Inject private PaymentProcessor paymentProcessor;
+		    ...
+		}
+	\end{lstlisting}
+
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+
+\begin{frame}[fragile]{Producer}
+
+\begin{itemize}
+\item Annotazione metodo:
+	\begin{lstlisting}
+	@Produces int getRandomNumber() {
+	    Random random = new Random(System.currentTimeMillis());
+	    return random.nextInt(100);
+	}
+	\end{lstlisting}
+
+
+\item Iniezione di dipendenza:
+	\begin{lstlisting}
+	@Inject int randomNumber;
+	\end{lstlisting}
+
+\end{itemize}
+
+\end{frame}
+
+
+
 \subsection{JSF}
 
-\begin{frame}{JavaServer Faces}
+\begin{frame}[fragile]{JavaServer Faces}
 
 \begin{itemize}
 \item Framework per lo sviluppo di interfaccia grafica
@@ -357,10 +498,27 @@
 \vspace{0.8em}
 
 \item \textsl{Component-based}
+	\begin{itemize}
+	\item Esempio: \textsl{dataTable}
+		\begin{lstlisting}
+		<h:dataTable value="#{items}" var="item">
+		    <h:column>
+		        #{item.property1}
+		    </h:column>
+		    <h:column>
+		        #{item.property2}
+		    </h:column>
+		    ...
+		</h:dataTable>
+		\end{lstlisting}
+	\end{itemize}
 
 \vspace{0.8em}
 
 \item Consente estensione delle funzionalità tramite librerie di terze parti
+	\begin{itemize}
+	\item \textsl{PrimeFaces}
+	\end{itemize}
 \end{itemize}
 
 \end{frame}
