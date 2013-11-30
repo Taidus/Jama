@@ -7,7 +7,7 @@
 
 	<composite:attribute name="editingDisable" default="true" />
 	<composite:attribute name="observingComponentId" type="java.lang.String" />
-	<composite:attribute name="observingComponentWidgetVar" type="java.lang.String" />
+	<composite:attribute name="observingComponentWidgetVar" type="java.lang.String" default="undefined" />
 </composite:interface>
 
 <composite:implementation>
@@ -20,7 +20,10 @@
 		<h:form>
 
 			<p:remoteCommand name="refresh" process="@this" immediate="true" />
-			<p:remoteCommand name="retrieveSocialNumber" process="@none" immediate="true" actionListener="#{companyManager.company.socialNumber}" />
+
+			<ui:remove>
+				<p:remoteCommand name="retrieveSocialNumber" process="@none" immediate="true" actionListener="#{companyManager.company.socialNumber}" />
+			</ui:remove>
 
 			<p:panelGrid id="companyPanel" styleClass="grid">
 
@@ -77,8 +80,8 @@
 					</p:column>
 					<p:column>
 						<h:inputText id="VatNumber" value="#{companyManager.company.vatNumber}" label="#{msgs.VatNumber}" required="true"
-							rendered="#{not cc.attrs.editingDisable}">
-							<f:convertNumber integerOnly="true" groupingUsed="false" />
+							rendered="#{not cc.attrs.editingDisable}" validatorMessage="#{msgs.err_illegalVatNumber}">
+							<f:validateRegex pattern="[0-9]*"/>
 						</h:inputText>
 						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.vatNumber}" />
 
@@ -88,17 +91,12 @@
 
 			</p:panelGrid>
 
-			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
-
 			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyManager.save()}"
-				update="@form :#{p:component(cc.attrs.observingComponentId)}"
+				update=":#{p:component('companyPanel')} :#{p:component(cc.attrs.observingComponentId)}"
 				oncomplete="if (!args.validationFailed){ setHideShow(); #{cc.attrs.dialogWidgetVar}.hide(); setMenuValue(#{cc.attrs.observingComponentWidgetVar}, '#{cc.attrs.dialogId}', 'socialNumber' ); }"
 				rendered="#{not cc.attrs.editingDisable}" />
 
-			<ui:remove>
-				<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyManager.save()}" update="@form :#{p:component('companyMenu')}"
-					oncomplete="if (!args.validationFailed) #{cc.attrs.dialogWidgetVar}.hide()" />
-			</ui:remove>
+			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
 
 		</h:form>
 
