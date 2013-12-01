@@ -10,7 +10,8 @@
 	
 	\vspace{0.5em}
 	
-	\item fornisce l'infrastruttura per consentire l'esecuzione di una web application
+	\item fornisce l'infrastruttura per consentire \\
+			l'esecuzione di una web application
 	\end{itemize}
 
 \vspace{1em}
@@ -50,16 +51,19 @@
 \begin{frame}{Bean}
 
 \begin{itemize}
-\item Sono componenti software riusabili che possono essere gestiti dal container
+\item Componenti software riusabili \\
+	che possono essere gestiti dal container
 
 \vspace{1em}
 
-\item Varie specifiche:
+\item Principali specifiche:
 	\begin{itemize}
 	
 	\vspace{0.8em}
 	
-	\item \textsl{Enterprise JavaBeans} (EJB): bean utilizzati per la logica di business o la persistenza
+	\item \textsl{Enterprise JavaBeans} (EJB) \\
+		logica di business o persistenza
+		
 		\begin{itemize}
 		
 		\vspace{0.5em}
@@ -77,7 +81,8 @@
 	
 	\vspace{0.8em}
 	
-	\item  \textsl{Managed beans}: bean utilizzati a livello di presentazione
+	\item  \textsl{Managed beans}\\
+		livello di presentazione
 	\end{itemize}
 
 \end{itemize}
@@ -163,11 +168,11 @@ public class MovieLister{
 
 \vspace{0.4em}
 
-\item Database: \textsl{modello relazionale}
+\item Applicazione Java: \textsl{modello a oggetti}
 
 \vspace{0.7em}
 
-\item Applicazione Java: \textsl{modello a oggetti}
+\item Database: \textsl{modello relazionale}
 
 \end{itemize}
 
@@ -196,12 +201,27 @@ public class MovieLister{
 
 
 \begin{itemize}
-\item È un'unità che possiede uno stato e può essere persistita
+\item Unità che possiede uno stato e può essere persistita
+
+\vspace{0.6em}
+
 \item una classe Java è un'entità se:
 	\begin{itemize}
+	
+	\vspace{0.3em}
+	
 	\item è annotata \texttt{@Entity}
+	
+	\vspace{0.5em}
+	
 	\item ha un costruttore senza parametri non privato
+	
+	\vspace{0.5em}
+	
 	\item non è \texttt{final} e non possiede metodi o attributi \texttt{final}
+	
+	\vspace{0.5em}
+	
 	\item non possiede attributi pubblici
 	\end{itemize}
 \end{itemize}
@@ -230,10 +250,23 @@ public class Persona {
 
 \begin{itemize}
 \item Gestisce le entità
+
+\vspace{0.6em}
+
 \item è associato ad un \textsl{Persistence Context}
 	\begin{itemize}
-	\item è l'insieme delle entità gestite da un Entity Manager in un dato momento
+	
+	\vspace{0.3em}
+	
+	\item è l'insieme delle entità gestite da un Entity Manager \\
+		in un dato momento
+	
+	\vspace{0.5em}
+		
 	\item se un entità fa parte di un Persistence Context viene detta \textsl{managed}
+	
+	\vspace{0.5em}
+	
 	\item altrimenti viene detta \textsl{detached}
 	\end{itemize}
 \end{itemize}
@@ -266,8 +299,13 @@ public class Persona {
 	\item utilizza le entità del modello di dominio e relativi attributi
 	\end{itemize}
 
+\vspace{1em}
+
 \item Esempio:
 	\begin{itemize}
+	
+	\vspace{0.5em}
+	
 	\item \texttt{SELECT p FROM Persona p}
 	\end{itemize}
 
@@ -318,43 +356,51 @@ public class Persona {
 
 
 
-\begin{frame}{Contesto}
+\begin{frame}[fragile]{Contesto}
 
 \begin{itemize}
 \item Lo \textsl{scope} di un bean determina:
 
 	\begin{itemize}
 	
-	\vspace{0.5em}
+	\vspace{0.3em}
 	
 	\item il tempo di vita (\textsl{lifetime})
 	
-	\vspace{0.8em}
+	\vspace{0.5em}
 	
 	\item la visibilità
 	\end{itemize}
 
-\vspace{1em}
+\vspace{0.7em}
 
 \item 4 possibili \textsl{scope}:
 	\begin{itemize}
 	
-	\vspace{0.5em}
+	\vspace{0.3em}
 	
 	\item Request
 	
-	\vspace{0.8em}
+	\vspace{0.5em}
 	
 	\item Conversation
 	
-	\vspace{0.8em}
+	\vspace{0.5em}
 	
 	\item Session
 	
-	\vspace{0.8em}
+	\vspace{0.5em}
 	
 	\item Application
 	\end{itemize}
+	
+\vspace{0.7em}
+
+\item Esempio:
+	\begin{lstlisting}
+	@RequestScoped
+	public class MovieFinderImpl implements MovieFinder { ... }
+	\end{lstlisting}
 
 \end{itemize}
 
@@ -470,16 +516,27 @@ public class Persona {
 \begin{itemize}
 \item Annotazione metodo:
 	\begin{lstlisting}
-	@Produces int getRandomNumber() {
-	    Random random = new Random(System.currentTimeMillis());
-	    return random.nextInt(100);
+	@SessionScoped
+	public class Preferences implements Serializable {
+	    ...
+	    @Produces PaymentProcessor getPaymentProcessor() {
+	        if( ... ){
+	            return new CreditCardPaymentProcessor();
+	        }
+	        else{
+	            return new CheckPaymentProcessor();
+	        }
+	    }
 	}
 	\end{lstlisting}
 
 
 \item Iniezione di dipendenza:
 	\begin{lstlisting}
-	@Inject int randomNumber;
+	public class BookShop {
+	    @Inject private PaymentProcessor paymentProcessor;
+	    ...
+	}
 	\end{lstlisting}
 
 \end{itemize}
@@ -499,6 +556,9 @@ public class Persona {
 
 \item \textsl{Component-based}
 	\begin{itemize}
+	
+	\vspace{0.5em}
+	
 	\item Esempio: \textsl{dataTable}
 		\begin{lstlisting}
 		<h:dataTable value="#{items}" var="item">
@@ -513,10 +573,11 @@ public class Persona {
 		\end{lstlisting}
 	\end{itemize}
 
-\vspace{0.8em}
-
 \item Consente estensione delle funzionalità tramite librerie di terze parti
 	\begin{itemize}
+	
+	\vspace{0.5em}
+	
 	\item \textsl{PrimeFaces}
 	\end{itemize}
 \end{itemize}
