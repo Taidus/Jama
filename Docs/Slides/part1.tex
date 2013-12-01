@@ -1,27 +1,21 @@
 \section{Introduzione}
 \subsection{Contesto Applicativo}
 \begin{frame}{Convenzione}
-\vskip2ex
-... un accordo fra l'Università, rappresentata da un docente, ed una azienda, per la realizzazione di un prodotto.
-\vskip2ex
-
-le fasi :\\
-\vskip2ex
-  \begin{enumerate}
-    \item Il docente si accorda con un'azienda riguardo ad un progetto.
-    \item Il docente, insieme al RAS, valuta i costi e stila la Tabella di Ripartizione dei compensi.
-    \item Il RAS prepara un documento da discutere nel prossimo Consiglio di Dipartimento, che deciderà se approvare o meno la convenzione.
-    \item In caso di approvazione la convenzione viene \textbf{inserita nell'applicazione}.
-    \item ...
-    \item La convenzione risulta esaurita (l'importo stabilito è stato pagato interamente) .
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Gestione di una Convenzione}
- \vskip-3ex
- L'applicazione deve \textbf{monitorare} la convenzione dal suo inserimento fino a quando risulti esaurita. 
- \vskip5ex
- In questo intervallo di tempo l'applicazione deve consentire di \textbf{compiere delle operazioni} sulla convenzione.
+  \begin{columns}[t]
+    \begin{column}{0.45\textwidth}
+      \begin{flushleft}
+	\vskip2ex
+	... un accordo fra l'Università ed una azienda per la realizzazione di un prodotto.
+      \end{flushleft}
+      \end{column}
+     \begin{column}{0.55\textwidth}
+      \begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.2]{images/convenzione_activity_diag.eps}
+      \end{figure}
+     \end{column}
+\end{columns}
+ 
 \end{frame}
 
 \subsection{Requisiti}
@@ -41,32 +35,48 @@ le fasi :\\
 
 \section{Analisi}
   \begin{frame}{Agenti}
+    \begin{columns}[t]
+      \begin{column}{0.7\textwidth}
     \vskip-3ex
     \begin{itemize}
-     \item L'Operatore:\\
-     \vskip3ex
+     \item L'Operatore amministrativo:\\
+     \vskip2ex
       \begin{itemize}
        \item inserisce, modifica convenzioni
        \item inserisce le rate
       \end{itemize}
-     \vskip3ex
+     \vskip2ex
      \item Il Docente:\\
       \begin{itemize}
        \item visualizza lo stato delle proprie convenzioni
       \end{itemize}
-     \vskip3ex
+     \vskip2ex
      \item Il Tempo:\\
       \begin{itemize}
        \item notifica le scadenze
       \end{itemize}
+      \vskip2ex
+      \item Amministratore
+	\begin{itemize}
+	 \item Gestisce gli utenti e i loro ruoli
+	\end{itemize}
 
-    \end{itemize}
+     \end{itemize}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \vskip-3em
+     \begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{images/agenti.eps}
+      \end{figure}
+    \end{column}
 
-    
+
+    \end{columns}
   \end{frame}
 
   \subsection{Casi d'Uso}
-  \begin{frame}{Casi d'uso dell'Operatore}
+  \begin{frame}{Casi d'uso dell'Operatore amministrativo}
     \begin{figure}[h]
     \label{use_case_diag_operator}
     \centering
@@ -74,63 +84,119 @@ le fasi :\\
     \end{figure}
   \end{frame}
   
-  \begin{frame}{Esempio di caso d'uso}
-   
-   \vskip-2ex
-      \begin{beamerboxesrounded}[lower=lowercolor, shadow=true]{}
-     \begin{center}
-	\normalsize{Inserimento di una nuova convenzione\\}
-     \end{center}
-    \end{beamerboxesrounded}
-  
-  \vskip2ex
-  \textbf{Percorso base}:
-  l'Operatore, una volta effettuato il login, clicca su ``Crea una convenzione"; viene visualizzata una schermata suddivisa in varie schede,
-  ognuna corrispondente ad un passo della procedura. I passi sono:
-  \begin{enumerate}
-    \item Inserimento dei dati della convenzione\\
-      \begin{itemize}
-	\item Il titolo
-	\item L'importo totale
-	\item ...
-      \end{itemize}
-            
-    \item Inserimento della tabella di ripartizione\\
-    \item Inserimento delle rate  
-    \item Inserimento della documentazione relativa alla convenzione\\
-    \vskip2ex
-    
-    L'Operatore clicca su ``Salva," la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente.
-    
-  \end{enumerate}
-  \end{frame}
-  
-  \begin{frame}{Esempio di caso d'uso}
-  
+   \begin{frame}{Esempio di caso d'uso}
+\tiny
+    \begin{tabular}{| l | l|}
+      \hline
+       \textbf{UC \#D1} & \textbf{Inserisci convenzione} \\
+      \hline
+      Level & User goal \\
+      \hline
+      Actor & Operatore Amministrativo \\
+      \hline
+      Preconditions & L'Operatore deve aver effettuato il login \\
+	\hline
+      Basic Course & {\tiny
+	\begin{minipage}{0.7\textwidth}
+	  \vskip1ex
+	  \begin{enumerate}
+	    \item l'Operatore clicca su ``Crea una convenzione"; viene visualizzata una schermata suddivisa in varie schede,
+	      ognuna corrispondente ad un passo della procedura.
+	    \item inserisce i dati della convenzione : il titolo, l'importo totale, la data di approvazione, la ditta, \ldots
+	    \item inserisce la tabella di ripartizione
+	    \item inserisce delle rate  
+	    \item inserisce la documentazione relativa alla convenzione
+	    \item clicca su ``Salva," la convenzione viene salvata e la procedura termina. Si ritorna alla schermata precedente. 
+	\end{enumerate}
+	\vskip1ex
+	
+      \end{minipage}
+      }
+      \\
+      \hline
+      Alternative courses & {\tiny
+	\begin{minipage}{0.7\textwidth}
+	\vskip1ex
+	\begin{itemize}
+	 \item [xa]   l'Operatore clicca sul tasto ``Salva'' o ``Successivo'' senza aver compilato alcuni dei campi obbligatori, o avendo inserito dei valori non consentiti; viene visualizzato un messaggio di errore 
+	    e il documento non viene salvato. La schermata non viene cambiata, dando la possibilità all'Operatore di procedere alla correzione.
+	 \item[xb]   durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla'', che comporta, a seguito di una conferma, il ritorno alla schermata precedente
+	    senza che la convenzione venga inserita o i cambiamenti effettuati salvati.\\
+	\end{itemize}
 
-  \textbf{Percorso alternativo 1}:
-  l'Operatore clicca sul tasto ``Salva'' o ``Successivo'' senza aver compilato alcuni dei campi obbligatori, o avendo inserito dei valori non consentiti; viene visualizzato un messaggio di errore 
-  e il documento non viene salvato. La schermata non viene cambiata, dando la possibilità all'Operatore di procedere alla correzione.
+  
+  \vskip1ex
 
-  
-  \vskip3ex
-  
-  \textbf{Percorso alternativo 2}:
-  durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla'', che comporta, a seguito di una conferma, il ritorno alla schermata precedente
-  senza che la convenzione venga inserita o i cambiamenti effettuati salvati.
-  
 
-   
-   
-  \end{frame}
+  \vskip1ex
+	\end{minipage}
+	}
+\\
+      \hline
+    \end{tabular}
+   \end{frame}
+
   
   \begin{frame}{}
-     \begin{figure}[h]
-      \centering
-      \includegraphics[scale=0.25]{images/flows.png}
-    \end{figure}
-   
-  \end{frame}
+    \begin{columns}[t]
+      \begin{column}{0.4\textwidth}
+      
+      
+      
+      
+    \tiny
+    \begin{tabular}{| l | l|}
+      \hline
+       \textbf{UC \#D1} & \textbf{Inserisci convenzione} \\
+      \hline
+      Level & User goal \\
+      \hline
+      Actor & Operatore Amministrativo \\
+      \hline
+      Preconditions & L'Operatore deve aver effettuato il login \\
+	\hline
+      Basic Course & {\tiny
+	\begin{minipage}{0.7\textwidth}
+	  \vskip1ex
+	  \begin{enumerate}
+	    \item l'Operatore clicca su ``Crea una convenzione"; viene visualizzata una schermata suddivisa in varie schede,
+	      ognuna corrispondente ad un passo della procedura.
+	    \item \ldots 
+	\end{enumerate}
+	\vskip1ex
+	
+      \end{minipage}
+      }
+      \\
+      \hline
+      Alternative courses & {\tiny
+	\begin{minipage}{0.6\textwidth}
+	\vskip1ex
+	\begin{itemize}
+	 \item [xa]   l'Operatore clicca sul tasto ``Salva'' o ``Successivo'' senza aver compilato alcuni dei campi \ldots \\
+	 \item[xb]   durante uno qualsiasi dei passi, l'Operatore  clicca sul tasto ``Annulla'' \ldots \\
+	\end{itemize}
+
+  
+  \vskip1ex
+
+
+  \vskip1ex
+	\end{minipage}
+	}
+\\
+      \hline
+    \end{tabular}
+      \end{column}
+      \begin{column}{0.7\textwidth}
+	\vskip5ex
+       \begin{figure}[h]
+        \centering
+        \includegraphics[scale=0.15]{images/flows.png}
+       \end{figure}
+      \end{column}
+     \end{columns}
+    \end{frame}
 
 
   
@@ -138,7 +204,7 @@ le fasi :\\
     \begin{figure}[h]
       \label{use_case_diag_teacher}
       \centering
-      \includegraphics[width=0.8\textwidth]{images/casi_uso_docente.eps}
+      \includegraphics[width=0.5\textwidth]{images/casi_uso_docente.eps}
     \end{figure}
   \end{frame}
   
@@ -146,14 +212,23 @@ le fasi :\\
     \begin{figure}[h]
       \label{use_case_diag_time}
       \centering
-      \includegraphics[width = 0.5\textwidth]{images/casi_uso_tempo.eps}
+      \includegraphics[width = 0.4\textwidth]{images/casi_uso_tempo.eps}
     \end{figure}
   \end{frame}
+  
+  \begin{frame}{Caso d'uso dell'Amministratore}
+    \begin{figure}
+     \centering
+           \includegraphics[width = 0.5\textwidth]{images/casi_uso_amministratore.eps}
+    \end{figure}
+
+  \end{frame}
+
 
 
   
   \subsection{Modello di Business}
-  \begin{frame}{Gli oggetti del modello}
+  \begin{frame}{Modello di Dominio}
      \begin{itemize}
       \item Convenzione
       \item Rata

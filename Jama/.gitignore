@@ -10,3 +10,4 @@
 *.backup
 *.pdf
 *.nav
+/bin
