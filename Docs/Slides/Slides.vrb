@@ -1,0 +1,29 @@
+\frametitle {JavaServer Faces}\par \begin{itemize}
+\item Framework per lo sviluppo di interfaccia grafica
+
+\vspace{0.8em}
+
+\item \textsl{Component-based}
+\begin{itemize}
+\item Esempio: \textsl{dataTable}
+\begin{lstlisting}
+<h:dataTable value="#{items}" var="item">
+    <h:column>
+        #{item.property1}
+    </h:column>
+    <h:column>
+        #{item.property2}
+    </h:column>
+    ...
+</h:dataTable>
+\end{lstlisting}
+\end{itemize}
+
+\vspace{0.8em}
+
+\item Consente estensione delle funzionalità tramite librerie di terze parti
+\begin{itemize}
+\item \textsl{PrimeFaces}
+\end{itemize}
+\end{itemize}
+
