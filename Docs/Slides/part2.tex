@@ -125,7 +125,7 @@ public class MovieLister{
 
 \begin{lstlisting}[basicstyle={\tiny\ttfamily}]
 public class MovieLister{
-    @Inject private MovieFinder finder;
+    &&@Inject&& private MovieFinder finder;
     
     public MovieLister() {
     }
@@ -228,7 +228,7 @@ public class MovieLister{
 
 
 \begin{lstlisting}[xleftmargin=0.3\textwidth,  basicstyle={\tiny\ttfamily}]
-@Entity
+&&@Entity&&
 public class Persona {
     private String nome, cognome;
     
@@ -398,7 +398,7 @@ public class Persona {
 
 \item Esempio:
 	\begin{lstlisting}
-	@RequestScoped
+	&&@RequestScoped&&
 	public class MovieFinderImpl implements MovieFinder { ... }
 	\end{lstlisting}
 
@@ -445,26 +445,22 @@ public class Persona {
 \begin{itemize}
 \item Creazione qualifier:
 	\begin{lstlisting}
-		@Qualifier
-		@Target({TYPE, METHOD, PARAMETER, FIELD})
-		@Retention(RUNTIME)
+		&&@Qualifier&&
+		&&@Target&&({TYPE, METHOD, PARAMETER, FIELD})
+		&&@Retention&&(RUNTIME)
 		public @interface CreditCard {}
 	\end{lstlisting}
-\end{itemize}
 
-
-
-\begin{itemize}
 \item Annotazione implementazione:
 	\begin{lstlisting}
-		@CreditCard
+		&&@CreditCard&&
 		public class CreditCardPaymentProcessor implements PaymentProcessor { ... }
 	\end{lstlisting}
 
 \item Iniezione di dipendenza:
 	\begin{lstlisting}
 		public class BookShop {
-		    @Inject @CreditCard 
+		    &&@Inject @CreditCard&&
 		    private PaymentProcessor paymentProcessor;
 		    ...
 		}
@@ -482,13 +478,13 @@ public class Persona {
 \begin{itemize}
 \item Annotazione alternativa:
 	\begin{lstlisting}
-	@Alternative
+	&&@Alternative&&
 	public class CreditCardPaymentProcessor implements PaymentProcessor { ... }
 	\end{lstlisting}
 
 
 \item Configurazione \texttt{bean.xml}:
-	\begin{lstlisting}
+	\begin{lstlisting}[language=XML, morekeywords={alternatives,class}]
 	<alternatives>
 	<class>org.mycompany.CreditCardPaymentProcessor</class>
 	</alternatives>
@@ -497,7 +493,7 @@ public class Persona {
 \item Iniezione di dipendenza:
 	\begin{lstlisting}
 		public class BookShop {
-		    @Inject private PaymentProcessor paymentProcessor;
+		    &&@Inject&& private PaymentProcessor paymentProcessor;
 		    ...
 		}
 	\end{lstlisting}
@@ -516,10 +512,10 @@ public class Persona {
 \begin{itemize}
 \item Annotazione metodo:
 	\begin{lstlisting}
-	@SessionScoped
+	&&@SessionScoped&&
 	public class Preferences implements Serializable {
 	    ...
-	    @Produces PaymentProcessor getPaymentProcessor() {
+	    &&@Produces&& PaymentProcessor getPaymentProcessor() {
 	        if( ... ){
 	            return new CreditCardPaymentProcessor();
 	        }
@@ -534,7 +530,7 @@ public class Persona {
 \item Iniezione di dipendenza:
 	\begin{lstlisting}
 	public class BookShop {
-	    @Inject private PaymentProcessor paymentProcessor;
+	    &&@Inject&& private PaymentProcessor paymentProcessor;
 	    ...
 	}
 	\end{lstlisting}
