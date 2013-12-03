@@ -1,29 +1,55 @@
-\frametitle {JavaServer Faces}\par \begin{itemize}
-\item Framework per lo sviluppo di interfaccia grafica
+\frametitle{Architettura}
+\begin{columns}[T]
+\begin{column}{.5\textwidth}
+
+
+\begin{itemize}
+\item Sicurezza su base metodo
+
+\begin{itemize}
+\item Classe \textsl{Authorizer}
+\vspace{0.8em}
+\item Annotare i metodi\newline
+da controllare
+\end{itemize}
 
 \vspace{0.8em}
-
-\item \textsl{Component-based}
+\item Sicurezza su base pagina
 \begin{itemize}
-\item Esempio: \textsl{dataTable}
-\begin{lstlisting}
-<h:dataTable value="#{items}" var="item">
-    <h:column>
-        #{item.property1}
-    </h:column>
-    <h:column>
-        #{item.property2}
-    </h:column>
-    ...
-</h:dataTable>
+\item Gerarchia interfacce/classi -\textgreater  cartelle/pagine
+\vspace{0.8em}
+\item Classe \textsl{AccessDecisionVoter}
+\vspace{0.8em}
+\item Possibilità di specificare\newline
+una pagina di errore\newline
+con un messaggio adatto
+\end{itemize}
+\end{itemize}
+\end{column}
+
+\begin{column}{.5\textwidth}
+\vspace{2.6em}
+\includegraphics[width=1\textwidth]{deltaspikeMethod.eps}
+
+\vspace{1.6em}
+\begin{lstlisting}[basicstyle={\tiny\ttfamily}]
+
+interface Pages{
+    &&@Secured&&(value = { MyVoter.class },
+    errorView = MyErrorPage.class)
+    class AgreementWiz implements ViewConfig {
+    }
+
+    &&@Secured&&(value = { MyOtherVoter.class },
+    errorView = MyOtherErrorPage.class)
+    class Home implements ViewConfig {
+    }
+
+    class MyErrorPage {}
+    class MyOtherErrorPage{}
+}
 \end{lstlisting}
-\end{itemize}
 
-\vspace{0.8em}
+\end{column}
 
-\item Consente estensione delle funzionalità tramite librerie di terze parti
-\begin{itemize}
-\item \textsl{PrimeFaces}
-\end{itemize}
-\end{itemize}
-
+\end{columns}
