@@ -1,4 +1,4 @@
-\beamer@endinputifotherversion {3.10pt}
+\beamer@endinputifotherversion {3.27pt}
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
 \headcommand {\sectionentry {1}{Introduzione}{2}{Introduzione}{0}}
@@ -33,92 +33,99 @@
 \headcommand {\beamer@framepages {11}{11}}
 \headcommand {\slideentry {2}{2}{2}{12/12}{Modello di Business}{0}}
 \headcommand {\beamer@framepages {12}{12}}
-\headcommand {\sectionentry {3}{Tecnologie}{13}{Tecnologie}{0}}
-\headcommand {\beamer@sectionpages {4}{12}}
-\headcommand {\beamer@subsectionpages {11}{12}}
-\headcommand {\beamer@subsectionentry {0}{3}{1}{13}{Introduzione}}\headcommand {\beamer@subsectionpages {13}{12}}
-\headcommand {\slideentry {3}{1}{1}{13/13}{Introduzione}{0}}
+\headcommand {\slideentry {2}{2}{3}{13/13}{Modello di Business}{0}}
 \headcommand {\beamer@framepages {13}{13}}
-\headcommand {\slideentry {3}{1}{2}{14/14}{Introduzione}{0}}
+\headcommand {\sectionentry {3}{Tecnologie}{14}{Tecnologie}{0}}
+\headcommand {\beamer@sectionpages {4}{13}}
+\headcommand {\beamer@subsectionpages {11}{13}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{14}{Introduzione}}\headcommand {\beamer@subsectionpages {14}{13}}
+\headcommand {\slideentry {3}{1}{1}{14/14}{Introduzione}{0}}
 \headcommand {\beamer@framepages {14}{14}}
-\headcommand {\slideentry {3}{1}{3}{15/15}{Introduzione}{0}}
+\headcommand {\slideentry {3}{1}{2}{15/15}{Introduzione}{0}}
 \headcommand {\beamer@framepages {15}{15}}
-\headcommand {\slideentry {3}{1}{4}{16/16}{Introduzione}{0}}
+\headcommand {\slideentry {3}{1}{3}{16/16}{Introduzione}{0}}
 \headcommand {\beamer@framepages {16}{16}}
-\headcommand {\beamer@subsectionentry {0}{3}{2}{17}{JPA}}\headcommand {\beamer@subsectionpages {13}{16}}
-\headcommand {\slideentry {3}{2}{1}{17/17}{JPA}{0}}
+\headcommand {\slideentry {3}{1}{4}{17/17}{Introduzione}{0}}
 \headcommand {\beamer@framepages {17}{17}}
-\headcommand {\slideentry {3}{2}{2}{18/18}{JPA}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{18}{JPA}}\headcommand {\beamer@subsectionpages {14}{17}}
+\headcommand {\slideentry {3}{2}{1}{18/18}{JPA}{0}}
 \headcommand {\beamer@framepages {18}{18}}
-\headcommand {\slideentry {3}{2}{3}{19/19}{JPA}{0}}
+\headcommand {\slideentry {3}{2}{2}{19/19}{JPA}{0}}
 \headcommand {\beamer@framepages {19}{19}}
-\headcommand {\slideentry {3}{2}{4}{20/20}{JPA}{0}}
+\headcommand {\slideentry {3}{2}{3}{20/20}{JPA}{0}}
 \headcommand {\beamer@framepages {20}{20}}
-\headcommand {\slideentry {3}{2}{5}{21/21}{JPA}{0}}
+\headcommand {\slideentry {3}{2}{4}{21/21}{JPA}{0}}
 \headcommand {\beamer@framepages {21}{21}}
-\headcommand {\slideentry {3}{2}{6}{22/22}{JPA}{0}}
+\headcommand {\slideentry {3}{2}{5}{22/22}{JPA}{0}}
 \headcommand {\beamer@framepages {22}{22}}
-\headcommand {\beamer@subsectionentry {0}{3}{3}{23}{CDI}}\headcommand {\beamer@subsectionpages {17}{22}}
-\headcommand {\slideentry {3}{3}{1}{23/23}{CDI}{0}}
+\headcommand {\slideentry {3}{2}{6}{23/23}{JPA}{0}}
 \headcommand {\beamer@framepages {23}{23}}
-\headcommand {\slideentry {3}{3}{2}{24/24}{CDI}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{24}{CDI}}\headcommand {\beamer@subsectionpages {18}{23}}
+\headcommand {\slideentry {3}{3}{1}{24/24}{CDI}{0}}
 \headcommand {\beamer@framepages {24}{24}}
-\headcommand {\slideentry {3}{3}{3}{25/25}{CDI}{0}}
+\headcommand {\slideentry {3}{3}{2}{25/25}{CDI}{0}}
 \headcommand {\beamer@framepages {25}{25}}
-\headcommand {\slideentry {3}{3}{4}{26/26}{CDI}{0}}
+\headcommand {\slideentry {3}{3}{3}{26/26}{CDI}{0}}
 \headcommand {\beamer@framepages {26}{26}}
-\headcommand {\slideentry {3}{3}{5}{27/27}{CDI}{0}}
+\headcommand {\slideentry {3}{3}{4}{27/27}{CDI}{0}}
 \headcommand {\beamer@framepages {27}{27}}
-\headcommand {\slideentry {3}{3}{6}{28/28}{CDI}{0}}
+\headcommand {\slideentry {3}{3}{5}{28/28}{CDI}{0}}
 \headcommand {\beamer@framepages {28}{28}}
-\headcommand {\beamer@subsectionentry {0}{3}{4}{29}{JSF}}\headcommand {\beamer@subsectionpages {23}{28}}
-\headcommand {\slideentry {3}{4}{1}{29/29}{JSF}{0}}
+\headcommand {\slideentry {3}{3}{6}{29/29}{CDI}{0}}
 \headcommand {\beamer@framepages {29}{29}}
-\headcommand {\slideentry {3}{4}{2}{30/30}{JSF}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{4}{30}{JSF}}\headcommand {\beamer@subsectionpages {24}{29}}
+\headcommand {\slideentry {3}{4}{1}{30/30}{JSF}{0}}
 \headcommand {\beamer@framepages {30}{30}}
-\headcommand {\slideentry {3}{4}{3}{31/31}{JSF}{0}}
+\headcommand {\slideentry {3}{4}{2}{31/31}{JSF}{0}}
 \headcommand {\beamer@framepages {31}{31}}
-\headcommand {\beamer@subsectionentry {0}{3}{5}{32}{Architettura}}\headcommand {\beamer@subsectionpages {29}{31}}
-\headcommand {\slideentry {3}{5}{1}{32/32}{Architettura}{0}}
+\headcommand {\slideentry {3}{4}{3}{32/32}{JSF}{0}}
 \headcommand {\beamer@framepages {32}{32}}
-\headcommand {\beamer@subsectionentry {0}{3}{6}{33}{Deltaspike}}\headcommand {\beamer@subsectionpages {32}{32}}
-\headcommand {\slideentry {3}{6}{1}{33/33}{Deltaspike}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{5}{33}{Architettura}}\headcommand {\beamer@subsectionpages {30}{32}}
+\headcommand {\slideentry {3}{5}{1}{33/33}{Architettura}{0}}
 \headcommand {\beamer@framepages {33}{33}}
-\headcommand {\slideentry {3}{6}{2}{34/34}{Deltaspike}{0}}
+\headcommand {\slideentry {3}{5}{2}{34/34}{Architettura}{0}}
 \headcommand {\beamer@framepages {34}{34}}
-\headcommand {\slideentry {3}{6}{3}{35/35}{Deltaspike}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{6}{35}{Deltaspike}}\headcommand {\beamer@subsectionpages {33}{34}}
+\headcommand {\slideentry {3}{6}{1}{35/35}{Deltaspike}{0}}
 \headcommand {\beamer@framepages {35}{35}}
-\headcommand {\sectionentry {4}{Utenti}{36}{Utenti}{0}}
-\headcommand {\beamer@sectionpages {13}{35}}
-\headcommand {\beamer@subsectionpages {33}{35}}
-\headcommand {\beamer@subsectionentry {0}{4}{1}{36}{Modello}}\headcommand {\beamer@subsectionpages {36}{35}}
-\headcommand {\slideentry {4}{1}{1}{36/36}{Modello}{0}}
+\headcommand {\slideentry {3}{6}{2}{36/36}{Deltaspike}{0}}
 \headcommand {\beamer@framepages {36}{36}}
-\headcommand {\beamer@subsectionentry {0}{4}{2}{37}{Ruoli e Permessi}}\headcommand {\beamer@subsectionpages {36}{36}}
-\headcommand {\slideentry {4}{2}{1}{37/37}{Ruoli e Permessi}{0}}
+\headcommand {\slideentry {3}{6}{3}{37/37}{Deltaspike}{0}}
 \headcommand {\beamer@framepages {37}{37}}
-\headcommand {\sectionentry {5}{Collaudo}{38}{Collaudo}{0}}
-\headcommand {\beamer@sectionpages {36}{37}}
-\headcommand {\beamer@subsectionpages {37}{37}}
-\headcommand {\beamer@subsectionentry {0}{5}{1}{38}{Introduzione}}\headcommand {\beamer@subsectionpages {38}{37}}
-\headcommand {\slideentry {5}{1}{1}{38/38}{Introduzione}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{7}{38}{LDAP}}\headcommand {\beamer@subsectionpages {35}{37}}
+\headcommand {\slideentry {3}{7}{1}{38/38}{LDAP}{0}}
 \headcommand {\beamer@framepages {38}{38}}
-\headcommand {\slideentry {5}{1}{2}{39/39}{Introduzione}{0}}
+\headcommand {\sectionentry {4}{Utenti}{39}{Utenti}{0}}
+\headcommand {\beamer@sectionpages {14}{38}}
+\headcommand {\beamer@subsectionpages {38}{38}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{39}{Modello}}\headcommand {\beamer@subsectionpages {39}{38}}
+\headcommand {\slideentry {4}{1}{1}{39/39}{Modello}{0}}
 \headcommand {\beamer@framepages {39}{39}}
-\headcommand {\beamer@subsectionentry {0}{5}{2}{40}{Risultati}}\headcommand {\beamer@subsectionpages {38}{39}}
-\headcommand {\slideentry {5}{2}{1}{40/40}{Risultati}{0}}
+\headcommand {\beamer@subsectionentry {0}{4}{2}{40}{Ruoli e Permessi}}\headcommand {\beamer@subsectionpages {39}{39}}
+\headcommand {\slideentry {4}{2}{1}{40/40}{Ruoli e Permessi}{0}}
 \headcommand {\beamer@framepages {40}{40}}
-\headcommand {\sectionentry {6}{Conclusioni}{41}{Conclusioni}{0}}
-\headcommand {\beamer@sectionpages {38}{40}}
+\headcommand {\sectionentry {5}{Collaudo}{41}{Collaudo}{0}}
+\headcommand {\beamer@sectionpages {39}{40}}
 \headcommand {\beamer@subsectionpages {40}{40}}
-\headcommand {\slideentry {6}{0}{2}{41/41}{}{0}}
+\headcommand {\beamer@subsectionentry {0}{5}{1}{41}{Introduzione}}\headcommand {\beamer@subsectionpages {41}{40}}
+\headcommand {\slideentry {5}{1}{1}{41/41}{Introduzione}{0}}
 \headcommand {\beamer@framepages {41}{41}}
-\headcommand {\slideentry {6}{0}{3}{42/42}{}{0}}
+\headcommand {\slideentry {5}{1}{2}{42/42}{Introduzione}{0}}
 \headcommand {\beamer@framepages {42}{42}}
-\headcommand {\slideentry {6}{0}{4}{43/43}{}{0}}
+\headcommand {\beamer@subsectionentry {0}{5}{2}{43}{Risultati}}\headcommand {\beamer@subsectionpages {41}{42}}
+\headcommand {\slideentry {5}{2}{1}{43/43}{Risultati}{0}}
 \headcommand {\beamer@framepages {43}{43}}
-\headcommand {\beamer@partpages {1}{43}}
-\headcommand {\beamer@subsectionpages {41}{43}}
+\headcommand {\sectionentry {6}{Conclusioni}{44}{Conclusioni}{0}}
 \headcommand {\beamer@sectionpages {41}{43}}
-\headcommand {\beamer@documentpages {43}}
-\headcommand {\def \inserttotalframenumber {43}}
+\headcommand {\beamer@subsectionpages {43}{43}}
+\headcommand {\slideentry {6}{0}{2}{44/44}{}{0}}
+\headcommand {\beamer@framepages {44}{44}}
+\headcommand {\slideentry {6}{0}{3}{45/45}{}{0}}
+\headcommand {\beamer@framepages {45}{45}}
+\headcommand {\slideentry {6}{0}{4}{46/46}{}{0}}
+\headcommand {\beamer@framepages {46}{46}}
+\headcommand {\beamer@partpages {1}{46}}
+\headcommand {\beamer@subsectionpages {44}{46}}
+\headcommand {\beamer@sectionpages {44}{46}}
+\headcommand {\beamer@documentpages {46}}
+\headcommand {\def \inserttotalframenumber {46}}
