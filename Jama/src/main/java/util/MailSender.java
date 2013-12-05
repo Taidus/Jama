@@ -44,59 +44,6 @@ public class MailSender implements Serializable {
 	private UserDaoBean userDao;
 
 
-	@Deprecated
-	private void send(String recipientEmail, String subject, String text) {
-		//TODO eliminare
-		
-
-		// MimeMessage message = new MimeMessage(mailSession);
-		// try {
-		// message.setRecipient(RecipientType.TO, new
-		// InternetAddress(recipientEmail));
-		// message.setSubject(subject);
-		// message.setText(text);
-		// message.saveChanges();
-		//
-		// Transport.send(message);
-		//
-		// } catch (MessagingException e) {
-		// e.printStackTrace();
-		// }
-
-		if (recipientEmail != null) {
-
-			String host = "smtp.gmail.com";
-			String username = "jama.mail.services";
-			String password = "pastrullo";
-
-			MimeMessage message = new MimeMessage(mailSession);
-			try {
-
-				message.setRecipient(RecipientType.TO, new InternetAddress(recipientEmail));
-				message.setSubject(subject);
-				message.setText(text);
-				message.saveChanges();
-
-				Transport t = mailSession.getTransport("smtps");
-				try {
-					t.connect(host, username, password);
-					t.sendMessage(message, message.getAllRecipients());
-				} finally {
-					t.close();
-				}
-
-			} catch (MessagingException e) {// TODO aggiungere growl opportuno
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
-			}
-		}
-		else {
-			Date date = new Date();
-			System.err.println(date + ": Error sending email, null address");
-		}
-	}
-
-
 	private void send(String subject, String text, String[] recipients) throws MessagingException {
 		if (recipients != null && recipients.length > 0) {
 
@@ -151,8 +98,7 @@ public class MailSender implements Serializable {
 			// bundle
 
 			exceptionThrown = false;
-			spam(); // TODO NON e dico NON eliminare
-
+			
 		} catch (IOException | TemplateException | MessagingException e) {
 			System.err.println(new Date() + ": exception thrown in MailSender.notifyEvent: " + e);
 		} catch (Exception e) {
@@ -163,14 +109,6 @@ public class MailSender implements Serializable {
 		if (exceptionThrown) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
 		}
-	}
-
-
-	private void spam() throws MessagingException {
-		// XXX inutile ai fini della business logic, ma chi non vorrebbe mandare
-		// spam a Damaz?
-		send("Promozione", "Sei stato promosso al grado di Spazzacamino nella DeltaSpikeForce! Mammejo!", new String[] { "damaz91@live.it" });
-		send("", "Partecipa al concorso Jama per accrescere le dimensioni del tuo pene!", new String[] { "zugo@hotmail.it" });
 	}
 
 

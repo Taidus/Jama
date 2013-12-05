@@ -15,11 +15,13 @@ import util.Messages;
 import util.Percent;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
+import businessLayer.PersonnelShareDetails;
 
 public abstract class ShareTablePresentationObj {
 
-//	private PersonnelShare selectedShare;
+	// private PersonnelShare selectedShare;
 	private PersonnelShare newShare;
+
 
 	protected ShareTablePresentationObj() {
 		newShare = new PersonnelShare();
@@ -28,54 +30,66 @@ public abstract class ShareTablePresentationObj {
 		// cosa positiva)
 	}
 
+
 	protected abstract AbstractShareTable getTransferObjShareTable();
 
+
 	protected abstract Money getTransfetObjWholeAmount();
+
 
 	public List<PersonnelShare> getShares() {
 		System.out.println("Building");
 		List<PersonnelShare> result = new ArrayList<>();
-		Map<ChiefScientist, Percent> shares = getTransferObjShareTable().getSharePerPersonnel();
+		Map<ChiefScientist, PersonnelShareDetails> shares = getTransferObjShareTable().getSharePerPersonnel();
 		for (ChiefScientist chief : shares.keySet()) {
-			result.add(new PersonnelShare(chief, shares.get(chief)));
+			PersonnelShareDetails d = shares.get(chief);
+			result.add(new PersonnelShare(chief, d.getShare(), d.getId()));
 		}
 		return result;
 	}
 
+
 	public void addShare() {
-		getTransferObjShareTable().getSharePerPersonnel().put(newShare.chiefScientist, newShare.value);
+		getTransferObjShareTable().getSharePerPersonnel().put(newShare.getChiefScientist(),
+				new PersonnelShareDetails(newShare.getId(), newShare.getValue()));
 		newShare = new PersonnelShare();
 	}
+
 
 	public void removeShare(PersonnelShare share) {
 		getTransferObjShareTable().getSharePerPersonnel().remove(share.chiefScientist);
 	}
-	
-//	public void editValue(PersonnelShare badshare){
-//		PersonnelShare share = selectedShare;
-//		System.out.println("Edit value sees: " + share.getValue());
-//		getTransferObjShareTable().getSharePerPersonnel().put(share.chiefScientist, share.getValue());
-//	}
 
-//	public PersonnelShare getSelectedShare() {
-//		return selectedShare;
-//	}
-//
-//	public void setSelectedShare(PersonnelShare selectedValue) {
-//		this.selectedShare = selectedValue;
-//	}
+
+	// public void editValue(PersonnelShare badshare){
+	// PersonnelShare share = selectedShare;
+	// System.out.println("Edit value sees: " + share.getValue());
+	// getTransferObjShareTable().getSharePerPersonnel().put(share.chiefScientist,
+	// share.getValue());
+	// }
+
+	// public PersonnelShare getSelectedShare() {
+	// return selectedShare;
+	// }
+	//
+	// public void setSelectedShare(PersonnelShare selectedValue) {
+	// this.selectedShare = selectedValue;
+	// }
 
 	public PersonnelShare getNewShare() {
 		return newShare;
 	}
 
+
 	public Set<ChiefScientist> getAddedChiefs() {
 		return getTransferObjShareTable().getSharePerPersonnel().keySet();
 	}
 
+
 	public AbstractShareTable getShareTable() {
 		return getTransferObjShareTable();
 	}
+
 
 	public void validateMainValues(FacesContext context, UIComponent component, Object value) {
 		if (getTransferObjShareTable().getGoodsAndServices().lessThan(Percent.ZERO)) {
@@ -83,11 +97,13 @@ public abstract class ShareTablePresentationObj {
 		}
 	}
 
+
 	public void validateGoodsAndServices(FacesContext context, UIComponent component, Object value) {
 		if (getTransferObjShareTable().getOtherCost().lessThan(Percent.ZERO)) {
 			throw new ValidatorException(Messages.getErrorMessage("err_shareTableGoods"));
 		}
 	}
+
 
 	public void validatePersonnelShares(FacesContext context, UIComponent component, Object value) {
 
@@ -95,60 +111,100 @@ public abstract class ShareTablePresentationObj {
 		System.out.println(personnel + " scale: " + personnel.getValue().scale() + "; zero scale: " + Percent.ZERO.getValue().scale());
 		if (!personnel.equals(Percent.ZERO)) {
 			System.out.println("Entered");
-			Percent sum = Percent.sum(getTransferObjShareTable().getSharePerPersonnel().values());
+
+			Percent sum = Percent.ZERO;
+
+			for (PersonnelShareDetails d : getTransferObjShareTable().getSharePerPersonnel().values()) {
+				sum = Percent.sum(sum, d.getShare());
+			}
+
 			if (!sum.equals(Percent.ONE)) {
 				throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 			}
 		}
 	}
 
+
 	public Money computePercentOnWholeAmount(Percent percent) {
 		return percent.computeOn(getTransfetObjWholeAmount());
 	}
+
 
 	public Money computePercentOnGoodsAndServices(Percent percent) {
 		return percent.computeOn(computePercentOnWholeAmount(getTransferObjShareTable().getGoodsAndServices()));
 	}
 
+
+
 	public class PersonnelShare {
 		private ChiefScientist chiefScientist;
 		private Percent value;
+		private String id;
 
-		public PersonnelShare(ChiefScientist chiefScientist, Percent value) {
+
+		public PersonnelShare(ChiefScientist chiefScientist, Percent value, String id) {
 			this.chiefScientist = chiefScientist;
 			this.value = value;
+			this.id = id;
 		}
+
 
 		public PersonnelShare() {
 			this.chiefScientist = null;
 			this.value = Percent.ZERO;
+			this.id = "";
 		}
+
 
 		public ChiefScientist getChiefScientist() {
 			return chiefScientist;
 		}
 
+
 		public void setChiefScientist(ChiefScientist chiefScientist) {
 			this.chiefScientist = chiefScientist;
 		}
+
 
 		public Percent getValue() {
 			System.out.println("Personnel share getter called: " + value);
 			return value;
 		}
 
+
 		public void setValue(Percent value) {
 			System.out.println("Personnel share setter called: " + value);
 			this.value = value;
-			Map<ChiefScientist, Percent> map = getTransferObjShareTable().getSharePerPersonnel();
-			if(map.containsKey(this.chiefScientist)){
-				map.put(this.chiefScientist, this.value);
+			updateShareTablePersonnel();
+		}
+
+
+		public String getId() {
+			return id;
+		}
+
+
+		public void setId(String id) {
+			this.id = id;
+			updateShareTablePersonnel();
+		}
+
+
+		private void updateShareTablePersonnel() {
+			Map<ChiefScientist, PersonnelShareDetails> map = getTransferObjShareTable().getSharePerPersonnel();
+			if (map.containsKey(this.chiefScientist)) {
+//				map.put(this.chiefScientist, new PersonnelShareDetails(id, value));
+				map.get(this.chiefScientist).setId(id);
+				map.get(this.chiefScientist).setShare(value);
+				
 			}
 		}
+
 
 		public Money getFlatAmount() {
 			return value.computeOn(computePercentOnWholeAmount(getTransferObjShareTable().getPersonnel()));
 		}
+
 
 		@Override
 		public String toString() {

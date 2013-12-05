@@ -343,6 +343,7 @@
 			<p:columnGroup type="header">
 				<p:row>
 					<p:column headerText="#{msgs.shareTableInvolvedPersonnel}" />
+					<p:column headerText="#{msgs.shareTablePersonnelId}" />
 					<p:column colspan="2" headerText="#{msgs.share}" />
 					<p:column />
 				</p:row>
@@ -350,6 +351,19 @@
 
 			<p:column>
 				<h:outputText value="#{share.chiefScientist.completeName}" />
+			</p:column>
+			
+			<p:column>
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{share.id}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:inputText value="#{share.id}" label="#{msgs.table_id}">
+							<p:ajax event="valueChange" process="@this" update="personnelShares" />
+						</h:inputText>
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 
 			<p:column>
@@ -386,11 +400,11 @@
 		<p:panelGrid id="personnalShareInput" style="width: 100%" rendered="#{not cc.attrs.editingDisable}">
 
 			<p:row>
-				<p:column width="20%">
+				<p:column width="15%">
 					<h:outputText value="#{msgs.shareTableInvolvedPersonnel}" />
 				</p:column>
 
-				<p:column width="30%">
+				<p:column width="25%">
 					<p:selectOneMenu id="personnalShareChiefMenu" value="#{agrShareTablePB.newShare.chiefScientist}" label="#{msgs.chief}" filter="true"
 						filterMatchMode="contains" disabled="#{cc.attrs.editingDisable}" required="#{not empty param[_contractChiefShareAddBtn.clientId]}">
 						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
@@ -400,7 +414,15 @@
 					</p:selectOneMenu>
 				</p:column>
 
-				<p:column width="20%">
+				<p:column width="10%">
+					<h:outputText value="#{msgs.shareTablePersonnelId}" />
+				</p:column>
+
+				<p:column width="10%">
+					<h:inputText value="#{agrShareTablePB.newShare.id}" label="#{msgs.shareTablePersonnelId}" />
+				</p:column>
+
+				<p:column width="10%">
 					<h:outputText value="#{msgs.share}" />
 				</p:column>
 
