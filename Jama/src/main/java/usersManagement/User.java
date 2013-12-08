@@ -2,6 +2,7 @@ package usersManagement;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -37,27 +38,28 @@ public class User implements Serializable {
 	private String name;
 	private String surname;
 
-	// c'era indecisione sul numero di dipartimenti che può essere associato ad
-	// un utente (se uno o più d'uno). Attualmente ogni utente è associato ad un
-	// solo dipartimento, ma abbiamo mantenuto la lista per rendere un'eventuale
-	// modifica più semplice in futuro
-	@ManyToMany
-	private List<Department> belongingDepts;
+	private Department department;
 
 	private String serialNumber;
 
-	@Enumerated(EnumType.STRING)
-	private Role role;
+	// @Enumerated(EnumType.STRING)
+	// private RolePermission rolePermission;
+
+	private List<Role> roles;
 
 
-	public User() {
-		super();
-		this.belongingDepts = new ArrayList<>();
-	}
+	public User() {}
 
 
-	public boolean hasRole(Role role) {
-		return (role == this.role) ? true : false;
+	public boolean hasRolePermission(RolePermission rolePermission) {
+		boolean found = false;
+		Iterator<Role> it = this.roles.iterator();
+
+		while (!found && it.hasNext()) {
+			found = it.next().hasRolePermission(rolePermission);
+		}
+
+		return found;
 	}
 
 
@@ -81,13 +83,23 @@ public class User implements Serializable {
 	}
 
 
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return new ArrayList<>(roles);
 	}
 
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void addRole(Role role) {
+		if (role != null) {
+			this.roles.add(role);
+		}
+	}
+
+
+	public boolean removeRole(Role role) {
+		if (null == role) {
+			return false;
+		}
+		return this.roles.remove(role);
 	}
 
 
@@ -117,49 +129,39 @@ public class User implements Serializable {
 
 
 	public Department getDepartment() {
-		if(belongingDepts.isEmpty()){
-			return null;
-		}
-		return belongingDepts.get(0);
+		return department;
 	}
 
 
-	public void addDepartment(Department d) {
-		if (belongingDepts.isEmpty()) {
-			belongingDepts.add(d);
-		}
-		else {
-			belongingDepts.set(0, d);
-		}
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
-	
-	
 
 
 	public List<String> getBelongingDeptsCodes() {
-		List<String> result = new ArrayList<>();
-		for (Department d : belongingDepts) {
-			result.add(d.getCode());
-		}
-		return result;
+		return null;
+		// List<String> result = new ArrayList<>();
+		// for (Department d : belongingDepts) {
+		// result.add(d.getCode());
+		// }
+		// return result;
 	}
 
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", belongingDepts=" + belongingDepts
-				+ ", serialNumber=" + serialNumber + ", role=" + role + "]";
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", dep=" + department + ", serialNumber="
+				+ serialNumber + ", role=" + roles + "]";
 	}
-	
-	public void copy(User copy){
+
+
+	public void copy(User copy) {
 		this.email = copy.getEmail();
 		this.name = copy.getName();
 		this.surname = copy.getSurname();
-		this.belongingDepts = new ArrayList<>();
-		this.addDepartment(copy.getDepartment());
+		this.department = copy.getDepartment();
 		this.serialNumber = copy.getSerialNumber();
-		this.role = copy.getRole();
-	}	
-	
+		this.roles = copy.getRoles();
+	}
 
 }

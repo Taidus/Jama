@@ -8,7 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import usersManagement.LdapManager;
-import usersManagement.Role;
+import usersManagement.RolePermission;
 import usersManagement.User;
 import businessLayer.Department;
 
@@ -36,7 +36,7 @@ public class UserInit {
 			Department d = em.createNamedQuery("Department.findByCode", Department.class)
 					.setParameter("code", u.getDepartment().getCode())
 					.getSingleResult();
-			u.addDepartment(d);
+			u.setDepartment(d);
 		} catch (NoResultException e) {
 			em.persist(u.getDepartment());
 		}
@@ -53,7 +53,7 @@ public class UserInit {
 
 		String serial = "Z000000";
 		u = ldap.getUserBySerial(serial);
-		u.setRole(Role.ADMIN);
+		u.addRolePermission(RolePermission.ADMIN);
 		createUser(u);
 		System.out.println(u);
 		System.out.println(u.getDepartment().getRateDirectory());
@@ -62,7 +62,7 @@ public class UserInit {
 
 		serial = "Z000001";
 		u = ldap.getUserBySerial(serial);
-		u.setRole(Role.OPERATOR);
+		u.addRolePermission(RolePermission.OPERATOR);
 		createUser(u);
 		System.out.println(u);
 		System.out.println(u.getDepartment().getRateDirectory());
@@ -71,7 +71,7 @@ public class UserInit {
 
 		serial = "Z000002";
 		u = ldap.getUserBySerial(serial);
-		u.setRole(Role.PROFESSOR);
+		u.addRolePermission(RolePermission.PROFESSOR);
 		createUser(u);
 		System.out.println(u);
 		System.out.println(u.getDepartment().getRateDirectory());

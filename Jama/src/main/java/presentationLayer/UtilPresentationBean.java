@@ -12,7 +12,7 @@ import javax.enterprise.context.Dependent;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
-import usersManagement.Role;
+import usersManagement.RolePermission;
 import util.Messages;
 import businessLayer.Agreement;
 import businessLayer.AgreementType;
@@ -63,7 +63,7 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public SelectItem[] getRolesItems() {
-		Role[] types = Role.getUserRoles();
+		RolePermission[] types = RolePermission.getUserRolePermission();
 		SelectItem[] result = new SelectItem[types.length];
 		for (int i = 0; i < types.length; i++) {
 			result[i] = new SelectItem(types[i], types[i].getDisplayString());

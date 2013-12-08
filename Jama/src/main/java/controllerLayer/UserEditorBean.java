@@ -91,7 +91,7 @@ public class UserEditorBean implements Serializable {
 	}
 
 	public void setSelectedDept(Department selectedDept) {
-		currentUser.addDepartment(selectedDept);
+		currentUser.setDepartment(selectedDept);
 	}
 
 	public User getCurrentUser() {

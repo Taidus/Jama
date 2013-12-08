@@ -15,7 +15,7 @@ import annotations.Updated;
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
 import usersManagement.LdapManager;
-import usersManagement.Role;
+import usersManagement.RolePermission;
 import usersManagement.User;
 
 @Stateful
@@ -48,7 +48,7 @@ public class UserDaoBean {
 
 		Department d = deptDao.getByCode(user.getDepartment().getCode());
 		if(d != null){
-			user.addDepartment(d);
+			user.setDepartment(d);
 		}else{
 			em.persist(user.getDepartment());
 		}
@@ -60,7 +60,7 @@ public class UserDaoBean {
 		
 		em.persist(user);
 		
-		if(user.hasRole(Role.PROFESSOR)){
+		if(user.hasRolePermission(RolePermission.PROFESSOR)){
 			profCreationEvent.fire(user);
 		}
 		return user;
@@ -101,7 +101,7 @@ public class UserDaoBean {
 	public void onChiefCreation(@Observes @Updated ChiefScientist c){
 		if(getBySerialNumber(c.getSerialNumber())== null){
 			User u =ldap.getUserBySerial(c.getSerialNumber());
-			u.setRole(Role.PROFESSOR);
+			u.addRolePermission(RolePermission.PROFESSOR);
 			create(u);
 		}
 	}

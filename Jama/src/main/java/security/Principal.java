@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import usersManagement.Permission;
-import usersManagement.Role;
+import usersManagement.RolePermission;
 import usersManagement.User;
 
 public class Principal {
@@ -14,15 +14,15 @@ public class Principal {
 	private String email;
 	private String serialNumber;
 	//TODO cambiare in Stringa
-	private Role role;
+	private RolePermission rolePermission;
 	private List<String> permissions = new ArrayList<>();
 	private List<String> belongingDepthsCodes;
 
 	public Principal() {
 		// TODO: di serialNumber che ci metto?
 		serialNumber = "Guest";
-		role = Role.GUEST;
-		setPermissions(role.getPermissions());
+		rolePermission = RolePermission.GUEST;
+		setPermissions(rolePermission.getPermissions());
 	}
 
 	public String getName() {
@@ -38,13 +38,13 @@ public class Principal {
 	}
 
 	public Principal(String name, String surname, String email,
-			String serialNumber, Role role, List<String> depthsCodes) {
+			String serialNumber, RolePermission role, List<String> depthsCodes) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.serialNumber = serialNumber;
-		this.role = role;
+		this.rolePermission = role;
 		this.belongingDepthsCodes = depthsCodes;
 		setPermissions(role.getPermissions());
 
@@ -56,13 +56,13 @@ public class Principal {
 		this.surname = u.getSurname();
 		this.email = u.getEmail();
 		this.serialNumber = u.getSerialNumber();
-		this.role = u.getRole();
+//		this.rolePermission = u.getRolePermission();
 		this.belongingDepthsCodes = u.getBelongingDeptsCodes();
-		setPermissions(role.getPermissions());
+		setPermissions(rolePermission.getPermissions());
 		
 	}
 
-	// public Principal(String serialNumber, Role role) {
+	// public Principal(String serialNumber, RolePermissions role) {
 	// this.serialNumber = serialNumber;
 	// this.role = role;
 	// setPermissions(role.getPermissions());
@@ -81,13 +81,13 @@ public class Principal {
 		return permissions.contains(toCheck.toString());
 	}
 
-	public boolean hasRole(Role toCheck) {
-		return role.equals(toCheck);
+	public boolean hasRolePermission(RolePermission toCheck) {
+		return rolePermission.equals(toCheck);
 	}
 
-	public boolean hasRole(String toCheck) {
-		Role r = Role.valueOf(toCheck);
-		return role.equals(r);
+	public boolean hasRolePermission(String toCheck) {
+		RolePermission r = RolePermission.valueOf(toCheck);
+		return rolePermission.equals(r);
 	}
 
 	private void setPermissions(List<Permission> permissions) {

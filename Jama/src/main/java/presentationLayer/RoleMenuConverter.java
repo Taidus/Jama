@@ -6,7 +6,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
-import usersManagement.Role;
+import usersManagement.RolePermission;
 
 @Named
 @RequestScoped
@@ -18,9 +18,9 @@ public class RoleMenuConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		try {
-			return Role.valueOf(value);
+			return RolePermission.valueOf(value);
 		} catch (IllegalArgumentException e) {
-			for (Role r : Role.values()) {
+			for (RolePermission r : RolePermission.values()) {
 				if (r.getDisplayString().equalsIgnoreCase(value)) {
 					return r;
 				}
@@ -35,7 +35,7 @@ public class RoleMenuConverter implements Converter {
 		if (null == value) {
 			return "";
 		}
-		return ((Role) value).getDisplayString();
+		return ((RolePermission) value).getDisplayString();
 	}
 
 }
