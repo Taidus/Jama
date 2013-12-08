@@ -19,6 +19,7 @@ import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
 import businessLayer.AgreementInstallment;
 import businessLayer.Contract;
+import businessLayer.ContractShareTable;
 import businessLayer.Installment;
 import businessLayer.InstallmentShareTable;
 
@@ -50,6 +51,11 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	@Override
 	protected Money getTransfetObjWholeAmount() {
 		return installment.getWholeAmount();
+	}
+	
+	@Override
+	protected ContractShareTable getContractShareTable() {
+		return installment.getContract().getShareTable();
 	}
 
 

@@ -353,8 +353,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar id="approvalDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{contractManager.contract.approvalDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true" locale="it">
+					<p:calendar id="approvalDate" label="#{msgs.approvalDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true" value="#{contractManager.contract.approvalDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true" locale="it">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 
@@ -375,8 +375,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar id="beginDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{contractManager.contract.beginDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true">
+					<p:calendar id="beginDate" label="#{msgs.beginDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true" value="#{contractManager.contract.beginDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 
@@ -399,8 +399,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar id="deadlineDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{contractManager.contract.deadlineDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true"
+					<p:calendar id="deadlineDate" label="#{msgs.deadlineDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true" value="#{contractManager.contract.deadlineDate}" rendered="#{cc.attrs.editingDisable == false}" navigator="true"
 						validator="#{contractDataPB.validateDeadlineDate}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>

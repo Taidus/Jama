@@ -65,7 +65,7 @@
 					<h:outputText value="#{msgs.newInstDate}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+					<p:calendar id="date" label="#{msgs.newInstDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
 						value="#{installmentManager.installment.date}" navigator="true" validator="#{instDataPB.validateDeadlineDate}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -97,8 +97,8 @@
 					<h:outputText value="#{msgs.newInstVoucherDate}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="voucherDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{installmentManager.installment.voucherDate}" navigator="true">
+					<p:calendar id="voucherDate" label="#{msgs.newInstVoucherDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true" value="#{installmentManager.installment.voucherDate}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 				</p:column>
@@ -158,8 +158,8 @@
 					<h:outputText value="#{msgs.newInstInvoiceDate}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="invoiceDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
-						value="#{installmentManager.installment.invoiceDate}" navigator="true">
+					<p:calendar id="invoiceDate" label="#{msgs.newInstInvoiceDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
+						required="true" value="#{installmentManager.installment.invoiceDate}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 				</p:column>

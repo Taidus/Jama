@@ -352,7 +352,7 @@
 			<p:column>
 				<h:outputText value="#{share.chiefScientist.completeName}" />
 			</p:column>
-			
+
 			<p:column>
 				<p:cellEditor>
 					<f:facet name="output">
@@ -419,7 +419,9 @@
 				</p:column>
 
 				<p:column width="10%">
-					<h:inputText value="#{agrShareTablePB.newShare.id}" label="#{msgs.shareTablePersonnelId}" />
+					<h:inputText value="#{agrShareTablePB.newShare.id}" label="#{msgs.shareTablePersonnelId}">
+						<p:ajax event="valueChange" process="@this" />
+					</h:inputText>
 				</p:column>
 
 				<p:column width="10%">

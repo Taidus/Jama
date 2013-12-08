@@ -43,7 +43,7 @@ public abstract class AbstractShareTable {
 	protected Percent personnel;
 
 	@ElementCollection
-	protected Map<ChiefScientist, PersonnelShareDetails> sharePerPersonnel;
+	protected Map<ChiefScientist, Percent> sharePerPersonnel;
 
 	@Embedded
 	@AttributeOverride(name = "value", column = @Column(name = "GOODS_AND_SERVICES", precision=20, scale=4))
@@ -202,7 +202,7 @@ public abstract class AbstractShareTable {
 		return otherCost;
 	}
 
-	public Map<ChiefScientist, PersonnelShareDetails> getSharePerPersonnel() {
+	public Map<ChiefScientist, Percent> getSharePerPersonnel() {
 		return sharePerPersonnel;
 	}
 

@@ -15,7 +15,7 @@ import util.Messages;
 import util.Percent;
 import businessLayer.AbstractShareTable;
 import businessLayer.ChiefScientist;
-import businessLayer.PersonnelShareDetails;
+import businessLayer.ContractShareTable;
 
 public abstract class ShareTablePresentationObj {
 
@@ -37,22 +37,31 @@ public abstract class ShareTablePresentationObj {
 	protected abstract Money getTransfetObjWholeAmount();
 
 
+	protected abstract ContractShareTable getContractShareTable();
+
+
 	public List<PersonnelShare> getShares() {
 		System.out.println("Building");
 		List<PersonnelShare> result = new ArrayList<>();
-		Map<ChiefScientist, PersonnelShareDetails> shares = getTransferObjShareTable().getSharePerPersonnel();
+		Map<ChiefScientist, Percent> shares = getTransferObjShareTable().getSharePerPersonnel();
+		Map<ChiefScientist, String> ids = getContractShareTable().getPersonnelId();
 		for (ChiefScientist chief : shares.keySet()) {
-			PersonnelShareDetails d = shares.get(chief);
-			result.add(new PersonnelShare(chief, d.getShare(), d.getId()));
+			String id = ids.get(chief);
+			if (null == id) {
+				id = "";
+			}
+			result.add(new PersonnelShare(chief, shares.get(chief), id));
 		}
 		return result;
 	}
 
 
 	public void addShare() {
-		getTransferObjShareTable().getSharePerPersonnel().put(newShare.getChiefScientist(),
-				new PersonnelShareDetails(newShare.getId(), newShare.getValue()));
+		System.out.println("ShareTablePO: adding share");
+		getTransferObjShareTable().getSharePerPersonnel().put(newShare.chiefScientist, newShare.value);
+		getContractShareTable().getPersonnelId().put(newShare.chiefScientist, newShare.id);
 		newShare = new PersonnelShare();
+
 	}
 
 
@@ -111,13 +120,7 @@ public abstract class ShareTablePresentationObj {
 		System.out.println(personnel + " scale: " + personnel.getValue().scale() + "; zero scale: " + Percent.ZERO.getValue().scale());
 		if (!personnel.equals(Percent.ZERO)) {
 			System.out.println("Entered");
-
-			Percent sum = Percent.ZERO;
-
-			for (PersonnelShareDetails d : getTransferObjShareTable().getSharePerPersonnel().values()) {
-				sum = Percent.sum(sum, d.getShare());
-			}
-
+			Percent sum = Percent.sum(getTransferObjShareTable().getSharePerPersonnel().values());
 			if (!sum.equals(Percent.ONE)) {
 				throw new ValidatorException(Messages.getErrorMessage("err_shareTablePersonnel"));
 			}
@@ -173,31 +176,38 @@ public abstract class ShareTablePresentationObj {
 
 
 		public void setValue(Percent value) {
+
 			System.out.println("Personnel share setter called: " + value);
 			this.value = value;
-			updateShareTablePersonnel();
+			Map<ChiefScientist, Percent> map = getTransferObjShareTable().getSharePerPersonnel();
+			if (map.containsKey(this.chiefScientist)) {
+				map.put(this.chiefScientist, this.value);
+			}
+
 		}
 
 
 		public String getId() {
+			System.out.println("Personnel id getter called: " + id);
+			if (null == this.id) {
+				return "";
+			}
 			return id;
 		}
 
 
 		public void setId(String id) {
-			this.id = id;
-			updateShareTablePersonnel();
-		}
 
-
-		private void updateShareTablePersonnel() {
-			Map<ChiefScientist, PersonnelShareDetails> map = getTransferObjShareTable().getSharePerPersonnel();
-			if (map.containsKey(this.chiefScientist)) {
-//				map.put(this.chiefScientist, new PersonnelShareDetails(id, value));
-				map.get(this.chiefScientist).setId(id);
-				map.get(this.chiefScientist).setShare(value);
-				
+			if (null == id) {
+				id = "";
 			}
+			System.out.println("Personnel id setter called: " + id);
+			this.id = id;
+			Map<ChiefScientist, String> map = getContractShareTable().getPersonnelId();
+			if (map.containsKey(this.chiefScientist)) {
+				map.put(this.chiefScientist, this.id);
+			}
+
 		}
 
 
