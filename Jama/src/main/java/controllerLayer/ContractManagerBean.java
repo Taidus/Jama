@@ -138,6 +138,8 @@ public class ContractManagerBean implements Serializable {
 	public void save() {
 		System.out.println("SAVE");
 
+		ContractDao.create(contract);
+		
 		if (creatingNewContract) {
 			mailSender.notifyCreation(contract);
 		}
@@ -145,8 +147,7 @@ public class ContractManagerBean implements Serializable {
 		if (!editingClosedContract && contract.isClosed()) {
 			mailSender.notifyClosure(contract);
 		}
-
-		ContractDao.create(contract);
+		
 		close();
 	}
 
