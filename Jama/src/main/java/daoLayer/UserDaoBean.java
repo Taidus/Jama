@@ -14,7 +14,9 @@ import javax.persistence.PersistenceContextType;
 import annotations.Updated;
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
+import usersManagement.BusinessRole;
 import usersManagement.LdapManager;
+import usersManagement.Permission;
 import usersManagement.RolePermission;
 import usersManagement.User;
 
@@ -99,11 +101,17 @@ public class UserDaoBean {
 	
 	
 	public void onChiefCreation(@Observes @Updated ChiefScientist c){
-		if(getBySerialNumber(c.getSerialNumber())== null){
-			User u =ldap.getUserBySerial(c.getSerialNumber());
-			u.addRolePermission(RolePermission.PROFESSOR);
-			create(u);
+		User u = getBySerialNumber(c.getSerialNumber());
+		if(u == null){
+			 u =ldap.getUserBySerial(c.getSerialNumber());
+			//u.addRolePermission(RolePermission.PROFESSOR);
+		}else if(!u.hasRolePermission(RolePermission.PROFESSOR)) {
+			
+			u.addRole(new BusinessRole(RolePermission.PROFESSOR,u.getDepartment()));
+			
 		}
+		
+		create(u);
 	}
 
 

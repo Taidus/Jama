@@ -120,7 +120,8 @@ public class LdapManager implements LdapQueryInterface {
 			}
 		}
 
-		result.addRolePermission(RolePermission.PROFESSOR);
+		result.addRole(new BusinessRole(RolePermission.PROFESSOR, d));
+//		result.addRolePermission(RolePermission.PROFESSOR);
 		d.setRateDirectory(Config.depRatesDefaultDir);
 		result.setDepartment(d);
 

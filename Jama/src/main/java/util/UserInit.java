@@ -7,8 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+import usersManagement.BusinessRole;
 import usersManagement.LdapManager;
 import usersManagement.RolePermission;
+import usersManagement.SystemRole;
 import usersManagement.User;
 import businessLayer.Department;
 
@@ -53,7 +55,7 @@ public class UserInit {
 
 		String serial = "Z000000";
 		u = ldap.getUserBySerial(serial);
-		u.addRolePermission(RolePermission.ADMIN);
+		u.addRole(new SystemRole((RolePermission.ADMIN)));
 		createUser(u);
 		System.out.println(u);
 		System.out.println(u.getDepartment().getRateDirectory());
@@ -62,7 +64,7 @@ public class UserInit {
 
 		serial = "Z000001";
 		u = ldap.getUserBySerial(serial);
-		u.addRolePermission(RolePermission.OPERATOR);
+		u.addRole(new BusinessRole(RolePermission.OPERATOR, u.getDepartment()));
 		createUser(u);
 		System.out.println(u);
 		System.out.println(u.getDepartment().getRateDirectory());
@@ -71,7 +73,7 @@ public class UserInit {
 
 		serial = "Z000002";
 		u = ldap.getUserBySerial(serial);
-		u.addRolePermission(RolePermission.PROFESSOR);
+		u.addRole(new BusinessRole(RolePermission.PROFESSOR, u.getDepartment()));
 		createUser(u);
 		System.out.println(u);
 		System.out.println(u.getDepartment().getRateDirectory());
