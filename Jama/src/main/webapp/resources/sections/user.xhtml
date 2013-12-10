@@ -118,66 +118,30 @@
 
 				<p:panel>
 
-
-					<h:inputHidden value="needed" id="percentsCheck" validator="#{agrShareTablePB.validatePersonnelShares}" />
-					<p:message styleClass="errorMessage" for="percentsCheck" />
-
 					<br />
 
-					<p:dataTable id="personnelShares" value="#{agrShareTablePB.shares}" var="share" rowKey="#{share.chiefScientist}"
-						emptyMessage="#{msgs.noShareFound}" editable="true" editMode="cell">
+					<p:dataTable id="userRoles" value="#{userEditor.user.roles}" var="role" rowKey=""
+						emptyMessage="#{msgs.noRoleFound}">
 
 						<f:facet name="header">
-							<h:outputText value="#{msgs.shareTablePersonnel}" />
+							<h:outputText value="#{msgs.userRoles}" />
 						</f:facet>
 
 
 						<p:columnGroup type="header">
 							<p:row>
-								<p:column headerText="#{msgs.shareTableInvolvedPersonnel}" />
-								<p:column headerText="#{msgs.shareTablePersonnelId}" />
-								<p:column colspan="2" headerText="#{msgs.share}" />
+								<p:column headerText="#{msgs.role}" />
+								<p:column headerText="#{msgs.department}" />
 								<p:column />
 							</p:row>
 						</p:columnGroup>
 
 						<p:column>
-							<h:outputText value="#{share.chiefScientist.completeName}" />
+							<h:outputText value="#{role.rolePermission}" />
 						</p:column>
 
 						<p:column>
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{share.id}" />
-								</f:facet>
-								<f:facet name="input">
-									<h:inputText value="#{share.id}" label="#{msgs.table_id}">
-										<p:ajax event="valueChange" process="@this" update="personnelShares" />
-									</h:inputText>
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
-
-						<p:column>
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{share.value}" />
-									<h:outputText value=" %" />
-								</f:facet>
-								<f:facet name="input">
-									<h:inputText id="personnelTableShareValueInput" value="#{share.value}" label="#{msgs.table_share}">
-										<f:validator binding="#{percentValidator}" />
-										<p:ajax event="valueChange" process="@this" update="personnelShares" />
-									</h:inputText>
-									<h:outputText value=" %" />
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
-
-						<p:column>
-							<h:outputText value="#{share.flatAmount}">
-								<f:attribute name="plain" value="false" />
-							</h:outputText>
+							<h:outputText value="#{share.id}" />
 						</p:column>
 
 						<p:column>
@@ -234,7 +198,7 @@
 							</p:column>
 
 							<p:column width="10%">
-								<p:commandButton value="#{msgs.add}" action="#{agrShareTablePB.addShare()}" update="personnalShareInput personnelShares"
+								<p:commandButton value="#{msgs.add}" action="#{agrShareTablePB.addShare()}" update="personnalShareInput userRoles"
 									process="personnalShareInput, @this" binding="#{_contractChiefShareAddBtn}" />
 							</p:column>
 						</p:row>

@@ -2,6 +2,7 @@ package usersManagement;
 
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +15,11 @@ import javax.persistence.InheritanceType;
 public abstract class Role {
 	public abstract boolean hasRolePermission(RolePermission toCheck);
 	public abstract List<Permission> getPermissions();
+	public abstract RolePermission getRolePermission();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
+
 }
