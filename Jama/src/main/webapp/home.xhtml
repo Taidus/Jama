@@ -22,7 +22,7 @@
 				id="actionPanel">
 
 				<p:panelGrid
-					rendered="#{userManager.loggedUser.hasRole('OPERATOR')==true}"
+					rendered="#{userManager.loggedUser.hasRolePermission('OPERATOR')==true}"
 					styleClass="center">
 
 					<p:row>
@@ -58,7 +58,7 @@
 
 
 				<p:panelGrid
-					rendered="#{userManager.loggedUser.hasRole('PROFESSOR')==true}"
+					rendered="#{userManager.loggedUser.hasRolePermission('PROFESSOR')==true}"
 					styleClass="center">
 					<p:row>
 						<p:column>
@@ -69,7 +69,7 @@
 				</p:panelGrid>
 
 				<p:panelGrid
-					rendered="#{userManager.loggedUser.hasRole('ADMIN')==true}"
+					rendered="#{userManager.loggedUser.hasRolePermission('ADMIN')==true}"
 					styleClass="center">
 					<p:row>
 						<p:column>

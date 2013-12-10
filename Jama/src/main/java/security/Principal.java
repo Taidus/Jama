@@ -89,7 +89,19 @@ public class Principal {
 
 
 	public boolean hasPermission(Permission toCheck) {
-		return permissionsPerRole.values().contains(toCheck.toString());
+		System.out.println(">>>>>>>>>>> Principal:\npermission to check: " + toCheck);
+		System.out.println("owned permissions: " + permissionsPerRole.values());
+		
+		String permissionString = toCheck.toString();
+		for(List<String> p : permissionsPerRole.values()){
+			if(p.contains(permissionString)){
+				System.out.println("OK\n<<<<<<<<<<<");
+				return true;
+			}
+		}
+		
+		System.out.println("NO\n<<<<<<<<<<<");
+		return false;
 	}
 
 
@@ -99,6 +111,10 @@ public class Principal {
 
 
 	public boolean hasRolePermission(String toCheck) {
+		System.out.println(">>>>>>>>>>> Principal:\n role to check: " + toCheck);
+		System.out.println("owned roles: " + permissionsPerRole.keySet());
+		System.out.println("<<<<<<<<<<<");
+		
 		return permissionsPerRole.keySet().contains(toCheck);
 	}
 
@@ -122,12 +138,12 @@ public class Principal {
 			permissionsToAdd.add(p.toString());
 		}
 
-		permissionsPerRole.put(role.toString(), permissionsToAdd);
+		permissionsPerRole.put(role.getRolePermission().toString(), permissionsToAdd);
 	}
 
 
 	private void _addDepartmentFromRole(BusinessRole role) {
-		departmentPerRole.put(role.toString(), role.getDepartment().toString());
+		departmentPerRole.put(role.getRolePermission().toString(), role.getDepartment().toString());
 	}
 
 }
