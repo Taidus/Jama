@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -49,7 +50,7 @@ public class User implements Serializable {
 	// @Enumerated(EnumType.STRING)
 	// private RolePermission rolePermission;
 
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
 	private List<Role> roles;
 
 
@@ -62,6 +63,7 @@ public class User implements Serializable {
 		this.surname = surname;
 		this.department = department;
 		this.serialNumber = serialNumber;
+		roles = new ArrayList<>();
 	}
 
 
@@ -129,6 +131,13 @@ public class User implements Serializable {
 
 	public Department getDepartment() {
 		return department;
+	}
+	
+	
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 

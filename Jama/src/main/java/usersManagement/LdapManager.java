@@ -86,8 +86,9 @@ public class LdapManager implements LdapQueryInterface {
 
 	@SuppressWarnings("unchecked")
 	private User buildUser(LDAPAttributeSet attributeSet) {
-		User result = new User();
 		Department d = new Department();
+		
+		String name = null,surname = null,email = null,serial = null;
 
 		Iterator<LDAPAttribute> allAttributes = (Iterator<LDAPAttribute>) attributeSet.iterator();
 
@@ -100,17 +101,19 @@ public class LdapManager implements LdapQueryInterface {
 			String value = getValue(allValues).trim();
 
 			// TODO mettere i nomi dei parametri in un file di configurazione
+			
+			
 			if (attributeName.equalsIgnoreCase("givenName")) {
-				result.setName(value);
+				name= value;
 			}
 			else if (attributeName.equalsIgnoreCase("sn")) {
-				result.setSurname(value);
+				surname=value;
 			}
 			else if (attributeName.equalsIgnoreCase("mail")) {
-				result.setEmail(value);
+				email=value;
 			}
 			else if (attributeName.equalsIgnoreCase("uid")) {
-				result.setSerialNumber(value);
+				serial=value;
 			}
 			else if (attributeName.equalsIgnoreCase("departmentNumber")) {
 				d.setCode(value);
@@ -120,10 +123,11 @@ public class LdapManager implements LdapQueryInterface {
 			}
 		}
 
-		result.addRole(new BusinessRole(RolePermission.PROFESSOR, d));
+//		result.addRole(new BusinessRole(RolePermission.PROFESSOR, d));
 //		result.addRolePermission(RolePermission.PROFESSOR);
 		d.setRateDirectory(Config.depRatesDefaultDir);
-		result.setDepartment(d);
+		User result = new User( name,surname,d,serial);
+		result.setEmail(email);
 
 		return result;
 

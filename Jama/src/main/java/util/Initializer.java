@@ -13,6 +13,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import usersManagement.LdapManager;
+import usersManagement.RolePermission;
+import usersManagement.SystemRole;
+import usersManagement.User;
 import businessLayer.Department;
 
 @ApplicationScoped
@@ -30,8 +33,7 @@ public class Initializer {
 
 	}
 	
-	@PostConstruct
-	public void init(){
+	public void initAllDepts(){
 		
 		List<Department> depts = ldap.getAllDepts();
 		for(Department d : depts){
@@ -43,7 +45,40 @@ public class Initializer {
 			em.persist(d);
 		}
 		}
+	}
+	
+	public void initAdmin(String serial){
 		
+		User u = ldap.getUserBySerial(serial);
+		
+		try {
+			Department d= em.createNamedQuery("Department.findByCode", Department.class)
+					.setParameter("code", u.getDepartment().getCode())
+					.getSingleResult();
+			u.setDepartment(d);
+		} catch (NoResultException e) {
+			em.persist(u.getDepartment());
+		}
+		
+		if (em.createNamedQuery("User.findBySerialNumber")
+				.setParameter("number", u.getSerialNumber()).getResultList()
+				.isEmpty()) {
+			
+			u.addRole(new SystemRole(RolePermission.ADMIN));
+			em.persist(u);
+
+		}
+		
+	
+	}
+	
+	
+	@PostConstruct
+	public void init(){
+		
+		
+		initAllDepts();
+		initAdmin("Z000002");
 		
 	}
 	
