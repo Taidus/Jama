@@ -12,8 +12,6 @@ import businessLayer.Department;
 @Entity
 public class BusinessRole extends Role {
 
-	@Enumerated(EnumType.STRING)
-	private RolePermission rolePermission;
 	
 	@ManyToOne
 	private Department department;

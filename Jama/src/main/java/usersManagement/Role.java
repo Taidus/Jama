@@ -2,8 +2,9 @@ package usersManagement;
 
 import java.util.List;
 
-
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,9 @@ public abstract class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Enumerated(EnumType.STRING)
+	protected RolePermission rolePermission;
 
 
 }

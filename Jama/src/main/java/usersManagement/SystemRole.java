@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class SystemRole extends Role {
-	private RolePermission rolePermission;
 
 
 	public SystemRole() {}
