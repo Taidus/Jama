@@ -36,11 +36,6 @@ public enum RolePermission {
 	public String getDisplayString() {
 		return displayString;
 	}
-	
-	@Override
-	public String toString() {
-		return displayString;
-	}
 
 
 	public boolean hasPermission(Permission toCheck) {

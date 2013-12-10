@@ -110,7 +110,7 @@ public class Principal {
 	}
 
 
-	public boolean hasRolePermission(String toCheck) {
+	private boolean hasRolePermission(String toCheck) {
 		System.out.println(">>>>>>>>>>> Principal:\n role to check: " + toCheck);
 		System.out.println("owned roles: " + permissionsPerRole.keySet());
 		System.out.println("<<<<<<<<<<<");
