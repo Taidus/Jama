@@ -132,8 +132,6 @@ public class User implements Serializable {
 	public Department getDepartment() {
 		return department;
 	}
-	
-	
 
 
 	public void setDepartment(Department department) {
@@ -153,8 +151,8 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", dep=" + department + ", serialNumber="
-				+ serialNumber + "]";
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", department=" + department + ", serialNumber="
+				+ serialNumber + ", roles=" + roles + "]";
 	}
 
 

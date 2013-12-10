@@ -53,8 +53,8 @@ public class Principal {
 		this.email = u.getEmail();
 		this.serialNumber = u.getSerialNumber();
 		
-		permissionsPerRole = new HashMap<>();
-		departmentPerRole = new HashMap<>();
+		this.permissionsPerRole = new HashMap<>();
+		this.departmentPerRole = new HashMap<>();
 
 		for (Role role : u.getRoles()) {
 			stringifyRole(role);
