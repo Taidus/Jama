@@ -99,16 +99,6 @@ public class UserPresentationBean implements Serializable {
 	}
 
 
-	public Department getSelectedDept() {
-		return userEditor.getCurrentUser().getDepartment();
-	}
-
-
-	public void setSelectedDept(Department selectedDept) {
-		userEditor.getCurrentUser().setDepartment(selectedDept);
-	}
-
-
 	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			String serial = value.toString();
