@@ -90,90 +90,92 @@
 			</p:row>
 
 			<p:row>
+				<p:column colspan="3">
+					<p:panel>
 
-				<p:panel>
+						<p:dataTable id="userRoles" value="#{userEditor.user.roles}" var="role" rowKey="#{userEditor.user.roles.indexOf(role)}"
+							emptyMessage="#{msgs.noRoleFound}">
 
-					<p:dataTable id="userRoles" value="#{userEditor.user.roles}" var="role" rowKey="#{userEditor.user.roles.indexOf(role)}"
-						emptyMessage="#{msgs.noRoleFound}">
-
-						<f:facet name="header">
-							<h:outputText value="#{msgs.userRoles}" />
-						</f:facet>
+							<f:facet name="header">
+								<h:outputText value="#{msgs.userRoles}" />
+							</f:facet>
 
 
-						<p:columnGroup type="header">
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column headerText="#{msgs.role}" />
+									<p:column headerText="#{msgs.department}" />
+									<p:column />
+								</p:row>
+							</p:columnGroup>
+
+							<p:column>
+								<h:outputText value="#{role.rolePermission}" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="#{userEditor.getDepartmentFromRole(role)}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="#{msgs.remove}" action="#{userEditor.removeRole(role)}" update="@form" process="@this"
+									rendered="#{cc.attrs.mode == 'wizard'}" />
+							</p:column>
+
+						</p:dataTable>
+
+						<br />
+
+						<p:panelGrid id="roleInput" style="width: 100%" rendered="#{cc.attrs.mode == 'wizard'}">
+
 							<p:row>
-								<p:column headerText="#{msgs.role}" />
-								<p:column headerText="#{msgs.department}" />
-								<p:column />
+								<p:column width="10%">
+									<h:outputText value="#{msgs.role}: " />
+								</p:column>
+
+								<p:column width="35%">
+									<p:selectOneMenu id="newRole" value="#{userEditor.newRolePermission}" label="#{msgs.role}"
+										required="#{not empty param[_roleAddBtn.clientId]}">
+										<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
+										<f:selectItems value="#{utilPB.rolesItems}" />
+										<p:ajax event="valueChange" process="@this" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column width="10%">
+									<h:outputText value="#{msgs.department}" />
+								</p:column>
+
+								<p:column width="35%">
+									<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{userEditor.newDepartmentRequired()}"
+										required="#{(not empty param[_roleAddBtn.clientId]) and userEditor.newDepartmentRequired()}" label="#{msgs.department}">
+										<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
+										<f:selectItems value="#{utilPB.depthItems}" />
+										<p:ajax event="valueChange" process="@this" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column width="10%">
+									<p:commandButton value="#{msgs.add}" action="#{userEditor.addRole()}" update="roleInput userRoles" process="roleInput, @this"
+										binding="#{_roleAddBtn}" />
+								</p:column>
 							</p:row>
-						</p:columnGroup>
 
-						<p:column>
-							<h:outputText value="#{role.rolePermission}" />
-						</p:column>
+							<p:row>
+								<p:column colspan="4">
+									<p:message autoUpdate="true" for="newRole" />
+								</p:column>
+							</p:row>
 
-						<p:column>
-							<h:outputText value="#{userEditor.getDepartmentFromRole(role)}" />
-						</p:column>
+							<p:row>
+								<p:column colspan="4">
+									<p:message autoUpdate="true" for="newDepartment" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
 
-						<p:column>
-							<p:commandButton value="#{msgs.remove}" action="#{userEditor.removeRole(role)}" update="@form" process="@this"
-								rendered="#{cc.attrs.mode == 'wizard'}" />
-						</p:column>
-
-					</p:dataTable>
-
-					<br />
-
-					<p:panelGrid id="roleInput" style="width: 100%" rendered="#{cc.attrs.mode == 'wizard'}">
-
-						<p:row>
-							<p:column width="10%">
-								<h:outputText value="#{msgs.role}: " />
-							</p:column>
-
-							<p:column width="35%">
-								<p:selectOneMenu id="newRole" value="#{userEditor.newRolePermission}" label="#{msgs.role}" required="#{not empty param[_roleAddBtn.clientId]}">
-									<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
-									<f:selectItems value="#{utilPB.rolesItems}" />
-									<p:ajax event="valueChange" process="@this" />
-								</p:selectOneMenu>
-							</p:column>
-
-							<p:column width="10%">
-								<h:outputText value="#{msgs.department}" />
-							</p:column>
-
-							<p:column width="35%">
-								<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{userEditor.newDepartmentRequired()}"
-									required="#{(not empty param[_roleAddBtn.clientId]) and userEditor.newDepartmentRequired()}" label="#{msgs.department}">
-									<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
-									<f:selectItems value="#{utilPB.depthItems}" />
-									<p:ajax event="valueChange" process="@this" />
-								</p:selectOneMenu>
-							</p:column>
-
-							<p:column width="10%">
-								<p:commandButton value="#{msgs.add}" action="#{userEditor.addRole()}" update="roleInput userRoles" process="roleInput, @this"
-									binding="#{_roleAddBtn}" />
-							</p:column>
-						</p:row>
-
-						<p:row>
-							<p:column colspan="4">
-								<p:message autoUpdate="true" for="newRole" />
-							</p:column>
-						</p:row>
-
-						<p:row>
-							<p:column colspan="4">
-								<p:message autoUpdate="true" for="newDepartment" />
-							</p:column>
-						</p:row>
-					</p:panelGrid>
-
-				</p:panel>
+					</p:panel>
+				</p:column>
 			</p:row>
 
 

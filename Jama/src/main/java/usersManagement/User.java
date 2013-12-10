@@ -54,7 +54,9 @@ public class User implements Serializable {
 	private List<Role> roles;
 
 
-	public User() {}
+	public User() {
+		this.roles = new ArrayList<>();
+	}
 
 
 	public User(String name, String surname, Department department, String serialNumber) {
@@ -63,7 +65,7 @@ public class User implements Serializable {
 		this.surname = surname;
 		this.department = department;
 		this.serialNumber = serialNumber;
-		roles = new ArrayList<>();
+		this.roles = new ArrayList<>();
 	}
 
 
