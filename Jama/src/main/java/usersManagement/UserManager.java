@@ -78,6 +78,7 @@ public class UserManager implements Serializable {
 				return "login";
 			}
 		} catch (Exception e) {
+			e.printStackTrace(System.out);
 			// TODO temporaneo catch Exception. Restringere.
 			return "error";
 		}
