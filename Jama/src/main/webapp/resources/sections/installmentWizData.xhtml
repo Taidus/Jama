@@ -98,7 +98,7 @@
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
 					<p:calendar id="voucherDate" label="#{msgs.newInstVoucherDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true" value="#{installmentManager.installment.voucherDate}" navigator="true">
+						value="#{installmentManager.installment.voucherDate}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 				</p:column>
@@ -159,7 +159,7 @@
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
 					<p:calendar id="invoiceDate" label="#{msgs.newInstInvoiceDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
-						required="true" value="#{installmentManager.installment.invoiceDate}" navigator="true">
+						value="#{installmentManager.installment.invoiceDate}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
 				</p:column>

@@ -1,38 +1,53 @@
-//package util;
-//
-//import java.security.NoSuchAlgorithmException;
-//import java.util.List;
-//
-//import javax.annotation.PostConstruct;
-//import javax.ejb.Singleton;
-//import javax.ejb.Startup;
-//import javax.enterprise.context.ApplicationScoped;
-//import javax.inject.Inject;
-//import javax.persistence.EntityManager;
-//import javax.persistence.NoResultException;
-//import javax.persistence.PersistenceContext;
-//import javax.persistence.PersistenceContextType;
-//
-//import usersManagement.LdapManager;
-//import usersManagement.Role;
-//import usersManagement.User;
-//import businessLayer.Department;
-//
-//@ApplicationScoped
-//@Startup
-//@Singleton
-//public class Initializer {
-//
-//	@PersistenceContext(unitName = "primary", type = PersistenceContextType.TRANSACTION)
-//	private EntityManager em;
-//
-//	@Inject
-//	private LdapManager ldap;
-//
-//	public Initializer() {
-//
-//	}
-//	
+package util;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+
+import usersManagement.LdapManager;
+import businessLayer.Department;
+
+@ApplicationScoped
+@Startup
+@Singleton
+public class Initializer {
+
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.TRANSACTION)
+	private EntityManager em;
+
+	@Inject
+	private LdapManager ldap;
+
+	public Initializer() {
+
+	}
+	
+	@PostConstruct
+	public void init(){
+		
+		List<Department> depts = ldap.getAllDepts();
+		for(Department d : depts){
+			try {
+			em.createNamedQuery("Department.findByCode", Department.class)
+					.setParameter("code", d.getCode())
+					.getSingleResult();
+		} catch (NoResultException e) {
+			em.persist(d);
+		}
+		}
+		
+		
+	}
+	
+	
 //	public void createUser(User u){
 //		
 //		if (em.createNamedQuery("User.findBySerialNumber")
@@ -175,5 +190,5 @@
 //		}
 //
 //	}
-//
-//}
+
+}

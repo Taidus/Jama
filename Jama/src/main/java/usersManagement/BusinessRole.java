@@ -2,11 +2,20 @@ package usersManagement;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+
 import businessLayer.Department;
 
-public class BusinessRole implements Role {
+@Entity
+public class BusinessRole extends Role {
 
+	@Enumerated(EnumType.STRING)
 	private RolePermission rolePermission;
+	
+	@ManyToOne
 	private Department department;
 
 
@@ -24,7 +33,8 @@ public class BusinessRole implements Role {
 		return department;
 	}
 
-
+	
+	@Override
 	public RolePermission getRolePermission() {
 		return rolePermission;
 	}

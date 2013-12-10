@@ -2,7 +2,10 @@ package usersManagement;
 
 import java.util.List;
 
-public class SystemRole implements Role {
+import javax.persistence.Entity;
+
+@Entity
+public class SystemRole extends Role {
 	private RolePermission rolePermission;
 
 
@@ -14,7 +17,8 @@ public class SystemRole implements Role {
 		this.rolePermission = rolePermission;
 	}
 
-
+	
+	@Override
 	public RolePermission getRolePermission() {
 		return rolePermission;
 	}
