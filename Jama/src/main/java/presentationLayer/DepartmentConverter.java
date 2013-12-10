@@ -21,6 +21,9 @@ public class DepartmentConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		if(null == value || value.isEmpty()){
+			return null;
+		}
 		int id = Integer.parseInt(value);
 		return depthDaoBean.getById(id);
 	}

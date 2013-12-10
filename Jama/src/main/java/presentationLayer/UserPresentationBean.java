@@ -14,7 +14,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import security.annotations.CreateUserAllowed;
+import usersManagement.BusinessRole;
 import usersManagement.LdapManager;
+import usersManagement.Role;
+import usersManagement.RolePermission;
+import usersManagement.SystemRole;
 import usersManagement.User;
 import util.Messages;
 import businessLayer.Department;
@@ -38,14 +42,24 @@ public class UserPresentationBean implements Serializable {
 	private LdapManager ldapManager;
 
 	private User tempLdapUser;
+	private RolePermission newRolePermission;
+	private Department newDepartment;
 
 
-	public UserPresentationBean() {}
+	public UserPresentationBean() {
+		resetNewRoleFields();
+	}
 
 
 	@PostConstruct
 	public void init() {
 		conversation.begin();
+	}
+
+
+	private void resetNewRoleFields() {
+		newRolePermission = RolePermission.ADMIN;
+		newDepartment = null;
 	}
 
 
@@ -96,6 +110,57 @@ public class UserPresentationBean implements Serializable {
 
 	public User getUser() {
 		return userEditor.getCurrentUser();
+	}
+
+
+	public Department getDepartmentFromRole(Role role) {
+		if (role instanceof BusinessRole) {
+			return ((BusinessRole) role).getDepartment();
+		}
+		return null;
+	}
+
+
+	public RolePermission getNewRolePermission() {
+		return newRolePermission;
+	}
+
+
+	public void setNewRolePermission(RolePermission newRolePermission) {
+		this.newRolePermission = newRolePermission;
+	}
+
+
+	public Department getNewDepartment() {
+		return newDepartment;
+	}
+
+
+	public void setNewDepartment(Department newDepartment) {
+		this.newDepartment = newDepartment;
+	}
+
+
+	public boolean newDepartmentRequired() {
+		return !newRolePermission.equals(RolePermission.ADMIN);
+	}
+
+
+	public void addRole(){
+		Role newRole;
+		if(newDepartmentRequired()){
+			newRole = new BusinessRole(newRolePermission, newDepartment);
+		}
+		else{
+			newRole = new SystemRole(newRolePermission);
+		}
+		userEditor.getCurrentUser().addRole(newRole);
+		resetNewRoleFields();
+	}
+
+
+	public void removeRole(Role role) {
+		userEditor.getCurrentUser().removeRole(role);
 	}
 
 

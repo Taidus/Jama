@@ -35,7 +35,7 @@ public class UtilPresentationBean implements Serializable {
 	@EJB
 	private CompanyDaoBean companyDaoBean;
 	@EJB
-	private DepartmentDaoBean depthDao;
+	private DepartmentDaoBean deptDao;
 
 	private static final Map<Class<? extends Contract>, String> contractTypeName;
 
@@ -80,7 +80,7 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public SelectItem[] getDepthItems() {
-		List<Department> depths = depthDao.getAll();
+		List<Department> depths = deptDao.getAll();
 		SelectItem[] result = new SelectItem[depths.size()];
 		Department current = null;
 		for (int i = 0; i < depths.size(); i++) {
@@ -160,15 +160,6 @@ public class UtilPresentationBean implements Serializable {
 		return result;
 	}
 
-
-	/*
-	 * public SelectItem[] getContractFilter() { ContractType[] types =
-	 * ContractType.values(); SelectItem[] result = new SelectItem[types.length
-	 * + 1]; result[0] = new SelectItem("", Messages.getString("allM")); for
-	 * (int i = 0; i < types.length; i++) { result[i + 1] = new
-	 * SelectItem(types[i].getRelatedClass(), types[i].getRelatedClassName()); }
-	 * return result; }
-	 */
 
 	public SelectItem[] getContractFilter() {
 		SelectItem[] result = new SelectItem[3];
