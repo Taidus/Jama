@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,6 +40,7 @@ public class User implements Serializable {
 	private String name;
 	private String surname;
 
+	@ManyToOne
 	private Department department;
 
 	private String serialNumber;
@@ -52,6 +54,15 @@ public class User implements Serializable {
 
 
 	public User() {}
+
+
+	public User(String name, String surname, Department department, String serialNumber) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.department = department;
+		this.serialNumber = serialNumber;
+	}
 
 
 	public boolean hasRolePermission(RolePermission rolePermission) {
@@ -78,11 +89,6 @@ public class User implements Serializable {
 
 	public String getSerialNumber() {
 		return serialNumber;
-	}
-
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
 	}
 
 
@@ -116,28 +122,13 @@ public class User implements Serializable {
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
 	public String getSurname() {
 		return surname;
 	}
 
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-
 	public Department getDepartment() {
 		return department;
-	}
-
-
-	public void setDepartment(Department department) {
-		this.department = department;
 	}
 
 

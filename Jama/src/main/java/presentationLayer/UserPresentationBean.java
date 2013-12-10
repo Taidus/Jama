@@ -43,28 +43,19 @@ public class UserPresentationBean implements Serializable {
 	public UserPresentationBean() {}
 
 
+	@PostConstruct
+	public void init() {
+		conversation.begin();
+	}
+
+
 	public Conversation getConversation() {
 		return conversation;
 	}
-	
-	@PostConstruct
-	public void init(){
-		begin();
-	}
-
-
-	private void begin() {
-
-		conversation.begin();
-		System.out.println("begin");
-	}
-	
 
 
 	private void close() {
-
 		conversation.end();
-
 	}
 
 
@@ -95,12 +86,10 @@ public class UserPresentationBean implements Serializable {
 	@CreateUserAllowed
 	public void importUser() {
 		userEditor.setCurrentUser(tempLdapUser);
-
 	}
 
 
 	public String editLoggedUser() {
-
 		return userEditor.editLoggedUser();
 	}
 
@@ -111,18 +100,12 @@ public class UserPresentationBean implements Serializable {
 
 
 	public Department getSelectedDept() {
-		// if (!currentUser.getBelongingDepts().isEmpty()) {
-		// return currentUser.getBelongingDepts().get(0);
-		// }
-		// else
-		// return null;
-
-		return userEditor.getSelectedDept();
+		return userEditor.getCurrentUser().getDepartment();
 	}
 
 
 	public void setSelectedDept(Department selectedDept) {
-		userEditor.setSelectedDept(selectedDept);
+		userEditor.getCurrentUser().setDepartment(selectedDept);
 	}
 
 
