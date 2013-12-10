@@ -52,6 +52,9 @@ public class Principal {
 		this.surname = u.getSurname();
 		this.email = u.getEmail();
 		this.serialNumber = u.getSerialNumber();
+		
+		permissionsPerRole = new HashMap<>();
+		departmentPerRole = new HashMap<>();
 
 		for (Role role : u.getRoles()) {
 			stringifyRole(role);
