@@ -22,18 +22,18 @@ import usersManagement.SystemRole;
 import usersManagement.User;
 import util.Messages;
 import businessLayer.Department;
-import controllerLayer.UserEditorBean;
+import controllerLayer.UserControllerBean;
 
-@Named("userEditor")
+@Named("userCreator")
 @ConversationScoped
-public class UserPresentationBean implements Serializable {
+public class UserCreationPresentationBean implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7518079536711094530L;
 
 	@EJB
-	private UserEditorBean userEditor;
+	private UserControllerBean userEditor;
 
 	@Inject
 	private Conversation conversation;
@@ -46,7 +46,7 @@ public class UserPresentationBean implements Serializable {
 	private Department newDepartment;
 
 
-	public UserPresentationBean() {
+	public UserCreationPresentationBean() {
 		resetNewRoleFields();
 	}
 
@@ -112,10 +112,6 @@ public class UserPresentationBean implements Serializable {
 	public void importUser() {
 		System.out.println("User editor: importing user " + tempLdapUser);
 		userEditor.setCurrentUser(tempLdapUser);
-	}
-
-	public String editLoggedUser() {
-		return userEditor.editLoggedUser();
 	}
 
 

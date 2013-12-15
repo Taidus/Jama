@@ -8,9 +8,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.CellEditEvent;
-
-import daoLayer.UserDaoBean;
+import presentationLayer.UserEditPresentationBean;
 import presentationLayer.lazyModel.UserTableLazyDataModel;
 
 @Named("userTablePCB")
@@ -25,7 +23,7 @@ public class UserTablePageControllerBean implements Serializable {
 	private Conversation conversation;
 
 	@Inject
-	private UserDaoBean userDao;
+	private UserEditPresentationBean editor;
 
 
 	@PostConstruct
@@ -48,14 +46,14 @@ public class UserTablePageControllerBean implements Serializable {
 	public UserTableLazyDataModel getLazyModel() {
 		return lazyModel;
 	}
-
-
-	public void changeRole(CellEditEvent event) {
-		int rowIndex = event.getRowIndex();
-		System.out.println("Row index: " + rowIndex);
-		if (rowIndex >= 0) {
-			userDao.create(lazyModel.getDisplayedUsers().get(rowIndex));
-		}
+	
+	public void viewUser(){
+		editUser();
+	}
+	
+	public void editUser(){
+		System.out.println("User table PCB: editing/viewing user");
+		editor.editUser(lazyModel.getSelectedUser());
 	}
 
 
