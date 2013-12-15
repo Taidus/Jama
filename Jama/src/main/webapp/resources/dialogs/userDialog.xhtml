@@ -20,19 +20,15 @@
 
 			<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
 
-			<sections:userData mode="#{ (cc.attrs.editingDisable) ? 'profile' : 'wizard'}" panelGridId="#{cc.attrs.panelGridId}" />
+			<sections:userData editingDisable="#{cc.attrs.editingDisable}" panelGridId="#{cc.attrs.panelGridId}" />
 
 
-			<p:commandButton value="#{msgs.save}" process="@form" update="@form" oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}"
-				rendered="#{not cc.attrs.editingDisable}" />
+			<p:commandButton value="#{msgs.cancel}" process="@this" immediate="true" actionListener="#{userEditor.cancel()}"
+				oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" />
 
-			<p:commandButton value="#{msgs.cancel}" action="#{userEditor.cancel()}" immediate="true" />
+			<p:commandButton styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{userEditor.save()}" process="@form"
+				rendered="#{not cc.attrs.editingDisable}" oncomplete="if(!args.validationFailed){ #{cc.attrs.dialogWidgetVar}.hide(); }" />
 
-			<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}" severity="alert" widgetVar="w_confirm_save_user"
-				rendered="#{not cc.attrs.editingDisable}">
-				<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}" immediate="true" oncomplete="w_confirm_save_user.hide()" />
-				<p:commandButton value="#{msgs.no}" onclick="w_confirm_save_user.hide();" type="button" />
-			</p:confirmDialog>
 
 		</p:dialog>
 	</h:form>

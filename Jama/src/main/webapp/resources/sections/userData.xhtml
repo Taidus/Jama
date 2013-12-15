@@ -3,7 +3,7 @@
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
 <composite:interface>
-	<composite:attribute name="mode" default="profile" />
+	<composite:attribute name="editingDisable" default="true" />
 	<composite:attribute name="panelGridId" default="usrDataPanelGrid" />
 
 </composite:interface>
@@ -20,26 +20,9 @@
 			</p:column>
 
 			<p:column>
-				<h:inputText id="serial" value="#{userCreator.serialNumberToImport}" label="#{msgs.serialNumber}" required="true"
-					rendered="#{cc.attrs.mode == 'wizard'}" validator="#{userCreator.validateSerialNumber}">
-					<p:ajax event="valueChange" process="@this" update="#{cc.attrs.panelGridId}" listener="#{userCreator.importUser()}" />
-				</h:inputText>
-
-				<h:outputText value="#{userCreator.user.serialNumber}" rendered="#{cc.attrs.mode == 'profile'}" />
+				<h:outputText value="#{userEditor.user.serialNumber}" />
 			</p:column>
 
-			<ui:remove>
-				<p:column>
-					<p:commandButton value="#{msgs.import}" process="@this serial" update="#{cc.attrs.panelGridId}" actionListener="#{userCreator.importUser()}"
-						rendered="#{cc.attrs.mode == 'wizard'}" />
-				</p:column>
-			</ui:remove>
-
-			<ui:remove>
-				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
-					<p:message styleClass="errorMessage" id="serialError" for="serial" />
-				</p:column>
-			</ui:remove>
 		</p:row>
 
 		<p:row>
@@ -48,7 +31,7 @@
 			</p:column>
 
 			<p:column>
-				<h:outputText id="name_output" value="#{userCreator.user.name}" />
+				<h:outputText id="name_output" value="#{userEditor.user.name}" />
 			</p:column>
 		</p:row>
 
@@ -58,7 +41,7 @@
 			</p:column>
 
 			<p:column>
-				<h:outputText id="surname_output" value="#{userCreator.user.surname}" />
+				<h:outputText id="surname_output" value="#{userEditor.user.surname}" />
 			</p:column>
 		</p:row>
 
@@ -68,9 +51,9 @@
 				<h:outputText value="#{msgs.email}: " />
 			</p:column>
 
-			<p:column>
+			<p:column rendered="#{not cc.attrs.editingDisable}">
 				<p:inputText id="email" required="true" label="email" requiredMessage="Please enter your email address."
-					validatorMessage="#{msgs.err_invalidEmail}" value="#{userCreator.user.email}">
+					validatorMessage="#{msgs.err_invalidEmail}" value="#{userEditor.user.email}">
 
 					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					<f:ajax event="blur" execute="@this" />
@@ -80,13 +63,10 @@
 				<p:watermark for="email" value="Email Address *" />
 
 			</p:column>
-
-			<ui:remove>
-				<p:column>
-					<p:message styleClass="errorMessage" id="emailError" for="email" />
-				</p:column>
-			</ui:remove>
-
+			
+			<p:column rendered="#{cc.attrs.editingDisable}">
+				<h:outputText value="#{userEditor.user.email}" />
+			</p:column>
 
 		</p:row>
 
@@ -94,7 +74,7 @@
 			<p:column colspan="2">
 				<p:panel>
 
-					<p:dataTable id="userRoles" value="#{userCreator.user.roles}" var="role" rowKey="#{userCreator.user.roles.indexOf(role)}"
+					<p:dataTable id="userRoles" value="#{userEditor.user.roles}" var="role" rowKey="#{userEditor.user.roles.indexOf(role)}"
 						emptyMessage="#{msgs.noRoleFound}" >
 
 						<f:facet name="header">
@@ -106,7 +86,7 @@
 							<p:row>
 								<p:column headerText="#{msgs.role}" />
 								<p:column headerText="#{msgs.department}" />
-								<p:column />
+								<p:column rendered="#{not cc.attrs.editingDisable}" />
 							</p:row>
 						</p:columnGroup>
 
@@ -115,19 +95,18 @@
 						</p:column>
 
 						<p:column width="55%">
-							<h:outputText value="#{userCreator.getDepartmentFromRole(role).displayName}" />
+							<h:outputText value="#{userEditor.getDepartmentFromRole(role).displayName}" />
 						</p:column>
 
-						<p:column width="15%">
-							<p:commandButton value="#{msgs.remove}" action="#{userCreator.removeRole(role)}" update="@form" process="@this"
-								rendered="#{cc.attrs.mode == 'wizard'}" />
+						<p:column width="15%" rendered="#{not cc.attrs.editingDisable}">
+							<p:commandButton value="#{msgs.remove}" action="#{userEditor.removeRole(role)}" update="@form" process="@this" />
 						</p:column>
 
 					</p:dataTable>
 
 					<br />
 
-					<p:panelGrid id="roleInput" style="width: 100%" rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:panelGrid id="roleInput" style="width: 100%" rendered="#{cc.attrs.editingDisable == false}">
 
 						<p:row>
 							<p:column width="10%">
@@ -135,7 +114,7 @@
 							</p:column>
 
 							<p:column width="35%">
-								<p:selectOneMenu id="newRole" value="#{userCreator.newRolePermission}" label="#{msgs.role}"
+								<p:selectOneMenu id="newRole" value="#{userEditor.newRolePermission}" label="#{msgs.role}"
 									required="#{not empty param[_roleAddBtn.clientId]}">
 									<f:selectItems value="#{utilPB.rolesItems}" />
 									<p:ajax event="valueChange" process="@this" update="newDepartment" />
@@ -147,8 +126,8 @@
 							</p:column>
 
 							<p:column width="35%">
-								<p:selectOneMenu id="newDepartment" value="#{userCreator.newDepartment}" disabled="#{not userCreator.newDepartmentRequired()}"
-									required="#{(not empty param[_roleAddBtn.clientId]) and userCreator.newDepartmentRequired()}" label="#{msgs.department}">
+								<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{not userEditor.newDepartmentRequired()}"
+									required="#{(not empty param[_roleAddBtn.clientId]) and userEditor.newDepartmentRequired()}" label="#{msgs.department}">
 									<f:selectItems value="#{utilPB.depthItems}" />
 									<f:converter binding="#{departmentConverter}" />
 									<p:ajax event="valueChange" process="@this" />
@@ -156,7 +135,7 @@
 							</p:column>
 
 							<p:column width="10%">
-								<p:commandButton value="#{msgs.add}" action="#{userCreator.addRole()}" update="roleInput userRoles" process="roleInput, @this"
+								<p:commandButton value="#{msgs.add}" action="#{userEditor.addRole()}" update="roleInput userRoles" process="roleInput, @this"
 									binding="#{_roleAddBtn}" />
 							</p:column>
 						</p:row>

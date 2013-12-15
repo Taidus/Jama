@@ -53,7 +53,7 @@ public class UserEditPresentationBean implements Serializable {
 	}
 
 
-	public String save() {
+	public void save() {
 		try {
 			userController.save();
 		} catch (GeneralSecurityException e) {
@@ -61,14 +61,12 @@ public class UserEditPresentationBean implements Serializable {
 			e.printStackTrace();
 		}
 		close();
-		return "home";
 	}
 
 
-	public String cancel() {
+	public void cancel() {
 		userController.cancel();
 		close();
-		return "home";
 	}
 
 

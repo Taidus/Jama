@@ -98,8 +98,8 @@
 		<p:commandButton action="#{userTablePCB.backToHome()}" value="#{msgs.home}" immediate="true" />
 	</h:form>
 	
-	<dialogs:userDialog panelGridId="editDialogPanel" dialogWidgetVar="w_editDialog" dialogId="editDialog" />
-	<dialogs:userDialog panelGridId="viewDialogPanel" dialogWidgetVar="w_viewDialog" dialogId="viewDialog" />
+	<dialogs:userDialog panelGridId="editDialogPanel" dialogWidgetVar="w_editDialog" dialogId="editDialog" editingDisable="false"/>
+	<dialogs:userDialog panelGridId="viewDialogPanel" dialogWidgetVar="w_viewDialog" dialogId="viewDialog" editingDisable="true"/>
 
 </h:body>
 
