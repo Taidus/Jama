@@ -23,7 +23,7 @@ import daoLayer.UserDaoBean;
 //TODO splittare in presentation e controller
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class UserEditorBean implements Serializable {
+public class UserControllerBean implements Serializable {
 	private static final long serialVersionUID = -4966124878956728047L;
 
 	@Inject
@@ -38,7 +38,7 @@ public class UserEditorBean implements Serializable {
 
 	private User currentUser;
 
-	public UserEditorBean() {
+	public UserControllerBean() {
 		super();
 	}
 
