@@ -32,6 +32,8 @@ import annotations.Logged;
 import businessLayer.Contract;
 import businessLayer.Installment;
 
+
+//TODO ricerca per department di afferneza
 @Stateful
 @ConversationScoped
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

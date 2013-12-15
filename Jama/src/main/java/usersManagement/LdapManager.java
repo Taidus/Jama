@@ -166,7 +166,8 @@ public class LdapManager implements LdapQueryInterface {
 			}
 		}
 
-		// result.addDepartment(d);
+		d.setRateDirectory(Config.depRatesDefaultDir);
+		result.setDepartment(d);
 
 		return result;
 

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -17,7 +18,8 @@ import javax.validation.constraints.Size;
     )
 @NamedQueries({
 @NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c ORDER BY c.surname"),
-@NamedQuery(name="ChiefScientist.getBySerial", query="SELECT c FROM ChiefScientist c WHERE LOWER(c.serialNumber)= :number")
+@NamedQuery(name="ChiefScientist.getBySerial", query="SELECT c FROM ChiefScientist c WHERE LOWER(c.serialNumber)= :number"),
+@NamedQuery(name="ChiefScientist.getByDeptSerials", query="SELECT c FROM ChiefScientist c WHERE c.department IN :serials")
 
 })
 public class ChiefScientist {
@@ -34,6 +36,19 @@ public class ChiefScientist {
 	
 	private String serialNumber;
 	
+	@ManyToOne
+	private Department department;
+	
+	
+	
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	public String getSerialNumber() {
 		return serialNumber;
 	}
@@ -62,6 +77,15 @@ public class ChiefScientist {
 	
 	public String getCompleteName(){
 		return this.surname + " " + this.name;
+	}
+	
+	
+
+	public void copy (ChiefScientist c) {
+		this.name = c.getName();
+		this.surname = c.getSurname();
+		this.serialNumber = c.getSerialNumber();
+		this.department = c.getDepartment();
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import org.primefaces.model.SortOrder;
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
 import security.annotations.ViewOwnContractsAllowed;
+import usersManagement.RolePermission;
 import util.Config;
 import annotations.Logged;
 import businessLayer.Contract;
@@ -56,7 +57,7 @@ public class ContractSearchService extends Pager<Contract> {
 
 		String code = principal.getSerialNumber();
 
-		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order,
+		_init(null,lowerDeadLineDate, upperDeadLineDate, null, companyId, order,
 				contractClass, code, closed, lowerInstDeadlineDate,
 				upperInstDeadlineDate,null,null);
 
@@ -66,13 +67,16 @@ public class ContractSearchService extends Pager<Contract> {
 	public void init(Date lowerApprovalDate, Date upperApprovalDate,
 			Integer chiefId, Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass, Boolean closed) {
+		
+		List<String> deptCodes = principal.getBelongingDepthsCodes(RolePermission.OPERATOR);
+		
 
-		_init(null, null, chiefId, companyId, order,
+		_init(deptCodes, null, null, chiefId, companyId, order,
 				contractClass, null, closed, null, null,lowerApprovalDate,upperApprovalDate);
 
 	}
 
-	private void _init(Date lowerDate, Date upperDate, Integer chiefId,
+	private void _init(List<String> deptsCodes ,Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass,
 			String principalSerialNumber, Boolean closed,
@@ -104,6 +108,13 @@ public class ContractSearchService extends Pager<Contract> {
 		Join<? extends Contract, Installment> join2;
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
+		
+		//metti paramter expression se ti riesce
+		if(deptsCodes != null){
+
+			criteria.add(agr.get("department").get("code").in(deptsCodes));		
+		}
+		
 
 		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
 

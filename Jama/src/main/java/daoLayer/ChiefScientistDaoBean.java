@@ -1,5 +1,6 @@
 package daoLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateful;
@@ -15,6 +16,7 @@ import usersManagement.LdapManager;
 import usersManagement.User;
 import annotations.Updated;
 import businessLayer.ChiefScientist;
+import businessLayer.Department;
 
 @Stateful
 @ConversationScoped
@@ -29,17 +31,38 @@ public class ChiefScientistDaoBean {
 
 	@Inject
 	private LdapManager ldap;
+	
+	@Inject
+	private DepartmentDaoBean deptDao;
 
 	public ChiefScientistDaoBean() {
 	}
 	
 
 	public ChiefScientist createChiefScientist(ChiefScientist chief) {
-
-		if (getBySerial(chief.getSerialNumber()) == null) {
-			em.persist(chief);
+		
+		
+		
+		ChiefScientist foundChief = getBySerial(chief.getSerialNumber());
+		if (foundChief == null) {
+			
+			Department d = deptDao.getByCode(chief.getDepartment().getCode());
+			if(d != null){
+				chief.setDepartment(d);
+			}else{
+				em.persist(chief.getDepartment());
+			}
+			
+			
 			chiefCreationEvent.fire(chief);
 		}
+		
+		else{
+			foundChief.copy(chief);
+			chief = foundChief;
+		}
+		
+		em.persist(chief);
 		return chief;
 	}
 
@@ -86,6 +109,20 @@ public class ChiefScientistDaoBean {
 					.getSerialNumber());
 			createChiefScientist(c);
 		}
+	}
+	
+	public List<ChiefScientist> getByDeptSerials(List<String> serials){
+		
+		List<ChiefScientist> results = new ArrayList<>();
+		
+		if(serials!=null){
+			
+			results = em.createNamedQuery("ChiefScientist.getByDeptSerials", ChiefScientist.class).setParameter("serials", serials).getResultList();
+			
+		}
+		
+		return results;
+		
 	}
 
 }

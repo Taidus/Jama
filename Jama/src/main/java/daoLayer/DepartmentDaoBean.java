@@ -43,6 +43,7 @@ public class DepartmentDaoBean {
 	}
 	
 	public Department getByCode(String code){
+		System.out.println("GET BY CODE: "+code +"   ////");
 		return em.createNamedQuery("Department.findByCode", Department.class).setParameter("code", code).getSingleResult();
 	}
 	

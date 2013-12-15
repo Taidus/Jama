@@ -20,14 +20,16 @@ public class Principal {
 	private String serialNumber;
 
 	private Map<String, List<String>> permissionsPerRole;
-	private Map<String, String> departmentPerRole;
+	//private Map<String, String> departmentPerRole;
+	private List<Couple>  roleWithDepartment;
 
 
 	public Principal() {
 		// TODO: di serialNumber che ci metto?
 		serialNumber = "Guest";
 		permissionsPerRole = new HashMap<>();
-		departmentPerRole = new HashMap<>();
+		//departmentPerRole = new HashMap<>();
+		roleWithDepartment = new ArrayList<>();
 
 		stringifyRole(new SystemRole(RolePermission.GUEST));
 	}
@@ -54,7 +56,8 @@ public class Principal {
 		this.serialNumber = u.getSerialNumber();
 		
 		this.permissionsPerRole = new HashMap<>();
-		this.departmentPerRole = new HashMap<>();
+		roleWithDepartment = new ArrayList<>();
+
 
 		for (Role role : u.getRoles()) {
 			stringifyRole(role);
@@ -84,8 +87,25 @@ public class Principal {
 
 
 	public List<String> getBelongingDepthsCodes() {
-		return new ArrayList<>(departmentPerRole.values());
+		List<String>  result = new ArrayList<>();
+		for(Couple c : roleWithDepartment ){
+			result.add(c.getS2());
+		}
+		
+		return result;
 	}
+	
+	public List<String> getBelongingDepthsCodes(RolePermission rolePermission) {
+		List<String>  result = new ArrayList<>();
+		for(Couple c : roleWithDepartment ){
+			if(c.getS1().equals(rolePermission.toString())){
+			result.add(c.getS2());
+		}
+			}
+		
+		return result;
+	}
+
 
 
 	public boolean hasPermission(Permission toCheck) {
@@ -143,7 +163,27 @@ public class Principal {
 
 
 	private void _addDepartmentFromRole(BusinessRole role) {
-		departmentPerRole.put(role.getRolePermission().toString(), role.getDepartment().toString());
+		roleWithDepartment.add(new Couple(role.getRolePermission().toString(), role.getDepartment().getCode().toString()));
+	}
+	
+	
+	private static class Couple{
+		private String s1;
+		private String s2;
+		
+		public Couple(String s1, String s2) {
+			super();
+			this.s1 = s1;
+			this.s2 = s2;
+		}
+		public String getS1() {
+			return s1;
+		}
+		public String getS2() {
+			return s2;
+		}
+		
+		
 	}
 
 }
