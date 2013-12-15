@@ -52,12 +52,11 @@ public class ChiefScientistDaoBean {
 			}else{
 				em.persist(chief.getDepartment());
 			}
-			
-			
-			chiefCreationEvent.fire(chief);
 		}
 		
 		else{
+			
+			chiefCreationEvent.fire(chief);
 			foundChief.copy(chief);
 			chief = foundChief;
 		}
