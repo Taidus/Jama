@@ -136,7 +136,6 @@
 								<p:column width="35%">
 									<p:selectOneMenu id="newRole" value="#{userEditor.newRolePermission}" label="#{msgs.role}"
 										required="#{not empty param[_roleAddBtn.clientId]}">
-										<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
 										<f:selectItems value="#{utilPB.rolesItems}" />
 										<p:ajax event="valueChange" process="@this" />
 									</p:selectOneMenu>
@@ -149,7 +148,6 @@
 								<p:column width="35%">
 									<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{userEditor.newDepartmentRequired()}"
 										required="#{(not empty param[_roleAddBtn.clientId]) and userEditor.newDepartmentRequired()}" label="#{msgs.department}">
-										<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" />
 										<f:selectItems value="#{utilPB.depthItems}" />
 										<p:ajax event="valueChange" process="@this" />
 									</p:selectOneMenu>

@@ -99,6 +99,7 @@ public class UserPresentationBean implements Serializable {
 
 	@CreateUserAllowed
 	public void importUser() {
+		System.out.println("User editor: importing user " + tempLdapUser);
 		userEditor.setCurrentUser(tempLdapUser);
 	}
 
@@ -109,6 +110,7 @@ public class UserPresentationBean implements Serializable {
 
 
 	public User getUser() {
+		System.out.println("User editor: getting user " + userEditor.getCurrentUser());
 		return userEditor.getCurrentUser();
 	}
 
@@ -167,17 +169,19 @@ public class UserPresentationBean implements Serializable {
 	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			String serial = value.toString();
+			System.out.print("User editor: validazione matricola " + serial + ". ");
 
 			if (null != userEditor.getBySerial(serial)) {
-				System.out.println("User editor: matricola duplicata");
+				System.out.println("Matricola duplicata");
 				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
 			}
 
 			tempLdapUser = ldapManager.getUserBySerial(serial);
 			if (null == tempLdapUser) {
-				System.out.println("User editor: matricola non trovata in ldap");
+				System.out.println("Matricola non trovata in ldap");
 				throw new ValidatorException(Messages.getErrorMessage("err_badImport"));
 			}
+			System.out.println("Validazione completata");
 		}
 	}
 }
