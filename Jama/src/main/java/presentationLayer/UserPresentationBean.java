@@ -63,6 +63,17 @@ public class UserPresentationBean implements Serializable {
 	}
 
 
+	public String getSerialNumberToImport() {
+		return getUser().getSerialNumber();
+	}
+
+
+	public void setSerialNumberToImport(String serialNumberToImport) {
+		// XXX serve un setter per l'input text, ma in realtà il valore inserito
+		// serve solo per importare l'utente da LDAP
+	}
+
+
 	public Conversation getConversation() {
 		return conversation;
 	}
@@ -103,14 +114,12 @@ public class UserPresentationBean implements Serializable {
 		userEditor.setCurrentUser(tempLdapUser);
 	}
 
-
 	public String editLoggedUser() {
 		return userEditor.editLoggedUser();
 	}
 
 
 	public User getUser() {
-		System.out.println("User editor: getting user " + userEditor.getCurrentUser());
 		return userEditor.getCurrentUser();
 	}
 
@@ -144,16 +153,17 @@ public class UserPresentationBean implements Serializable {
 
 
 	public boolean newDepartmentRequired() {
+		System.out.println("User editor: newDepReq = " + !newRolePermission.equals(RolePermission.ADMIN));
 		return !newRolePermission.equals(RolePermission.ADMIN);
 	}
 
 
-	public void addRole(){
+	public void addRole() {
 		Role newRole;
-		if(newDepartmentRequired()){
+		if (newDepartmentRequired()) {
 			newRole = new BusinessRole(newRolePermission, newDepartment);
 		}
-		else{
+		else {
 			newRole = new SystemRole(newRolePermission);
 		}
 		userEditor.getCurrentUser().addRole(newRole);
@@ -168,20 +178,20 @@ public class UserPresentationBean implements Serializable {
 
 	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
-			String serial = value.toString();
-			System.out.print("User editor: validazione matricola " + serial + ". ");
+			String serialNumberToImport = value.toString();
+			System.out.print("User editor: validazione matricola " + serialNumberToImport + ". ");
 
-			if (null != userEditor.getBySerial(serial)) {
+			if (null != userEditor.getBySerial(serialNumberToImport)) {
 				System.out.println("Matricola duplicata");
 				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
 			}
 
-			tempLdapUser = ldapManager.getUserBySerial(serial);
+			tempLdapUser = ldapManager.getUserBySerial(serialNumberToImport);
 			if (null == tempLdapUser) {
 				System.out.println("Matricola non trovata in ldap");
 				throw new ValidatorException(Messages.getErrorMessage("err_badImport"));
 			}
-			System.out.println("Validazione completata");
+			System.out.println("Validazione completata: " + tempLdapUser);
 		}
 	}
 }

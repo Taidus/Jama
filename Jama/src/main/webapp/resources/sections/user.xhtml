@@ -22,8 +22,8 @@
 				</p:column>
 
 				<p:column>
-					<h:inputText id="serial" value="#{userEditor.user.serialNumber}" label="#{msgs.serialNumber}" required="true"
-						rendered="#{cc.attrs.mode == 'wizard'}" validator="#{userEditor.validateSerialNumber}">
+					<h:inputText id="serial" value="#{userEditor.serialNumberToImport}" label="#{msgs.serialNumber}" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}" validator="#{userEditor.validateSerialNumber}" >
 						<p:ajax event="valueChange" process="@this" update="usrDataPanelGrid" listener="#{userEditor.importUser()}" />
 					</h:inputText>
 
@@ -90,7 +90,7 @@
 			</p:row>
 
 			<p:row>
-				<p:column colspan="3">
+				<p:column colspan="2">
 					<p:panel>
 
 						<p:dataTable id="userRoles" value="#{userEditor.user.roles}" var="role" rowKey="#{userEditor.user.roles.indexOf(role)}"
@@ -114,7 +114,7 @@
 							</p:column>
 
 							<p:column>
-								<h:outputText value="#{userEditor.getDepartmentFromRole(role)}" />
+								<h:outputText value="#{userEditor.getDepartmentFromRole(role).displayName}" />
 							</p:column>
 
 							<p:column>
@@ -137,7 +137,7 @@
 									<p:selectOneMenu id="newRole" value="#{userEditor.newRolePermission}" label="#{msgs.role}"
 										required="#{not empty param[_roleAddBtn.clientId]}">
 										<f:selectItems value="#{utilPB.rolesItems}" />
-										<p:ajax event="valueChange" process="@this" />
+										<p:ajax event="valueChange" process="@this" update="newDepartment"/>
 									</p:selectOneMenu>
 								</p:column>
 
@@ -146,9 +146,10 @@
 								</p:column>
 
 								<p:column width="35%">
-									<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{userEditor.newDepartmentRequired()}"
+									<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{not userEditor.newDepartmentRequired()}"
 										required="#{(not empty param[_roleAddBtn.clientId]) and userEditor.newDepartmentRequired()}" label="#{msgs.department}">
 										<f:selectItems value="#{utilPB.depthItems}" />
+										<f:converter binding="#{departmentConverter}" />
 										<p:ajax event="valueChange" process="@this" />
 									</p:selectOneMenu>
 								</p:column>
