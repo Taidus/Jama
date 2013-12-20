@@ -12,13 +12,22 @@
 
 </h:head>
 <h:body>
+	
+	
 	<ui:include src="/resources/sections/toolbar.xhtml" />
 	
-	<p:panel header="#{msgs.personalData}">
-	<sections:user mode="profile">
+	<h:form>
 	
-	</sections:user>
+	<input type="hidden" name="cid" value='#{userProfilePB.conversation.id}' />
+	
+	<p:panel header="#{msgs.personalData}">
+	<sections:userData editingDisable="false" panelGridId="usrProfileEdit"></sections:userData>>
 	</p:panel>
+	
+	<p:commandButton  icon="ui-icon-disk" value="#{msgs.save}"  action="#{userProfilePB.save()}" ></p:commandButton>	
+	<p:commandButton value="#{msgs.cancel}" action="#{userProfilePB.cancel()}"></p:commandButton>
+	
+	</h:form>
 	
 </h:body>
 </html>
