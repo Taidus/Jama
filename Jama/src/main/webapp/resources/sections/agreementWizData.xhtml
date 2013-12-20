@@ -70,7 +70,7 @@
 						label="#{msgs.department}" required="true">
 						<f:selectItems value="#{utilPB.loggedUserDepts}" />
 						<f:converter binding="#{departmentConverter}" />
-						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId}" />
+						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId} #{cc.attrs.chiefMenuId}" />
 					</p:selectOneMenu>
 
 					<h:outputText value="#{contractManager.contract.department.displayName}" rendered="#{cc.attrs.editingDisable == true}" />
@@ -112,7 +112,7 @@
 				<p:column>
 					<p:selectOneMenu id="#{cc.attrs.chiefMenuId}" widgetVar="#{cc.attrs.chiefMenuWidgetVar}" value="#{contractManager.contract.chief}"
 						label="#{msgs.chief}" required="true" filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
-						<f:selectItems value="#{utilPB.chiefItems}" />
+						<f:selectItems value="#{utilPB.chiefItemsForCurrentDept}" />
 						<f:converter binding="#{chiefConverter}" />
 					</p:selectOneMenu>
 
