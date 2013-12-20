@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 @NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c ORDER BY c.surname"),
 @NamedQuery(name="ChiefScientist.getBySerial", query="SELECT c FROM ChiefScientist c WHERE LOWER(c.serialNumber)= :number"),
-@NamedQuery(name="ChiefScientist.getByDeptSerials", query="SELECT c FROM ChiefScientist c WHERE c.department IN :serials")
+@NamedQuery(name="ChiefScientist.getByDeptSerials", query="SELECT c FROM ChiefScientist c WHERE c.department.code IN :serials")
 
 })
 public class ChiefScientist {
