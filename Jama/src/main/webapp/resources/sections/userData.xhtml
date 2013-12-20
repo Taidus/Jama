@@ -100,7 +100,7 @@
 						</p:column>
 
 						<p:column width="15%" rendered="#{not cc.attrs.editingDisable}">
-							<p:commandButton value="#{msgs.remove}" actionListener="#{userEditor.removeRole(role)}" update="@form" process="@this" />
+							<p:commandButton value="#{msgs.remove}" actionListener="#{userEditor.removeRole(role)}" update="userRoles" process="@this" />
 						</p:column>
 
 					</p:dataTable>
