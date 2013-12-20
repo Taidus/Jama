@@ -16,9 +16,13 @@
 
 	<h:form>
 
+		<p:remoteCommand name="closeDiag" actionListener="#{userEditor.cancel()}" immediate="true" />
+
 		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true">
 
 			<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
+
+			<p:ajax event="close" onstart="closeDiag();" oncomplete="setHideShow();" />
 
 			<sections:userData editingDisable="#{cc.attrs.editingDisable}" panelGridId="#{cc.attrs.panelGridId}" />
 
@@ -26,7 +30,7 @@
 			<p:commandButton value="#{msgs.cancel}" process="@this" immediate="true" actionListener="#{userEditor.cancel()}"
 				oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" />
 
-			<p:commandButton styleClass="saveButton" icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{userEditor.save()}" process="@form"
+			<p:commandButton icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{userEditor.save()}" process="@form"
 				rendered="#{not cc.attrs.editingDisable}" oncomplete="if(!args.validationFailed){ #{cc.attrs.dialogWidgetVar}.hide(); }" />
 
 
