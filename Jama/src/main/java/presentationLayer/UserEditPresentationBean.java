@@ -80,7 +80,7 @@ public class UserEditPresentationBean implements Serializable {
 	}
 	
 	public void editUser(User user){
-		userController.setCurrentUser(user);
+		userController.editUser(user);
 	}
 
 

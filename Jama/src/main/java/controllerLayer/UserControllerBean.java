@@ -69,6 +69,10 @@ public class UserControllerBean implements Serializable {
 	public User getCurrentUser() {
 		return currentUser;
 	}
+	
+	public void editUser(User u){
+		this.currentUser = em.find(User.class, u.getId());
+	}
 
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;

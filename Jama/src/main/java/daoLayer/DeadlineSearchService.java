@@ -27,41 +27,40 @@ import org.primefaces.model.SortOrder;
 
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
+import usersManagement.RolePermission;
 import util.Config;
 import annotations.Logged;
 import businessLayer.Contract;
 import businessLayer.Installment;
-
 
 //TODO ricerca per department di afferneza
 @Stateful
 @ConversationScoped
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DeadlineSearchService extends Pager<Contract> {
-	
-	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
+
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
-	
+
 	private Pager<Contract> pager;
-	
+
 	@Inject
 	@Logged
 	private Principal principal;
 
 	public DeadlineSearchService() {
-		
-	
+
 	}
 
 	@AlterContractsAllowed
 	public void init(Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
-			Class<? extends Contract> contractClass, Boolean closed ) {
+			Class<? extends Contract> contractClass, Boolean closed) {
 
 		if (contractClass == null) {
 			contractClass = Contract.class;
 		}
-		
+
 		TypedQuery<Contract> query;
 		TypedQuery<Long> countQuery;
 
@@ -69,29 +68,32 @@ public class DeadlineSearchService extends Pager<Contract> {
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
 		Root<? extends Contract> agr = c.from(contractClass);
 		agr.alias("agr_alias");
-		
-		//countQuery
+
+		// countQuery
 		CriteriaQuery<Long> countC = cb.createQuery(Long.class);
 		Root<? extends Contract> agr2 = countC.from(c.getResultType());
 		agr2.alias("agr_alias");
 		countC.select(cb.countDistinct(agr2));
 
-		c.select(agr)
-				.distinct(true);
+		c.select(agr).distinct(true);
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
-	
-		
-		
-		Join<? extends Contract,Installment> join = agr.join("installments",JoinType.INNER);
+
+		List<String> deptCodes = principal.getBelongingDepthsCodes(RolePermission.OPERATOR);
+		// metti paramter expression se ti riesce
+		if (deptCodes != null) {				
+			criteria.add(agr.get("department").get("code").in(deptCodes));
+		}
+
+		Join<? extends Contract, Installment> join = agr.join("installments",
+				JoinType.INNER);
 		join.alias("contractJoinInstallment");
-		
-		Join<? extends Contract,Installment> join2 = agr2.join("installments",JoinType.INNER);
+
+		Join<? extends Contract, Installment> join2 = agr2.join("installments",
+				JoinType.INNER);
 		join2.alias("contractJoinInstallment");
-		
-		criteria.add((cb.equal(join.get("paidInvoice"),
-				false)));
-		
+
+		criteria.add((cb.equal(join.get("paidInvoice"), false)));
 
 		if (lowerDate != null) {
 
@@ -139,9 +141,10 @@ public class DeadlineSearchService extends Pager<Contract> {
 			Predicate predicate = exp.in(codes);
 			criteria.add(predicate);
 		}
-		
+
 		if (closed != null) {
-			ParameterExpression<Boolean> p = cb.parameter(Boolean.class, "closed");
+			ParameterExpression<Boolean> p = cb.parameter(Boolean.class,
+					"closed");
 			criteria.add(cb.equal(agr.get("closed"), p));
 		}
 
@@ -156,20 +159,21 @@ public class DeadlineSearchService extends Pager<Contract> {
 				c.where(cb.and(criteria.toArray(new Predicate[0])));
 				countC.where(cb.and(criteria.toArray(new Predicate[0])));
 
-				
 			}
 
 			query = em.createQuery(c);
 			countQuery = em.createQuery(countC);
-			
+
 			if (lowerDate != null) {
 				query.setParameter("lowerDate", lowerDate, TemporalType.DATE);
-				countQuery.setParameter("lowerDate", lowerDate, TemporalType.DATE);
+				countQuery.setParameter("lowerDate", lowerDate,
+						TemporalType.DATE);
 
 			}
 			if (upperDate != null) {
 				query.setParameter("upperDate", upperDate, TemporalType.DATE);
-				countQuery.setParameter("upperDate", upperDate, TemporalType.DATE);
+				countQuery.setParameter("upperDate", upperDate,
+						TemporalType.DATE);
 
 			}
 			if (chiefId != null) {
@@ -194,7 +198,7 @@ public class DeadlineSearchService extends Pager<Contract> {
 
 		}
 
-		pager= new ResultPager<>(0, Config.defaultPageSize, query, countQuery);
+		pager = new ResultPager<>(0, Config.defaultPageSize, query, countQuery);
 
 	}
 
@@ -229,7 +233,5 @@ public class DeadlineSearchService extends Pager<Contract> {
 	public Long getResultNumber() {
 		return pager.getResultNumber();
 	}
-	
-	
 
 }
