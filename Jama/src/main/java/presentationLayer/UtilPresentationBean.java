@@ -1,6 +1,7 @@
 package presentationLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,10 +11,12 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import usersManagement.RolePermission;
 import util.Messages;
+import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
@@ -36,6 +39,10 @@ public class UtilPresentationBean implements Serializable {
 	private CompanyDaoBean companyDaoBean;
 	@EJB
 	private DepartmentDaoBean deptDao;
+	
+	@Inject 
+	@TransferObj
+	private Contract c;
 
 	private static final Map<Class<? extends Contract>, String> contractTypeName;
 
@@ -75,6 +82,16 @@ public class UtilPresentationBean implements Serializable {
 
 	public SelectItem[] getChiefItems() {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
+		return getChiefsFromList(chiefs);
+	}
+	
+	public SelectItem[] getChiefItemsForCurrentDept(){
+
+		List<String> deptSerial = new ArrayList<String>();
+		if(c.getDepartment()!=null){
+		deptSerial.add(c.getDepartment().getCode());
+		}
+		List<ChiefScientist> chiefs = chiefDaoBean.getByDeptSerials(deptSerial);
 		return getChiefsFromList(chiefs);
 	}
 
