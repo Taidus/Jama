@@ -1,10 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:sections="http://java.sun.com/jsf/composite/sections"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections"
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 
 <h:head>
@@ -12,22 +8,22 @@
 
 </h:head>
 <h:body>
-	
-	
+
+
 	<ui:include src="/resources/sections/toolbar.xhtml" />
-	
+
 	<h:form>
-	
-	<input type="hidden" name="cid" value='#{userProfilePB.conversation.id}' />
-	
-	<p:panel header="#{msgs.personalData}">
-	<sections:userData editingDisable="false" panelGridId="usrProfileEdit"></sections:userData>>
-	</p:panel>
-	
-	<p:commandButton  icon="ui-icon-disk" value="#{msgs.save}"  action="#{userProfilePB.save()}" ></p:commandButton>	
-	<p:commandButton value="#{msgs.cancel}" action="#{userProfilePB.cancel()}"></p:commandButton>
-	
+
+		<input type="hidden" name="cid" value='#{userProfilePB.conversation.id}' />
+
+		<p:panel header="#{msgs.personalData}">
+			<sections:userData editingDisable="false" panelGridId="usrProfileEdit" profile="true" />
+		</p:panel>
+
+		<p:commandButton icon="ui-icon-disk" value="#{msgs.save}" action="#{userProfilePB.save()}"></p:commandButton>
+		<p:commandButton value="#{msgs.cancel}" action="#{userProfilePB.cancel()}"></p:commandButton>
+
 	</h:form>
-	
+
 </h:body>
 </html>

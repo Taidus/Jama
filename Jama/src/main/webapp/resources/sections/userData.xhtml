@@ -5,6 +5,7 @@
 <composite:interface>
 	<composite:attribute name="editingDisable" default="true" />
 	<composite:attribute name="panelGridId" default="usrDataPanelGrid" />
+	<composite:attribute name="profile" default="false" />
 
 </composite:interface>
 
@@ -70,7 +71,7 @@
 
 		</p:row>
 
-		<p:row>
+		<p:row rendered="#{not cc.attrs.profile}">
 			<p:column colspan="2">
 				<p:panel>
 
@@ -99,7 +100,7 @@
 						</p:column>
 
 						<p:column width="15%" rendered="#{not cc.attrs.editingDisable}">
-							<p:commandButton value="#{msgs.remove}" action="#{userEditor.removeRole(role)}" update="@form" process="@this" />
+							<p:commandButton value="#{msgs.remove}" actionListener="#{userEditor.removeRole(role)}" update="@form" process="@this" />
 						</p:column>
 
 					</p:dataTable>
