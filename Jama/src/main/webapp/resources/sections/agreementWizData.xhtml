@@ -66,8 +66,8 @@
 
 
 				<p:column>
-					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" required="#{not cc.attrs.editingDisable}"
-						label="#{msgs.department}">
+					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" rendered="#{not cc.attrs.editingDisable}"
+						label="#{msgs.department}" required="true">
 						<f:selectItems value="#{utilPB.loggedUserDepts}" />
 						<f:converter binding="#{departmentConverter}" />
 						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId}" />
@@ -252,20 +252,20 @@
 			</p:row>
 
 
-			<p:row>
+			<p:row rendered="#{agreementWizardPB.renderIvaComponents()==true}">
 				<p:column>
-					<h:outputText value="#{msgs.iva}:" rendered="#{agreementWizardPB.renderIvaComponents()==true}" />
+					<h:outputText value="#{msgs.iva}:"  />
 				</p:column>
 
 				<p:column>
 					<h:inputText id="iva" value="#{contractManager.contract.IVA_amount}" label="#{msgs.iva}" required="true"
-						rendered="#{(cc.attrs.editingDisable == false) and (agreementWizardPB.renderIvaComponents()==true) }">
+						rendered="#{(cc.attrs.editingDisable == false)}">
 						<f:validator binding="#{percentValidator}" />
 						<p:ajax update="amount ivaError" />
 					</h:inputText>
 
 					<h:outputText id="iva_o" value="#{contractManager.contract.IVA_amount}"
-						rendered="#{cc.attrs.editingDisable == true and agreementWizardPB.renderIvaComponents()==true }" />
+						rendered="#{cc.attrs.editingDisable == true}" />
 					<h:outputText value=" %" />
 				</p:column>
 
