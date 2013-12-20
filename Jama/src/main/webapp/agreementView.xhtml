@@ -38,8 +38,8 @@
 			</p:tab>
 
 			<p:tab id="tabAttachs" title="#{msgs.attachments_Tab}">
-				<sections:agreementWizAttachments editingDisable="#{userManager.loggedUser.hasRolePermission('PROFESSOR')==false }">
-				</sections:agreementWizAttachments>
+				<sections:agreementWizAttachments
+					editingDisable="#{not (userManager.loggedUser.hasRolePermission('PROFESSOR') and agreementEditPB.professorModeOn) }" />
 			</p:tab>
 
 		</p:tabView>
@@ -47,7 +47,8 @@
 
 		<p:commandButton value="#{msgs.previous}" action="#{agreementEditPB.cancel()}" ajax="false" />
 
-		<p:commandButton value="#{msgs.save}" action="#{agreementEditPB.save()}" ajax="false" rendered="#{userManager.loggedUser.hasRolePermission('PROFESSOR')}" />
+		<p:commandButton value="#{msgs.save}" action="#{agreementEditPB.save()}" ajax="false"
+			rendered="#{userManager.loggedUser.hasRolePermission('PROFESSOR')}" />
 
 
 	</h:form>

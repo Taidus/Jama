@@ -20,8 +20,17 @@ public class AgreementEditPresentationBean implements Serializable {
 
 	@Inject
 	private ContractManagerBean manager;
+	
+	private boolean professorModeOn;
 
 	public AgreementEditPresentationBean() {
+		setDefault();
+	}
+	
+	private void setDefault(){
+		this.professorModeOn = false;
+		this.currentTabIndex = defaultTab;
+
 	}
 
 	public int getCurrentTabIndex() {
@@ -30,7 +39,14 @@ public class AgreementEditPresentationBean implements Serializable {
 
 	public void setCurrentTabIndex(int currentTabIndex) {
 		this.currentTabIndex = currentTabIndex;
-
+	}
+	
+	public boolean isProfessorModeOn() {
+		return professorModeOn;
+	}
+	
+	public void setProfessorModeOn(boolean professorModeOn) {
+		this.professorModeOn = professorModeOn;
 	}
 
 	public void handleFlow(TabChangeEvent event) {
@@ -41,14 +57,14 @@ public class AgreementEditPresentationBean implements Serializable {
 	}
 
 	public String cancel() {
-		currentTabIndex = defaultTab;
+		setDefault();
 		manager.cancel();
 		return getListLink();
 
 	}
 
 	public String save() {
-		currentTabIndex = defaultTab;
+		setDefault();
 		manager.save();
 		return getListLink();
 
