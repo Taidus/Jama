@@ -61,35 +61,23 @@
 
 			<p:row>
 				<p:column>
-					<h:outputText value="#{msgs.protocolNumber}:" />
-				</p:column>
-
-				<p:column>
-					<h:inputText id="protocolNumber" value="#{contractManager.contract.protocolNumber}" label="#{msgs.protocolNumber}" required="true"
-						rendered="#{cc.attrs.editingDisable == false}">
-						<f:convertNumber minIntegerDigits="6" maxIntegerDigits="6" integerOnly="true" />
-						<p:ajax event="blur" process="@this" update="protocolNumberError" />
-					</h:inputText>
-
-					<h:outputText id="protocolNumber_o" value="#{contractManager.contract.protocolNumber}" label="#{msgs.protocolNumber}"
-						rendered="#{cc.attrs.editingDisable == true}">
-					</h:outputText>
-
-				</p:column>
-
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" id="protocolNumberError" for="protocolNumber" />
-				</p:column>
-			</p:row>
-
-
-			<p:row>
-				<p:column>
 					<h:outputText value="#{msgs.department}:" />
 				</p:column>
 
-				<p:column colspan="3">
-					<h:outputText value="#{contractManager.contract.department.name}" />
+
+				<p:column>
+					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" required="#{not cc.attrs.editingDisable}"
+						label="#{msgs.department}">
+						<f:selectItems value="#{utilPB.loggedUserDepts}" />
+						<f:converter binding="#{departmentConverter}" />
+						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId}" />
+					</p:selectOneMenu>
+
+					<h:outputText value="#{contractManager.contract.department.displayName}" rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+				
+				<p:column colspan="2">
+					<p:message styleClass="errorMessage" id="depError" for="department" />
 				</p:column>
 			</p:row>
 

@@ -1,6 +1,7 @@
 package presentationLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,10 +11,13 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import security.Principal;
 import usersManagement.RolePermission;
 import util.Messages;
+import annotations.Logged;
 import businessLayer.Agreement;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
@@ -30,12 +34,19 @@ import daoLayer.DepartmentDaoBean;
 @Dependent
 public class UtilPresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private ChiefScientistDaoBean chiefDaoBean;
+
 	@EJB
 	private CompanyDaoBean companyDaoBean;
+
 	@EJB
 	private DepartmentDaoBean deptDao;
+
+	@Inject
+	@Logged
+	private Principal loggedUser;
 
 	private static final Map<Class<? extends Contract>, String> contractTypeName;
 
@@ -80,11 +91,25 @@ public class UtilPresentationBean implements Serializable {
 
 
 	public SelectItem[] getDepthItems() {
-		List<Department> depths = deptDao.getAll();
-		SelectItem[] result = new SelectItem[depths.size()];
+		return getDeptsItems(deptDao.getAll());
+	}
+
+
+	public SelectItem[] getLoggedUserDepts() {
+		List<Department> depts = new ArrayList<>();
+		
+		for (String depCode : loggedUser.getBelongingDepthsCodes(RolePermission.OPERATOR)){
+			depts.add(deptDao.getByCode(depCode));
+		}
+		
+		return getDeptsItems(depts);
+	}
+	
+	private SelectItem[] getDeptsItems(List<Department> depts){
+		SelectItem[] result = new SelectItem[depts.size()];
 		Department current = null;
-		for (int i = 0; i < depths.size(); i++) {
-			current = depths.get(i);
+		for (int i = 0; i < depts.size(); i++) {
+			current = depts.get(i);
 			result[i] = new SelectItem(current, current.getDisplayName());
 		}
 		return result;
