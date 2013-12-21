@@ -33,7 +33,7 @@ public class UserCreationPresentationBean implements Serializable {
 	private static final long serialVersionUID = 7518079536711094530L;
 
 	@EJB
-	private UserControllerBean userEditor;
+	private UserControllerBean userController;
 
 	@Inject
 	private Conversation conversation;
@@ -86,7 +86,7 @@ public class UserCreationPresentationBean implements Serializable {
 
 	public String save() {
 		try {
-			userEditor.save();
+			userController.save();
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,26 +97,26 @@ public class UserCreationPresentationBean implements Serializable {
 
 
 	public String cancel() {
-		userEditor.cancel();
+		userController.cancel();
 		close();
 		return "home";
 	}
 
 
 	public String createUser() {
-		return userEditor.createUser();
+		return userController.createUser();
 	}
 
 
 	@CreateUserAllowed
 	public void importUser() {
 		System.out.println("User editor: importing user " + tempLdapUser);
-		userEditor.setCurrentUser(tempLdapUser);
+		userController.setCurrentUser(tempLdapUser);
 	}
 
 
 	public User getUser() {
-		return userEditor.getCurrentUser();
+		return userController.getCurrentUser();
 	}
 
 
@@ -150,25 +150,30 @@ public class UserCreationPresentationBean implements Serializable {
 
 	public boolean newDepartmentRequired() {
 		System.out.println("User editor: newDepReq = " + !newRolePermission.equals(RolePermission.ADMIN));
-		return !newRolePermission.equals(RolePermission.ADMIN);
+		return !newRolePermission.equals(RolePermission.ADMIN) && !newRolePermission.equals(RolePermission.PROFESSOR);
 	}
 
 
 	public void addRole() {
 		Role newRole;
-		if (newDepartmentRequired()) {
-			newRole = new BusinessRole(newRolePermission, newDepartment);
-		}
-		else {
+		
+		if(newRolePermission.equals(RolePermission.ADMIN)){
 			newRole = new SystemRole(newRolePermission);
 		}
-		userEditor.getCurrentUser().addRole(newRole);
+		else{
+			if(newRolePermission.equals(RolePermission.PROFESSOR)){
+				newDepartment = getUser().getDepartment();
+			}
+			newRole = new BusinessRole(newRolePermission, newDepartment);
+		}
+		
+		getUser().addRole(newRole);
 		resetNewRoleFields();
 	}
 
 
 	public void removeRole(Role role) {
-		userEditor.getCurrentUser().removeRole(role);
+		userController.getCurrentUser().removeRole(role);
 	}
 
 
@@ -177,7 +182,7 @@ public class UserCreationPresentationBean implements Serializable {
 			String serialNumberToImport = value.toString();
 			System.out.print("User editor: validazione matricola " + serialNumberToImport + ". ");
 
-			if (null != userEditor.getBySerial(serialNumberToImport)) {
+			if (null != userController.getBySerial(serialNumberToImport)) {
 				System.out.println("Matricola duplicata");
 				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
 			}
