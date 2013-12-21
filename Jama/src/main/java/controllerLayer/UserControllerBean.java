@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContextType;
 
 import security.Principal;
 import security.annotations.CreateUserAllowed;
+import usersManagement.LdapEntityWrapper;
 import usersManagement.User;
 import annotations.Logged;
 import annotations.TransferObj;
@@ -31,12 +32,19 @@ public class UserControllerBean implements Serializable {
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
+	
+
+	@Inject
+	private LdapEntityWrapper ldapManager;
+
 
 	@Inject
 	@Logged
 	private Principal loggedUser;
 
 	private User currentUser;
+	
+	private User tempLdapUser;
 
 	public UserControllerBean() {
 		super();
@@ -78,8 +86,20 @@ public class UserControllerBean implements Serializable {
 		this.currentUser = currentUser;
 	}
 	
-	public User getBySerial(String serial){
+	public User getFromDbBySerial(String serial){
 		return userDao.getBySerialNumber(serial);
 	}
+	
+	public User getFromLdapBySerial(String serial){
+		tempLdapUser = ldapManager.getUserBySerial(serial);
+		return tempLdapUser;
+	}
+	
+	@CreateUserAllowed
+	public void importUser(){
+		System.out.println("User controller: importing user " + tempLdapUser);
+		currentUser = tempLdapUser;
+	}
+	
 
 }

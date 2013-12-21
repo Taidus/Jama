@@ -15,7 +15,6 @@ import javax.inject.Named;
 
 import security.annotations.CreateUserAllowed;
 import usersManagement.BusinessRole;
-import usersManagement.LdapEntityWrapper;
 import usersManagement.Role;
 import usersManagement.RolePermission;
 import usersManagement.SystemRole;
@@ -38,10 +37,6 @@ public class UserCreationPresentationBean implements Serializable {
 	@Inject
 	private Conversation conversation;
 
-	@Inject
-	private LdapEntityWrapper ldapManager;
-
-	private User tempLdapUser;
 	private RolePermission newRolePermission;
 	private Department newDepartment;
 
@@ -110,8 +105,7 @@ public class UserCreationPresentationBean implements Serializable {
 
 	@CreateUserAllowed
 	public void importUser() {
-		System.out.println("User editor: importing user " + tempLdapUser);
-		userController.setCurrentUser(tempLdapUser);
+		userController.importUser();
 	}
 
 
@@ -180,19 +174,20 @@ public class UserCreationPresentationBean implements Serializable {
 	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			String serialNumberToImport = value.toString();
+			
 			System.out.print("User editor: validazione matricola " + serialNumberToImport + ". ");
 
-			if (null != userController.getBySerial(serialNumberToImport)) {
+			if (null != userController.getFromDbBySerial(serialNumberToImport)) {
 				System.out.println("Matricola duplicata");
 				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSerial"));
 			}
 
-			tempLdapUser = ldapManager.getUserBySerial(serialNumberToImport);
-			if (null == tempLdapUser) {
+			User user = userController.getFromLdapBySerial(serialNumberToImport);
+			if (null == user) {
 				System.out.println("Matricola non trovata in ldap");
 				throw new ValidatorException(Messages.getErrorMessage("err_badImport"));
 			}
-			System.out.println("Validazione completata: " + tempLdapUser);
+			System.out.println("Validazione completata: " + user);
 		}
 	}
 }
