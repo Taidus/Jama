@@ -30,9 +30,11 @@ public class CompanyDialogPresentationBean implements Serializable {
 
 
 	public void validateSocialNumber(FacesContext context, UIComponent component, Object value) {
+		System.out.println("°°° Company dialog PB: validazione CF.");
 		String socialNumber = (String) value;
 
 		if (socialNumber != null && !socialNumber.isEmpty()) {
+			System.out.println("CF non vuoto: " + socialNumber);
 			Company company = manager.getCompany();
 
 			if (!socialNumber.equalsIgnoreCase(company.getSocialNumber()) && companyDao.getBySocialNumber(socialNumber) != null) {
@@ -43,8 +45,9 @@ public class CompanyDialogPresentationBean implements Serializable {
 
 
 	public void validateRequiredParams(FacesContext context, UIComponent component, Object value) {
+		System.out.println("°°° Company dialog PB: validazione parametri.");
 		Company c = manager.getCompany();
-		System.out.println("°°° Company dialog PB: validazione parametri.\n\tCF: " + c.getSocialNumber() + "\n\tPartita IVA: " + c.getVatNumber());
+		System.out.println("\tCF: " + c.getSocialNumber() + "\n\tPartita IVA: " + c.getVatNumber());
 		if ((null == c.getSocialNumber() || c.getSocialNumber().isEmpty()) && (null == c.getVatNumber() || c.getVatNumber().isEmpty())) {
 			throw new ValidatorException(Messages.getErrorMessage("err_socialOrVatRequired"));
 		}

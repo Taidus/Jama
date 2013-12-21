@@ -175,7 +175,7 @@ public class UserCreationPresentationBean implements Serializable {
 		if (value != null) {
 			String serialNumberToImport = value.toString();
 			
-			System.out.print("User editor: validazione matricola " + serialNumberToImport + ". ");
+			System.out.print("User creator: validazione matricola '" + serialNumberToImport + "'. ");
 
 			if (null != userController.getFromDbBySerial(serialNumberToImport)) {
 				System.out.println("Matricola duplicata");

@@ -29,7 +29,7 @@
 
 				<p:row>
 					<p:column>
-						<h:outputText value="#{msgs.companyName}:" />
+						<h:outputText value="#{msgs.companyName}*:" />
 					</p:column>
 					<p:column>
 						<h:inputText id="companyName" value="#{companyManager.company.name}" label="#{msgs.companyName}" required="true"
@@ -40,7 +40,7 @@
 
 				<p:row>
 					<p:column>
-						<h:outputText value="#{msgs.businessName}:" />
+						<h:outputText value="#{msgs.businessName}*:" />
 					</p:column>
 					<p:column>
 						<h:inputText id="businessName" value="#{companyManager.company.businessName}" label="#{msgs.businessName}" required="true"
@@ -52,7 +52,7 @@
 
 				<p:row>
 					<p:column>
-						<h:outputText value="#{msgs.legalResidence}:" />
+						<h:outputText value="#{msgs.legalResidence}*:" />
 					</p:column>
 					<p:column>
 						<h:inputText id="legalResidence" value="#{companyManager.company.legalResidence}" label="#{msgs.legalResidence}" required="true"
@@ -64,7 +64,7 @@
 
 				<p:row>
 					<p:column>
-						<h:outputText value="#{msgs.socialNumber}:" />
+						<h:outputText value="#{msgs.socialNumber}**:" />
 					</p:column>
 					<p:column>
 						<h:inputText id="socialNumber" value="#{companyManager.company.socialNumber}" label="#{msgs.socialNumber}"
@@ -77,7 +77,7 @@
 
 				<p:row>
 					<p:column>
-						<h:outputText value="#{msgs.VatNumber}:" />
+						<h:outputText value="#{msgs.VatNumber}**:" />
 					</p:column>
 					<p:column>
 						<h:inputText id="VatNumber" value="#{companyManager.company.vatNumber}" label="#{msgs.VatNumber}" rendered="#{not cc.attrs.editingDisable}"
@@ -87,6 +87,19 @@
 						</h:inputText>
 						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.vatNumber}" />
 
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText value="*: campi obbligatori" />
+					</p:column>
+				</p:row>
+
+
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText value="**: necessario almeno uno dei due" />
 					</p:column>
 				</p:row>
 
