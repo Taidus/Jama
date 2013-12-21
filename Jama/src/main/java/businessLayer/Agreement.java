@@ -26,8 +26,7 @@ public class Agreement extends Contract implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Agreement [id=" + id + ", title=" + title + ", protocolNumber="
-				+ protocolNumber + ", type=" + type + ", chief=" + chief
+		return "Agreement [id=" + id + ", title=" + title + ", type=" + type + ", chief=" + chief
 				+ ", contactPerson=" + contactPerson + ", company=" + company
 				+ ", department=" + department + ", CIA_projectNumber="
 				+ CIA_projectNumber + ", inventoryNumber=" + inventoryNumber

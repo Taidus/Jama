@@ -265,7 +265,6 @@ public class ContractManagerBean implements Serializable {
 		c.setInventoryNumber("00/00z");
 		c.setDepartment(depDao.getByCode(principal.getBelongingDepthsCodes().get(0)));
 		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
-		c.setProtocolNumber("30000");
 		c.setApprovalDate(new Date());
 		c.setBeginDate(new Date());
 		c.setDeadlineDate(new Date());

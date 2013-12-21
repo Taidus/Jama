@@ -46,18 +46,17 @@ public class UserDaoBean {
 		 
 		
 		User foundUser = getBySerialNumber(user.getSerialNumber());
-		if(foundUser ==null){
-
+		if(foundUser !=null){
+	
+			foundUser.copy(user);
+			user = foundUser;
+		}
+		
 		Department d = deptDao.getByCode(user.getDepartment().getCode());
 		if(d != null){
 			user.setDepartment(d);
 		}else{
 			em.persist(user.getDepartment());
-		}
-		}
-		else{
-			foundUser.copy(user);
-			user = foundUser;
 		}
 		
 		em.persist(user);

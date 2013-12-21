@@ -19,8 +19,7 @@ public class Funding extends Contract implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Funding [id=" + id + ", title=" + title + ", protocolNumber="
-				+ protocolNumber + ", chief=" + chief + ", contactPerson="
+		return "Funding [id=" + id + ", title=" + title  + ", chief=" + chief + ", contactPerson="
 				+ contactPerson + ", company=" + company + ", department="
 				+ department + ", CIA_projectNumber=" + CIA_projectNumber
 				+ ", inventoryNumber=" + inventoryNumber + ", spentAmount="

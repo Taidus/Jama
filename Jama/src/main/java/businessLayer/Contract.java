@@ -64,8 +64,6 @@ public abstract class Contract implements Serializable {
 
 	protected String shortTitle;
 
-	protected String protocolNumber;
-
 	@ManyToOne
 	protected ChiefScientist chief;
 
@@ -184,16 +182,6 @@ public abstract class Contract implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-
-	public String getProtocolNumber() {
-		return protocolNumber;
-	}
-
-
-	public void setProtocolNumber(String protocolNumber) {
-		this.protocolNumber = protocolNumber;
 	}
 
 
