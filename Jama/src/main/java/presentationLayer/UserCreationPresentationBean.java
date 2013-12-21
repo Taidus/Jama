@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 import security.annotations.CreateUserAllowed;
 import usersManagement.BusinessRole;
-import usersManagement.LdapManager;
+import usersManagement.LdapEntityWrapper;
 import usersManagement.Role;
 import usersManagement.RolePermission;
 import usersManagement.SystemRole;
@@ -39,7 +39,7 @@ public class UserCreationPresentationBean implements Serializable {
 	private Conversation conversation;
 
 	@Inject
-	private LdapManager ldapManager;
+	private LdapEntityWrapper ldapManager;
 
 	private User tempLdapUser;
 	private RolePermission newRolePermission;
