@@ -32,7 +32,7 @@ public class Company {
 	private String businessName;
 	private String legalResidence;
 	private String socialNumber;
-	private String VatNumber;
+	private String vatNumber;
 
 	public String getName() {
 		return name;
@@ -71,18 +71,18 @@ public class Company {
 	}
 
 	public String getVatNumber() {
-		return VatNumber;
+		return vatNumber;
 	}
 
 	public void setVatNumber(String vatNumber) {
-		VatNumber = vatNumber;
+		this.vatNumber = vatNumber;
 	}
 
 	@Override
 	public String toString() {
 		return "Company [name=" + name + ", businessName=" + businessName
 				+ ", legalResidence=" + legalResidence + ", socialNumber="
-				+ socialNumber + ", VatNumber=" + VatNumber + "]";
+				+ socialNumber + ", VatNumber=" + vatNumber + "]";
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class Company {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((VatNumber == null) ? 0 : VatNumber.hashCode());
+				+ ((vatNumber == null) ? 0 : vatNumber.hashCode());
 		result = prime * result
 				+ ((socialNumber == null) ? 0 : socialNumber.hashCode());
 		return result;
@@ -105,10 +105,10 @@ public class Company {
 		if (getClass() != obj.getClass())
 			return false;
 		Company other = (Company) obj;
-		if (VatNumber == null) {
-			if (other.VatNumber != null)
+		if (vatNumber == null) {
+			if (other.vatNumber != null)
 				return false;
-		} else if (!VatNumber.equals(other.VatNumber))
+		} else if (!vatNumber.equals(other.vatNumber))
 			return false;
 		if (socialNumber == null) {
 			if (other.socialNumber != null)

@@ -67,10 +67,11 @@
 						<h:outputText value="#{msgs.socialNumber}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="socialNumber" value="#{companyManager.company.socialNumber}" label="#{msgs.socialNumber}" required="true"
-							validator="#{companyDialogPB.validateSocialNumber}" rendered="#{not cc.attrs.editingDisable}" />
+						<h:inputText id="socialNumber" value="#{companyManager.company.socialNumber}" label="#{msgs.socialNumber}"
+							validator="#{companyDialogPB.validateSocialNumber}" rendered="#{not cc.attrs.editingDisable}">
+							<p:ajax event="valueChange" process="@this" />
+						</h:inputText>
 						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.socialNumber}" />
-
 					</p:column>
 				</p:row>
 
@@ -79,17 +80,19 @@
 						<h:outputText value="#{msgs.VatNumber}:" />
 					</p:column>
 					<p:column>
-						<h:inputText id="VatNumber" value="#{companyManager.company.vatNumber}" label="#{msgs.VatNumber}" required="true"
-							rendered="#{not cc.attrs.editingDisable}" validatorMessage="#{msgs.err_illegalVatNumber}">
-							<f:validateRegex pattern="[0-9]*"/>
+						<h:inputText id="VatNumber" value="#{companyManager.company.vatNumber}" label="#{msgs.VatNumber}" rendered="#{not cc.attrs.editingDisable}"
+							validatorMessage="#{msgs.err_illegalVatNumber}">
+							<f:validateRegex pattern="[0-9]*" />
+							<p:ajax event="valueChange" process="@this" />
 						</h:inputText>
 						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.vatNumber}" />
 
 					</p:column>
 				</p:row>
 
-
 			</p:panelGrid>
+
+			<h:inputHidden value="needed" id="vatOrSocialCheck" validator="#{companyDialogPB.validateRequiredParams}" />
 
 			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyManager.save()}"
 				update=":#{p:component('companyPanel')} :#{p:component(cc.attrs.observingComponentId)}"

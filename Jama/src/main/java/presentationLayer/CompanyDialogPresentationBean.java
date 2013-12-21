@@ -19,19 +19,35 @@ import daoLayer.CompanyDaoBean;
 public class CompanyDialogPresentationBean implements Serializable {
 	private static final long serialVersionUID = -4695232863581347323L;
 
-	@Inject private CompanyManagerBean manager;
-	
-	@Inject private CompanyDaoBean companyDao;
-	
+	@Inject
+	private CompanyManagerBean manager;
+
+	@Inject
+	private CompanyDaoBean companyDao;
+
+
 	public CompanyDialogPresentationBean() {}
-	
-	
+
+
 	public void validateSocialNumber(FacesContext context, UIComponent component, Object value) {
 		String socialNumber = (String) value;
-		Company company = manager.getCompany();
-		
-		if(!socialNumber.equalsIgnoreCase(company.getSocialNumber()) && companyDao.getBySocialNumber(socialNumber)!= null){
-			throw new ValidatorException(Messages.getErrorMessage("err_duplicateSocialNumber"));
+
+		if (socialNumber != null && !socialNumber.isEmpty()) {
+			Company company = manager.getCompany();
+
+			if (!socialNumber.equalsIgnoreCase(company.getSocialNumber()) && companyDao.getBySocialNumber(socialNumber) != null) {
+				throw new ValidatorException(Messages.getErrorMessage("err_duplicateSocialNumber"));
+			}
 		}
+	}
+
+
+	public void validateRequiredParams(FacesContext context, UIComponent component, Object value) {
+		Company c = manager.getCompany();
+		System.out.println("°°° Company dialog PB: validazione parametri.\n\tCF: " + c.getSocialNumber() + "\n\tPartita IVA: " + c.getVatNumber());
+		if ((null == c.getSocialNumber() || c.getSocialNumber().isEmpty()) && (null == c.getVatNumber() || c.getVatNumber().isEmpty())) {
+			throw new ValidatorException(Messages.getErrorMessage("err_socialOrVatRequired"));
+		}
+		System.out.println("°°° Validazione superata");
 	}
 }
