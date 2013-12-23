@@ -170,7 +170,7 @@ public class InstallmentManagerBean implements Serializable {
 			((AgreementInstallment) transferObjInstallment).initShareTableFromContract(contract);
 		} catch (ClassCastException e) {}
 
-		insertRandomValues(transferObjInstallment); //TODO eliminare
+//		insertRandomValues(transferObjInstallment); //TODO eliminare
 		return "/installmentWiz.xhtml";
 	}
 

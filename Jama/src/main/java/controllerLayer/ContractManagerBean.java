@@ -179,7 +179,7 @@ public class ContractManagerBean implements Serializable {
 
 
 	private String createContract() {
-		insertRandomValues(contract); // TODO eliminare
+//		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
 		shareTable.setFiller(fillerFactory.getFiller(contract.getDepartment()));
 		contract.setShareTable(shareTable);
