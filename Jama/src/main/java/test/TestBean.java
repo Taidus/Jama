@@ -1,12 +1,6 @@
 package test;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,25 +8,16 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jms.IllegalStateException;
 
-import com.novell.ldap.util.Base64;
-
-import usersManagement.LdapCachedManager;
 import usersManagement.LdapManager;
-import usersManagement.User;
-import util.Encryptor;
 import util.MailSender;
-import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
-import businessLayer.Contract;
 import businessLayer.Department;
-import businessLayer.Funding;
-import daoLayer.ContractDaoBean;
-import daoLayer.ContractSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
+import daoLayer.ContractDaoBean;
+import daoLayer.ContractSearchService;
 import daoLayer.DeadlineSearchService;
 import daoLayer.DepartmentDaoBean;
 

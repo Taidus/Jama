@@ -15,6 +15,7 @@ import businessLayer.Department;
 
 @ConversationScoped
 @Stateful
+//TODO è stato scritto solo il codice per getUserBySerial, andrebbe fatto anche per gli altri metodi.
 public class LdapEntityWrapper {
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)

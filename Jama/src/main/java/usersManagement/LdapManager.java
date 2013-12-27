@@ -44,7 +44,6 @@ public class LdapManager implements LdapQueryInterface {
 		lc.connect(Config.ldapHost, Config.ldapPort);
 		lc.bind(Config.ldapVersion, Config.loginDN, Config.password.getBytes("UTF8"));
 		
-		
 
 	}
 
