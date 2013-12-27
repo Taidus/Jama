@@ -67,8 +67,9 @@
 				<p:column>
 					<p:selectOneMenu id="type" value="#{contractManager.contract.type}" label="#{msgs.agrType}" required="true"
 						rendered="#{cc.attrs.editingDisable == false}">
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />
 						<f:selectItems value="#{utilPB.agreementTypeItems}" />
-						<p:ajax event="blur" process="@this" update="typeError" />
+						<p:ajax event="valueChange" process="@this" update="typeError" />
 					</p:selectOneMenu>
 
 					<h:outputText value="#{contractManager.contract.type.description}" rendered="#{cc.attrs.editingDisable == true}" />
@@ -90,7 +91,7 @@
 				<p:column>
 					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" rendered="#{not cc.attrs.editingDisable}"
 						label="#{msgs.department}" required="true">
-						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />
 						<f:selectItems value="#{utilPB.loggedUserDepts}" />
 						<f:converter binding="#{departmentConverter}" />
 						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId} #{cc.attrs.chiefMenuId}" />
@@ -113,6 +114,7 @@
 				<p:column>
 					<p:selectOneMenu id="#{cc.attrs.chiefMenuId}" widgetVar="#{cc.attrs.chiefMenuWidgetVar}" value="#{contractManager.contract.chief}"
 						label="#{msgs.chief}" required="true" filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />
 						<f:selectItems value="#{utilPB.chiefItemsForCurrentDept}" />
 						<f:converter binding="#{chiefConverter}" />
 					</p:selectOneMenu>
@@ -160,12 +162,12 @@
 				<p:column>
 					<p:selectOneMenu id="companyMenu" widgetVar="#{cc.attrs.companyMenuWidgetVar}" value="#{contractManager.contract.company}"
 						label="#{msgs.company}" required="true" filter="true" filterMatchMode="contains" rendered="#{cc.attrs.editingDisable == false}">
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />
 						<f:selectItems value="#{utilPB.companyItems}" />
 						<f:converter binding="#{companyConverter}" />
 					</p:selectOneMenu>
 
-					<h:outputText value="#{contractManager.contract.company.name}" rendered="#{cc.attrs.editingDisable==true}">
-					</h:outputText>
+					<h:outputText value="#{contractManager.contract.company.name}" rendered="#{cc.attrs.editingDisable==true}" />
 				</p:column>
 
 				<p:column>
