@@ -114,7 +114,7 @@ public class ChiefScientistDaoBean {
 		
 		List<ChiefScientist> results = new ArrayList<>();
 		
-		if(serials!=null){
+		if(serials!=null && !serials.isEmpty()){
 			
 			results = em.createNamedQuery("ChiefScientist.getByDeptSerials", ChiefScientist.class).setParameter("serials", serials).getResultList();
 			
