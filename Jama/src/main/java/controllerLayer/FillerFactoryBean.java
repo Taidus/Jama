@@ -20,18 +20,23 @@ public abstract class FillerFactoryBean implements Serializable {
 	@Inject protected FillerDaoBean fillerDao;
 
 	public ContractShareTableFiller getFiller(Department dep) {
-		List<ContractShareTableFiller> fillers = fillerDao.getAll();
-		String depDir = Config.depRatesDefaultDir;;
+		String depDir = Config.depRatesDefaultDir;
 		if(null != dep && new File(dep.getRateDirectory()).exists()){
 			depDir = dep.getRateDirectory() ;
 		}
+		System.out.println("°°°°°°°°°°°°°°Filler factory: depDir = " + depDir);
 		ContractShareTableFiller currentFiller = createFiller(depDir);
+		System.out.println("°°°°°°°°°°°°°°Filler factory: current =\n\t " + currentFiller);
+
 		
 		boolean found = false;
+		List<ContractShareTableFiller> fillers = fillerDao.getAll();
+		System.out.println("°°°°°°°°°°°°°°Filler factory: fillers =\n\t " + fillers);
 		Iterator<ContractShareTableFiller> it = fillers.iterator();
 		while(!found && it.hasNext()){
 			ContractShareTableFiller f = it.next();
 			if(currentFiller.equals(f)){
+				System.out.println("°°°°°°°°°°°°°°Filler factory: equals ");
 				found = true;
 				currentFiller = f;
 			}
