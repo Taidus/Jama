@@ -1,7 +1,9 @@
 package controllerLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Remove;
@@ -23,6 +25,7 @@ import org.joda.money.Money;
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
 import security.annotations.ViewOwnContractsAllowed;
+import usersManagement.RolePermission;
 import util.Config;
 import util.MailSender;
 import annotations.Current;
@@ -32,6 +35,7 @@ import businessLayer.Agreement;
 import businessLayer.Contract;
 import businessLayer.ContractHelper;
 import businessLayer.ContractShareTable;
+import businessLayer.Department;
 import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
 import daoLayer.DepartmentDaoBean;
@@ -61,6 +65,9 @@ public class ContractManagerBean implements Serializable {
 
 	@Inject
 	private MailSender mailSender;
+	
+	@EJB
+	private DepartmentDaoBean deptDao;
 
 	@Inject
 	@Logged
@@ -179,6 +186,7 @@ public class ContractManagerBean implements Serializable {
 
 
 	private String createContract() {
+		initDefaultValues();
 //		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
 		shareTable.setFiller(fillerFactory.getFiller(contract.getDepartment()));
@@ -226,17 +234,6 @@ public class ContractManagerBean implements Serializable {
 	@RequestScoped
 	@Current
 	public ContractHelper getInstallmentManager() {
-
-//		if (contract instanceof Agreement) {
-//			return agrHelper;
-//		}
-//
-//		else if (contract instanceof Funding) {
-//			return funHelper;
-//		}
-//		else {
-//			return null;
-//		}
 		
 		return contract.getHelper();
 
@@ -252,6 +249,19 @@ public class ContractManagerBean implements Serializable {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
+	}
+	
+	private void initDefaultValues(){
+		List<Department> depts = new ArrayList<>();
+
+		for (String depCode : principal
+				.getBelongingDepthsCodes(RolePermission.OPERATOR)) {
+			depts.add(deptDao.getByCode(depCode));
+		}
+
+		if(depts.size() == 1){
+			contract.setDepartment(depts.get(0));
+		}
 	}
 
 

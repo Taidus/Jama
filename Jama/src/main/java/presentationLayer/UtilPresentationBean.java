@@ -91,10 +91,13 @@ public class UtilPresentationBean implements Serializable {
 	}
 
 	public SelectItem[] getChiefItemsForCurrentDept() {
+		
+		System.out.println("Util called!!!");
 
 		List<String> deptSerial = new ArrayList<String>();
 		if (c.getDepartment() != null) {
 			deptSerial.add(c.getDepartment().getCode());
+			System.out.println("Eseguo query per dip: "+c.getDepartment().getCode());
 		}
 		List<ChiefScientist> chiefs = chiefDaoBean.getByDeptSerials(deptSerial);
 		return getChiefsFromList(chiefs);
