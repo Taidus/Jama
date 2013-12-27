@@ -7,6 +7,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
+import util.Config;
 import businessLayer.ContractShareTableFiller;
 import businessLayer.Department;
 import daoLayer.FillerDaoBean;
@@ -19,7 +20,8 @@ public abstract class FillerFactoryBean implements Serializable {
 
 	public ContractShareTableFiller getFiller(Department dep) {
 		List<ContractShareTableFiller> fillers = fillerDao.getAll();
-		ContractShareTableFiller currentFiller = createFiller(dep.getRateDirectory());
+		String depDir = (null == dep) ? Config.depRatesDefaultDir : dep.getRateDirectory() ;
+		ContractShareTableFiller currentFiller = createFiller(depDir);
 		
 		boolean found = false;
 		Iterator<ContractShareTableFiller> it = fillers.iterator();
