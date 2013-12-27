@@ -59,29 +59,6 @@
 			</p:row>
 
 
-			<p:row>
-				<p:column>
-					<h:outputText value="#{msgs.department}:" />
-				</p:column>
-
-
-				<p:column>
-					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" rendered="#{not cc.attrs.editingDisable}"
-						label="#{msgs.department}" required="true">
-						<f:selectItems value="#{utilPB.loggedUserDepts}" />
-						<f:converter binding="#{departmentConverter}" />
-						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId} #{cc.attrs.chiefMenuId}" />
-					</p:selectOneMenu>
-
-					<h:outputText value="#{contractManager.contract.department.displayName}" rendered="#{cc.attrs.editingDisable == true}" />
-				</p:column>
-				
-				<p:column colspan="2">
-					<p:message styleClass="errorMessage" id="depError" for="department" />
-				</p:column>
-			</p:row>
-
-
 			<p:row rendered="#{agreementWizardPB.renderType()==true}">
 				<p:column>
 					<h:outputText value="#{msgs.agrType}:" />
@@ -100,6 +77,30 @@
 
 				<p:column colspan="2">
 					<p:message styleClass="errorMessage" id="typeError" for="type" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.department}:" />
+				</p:column>
+
+
+				<p:column>
+					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" rendered="#{not cc.attrs.editingDisable}"
+						label="#{msgs.department}" required="true">
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItems value="#{utilPB.loggedUserDepts}" />
+						<f:converter binding="#{departmentConverter}" />
+						<p:ajax event="valueChange" process="@this" update="depError #{cc.attrs.chiefMenuId} #{cc.attrs.chiefMenuId}" />
+					</p:selectOneMenu>
+
+					<h:outputText value="#{contractManager.contract.department.displayName}" rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+
+				<p:column colspan="2">
+					<p:message styleClass="errorMessage" id="depError" for="department" />
 				</p:column>
 			</p:row>
 
@@ -254,7 +255,7 @@
 
 			<p:row rendered="#{agreementWizardPB.renderIvaComponents()==true}">
 				<p:column>
-					<h:outputText value="#{msgs.iva}:"  />
+					<h:outputText value="#{msgs.iva}:" />
 				</p:column>
 
 				<p:column>
@@ -264,8 +265,7 @@
 						<p:ajax update="amount ivaError" />
 					</h:inputText>
 
-					<h:outputText id="iva_o" value="#{contractManager.contract.IVA_amount}"
-						rendered="#{cc.attrs.editingDisable == true}" />
+					<h:outputText id="iva_o" value="#{contractManager.contract.IVA_amount}" rendered="#{cc.attrs.editingDisable == true}" />
 					<h:outputText value=" %" />
 				</p:column>
 

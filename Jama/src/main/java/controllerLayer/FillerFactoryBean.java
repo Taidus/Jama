@@ -1,5 +1,6 @@
 package controllerLayer;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +21,10 @@ public abstract class FillerFactoryBean implements Serializable {
 
 	public ContractShareTableFiller getFiller(Department dep) {
 		List<ContractShareTableFiller> fillers = fillerDao.getAll();
-		String depDir = (null == dep) ? Config.depRatesDefaultDir : dep.getRateDirectory() ;
+		String depDir = Config.depRatesDefaultDir;;
+		if(null != dep && new File(dep.getRateDirectory()).exists()){
+			depDir = dep.getRateDirectory() ;
+		}
 		ContractShareTableFiller currentFiller = createFiller(depDir);
 		
 		boolean found = false;
