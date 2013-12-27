@@ -34,7 +34,7 @@ public class CompanyConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if(null == value){
-			return null;
+			return "";
 		}
 		return String.valueOf(((Company) value).getId());
 	}
