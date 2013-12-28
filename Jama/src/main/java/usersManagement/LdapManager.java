@@ -164,7 +164,7 @@ public class LdapManager implements LdapQueryInterface {
 			}
 		}
 
-		d.setRateDirectory(Config.depRatesDefaultDir);
+		d.setRateDirectory(d.getCode());
 		result.setDepartment(d);
 
 		return result;
@@ -194,7 +194,7 @@ public class LdapManager implements LdapQueryInterface {
 				d.setName(value);
 			}
 			// TODO set actual directory
-			d.setRateDirectory(Config.depRatesDefaultDir);
+			d.setRateDirectory(d.getCode());
 
 
 		}
