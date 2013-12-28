@@ -263,6 +263,15 @@ public class ContractManagerBean implements Serializable {
 			contract.setDepartment(depts.get(0));
 		}
 	}
+	
+	public void setContractDepartment(Department d){
+		contract.setDepartment(d);
+		contract.getShareTable().setFiller(fillerFactory.getFiller(d));		
+	}
+	
+	public Department getContractDepartment(){
+		return contract.getDepartment();
+	}
 
 
 	// TODO eliminare
