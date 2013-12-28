@@ -59,7 +59,7 @@ public class UserDaoBean {
 		
 		em.persist(user);
 		
-		if(user.hasRolePermission(RolePermission.PROFESSOR)){
+		if(user.hasRolePermission(RolePermission.PROFESSOR) && foundUser==null){
 			profCreationEvent.fire(user);
 		}
 		return user;
