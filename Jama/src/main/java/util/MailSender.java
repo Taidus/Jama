@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -17,6 +18,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import usersManagement.User;
 import businessLayer.Agreement;
@@ -28,20 +32,18 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 @Named
-@SessionScoped
+@Dependent
 public class MailSender implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Resource(lookup = "java:jboss/mail/JaMail")
 	private Session mailSession;
 
-	// @Inject
-	// @Logged
-	// private User loggedUser;
-
-	// TODO prevedere integrazione col LDAP!
 	@Inject
 	private UserDaoBean userDao;
+	
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
+	private EntityManager em;
 
 
 	private void send(String subject, String text, String[] recipients) throws MessagingException {
