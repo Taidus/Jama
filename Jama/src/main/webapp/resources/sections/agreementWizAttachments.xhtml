@@ -14,7 +14,7 @@
 
 	<p:panel header="#{msgs.attachments_header}" styleClass="semiEmptyPanel">
 
-		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}" var="file" emptyMessage="#{msgs.noAttachmentFound}"
+		<p:dataTable id="attchsList" value="#{attachmentsPB.attachments}" var="file" emptyMessage="#{msgs.noAttachmentFound}" 
 			styleClass="hideShow hide-column-names">
 			<p:column>
 				<p:commandLink id="downloadLink" ajax="false" value="#{file.fileName}">
@@ -22,7 +22,7 @@
 				</p:commandLink>
 			</p:column>
 
-			<p:column>
+			<p:column styleClass="button-two-column">
 				<p:commandButton id="downloadButton" styleClass="list-row-button" ajax="false" icon="ui-icon-arrowthick-1-s">
 					<p:fileDownload value="#{attachmentsPB.getFile(file)}" />
 				</p:commandButton>
