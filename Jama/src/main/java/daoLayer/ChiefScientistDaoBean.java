@@ -41,8 +41,6 @@ public class ChiefScientistDaoBean {
 
 	public ChiefScientist createChiefScientist(ChiefScientist chief) {
 		
-		
-		
 		ChiefScientist foundChief = getBySerial(chief.getSerialNumber());
 		if (foundChief == null) {
 			
@@ -52,11 +50,12 @@ public class ChiefScientistDaoBean {
 			}else{
 				em.persist(chief.getDepartment());
 			}
+			
+			chiefCreationEvent.fire(chief);
 		}
 		
 		else{
 			
-			chiefCreationEvent.fire(chief);
 			foundChief.copy(chief);
 			chief = foundChief;
 		}
