@@ -3,6 +3,7 @@ package usersManagement;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -25,7 +26,7 @@ public class UserManager implements Serializable {
 	private Principal loggedUser;
 	private String insertedSerialNumber;
 
-	@Inject
+	@EJB
 	private UserDaoBean userDao;
 
 	@Inject
@@ -86,6 +87,7 @@ public class UserManager implements Serializable {
 
 
 	public String logout() {
+		userDao.clear();
 		loggedUser = new Principal();
 		if (!conversation.isTransient()) {
 			conversation.end();

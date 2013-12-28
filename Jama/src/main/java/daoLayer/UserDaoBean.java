@@ -116,5 +116,9 @@ public class UserDaoBean {
 	public void close() {
 
 	}
+	
+	public void clear(){
+		em.clear();
+	}
 
 }
