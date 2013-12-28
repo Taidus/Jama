@@ -5,20 +5,26 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import util.Config;
 import businessLayer.ContractShareTableFiller;
 import businessLayer.Department;
 import daoLayer.FillerDaoBean;
 
-@SessionScoped
+@Stateful
 public abstract class FillerFactoryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject protected FillerDaoBean fillerDao;
 
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
+	private EntityManager em;
+	
 	public ContractShareTableFiller getFiller(Department dep) {
 		List<ContractShareTableFiller> fillers = fillerDao.getAll();
 		String depDir = Config.depRatesDefaultDir;;

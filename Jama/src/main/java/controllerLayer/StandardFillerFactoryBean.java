@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateful;
 import javax.enterprise.inject.Alternative;
 
 import util.Config;
@@ -17,7 +17,7 @@ import util.Percent;
 import businessLayer.StandardContractShareTableFiller;
 
 @Alternative
-@SessionScoped
+@Stateful
 public class StandardFillerFactoryBean extends FillerFactoryBean {
 	private static final long serialVersionUID = 1L;
 
