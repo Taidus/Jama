@@ -49,7 +49,7 @@ public class UserEditPresentationBean implements Serializable {
 
 
 	private void close() {
-		//TODO cancellare se non serve
+		// TODO cancellare se non serve
 	}
 
 
@@ -78,8 +78,9 @@ public class UserEditPresentationBean implements Serializable {
 	public User getUser() {
 		return userController.getCurrentUser();
 	}
-	
-	public void editUser(User user){
+
+
+	public void editUser(User user) {
 		userController.editUser(user);
 	}
 
@@ -113,8 +114,7 @@ public class UserEditPresentationBean implements Serializable {
 
 
 	public boolean newDepartmentRequired() {
-		System.out.println("User editor: newDepReq = " + !newRolePermission.equals(RolePermission.ADMIN));
-		return !newRolePermission.equals(RolePermission.ADMIN);
+		return !newRolePermission.equals(RolePermission.ADMIN) && !newRolePermission.equals(RolePermission.PROFESSOR);
 	}
 
 

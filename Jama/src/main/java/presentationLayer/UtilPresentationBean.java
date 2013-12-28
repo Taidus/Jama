@@ -175,7 +175,7 @@ public class UtilPresentationBean implements Serializable {
 		ChiefScientist current = null;
 		for (int i = 0; i < list.size(); i++) {
 			current = list.get(i);
-			result[i] = new SelectItem(current, current.getCompleteName());
+			result[i] = new SelectItem(current, current.getCompleteName() + " " + current.getSerialNumber());
 		}
 		return result;
 	}

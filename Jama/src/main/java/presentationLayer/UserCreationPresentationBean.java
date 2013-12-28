@@ -143,24 +143,23 @@ public class UserCreationPresentationBean implements Serializable {
 
 
 	public boolean newDepartmentRequired() {
-		System.out.println("User editor: newDepReq = " + !newRolePermission.equals(RolePermission.ADMIN));
 		return !newRolePermission.equals(RolePermission.ADMIN) && !newRolePermission.equals(RolePermission.PROFESSOR);
 	}
 
 
 	public void addRole() {
 		Role newRole;
-		
-		if(newRolePermission.equals(RolePermission.ADMIN)){
+
+		if (newRolePermission.equals(RolePermission.ADMIN)) {
 			newRole = new SystemRole(newRolePermission);
 		}
-		else{
-			if(newRolePermission.equals(RolePermission.PROFESSOR)){
+		else {
+			if (newRolePermission.equals(RolePermission.PROFESSOR)) {
 				newDepartment = getUser().getDepartment();
 			}
 			newRole = new BusinessRole(newRolePermission, newDepartment);
 		}
-		
+
 		getUser().addRole(newRole);
 		resetNewRoleFields();
 	}
@@ -174,7 +173,7 @@ public class UserCreationPresentationBean implements Serializable {
 	public void validateSerialNumber(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			String serialNumberToImport = value.toString();
-			
+
 			System.out.print("User creator: validazione matricola '" + serialNumberToImport + "'. ");
 
 			if (null != userController.getFromDbBySerial(serialNumberToImport)) {
