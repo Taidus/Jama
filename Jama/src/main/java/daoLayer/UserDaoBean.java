@@ -3,7 +3,6 @@ package daoLayer;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -12,17 +11,15 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
+import usersManagement.BusinessRole;
+import usersManagement.LdapManager;
+import usersManagement.RolePermission;
+import usersManagement.User;
 import annotations.Updated;
 import businessLayer.ChiefScientist;
 import businessLayer.Department;
-import usersManagement.BusinessRole;
-import usersManagement.LdapManager;
-import usersManagement.Permission;
-import usersManagement.RolePermission;
-import usersManagement.User;
 
 @Stateful
-@Dependent
 public class UserDaoBean {
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;

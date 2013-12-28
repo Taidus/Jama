@@ -3,6 +3,7 @@ package controllerLayer;
 import java.io.Serializable;
 import java.security.GeneralSecurityException;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -27,7 +28,7 @@ import daoLayer.UserDaoBean;
 public class UserControllerBean implements Serializable {
 	private static final long serialVersionUID = -4966124878956728047L;
 
-	@Inject
+	@EJB
 	private UserDaoBean userDao;
 
 	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
