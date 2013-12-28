@@ -89,7 +89,7 @@
 
 
 				<p:column>
-					<p:selectOneMenu id="department" value="#{contractManager.contract.department}" rendered="#{not cc.attrs.editingDisable}"
+					<p:selectOneMenu id="department" value="#{contractManager.contractDepartment}" rendered="#{not cc.attrs.editingDisable}"
 						label="#{msgs.department}" required="true">
 						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}" itemDisabled="true" noSelectionOption="true" />
 						<f:selectItems value="#{utilPB.loggedUserDepts}" />
