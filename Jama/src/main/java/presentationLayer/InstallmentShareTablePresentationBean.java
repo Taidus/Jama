@@ -54,6 +54,11 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 	}
 	
 	@Override
+	protected Money getTransfetObjWholeTaxableAmount() {
+		return installment.getWholeTaxableAmount();
+	}
+	
+	@Override
 	protected ContractShareTable getContractShareTable() {
 		return installment.getContract().getShareTable();
 	}
@@ -158,4 +163,7 @@ public class InstallmentShareTablePresentationBean extends ShareTablePresentatio
 
 		return attributes;
 	}
+
+
+	
 }

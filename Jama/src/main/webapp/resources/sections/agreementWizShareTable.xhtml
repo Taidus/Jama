@@ -27,7 +27,7 @@
 
 				<p:column>
 					<h:outputText id="percentAtheneumCapitalBalance"
-						value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.atheneumCapitalBalance)}">
+						value="#{agrShareTablePB.computePercentOnWholeTaxableAmount(agrShareTablePB.shareTable.atheneumCapitalBalance)}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
@@ -50,7 +50,7 @@
 
 				<p:column>
 					<h:outputText id="percentAtheneumCommonBalance"
-						value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.atheneumCommonBalance)}">
+						value="#{agrShareTablePB.computePercentOnWholeTaxableAmount(agrShareTablePB.shareTable.atheneumCommonBalance)}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
@@ -79,7 +79,7 @@
 				</p:column>
 
 				<p:column>
-					<h:outputText id="percentPersonnel" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.personnel)}">
+					<h:outputText id="percentPersonnel" value="#{agrShareTablePB.computePercentOnWholeTaxableAmount(agrShareTablePB.shareTable.personnel)}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
@@ -102,7 +102,7 @@
 				</p:column>
 
 				<p:column>
-					<h:outputText id="percentStructures" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.structures)}">
+					<h:outputText id="percentStructures" value="#{agrShareTablePB.computePercentOnWholeTaxableAmount(agrShareTablePB.shareTable.structures)}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
@@ -126,7 +126,7 @@
 				</p:column>
 
 				<p:column>
-					<h:outputText id="percentGoodsAndServices" value="#{agrShareTablePB.computePercentOnWholeAmount(agrShareTablePB.shareTable.goodsAndServices)}">
+					<h:outputText id="percentGoodsAndServices" value="#{agrShareTablePB.computePercentOnWholeTaxableAmount(agrShareTablePB.shareTable.goodsAndServices)}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>
@@ -383,7 +383,7 @@
 			</p:column>
 
 			<p:column>
-				<h:outputText value="#{share.flatAmount}">
+				<h:outputText value="#{share.flatTaxableAmount}">
 					<f:attribute name="plain" value="false" />
 				</h:outputText>
 			</p:column>
@@ -437,7 +437,7 @@
 				</p:column>
 
 				<p:column width="10%">
-					<h:outputText id="percentPersonnelShare" value="#{agrShareTablePB.newShare.flatAmount}">
+					<h:outputText id="percentPersonnelShare" value="#{agrShareTablePB.newShare.flatTaxableAmount}">
 						<f:attribute name="plain" value="false" />
 					</h:outputText>
 				</p:column>

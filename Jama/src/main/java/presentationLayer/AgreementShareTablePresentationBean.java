@@ -35,6 +35,11 @@ public class AgreementShareTablePresentationBean extends ShareTablePresentationO
 	}
 	
 	@Override
+	protected Money getTransfetObjWholeTaxableAmount() {
+		return c.getWholeTaxableAmount();
+	}
+	
+	@Override
 	protected ContractShareTable getContractShareTable() {
 		return c.getShareTable();
 	}

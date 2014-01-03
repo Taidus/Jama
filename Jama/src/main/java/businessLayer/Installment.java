@@ -59,15 +59,15 @@ public abstract class Installment implements Serializable {
 	protected Money wholeTaxableAmount;
 
 	@Min(0)
-	protected int voucherNumber;
+	protected Integer voucherNumber;
 
 	@Temporal(TemporalType.DATE)
 	protected Date voucherDate;
 
 	@Min(0)
-	protected int pendingNumber;
+	protected Integer pendingNumber;
 	@Min(0)
-	protected int invoiceNumber;
+	protected Integer invoiceNumber;
 
 	@Temporal(TemporalType.DATE)
 	protected Date invoiceDate;
@@ -96,12 +96,30 @@ public abstract class Installment implements Serializable {
 		this.date = date;
 	}
 
-	public int getVoucherNumber() {
+	
+
+	public Integer getVoucherNumber() {
 		return voucherNumber;
 	}
 
-	public void setVoucherNumber(int voucherNumber) {
+	public void setVoucherNumber(Integer voucherNumber) {
 		this.voucherNumber = voucherNumber;
+	}
+
+	public Integer getPendingNumber() {
+		return pendingNumber;
+	}
+
+	public void setPendingNumber(Integer pendingNumber) {
+		this.pendingNumber = pendingNumber;
+	}
+
+	public Integer getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(Integer invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
 	}
 
 	public Date getVoucherDate() {
@@ -112,21 +130,7 @@ public abstract class Installment implements Serializable {
 		this.voucherDate = voucherDate;
 	}
 
-	public int getPendingNumber() {
-		return pendingNumber;
-	}
-
-	public void setPendingNumber(int pendingNumber) {
-		this.pendingNumber = pendingNumber;
-	}
-
-	public int getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-	public void setInvoiceNumber(int invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
+	
 
 	public Date getInvoiceDate() {
 		return invoiceDate;

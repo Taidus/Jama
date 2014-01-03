@@ -35,6 +35,8 @@ public abstract class ShareTablePresentationObj {
 
 
 	protected abstract Money getTransfetObjWholeAmount();
+	
+	protected abstract Money getTransfetObjWholeTaxableAmount();
 
 
 	protected abstract ContractShareTable getContractShareTable();
@@ -131,6 +133,10 @@ public abstract class ShareTablePresentationObj {
 	public Money computePercentOnWholeAmount(Percent percent) {
 		return percent.computeOn(getTransfetObjWholeAmount());
 	}
+	
+	public Money computePercentOnWholeTaxableAmount(Percent percent) {
+		return percent.computeOn(getTransfetObjWholeTaxableAmount());
+	}
 
 
 	public Money computePercentOnGoodsAndServices(Percent percent) {
@@ -214,6 +220,11 @@ public abstract class ShareTablePresentationObj {
 		public Money getFlatAmount() {
 			return value.computeOn(computePercentOnWholeAmount(getTransferObjShareTable().getPersonnel()));
 		}
+		
+		public Money getFlatTaxableAmount(){			
+			return value.computeOn(computePercentOnWholeTaxableAmount(getTransferObjShareTable().getPersonnel()));
+
+		}
 
 
 		@Override
@@ -222,5 +233,9 @@ public abstract class ShareTablePresentationObj {
 		}
 
 	}
+
+
+
+	
 
 }
