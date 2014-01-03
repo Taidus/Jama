@@ -54,7 +54,7 @@ public class MoneyConverter implements Converter {
 			plain = true;
 		}
 		
-		Money m = Money.of(Config.currency, ((Money) value).getAmount().setScale(2));
+		Money m = Money.of(Config.currency, ((Money) value).getAmount().setScale(2, RoundingMode.HALF_EVEN));
 
 		if (null == plain || true == plain) {
 			// return ((Money) value).getAmount().toPlainString();
