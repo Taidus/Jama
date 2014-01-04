@@ -84,7 +84,7 @@
 					<h:outputText value="#{msgs.newInstVoucherNumber}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<h:inputText id="voucherNumber" value="#{installmentManager.installment.voucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true" />
+					<h:inputText id="voucherNumber" value="#{installmentManager.installment.voucherNumber}" label="#{msgs.newInstVoucherNumber}"/>
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
@@ -116,7 +116,7 @@
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
 					<h:inputText id="ivaVoucherNumber" value="#{installmentManager.installment.ivaVoucherNumber}" label="#{msgs.newInstVoucherNumber}"
-						required="true">
+						>
 					</h:inputText>
 				</p:column>
 
