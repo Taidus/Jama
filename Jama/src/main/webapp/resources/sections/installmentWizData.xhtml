@@ -131,7 +131,7 @@
 					<h:outputText value="#{msgs.newInstPendingNumber}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<h:inputText id="pendingNumber" value="#{installmentManager.installment.pendingNumber}" label="#{msgs.newInstPendingNumber}" required="true" />
+					<h:inputText id="pendingNumber" value="#{installmentManager.installment.pendingNumber}" label="#{msgs.newInstPendingNumber}"/>
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
@@ -145,7 +145,7 @@
 					<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<h:inputText id="invoiceNumber" value="#{installmentManager.installment.invoiceNumber}" label="#{msgs.newInstInvoiceNumber}" required="true" />
+					<h:inputText id="invoiceNumber" value="#{installmentManager.installment.invoiceNumber}" label="#{msgs.newInstInvoiceNumber}" />
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
