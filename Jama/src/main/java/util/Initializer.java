@@ -42,8 +42,9 @@ public class Initializer {
 					.setParameter("code", d.getCode())
 					.getSingleResult();
 		} catch (NoResultException e) {
+			if(d.getCode() != null && d.getCode()!= ""){
 			em.persist(d);
-		}
+		}}
 		}
 	}
 	
@@ -57,8 +58,11 @@ public class Initializer {
 					.getSingleResult();
 			u.setDepartment(d);
 		} catch (NoResultException e) {
+			if(u.getDepartment().getCode() != null && u.getDepartment().getCode()!=""){
 			em.persist(u.getDepartment());
+			}
 		}
+			
 		
 		if (em.createNamedQuery("User.findBySerialNumber")
 				.setParameter("number", u.getSerialNumber()).getResultList()

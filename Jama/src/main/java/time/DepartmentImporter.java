@@ -35,9 +35,9 @@ public class DepartmentImporter extends TimerTask {
 				em.createNamedQuery("Department.findByCode", Department.class)
 						.setParameter("code", d.getCode()).getSingleResult();
 			} catch (NoResultException e) {
-
+				if(d.getCode()!= null && d.getCode()!=""){
 				em.persist(d);
-			}
+			}}
 		}
 	}
 

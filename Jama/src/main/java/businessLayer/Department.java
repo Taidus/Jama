@@ -8,6 +8,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(
@@ -21,6 +24,7 @@ public class Department {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;
 
 	private String rateDirectory;
+	@NotEmpty
 	private String code; // XXX pattern?
 	private String name;
 

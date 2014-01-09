@@ -22,9 +22,14 @@ public class DepartmentDaoBean {
 	}
 
 	public Department createDepartment(Department department) {
-
+		
+		if(department.getCode() != null && department.getCode() != ""){
 		em.persist(department);
-
+		}
+		else{
+			//FIXME
+			System.out.println("Trying to persist a department with null code");
+		}
 		return department;
 	}
 
