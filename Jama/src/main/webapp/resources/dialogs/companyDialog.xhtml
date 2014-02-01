@@ -89,6 +89,35 @@
 
 					</p:column>
 				</p:row>
+				
+				
+				<p:row >
+				<p:column>
+					<h:outputText value="#{msgs.companyType}:" />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="type" value="#{companyManager.company.type}"
+						label="#{msgs.companyType}:" required="true"
+						rendered="#{cc.attrs.editingDisable == false}">
+						<f:selectItem itemLabel="#{msgs.select}" itemValue="#{null}"
+							itemDisabled="true" noSelectionOption="true" />
+						<f:selectItems value="#{utilPB.companyTypeItems}" />
+						<p:ajax event="valueChange" process="@this" update="typeError" />
+					</p:selectOneMenu>
+
+					<h:outputText value="#{companyManager.company.type.description}"
+						rendered="#{cc.attrs.editingDisable == true}" />
+				</p:column>
+
+
+				<p:column colspan="2">
+					<p:message styleClass="errorMessage" id="typeError" for="type" />
+				</p:column>
+			</p:row>
+				
+				
+				
 
 				<p:row>
 					<p:column colspan="2">

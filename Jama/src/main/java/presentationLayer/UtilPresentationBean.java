@@ -23,6 +23,7 @@ import businessLayer.Agreement;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
+import businessLayer.CompanyType;
 import businessLayer.Contract;
 import businessLayer.Department;
 import businessLayer.Funding;
@@ -68,6 +69,17 @@ public class UtilPresentationBean implements Serializable {
 
 	public SelectItem[] getAgreementTypeItems() {
 		AgreementType[] types = AgreementType.values();
+		SelectItem[] result = new SelectItem[types.length];
+		for (int i = 0; i < types.length; i++) {
+			result[i] = new SelectItem(types[i], types[i].getDescription());
+		}
+		return result;
+
+	}
+	
+	
+	public SelectItem[] getCompanyTypeItems() {
+		CompanyType[] types = CompanyType.values();
 		SelectItem[] result = new SelectItem[types.length];
 		for (int i = 0; i < types.length; i++) {
 			result[i] = new SelectItem(types[i], types[i].getDescription());

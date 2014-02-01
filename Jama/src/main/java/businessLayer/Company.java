@@ -33,6 +33,8 @@ public class Company {
 	private String legalResidence;
 	private String socialNumber;
 	private String vatNumber;
+	
+	private CompanyType type;
 
 	public String getName() {
 		return name;
@@ -76,6 +78,15 @@ public class Company {
 
 	public void setVatNumber(String vatNumber) {
 		this.vatNumber = vatNumber;
+	}
+	
+
+	public CompanyType getType() {
+		return type;
+	}
+
+	public void setType(CompanyType type) {
+		this.type = type;
 	}
 
 	@Override
