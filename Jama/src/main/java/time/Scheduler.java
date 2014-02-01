@@ -62,11 +62,10 @@ public class Scheduler {
 	}
 	
 	private void scheduleImports(){
-		
 		//TODO mettere valori sensati
+		
 		Calendar date = Calendar.getInstance();
-		date.add(Calendar.SECOND, 30);
-//		timer.schedule(chiefImporter, new Date(date.getTimeInMillis()));
+		date.add(Calendar.SECOND, 60*60);  //ogni ora
 		timer.schedule(deptsImp, new Date(date.getTimeInMillis()));
 		
 	}

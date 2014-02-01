@@ -164,6 +164,30 @@
 				</p:column>
 			</p:row>
 
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.teachingSector}:" />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="teachingSector"
+						value="#{contractManager.contract.teachingSector}" required="true"
+						rendered="#{cc.attrs.editingDisable==false}" />
+
+					<h:outputText id="teachingSector_o"
+						value="#{contractManager.contract.teachingSector}"
+						rendered="#{cc.attrs.editingDisable==true}" />
+				</p:column>
+
+				<p:column>
+					<p:message styleClass="errorMessage" for="teachingSector" />
+				</p:column>
+
+
+
+			</p:row>
+
 
 			<p:row>
 				<p:column>
@@ -450,6 +474,8 @@
 						value="#{contractManager.contract.beginDate}"
 						rendered="#{cc.attrs.editingDisable == false}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						<p:ajax event="dateSelect" process="@this" update="timeInMonths" />
+						
 					</p:calendar>
 
 					<h:outputText id="beginDate_o"
@@ -480,6 +506,7 @@
 						rendered="#{cc.attrs.editingDisable == false}" navigator="true"
 						validator="#{contractDataPB.validateDeadlineDate}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						<p:ajax event="dateSelect" process="@this" update="timeInMonths" />
 					</p:calendar>
 
 					<h:outputText id="deadlineDate_o"
@@ -494,6 +521,21 @@
 				<p:column colspan="2">
 					<p:message styleClass="errorMessage" for="deadlineDate" />
 				</p:column>
+			</p:row>
+
+			<p:row>
+
+				<p:column>
+					<h:outputText value="#{msgs.timeInMonths}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="timeInMonths"
+						value="#{contractManager.contract.contractTimeInMonths}" >
+						<f:convertNumber type="number" pattern="#0.0"/>
+						</h:outputText>
+				</p:column>
+
 			</p:row>
 
 

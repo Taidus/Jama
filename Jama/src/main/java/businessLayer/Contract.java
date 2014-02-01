@@ -44,7 +44,6 @@ public abstract class Contract implements Serializable {
 
 	private static final long serialVersionUID = 4462547331383503646L;
 
-
 	public Contract() {
 		super();
 		installments = new ArrayList<>();
@@ -67,6 +66,8 @@ public abstract class Contract implements Serializable {
 	@ManyToOne
 	protected ChiefScientist chief;
 
+	protected String teachingSector;
+
 	protected String contactPerson;
 
 	@ManyToOne
@@ -82,16 +83,16 @@ public abstract class Contract implements Serializable {
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "money", column = @Column(name = "SPENT_AMOUNT", precision=20, scale=4)),
-			@AttributeOverride(name = "money.currency.code", column = @Column(name = "SPENT_AMOUNT_CODE", precision=20, scale=4)),
-			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "SPENT_AMOUNT_DECIMAL_PLACES", precision=20, scale=4)),
-			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "SPENT_AMOUNT_NUMERIC_CODE", precision=20, scale=4)),
-			@AttributeOverride(name = "money.amount", column = @Column(name = "SPENT_AMOUNT_AMOUNT", precision=20, scale=4)) })
+			@AttributeOverride(name = "money", column = @Column(name = "SPENT_AMOUNT", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.currency.code", column = @Column(name = "SPENT_AMOUNT_CODE", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "SPENT_AMOUNT_DECIMAL_PLACES", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "SPENT_AMOUNT_NUMERIC_CODE", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.amount", column = @Column(name = "SPENT_AMOUNT_AMOUNT", precision = 20, scale = 4)) })
 	protected Money spentAmount;
 
-
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "money", column = @Column(name = "RESERVED_AMOUNT")),
+	@AttributeOverrides({
+			@AttributeOverride(name = "money", column = @Column(name = "RESERVED_AMOUNT")),
 			@AttributeOverride(name = "money.currency.code", column = @Column(name = "RESERVED_AMOUNT_CODE")),
 			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "RESERVED_AMOUNT_DECIMAL_PLACES")),
 			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "RESERVED_AMOUNT_NUMERIC_CODE")),
@@ -103,12 +104,11 @@ public abstract class Contract implements Serializable {
 
 	@Embedded
 	@AttributeOverrides({
-	@AttributeOverride(name="money", column=@Column(name="WHOLE_TAXABLE_AMOUNT", precision=20, scale=4)),
-	@AttributeOverride(name="money.currency.code", column=@Column(name="WHOLE_TAXABLE_AMOUNT_CODE", precision=20, scale=4)),
-	@AttributeOverride(name="money.currency.decimalPlaces", column=@Column(name="WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES", precision=20, scale=4)),
-	@AttributeOverride(name="money.currency.numericCode", column=@Column(name="WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE", precision=20, scale=4)),
-	@AttributeOverride(name="money.amount", column=@Column(name="WHOLE_TAXABLE_AMOUNT_AMOUNT", precision=20, scale=4))})
-
+			@AttributeOverride(name = "money", column = @Column(name = "WHOLE_TAXABLE_AMOUNT", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.currency.code", column = @Column(name = "WHOLE_TAXABLE_AMOUNT_CODE", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.currency.decimalPlaces", column = @Column(name = "WHOLE_TAXABLE_AMOUNT_DECIMAL_PLACES", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.currency.numericCode", column = @Column(name = "WHOLE_TAXABLE_AMOUNT_NUMERIC_CODE", precision = 20, scale = 4)),
+			@AttributeOverride(name = "money.amount", column = @Column(name = "WHOLE_TAXABLE_AMOUNT_AMOUNT", precision = 20, scale = 4)) })
 	protected Money wholeTaxableAmount;
 
 	@Temporal(TemporalType.DATE)
@@ -122,7 +122,8 @@ public abstract class Contract implements Serializable {
 
 	protected String note;
 
-	@OneToMany(mappedBy = "contract", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "contract", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	@OrderBy("date DESC")
 	protected List<Installment> installments;
 
@@ -132,26 +133,22 @@ public abstract class Contract implements Serializable {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	protected ContractShareTable shareTable;
 
-
 	public Money getWholeTaxableAmount() {
 		return wholeTaxableAmount;
 	}
-
 
 	public void setWholeTaxableAmount(Money wholeTaxableAmount) {
 		this.wholeTaxableAmount = wholeTaxableAmount;
 	}
 
-
 	public Money getWholeAmount() {
-		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
+		return wholeTaxableAmount
+				.plus(IVA_amount.computeOn(wholeTaxableAmount));
 	}
-
 
 	public Percent getIVA_amount() {
 		return IVA_amount;
 	}
-
 
 	public void addInstallment(Installment i) {
 		i.setContract(this);
@@ -159,151 +156,142 @@ public abstract class Contract implements Serializable {
 
 	}
 
-
 	public void removeInstallment(Installment i) {
 		installments.remove(i);
 	}
-
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public String getTitle() {
 		return title;
 	}
 
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 
 	public String getContactPerson() {
 		return contactPerson;
 	}
 
-
 	public void setContactPerson(String contactPerson) {
 		this.contactPerson = contactPerson;
 	}
-
 
 	public ChiefScientist getChief() {
 		return chief;
 	}
 
-
 	public void setChief(ChiefScientist chief) {
 		this.chief = chief;
 	}
 
+	public String getTeachingSector() {
+		return teachingSector;
+	}
+
+	public void setTeachingSector(String teachingSector) {
+		this.teachingSector = teachingSector;
+	}
 
 	public Company getCompany() {
 		return company;
 	}
 
-
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-
 
 	public Department getDepartment() {
 		return department;
 	}
 
-
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-
 
 	public String getCIA_projectNumber() {
 		return CIA_projectNumber;
 	}
 
-
 	public void setCIA_projectNumber(String cIA_projectNumber) {
 		CIA_projectNumber = cIA_projectNumber;
 	}
-
 
 	public String getInventoryNumber() {
 		return inventoryNumber;
 	}
 
-
 	public void setInventoryNumber(String inventoryNumber) {
 		this.inventoryNumber = inventoryNumber;
 	}
-
 
 	public Money getSpentAmount() {
 		return spentAmount;
 	}
 
-
 	public void setSpentAmount(Money spentAmount) {
 		this.spentAmount = spentAmount;
 	}
-
 
 	public Money getReservedAmount() {
 		return reservedAmount;
 	}
 
-
 	public void setReservedAmount(Money reservedAmount) {
 		this.reservedAmount = reservedAmount;
 	}
-
 
 	public Date getApprovalDate() {
 		return approvalDate;
 	}
 
-
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
 	}
-
 
 	public Date getBeginDate() {
 		return beginDate;
 	}
 
-
 	public void setBeginDate(Date beginDate) {
 		this.beginDate = beginDate;
 	}
-
 
 	public Date getDeadlineDate() {
 		return deadlineDate;
 	}
 
-
 	public void setDeadlineDate(Date deadlineDate) {
 		this.deadlineDate = deadlineDate;
 	}
 
+	public Float getContractTimeInMonths() {
+		
+		if (beginDate != null && deadlineDate != null) {
+
+			long difference = deadlineDate.getTime() - beginDate.getTime();
+			float months = ((float)difference) / 1000 / 60 / 60 / 24 / 30;
+			return months;
+		} else {
+			return null;
+		}
+
+	}
 
 	public String getNote() {
 		return note;
 	}
 
-
 	public void setNote(String note) {
 		this.note = note;
 	}
-
 
 	public List<Installment> getInstallments() {
 
@@ -311,31 +299,25 @@ public abstract class Contract implements Serializable {
 		return new ArrayList<>(installments);
 	}
 
-
 	public void setInstallments(List<Installment> installments) {
 		this.installments = installments;
 	}
-
 
 	public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
-
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
-
 
 	public ContractShareTable getShareTable() {
 		return shareTable;
 	}
 
-
 	public void setShareTable(ContractShareTable shareTable) {
 		this.shareTable = shareTable;
 	}
-
 
 	// fatturato
 	public Money getTurnOver() {
@@ -351,11 +333,9 @@ public abstract class Contract implements Serializable {
 		return sum;
 	}
 
-
 	public Money getRemainder() {
 		return getWholeAmount().minus(getTurnOver());
 	}
-
 
 	@Access(AccessType.PROPERTY)
 	public boolean isClosed() {
@@ -364,27 +344,22 @@ public abstract class Contract implements Serializable {
 
 	}
 
-
 	public String getClosedString() {
 		return String.valueOf(isClosed());
 	}
-
 
 	private void setClosed(boolean closed) {
 		// serve ad Hibernate
 		this.closed = closed;
 	}
 
-
 	public String getShortTitle() {
 		return shortTitle;
 	}
 
-
 	public void setShortTitle(String shortTitle) {
 		this.shortTitle = shortTitle;
 	}
-
 
 	public abstract ContractHelper getHelper();
 
