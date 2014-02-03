@@ -1,6 +1,8 @@
 package businessLayer;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +36,7 @@ public class Company {
 	private String socialNumber;
 	private String vatNumber;
 	
+	@Enumerated(EnumType.STRING)
 	private CompanyType type;
 
 	public String getName() {
