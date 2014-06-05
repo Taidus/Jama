@@ -26,11 +26,11 @@
     <datasource jndi-name="java:jboss/datasources/JamaDS"
         pool-name="Jama" enabled="true"
         use-java-context="true">
-        <connection-url>jdbc:mysql://localhost:3306/JamaDB</connection-url>
+        <connection-url>jdbc:mysql://127.0.0.1:3306/JamaDB</connection-url>
         <driver>mysql-connector.jar</driver>
         <security>
-            <user-name>jama</user-name>
-            <password>jama</password>
+            <user-name>root</user-name>
+            <password>DB01Maria</password>
         </security>
     </datasource>
 </datasources>

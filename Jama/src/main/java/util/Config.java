@@ -22,7 +22,7 @@ public class Config {
 
 	public static int defaultPageSize = 30;
 
-	private static final String resourcesPath = "../standalone/deployments/Jama.war/WEB-INF/classes/";
+	private static final String resourcesPath = "/home/jama/jboss/standalone/deployments/Jama.war/WEB-INF/classes/";
 	private static final String configPath = resourcesPath + "config/";
 	
 	public static final String depRatesPath = configPath  + "aliquoteDipartimenti/";
