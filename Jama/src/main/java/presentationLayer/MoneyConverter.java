@@ -20,22 +20,26 @@ import util.Messages;
 
 @Named
 @RequestScoped
-@FacesConverter(forClass=Money.class)
+@FacesConverter(forClass = Money.class)
 public class MoneyConverter implements Converter {
 
 	public MoneyConverter() {}
 
+
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		// il valore viene convertito da numeri decimali, senza valuta
-		try{
-			return Money.of(Config.currency, new BigDecimal(value).setScale(2, RoundingMode.HALF_EVEN));
-		}
-		catch(NumberFormatException e){
-			String[] params = {(String) component.getAttributes().get("label")};
+		try {
+			String s = value.replaceAll("\\.", "");
+			s = s.replaceAll(",", "\\.");
+			System.out.println("Money converter: value = " + value + "; s = " + s);
+			return Money.of(Config.currency, new BigDecimal(s).setScale(2, RoundingMode.HALF_EVEN));
+		} catch (NumberFormatException e) {
+			String[] params = { (String) component.getAttributes().get("label") };
 			throw new ConverterException(Messages.getErrorMessage("err_invalidValue", params));
 		}
 	}
+
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
@@ -49,12 +53,18 @@ public class MoneyConverter implements Converter {
 		} catch (NullPointerException e) {
 			plain = true;
 		}
+		
+		Money m = Money.of(Config.currency, ((Money) value).getAmount().setScale(2, RoundingMode.HALF_EVEN));
 
-		if (null == plain || true == plain)
-			return ((Money) value).getAmount().toPlainString();
+		if (null == plain || true == plain) {
+			// return ((Money) value).getAmount().toPlainString();
+			String s = new MoneyFormatterBuilder().appendAmount(MoneyAmountStyle.ASCII_DECIMAL_COMMA_GROUP3_DOT).toFormatter(Config.locale)
+					.print(m);
+			return s;
+		}
 		else {
 			String s = new MoneyFormatterBuilder().appendAmount(MoneyAmountStyle.ASCII_DECIMAL_COMMA_GROUP3_DOT).appendCurrencySymbolLocalized()
-					.toFormatter(Config.locale).print(((Money) value));
+					.toFormatter(Config.locale).print(m);
 			return s;
 		}
 	}

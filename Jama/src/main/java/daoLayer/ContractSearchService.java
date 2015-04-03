@@ -5,9 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -22,17 +28,26 @@ import org.primefaces.model.SortOrder;
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
 import security.annotations.ViewOwnContractsAllowed;
+import usersManagement.RolePermission;
+import util.Config;
 import annotations.Logged;
 import businessLayer.Contract;
 import businessLayer.Installment;
 
 @Stateful
 @ConversationScoped
-public class ContractSearchService extends ResultPagerBean<Contract> {
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+public class ContractSearchService extends Pager<Contract> {
+	
+	@PersistenceContext(unitName = "primary",type=PersistenceContextType.EXTENDED)
+	private EntityManager em;
 
 	@Inject
 	@Logged
 	private Principal principal;
+	
+	private Pager<Contract> pager;
+
 
 	@ViewOwnContractsAllowed
 	public void initWithLoggedUserCode(Date lowerDeadLineDate,
@@ -42,32 +57,38 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 		String code = principal.getSerialNumber();
 
-		_init(lowerDeadLineDate, upperDeadLineDate, null, companyId, order,
+		_init(null,lowerDeadLineDate, upperDeadLineDate, null, companyId, order,
 				contractClass, code, closed, lowerInstDeadlineDate,
-				upperInstDeadlineDate);
+				upperInstDeadlineDate,null,null);
 
 	}
 
 	@AlterContractsAllowed
-	public void init(Date lowerDeadLineDate, Date upperDeadLineDate,
+	public void init(Date lowerApprovalDate, Date upperApprovalDate,
 			Integer chiefId, Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass, Boolean closed) {
+		
+		List<String> deptCodes = principal.getBelongingDepthsCodes(RolePermission.OPERATOR);
+		
 
-		_init(lowerDeadLineDate, upperDeadLineDate, chiefId, companyId, order,
-				contractClass, null, closed, null, null);
+		_init(deptCodes, null, null, chiefId, companyId, order,
+				contractClass, null, closed, null, null,lowerApprovalDate,upperApprovalDate);
 
 	}
 
-	private void _init(Date lowerDate, Date upperDate, Integer chiefId,
+	private void _init(List<String> deptsCodes ,Date lowerDate, Date upperDate, Integer chiefId,
 			Integer companyId, SortOrder order,
 			Class<? extends Contract> contractClass,
 			String principalSerialNumber, Boolean closed,
-			Date lowerInstDeadlineDate, Date upperInstDeadlineDate) {
-		currentPage = 0;
+			Date lowerInstDeadlineDate, Date upperInstDeadlineDate, Date lowerApprovalDate, Date upperApprovalDate) {
 
 		if (contractClass == null) {
 			contractClass = Contract.class;
 		}
+		
+		TypedQuery<Contract> query;
+		TypedQuery<Long> countQuery;
+
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Contract> c = cb.createQuery(Contract.class);
@@ -87,6 +108,13 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 		Join<? extends Contract, Installment> join2;
 
 		List<Predicate> criteria = new ArrayList<Predicate>();
+		
+		//metti paramter expression se ti riesce
+		if(deptsCodes != null){
+
+			criteria.add(agr.get("department").get("code").in(deptsCodes));		
+		}
+		
 
 		if (upperInstDeadlineDate != null || lowerInstDeadlineDate != null) {
 
@@ -125,6 +153,21 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 
 			ParameterExpression<Date> p = cb.parameter(Date.class, "upperDate");
 			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("deadlineDate"), p));
+
+		}
+		
+		if (lowerApprovalDate != null) {
+
+			ParameterExpression<Date> p = cb.parameter(Date.class, "lowerApprovalDate");
+			criteria.add(cb.greaterThanOrEqualTo(
+					agr.<Date> get("approvalDate"), p));
+
+		}
+
+		if (upperApprovalDate != null) {
+
+			ParameterExpression<Date> p = cb.parameter(Date.class, "upperApprovalDate");
+			criteria.add(cb.lessThanOrEqualTo(agr.<Date> get("approvalDate"), p));
 
 		}
 
@@ -213,6 +256,19 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 						TemporalType.DATE);
 
 			}
+			
+			if (lowerApprovalDate != null) {
+				query.setParameter("lowerApprovalDate", lowerApprovalDate, TemporalType.DATE);
+				countQuery.setParameter("lowerApprovalDate", lowerApprovalDate,
+						TemporalType.DATE);
+
+			}
+			if (upperApprovalDate != null) {
+				query.setParameter("upperApprovalDate", upperApprovalDate, TemporalType.DATE);
+				countQuery.setParameter("upperApprovalDate", upperApprovalDate,
+						TemporalType.DATE);
+
+			}
 			if (chiefId != null) {
 				query.setParameter("chiefId", chiefId);
 				countQuery.setParameter("chiefId", chiefId);
@@ -242,7 +298,43 @@ public class ContractSearchService extends ResultPagerBean<Contract> {
 			countQuery = em.createQuery(countC);
 
 		}
+		
+		pager= new ResultPager<>(0, Config.defaultPageSize, query, countQuery);
 
 	}
+
+	public void next() {
+		pager.next();
+	}
+
+	public void previous() {
+		pager.previous();
+	}
+
+	public int getCurrentPage() {
+		return pager.getCurrentPage();
+	}
+
+	public void setCurrentPage(int currentPage) {
+		pager.setCurrentPage(currentPage);
+	}
+
+	public List<Contract> getCurrentResults() {
+		return pager.getCurrentResults();
+	}
+
+	public int getPageSize() {
+		return pager.getPageSize();
+	}
+
+	public void setPageSize(int pageSize) {
+		pager.setPageSize(pageSize);
+	}
+
+	public Long getResultNumber() {
+		return pager.getResultNumber();
+	}
+
+	
 
 }

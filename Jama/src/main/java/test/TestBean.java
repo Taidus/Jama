@@ -1,9 +1,6 @@
 package test;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,17 +9,15 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import usersManagement.LdapManager;
 import util.MailSender;
-import businessLayer.Agreement;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
-import businessLayer.Contract;
 import businessLayer.Department;
-import businessLayer.Funding;
-import daoLayer.ContractDaoBean;
-import daoLayer.ContractSearchService;
 import daoLayer.ChiefScientistDaoBean;
 import daoLayer.CompanyDaoBean;
+import daoLayer.ContractDaoBean;
+import daoLayer.ContractSearchService;
 import daoLayer.DeadlineSearchService;
 import daoLayer.DepartmentDaoBean;
 
@@ -46,11 +41,15 @@ public class TestBean implements Serializable {
 	private ContractSearchService searchService;
 	@EJB
 	private DeadlineSearchService deadService;
-	
+	@Inject
+	private LdapManager ldap;
+
 	@Inject
 	private MailSender mailSender;
-	public TestBean() {
-	}
+
+
+	public TestBean() {}
+
 
 	private void testDepartmentGetAll() {
 
@@ -74,6 +73,7 @@ public class TestBean implements Serializable {
 
 	}
 
+
 	private void testCompanyGetAll() {
 
 		Company c = new Company();
@@ -94,6 +94,7 @@ public class TestBean implements Serializable {
 
 	}
 
+
 	private void testChiefScientistGetAll() {
 
 		ChiefScientist c = new ChiefScientist();
@@ -112,44 +113,59 @@ public class TestBean implements Serializable {
 
 	}
 
+
 	@PostConstruct
 	public void init() {
-		
-		int chiefId = 11;
-		int companyId = 12;
-		Date lower = new Date(Calendar.getInstance().getTimeInMillis());
-		Calendar c = new GregorianCalendar();
-		c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
-		c.add(Calendar. DAY_OF_MONTH,3);
-		Date upper = new Date(c.getTimeInMillis());
-		deadService.setPageSize(1);
-		
-		System.out.println("Querying in dates: "+lower+", "+upper);
 
-		deadService.init(null, null, null, null, null,Agreement.class, null);
+		// int chiefId = 11;
+		// int companyId = 12;
+		// Date lower = new Date(Calendar.getInstance().getTimeInMillis());
+		// Calendar c = new GregorianCalendar();
+		// c.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+		// c.add(Calendar.DAY_OF_MONTH, 3);
+		// Date upper = new Date(c.getTimeInMillis());
+		// deadService.setPageSize(1);
+		//
+		// System.out.println("Querying in dates: " + lower + ", " + upper);
+		//
+		// deadService.init(null, null, null, null, null, Agreement.class,
+		// null);
 	}
 
+
 	public void doJob1() {
-		
 
 		System.out.println(deadService.getCurrentResults());
 
 	}
+
 
 	public void doJob2() {
 
 		deadService.next();
 	}
 
+
 	public void doJob3() {
 
 		deadService.previous();
 	}
-	
-	
-	public void doDelta(){
+
+
+	public void doDelta() {
 		
-		System.out.println(deadService.getResultNumber());
+		
+		ldap.getAllUsers();
+		
+		for(ChiefScientist c : ldap.getAllChiefScientists()){
+			System.out.println(c);
+		
+		}
+		 System.out.println( ldap.authenticate("UfoRobot-123","D000000") ? "The password is correct.":
+
+                 "The password is incorrect.\n");
+		
+		
 		
 	}
 

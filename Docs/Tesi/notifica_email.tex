@@ -1,0 +1,81 @@
+Nell'applicazione ricopre un ruolo cruciale la notifica tramite e-mail al Docente di ciò che riguarda contratti da lui stipulati.\\
+Qui di seguito viene illustrata la struttura del codice che viene usato per questo procedimento e un estratto di template:
+
+\begin{lstlisting}
+public void notifyEvent(Contract c) {
+	
+	TemplateFiller filler = new TemplateFiller(c, "email@address.com");
+	StringWriter out = new StringWriter();
+
+	Template template = Config.fmconf.getTemplate(Config.templateFileName);
+	temp.process(filler, out);
+	String mailContent = out.toString();
+
+	User u = userDao.getBySerialNumber(c.getChief().getSerialNumber());
+	String email = u.getEmail();
+
+	send(email, "Title", mailContent);
+}
+
+private void send(String recipientEmail, String subject, String text) {
+
+	String host = "smtp.gmail.com";
+	String username = "jama.mail.services";
+	String password = "password";
+
+	MimeMessage message = new MimeMessage(mailSession);
+	try {
+
+		message.setRecipient(RecipientType.TO, new InternetAddress(recipientEmail));
+		message.setSubject(subject);
+		message.setText(text);
+		message.saveChanges();
+
+		Transport t = mailSession.getTransport("smtps");
+		try {
+			t.connect(host, username, password);
+			t.sendMessage(message, message.getAllRecipients());
+		} finally {
+			t.close();
+		}
+
+	} catch (MessagingException e) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(Messages.getString("err_sendingMail")));
+	}
+}
+
+public class TemplateFiller {
+	private Contract contract;
+	private String mail;
+
+
+	public TemplateFiller(Contract contract, String mail) {
+		super();
+		this.contract = contract;
+		this.mail = mail;
+	}
+
+
+	public Contract getContract() {
+		return contract;
+	}
+
+
+	public String getMail() {
+		return mail;
+	}
+
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+Gent.mo Professore,
+questa comunicazione riguarda la convenzione dal titolo "${contract.title}" fra ${contract.department.name} e ${contract.company.name} [...]
+\end{lstlisting}
+
+Per produrre il contenuto della mail viene usata la libreria FreeMarker. Si è già spiegato il suo funzionamento nel paragrafo \ref{freemarker}; qui si può vedere la sua applicazione all'operazione di notifica.\\
+La configurazione di FreeMarker viene definita una sola volta all'avvio, ed è accessibile tramite la classe \lstinline{util.Config} (che contiene la configurazione di Jama). La classe \lstinline{Config} espone inoltre anche gli attributi che contengono i nomi dei file di template.\\
+Definita la configurazione è possibile passare al caricamento del template e al suo utilizzo. Tale operazione viene eseguita nel metodo \lstinline{notifyEvent} tramite la chiamata al metodo \lstinline{getTemplate}. Quest'ultimo viene poi riempito utilizzando il bean \lstinline{TemplateFiller} e subito dopo viene prodotto l'output. \\
+A questo punto viene chiamato il metodo \lstinline{send}, che è quello che si occupa dell'invio vero e proprio della posta elettronica. Per fare ciò, vengono semplicemente adoperate le API Java del package \lstinline{javax.mail}, usando gli opportuni parametri dipendenti dall'applicazione (come ad esempio l'host o il protocollo).\\
+L'intero processo viene eseguito dalla classe \lstinline{MailSender}, che si trova nel package \lstinline{Util}.

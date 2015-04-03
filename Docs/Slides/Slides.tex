@@ -1,0 +1,166 @@
+\documentclass[xcolor=dvipsnames,10pt]{beamer}
+
+\mode<presentation>
+
+\usepackage{beamerthemesplit}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  keepspaces=true,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\tiny\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  moredelim=[is][\textcolor{gray}]{&&}{&&},
+  literate={A}{A}{1\discretionary{}{}{}}
+             {B}{B}{1\discretionary{}{}{}}
+             {C}{C}{1\discretionary{}{}{}}
+             {D}{D}{1\discretionary{}{}{}}
+             {E}{E}{1\discretionary{}{}{}}
+             {F}{F}{1\discretionary{}{}{}}
+             {G}{G}{1\discretionary{}{}{}}
+             {H}{H}{1\discretionary{}{}{}}
+             {I}{I}{1\discretionary{}{}{}}
+             {J}{J}{1\discretionary{}{}{}}
+             {K}{K}{1\discretionary{}{}{}}
+             {L}{L}{1\discretionary{}{}{}}
+             {M}{M}{1\discretionary{}{}{}}
+             {N}{N}{1\discretionary{}{}{}}
+             {O}{O}{1\discretionary{}{}{}}
+             {P}{P}{1\discretionary{}{}{}}
+             {Q}{Q}{1\discretionary{}{}{}}
+             {R}{R}{1\discretionary{}{}{}}
+             {S}{S}{1\discretionary{}{}{}}
+             {T}{T}{1\discretionary{}{}{}}
+             {U}{U}{1\discretionary{}{}{}}
+             {V}{V}{1\discretionary{}{}{}}
+             {W}{W}{1\discretionary{}{}{}}
+             {X}{X}{1\discretionary{}{}{}}
+             {Y}{Y}{1\discretionary{}{}{}}
+             {Z}{Z}{1\discretionary{}{}{}}
+}
+
+\graphicspath{ {./images/} }
+
+\usecolortheme[named=MidnightBlue]{structure}
+
+%Warsaw Dresden Singapore Copenhagen Madrid AnnArbor
+\usetheme{Warsaw}
+\setbeamercovered{transparent}
+\setbeamercolor{lowercolor}{fg=white , bg=MidnightBlue}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{items}[default]
+\setbeamertemplate{navigation symbols}{}
+
+\def\hilite<#1>{%
+\temporal<#1>{\color{lightgray}}{\color{black}}%
+{\color{black}}}
+
+\usetitlepagetemplate{
+  \begin{center}
+    %\pgfuseimage{salom}
+    %\vskip0.5ex
+    \textsc{Università degli Studi di Firenze}
+    \vskip1ex
+    \scriptsize{\textsc{Dipartimento di Sistemi e Informatica} }\\
+    \scriptsize{\textsc{Tesi di Laurea Triennale in Ingegneria Informatica } }
+    \vskip4ex
+    \begin{beamerboxesrounded}[lower=lowercolor, shadow=true]{}
+     \begin{center}
+    \normalsize{Analisi e sviluppo di una web application \\
+		basata sui framework JPA, JSF, CDI, \\
+		per l'amministrazione di attività di trasferimento tecnologico\\}
+     \end{center}
+    \end{beamerboxesrounded}
+
+    \vskip4ex
+    \begin{footnotesize}
+\begin{columns}[t]
+\begin{column}{0.2\textwidth}
+\begin{flushright}
+\vskip -3em
+      \begin{minipage}[t]{20ex}
+	\raggedright
+	\emph{Candidati:}\\
+	Giulio Galvan\\Alessio Sarullo\\Tommaso Levato
+      \end{minipage}
+\end{flushright}
+\end{column}
+\begin{column}{0.4\textwidth}
+\vskip-3ex
+  \begin{figure}
+   \includegraphics[width=2.5cm]{images/stemma.pdf}
+  \end{figure}
+\end{column}
+\begin{column}{0.3\textwidth}
+	\emph{Relatori}\\
+	Prof. Enrico Vicario\\
+ \vskip 0.5em
+	\emph{Correlatori}\\
+	Ing. Jacopo Torrini\\
+\end{column}
+\end{columns}
+      \vskip 4ex
+      \rule{15em}{0.4pt}
+      \vskip 0.2ex
+      Anno Accademico 2012/2013
+\vskip 0.3em
+\begin{itemize}
+\item \structure{Obiettivo}: \\Sviluppo di una applicazione web per la gestione delle convenzioni
+\end{itemize}
+    \end{footnotesize}
+  \end{center}
+}
+
+\title[Analisi e sviluppo di una web application]{Analisi e sviluppo di una web application \\
+basata sui framework JPA, JSF, CDI, \\
+per l'amministrazione di attività di trasferimento tecnologico\\}
+\author{Tommaso Levato, Alessio Sarullo, Giulio Galvan}
+
+\date{\today}
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+
+\begin{document}
+
+\frame{\titlepage}
+\input{part1}
+\begin{frame}
+\end{frame}
+\input{part2}
+\begin{frame}
+\end{frame}
+\input{part3}
+%\section[Outline]{}
+%\frame{\tableofcontents}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\section*{}
+%\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\frame{\titlepage}
+
+\end{document} 

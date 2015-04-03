@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -17,7 +18,8 @@ import javax.validation.constraints.Size;
     )
 @NamedQueries({
 @NamedQuery(name="ChiefScientist.findAll",query="SELECT c FROM ChiefScientist c ORDER BY c.surname"),
-@NamedQuery(name="ChiefScientist.getBySerial", query="SELECT c FROM ChiefScientist c WHERE c.serialNumber= :number")
+@NamedQuery(name="ChiefScientist.getBySerial", query="SELECT c FROM ChiefScientist c WHERE LOWER(c.serialNumber)= :number"),
+@NamedQuery(name="ChiefScientist.getByDeptSerials", query="SELECT c FROM ChiefScientist c WHERE c.department.code IN :serials")
 
 })
 public class ChiefScientist {
@@ -34,6 +36,19 @@ public class ChiefScientist {
 	
 	private String serialNumber;
 	
+	@ManyToOne
+	private Department department;
+	
+	
+	
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	public String getSerialNumber() {
 		return serialNumber;
 	}
@@ -63,6 +78,15 @@ public class ChiefScientist {
 	public String getCompleteName(){
 		return this.surname + " " + this.name;
 	}
+	
+	
+
+	public void copy (ChiefScientist c) {
+		this.name = c.getName();
+		this.surname = c.getSurname();
+		this.serialNumber = c.getSerialNumber();
+		this.department = c.getDepartment();
+	}
 
 	@Override
 	public String toString() {
@@ -74,11 +98,8 @@ public class ChiefScientist {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((serialNumber == null) ? 0 : serialNumber.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
 
@@ -91,25 +112,15 @@ public class ChiefScientist {
 		if (getClass() != obj.getClass())
 			return false;
 		ChiefScientist other = (ChiefScientist) obj;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		if (serialNumber == null) {
 			if (other.serialNumber != null)
 				return false;
 		} else if (!serialNumber.equals(other.serialNumber))
 			return false;
-		if (surname == null) {
-			if (other.surname != null)
-				return false;
-		} else if (!surname.equals(other.surname))
-			return false;
 		return true;
 	}
+	
+	
 
 	
 	

@@ -5,13 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
 import org.joda.money.CurrencyUnit;
+
+import com.novell.ldap.LDAPConnection;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -22,15 +22,14 @@ public class Config {
 
 	public static int defaultPageSize = 30;
 
-	private static final String resourcesPath = "../standalone/deployments/Jama.war/WEB-INF/classes/";
+	private static final String resourcesPath = "/home/jama/jboss/standalone/deployments/Jama.war/WEB-INF/classes/";
 	private static final String configPath = resourcesPath + "config/";
 	
 	public static final String depRatesPath = configPath  + "aliquoteDipartimenti/";
+	public static final String depRatesDefaultDir = "default";
 	private static final String mailTemplateDir = configPath + "mailTemplates";
 	private static final String basicConfigFile = configPath + "basic.properties";
-
-	private static final String logFile = resourcesPath  + "log";
-
+	
 	public static final Configuration fmconf;
 	public static final String instDeadlineTemplateFileName = "template_scadenzaRata.ftl";
 	public static final String contractCreationTemplateFileName = "template_creazioneContratto.ftl";
@@ -42,19 +41,37 @@ public class Config {
 	public static final int dailyScheduledTaskExecutionHour;
 	public static final int daysBeforeDeadlineExpriration;
 	public static final Percent defaultIva;
+	
+	//LDAP settings
+	private static final String ldapConfigFile = configPath +"ldap.properties";
+	
+	public static final int ldapPort;
+	public static final int searchScope = LDAPConnection.SCOPE_SUB;
+	public static final int ldapVersion = LDAPConnection.LDAP_V3;
+	public static final String ldapHost;
+	public static final String loginDN;
+	public static final String password;
+	public static final String searchBase;
+	public static final String deptsBusinessCategory;
+	public static final int hoursBeforeLdapCacheUpdate;
+
+	
+	
 
 	static {
+		
 
-		try {
-			System.setErr(new PrintStream(new File(logFile)));
-			System.err.println(new Date() + "\n=========\n" + "Inizio attività di logging\n" + "==========");
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+
+//		try {
+//			System.setErr(new PrintStream(new File(logFile)));
+//			System.err.println(new Date() + "\n=========\n" + "Inizio attività di logging\n" + "==========");
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		}
 
 		fmconf = new Configuration();
 		setFreeMarkerConf();
-		
+
 		
 		Properties p = new Properties();
 		InputStream in = null;
@@ -80,6 +97,46 @@ public class Config {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		p = new Properties();
+		in = null;
+
+		try {
+			in = new FileInputStream(ldapConfigFile);
+			p.load(in);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Could not find or open " + ldapConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("Could not read " + ldapConfigFile);
+		}
+
+		ldapPort = Integer.parseInt(p.getProperty("ldapPort").trim());
+		ldapHost = p.getProperty("ldapHost").trim();
+		loginDN = p.getProperty("loginDN").trim();
+		password = p.getProperty("password").trim();
+		searchBase = p.getProperty("searchBase").trim();
+		deptsBusinessCategory = p.getProperty("deptsBusinessCategory");
+		hoursBeforeLdapCacheUpdate = Integer.parseInt(p.getProperty("hoursBeforeCacheUpdate"));
+
+		
+
+		
+		
+		try {
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	private static void setFreeMarkerConf(){
@@ -114,4 +171,6 @@ public class Config {
 		fmconf.setIncompatibleImprovements(new Version(2, 3, 20)); // FreeMarker
 																	// 2.3.20
 	}
+	
+
 }

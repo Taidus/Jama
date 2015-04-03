@@ -4,6 +4,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import presentationLayer.AgreementEditPresentationBean;
 import presentationLayer.lazyModel.ChiefContractListLDM;
 import presentationLayer.lazyModel.SkeletalContractTableLDM;
 
@@ -14,6 +15,8 @@ public class ChiefContractListPCB extends ContractTablePageController {
 
 	@Inject
 	private ChiefContractListLDM lazyModel;
+	
+	@Inject private AgreementEditPresentationBean editPB;
 
 
 	public ChiefContractListPCB() {}
@@ -33,6 +36,7 @@ public class ChiefContractListPCB extends ContractTablePageController {
 
 	@Override
 	public String viewAgreement() {
+		editPB.setProfessorModeOn(true);
 		return super.viewAgreement();
 	}
 

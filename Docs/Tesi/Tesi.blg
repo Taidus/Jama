@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: Tesi.aux
+The style file: plain.bst
+Database file #1: biblio.bib
+Warning--to sort, need author or key in cdi
+Warning--to sort, need author or key in javaBeans
+Warning--to sort, need author or key in managedBean
+Warning--to sort, need author or key in freemarker
+Warning--to sort, need author or key in jldap
+Warning--to sort, need author or key in joda
+Warning--to sort, need author or key in hibernate
+Warning--to sort, need author or key in prime
+Warning--empty year in effective
+Warning--empty year in pa
+Warning--empty year in gof
+Warning--empty year in jsf
+Warning--empty year in jpa
+Warning--empty year in weld
+You've used 16 entries,
+            2118 wiz_defined-function locations,
+            552 strings with 5241 characters,
+and the built_in function-call counts, 3333 in all, are:
+= -- 291
+> -- 119
+< -- 0
++ -- 52
+- -- 36
+* -- 154
+:= -- 497
+add.period$ -- 40
+call.type$ -- 16
+change.case$ -- 60
+chr.to.int$ -- 0
+cite$ -- 30
+duplicate$ -- 142
+empty$ -- 361
+format.name$ -- 36
+if$ -- 741
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 12
+newline$ -- 75
+num.names$ -- 16
+pop$ -- 150
+preamble$ -- 1
+purify$ -- 50
+quote$ -- 0
+skip$ -- 112
+stack$ -- 0
+substring$ -- 80
+swap$ -- 16
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 52
+warning$ -- 14
+while$ -- 16
+width$ -- 18
+write$ -- 130
+(There were 14 warnings)

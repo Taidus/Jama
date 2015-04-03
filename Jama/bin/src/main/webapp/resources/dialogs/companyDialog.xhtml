@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="dialogWidgetVar" required="true" />
+	<composite:attribute name="dialogId" default="companyDialog" />
+
+	<composite:attribute name="editingDisable" default="true" />
+	<composite:attribute name="observingComponentId" type="java.lang.String" />
+	<composite:attribute name="observingComponentWidgetVar" type="java.lang.String" default="undefined" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputScript name="hideShow.js" library="js" />
+	<h:outputScript name="dialogScripts.js" library="js" />
+
+	<p:dialog id="#{cc.attrs.dialogId}" header="#{msgs.newCompanyTitle}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true" onHide="refresh();">
+
+		<h:form>
+
+			<p:remoteCommand name="refresh" process="@this" immediate="true" />
+
+			<ui:remove>
+				<p:remoteCommand name="retrieveSocialNumber" process="@none" immediate="true" actionListener="#{companyManager.company.socialNumber}" />
+			</ui:remove>
+
+			<p:panelGrid id="companyPanel" styleClass="grid">
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.companyName}:" />
+					</p:column>
+					<p:column>
+						<h:inputText id="companyName" value="#{companyManager.company.name}" label="#{msgs.companyName}" required="true"
+							rendered="#{not cc.attrs.editingDisable}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.name}" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.businessName}:" />
+					</p:column>
+					<p:column>
+						<h:inputText id="businessName" value="#{companyManager.company.businessName}" label="#{msgs.businessName}" required="true"
+							rendered="#{not cc.attrs.editingDisable}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.businessName}" />
+
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.legalResidence}:" />
+					</p:column>
+					<p:column>
+						<h:inputText id="legalResidence" value="#{companyManager.company.legalResidence}" label="#{msgs.legalResidence}" required="true"
+							rendered="#{not cc.attrs.editingDisable}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.legalResidence}" />
+
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.socialNumber}:" />
+					</p:column>
+					<p:column>
+						<h:inputText id="socialNumber" value="#{companyManager.company.socialNumber}" label="#{msgs.socialNumber}" required="true"
+							validator="#{companyDialogPB.validateSocialNumber}" rendered="#{not cc.attrs.editingDisable}" />
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.socialNumber}" />
+
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msgs.VatNumber}:" />
+					</p:column>
+					<p:column>
+						<h:inputText id="VatNumber" value="#{companyManager.company.vatNumber}" label="#{msgs.VatNumber}" required="true"
+							rendered="#{not cc.attrs.editingDisable}" validatorMessage="#{msgs.err_illegalVatNumber}">
+							<f:validateRegex pattern="[0-9]*"/>
+						</h:inputText>
+						<h:outputText rendered="#{cc.attrs.editingDisable}" value="#{companyManager.company.vatNumber}" />
+
+					</p:column>
+				</p:row>
+
+
+			</p:panelGrid>
+
+			<p:commandButton process="@form" value="#{msgs.save}" actionListener="#{companyManager.save()}"
+				update=":#{p:component('companyPanel')} :#{p:component(cc.attrs.observingComponentId)}"
+				oncomplete="if (!args.validationFailed){ setHideShow(); #{cc.attrs.dialogWidgetVar}.hide(); setMenuValue(#{cc.attrs.observingComponentWidgetVar}, '#{cc.attrs.dialogId}', 'socialNumber' ); }"
+				rendered="#{not cc.attrs.editingDisable}" />
+
+			<p:commandButton process="@this" immediate="true" oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" value="#{msgs.cancel}" />
+
+		</h:form>
+
+	</p:dialog>
+
+</composite:implementation>
+</html>

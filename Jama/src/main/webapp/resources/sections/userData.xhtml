@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
+
+<composite:interface>
+	<composite:attribute name="editingDisable" default="true" />
+	<composite:attribute name="panelGridId" default="usrDataPanelGrid" />
+	<composite:attribute name="profile" default="false" />
+
+</composite:interface>
+
+<composite:implementation>
+
+	<p:panelGrid id="#{cc.attrs.panelGridId}">
+
+		<p:growl autoUpdate="true" sticky="true" showSummary="false" showDetail="true" />
+
+		<p:row>
+			<p:column>
+				<h:outputText value="#{msgs.serialNumber}: " />
+			</p:column>
+
+			<p:column>
+				<h:outputText value="#{userEditor.user.serialNumber}" />
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText value="#{msgs.name}:" />
+			</p:column>
+
+			<p:column>
+				<h:outputText id="name_output" value="#{userEditor.user.name}" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText value="#{msgs.surname}:" />
+			</p:column>
+
+			<p:column>
+				<h:outputText id="surname_output" value="#{userEditor.user.surname}" />
+			</p:column>
+		</p:row>
+
+
+		<p:row>
+			<p:column>
+				<h:outputText value="#{msgs.email}: " />
+			</p:column>
+
+			<p:column rendered="#{not cc.attrs.editingDisable}">
+				<p:inputText id="email" required="true" label="email" requiredMessage="Please enter your email address."
+					validatorMessage="#{msgs.err_invalidEmail}" value="#{userEditor.user.email}">
+
+					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					<f:ajax event="blur" execute="@this" />
+
+				</p:inputText>
+
+				<p:watermark for="email" value="Email Address *" />
+
+			</p:column>
+			
+			<p:column rendered="#{cc.attrs.editingDisable}">
+				<h:outputText value="#{userEditor.user.email}" />
+			</p:column>
+
+		</p:row>
+
+		<p:row rendered="#{not cc.attrs.profile}">
+			<p:column colspan="2">
+				<p:panel>
+
+					<p:dataTable id="userRoles" value="#{userEditor.user.roles}" var="role" rowKey="#{userEditor.user.roles.indexOf(role)}"
+						emptyMessage="#{msgs.noRoleFound}"  >
+
+						<f:facet name="header">
+							<h:outputText value="#{msgs.userRoles}" />
+						</f:facet>
+
+
+						<p:columnGroup type="header">
+							<p:row>
+								<p:column headerText="#{msgs.role}" />
+								<p:column headerText="#{msgs.department}" />
+								<p:column rendered="#{not cc.attrs.editingDisable}" />
+							</p:row>
+						</p:columnGroup>
+
+						<p:column width="30%">
+							<h:outputText value="#{role.rolePermission.displayString}" />
+						</p:column>
+
+						<p:column width="55%">
+							<h:outputText value="#{userEditor.getDepartmentFromRole(role).displayName}" />
+						</p:column>
+
+						<p:column width="15%" rendered="#{not cc.attrs.editingDisable}">
+							<p:commandButton value="#{msgs.remove}" actionListener="#{userEditor.removeRole(role)}" update="userRoles" process="@this" />
+						</p:column>
+
+					</p:dataTable>
+
+					<br />
+
+					<p:panelGrid id="roleInput" style="width: 100%" rendered="#{cc.attrs.editingDisable == false}">
+
+						<p:row>
+							<p:column width="10%">
+								<h:outputText value="#{msgs.role}: " />
+							</p:column>
+
+							<p:column width="35%">
+								<p:selectOneMenu id="newRole" value="#{userEditor.newRolePermission}" label="#{msgs.role}">
+									<f:selectItems value="#{utilPB.rolesItems}" />
+									<p:ajax event="valueChange" process="@this" update="newDepartment" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column width="10%">
+								<h:outputText value="#{msgs.department}" />
+							</p:column>
+
+							<p:column width="35%">
+								<p:selectOneMenu id="newDepartment" value="#{userEditor.newDepartment}" disabled="#{not userEditor.newDepartmentRequired()}"
+									required="#{userEditor.newDepartmentRequired()}" label="#{msgs.department}">
+									<f:selectItems value="#{utilPB.depthItems}" />
+									<f:converter binding="#{departmentConverter}" />
+									<p:ajax event="valueChange" process="@this" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column width="10%">
+								<p:commandButton value="#{msgs.add}" actionListener="#{userEditor.addRole()}" update="roleInput userRoles" process="roleInput, @this" />
+							</p:column>
+						</p:row>
+
+						<ui:remove>
+							<p:row>
+								<p:column colspan="4">
+									<p:message autoUpdate="true" for="newRole" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column colspan="4">
+									<p:message autoUpdate="true" for="newDepartment" />
+								</p:column>
+							</p:row>
+						</ui:remove>
+					</p:panelGrid>
+
+				</p:panel>
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+</composite:implementation>
+</html>

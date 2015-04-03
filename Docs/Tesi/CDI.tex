@@ -1,0 +1,89 @@
+\subsection{Introduzione}
+
+La specifica \textsl{Contexts and Dependency Injection} (o \textsl{CDI}) è stata introdotta nella versione 6 di Java EE per unificare il livello applicazione (che fa uso degli \textsl{Enterprise Java Bean}, o \textsl{EJB}) e il livello web (con particolare riferimento alla tecnologia JSF, che fa uso dei \textsl{Managed bean}).\\
+Esistono attualmente varie versioni di CDI. Nello sviluppo dell'applicazione è stata usata \textsl{JBoss Weld}, che è quella di riferimento ed è inoltre inclusa di default in \textsl{JBoss AS}.\\
+In seguito, verranno descritti in modo sufficientemente approfondito le caratteristiche principali di CDI. Per una trattazione più dettagliata e completa, si rimanda alla specifica \cite{cdi} e alla documentazione dell'implementazione di riferimento \cite{weld}.
+
+\subsection{Caratteristiche}
+
+I principali servizi offerti da CDI sono due:
+
+\begin{itemize}
+\item \textbf{Contesto}: CDI è in grado di conferire agli oggetti Java un ciclo di vita legato ad un particolare contesto.
+\item \textbf{Iniezione di dipendenza}: tramite CDI è possibile delegare al framework il compito di istanziare gli oggetti, creando così un meccanismo di iniezione di dipendenza. Tale operazione può essere eseguita sia durante lo sviluppo che durante la fase di \textit{deploy} dell'applicazione. Questi oggetti gestiti dal framework invece che direttamente dal programmatore vengono denominati \textsl{bean}.
+\end{itemize}
+
+Inoltre CDI:
+
+\begin{itemize}
+\item consente l'integrazione con l'\textsl{Expression Language} (o \textsl{EL}), permettendo di far riferimento agli oggetti dalle pagine JSF in modo diretto.
+\item favorisce il disaccoppiamento sia al livello client-server, permettendo varie implementazioni lato server attraverso l'utilizzo dei \textit{qualifier}, sia per quanto riguarda il ciclo di vita dei bean, attraverso una sua gestione mediante l'utilizzo di vari contesti.
+\item permette un forte controllo sui tipi, eliminando la necessità di identificatori di tipo stringa per il collegamento tra i vari bean tramite l'utilizzo delle annotazioni Java.
+\end{itemize}
+
+\subsection{Bean}
+
+\subsubsection{Definizione}
+Alla base di CDI vi sono oggetti particolari chiamati \textsl{bean}.\\
+Un bean, nella sua accezione più ampia, è un \textquotedblleft componente software riusabile che può essere gestito dal container\textquotedblright{} (adattamento libero della definizione fornita dalla specifica \textsl{JavaBeans}, consultabile all'indirizzo \cite{javaBeans}).\\
+I bean di CDI rispettano questa specifica, ma hanno un'importante proprietà aggiuntiva: lo \textit{scope}, che li lega ad uno specifico contesto, il quale ne determina il ciclo di vita e la visibilità ai client.
+CDI mette a disposizione quattro \textit{scope}:
+\begin{itemize}
+\item \textit{Request scope} Il tempo di vita del bean equivale ad una singola richiesta HTTP
+\item \textit{Conversation scope} Una \textsl{conversazione} di CDI può essere di due tipi: \textit{transient} e \textit{long-running}. Normalmente, una conversazione è \textit{transient} e ha la stessa durata di una richiesta HTTP. Tuttavia, una conversazione \textit{transient} può divenire \textit{long-running} tramite una chiamata al metodo \lstinline{begin()}, e rimane tale finché non viene chiamato il metodo \lstinline{end()}, riportandola allo stato \textit{transient}.
+\item \textit{Session scope} È legato alla sessione HTTP. Un bean \textit{session scoped} rimane quindi attivo attraverso più richieste HTTP ed è visibile tra più viste che condividono la stessa sessione.
+\item \textit{Application scope} Un bean \textit{application scoped} viene creato una volta sola per tutta la durata dell'applicazione.
+\end{itemize}
+
+Oltre agli \textit{scope} \textquoteleft classici\textquoteright{} appena elencati, ve ne sono altri chiamati \textit{pseudo-scope}. Tra questi, il più importante è lo \textit{pseudo-scope} \textit{dependent}: un bean \textit{dependent} viene istanziato per servire un solo client o bean, ed il suo ciclo di vita è quindi legato a quello del client/bean. Se ad un bean non viene assegnato esplicitamente uno \textit{scope}, viene considerato \textit{dependent}.\\\\
+
+Un bean CDI non è solo definito dal suo \textit{scope}: di seguito sono elencati gli altri principali attributi di un bean CDI.
+\begin{itemize}
+\item \underline{Un insieme (non vuoto) di \textit{bean type}}. Un \textit{bean type} è un tipo che è visibile dal client. A livello pratico, quasi tutti i tipi Java possono essere \textit{bean type}.
+\item \underline{Un insieme (non vuoto) di \textit{qualifier}}. I \textit{qualifier} sono annotazioni particolari che definiscono ulteriormente un bean, e sono in genere usati per distinguere tra varie implementazioni di una stessa interfaccia.
+\item \underline{(Opzionale) Un nome EL}. Questo nome serve per far riferimento al bean tramite EL, (ad esempio, da una pagina JSF). È possibile specificare il nome desiderato tramite l'annotazione \lstinline{@Named}; alternativamente, viene usato un nome di default scelto dal frame (di solito, il nome della classe con l'iniziale minuscola).
+\end{itemize}
+
+\subsubsection{Iniezione di un bean}
+Il meccanismo che sta alla base di CDI è l'\textsl{iniezione di dipendenza}, che costituisce a una forma di \textquotedblleft inversione di controllo\textquotedblright (in inglese, \textit{inversion of control}): non è più il programmatore a controllare gli oggetti da istanziare, bensì il framework \footnote{come approfondimento si consiglia la lettura di \cite{inversion}}.\\
+Per eseguire l'iniezione di dipendenza in CDI, dichiarando un attributo di una classe e delegando al framework la responsabilità di inizializzarlo, bisogna innanzitutto inserire le classi che definiscono i bean in un archivio (\texttt{jar}, \texttt{war} etc) che contiene il file \texttt{META-INF/beans.xml}. A questo punto, è sufficiente annotare l'attributo con \lstinline{@Inject}: il \textit{container} all'interno del quale viene eseguita l'applicazione cercherà - nel contesto appropriato - un bean dello stesso tipo dell'attributo dichiarato e provvederà all'inizializzazione.\\
+
+\paragraph{\textit{Qualifier} e \textit{alternatives}} Nel caso in cui il tipo dell'attributo non sia concreto, potrebbero esistere diversi bean che lo implementano e che possono essere iniettati. Per ovviare a questo problema, CDI consente al programmatore di specificare quale bean utilizzare mediante annotazioni personalizzate chiamate \textit{qualifier}. Un \textit{qualifier} è un'annotazione annotata a sua volta con \lstinline{@Qualifier}. Annotando un bean di implementazione di un'interfaccia con un \textit{qualifier} consente quindi di decidere, durante lo sviluppo dell'applicazione, quale classe concreta adoperare.\\
+Le \textsl{alternative} (\textit{alternatives}) consentono invece di effettuare questa scelta durante il \textit{deploy} dell'applicazione. Per dichiarare un bean come una \textquoteleft alternativa\textquoteright{} di un'interfaccia è sufficiente annotarlo con \lstinline{@Alternative}. È poi possibile scegliere quale alternativa utilizzare modificando il file di configurazione \texttt{META-INF/beans.xml}.
+
+\paragraph{Metodi \textit{producer}} Un metodo \textit{producer} è un metodo che genera un oggetto che può essere iniettato. Per definire un metodo \textit{producer} lo si deve annotare con \lstinline{@Producer}. L'oggetto così prodotto è a tutti gli effetti un bean CDI, ed è pertanto possibile caratterizzarlo con le annotazioni menzionate in precedenza, come ad esempio \lstinline{@Named} o i \textit{qualifier}.\\
+I metodo \textit{producer} hanno due importanti caratteristiche:
+\begin{enumerate}
+\item rendono possibile stabilire a runtime l'implementazione di un \textit{bean type}, a differenza dei \textit{qualifier} o delle alternative
+\item consentono di trattare come bean CDI qualunque classe Java; ad esempio, consentono di utilizzare l'iniezione di dipendenza con le \textsl{entità} di JPA.
+\end{enumerate}
+
+
+\subsubsection{Tipi di bean}
+
+La definizione generale di bean è piuttosto ampia e per questo molte specifiche ne adottano una propria. CDI non supporta soltanto i bean che rispecchiano le caratteristiche precedentemente elencate, ma anche quelli definiti da altre specifiche. I principali sono due: i \textit{managed bean} e i \textit{session bean}.
+
+\paragraph{\textit{Managed bean}} Una classe Java non nidificata è un \textit{managed bean} se è definito tale dalla specifica di una delle tecnologie di Java EE (ad esempio, dalla specifica di JSF risulta che una classe è un \textit{managed bean} se è annotata con l'annotazione \lstinline{@ManagedBean}) oppure se rispecchia le seguenti condizioni:
+\begin{itemize}
+\item È una classe interna (\textit{inner class}) non statica
+\item È una classe concreta o è annotata con \lstinline{@Decorator}
+\item Non è annotata con un'annotazione che definisce un EJB
+\item Non è dichiarata essere un bean EJB nel file \texttt{ejb-jar.xml}
+\item Ha un costruttore che non riceve parametri o che è annotato con \lstinline{@Inject}
+\end{itemize}
+
+La semantica e il ciclo di vita di un \textit{managed bean} sono descritti nella rispettiva specifica (vedi \cite{managedBean}).
+
+\paragraph{\textit{Session bean}} Un \textit{session bean} è un particolare tipo di EJB che incapsula logica di business, nascondendo così ai client dettagli implementativi del servizio offerto; in altre parole, i client si limitano ad invocare i metodi del \textit{session bean}, ignorando cosa accade all'interno del server.\\
+Un \textit{session bean} può essere di tre tipi:
+\begin{itemize}
+\item \underline{\textit{stateful}} Uno \textit{stateful session bean} rimane in vita fino a quando il client mantiene un riferimento allo stesso, memorizzando lo stato di quella specifica sessione client-bean (per via della natura \textquoteleft interattiva\textquoteright{} di tali bean, talvolta questo stato viene detto \textit{conversational state}). Uno \textit{stateful session bean} non viene condiviso fra più client.
+\item \underline{\textit{stateless}} Uno \textit{stateless session bean} non memorizza un \textit{conversational state} con il client, ma mantiene il suo stato solo per la durata dell'invocazione del metodo chiamato dal client.
+\item \underline{\textit{singleton}} Un \textit{singleton session bean} esiste per tutto il ciclo di vita dell'applicazione e viene istanziato una sola volta. I \textit{singleton session bean} sono analoghi agli \textit{stateful session bean} nel senso che mantengono il loro stato tra invocazioni del client, ma se ne differenziano perché sono condivisi tra i client, che vi accedono in modo concorrente.
+\end{itemize}
+
+Sebbene i \textit{session bean} possano rispettare le caratteristiche dei \textit{managed bean}, non lo sono, in quanto il loro ciclo di vita è differente da quello descritto nella specifica di questi ultimi.\\
+
+
+
+

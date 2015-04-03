@@ -1,31 +1,49 @@
 package controllerLayer;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
-import businessLayer.AgreementShareTableFiller;
+import util.Config;
+import businessLayer.ContractShareTableFiller;
 import businessLayer.Department;
 import daoLayer.FillerDaoBean;
 
-@SessionScoped
+@Stateful
 public abstract class FillerFactoryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject protected FillerDaoBean fillerDao;
 
-	public AgreementShareTableFiller getFiller(Department dep) {
-		List<AgreementShareTableFiller> fillers = fillerDao.getAll();
-		AgreementShareTableFiller currentFiller = createFiller(dep.getRateDirectory());
+	@PersistenceContext(unitName = "primary", type = PersistenceContextType.EXTENDED)
+	private EntityManager em;
+	
+	public ContractShareTableFiller getFiller(Department dep) {
+		String depDir = Config.depRatesDefaultDir;
+		if(null != dep){
+			System.out.println("°°°°°°°°°°°°°°Filler factory: dep not null. Dir = " + dep.getRateDirectory());
+		}
+		if(null != dep && new File(Config.depRatesPath +  dep.getRateDirectory()).exists()){
+			depDir = dep.getRateDirectory() ;
+		}
+		System.out.println("°°°°°°°°°°°°°°Filler factory: depDir = " + depDir);
+		ContractShareTableFiller currentFiller = createFiller(depDir);
+
 		
 		boolean found = false;
-		Iterator<AgreementShareTableFiller> it = fillers.iterator();
+		List<ContractShareTableFiller> fillers = fillerDao.getAll();
+		Iterator<ContractShareTableFiller> it = fillers.iterator();
 		while(!found && it.hasNext()){
-			AgreementShareTableFiller f = it.next();
+			ContractShareTableFiller f = it.next();
 			if(currentFiller.equals(f)){
+				System.out.println("°°°°°°°°°°°°°°Filler factory: equals ");
 				found = true;
 				currentFiller = f;
 			}
@@ -37,5 +55,5 @@ public abstract class FillerFactoryBean implements Serializable {
 		return currentFiller;
 	}
 	
-	protected abstract AgreementShareTableFiller createFiller(String depDirectory);
+	protected abstract ContractShareTableFiller createFiller(String depDirectory);
 }

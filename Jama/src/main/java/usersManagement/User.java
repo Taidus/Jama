@@ -1,140 +1,170 @@
 package usersManagement;
 
 import java.io.Serializable;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.resource.spi.IllegalStateException;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import businessLayer.Department;
-import util.Encryptor;
 
 /**
  * Entity implementation class for Entity: User
  * 
  */
 @Entity
-@Table(
-        uniqueConstraints=
-            @UniqueConstraint(columnNames={"serialNumber"})
-    )
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "serialNumber" }))
 @NamedQueries({ @NamedQuery(name = "User.findBySerialNumber", query = "SELECT u FROM User U where u.serialNumber= :number ") })
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private byte[] password;
+
 	private String email;
 	private String name;
 	private String surname;
-	
-	//molti o uno solo???????
-	@ManyToMany
-	private List<Department> belongingDepts;
+
+	@ManyToOne
+	private Department department;
 
 	private String serialNumber;
-	@Enumerated(EnumType.STRING)
-	private Role role;
+
+	// @Enumerated(EnumType.STRING)
+	// private RolePermission rolePermission;
+
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	private List<Role> roles;
+
 
 	public User() {
-		super();
-		belongingDepts = new ArrayList<>();
+		this.roles = new ArrayList<>();
 	}
 
-	public boolean hasRole(Role role) {
-		return (role == this.role) ? true : false;
+
+	public User(String name, String surname, Department department, String serialNumber) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.department = department;
+		this.serialNumber = serialNumber;
+		this.roles = new ArrayList<>();
 	}
+
+
+	public boolean hasRolePermission(RolePermission rolePermission) {
+		boolean found = false;
+		Iterator<Role> it = this.roles.iterator();
+
+		while (!found && it.hasNext()) {
+			found = it.next().hasRolePermission(rolePermission);
+		}
+
+		return found;
+	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 	public String getSerialNumber() {
 		return serialNumber;
 	}
 
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
+
+	public List<Role> getRoles() {
+		return new ArrayList<>(roles);
 	}
 
-	public Role getRole() {
-		return role;
+
+	public void addRole(Role role) {
+		if (role != null) {
+			this.roles.add(role);
+		}
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+
+	public boolean removeRole(Role role) {
+		if (null == role) {
+			return false;
+		}
+		return this.roles.remove(role);
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
-	public void setPassword(String password) throws GeneralSecurityException {
-		this.password = Encryptor.encrypt(password);
-	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getSurname() {
 		return surname;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+
+	public Department getDepartment() {
+		return department;
 	}
 
-	public List<Department> getBelongingDepts() {
-		return belongingDepts;
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
-	public void setBelongingDepts(List<Department> belongingDepts) {
-		this.belongingDepts = belongingDepts;
-	}
-	
-	public void addDepartment(Department d){
-		belongingDepts.add(d);
-	}
-	
-	public List<String> getBelongingDeptsCodes(){
-		List<String> result = new ArrayList<>();
-		for(Department d : belongingDepts){
-			result.add(d.getCode());
-		}
-		return result;
+
+	public List<String> getBelongingDeptsCodes() {
+		return null;
+		// List<String> result = new ArrayList<>();
+		// for (Department d : belongingDepts) {
+		// result.add(d.getCode());
+		// }
+		// return result;
 	}
 
-	public boolean login(String password) throws IllegalStateException {
-
-		try {
-
-			byte[] encrypted = Encryptor.encrypt(password);
-			// XXX nn so perchè equals su array di byte nn funziona!
-			return new String(encrypted).equals(new String(this.password));
-
-		} catch (GeneralSecurityException e) {
-			throw new IllegalStateException("E' avvenuto un errore durante il controllo della password causato dal Cypher");
-		}
-
-	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", password=" + password + ", serialNumber="
-				+ serialNumber + ", role=" + role + "]";
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", surname=" + surname + ", department=" + department + ", serialNumber="
+				+ serialNumber + ", roles=" + roles + "]";
+	}
+
+
+	public void copy(User copy) {
+		this.email = copy.getEmail();
+		this.name = copy.getName();
+		this.surname = copy.getSurname();
+		this.department = copy.getDepartment();
+		this.serialNumber = copy.getSerialNumber();
+		this.roles = copy.getRoles();
 	}
 
 }

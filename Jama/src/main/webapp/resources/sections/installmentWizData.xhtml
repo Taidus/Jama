@@ -3,7 +3,7 @@
 
 <composite:interface>
 	<composite:attribute name="editingDisable" default="false" />
-
+	<composite:attribute name="creating" default="false" />
 </composite:interface>
 
 <composite:implementation>
@@ -18,11 +18,11 @@
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-
 					<h:inputText id="taxableAmount" value="#{installmentManager.installment.wholeTaxableAmount}" label="#{msgs.amount}" required="true">
 						<f:validator binding="#{moneyValidator}" />
 						<p:ajax process="@this" update="amount" />
 					</h:inputText>
+					<h:outputText value=" #{msgs.currencySym}" />
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
@@ -46,6 +46,7 @@
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
 					<h:outputText id="iva_o" value="#{installmentManager.installment.IVA_amount}" />
 				</p:column>
+				<h:outputText value=" %" />
 			</p:row>
 
 			<p:row>
@@ -64,7 +65,7 @@
 					<h:outputText value="#{msgs.newInstDate}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="date" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+					<p:calendar id="date" label="#{msgs.newInstDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
 						value="#{installmentManager.installment.date}" navigator="true" validator="#{instDataPB.validateDeadlineDate}">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -83,7 +84,7 @@
 					<h:outputText value="#{msgs.newInstVoucherNumber}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<h:inputText id="voucherNumber" value="#{installmentManager.installment.voucherNumber}" label="#{msgs.newInstVoucherNumber}" required="true" />
+					<h:inputText id="voucherNumber" value="#{installmentManager.installment.voucherNumber}" label="#{msgs.newInstVoucherNumber}"/>
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
@@ -96,7 +97,7 @@
 					<h:outputText value="#{msgs.newInstVoucherDate}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="voucherDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+					<p:calendar id="voucherDate" label="#{msgs.newInstVoucherDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
 						value="#{installmentManager.installment.voucherDate}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -115,7 +116,7 @@
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
 					<h:inputText id="ivaVoucherNumber" value="#{installmentManager.installment.ivaVoucherNumber}" label="#{msgs.newInstVoucherNumber}"
-						required="true">
+						>
 					</h:inputText>
 				</p:column>
 
@@ -130,21 +131,21 @@
 					<h:outputText value="#{msgs.newInstPendingNumber}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<h:inputText id="pendingNumber" value="#{installmentManager.installment.pendingNumber}" label="#{msgs.newInstPendingNumber}" required="true" />
+					<h:inputText id="pendingNumber" value="#{installmentManager.installment.pendingNumber}" label="#{msgs.newInstPendingNumber}"/>
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
 					<h:outputText id="pendingNumber_o" value="#{installmentManager.installment.pendingNumber}" />
 				</p:column>
 			</p:row>
-			
-			
+
+
 			<p:row>
 				<p:column>
 					<h:outputText value="#{msgs.newInstInvoiceNumber}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<h:inputText id="invoiceNumber" value="#{installmentManager.installment.invoiceNumber}" label="#{msgs.newInstInvoiceNumber}" required="true" />
+					<h:inputText id="invoiceNumber" value="#{installmentManager.installment.invoiceNumber}" label="#{msgs.newInstInvoiceNumber}" />
 				</p:column>
 
 				<p:column rendered="#{cc.attrs.editingDisable == true}">
@@ -157,7 +158,7 @@
 					<h:outputText value="#{msgs.newInstInvoiceDate}:" />
 				</p:column>
 				<p:column rendered="#{cc.attrs.editingDisable == false}">
-					<p:calendar id="invoiceDate" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true" required="true"
+					<p:calendar id="invoiceDate" label="#{msgs.newInstInvoiceDate}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="both" showOtherMonths="true"
 						value="#{installmentManager.installment.invoiceDate}" navigator="true">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</p:calendar>
@@ -206,7 +207,9 @@
 
 			<p:row>
 				<p:column colspan="3">
-					<h:inputHidden value="needed" id="amountCheck" validator="#{instDataPB.validateAmount}"  />
+					<h:inputHidden value="needed" id="amountCheck" validator="#{instDataPB.validateAmount}" rendered="#{cc.attrs.creating}" />
+					<h:inputHidden value="needed" id="e_amountCheck" validator="#{instDataPB.editingValidateAmount}"
+						rendered="#{not cc.attrs.creating and not cc.attrs.editingDisable}" />
 				</p:column>
 			</p:row>
 

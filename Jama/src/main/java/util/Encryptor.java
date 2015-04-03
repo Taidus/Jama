@@ -1,48 +1,69 @@
 package util;
 
-import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
+import com.novell.ldap.util.Base64;
 
-import com.google.common.base.Charsets;
+public enum Encryptor {
+	MD5("MD5"), SHA("SHA");
 
-public class Encryptor {
+	public static final Encryptor JAMA_DEFAULT = Encryptor.SHA;
+
+	private String alg;
+
+
+	private Encryptor(String alg) {
+		this.alg = alg;
+	}
+
+
+	public String getAlg() {
+		return alg;
+	}
 	
-	private static String key = "1234567890987654";
+	public String getAlgPrefix(){
+		return "{" + alg + "}";
+	}
+
+
+	public String encrypt(String pwdPlainText) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance(alg);
+		md.update(pwdPlainText.getBytes());
+		return Base64.encode(md.digest());
+	}
+
+
+	public boolean areEquals(String plainPwd, String encrypted) throws NoSuchAlgorithmException {
+		String arg1, arg2;
+
+		arg1 = encrypt(plainPwd);
+		if (encrypted.indexOf(getAlgPrefix()) == 0) {
+			arg2 = encrypted.replace(getAlgPrefix(), "").trim();
+		}
+		else {
+			arg2 = encrypted;
+		}
+
+		return arg1.equals(arg2);
+	}
 	
-
-	  public static byte[] encrypt(String value)
-	      throws GeneralSecurityException {
-
-	    byte[] raw = key.getBytes(Charsets.US_ASCII);
-	    if (raw.length != 16) {
-	      throw new IllegalArgumentException("Invalid key size.");
-	    }
-
-	    SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-	    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-	    cipher.init(Cipher.ENCRYPT_MODE, skeySpec,
-	        new IvParameterSpec(new byte[16]));
-	    return cipher.doFinal(value.getBytes(Charsets.US_ASCII));
-	  }
-
-	  public static String decrypt(byte[] encrypted)
-	      throws GeneralSecurityException {
-
-	    byte[] raw = key.getBytes(Charsets.US_ASCII);
-	    if (raw.length != 16) {
-	      throw new IllegalArgumentException("Invalid key size.");
-	    }
-	    SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-
-	    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-	    cipher.init(Cipher.DECRYPT_MODE, skeySpec,
-	        new IvParameterSpec(new byte[16]));
-	    byte[] original = cipher.doFinal(encrypted);
-
-	    return new String(original, Charsets.US_ASCII);
-	  }
-
+	public static Encryptor getFromPasswordWithPrefix(String pwd){
+		if(pwd.indexOf("{") == 0 && pwd.indexOf("}") > 0){
+			String alg = pwd.substring(1, pwd.indexOf("}"));
+			for(Encryptor e : values()){
+				if(alg.equalsIgnoreCase(e.alg)){
+					return e;
+				}
+			}
+			//REMOVEME
+			if(alg.equalsIgnoreCase("ssha")){
+				return Encryptor.SHA;
+			}
+			throw new IllegalArgumentException("There is no Encryptor constant for method " + alg);
+		}
+		
+		throw new IllegalArgumentException("Password " + pwd + " has no method prefix");
+		
+	}
 }

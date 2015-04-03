@@ -1,0 +1,99 @@
+\subsection{Introduzione}
+\textsl{Deltaspike} è un \textit{framework} che estende le funzionalità di \textsl{CDI}. Il suo utilizzo in Jama è la gestione della sicurezza: associare ad ogni utente un insieme di permessi che determinano le azioni che può effettuare.
+La caratteristica fondamentale di Deltaspike è l'essere un \textit{framework annotation-based}: funziona tramite le \textsl{Annotation} di Java - che d'ora in poi verranno chiamate semplicemente annotazioni - il che lo rende facile da utilizzare e poco invasivo.
+
+\subsection{Caratteristiche}
+Il cuore della sicurezza in Deltaspike è la classe \textsl{Authorizer}: è un \textit{bean} di CDI - tipicamente \textsl{Application Scoped} - definito dallo sviluppatore che definisce i metodi che verranno invocati durante il controllo sui permessi di un utente. Questi metodi devono essere annotati con l'annotazione \textsl{@Secures} definita da Deltaspike, che indica che essi sono i metodi da invocare per il controllo sui permessi. Non basta: devono essere annotati anche con un'altra annotazione, una \textsl{custom annotation} - cioè definita dallo sviluppatore - che associa il metodo in questione ai metodi su cui effettuare il controllo dei permessi. Quest'ultima deve essere a sua volta annotata con l'annotazione \textsl{@SecurityBindingType} di Deltaspike.\newline
+Nonostante già il controllo sui metodi possa essere sufficiente per gestire l'intera sicurezza di un'applicazione, una funzionalità interessante e molto utile di Deltaspike è la possibilità di effettuare un controllo a livello di pagina: ad esempio, far sì che solo un Amministratore possa visitare la pagina di creazione di un utente, o che solo un Operatore Amministrativo possa visitare la pagina di creazione di una convenzione. Inoltre, qualora il controllo non vada a buon fine, si può specificare una pagina di errore diversa per ogni pagina, ed un messaggio di errore che verrà visualizzato a video dopo il redirect.\newline
+Per concludere quest'introduzione e visione d'insieme delle funzionalità di Deltaspike con gli autori hanno avuto a che fare, si ritiene comunque importante far notare che, nonostante sia un framework già usabile e utile, non sia ancora completamente maturo: la documentazione è scarsa - per non dire di peggio - e alcune funzionalità utili sono mancanti o non funzionanti - ad esempio, il redirect ad una pagina di errore anche per la sicurezza sui metodi.\newline
+Si discute adesso in dettaglio come utilizzare Deltaspike.
+
+
+
+\subsection{Funzionamento}
+\paragraph{Rendere sicuro un metodo}
+Per spiegare come si rende sicuro un metodo, si prenderà come esempio un problema affrontato nello sviluppo di Jama: far sì che solo un Operatore Amministrativo possa eliminare una convenzione. L'eliminazione di una convenzione, in Jama, consiste in sostanza nell'invocazione di un metodo di uno dei \textit{bean} dell'applicazione, quindi il problema si risolve impedendo l'invocazione di tale metodo da parte di utenti che non siano un Operatore Amministrativo.\newline
+Il primo passo è il definire un'annotazione, chiamata per esempio \textsl{@DeleteContractsAllowed}:
+
+\begin{lstlisting}
+&&Retention&&(value = RetentionPolicy.RUNTIME)
+&&@Target&&({ ElementType.TYPE, ElementType.METHOD })
+&&@Documented&&
+&&@SecurityBindingType&&
+public @interface DeleteContractsAllowed {}
+\end{lstlisting}
+
+Si procede dunque ad annotare il nostro metodo che elimina una convenzione con l'annotazione appena definita:
+
+\begin{lstlisting}
+...
+
+&&@DeleteContractsAllowed&&
+public void deleteContract() {
+	//Elimina una convenzione.
+	
+	...
+}
+\end{lstlisting}
+
+L'ultima cosa da fare è fornire all'Authorizer un metodo annotato \textsl{@Secures} e \textsl{@DeleteContractsAllowed}:
+
+\begin{lstlisting}
+
+public class Authorizer {
+	&&@Secures&&
+	&&@DeleteContractsAllowed&&
+	public boolean canDeleteContracts {
+		//Verifica che l'utente possa eliminare una convenzione.
+		//Restituisce true in caso affermativo, altrimenti false.
+	
+		...
+	}
+}
+\end{lstlisting}
+
+Il metodo appena definito verrà invocato da Deltaspike in maniera automatica tutte le volte che si invocherà \textsl{deleteContract()}. Nel caso \textsl{canDeleteContracts()} restituisca \textsl{true}, l'eliminazione può proseguire, altrimenti viene generata un'eccezione.
+
+\paragraph{Rendere sicura una pagina} 
+La sicurezza su base pagina si implementa definendo interfacce e classi che rappresentano rispettivamente cartelle e pagine. Ad esempio, per rendere sicura la pagina \textsl{home.xhtml} che si trova dentro la cartella \textsl{pages}, si definisce un interfaccia \textsl{Pages} con all'interno una classe \textsl{Home}; le classi così definite devono implementare l'interfaccia \textsl{ViewConfig} di Deltaspike. Il \textit{path} è relativo alla cartella \textsl{webapp} dell'applicazione, quindi la classe Home contenuta nell'interfaccia Pages fa riferimento alla pagina \textsl{webapp/pages/home.xhtml}. I nomi sono \textit{case insensitive}: la classe Home fa riferimento alle pagine home.xhtml e Home.xhtml; stesso discorso vale per le interfacce.\newline
+Il metodo più facile per rendere sicuro un insieme di più pagine è creare un file Java e di definire all'interno di quest'ultimo tutta la gerarchia di interfacce e di classi - ricordando di omettere il \textit{modifier} \textsl{public} per ognuna delle interfacce/classi, altrimenti si otterrebbe un errore di compilazione.\newline
+Ognuna delle classi definite deve essere annotata con l'annotazione \textsl{@Secured}, completata con l'attributo \textsl{value} che specifica una classe definita dallo sviluppatore che implementa l'interfaccia \textsl{AccessDecisionVoter} di Deltaspike; questa classe deve essere un \textit{bean} di CDI, tipicamente \textsl{Application Scoped} .
+La classe specificata deve implementare il metodo \textsl{public Set\textless SecurityViolation\textgreater \space checkPermission()}, che viene invocato da Deltaspike ogni volta che si tenta di accedere alla pagina.\newline
+Il metodo restituisce un Set di \textsl{SecurityViolation}, una \textsl{Anonymous Inner Class} definita da Deltaspike. Nel caso esso sia vuoto, l'accesso viene consentito, altrimenti viene impedito.\newline Come abbiamo visto nell'introduzione, una delle peculiarità più interessanti della sicurezza su base pagina è il poter specificare una pagina di errore. Per fare ciò, si arricchisce l'annotazione \textsl{@Secured} delle pagine con l'attributo \textsl{errorView}, indicando una pagina definita secondo la solita convenzione spiegata ad inizio paragrafo. Nel caso venga specificata una pagina di errore, le SecurityViolation contenute nel Set restituito da checkPermission() vengono aggiunte al \textit{bundle} di messaggi della pagina, ovvero all'interno dell'area definita dal tag \textsl{\textless h:messages\textgreater} della pagina - detta in maniera meno tecnica, verrà visualizzato un messaggio a video nella pagina di errore per ogni SecurityViolation contenuta. \newline Il messaggio da visualizzare viene specificato nel metodo \textsl{public String getReason()} di ogni SecurityViolation; ricordando che quest'ultima è una Anonymous Inner Class, il metodo getReason() viene obbligatoriamente ridefinito ad ogni SecurityViolation creata, permettendo così di specificare il messaggio di errore più adatto in ogni occasione.\newpage
+Per fissare meglio le idee, è opportuno mostrare un esempio. Per prima cosa, si creano le classi relative alle pagine da rendere sicure:
+
+\begin{lstlisting}
+interface Pages {
+
+	@Secured(value = { ViewHomeAccessDecisionVoter.class }, errorView = Login.class)
+	class Home implements ViewConfig {}
+
+	
+	class Login implements ViewConfig {}
+
+}
+\end{lstlisting}
+
+Successivamente si definisce l'AccessDecisionVoter; non viene mostrata nel dettaglio nella logica che esegue il controllo, verrà invece usato uno pseudo-codice che renda l'idea di come deve funzionare la classe:
+
+\begin{lstlisting}
+&&@ApplicationScoped&&
+public class ViewHomeAccessDecisionVoter implements AccessDecisionVoter {
+	private SecurityViolation violation = new SecurityViolation() {
+		public String getReason() {
+			return "Non sei autorizzato";
+		};
+		
+	public Set<SecurityViolation> checkPermission(
+				AccessDecisionVoterContext accessDecisionVoterContext) {
+				
+		Set<SecurityViolation> violations = new HashSet<>();
+				
+		if( user cannot see home )
+			violations.add(violation);
+		return violations;
+	}
+}
+
+\end{lstlisting}
+Il gioco è fatto: chiunque tenti di visitare la pagina \textsl{home} senza averne i permessi - ad esempio, un utente che senza fare il login tenta di andare subito alla home - viene reindirizzato alla pagina di login, dove potrà vedere un bel messaggio che recita: \textsl{Non sei autorizzato!}\newline

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>330</x>
+      <y>450</y>
+      <w>230</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>Convenzione
+--
+bg=white
+title: String
+shortTitle: String
+protocolNumber: String
+contactPerson. String
+CIA_projectNumber: String
+inventoryNumber: String
+closed: boolean 
+spentAmount: Money
+reservedAmount: Money
+IVA_amount: Percent
+wholeTaxableAmount: Money
+approvalDate: Date
+beginDate: Date
+Date: deadlineDate
+note: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>530</x>
+      <y>500</y>
+      <w>430</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+bg=white</panel_attributes>
+    <additional_attributes>30;30;410;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>940</x>
+      <y>480</y>
+      <w>220</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>Rata
+--
+bg=white
+date: Date
+IVA_amount: Percent
+ivaVoucherNumber: int
+wholeTaxableAmount: Money
+voucherNumber: int
+voucherDate: Date
+pendingNumber: int
+invoiceNumber: int
+invoiceDate : Date
+paidInvoice: boolean
+reportRequired: boolean
+note: String
+deadlineNotified: boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>650</x>
+      <y>590</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Personale
+--
+bg=white
+name: String
+surname: String
+serialNumber: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>560</y>
+      <w>170</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Allegato
+--
+bg=white
+fileName: String
+fileType: String
+content: byte[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>460</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Dipartimento
+--
+bg=white
+code: String
+name: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>660</y>
+      <w>170</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Ditta
+--
+bg=white
+name: String
+businessName: String
+legalResidence: String
+socialNumber: String
+VatNumber: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>330</x>
+      <y>330</y>
+      <w>230</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Tabella di Ripartizione
+della Convenzione
+--
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>670</x>
+      <y>330</y>
+      <w>230</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Tabella di Ripartizione
+della Rata
+--
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>420</x>
+      <y>0</y>
+      <w>360</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>/Tabella di Ripartizione/
+--
+bg=white
+atheneumCapitalBalance: Percent
+atheneumCommonBalance: Percent
+structures: Percent
+personnel: Percent
+sharePerPersonnel: Map&lt;ChiefScientist, Percent&gt; 
+goodsAndServices: Percent
+businessTrip: Percent
+consumerMaterials: Percent
+inventoryMaterials: Percent
+rentals: Percent
+personnelOnContract: Percent
+otherCost: Percent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>200</y>
+      <w>190</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=white</panel_attributes>
+    <additional_attributes>170;30;170;80;30;80;30;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>590</x>
+      <y>200</y>
+      <w>200</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=white</panel_attributes>
+    <additional_attributes>30;30;30;80;180;80;180;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>160</x>
+      <y>470</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>870</x>
+      <y>340</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;170;30;170;140</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>410</x>
+      <y>370</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;80</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>530</x>
+      <y>590</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>160</x>
+      <y>660</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>780</x>
+      <y>590</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+bg=white</panel_attributes>
+    <additional_attributes>160;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>160</x>
+      <y>570</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>170;30;30;30</additional_attributes>
+  </element>
+</diagram>

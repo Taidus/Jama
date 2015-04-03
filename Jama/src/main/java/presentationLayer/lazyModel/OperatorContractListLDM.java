@@ -9,7 +9,8 @@ import org.primefaces.model.SortOrder;
 
 import businessLayer.Contract;
 import daoLayer.ContractSearchService;
-import daoLayer.ResultPagerBean;
+import daoLayer.Pager;
+import daoLayer.ResultPager;
 
 @Dependent
 public class OperatorContractListLDM extends OperatorContractTableLDM {
@@ -38,7 +39,7 @@ public class OperatorContractListLDM extends OperatorContractTableLDM {
 
 
 	@Override
-	protected ResultPagerBean<Contract> getPager() {
+	protected Pager<Contract> getPager() {
 		return contractSearch;
 	}
 

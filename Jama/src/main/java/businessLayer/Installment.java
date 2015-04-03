@@ -27,8 +27,8 @@ import util.Percent;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@NamedQuery(name = "Installment.findInstallmentsWithNearDeadLine",
-		query = "SELECT  i FROM Installment i WHERE i.date = :date  AND i.paidInvoice = FALSE")
+@NamedQuery(name = "Installment.findInstallmentsWithNearDeadLine", query = "SELECT  i FROM Installment i WHERE i.date <= :date  "
+		+ "AND i.paidInvoice = FALSE AND i.deadlineNotified = FALSE")
 public abstract class Installment implements Serializable {
 
 	/**
@@ -38,11 +38,8 @@ public abstract class Installment implements Serializable {
 
 
 	public Installment() {
-		this.shareTable = new InstallmentShareTable();
 		this.wholeTaxableAmount = Money.zero(Config.currency);
-		this.date = new Date();
-		this.invoiceDate = new Date();
-		this.voucherDate = new Date();
+		this.deadlineNotified = false;
 	}
 
 	@Id
@@ -63,15 +60,15 @@ public abstract class Installment implements Serializable {
 	protected Money wholeTaxableAmount;
 
 	@Min(0)
-	protected int voucherNumber;
+	protected Integer voucherNumber;
 
 	@Temporal(TemporalType.DATE)
 	protected Date voucherDate;
 
 	@Min(0)
-	protected int pendingNumber;
+	protected Integer pendingNumber;
 	@Min(0)
-	protected int invoiceNumber;
+	protected Integer invoiceNumber;
 
 	@Temporal(TemporalType.DATE)
 	protected Date invoiceDate;
@@ -80,9 +77,7 @@ public abstract class Installment implements Serializable {
 	protected boolean reportRequired;
 	protected String note;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn
-	protected InstallmentShareTable shareTable;
+	protected boolean deadlineNotified;
 
 
 	public Contract getContract() {
@@ -105,13 +100,33 @@ public abstract class Installment implements Serializable {
 	}
 
 
-	public int getVoucherNumber() {
+	public Integer getVoucherNumber() {
 		return voucherNumber;
 	}
 
 
-	public void setVoucherNumber(int voucherNumber) {
+	public void setVoucherNumber(Integer voucherNumber) {
 		this.voucherNumber = voucherNumber;
+	}
+
+
+	public Integer getPendingNumber() {
+		return pendingNumber;
+	}
+
+
+	public void setPendingNumber(Integer pendingNumber) {
+		this.pendingNumber = pendingNumber;
+	}
+
+
+	public Integer getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+
+	public void setInvoiceNumber(Integer invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
 	}
 
 
@@ -122,26 +137,6 @@ public abstract class Installment implements Serializable {
 
 	public void setVoucherDate(Date voucherDate) {
 		this.voucherDate = voucherDate;
-	}
-
-
-	public int getPendingNumber() {
-		return pendingNumber;
-	}
-
-
-	public void setPendingNumber(int pendingNumber) {
-		this.pendingNumber = pendingNumber;
-	}
-
-
-	public int getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-
-	public void setInvoiceNumber(int invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
 	}
 
 
@@ -190,16 +185,6 @@ public abstract class Installment implements Serializable {
 	}
 
 
-	public InstallmentShareTable getShareTable() {
-		return shareTable;
-	}
-
-
-	public void setShareTable(InstallmentShareTable shareTable) {
-		this.shareTable = shareTable;
-	}
-
-
 	public Money getWholeAmount() {
 		return wholeTaxableAmount.plus(IVA_amount.computeOn(wholeTaxableAmount));
 	}
@@ -220,6 +205,23 @@ public abstract class Installment implements Serializable {
 	}
 
 
+	public boolean isDeadlineNotified() {
+		return deadlineNotified;
+	}
+
+
+	public void setDeadlineNotified(boolean deadlineNotified) {
+		this.deadlineNotified = deadlineNotified;
+	}
+
+
+	public int getIndexInContract() {
+		int x = contract.getInstallments().indexOf(this);
+		System.out.println("Position in contract: " + x);
+		return x;
+	}
+
+
 	public abstract void copy(Installment copy);
 
 
@@ -228,24 +230,26 @@ public abstract class Installment implements Serializable {
 		this.id = copy.id;
 		this.date = new Date(copy.date.getTime());
 		this.voucherNumber = copy.voucherNumber;
-		this.voucherDate = new Date(copy.voucherDate.getTime());
+		if (copy.invoiceDate != null) {
+			this.voucherDate = new Date(copy.voucherDate.getTime());
+		}
+		else {
+			this.voucherDate = null;
+		}
 		this.pendingNumber = copy.pendingNumber;
 		this.invoiceNumber = copy.invoiceNumber;
-		this.invoiceDate = new Date(copy.invoiceDate.getTime());
+		if (copy.invoiceDate != null) {
+			this.invoiceDate = new Date(copy.invoiceDate.getTime());
+		}
+		else {
+			this.invoiceDate = null;
+		}
 		this.paidInvoice = copy.paidInvoice;
 		this.reportRequired = copy.reportRequired;
 		this.note = copy.note;
 		this.contract = copy.getContract();
-		this.shareTable = new InstallmentShareTable();
 		this.wholeTaxableAmount = copy.wholeTaxableAmount;
 
-		this.shareTable.copy(copy.getShareTable());
-
-	}
-
-
-	public void initShareTableFromContract(Contract c) {
-		this.shareTable.copy(c.getShareTable());
 	}
 
 }

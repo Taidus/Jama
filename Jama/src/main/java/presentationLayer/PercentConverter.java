@@ -31,7 +31,10 @@ public class PercentConverter implements Converter {
 		BigDecimal d = null;
 		boolean invalid = false;
 		try {
-			d = new BigDecimal(value).divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN);
+			String s = value.replaceAll("\\.", "");
+			s = s.replaceAll(",", "\\.");
+			d = new BigDecimal(s).divide(BigDecimal.valueOf(100));
+			System.out.println("Percent converter. d = " + d);
 		} catch (NumberFormatException e) {
 			invalid = true;
 		}
@@ -40,7 +43,7 @@ public class PercentConverter implements Converter {
 			String[] params = { (String) component.getAttributes().get("label") };
 			throw new ConverterException(Messages.getErrorMessage("err_invalidValue", params));
 		}
-		else{
+		else {
 			return new Percent(d);
 		}
 	}
@@ -51,7 +54,8 @@ public class PercentConverter implements Converter {
 		if (null == value) {
 			return "";
 		}
-		return ((Percent) value).getValue().multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+		return ((Percent) value).getValue().multiply(BigDecimal.valueOf(100)).setScale(2, Percent.DEFAULT_ROUNDING).toPlainString()
+				.replaceAll("\\.", ",");
 	}
 
 }

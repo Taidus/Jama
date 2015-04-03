@@ -21,18 +21,34 @@ public class Scheduler {
 
 	@Inject
 	private ContractDeadLineTimer contractDeadLineTimer;
+	
+	@Inject 
+	private DepartmentImporter deptsImp;
+	
+	@Inject 
+	private ChiefScientistImporter chiefImporter;
+	
+	private Timer timer;
 
 
-	public Scheduler() {}
+	public Scheduler() {
+		timer = new Timer();
+	}
 
 
 	@PostConstruct
 	public void schedule() {
 
+		scheduleNotifyTasks();
+		scheduleImports();
+
+	}
+	
+	private void scheduleNotifyTasks(){
+		
 		Calendar deadLineDate = Calendar.getInstance();
 		deadLineDate.add(Calendar.DAY_OF_MONTH, Config.daysBeforeDeadlineExpriration);
 
-		Timer timer = new Timer();
 		contractDeadLineTimer.setDate(deadLineDate);
 
 		Calendar cal = Calendar.getInstance();
@@ -42,7 +58,16 @@ public class Scheduler {
 		cal.set(Calendar.HOUR_OF_DAY, Config.dailyScheduledTaskExecutionHour);
 		long period = 1000 * 60 * 60 * 24;
 		timer.schedule(contractDeadLineTimer, new Date(cal.getTimeInMillis()), period);
-
+		
+	}
+	
+	private void scheduleImports(){
+		//TODO mettere valori sensati
+		
+		Calendar date = Calendar.getInstance();
+		date.add(Calendar.SECOND, 60*60);  //ogni ora
+		timer.schedule(deptsImp, new Date(date.getTimeInMillis()));
+		
 	}
 
 }

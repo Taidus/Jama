@@ -1,0 +1,19 @@
+Lo scopo di Jama è la gestione delle convenzioni e dei contributi stipulati dai responsabili scientifici. È quindi essenziale rappresentare un importo come oggetto Java. \\
+In prima istanza, si potrebbe pensare di utilizzare tipi primitivi in virgola mobile come \texttt{float} o \texttt{double}. Questa scelta però presenta due grandi difetti:
+\begin{enumerate}
+\item \underline{aritmetica inesatta}. L'aritmetica dei numeri in virgola mobile non è esatta. Ad esempio, a causa della rappresentazione binaria dei numeri in virgola mobile all'interno di un calcolatore, non è possibile rappresentare una potenza negativa del 10 (e.g., 0.1 o 0.01) in maniera esatta.
+\item \underline{assenza di unità di misura}. Una somma di denaro è costituito da un valore numerico ed una valuta. Rappresentare il solo ammontare può andare bene in sistemi in cui si utilizza sempre la stessa valuta, ma rende poi praticamente impossibile cambiare questo comportamento in fase di mantenimento dell'applicazione.
+\end{enumerate}
+
+Nella prossima sezione viene descritto uno schema di programmazione volto a risolvere questi problemi. Per una trattazione più approfondita si rimanda a \cite{pa}.
+
+\subsubsection{\textsl{Money}}
+
+\paragraph{Il pattern}
+Il pattern Money è nato proprio per risolvere il problema della rappresentazione del denaro. Esso consiste nel definire una classe che incapsula tutte le operazione di gestione di importi monetari in maniera trasparente al programmatore. \\
+La classe \lstinline{Money} ha due attributi fondamentali: la quantità di denaro e la valuta. Inoltre, deve avere dei metodi che consentano di eseguire le operazioni aritmetiche e di confronto tra somme di denaro nella stessa valuta. Alcune implementazioni più sofisticate possono prevedere anche conversioni fra valute e quindi operare con somme in diversa valuta.\\
+Le operazioni di confronto, addizione e sottrazione fra somme di denaro (nella stessa valuta), così come anche quella di moltiplicazione per uno scalare, coincidono con le rispettive operazioni eseguite sui numeri reali. L'operazione di divisione è invece più complessa e merita una trattazione specifica. 
+
+\paragraph{La divisione}
+Quando si divide una somma di denaro, sorge subito un problema: se il risultato della divisione non è un numero rappresentabile con la precisione della valuta corrente, non si può semplicemente effettuare un arrotondamento, perché la somma di tutti i risultati potrebbe non coincidere con l'importo di partenza. Ad esempio, dividendo 100.02\euro{} per 5 si ottiene 20.004\euro{}, che viene arrotondato a 20.00\euro{}; in questo modo, però, vengono persi 0.02\euro{}. \\
+Vi sono varie tecniche alternative per risolvere questo problema. La più comune è la seguente: il risultato della divisione di un importo X per un numero N è una collezione di N valori la cui somma fa X e che differiscono fra loro per non più della minima somma di denaro disponibile per la valuta di X. Per esempio, si consideri nuovamente l'esempio precedente. Applicando il metodo appena descritto, il risultato della divisione di 100.02\euro{} per 5 è [20.01\euro{}, 20.01\euro{}, 20.00\euro{}, 20.00\euro{}, 20.00\euro{}]: una collezione di 5 valori la cui somma dà 100.02\euro{} e che differiscono fra di loro per non più di un centesimo, che è l'importo minimo possibile nella valuta data (l'euro). Notare che la \textquoteleft posizione\textquoteright{} degli elementi a cui \textquoteleft spetta\textquoteright{} un centesimo in più non è definita dall'algoritmo. Per la stragrande maggioranza delle applicazioni è irrilevante e si assume per convenzione di suddividere il resto fra i primi risultati.

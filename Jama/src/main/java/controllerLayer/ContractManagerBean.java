@@ -1,8 +1,9 @@
 package controllerLayer;
 
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Remove;
@@ -23,8 +24,8 @@ import org.joda.money.Money;
 
 import security.Principal;
 import security.annotations.AlterContractsAllowed;
-import security.annotations.ViewContractsAllowed;
 import security.annotations.ViewOwnContractsAllowed;
+import usersManagement.RolePermission;
 import util.Config;
 import util.MailSender;
 import annotations.Current;
@@ -32,18 +33,18 @@ import annotations.Logged;
 import annotations.TransferObj;
 import businessLayer.Agreement;
 import businessLayer.Contract;
+import businessLayer.ContractHelper;
 import businessLayer.ContractShareTable;
+import businessLayer.Department;
 import businessLayer.Funding;
 import daoLayer.ContractDaoBean;
 import daoLayer.DepartmentDaoBean;
-import freemarker.template.TemplateException;
 
 @Named("contractManager")
 @ConversationScoped
 @Stateful
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ContractManagerBean implements Serializable {
-
 
 	/**
 	 * 
@@ -65,6 +66,9 @@ public class ContractManagerBean implements Serializable {
 	@Inject
 	private MailSender mailSender;
 	
+	@EJB
+	private DepartmentDaoBean deptDao;
+
 	@Inject
 	@Logged
 	private Principal principal;
@@ -141,20 +145,16 @@ public class ContractManagerBean implements Serializable {
 	public void save() {
 		System.out.println("SAVE");
 
-		try {
-			if (creatingNewContract) {
-				mailSender.notifyCreation(contract);
-			}
+		ContractDao.create(contract);
+		
+		if (creatingNewContract) {
+			mailSender.notifyCreation(contract);
+		}
 
-			if (!editingClosedContract && contract.isClosed()) {
-				mailSender.notifyClosure(contract);
-			}
-		} catch (IOException | TemplateException e) {
-			e.printStackTrace();
-			//TODO gestire l'eccezione, se necessario
+		if (!editingClosedContract && contract.isClosed()) {
+			mailSender.notifyClosure(contract);
 		}
 		
-		ContractDao.create(contract);
 		close();
 	}
 
@@ -171,6 +171,7 @@ public class ContractManagerBean implements Serializable {
 
 	private void initContract() {
 		begin();
+		System.out.println("Contract manager -> init contract: tutto bene fino a qui ");
 		contract = em.find(Contract.class, selectedContractId);
 
 	}
@@ -183,9 +184,10 @@ public class ContractManagerBean implements Serializable {
 		return "/agreementEdit.xhtml?faces-redirect=true";
 	}
 
-	
+
 	private String createContract() {
-		insertRandomValues(contract); // TODO eliminare
+		initDefaultValues();
+//		insertRandomValues(contract); // TODO eliminare
 		ContractShareTable shareTable = new ContractShareTable();
 		shareTable.setFiller(fillerFactory.getFiller(contract.getDepartment()));
 		contract.setShareTable(shareTable);
@@ -196,6 +198,7 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
+
 	@AlterContractsAllowed
 	public String createAgreement() {
 		contract = new Agreement();
@@ -203,12 +206,14 @@ public class ContractManagerBean implements Serializable {
 
 	}
 
+
 	@AlterContractsAllowed
 	public String createFunding() {
 		contract = new Funding();
 		return createContract();
 
 	}
+
 
 	@ViewOwnContractsAllowed
 	public String viewContract() {
@@ -228,17 +233,9 @@ public class ContractManagerBean implements Serializable {
 	@Produces
 	@RequestScoped
 	@Current
-	public ContractHelper getInstallmentManager(AgreementHelper agrHelper, FundingHelper funHelper) {
-
-		if (contract instanceof Agreement) {
-			return agrHelper;
-		}
-
-		else if (contract instanceof Funding) {
-			return funHelper;
-		} else {
-			return null;
-		}
+	public ContractHelper getInstallmentManager() {
+		
+		return contract.getHelper();
 
 	}
 
@@ -247,10 +244,33 @@ public class ContractManagerBean implements Serializable {
 		return contract;
 	}
 
-	
+
 	@AlterContractsAllowed
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteContract() {
 		ContractDao.delete(selectedContractId);
+	}
+	
+	private void initDefaultValues(){
+		List<Department> depts = new ArrayList<>();
+
+		for (String depCode : principal
+				.getBelongingDepthsCodes(RolePermission.OPERATOR)) {
+			depts.add(deptDao.getByCode(depCode));
+		}
+
+		if(depts.size() == 1){
+			contract.setDepartment(depts.get(0));
+		}
+	}
+	
+	public void setContractDepartment(Department d){
+		contract.setDepartment(d);
+		contract.getShareTable().setFiller(fillerFactory.getFiller(d));		
+	}
+	
+	public Department getContractDepartment(){
+		return contract.getDepartment();
 	}
 
 
@@ -258,17 +278,16 @@ public class ContractManagerBean implements Serializable {
 	private void insertRandomValues(Contract c) {
 
 		c.setTitle("Random title");
-		c.setCIA_projectNumber(10000);
+		c.setShortTitle("Random short title");
+		c.setCIA_projectNumber("a10");
 		c.setContactPerson("Random contact");
-		c.setInventoryNumber(20000);
+		c.setInventoryNumber("00/00z");
 		c.setDepartment(depDao.getByCode(principal.getBelongingDepthsCodes().get(0)));
 		c.setWholeTaxableAmount(Money.ofMajor(Config.currency, 10_000L));
-		c.setProtocolNumber("30000");
 		c.setApprovalDate(new Date());
 		c.setBeginDate(new Date());
 		c.setDeadlineDate(new Date());
 
 	}
-
 
 }

@@ -3,47 +3,104 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:sections="http://java.sun.com/jsf/composite/sections"
 	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
 <h:head>
+	<h:outputStylesheet name="home.css" library="css" />
+	<h:outputStylesheet name="table.css" library="css" />
+
+	<h:outputScript name="hideShow.js" library="js" />
+
+
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			setHideShow();
+		});
+	</script>
 </h:head>
 
 <h:body>
-	<h:form>
-		<input type="hidden" name="cid" value='#{userTablePC.conversation.id}' />
+	<h:form id="tableForm">
+		<input type="hidden" name="cid" value='#{userTablePCB.conversation.id}' />
+		
+		<p:contextMenu id="tableContextMenu" styleClass="contextMenu" widgetVar="w_tableContextMenu" for="userTable">
+			<p:menuitem process="@form" value="#{msgs.view}" icon="ui-icon-search" action="#{userTablePCB.viewUser()}"
+				update=":#{p:component('viewDialog')}" oncomplete="w_viewDialog.show();" />
+			<p:menuitem process="@form" value="#{msgs.edit}" icon="ui-icon-wrench" action="#{userTablePCB.editUser()}"
+				update=":#{p:component('editDialog')}" oncomplete="w_editDialog.show();">
+				<p:resetInput target=":#{p:component('editDialog')}" />
+			</p:menuitem>
+		</p:contextMenu>
 
-		<p:panel>
+		<p:dataTable id="userTable" emptyMessage="#{msgs.noUserFound}" lazy="true" value="#{userTablePCB.lazyModel}" var="user" paginator="true" rows="20"
+			rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}"
+			selection="#{userTablePCB.lazyModel.selectedUser}" selectionMode="single" rowKey="#{user.id}">
+			
+			
+			<p:ajax event="filter" oncomplete="setHideShow();" />
+			<p:ajax event="page" oncomplete="setHideShow(); " />
 
-			<p:dataTable id="userTable" emptyMessage="#{msgs.noUserFound}" lazy="true" value="#{userTablePC.lazyModel}" var="user" paginator="true" rows="20"
-				rowsPerPageTemplate="10,20,50" paginatorTemplate="{RowsPerPageDropdown} {PreviousPageLink} {NextPageLink}">
+			<p:column headerText="#{msgs.serialNumber}" styleClass="button-left-column">
+				<h:outputText value="#{user.serialNumber}" />
+			</p:column>
 
-				<p:column headerText="#{msgs.serialNumber}">
-					<h:outputText value="#{user.serialNumber}" />
-				</p:column>
+			<p:column styleClass="button-complete-column button-right-column">
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-search" action="#{userTablePCB.viewUser()}"
+					update=":#{p:component('viewDialog')}" oncomplete="w_viewDialog.show();">
+					<f:setPropertyActionListener value="#{user}" target="#{userTablePCB.lazyModel.selectedUser}" />
+				</p:commandButton>
 
-				<p:column headerText="#{msgs.surname}">
-					<h:outputText value="#{user.surname}" />
-				</p:column>
+				<p:commandButton styleClass="list-row-button" process="@form" icon="ui-icon-wrench" action="#{userTablePCB.editUser()}"
+					update=":#{p:component('editDialog')}" oncomplete="w_editDialog.show();">
+					<f:setPropertyActionListener value="#{user}" target="#{userTablePCB.lazyModel.selectedUser}" />
+					<p:resetInput target=":#{p:component('editDialog')}" />
+				</p:commandButton>
+			</p:column>
 
-				<p:column headerText="#{msgs.name}">
-					<h:outputText value="#{user.name}" />
-				</p:column>
+			<p:column headerText="#{msgs.surname}" filterBy="#{user.surname}" filterMatchMode="startsWith">
+				<h:outputText value="#{user.surname}" />
+			</p:column>
 
+			<p:column headerText="#{msgs.name}">
+				<h:outputText value="#{user.name}" />
+			</p:column>
+
+			<ui:remove>
 				<p:column headerText="#{msgs.role}">
-					<h:outputText value="#{user.role.displayString}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.role.displayString}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:selectOneMenu id="roleInput" value="#{user.role}" label="#{msgs.role}" style="width: 96%">
+								<f:converter binding="#{roleMenuConverter}" />
+								<f:selectItems value="#{utilPB.rolesItems}" />
+								<p:ajax event="blur" process="@this" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
+
 
 				<p:column headerText="#{msgs.department}">
-					<h:outputText value="#{user.belongingDepts.get(0).displayName}" />
+					<h:outputText value="#{user.department.displayName}" />
 				</p:column>
+
 
 				<p:column headerText="#{msgs.email}">
 					<h:outputText value="#{user.email}" />
 				</p:column>
 
-			</p:dataTable>
 
-		</p:panel>
+			</ui:remove>
 
-		<p:commandButton action="#{userTablePC.backToHome()}" value="#{msgs.home}" immediate="true" />
+		</p:dataTable>
+		
+		<br />
+
+		<p:commandButton action="#{userTablePCB.backToHome()}" value="#{msgs.home}" immediate="true" />
 	</h:form>
+	
+	<dialogs:userDialog panelGridId="editDialogPanel" dialogWidgetVar="w_editDialog" dialogId="editDialog" editingDisable="false"/>
+	<dialogs:userDialog panelGridId="viewDialogPanel" dialogWidgetVar="w_viewDialog" dialogId="viewDialog" editingDisable="true"/>
 
 </h:body>
 

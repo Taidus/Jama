@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections">
+
+<composite:interface>
+	<composite:attribute name="dialogWidgetVar" required="true" />
+	<composite:attribute name="dialogId" required="true" />
+	<composite:attribute name="panelGridId" required="true" />
+
+	<composite:attribute name="editingDisable" default="true" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:form>
+
+		<p:remoteCommand name="closeDiag" actionListener="#{userEditor.cancel()}" immediate="true" />
+
+		<p:dialog id="#{cc.attrs.dialogId}" widgetVar="#{cc.attrs.dialogWidgetVar}" modal="true">
+
+			<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
+
+			<p:ajax event="close" onstart="closeDiag();" oncomplete="setHideShow();" />
+
+			<sections:userData editingDisable="#{cc.attrs.editingDisable}" panelGridId="#{cc.attrs.panelGridId}" />
+
+
+			<p:commandButton value="#{msgs.cancel}" process="@this" immediate="true" actionListener="#{userEditor.cancel()}"
+				oncomplete="#{cc.attrs.dialogWidgetVar}.hide();" />
+
+			<p:commandButton icon="ui-icon-disk" value="#{msgs.save}" actionListener="#{userEditor.save()}" process="@form"
+				rendered="#{not cc.attrs.editingDisable}" oncomplete="if(!args.validationFailed){ #{cc.attrs.dialogWidgetVar}.hide(); }" />
+
+
+		</p:dialog>
+	</h:form>
+
+</composite:implementation>
+</html>

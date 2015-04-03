@@ -1,0 +1,62 @@
+Si è annoverato insieme agli agenti che interagiscono con il sistema anche il Tempo. In questa sezione si illustra come è stato realizzato questo tipo di agente, e come si sono implementate le azioni che esso compie.
+In particolare si analizzano quelle azioni che possono essere classificate come task periodici e che non possono essere effettuate come conseguenza di un azione di un utente come l'Operatore, il Docente o l'Amministratore.
+Un buon candidato è la notifica delle scadenze più vicine: ogni giorno ad un' ora fissata è necessario cercare le scadenze da notificare e spedire una email al docente di riferimento.
+
+Si è scelto di rappresentare questa operazione sfruttando la classe \texttt{java.util.TimerTask}. Per definire un task occorre quindi estendere la classe \texttt{TimerTask} ed implementare il metodo \texttt{run()} come è mostrato di seguito.
+\begin{lstlisting}
+ 
+public class MyTask extends TimerTask {
+	...
+
+	@Override
+	public void run() {
+	
+	  dostuff();
+
+	}
+
+}
+ 
+\end{lstlisting}
+
+Una volta definita l'operazione occorre schedulare la sua esecuzione impostando un tempo di partenza e un intervallo di ripetizione. Possiamo fare ciò utilizzando la classe \texttt{java.util.Timer} come mostrato di seguito.
+
+\begin{lstlisting}
+		Date date = ...;
+
+		Timer timer = new Timer();
+		TimerTask task = new MyTask();
+
+		long interval = ...;
+		timer.schedule(task, date, period);
+ 
+\end{lstlisting}
+
+L'ultimo problema che è necessario affrontare è come poter eseguire il codice sopra riportato all'avvio dell'\textit{application server}. La soluzione che si propone è utilizzare un bean che venga creato allo startup del server, utilizzando l'annotazione
+ \texttt{@Startup}, e che contenga il codice sopra riportato in un metodo annotato con \texttt{@PostConstruct}. Un metodo così annotato verrà eseguito dopo il costruttore del bean ma prima di ogni altro metodo. Il risultato è quindi un bean così fatto:
+
+\begin{lstlisting}
+@ApplicationScoped
+@Singleton
+@Startup
+@Named("scheduler")
+public class Scheduler {
+
+	public Scheduler() {}
+
+
+	@PostConstruct
+	public void schedule() {
+
+		Date date = ...;
+
+		Timer timer = new Timer();
+		TimerTask task = new MyTask();
+
+		long interval = ...;
+		timer.schedule(task, date, period);
+
+	}
+
+}
+\end{lstlisting}

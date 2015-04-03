@@ -1,15 +1,14 @@
 package security.accessDecisionVoters;
 
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.apache.deltaspike.security.api.authorization.AccessDecisionVoter;
 import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 import security.Authorizer;
 import usersManagement.Permission;
+import util.Messages;
 
 @ApplicationScoped
 public abstract class CustomAccessDecisionVoter implements AccessDecisionVoter {
@@ -28,17 +27,12 @@ public abstract class CustomAccessDecisionVoter implements AccessDecisionVoter {
 
 			@Override
 			public String getReason() {
-				return getBundle().getString("notAuthorized");
+				return Messages.getString("notAuthorized");
 			}
 		});
 	}
 
 	protected Set<SecurityViolation> _checkPermission(Permission toCheck) {
-		return (authorizer.canDo(toCheck)) ? noViolations : violationsHappened;
-	}
-
-	private ResourceBundle getBundle() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().getResourceBundle(context, "msgs");
+		return (authorizer.canUserDo(toCheck)) ? noViolations : violationsHappened;
 	}
 }

@@ -1,16 +1,26 @@
 package businessLayer;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c ORDER BY c.name") })
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"socialNumber"})
+    )
+@NamedQueries({
+		@NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c ORDER BY c.name"),
+		@NamedQuery(name = "Company.findBySocialNumber", query = "SELECT c FROM Company c WHERE c.socialNumber =:number") })
 public class Company {
 
 	@Id
@@ -20,6 +30,14 @@ public class Company {
 	@NotNull
 	@Size(min = 1, max = 1000)
 	private String name;
+
+	private String businessName;
+	private String legalResidence;
+	private String socialNumber;
+	private String vatNumber;
+	
+	@Enumerated(EnumType.STRING)
+	private CompanyType type;
 
 	public String getName() {
 		return name;
@@ -33,17 +51,62 @@ public class Company {
 		return id;
 	}
 
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
+	public String getLegalResidence() {
+		return legalResidence;
+	}
+
+	public void setLegalResidence(String legalResidence) {
+		this.legalResidence = legalResidence;
+	}
+
+	public String getSocialNumber() {
+		return socialNumber;
+	}
+
+	public void setSocialNumber(String socialNumber) {
+		this.socialNumber = socialNumber;
+	}
+
+	public String getVatNumber() {
+		return vatNumber;
+	}
+
+	public void setVatNumber(String vatNumber) {
+		this.vatNumber = vatNumber;
+	}
+	
+
+	public CompanyType getType() {
+		return type;
+	}
+
+	public void setType(CompanyType type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
-		return "Company [id=" + id + ", name=" + name + "]";
+		return "Company [name=" + name + ", businessName=" + businessName
+				+ ", legalResidence=" + legalResidence + ", socialNumber="
+				+ socialNumber + ", VatNumber=" + vatNumber + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((vatNumber == null) ? 0 : vatNumber.hashCode());
+		result = prime * result
+				+ ((socialNumber == null) ? 0 : socialNumber.hashCode());
 		return result;
 	}
 
@@ -56,12 +119,15 @@ public class Company {
 		if (getClass() != obj.getClass())
 			return false;
 		Company other = (Company) obj;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (vatNumber == null) {
+			if (other.vatNumber != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!vatNumber.equals(other.vatNumber))
+			return false;
+		if (socialNumber == null) {
+			if (other.socialNumber != null)
+				return false;
+		} else if (!socialNumber.equals(other.socialNumber))
 			return false;
 		return true;
 	}

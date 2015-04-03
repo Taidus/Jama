@@ -12,9 +12,9 @@ import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
 
+import businessLayer.ContractHelper;
 import util.Messages;
 import annotations.Current;
-import controllerLayer.ContractHelper;
 import controllerLayer.ContractManagerBean;
 import daoLayer.ChiefScientistDaoBean;
 
@@ -78,6 +78,10 @@ public class AgreementWizardPresentationBean implements Serializable {
 	
 	public boolean renderType(){
 		return helper.renderType();
+	}
+	
+	public boolean renderShareTable(){
+		return helper.renderShareTable();
 	}
 	
 	public boolean renderPersonnelQuotes(){

@@ -11,6 +11,7 @@ import org.joda.money.Money;
 import annotations.TransferObj;
 import businessLayer.AbstractShareTable;
 import businessLayer.Contract;
+import businessLayer.ContractShareTable;
 
 @Named("agrShareTablePB")
 @ConversationScoped
@@ -31,6 +32,16 @@ public class AgreementShareTablePresentationBean extends ShareTablePresentationO
 	@Override
 	protected Money getTransfetObjWholeAmount() {
 		return c.getWholeAmount();
+	}
+	
+	@Override
+	protected Money getTransfetObjWholeTaxableAmount() {
+		return c.getWholeTaxableAmount();
+	}
+	
+	@Override
+	protected ContractShareTable getContractShareTable() {
+		return c.getShareTable();
 	}
 
 }

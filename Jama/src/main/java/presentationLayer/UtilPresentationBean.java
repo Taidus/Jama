@@ -1,6 +1,7 @@
 package presentationLayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,14 +11,19 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import usersManagement.Role;
+import security.Principal;
+import usersManagement.RolePermission;
 import util.Messages;
+import annotations.TransferObj;
+import annotations.Logged;
 import businessLayer.Agreement;
 import businessLayer.AgreementType;
 import businessLayer.ChiefScientist;
 import businessLayer.Company;
+import businessLayer.CompanyType;
 import businessLayer.Contract;
 import businessLayer.Department;
 import businessLayer.Funding;
@@ -30,12 +36,23 @@ import daoLayer.DepartmentDaoBean;
 @Dependent
 public class UtilPresentationBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private ChiefScientistDaoBean chiefDaoBean;
+
 	@EJB
 	private CompanyDaoBean companyDaoBean;
+
 	@EJB
-	private DepartmentDaoBean depthDao;
+	private DepartmentDaoBean deptDao;
+
+	@Inject
+	@TransferObj
+	private Contract c;
+
+	@Inject
+	@Logged
+	private Principal loggedUser;
 
 	private static final Map<Class<? extends Contract>, String> contractTypeName;
 
@@ -46,53 +63,82 @@ public class UtilPresentationBean implements Serializable {
 		contractTypeName.put(Funding.class, Messages.getString("funding"));
 	}
 
-
 	public String getNameFromClass(Class<? extends Contract> c) {
 		return contractTypeName.get(c);
 	}
 
-
 	public SelectItem[] getAgreementTypeItems() {
 		AgreementType[] types = AgreementType.values();
-		return getTypeItems(types);
-	}
-
-
-	public SelectItem[] getRolesItems() {
-		Role[] types = Role.getAvailableUserRoleValues();
-		return getTypeItems(types);
-
-	}
-
-
-	private SelectItem[] getTypeItems(Object[] types) {
-
 		SelectItem[] result = new SelectItem[types.length];
 		for (int i = 0; i < types.length; i++) {
-			result[i] = new SelectItem(types[i], types[i].toString());
+			result[i] = new SelectItem(types[i], types[i].getDescription());
 		}
 		return result;
 
 	}
+	
+	
+	public SelectItem[] getCompanyTypeItems() {
+		CompanyType[] types = CompanyType.values();
+		SelectItem[] result = new SelectItem[types.length];
+		for (int i = 0; i < types.length; i++) {
+			result[i] = new SelectItem(types[i], types[i].getDescription());
+		}
+		return result;
+	}
 
+	public SelectItem[] getRolesItems() {
+		RolePermission[] types = RolePermission.getUserRolePermission();
+		SelectItem[] result = new SelectItem[types.length];
+		for (int i = 0; i < types.length; i++) {
+			result[i] = new SelectItem(types[i], types[i].getDisplayString());
+		}
+		return result;
+
+	}
 
 	public SelectItem[] getChiefItems() {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		return getChiefsFromList(chiefs);
 	}
 
+	public SelectItem[] getChiefItemsForCurrentDept() {
+		
+		System.out.println("Util called!!!");
+
+		List<String> deptSerial = new ArrayList<String>();
+		if (c.getDepartment() != null) {
+			deptSerial.add(c.getDepartment().getCode());
+			System.out.println("Eseguo query per dip: "+c.getDepartment().getCode());
+		}
+		List<ChiefScientist> chiefs = chiefDaoBean.getByDeptSerials(deptSerial);
+		return getChiefsFromList(chiefs);
+	}
 
 	public SelectItem[] getDepthItems() {
-		List<Department> depths = depthDao.getAll();
-		SelectItem[] result = new SelectItem[depths.size()];
+		return getDeptsItems(deptDao.getAll());
+	}
+
+	public SelectItem[] getLoggedUserDepts() {
+		List<Department> depts = new ArrayList<>();
+
+		for (String depCode : loggedUser
+				.getBelongingDepthsCodes(RolePermission.OPERATOR)) {
+			depts.add(deptDao.getByCode(depCode));
+		}
+
+		return getDeptsItems(depts);
+	}
+
+	private SelectItem[] getDeptsItems(List<Department> depts) {
+		SelectItem[] result = new SelectItem[depts.size()];
 		Department current = null;
-		for (int i = 0; i < depths.size(); i++) {
-			current = depths.get(i);
+		for (int i = 0; i < depts.size(); i++) {
+			current = depts.get(i);
 			result[i] = new SelectItem(current, current.getDisplayName());
 		}
 		return result;
 	}
-
 
 	public SelectItem[] getCompanyItems() {
 		List<Company> companies = companyDaoBean.getAll();
@@ -105,7 +151,6 @@ public class UtilPresentationBean implements Serializable {
 		return result;
 	}
 
-
 	public SelectItem[] getFilterChiefItems() {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		SelectItem[] result = new SelectItem[chiefs.size() + 1];
@@ -113,11 +158,11 @@ public class UtilPresentationBean implements Serializable {
 		ChiefScientist current = null;
 		for (int i = 0; i < chiefs.size(); i++) {
 			current = chiefs.get(i);
-			result[i + 1] = new SelectItem(current.getId(), current.getCompleteName());
+			result[i + 1] = new SelectItem(current.getId(),
+					current.getCompleteName());
 		}
 		return result;
 	}
-
 
 	public SelectItem[] getFilterCompanyItems() {
 		List<Company> companies = companyDaoBean.getAll();
@@ -131,29 +176,26 @@ public class UtilPresentationBean implements Serializable {
 		return result;
 	}
 
-
 	public SelectItem[] getChiefsItemsNotIn(Collection<ChiefScientist> list) {
 		List<ChiefScientist> chiefs = chiefDaoBean.getAll();
 		chiefs.removeAll(list);
 		return getChiefsFromList(chiefs);
 	}
 
-
 	private SelectItem[] getChiefsFromList(List<ChiefScientist> list) {
 		SelectItem[] result = new SelectItem[list.size()];
 		ChiefScientist current = null;
 		for (int i = 0; i < list.size(); i++) {
 			current = list.get(i);
-			result[i] = new SelectItem(current, current.getCompleteName());
+			result[i] = new SelectItem(current, current.getCompleteName() + " " + current.getSerialNumber());
 		}
 		return result;
 	}
 
-
 	public SelectItem[] getBooleanFilter() {
-		return getBooleanFilter(Boolean.TRUE.toString(), Boolean.FALSE.toString());
+		return getBooleanFilter(Boolean.TRUE.toString(),
+				Boolean.FALSE.toString());
 	}
-
 
 	public SelectItem[] getBooleanFilter(String trueLabel, String falseLabel) {
 		SelectItem[] result = new SelectItem[3];
@@ -163,24 +205,16 @@ public class UtilPresentationBean implements Serializable {
 		return result;
 	}
 
-
-	/*
-	 * public SelectItem[] getContractFilter() { ContractType[] types =
-	 * ContractType.values(); SelectItem[] result = new SelectItem[types.length
-	 * + 1]; result[0] = new SelectItem("", Messages.getString("allM")); for
-	 * (int i = 0; i < types.length; i++) { result[i + 1] = new
-	 * SelectItem(types[i].getRelatedClass(), types[i].getRelatedClassName()); }
-	 * return result; }
-	 */
-
 	public SelectItem[] getContractFilter() {
 		SelectItem[] result = new SelectItem[3];
-		result[0] = new SelectItem(Contract.class.getName(), Messages.getString("allM"));
-		result[1] = new SelectItem(Agreement.class.getName(), Messages.getString("agreement"));
-		result[2] = new SelectItem(Funding.class.getName(), Messages.getString("funding"));
+		result[0] = new SelectItem(Contract.class.getName(),
+				Messages.getString("allM"));
+		result[1] = new SelectItem(Agreement.class.getName(),
+				Messages.getString("agreement"));
+		result[2] = new SelectItem(Funding.class.getName(),
+				Messages.getString("funding"));
 		return result;
 	}
-
 
 	public Date findClosestDeadline(Contract contract, Date minDate) {
 		// TODO eliminare
@@ -196,7 +230,7 @@ public class UtilPresentationBean implements Serializable {
 		// }
 		// return closestDeadline;
 
-		List<Installment> insts = contract.getInstallments();
+		List<? extends Installment> insts = contract.getInstallments();
 		Date current, closestDeadline = null;
 
 		for (Installment i : insts) {
@@ -204,10 +238,12 @@ public class UtilPresentationBean implements Serializable {
 				current = i.getDate();
 
 				if (null == current) {
-					System.err.println(new Date() + ": null installment date (installment #" + i.getId() + ")");
-				}
-				else if (null == minDate || !current.before(minDate)) {
-					if (null == closestDeadline || current.before(closestDeadline)) {
+					System.err.println(new Date()
+							+ ": null installment date (installment #"
+							+ i.getId() + ")");
+				} else if (null == minDate || !current.before(minDate)) {
+					if (null == closestDeadline
+							|| current.before(closestDeadline)) {
 						closestDeadline = current;
 					}
 				}
@@ -217,6 +253,6 @@ public class UtilPresentationBean implements Serializable {
 		return closestDeadline;
 	}
 
-
-	public UtilPresentationBean() {}
+	public UtilPresentationBean() {
+	}
 }

@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:dialogs="http://java.sun.com/jsf/composite/dialogs">
+
+<composite:interface>
+	<composite:attribute name="mode" default="profile" />
+
+</composite:interface>
+
+<composite:implementation>
+
+	<h:form id="userEdit" prependId="false">
+
+		<input type="hidden" name="cid" value='#{userEditor.conversation.id}' />
+
+
+		<p:panelGrid id="usrDataPanelGrid">
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.serialNumber}: " />
+				</p:column>
+
+				<p:column>
+					<h:inputText id="serial" value="#{userEditor.user.serialNumber}" label="#{msgs.serialNumber}" required="true"
+						rendered="#{cc.attrs.mode == 'wizard'}" validator="#{userEditor.validateSerialNumber}">
+						<p:ajax event="valueChange" process="@this" update="usrDataPanelGrid" listener="#{userEditor.importUser()}" />
+					</h:inputText>
+
+					<h:outputText value="#{userEditor.user.serialNumber}" rendered="#{cc.attrs.mode == 'profile'}" />
+				</p:column>
+
+				<ui:remove>
+					<p:column>
+						<p:commandButton value="#{msgs.import}" process="@this serial" update="usrDataPanelGrid" actionListener="#{userEditor.importUser()}"
+							rendered="#{cc.attrs.mode == 'wizard'}" />
+					</p:column>
+				</ui:remove>
+
+				<p:column colspan="2" rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:message styleClass="errorMessage" id="serialError" for="serial" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.name}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="name_output" value="#{userEditor.user.name}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.surname}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText id="surname_output" value="#{userEditor.user.surname}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.department}:" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="#{userEditor.selectedDept.displayName}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.role}: " />
+				</p:column>
+
+				<p:column>
+					<h:selectOneMenu id="type" value="#{userEditor.user.role}" label="#{msgs.role}" required="true" rendered="#{cc.attrs.mode == 'wizard'}">
+						<f:selectItems value="#{utilPB.rolesItems}" />
+						<f:ajax event="blur" execute="@this" render="typeError" />
+					</h:selectOneMenu>
+
+					<h:outputText value="#{userEditor.user.role.displayString}" rendered="#{cc.attrs.mode == 'profile'}" />
+				</p:column>
+
+
+				<p:column rendered="#{cc.attrs.mode == 'wizard'}">
+					<p:message styleClass="errorMessage" id="typeError" for="type" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msgs.email}: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="email" required="true" label="email" requiredMessage="Please enter your email address."
+						validatorMessage="#{msgs.err_invalidEmail}" value="#{userEditor.user.email}">
+
+						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						<f:ajax event="blur" execute="@this" render="emailError" />
+
+					</p:inputText>
+
+					<p:watermark for="email" value="Email Address *" />
+
+				</p:column>
+
+
+				<p:column>
+					<p:message styleClass="errorMessage" id="emailError" for="email" />
+				</p:column>
+
+
+			</p:row>
+
+
+		</p:panelGrid>
+
+
+		<p:commandButton value="#{msgs.save}" process="@form" update="usrDataPanelGrid"
+			oncomplete="if (!args.validationFailed) {w_confirm_save_user.show();}" />
+
+		<p:commandButton value="#{msgs.cancel}" action="#{userEditor.cancel()}" immediate="true" oncomplete="w_confirm_cancel_user.hide()" />
+
+		<p:confirmDialog message="#{msgs.sure}" header="#{msgs.save}" severity="alert" widgetVar="w_confirm_save_user">
+			<p:commandButton value="#{msgs.yes}" action="#{userEditor.save()}" immediate="true" oncomplete="w_confirm_save_user.hide()" />
+			<p:commandButton value="#{msgs.no}" onclick="w_confirm_save_user.hide();" type="button" />
+		</p:confirmDialog>
+
+	</h:form>
+
+</composite:implementation>
+</html>

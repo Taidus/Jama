@@ -1,0 +1,13 @@
+/target
+*.classpath
+*/MANIFEST.MF
+.prefs
+
+#Tex Files
+*.log
+*.aux
+*.out
+*.toc
+*.backup
+*.pdf
+*.nav

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.apache.deltaspike.security.api.authorization.Secures;
 
+import security.annotations.AlterCompaniesAllowed;
 import security.annotations.AlterContractsAllowed;
 import security.annotations.AlterUserPermissionAllowed;
 import security.annotations.CreateUserAllowed;
@@ -35,48 +36,54 @@ public class Authorizer implements Serializable {
 	private Principal loggedUser;
 
 	@Secures
+	@AlterCompaniesAllowed
+	public boolean canUserAlterCompanies() {
+		return canUserDo(Permission.ALTER_COMPANIES);
+	}
+	
+	@Secures
 	@AlterContractsAllowed
-	public boolean canAlterContracts() {
-		return canDo(Permission.ALTER_CONTRACTS);
+	public boolean canUserAlterContracts() {
+		return canUserDo(Permission.ALTER_CONTRACTS);
 	}
 
 	@Secures
 	@AlterUserPermissionAllowed
-	public boolean canAlterUserPermission() {
-		return canDo(Permission.ALTER_USER_PERMISSIONS);
+	public boolean canUserAlterUserPermission() {
+		return canUserDo(Permission.ALTER_USER_PERMISSIONS);
 	}
 
 	@Secures
 	@CreateUserAllowed
-	public boolean canCreateUser() {
-		return canDo(Permission.CREATE_USER);
+	public boolean canUserCreateUser() {
+		return canUserDo(Permission.CREATE_USER);
 	}
 
 	@Secures
 	@DeleteContractsAllowed
-	public boolean canDeleteContracts() {
-		return canDo(Permission.DELETE_CONTRACTS);
+	public boolean canUserDeleteContracts() {
+		return canUserDo(Permission.DELETE_CONTRACTS);
 	}
 
 	@Secures
 	@ViewContractsAllowed
-	public boolean canViewContracts() {
-		return canDo(Permission.VIEW_CONTRACTS);
+	public boolean canUserViewContracts() {
+		return canUserDo(Permission.VIEW_CONTRACTS);
 	}
 
 	@Secures
 	@ViewHomeAllowed
-	public boolean canViewHome() {
-		return canDo(Permission.VIEW_HOME);
+	public boolean canUserViewHome() {
+		return canUserDo(Permission.VIEW_HOME);
 	}
 
 	@Secures
 	@ViewOwnContractsAllowed
-	public boolean canViewOwnContracts() {
-		return canDo(Permission.VIEW_OWN_CONTRACTS);
+	public boolean canUserViewOwnContracts() {
+		return canUserDo(Permission.VIEW_OWN_CONTRACTS);
 	}
 	
-	public boolean canDo(Permission toCheck) {
+	public boolean canUserDo(Permission toCheck) {
 		return loggedUser.hasPermission(toCheck);
 	}
 

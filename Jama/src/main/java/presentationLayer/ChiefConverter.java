@@ -21,8 +21,7 @@ public class ChiefConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		int id = Integer.parseInt(value);
-		return chiefDaoBean.getById(id);
+		return chiefDaoBean.getBySerial(value);
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class ChiefConverter implements Converter {
 		if (null == value) {
 			return "";
 		}
-		return String.valueOf(((ChiefScientist) value).getId());
+		return ((ChiefScientist) value).getSerialNumber();
 	}
 
 }

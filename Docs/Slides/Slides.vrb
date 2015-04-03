@@ -1,0 +1,55 @@
+\frametitle{Architettura}
+\begin{columns}[T]
+\begin{column}{.5\textwidth}
+
+
+\begin{itemize}
+\item Sicurezza su base metodo
+
+\begin{itemize}
+\item Classe \textsl{Authorizer}
+\vspace{0.8em}
+\item Annotare i metodi\newline
+da controllare
+\end{itemize}
+
+\vspace{0.8em}
+\item Sicurezza su base pagina
+\begin{itemize}
+\item Gerarchia interfacce/classi -\textgreater  cartelle/pagine
+\vspace{0.8em}
+\item Classe \textsl{AccessDecisionVoter}
+\vspace{0.8em}
+\item Possibilità di specificare\newline
+una pagina di errore\newline
+con un messaggio adatto
+\end{itemize}
+\end{itemize}
+\end{column}
+
+\begin{column}{.5\textwidth}
+\vspace{2.6em}
+\includegraphics[width=1\textwidth]{deltaspikeMethod.eps}
+
+\vspace{1.6em}
+\begin{lstlisting}[basicstyle={\tiny\ttfamily}]
+
+interface Pages{
+    &&@Secured&&(value = { MyVoter.class },
+    errorView = MyErrorPage.class)
+    class AgreementWiz implements ViewConfig {
+    }
+
+    &&@Secured&&(value = { MyOtherVoter.class },
+    errorView = MyOtherErrorPage.class)
+    class Home implements ViewConfig {
+    }
+
+    class MyErrorPage {}
+    class MyOtherErrorPage{}
+}
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}

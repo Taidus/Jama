@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sections="http://java.sun.com/jsf/composite/sections"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="home.css" library="css" />
+</h:head>
+<h:body>
+
+	<ui:include src="/resources/sections/toolbar.xhtml" />
+
+	<h:form prependId="false">
+
+
+		<div class="center">
+
+			<p:panel header="#{msgs.available_actions}" styleClass="center"
+				id="actionPanel">
+
+				<p:panelGrid
+					rendered="#{userManager.loggedUser.hasRole('OPERATOR')==true}"
+					styleClass="center">
+
+					<p:row>
+						<p:column>
+							<p:commandButton value="#{msgs.create_agreement}"
+								action="#{contractManager.createAgreement}" styleClass="buttons" />
+						</p:column>
+						<p:column>
+							<p:commandButton action="#{contractManager.createFunding()}"
+								value="#{msgs.create_funding}" styleClass="buttons" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:button value="#{msgs.viewEdit_contracts}" outcome="agreementList"
+								styleClass="buttons" />
+						</p:column>
+						<p:column>
+							<p:button value="#{msgs.view_deadlines}"
+								outcome="agreementSchedule" styleClass="buttons" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:button value="#{msgs.view_companyList}" outcome="companyList" styleClass="buttons"  ></p:button>
+						</p:column>
+					
+					
+					</p:row>
+
+				</p:panelGrid>
+
+
+				<p:panelGrid
+					rendered="#{userManager.loggedUser.hasRole('PROFESSOR')==true}"
+					styleClass="center">
+					<p:row>
+						<p:column>
+							<p:button value="#{msgs.view_contracts}"
+								outcome="chiefContractList" styleClass="buttons" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panelGrid
+					rendered="#{userManager.loggedUser.hasRole('ADMIN')==true}"
+					styleClass="center">
+					<p:row>
+						<p:column>
+							<p:commandButton action="#{userEditor.createUser()}"
+								value="#{msgs.create_user}" styleClass="buttons" />
+						</p:column>
+						<p:column>
+							<p:button outcome="userList" value="#{msgs.view_users}"
+								styleClass="buttons" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+			</p:panel>
+		</div>
+	</h:form>
+
+</h:body>
+
+
+
+</html>

@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.joda.money.Money;
@@ -13,6 +14,7 @@ import org.joda.money.Money;
 public class Percent implements Comparable<Percent> {
 	public static final Percent ONE = new Percent(BigDecimal.ONE);
 	public static final Percent ZERO = new Percent(BigDecimal.ZERO);
+	public static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN; 
 
 	public static final Percent valueOf(double arg) {
 		return new Percent(BigDecimal.valueOf(arg));
@@ -48,6 +50,7 @@ public class Percent implements Comparable<Percent> {
 		return new Percent(arg1.value.subtract(arg2.value));
 	}
 
+	@Column(precision=20, scale=4)
 	private BigDecimal value;
 
 	public Percent() {
@@ -60,7 +63,7 @@ public class Percent implements Comparable<Percent> {
 //		if (value.abs().compareTo(BigDecimal.ONE) > 0) {
 //			throw new IllegalArgumentException("Illegal percent value (its absolute value is greater than 1)");
 //		}
-		this.value = value.setScale(2, RoundingMode.HALF_EVEN);
+		this.value = value.setScale(4, RoundingMode.HALF_EVEN);
 	}
 
 	public BigDecimal getValue() {
@@ -127,7 +130,7 @@ public class Percent implements Comparable<Percent> {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value)){
+		} else if (value.compareTo(other.value) != 0){
 			return false;
 		}
 		return true;
@@ -135,7 +138,7 @@ public class Percent implements Comparable<Percent> {
 
 	@Override
 	public String toString() {
-		return value.multiply(BigDecimal.valueOf(100L)) + "%";
+		return value.multiply(BigDecimal.valueOf(100L)).setScale(2).toPlainString();
 	}
 
 }

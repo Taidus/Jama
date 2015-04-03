@@ -1,34 +1,165 @@
-\documentclass[a4paper,10pt]{report}
+\documentclass[italian,laurea,oneside,10pt]{UFtesi}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{comment}
+\usepackage{longtable}
+\usepackage{eurosym}
+\graphicspath{ {./images/} }
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  moredelim=[is][\textcolor{gray}]{&&}{&&},
+  literate={A}{A}{1\discretionary{}{}{}}
+             {B}{B}{1\discretionary{}{}{}}
+             {C}{C}{1\discretionary{}{}{}}
+             {D}{D}{1\discretionary{}{}{}}
+             {E}{E}{1\discretionary{}{}{}}
+             {F}{F}{1\discretionary{}{}{}}
+             {G}{G}{1\discretionary{}{}{}}
+             {H}{H}{1\discretionary{}{}{}}
+             {I}{I}{1\discretionary{}{}{}}
+             {J}{J}{1\discretionary{}{}{}}
+             {K}{K}{1\discretionary{}{}{}}
+             {L}{L}{1\discretionary{}{}{}}
+             {M}{M}{1\discretionary{}{}{}}
+             {N}{N}{1\discretionary{}{}{}}
+             {O}{O}{1\discretionary{}{}{}}
+             {P}{P}{1\discretionary{}{}{}}
+             {Q}{Q}{1\discretionary{}{}{}}
+             {R}{R}{1\discretionary{}{}{}}
+             {S}{S}{1\discretionary{}{}{}}
+             {T}{T}{1\discretionary{}{}{}}
+             {U}{U}{1\discretionary{}{}{}}
+             {V}{V}{1\discretionary{}{}{}}
+             {W}{W}{1\discretionary{}{}{}}
+             {X}{X}{1\discretionary{}{}{}}
+             {Y}{Y}{1\discretionary{}{}{}}
+             {Z}{Z}{1\discretionary{}{}{}}
+}
 
 % Title Page
 \title{Analisi e sviluppo di una web application \\
 basata sui framework JPA, JSF, CDI, \\
-per l'amministrazione di attività di trasferimento tecnologico}
+per l'amministrazione di attività di trasferimento tecnologico\\\vspace{1.5cm}
+Analysis and development of a web application \\
+based on the JPA, JSF, and CDI frameworks \\
+for administration of \\
+technology transfer activities
+}
 \author{Tommaso Levato, Alessio Sarullo, Giulio Galvan}
+\titolocorso{Ingegneria Informatica}
+\degreeyear{2012/2013}
+\date{}
+\chair{Prof. Enrico Vicario}
+\othermembers{Ing. Jacopo Torrini\\}
+\numberofmembers{4}
 
 
 \begin{document}
 \maketitle
+\frontmatter
 
 
-\begin{abstract}
-\end{abstract}
 
 \tableofcontents
-
+\mainmatter
 \chapter{Introduzione}
+\input{Introduzione}
+
 \chapter{Analisi}
-\section{Casi d'Uso}
+\label{analisi}
+\input{introduzione_analisi}
+\section{Modello}
+Il Modello di Dominio dell'applicazione è costituito da due parti \textquoteleft ortogonali' tra loro: il \textsl{Modello di Business},
+che descrive la \textquoteleft Business Logic' dell'applicazione, e il \textsl{Modello degli Utenti}, che rappresenta gli utenti e i ruoli ad essi associati.
+\input{modello_business}
+\input{modello_utenti}
+\section{Casi d'uso}
 \input{casi_uso}
+
+
 \chapter{Tecnologie}
+\label{tecnologie}
+\input{introduzione_tecnologie}
 \section{JPA}
-\section{CDI}
+\label{jpa}
+\input{jpa}
+\section{CDI} 
+\label{cdi}
+\input{CDI}
 \section{JSF}
-\chapter{Utilizzo}
+\label{jsf}
+\input{JSF}
+\section{Deltaspike}
+\label{delta}
+\input{Deltaspike}
+\section{Altre librerie}
+\label{libs}
+\subsection{JLDAP}
+\label{jldap}
+\input{jldap}
+\subsection{FreeMarker}
+\label{freemarker}
+\input{freemarker}
 
 
+\chapter{Dietro le quinte}
+\label{code}
+\input{introduzione_dietro_le_quinte}
+\section{Login}
+\label{login}
+\input{login}
+\section{Recupero degli Utenti}
+\input{recupero_utenti}
+\section{Lista convenzioni}
+\input{lista_interfaccia}
+\input{lista_business}
+\section{Creazione e Modifica di Entità}
+\input{creazione_interfaccia}
+\input{creazione_business}
+\section{Strategie per il calcolo delle aliquote}
+\input{filler}
+\section{Tempo e task periodici}
+\input{scheduler}
+\section{Notifiche e-mail}
+\input{notifica_email}
+\section{Valuta}
+\input{money}
 
 
-\end{document}          
+\chapter{Test funzionale e collaudo}
+\label{howto}
+\input{collaudo}
+
+\chapter{Conclusione}
+\input{conclusione}
+
+\nocite{*}		 % Mostra in bibliografia anche gli oggetti non citati 
+\bibliography{biblio}{}
+\bibliographystyle{plain}
+
+
+\end{document}       

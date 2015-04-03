@@ -14,8 +14,29 @@
 	height: 20px !important;
 	width: 30px !important;
 	display: none;
-	float: right !important;
+	/* float: right !important; */
 }
+
+.button-complete-column{
+	width: 100px !important;
+}
+
+.button-two-column{
+	width: 70px !important;
+}
+
+.button-view-column{
+	width: 40px !important;
+}
+
+th[class*=button-left-column], td[class*=button-left-column]{
+	border-right: none !important;
+} 
+
+th[class*=button-right-column], td[class*=button-right-column]{
+	border-left: none !important;
+} 
+
 
 .hide-column-names table thead tr {
     display: none !important;
